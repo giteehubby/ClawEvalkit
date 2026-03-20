@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw Agent Benchmark Suite</title>
+<style>
+:root {
+  --bg: #0f1117;
+  --card-bg: #1a1d27;
+  --card-hover: #222638;
+  --border: #2a2e3e;
+  --text: #e4e4e7;
+  --text-muted: #9ca3af;
+  --accent: #6366f1;
+  --accent2: #8b5cf6;
+  --green: #22c55e;
+  --yellow: #eab308;
+  --red: #ef4444;
+  --blue: #3b82f6;
+  --orange: #f97316;
+  --pink: #ec4899;
+  --cyan: #06b6d4;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, system-ui, sans-serif; line-height: 1.6; }
+.header {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 30%, #4338ca 60%, #6366f1 100%);
+  padding: 48px 32px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(139,92,246,0.15) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(6,182,212,0.1) 0%, transparent 40%);
+}
+.header h1 { font-size: 2.2em; font-weight: 800; position: relative; z-index: 1; letter-spacing: -0.02em; }
+.header p { color: rgba(255,255,255,0.7); font-size: 1.1em; margin-top: 8px; position: relative; z-index: 1; }
+.tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--card-bg);
+  padding: 6px;
+  border-radius: 12px;
+  margin: 24px 32px 0;
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+.tab {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.95em;
+  font-weight: 600;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab:hover { color: var(--text); background: rgba(99,102,241,0.1); }
+.tab.active { background: var(--accent); color: white; }
+.container { max-width: 1400px; margin: 0 auto; padding: 24px 32px; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* TLDR Card */
+.tldr {
+  background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.05));
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  font-size: 0.95em;
+}
+.tldr strong { color: var(--accent); }
+
+/* Cards */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s;
+  position: relative;
+}
+.card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(99,102,241,0.15); }
+.card-title { font-size: 1.3em; font-weight: 700; margin-bottom: 8px; }
+.card-desc { color: var(--text-muted); font-size: 0.9em; margin-bottom: 16px; }
+.card-stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+.stat { text-align: center; }
+.stat-value { font-size: 1.8em; font-weight: 800; }
+.stat-label { font-size: 0.75em; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75em;
+  font-weight: 600;
+  border: 1px solid;
+}
+.tag-purple { background: rgba(139,92,246,0.15); color: #a78bfa; border-color: rgba(139,92,246,0.3); }
+.tag-blue { background: rgba(59,130,246,0.15); color: #60a5fa; border-color: rgba(59,130,246,0.3); }
+.tag-green { background: rgba(34,197,94,0.15); color: #4ade80; border-color: rgba(34,197,94,0.3); }
+.tag-orange { background: rgba(249,115,22,0.15); color: #fb923c; border-color: rgba(249,115,22,0.3); }
+.tag-pink { background: rgba(236,72,153,0.15); color: #f472b6; border-color: rgba(236,72,153,0.3); }
+.tag-cyan { background: rgba(6,182,212,0.15); color: #22d3ee; border-color: rgba(6,182,212,0.3); }
+.link { color: var(--accent); text-decoration: none; font-weight: 600; }
+.link:hover { text-decoration: underline; }
+
+/* Comparison Table */
+.comp-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.comp-table th {
+  background: linear-gradient(135deg, #1e1b4b, #312e81);
+  color: white;
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 0.85em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.comp-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9em;
+  vertical-align: top;
+}
+.comp-table tr:nth-child(even) td { background: rgba(26,29,39,0.5); }
+.comp-table tr:hover td { background: rgba(99,102,241,0.05); }
+.highlight { color: var(--green); font-weight: 700; }
+
+/* Bar Chart */
+.bar-chart { margin: 24px 0; }
+.bar-row { display: flex; align-items: center; margin-bottom: 12px; gap: 12px; }
+.bar-label { width: 200px; font-size: 0.85em; font-weight: 600; text-align: right; flex-shrink: 0; }
+.bar-track { flex: 1; height: 32px; background: rgba(255,255,255,0.05); border-radius: 8px; position: relative; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 8px; transition: width 0.8s ease; display: flex; align-items: center; justify-content: flex-end; padding-right: 10px; font-size: 0.8em; font-weight: 700; color: white; }
+.bar-value { position: absolute; right: -45px; top: 50%; transform: translateY(-50%); font-size: 0.85em; font-weight: 700; width: 40px; }
+
+/* Score Table */
+.score-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+.score-table th { background: var(--card-bg); padding: 10px; text-align: left; font-size: 0.8em; border-bottom: 2px solid var(--accent); }
+.score-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); font-size: 0.85em; }
+
+/* Feature List */
+.feature-list { list-style: none; padding: 0; }
+.feature-list li { padding: 8px 0; padding-left: 24px; position: relative; font-size: 0.9em; }
+.feature-list li::before { content: ''; position: absolute; left: 0; top: 14px; width: 8px; height: 8px; border-radius: 50%; }
+.feature-list li.pro::before { background: var(--green); }
+.feature-list li.con::before { background: var(--red); }
+.feature-list li.neutral::before { background: var(--yellow); }
+
+/* Collapsible */
+.collapsible { cursor: pointer; user-select: none; }
+.collapsible::after { content: ' ▸'; }
+.collapsible.open::after { content: ' ▾'; }
+.collapsible-content { display: none; padding: 16px 0; }
+.collapsible-content.open { display: block; }
+
+/* Paper Card */
+.paper-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-bottom: 12px; }
+.paper-title { font-weight: 700; font-size: 0.95em; margin-bottom: 6px; }
+.paper-meta { color: var(--text-muted); font-size: 0.8em; }
+.paper-abstract { font-size: 0.85em; margin-top: 8px; color: var(--text-muted); }
+
+/* Sample Task */
+.sample-box {
+  background: rgba(99,102,241,0.05);
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin: 12px 0;
+}
+.sample-box h4 { color: var(--accent); margin-bottom: 8px; }
+
+/* Section headers */
+.section-title {
+  font-size: 1.4em;
+  font-weight: 800;
+  margin: 32px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container { padding: 16px; }
+  .tabs { margin: 16px; }
+  .card-grid { grid-template-columns: 1fr; }
+  .bar-label { width: 120px; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>OpenClaw Agent Benchmark Suite</h1>
+  <p>4 Benchmarks | 409 Tasks | 7+ Evaluation Dimensions | OpenClaw Ecosystem</p>
+</div>
+
+<div class="tabs" id="tabs">
+  <button class="tab active" onclick="switchTab('overview')">总览</button>
+  <button class="tab" onclick="switchTab('comparison')">对比分析</button>
+  <button class="tab" onclick="switchTab('detail-pinch')">PinchBench</button>
+  <button class="tab" onclick="switchTab('detail-agent')">AgentBench</button>
+  <button class="tab" onclick="switchTab('detail-claw')">Claw-Bench</button>
+  <button class="tab" onclick="switchTab('detail-tribe')">TRIBE-INC</button>
+  <button class="tab" onclick="switchTab('detail-skills')">SkillsBench</button>
+  <button class="tab" onclick="switchTab('detail-skillbench')">SkillBench</button>
+  <button class="tab" onclick="switchTab('detail-sciskill')">SciSkillBench</button>
+  <button class="tab" onclick="switchTab('papers')">相关论文</button>
+  <button class="tab" onclick="switchTab('recommend')">选型建议</button>
+</div>
+
+<div class="container">
+
+<!-- ========== TAB: Overview ========== -->
+<div class="tab-content active" id="tab-overview">
+  <div class="tldr">
+    <strong>TLDR:</strong> 7 大 Agent Benchmark 全景扫描。Claw-Bench (313 tasks) · SciSkillBench (116 tasks, 材料科学+化学) · SkillsBench (87 tasks, Skills 增益) · AgentBench (40 tasks, 4 层评分) · TRIBE-INC (33 tests, 模型横评) · PinchBench (23 tasks, 真实场景) · SkillBench (22 tasks, 5 维 profiling)。总计 634 个评测任务。
+  </div>
+
+  <div class="card-grid">
+    <div class="card" style="border-top: 3px solid var(--accent);">
+      <div class="card-title">PinchBench</div>
+      <div class="card-desc">面向 OpenClaw coding agent 的真实世界基准测试</div>
+      <div class="card-stats">
+        <div class="stat"><div class="stat-value" style="color:var(--accent)">23</div><div class="stat-label">Tasks</div></div>
+        <div class="stat"><div class="stat-value" style="color:var(--cyan)">8</div><div class="stat-label">Categories</div></div>
+        <div class="stat"><div class="stat-value" style="color:var(--green)">4</div><div class="stat-label">Eval Dims</div></div>
+      </div>
+      <div class="tags">
+        <span class="tag tag-purple">Real-world Tasks</span>
+        <span class="tag tag-blue">LLM Judge</span>
+        <span class="tag tag-green">Public Leaderboard</span>
+        <span class="tag tag-orange">MIT</span>
+      </div>
+      <p style="margin-top:12px;font-size:0.85em"><a class="link" href="https://github.com/pinchbench/skill" target="_blank">GitHub</a> · <a class="link" href="https://pinchbench.com" target="_blank">Leaderboard</a></p>
+    </div>
+
+    <div class="card" style="border-top: 3px solid var(--blue);">
+      <div class="card-title">AgentBench-OpenClaw</div>
+      <div class="card-desc">跨平台通用 agent 能力评测，4 层评分系统</div>
+      <div class="card-stats">
+        <div class="stat"><div class="stat-value" style="color:var(--blue)">40</div><div class="stat-label">Tasks</div></div>
+        <div class="stat"><div class="stat-value" style="color:var(--cyan)">7</div><div class="stat-label">Domains</div></div>
+        <div class="stat"><div class="stat-value" style="color:var(--green)">4</div><div class="stat-label">Difficulty</div></div>
+      </div>
+      <div class="tags">
+        <span class="tag tag-blue">4-Layer Scoring</span>
+        <span class="tag tag-purple">Cross-platform</span>
+        <span class="tag tag-green">HMAC Signed</span>
+        <span class="tag tag-orange">MIT</span>
+      </div>
+      <p style="margin-top:12px;font-size:0.85em"><a class="link" href="https://github.com/agentbench/agentbench-openclaw" target="_blank">GitHub</a> · <a class="link" href="https://agentbench.app" target="_blank">Leaderboard</a></p>
+    </div>
+
+    <div class="card" style="border-top: 3px solid var(--green);">
+      <div class="card-title">Claw-Bench</div>
+      <div class="card-desc">最全面的 AI Agent Benchmark — 313 tasks, 32 domains</div>
+      <div class="card-stats">
+        <div class="stat"><div class="stat-value" style="color:var(--green)">313</div><div class="stat-label">Tasks</div></div>
+        <div class="stat"><div class="stat-value" style="color:var(--cyan)">32</div><div class="stat-label">Domains</div></div>
+        <div class="stat"><div class="stat-value" style="color:var(--yellow)">4</div><div class="stat-label">Levels</div></div>
+      </div>
+      <div class="tags">
+        <span class="tag tag-green">Pytest Auto-verify</span>
+        <span class="tag tag-pink">Weighted Scoring</span>
+        <span class="tag tag-cyan">Anti-abuse</span>
+        <span class="tag tag-orange">Apache-2.0</span>
+      </div>
+      <p style="margin-top:12px;font-size:0.85em"><a class="link" href="https://github.com/claw-bench/claw-bench" target="_blank">GitHub</a> · <a class="link" href="https://clawbench.net" target="_blank">Leaderboard</a></p>
+    </div>
+
+    <div class="card" style="border-top: 3px solid var(--orange);">
+      <div class="card-title">TRIBE-INC Claw-Bench</div>
+      <div class="card-desc">clawdbot 实战测试套件 + 模型横评排行榜</div>
+      <div class="card-stats">
+        <div class="stat"><div class="stat-value" style="color:var(--orange)">33</div><div class="stat-label">Tests</div></div>
+        <div class="stat"><div class="stat-value" style="color:var(--cyan)">5</div><div class="stat-label">Categories</div></div>
+        <div class="stat"><div class="stat-value" style="color:var(--red)">9</div><div class="stat-label">Models Tested</div></div>
+      </div>
+      <div class="tags">
+        <span class="tag tag-orange">AWS Bedrock</span>
+        <span class="tag tag-blue">OpenRouter</span>
+        <span class="tag tag-pink">Model Comparison</span>
+        <span class="tag tag-orange">MIT</span>
+      </div>
+      <p style="margin-top:12px;font-size:0.85em"><a class="link" href="https://github.com/TRIBE-INC/claw-bench" target="_blank">GitHub</a></p>
+    </div>
+
+    <div class="card" style="border-top: 3px solid var(--pink);">
+      <div class="card-title">SkillsBench</div>
+      <div class="card-desc">首个评估 Agent Skills 有效性的基准，三条件对比评估</div>
+      <div class="card-stats">
+        <div class="stat"><div class="stat-value" style="color:var(--pink)">87</div><div class="stat-label">Tasks</div></div>
+        <div class="stat"><div class="stat-value" style="color:var(--cyan)">60+</div><div class="stat-label">Domains</div></div>
+        <div class="stat"><div class="stat-value" style="color:var(--green)">3</div><div class="stat-label">Conditions</div></div>
+      </div>
+      <div class="tags">
+        <span class="tag tag-pink">Skills Evaluation</span>
+        <span class="tag tag-purple">Docker Isolation</span>
+        <span class="tag tag-green">Peer Reviewed</span>
+        <span class="tag tag-blue">Apache-2.0</span>
+      </div>
+      <p style="margin-top:12px;font-size:0.85em"><a class="link" href="https://github.com/benchflow-ai/skillsbench" target="_blank">GitHub</a> · <a class="link" href="https://arxiv.org/abs/2602.12670" target="_blank">Paper</a> · <a class="link" href="https://www.skillsbench.ai" target="_blank">Website</a></p>
+    </div>
+
+    <div class="card" style="border-top: 3px solid var(--yellow);">
+      <div class="card-title">SkillBench</div>
+      <div class="card-desc">SWE-bench 风格的 Skills 增量测量，5 维 profiling</div>
+      <div class="card-stats">
+        <div class="stat"><div class="stat-value" style="color:var(--yellow)">22</div><div class="stat-label">Tasks</div></div>
+        <div class="stat"><div class="stat-value" style="color:var(--cyan)">6</div><div class="stat-label">Categories</div></div>
+        <div class="stat"><div class="stat-value" style="color:var(--green)">5</div><div class="stat-label">Eval Dims</div></div>
+      </div>
+      <div class="tags">
+        <span class="tag tag-yellow">5-Dim Profiling</span>
+        <span class="tag tag-purple">Baseline vs Augmented</span>
+        <span class="tag tag-blue">Phase 0</span>
+      </div>
+      <p style="margin-top:12px;font-size:0.85em"><a class="link" href="https://github.com/milesgoscha/skillbench" target="_blank">GitHub</a></p>
+    </div>
+
+    <div class="card" style="border-top: 3px solid var(--cyan);">
+      <div class="card-title">SciSkillBench</div>
+      <div class="card-desc">116 个材料科学+化学研究任务，配套 CASCADE 自进化 agent</div>
+      <div class="card-stats">
+        <div class="stat"><div class="stat-value" style="color:var(--cyan)">116</div><div class="stat-label">Tasks</div></div>
+        <div class="stat"><div class="stat-value" style="color:var(--green)">6</div><div class="stat-label">Task Types</div></div>
+        <div class="stat"><div class="stat-value" style="color:var(--pink)">93.3%</div><div class="stat-label">GPT-5+CASCADE</div></div>
+      </div>
+      <div class="tags">
+        <span class="tag tag-cyan">Materials Science</span>
+        <span class="tag tag-green">Chemistry</span>
+        <span class="tag tag-purple">Self-evolving Agent</span>
+        <span class="tag tag-pink">Peer Reviewed</span>
+      </div>
+      <p style="margin-top:12px;font-size:0.85em"><a class="link" href="https://github.com/CederGroupHub/CASCADE" target="_blank">GitHub</a> · <a class="link" href="https://arxiv.org/abs/2512.23880" target="_blank">Paper</a></p>
+    </div>
+  </div>
+
+  <!-- Task Count Bar Chart -->
+  <h3 class="section-title">Task Count Comparison</h3>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-label">PinchBench</div>
+      <div class="bar-track"><div class="bar-fill" style="width:7.3%;background:linear-gradient(90deg,#6366f1,#8b5cf6)">23</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">AgentBench-OpenClaw</div>
+      <div class="bar-track"><div class="bar-fill" style="width:12.8%;background:linear-gradient(90deg,#3b82f6,#6366f1)">40</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">TRIBE-INC</div>
+      <div class="bar-track"><div class="bar-fill" style="width:10.5%;background:linear-gradient(90deg,#f97316,#ef4444)">33</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">SkillsBench</div>
+      <div class="bar-track"><div class="bar-fill" style="width:27.8%;background:linear-gradient(90deg,#ec4899,#f472b6)">87</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">SciSkillBench</div>
+      <div class="bar-track"><div class="bar-fill" style="width:37.1%;background:linear-gradient(90deg,#06b6d4,#22d3ee)">116</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">SkillBench</div>
+      <div class="bar-track"><div class="bar-fill" style="width:7.0%;background:linear-gradient(90deg,#eab308,#facc15)">22</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Claw-Bench</div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#22c55e,#06b6d4)">313</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== TAB: Comparison ========== -->
+<div class="tab-content" id="tab-comparison">
+  <div class="tldr">
+    <strong>TLDR:</strong> 5 个 benchmark 各有侧重：PinchBench 最贴近真实场景；AgentBench 评分最严谨（4 层加权）；Claw-Bench 规模最大（313 tasks）；TRIBE-INC 最实战（含模型横评）；SkillsBench 独创 Skills 增益评估（三条件对比，学术论文加持）。
+  </div>
+
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th style="width:12%">维度</th>
+        <th style="width:17%">PinchBench</th>
+        <th style="width:17%">AgentBench</th>
+        <th style="width:18%">Claw-Bench</th>
+        <th style="width:17%">TRIBE-INC</th>
+        <th style="width:19%">SkillsBench</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>任务数量</strong></td>
+        <td>23</td>
+        <td>40</td>
+        <td class="highlight">313</td>
+        <td>33</td>
+        <td>87</td>
+      </tr>
+      <tr>
+        <td><strong>领域数</strong></td>
+        <td>8</td>
+        <td>7</td>
+        <td>32</td>
+        <td>5</td>
+        <td class="highlight">60+</td>
+      </tr>
+      <tr>
+        <td><strong>难度分级</strong></td>
+        <td>无分级</td>
+        <td>E/M/H/X</td>
+        <td class="highlight">L1/L2/L3/L4</td>
+        <td>5 阶递进</td>
+        <td>E/M/H</td>
+      </tr>
+      <tr>
+        <td><strong>评分方式</strong></td>
+        <td>Auto + LLM Judge</td>
+        <td>4-Layer (55% 客观)</td>
+        <td>Pytest Weighted</td>
+        <td>PASS/FAIL</td>
+        <td class="highlight">Pytest + 三条件对比</td>
+      </tr>
+      <tr>
+        <td><strong>评分粒度</strong></td>
+        <td>Per-criterion 0/1</td>
+        <td>0-100 per task</td>
+        <td>Weighted checkpoints</td>
+        <td>Binary</td>
+        <td>0.0-1.0 per task</td>
+      </tr>
+      <tr>
+        <td><strong>客观评分占比</strong></td>
+        <td>~50%</td>
+        <td>55%</td>
+        <td class="highlight">100%</td>
+        <td>100%</td>
+        <td class="highlight">100%</td>
+      </tr>
+      <tr>
+        <td><strong>排行榜</strong></td>
+        <td>pinchbench.com</td>
+        <td>agentbench.app</td>
+        <td>clawbench.net</td>
+        <td>无（本地报告）</td>
+        <td>skillsbench.ai</td>
+      </tr>
+      <tr>
+        <td><strong>跨平台</strong></td>
+        <td>OpenClaw only</td>
+        <td class="highlight">OpenClaw + Claude Code</td>
+        <td>Any agent product</td>
+        <td>clawdbot only</td>
+        <td>Claude Code / Codex / Gemini CLI</td>
+      </tr>
+      <tr>
+        <td><strong>模型横评</strong></td>
+        <td>通过 OpenRouter</td>
+        <td>通过排行榜</td>
+        <td>通过排行榜</td>
+        <td class="highlight">内置 9 模型数据</td>
+        <td>7 agent-model configs</td>
+      </tr>
+      <tr>
+        <td><strong>基础设施</strong></td>
+        <td>Python + Docker</td>
+        <td>OpenClaw Skill</td>
+        <td>Docker + Next.js</td>
+        <td>Shell + AWS</td>
+        <td>Harbor + Docker</td>
+      </tr>
+      <tr>
+        <td><strong>License</strong></td>
+        <td>MIT</td>
+        <td>MIT</td>
+        <td>Apache-2.0</td>
+        <td>MIT</td>
+        <td>Apache-2.0</td>
+      </tr>
+      <tr>
+        <td><strong>学术论文</strong></td>
+        <td>无</td>
+        <td>无</td>
+        <td>无</td>
+        <td>无</td>
+        <td class="highlight">arXiv:2602.12670</td>
+      </tr>
+      <tr>
+        <td><strong>独创特色</strong></td>
+        <td>Token 效率追踪</td>
+        <td>HMAC 签名防篡改</td>
+        <td>双轨评分体系</td>
+        <td>平台 bug 发现</td>
+        <td class="highlight">三条件 Skills 增益评估</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="section-title">Scoring System Comparison</h3>
+  <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+    <div class="card">
+      <div class="card-title" style="color:var(--accent)">PinchBench — Auto + LLM</div>
+      <ul class="feature-list">
+        <li class="pro">每个任务有明确的 grading criteria checklist</li>
+        <li class="pro">内置 Python 评分函数（自动化检查）</li>
+        <li class="neutral">部分任务使用 LLM judge 进行语义评估</li>
+        <li class="con">LLM judge 可能引入主观偏差</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--blue)">AgentBench — 4-Layer System</div>
+      <ul class="feature-list">
+        <li class="pro">L0 (20%): 文件存在/格式/内容自动检查</li>
+        <li class="pro">L1 (35%): 工具调用次数/规划比/错误数量</li>
+        <li class="neutral">L2 (20%): 行为分析（自评）</li>
+        <li class="neutral">L3 (25%): 输出质量（自评）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--green)">Claw-Bench — Pytest Weighted</div>
+      <ul class="feature-list">
+        <li class="pro">每个任务 12-28 个 pytest checkpoint</li>
+        <li class="pro">Weight 3: 核心正确性（文件存在、值正确）</li>
+        <li class="pro">Weight 2: 标准质量（格式校验）</li>
+        <li class="pro">Weight 1: 加分严格性（无占位符、一致命名）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--orange)">TRIBE-INC — Pass/Fail</div>
+      <ul class="feature-list">
+        <li class="pro">PASS: 输出符合预期标记</li>
+        <li class="neutral">WARN + PASS: 通过但有 caveat</li>
+        <li class="con">FAIL: 未满足最低要求</li>
+        <li class="con">CRITICAL FAIL: 核心功能损坏</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--pink)">SkillsBench — Three-condition Pytest</div>
+      <ul class="feature-list">
+        <li class="pro">确定性 pytest 验证器（非 LLM judge）</li>
+        <li class="pro">Oracle solution 必须 100% 通过</li>
+        <li class="pro">三条件对比：vanilla / curated / self-gen</li>
+        <li class="pro">Normalized gain = (skills - vanilla) / (1 - vanilla)</li>
+        <li class="pro">Docker 容器隔离，每任务独立环境</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ========== TAB: PinchBench Detail ========== -->
+<div class="tab-content" id="tab-detail-pinch">
+  <div class="tldr">
+    <strong>TLDR:</strong> PinchBench 由 kilo.ai 开发，包含 23 个真实世界任务（日历/股票/博客/邮件/记忆等），是最贴近用户实际使用场景的 benchmark。评分结合自动化检查与 LLM judge。
+  </div>
+
+  <h3 class="section-title">Task Category Breakdown</h3>
+  <table class="comp-table">
+    <thead>
+      <tr><th>Category</th><th>Tasks</th><th>What's Tested</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Productivity</strong></td><td>Calendar, daily summaries</td><td>Event creation, time parsing, scheduling</td></tr>
+      <tr><td><strong>Research</strong></td><td>Stock prices, conferences, markets</td><td>Web search, data extraction, synthesis</td></tr>
+      <tr><td><strong>Writing</strong></td><td>Blog posts, emails, humanization</td><td>Content generation, tone, formatting</td></tr>
+      <tr><td><strong>Coding</strong></td><td>Weather scripts, file structures</td><td>Code generation, file operations</td></tr>
+      <tr><td><strong>Analysis</strong></td><td>Spreadsheets, PDFs, documents</td><td>Data processing, summarization</td></tr>
+      <tr><td><strong>Email</strong></td><td>Triage, search</td><td>Inbox management, filtering</td></tr>
+      <tr><td><strong>Memory</strong></td><td>Context retrieval, knowledge mgmt</td><td>Long-term memory, recall</td></tr>
+      <tr><td><strong>Skills</strong></td><td>ClawHub, skill discovery</td><td>OpenClaw ecosystem integration</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="section-title">Sample Task: Calendar Event Creation</h3>
+  <div class="sample-box">
+    <h4>task_01_calendar</h4>
+    <p><strong>Prompt:</strong> Schedule a meeting for next Tuesday at 3pm with john@example.com. Title "Project Sync", note about Q1 roadmap.</p>
+    <p style="margin-top:8px"><strong>Grading Criteria (6 checks):</strong></p>
+    <ul style="margin-top:4px;padding-left:20px;font-size:0.9em">
+      <li>ICS file created</li>
+      <li>Date = next Tuesday from execution date</li>
+      <li>Time = 15:00</li>
+      <li>Attendee john@example.com included</li>
+      <li>Summary = "Project Sync"</li>
+      <li>Description mentions Q1 roadmap</li>
+    </ul>
+    <p style="margin-top:8px;font-size:0.85em;color:var(--text-muted)">评分通过 Python 自动检查 ICS 文件内容实现。</p>
+  </div>
+
+  <h3 class="section-title">Strengths & Limitations</h3>
+  <div class="card-grid" style="grid-template-columns: 1fr 1fr;">
+    <div class="card">
+      <h4 style="color:var(--green);margin-bottom:8px">Strengths</h4>
+      <ul class="feature-list">
+        <li class="pro">任务来自真实用户场景，非人工合成</li>
+        <li class="pro">评分可验证（自动化 + LLM 双重评估）</li>
+        <li class="pro">支持 OpenRouter 统一接入任意模型</li>
+        <li class="pro">社区活跃，接受新任务贡献</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--red);margin-bottom:8px">Limitations</h4>
+      <ul class="feature-list">
+        <li class="con">任务数量偏少（23 个），领域覆盖有限</li>
+        <li class="con">部分任务依赖 LLM judge，可能引入主观性</li>
+        <li class="con">需要运行 OpenClaw 实例</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ========== TAB: AgentBench Detail ========== -->
+<div class="tab-content" id="tab-detail-agent">
+  <div class="tldr">
+    <strong>TLDR:</strong> AgentBench-OpenClaw 提供 40 个任务 + 4 层评分系统（55% 客观），结果与 Claude Code 版通用，支持跨平台对比。HMAC 签名保证结果不可篡改。
+  </div>
+
+  <h3 class="section-title">Domain Breakdown with Difficulty Distribution</h3>
+  <table class="comp-table">
+    <thead>
+      <tr><th>Domain</th><th>Tasks</th><th>Easy</th><th>Medium</th><th>Hard</th><th>Expert</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>File Creation</strong></td><td>9</td><td>2</td><td>3</td><td>4</td><td>0</td></tr>
+      <tr><td><strong>Research</strong></td><td>5</td><td>0</td><td>3</td><td>2</td><td>0</td></tr>
+      <tr><td><strong>Data Analysis</strong></td><td>5</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+      <tr><td><strong>Multi-Step</strong></td><td>5</td><td>0</td><td>1</td><td>2</td><td>2</td></tr>
+      <tr><td><strong>Memory</strong></td><td>5</td><td>0</td><td>2</td><td>1</td><td>1</td></tr>
+      <tr><td><strong>Error Handling</strong></td><td>6</td><td>1</td><td>2</td><td>3</td><td>0</td></tr>
+      <tr><td><strong>Tool Efficiency</strong></td><td>5</td><td>3</td><td>0</td><td>2</td><td>0</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="section-title">4-Layer Scoring Architecture</h3>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-label">L0: Automated Checks</div>
+      <div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--green)">20%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">L1: Metrics Analysis</div>
+      <div class="bar-track"><div class="bar-fill" style="width:35%;background:var(--blue)">35%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">L2: Behavioral Analysis</div>
+      <div class="bar-track"><div class="bar-fill" style="width:20%;background:var(--yellow)">20%</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">L3: Output Quality</div>
+      <div class="bar-track"><div class="bar-fill" style="width:25%;background:var(--accent)">25%</div></div>
+    </div>
+  </div>
+  <p style="font-size:0.85em;color:var(--text-muted)">L0 + L1 占 55%，完全客观自动评分。L2 + L3 共 45%，依赖 self-evaluation（可能有偏差，排行榜会检测异常）。</p>
+</div>
+
+<!-- ========== TAB: Claw-Bench Detail ========== -->
+<div class="tab-content" id="tab-detail-claw">
+  <div class="tldr">
+    <strong>TLDR:</strong> Claw-Bench 是规模最大的 OpenClaw benchmark — 313 个任务，32 个领域，4 级难度，全部 pytest 自动验证。每个任务 12-28 个加权检查点，零主观评分。
+  </div>
+
+  <h3 class="section-title">Difficulty Distribution</h3>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-label">L1 (Baseline)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:14.4%;background:var(--green)">45</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">L2 (Standard)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:40.6%;background:var(--blue)">127</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">L3 (Advanced)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:35.5%;background:var(--yellow)">111</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">L4 (Expert)</div>
+      <div class="bar-track"><div class="bar-fill" style="width:9.6%;background:var(--red)">30</div></div>
+    </div>
+  </div>
+
+  <h3 class="section-title">Domain × Task Count Matrix</h3>
+  <table class="comp-table">
+    <thead>
+      <tr><th>Domain</th><th>Tasks</th><th>L1</th><th>L2</th><th>L3</th><th>L4</th><th>Dimension</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>File Operations</td><td>15</td><td>6</td><td>5</td><td>3</td><td>1</td><td><span class="tag tag-blue">efficiency</span></td></tr>
+      <tr><td>Data Analysis</td><td>17</td><td>3</td><td>6</td><td>6</td><td>2</td><td><span class="tag tag-blue">efficiency</span></td></tr>
+      <tr><td>Workflow Automation</td><td>17</td><td>2</td><td>8</td><td>6</td><td>1</td><td><span class="tag tag-blue">efficiency</span></td></tr>
+      <tr><td>Security</td><td>15</td><td>3</td><td>5</td><td>4</td><td>3</td><td><span class="tag tag-pink">security</span></td></tr>
+      <tr><td>System Admin</td><td>15</td><td>3</td><td>6</td><td>5</td><td>1</td><td><span class="tag tag-pink">security</span></td></tr>
+      <tr><td>Code Assistance</td><td>15</td><td>3</td><td>6</td><td>4</td><td>2</td><td><span class="tag tag-purple">skills</span></td></tr>
+      <tr><td>Cross-Domain</td><td>17</td><td>0</td><td>0</td><td>10</td><td>7</td><td><span class="tag tag-purple">skills</span></td></tr>
+      <tr><td>Multimodal</td><td>15</td><td>1</td><td>6</td><td>7</td><td>1</td><td><span class="tag tag-purple">skills</span></td></tr>
+      <tr><td>Email</td><td>18</td><td>3</td><td>8</td><td>6</td><td>1</td><td><span class="tag tag-cyan">ux</span></td></tr>
+      <tr><td>Communication</td><td>15</td><td>3</td><td>5</td><td>6</td><td>1</td><td><span class="tag tag-cyan">ux</span></td></tr>
+      <tr><td>Calendar</td><td>15</td><td>5</td><td>5</td><td>3</td><td>2</td><td><span class="tag tag-cyan">ux</span></td></tr>
+      <tr><td>Document Editing</td><td>18</td><td>4</td><td>9</td><td>4</td><td>1</td><td><span class="tag tag-cyan">ux</span></td></tr>
+      <tr><td>Memory</td><td>15</td><td>1</td><td>6</td><td>7</td><td>1</td><td><span class="tag tag-cyan">ux</span></td></tr>
+      <tr><td>Web Browsing</td><td>15</td><td>3</td><td>6</td><td>5</td><td>1</td><td><span class="tag tag-cyan">ux</span></td></tr>
+      <tr><td>+ 18 more domains...</td><td>56</td><td colspan="5" style="color:var(--text-muted)">Database, Real Tools, Debugging, Math Reasoning, Planning, Academic Research, Accounting, Bioinformatics, Clinical Data, Content Analysis, Contract Review, etc.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ========== TAB: TRIBE-INC Detail ========== -->
+<div class="tab-content" id="tab-detail-tribe">
+  <div class="tldr">
+    <strong>TLDR:</strong> TRIBE-INC 是最实战的 benchmark — 33 个测试 + 已有 9 个模型的横评数据（含价格对比）。发现了 Kimi K2.5 在 AWS Bedrock 上的 40% timeout bug。
+  </div>
+
+  <h3 class="section-title">Model Benchmark Scores (2026-02-10)</h3>
+  <table class="comp-table">
+    <thead>
+      <tr><th>Rank</th><th>Model</th><th>Pass Rate</th><th>Input $/1M</th><th>Output $/1M</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr style="background:rgba(34,197,94,0.1)"><td>🥇</td><td><strong>Kimi K2.5 (OpenRouter)</strong></td><td class="highlight">~100%</td><td>$0.60</td><td>$3.00</td><td>Works on OpenRouter, not Bedrock</td></tr>
+      <tr style="background:rgba(34,197,94,0.05)"><td>🥈</td><td><strong>Mistral Large 3</strong></td><td style="color:var(--green)">90.6%</td><td>$0.50</td><td>$1.50</td><td>Best value</td></tr>
+      <tr><td>🥉</td><td>Amazon Nova Lite</td><td>33.3%</td><td>$0.06</td><td>$0.24</td><td>Ultra-cheap, limited</td></tr>
+      <tr><td>4</td><td>Llama 3.3 70B</td><td>25.0%</td><td>$0.72</td><td>$0.72</td><td>Requires inference profile</td></tr>
+      <tr><td>5</td><td>Amazon Nova Pro</td><td>25.0%</td><td>$0.80</td><td>$3.20</td><td>Bedrock API issues</td></tr>
+      <tr><td>6</td><td>DeepSeek R1</td><td>25.0%</td><td>$1.35</td><td>$5.40</td><td>Requires inference profile</td></tr>
+      <tr style="background:rgba(239,68,68,0.1)"><td>7</td><td>Kimi K2.5 (Bedrock)</td><td style="color:var(--red)">9.1%</td><td>$0.60</td><td>$2.50</td><td>40% timeout bug (proven)</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="section-title">Test Categories</h3>
+  <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+    <div class="card">
+      <h4 style="color:var(--green)">Core Agent Tests (13)</h4>
+      <p style="font-size:0.85em;color:var(--text-muted)">Basic Chat, Tool Use Response (CRITICAL), Web Fetch JSON/HTML, Data Extraction, Multi-step Reasoning, Instruction Following, Tag Stripping, Error Handling, Consecutive Tools, Skill Installation, Muse Extension</p>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--blue)">Extended Tool Tests (8)</h4>
+      <p style="font-size:0.85em;color:var(--text-muted)">Shell Execution, Web Search, Browser Automation, File Operations, Sub-agent Communication, Background Process, Image Analysis, Session Status</p>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--accent)">Use Case Tests (7)</h4>
+      <p style="font-size:0.85em;color:var(--text-muted)">Multi-turn Context, Research Task, Code Generation, Memory Operations, Skill Workflow, Multi-tool Chain, Response Quality</p>
+    </div>
+    <div class="card">
+      <h4 style="color:var(--orange)">Robustness + Stress (5)</h4>
+      <p style="font-size:0.85em;color:var(--text-muted)">Error Recovery, Complex Instructions, Adversarial Input, Long Context, JSON Output</p>
+    </div>
+  </div>
+
+  <h3 class="section-title">Key Finding: Bedrock vs OpenRouter</h3>
+  <div class="sample-box">
+    <h4>Kimi K2.5 Bedrock Timeout Bug (Proven)</h4>
+    <p style="font-size:0.9em">10 次相同请求测试：6 次成功，4 次超时（60% 成功率）。多次 tool use 成功率呈指数衰减：60%^n。</p>
+    <p style="font-size:0.9em;margin-top:8px"><strong>原因：</strong>AWS Bedrock Converse API 在处理 tool results 时出现间歇性 stream 挂起，不是模型 bug。</p>
+    <p style="font-size:0.9em;margin-top:8px"><strong>解决方案：</strong>使用 OpenRouter 替代 Bedrock。</p>
+  </div>
+</div>
+
+<!-- ========== TAB: SkillBench Detail ========== -->
+<div class="tab-content" id="tab-detail-skillbench">
+  <div class="tldr">
+    <strong>TLDR:</strong> SkillBench (milesgoscha/skillbench) 是 SWE-bench 风格的 Agent Skills 增量测量框架。22 个任务，5 维 profiling（reliability/efficiency/robustness/composability/failure legibility）。通过 baseline vs augmented 严格对比量化单个 Skill 的增量效果。目前处于 Phase 0 早期阶段。
+  </div>
+
+  <h3 class="section-title">5 Dimensional Profiling</h3>
+  <div class="card-grid" style="grid-template-columns: repeat(5, 1fr);">
+    <div class="card" style="text-align:center;padding:16px">
+      <div style="font-size:1.5em;font-weight:800;color:var(--green)">Reliability</div>
+      <div style="font-size:0.8em;color:var(--text-muted);margin-top:4px">成功率 delta<br>(baseline vs augmented)</div>
+    </div>
+    <div class="card" style="text-align:center;padding:16px">
+      <div style="font-size:1.5em;font-weight:800;color:var(--blue)">Efficiency</div>
+      <div style="font-size:0.8em;color:var(--text-muted);margin-top:4px">avg runtime<br>token cost, tool calls</div>
+    </div>
+    <div class="card" style="text-align:center;padding:16px">
+      <div style="font-size:1.5em;font-weight:800;color:var(--yellow)">Robustness</div>
+      <div style="font-size:0.8em;color:var(--text-muted);margin-top:4px">perturbation injection<br>tool failure handling</div>
+    </div>
+    <div class="card" style="text-align:center;padding:16px">
+      <div style="font-size:1.5em;font-weight:800;color:var(--pink)">Composability</div>
+      <div style="font-size:0.8em;color:var(--text-muted);margin-top:4px">multi-skill composition<br>state leakage detection</div>
+    </div>
+    <div class="card" style="text-align:center;padding:16px">
+      <div style="font-size:1.5em;font-weight:800;color:var(--orange)">Failure Legibility</div>
+      <div style="font-size:0.8em;color:var(--text-muted);margin-top:4px">error clarity<br>silent vs explicit</div>
+    </div>
+  </div>
+
+  <h3 class="section-title">Task Packs</h3>
+  <div class="card">
+    <table class="comp-table">
+      <thead><tr><th>Pack</th><th>Tasks</th><th>Type</th></tr></thead>
+      <tbody>
+        <tr><td>coding/swe-lite</td><td>10</td><td>Bug fixes, refactors (SWE-bench style)</td></tr>
+        <tr><td>coding/tool-use</td><td>10</td><td>Tool usage patterns</td></tr>
+        <tr><td>docs/text-lite</td><td>2</td><td>PDF forms, text editing</td></tr>
+        <tr><td colspan="3" style="color:var(--text-muted)">Planned: data/sql-lite, ops/runbook, research/retrieval, decision/tradeoffs</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="card-title" style="color:var(--yellow)">Links</div>
+    <p><a class="link" href="https://github.com/milesgoscha/skillbench" target="_blank">GitHub Repository</a></p>
+  </div>
+</div>
+
+<!-- ========== TAB: SciSkillBench Detail ========== -->
+<div class="tab-content" id="tab-detail-sciskill">
+  <div class="tldr">
+    <strong>TLDR:</strong> SciSkillBench (arXiv:2512.23880) 是 CASCADE 框架的配套 benchmark，包含 116 个材料科学 + 化学研究任务。CASCADE (4-agent 多智能体架构) + GPT-5 达到 93.3% 成功率，无 evolution 机制仅 35.4%（+57.9pp 增益）。
+  </div>
+
+  <h3 class="section-title">核心发现 — Skill Evolution Impact</h3>
+  <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2.5em;font-weight:800;color:var(--green)">93.3%</div>
+      <div style="color:var(--text-muted);margin-top:4px">CASCADE + GPT-5</div>
+      <div style="font-size:0.85em;margin-top:8px">4-agent 架构 + skill evolution</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2.5em;font-weight:800;color:var(--red)">35.4%</div>
+      <div style="color:var(--text-muted);margin-top:4px">Without Evolution</div>
+      <div style="font-size:0.85em;margin-top:8px">无 skill 累积和进化</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2.5em;font-weight:800;color:var(--cyan)">+57.9pp</div>
+      <div style="color:var(--text-muted);margin-top:4px">Evolution Gain</div>
+      <div style="font-size:0.85em;margin-top:8px">自进化机制的增益</div>
+    </div>
+  </div>
+
+  <h3 class="section-title">Task Distribution (116 tasks)</h3>
+  <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+    <div class="card">
+      <div class="card-title" style="color:var(--cyan)">Data-oriented (76 tasks)</div>
+      <ul class="feature-list">
+        <li class="pro">Data Retrieval (22): 从数据库/API 获取材料数据</li>
+        <li class="pro">Data Analysis (24): 统计分析、结构特征提取</li>
+        <li class="pro">Data Management (4): 数据库操作、格式转换</li>
+        <li class="pro">Data Processing (26): 数据清洗、特征工程</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--pink)">Computation-oriented (40 tasks)</div>
+      <ul class="feature-list">
+        <li class="pro">Simulation (32): DFT, MD, 机器学习力场 (MACE-OFF 等)</li>
+        <li class="pro">Specialized Toolkits (8): pymatgen, ASE, LAMMPS 等</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="section-title">CASCADE 4-Agent Architecture</h3>
+  <div class="card" style="font-family:monospace;font-size:0.85em;white-space:pre-wrap;background:var(--bg);border:1px solid var(--border)">
+  1. Solution Researcher  → Web search + code extraction
+  2. Code Agent           → Code execution + verification
+  3. Debug Agent (x3)     → 3 parallel debugging instances
+  4. Output Processor     → Result selection + formatting
+
+  Meta-skills:
+  - Continuous Learning: web search, code extraction, memory
+  - Self-reflection: introspection, knowledge graph exploration</div>
+
+  <h3 class="section-title">Sample Task</h3>
+  <div class="card" style="font-family:monospace;font-size:0.85em;white-space:pre-wrap;background:var(--bg);border:1px solid var(--border)">
+  Task: MACE-OFF Potential Energy
+  Domain: Simulation (materials science)
+
+  Query: Download the test dataset of the MACE-OFF paper,
+  load the mace_off small model, compute potential energy
+  of C19H22Cl2N4O2S.
+
+  Expected: -66021.511481 eV (tolerance: ±0.01 eV)
+  Verification: Structured output numerical match</div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="card-title" style="color:var(--cyan)">Links</div>
+    <p><a class="link" href="https://github.com/CederGroupHub/CASCADE" target="_blank">GitHub Repository</a> · <a class="link" href="https://arxiv.org/abs/2512.23880" target="_blank">arXiv Paper</a></p>
+  </div>
+</div>
+
+<!-- ========== TAB: SkillsBench Detail ========== -->
+<div class="tab-content" id="tab-detail-skills">
+  <div class="tldr">
+    <strong>TLDR:</strong> SkillsBench (arXiv:2602.12670) 是首个系统性评估 Agent Skills 有效性的基准。87 个任务覆盖 60+ 个真实世界领域，三条件对比设计（vanilla / curated / self-gen Skills）。核心发现：Curated Skills +16.2pp，Self-generated Skills 无增益。
+  </div>
+
+  <h3 class="section-title">核心发现 — Skills Effectiveness</h3>
+  <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2.5em;font-weight:800;color:var(--green)">+16.2pp</div>
+      <div style="color:var(--text-muted);margin-top:4px">Curated Skills Avg Gain</div>
+      <div style="font-size:0.85em;margin-top:8px">Healthcare: +51.9pp (max)<br>SWE: +4.5pp (min)</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2.5em;font-weight:800;color:var(--red)">~0pp</div>
+      <div style="color:var(--text-muted);margin-top:4px">Self-gen Skills Avg Gain</div>
+      <div style="font-size:0.85em;margin-top:8px">模型无法可靠编写<br>自己受益的程序性知识</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2.5em;font-weight:800;color:var(--yellow)">16/84</div>
+      <div style="color:var(--text-muted);margin-top:4px">Negative Delta Tasks</div>
+      <div style="font-size:0.85em;margin-top:8px">19% 的任务使用 Skills<br>后反而性能下降</div>
+    </div>
+  </div>
+
+  <h3 class="section-title">Difficulty Distribution</h3>
+  <div class="bar-chart">
+    <div class="bar-row">
+      <div class="bar-label">Easy</div>
+      <div class="bar-track"><div class="bar-fill" style="width:12.8%;background:var(--green)">6</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Medium</div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--yellow)">47</div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Hard</div>
+      <div class="bar-track"><div class="bar-fill" style="width:70.2%;background:var(--red)">33</div></div>
+    </div>
+  </div>
+
+  <h3 class="section-title">Top Domain Categories</h3>
+  <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+    <div class="card">
+      <div class="card-title" style="color:var(--pink)">High-count Domains</div>
+      <ul class="feature-list">
+        <li class="pro">Security (4): CVE 修复、入侵检测、fuzzing、Suricata 规则</li>
+        <li class="pro">Research (4): 引用验证、PDDL 规划、JAX 计算、VirtualHome agent</li>
+        <li class="pro">Financial Analysis (4): SEC 报告、供需冲击、风险储备、GDP 加权</li>
+        <li class="pro">Manufacturing (3): 编码标准化、设备维护、柔性作业车间调度</li>
+        <li class="pro">Energy (3): 最优潮流、市场定价、电网调度</li>
+        <li class="pro">Control Systems (3): 自适应巡航、HVAC、MPC 控制器</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--cyan)">Unique Domain Highlights</div>
+      <ul class="feature-list">
+        <li class="neutral">Seismology (2): 地震波相位关联、相位拾取</li>
+        <li class="neutral">Astronomy (2): 系外行星周期检测、引力波探测</li>
+        <li class="neutral">3D Graphics (2): Three.js 结构解析、OBJ 转换</li>
+        <li class="neutral">Chemistry: 相似化合物 Top-K 搜索</li>
+        <li class="neutral">Quantum Simulation: 量子数值模拟</li>
+        <li class="neutral">Formal Methods: Lean4 证明</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="section-title">三条件评估设计</h3>
+  <div class="card">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>条件</th>
+          <th>描述</th>
+          <th>目的</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Vanilla</strong></td>
+          <td>Agent 仅收到 instruction.md，无 Skills 辅助</td>
+          <td>建立 baseline 性能</td>
+        </tr>
+        <tr>
+          <td><strong>Curated Skills</strong></td>
+          <td>Agent 获得专家精心制作的 Skills 包（2-3 modules）</td>
+          <td>量化最佳 Skills 的增益上限</td>
+        </tr>
+        <tr>
+          <td><strong>Self-generated Skills</strong></td>
+          <td>Agent 自己生成 Skills 后使用</td>
+          <td>测试 agent 自主知识创建能力</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="section-title">Sample Task: Citation Check</h3>
+  <div class="card" style="font-family:monospace;font-size:0.85em;white-space:pre-wrap;background:var(--bg);border:1px solid var(--border)">instruction.md:
+  验证 BibTeX 文件 /root/test.bib 中的引用真实性。
+  识别虚假/幻觉引用，输出到 /root/answer.json:
+  {"fake_citations": ["Title 1", "Title 2", ...]}
+
+environment/skills/:
+  Crossref API 查询技巧、Semantic Scholar API 指南、
+  BibTeX 解析方法、学术引用验证最佳实践
+
+solution/solve.sh:
+  使用 Python 脚本调用 Crossref/S2 API 逐条验证
+  Oracle solution 必须 100% 通过所有 pytest 测试
+
+tests/test_outputs.py:
+  确定性验证 answer.json 中 fake_citations 的正确性</div>
+
+  <h3 class="section-title">Strengths & Limitations</h3>
+  <div class="card-grid" style="grid-template-columns: repeat(2, 1fr);">
+    <div class="card">
+      <div class="card-title" style="color:var(--green)">Strengths</div>
+      <ul class="feature-list">
+        <li class="pro">首个系统性评估 Agent Skills 有效性的基准</li>
+        <li class="pro">领域多样性最高（60+ 真实世界领域）</li>
+        <li class="pro">三条件对比设计可精确量化 Skills 增益</li>
+        <li class="pro">确定性 pytest 验证器，100% 可复现</li>
+        <li class="pro">有对应学术论文 (arXiv:2602.12670)</li>
+        <li class="pro">Docker 容器隔离，每任务独立环境</li>
+        <li class="pro">7,308 条轨迹的大规模评估</li>
+        <li class="pro">47,150 unique Skills 数据库</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--red)">Limitations</div>
+      <ul class="feature-list">
+        <li class="con">需要 Docker 基础设施，部署门槛高</li>
+        <li class="con">Category 标签不统一（大小写混乱）</li>
+        <li class="con">不支持 OpenClaw 等通用 agent 框架</li>
+        <li class="con">无公开排行榜</li>
+        <li class="con">repo 体积大（2.9GB）</li>
+        <li class="con">缺乏难度加权评分</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="card-title" style="color:var(--pink)">Links</div>
+    <p><a class="link" href="https://github.com/benchflow-ai/skillsbench" target="_blank">GitHub Repository</a> · <a class="link" href="https://arxiv.org/abs/2602.12670" target="_blank">arXiv Paper</a> · <a class="link" href="https://www.skillsbench.ai" target="_blank">Official Website</a></p>
+  </div>
+</div>
+
+<!-- ========== TAB: Papers ========== -->
+<div class="tab-content" id="tab-papers">
+  <div class="tldr">
+    <strong>TLDR:</strong> OpenClaw 生态相关的学术研究主要集中在安全评估和多 agent 协调。SkillsBench (arXiv:2602.12670) 是唯一有配套学术论文的 benchmark，发现 curated skills +16.2pp 但 self-gen skills 无增益。
+  </div>
+
+  <div class="paper-card">
+    <div class="paper-title">A Trajectory-Based Safety Audit of Clawdbot (OpenClaw)</div>
+    <div class="paper-meta">2026 · 4 citations · Computer Science</div>
+    <div class="paper-abstract">34 个安全场景的轨迹评估，在模糊意图和 jailbreak 场景下发现安全漏洞。使用 ATBench 和 LPS-Bench 适配的测试用例 + 自动轨迹评判 (AgentDoG-Qwen3-4B)。</div>
+  </div>
+  <div class="paper-card">
+    <div class="paper-title">From Assistant to Double Agent: Formalizing and Benchmarking Attacks on OpenClaw (PASB)</div>
+    <div class="paper-meta">2026 · 2 citations · Computer Science</div>
+    <div class="paper-abstract">提出 Personalized Agent Security Bench (PASB)，针对个性化 agent 的端到端安全评估框架。发现 OpenClaw 在 user prompt 处理、tool usage、memory retrieval 阶段均有安全漏洞。</div>
+  </div>
+  <div class="paper-card">
+    <div class="paper-title">Agent Privilege Separation in OpenClaw: A Structural Defense Against Prompt Injection</div>
+    <div class="paper-meta">2026 · 0 citations · Computer Science</div>
+    <div class="paper-abstract">提出 agent 隔离 + JSON 格式化的结构性防御方案。在 649 次成功攻击中实现 0% ASR（全隔离 pipeline）。Agent isolation alone: 0.31% ASR。</div>
+  </div>
+  <div class="paper-card">
+    <div class="paper-title">OpenClaw PRISM: A Zero-Fork, Defense-in-Depth Runtime Security Layer</div>
+    <div class="paper-meta">2026 · 0 citations · Computer Science</div>
+    <div class="paper-abstract">OpenClaw 运行时安全层，10 个生命周期 hook（message ingress, tool execution, sub-agent spawning 等），混合启发式 + LLM 扫描 pipeline。</div>
+  </div>
+</div>
+
+<!-- ========== TAB: Recommendation ========== -->
+<div class="tab-content" id="tab-recommend">
+  <div class="tldr">
+    <strong>TLDR:</strong> 根据你的需求选择 benchmark — 快速验证用 TRIBE-INC，能力摸底用 PinchBench，正式横评用 Claw-Bench，跨框架对比用 AgentBench，Skills 增益研究用 SkillsBench。
+  </div>
+
+  <h3 class="section-title">选型决策矩阵</h3>
+  <table class="comp-table">
+    <thead>
+      <tr><th>使用场景</th><th>推荐</th><th>原因</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>快速验证部署质量</strong></td>
+        <td style="color:var(--orange);font-weight:700">TRIBE-INC</td>
+        <td>33 个测试 + Shell 脚本，几分钟搞定。已有模型横评数据可直接对比。</td>
+      </tr>
+      <tr>
+        <td><strong>模型选型决策</strong></td>
+        <td style="color:var(--orange);font-weight:700">TRIBE-INC</td>
+        <td>内置 9 个模型的通过率 + 价格数据，直接做 cost-performance 分析。</td>
+      </tr>
+      <tr>
+        <td><strong>真实用户场景摸底</strong></td>
+        <td style="color:var(--accent);font-weight:700">PinchBench</td>
+        <td>23 个来自真实用户的任务，最能反映 agent 的实际可用性。</td>
+      </tr>
+      <tr>
+        <td><strong>跨框架横向对比</strong></td>
+        <td style="color:var(--blue);font-weight:700">AgentBench</td>
+        <td>OpenClaw + Claude Code 同一排行榜，HMAC 签名保证可信度。</td>
+      </tr>
+      <tr>
+        <td><strong>正式 Benchmark 论文</strong></td>
+        <td style="color:var(--green);font-weight:700">Claw-Bench</td>
+        <td>313 个任务 + 32 领域 + 全自动 pytest，数据量和严谨度最高。</td>
+      </tr>
+      <tr>
+        <td><strong>全面能力评估</strong></td>
+        <td style="color:var(--green);font-weight:700">Claw-Bench</td>
+        <td>覆盖效率/安全/技能/UX 四大维度，L1-L4 四级难度。</td>
+      </tr>
+      <tr>
+        <td><strong>快速迭代测试</strong></td>
+        <td style="color:var(--blue);font-weight:700">AgentBench (--fast)</td>
+        <td>Fast profile 19 个 Easy+Medium 任务，适合 CI/CD 流水线。</td>
+      </tr>
+      <tr>
+        <td><strong>Skills 增益研究</strong></td>
+        <td style="color:var(--pink);font-weight:700">SkillsBench</td>
+        <td>唯一支持三条件对比（vanilla/curated/self-gen），量化 Skills 效果。有学术论文。</td>
+      </tr>
+      <tr>
+        <td><strong>跨领域泛化评估</strong></td>
+        <td style="color:var(--pink);font-weight:700">SkillsBench</td>
+        <td>60+ 个真实世界领域（安全、金融、天文、制造等），领域多样性最高。</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="section-title">推荐优先级</h3>
+  <div style="font-size:1.1em;padding:16px;background:var(--card-bg);border-radius:12px;border:1px solid var(--border)">
+    <p style="margin-bottom:12px"><strong>如果你要评估模型能力 →</strong> <span style="color:var(--accent);font-weight:700">PinchBench</span> (真实任务) + <span style="color:var(--green);font-weight:700">Claw-Bench</span> (全面覆盖)</p>
+    <p style="margin-bottom:12px"><strong>如果你要做框架横评 →</strong> <span style="color:var(--blue);font-weight:700">AgentBench</span> (跨平台可比) + <span style="color:var(--green);font-weight:700">Claw-Bench</span> (规模大)</p>
+    <p style="margin-bottom:12px"><strong>如果你要快速验证部署 →</strong> <span style="color:var(--orange);font-weight:700">TRIBE-INC</span> (轻量 + 模型对比)</p>
+    <p><strong>如果你要研究 Skills 效果 →</strong> <span style="color:var(--pink);font-weight:700">SkillsBench</span> (三条件对比 + 学术论文)</p>
+  </div>
+</div>
+
+</div>
+
+<script>
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+<footer style="text-align:center;padding:32px;color:var(--text-muted);font-size:0.8em;border-top:1px solid var(--border);margin-top:48px">
+  Generated by Claude Code · exp89_claw_benchmarks · 2026-03-20<br>
+  Data sources: <a class="link" href="https://github.com/pinchbench/skill">PinchBench</a> · <a class="link" href="https://github.com/agentbench/agentbench-openclaw">AgentBench</a> · <a class="link" href="https://github.com/claw-bench/claw-bench">Claw-Bench</a> · <a class="link" href="https://github.com/TRIBE-INC/claw-bench">TRIBE-INC</a> · <a class="link" href="https://github.com/benchflow-ai/skillsbench">SkillsBench</a> · <a class="link" href="https://github.com/milesgoscha/skillbench">SkillBench</a> · <a class="link" href="https://github.com/CederGroupHub/CASCADE">SciSkillBench</a>
+</footer>
+
+</body>
+</html>
