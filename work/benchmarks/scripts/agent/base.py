@@ -1,0 +1,99 @@
+"""
+统一 Agent 接口定义。
+
+所有 Agent 适配器（nanobot、openclaw 等）都需实现此接口。
+"""
+
+from abc import ABC, abstractmethod
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+
+class AgentResult:
+    """Agent 执行结果"""
+
+    def __init__(
+        self,
+        status: str,
+        content: str = "",
+        transcript: List[Dict[str, Any]] | None = None,
+        usage: Dict[str, Any] | None = None,
+        workspace: str = "",
+        execution_time: float = 0.0,
+        error: str = "",
+    ):
+        self.status = status  # success, error, timeout
+        self.content = content
+        self.transcript = transcript or []
+        self.usage = usage or {}
+        self.workspace = workspace
+        self.execution_time = execution_time
+        self.error = error
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "status": self.status,
+            "content": self.content,
+            "transcript": self.transcript,
+            "usage": self.usage,
+            "workspace": self.workspace,
+            "execution_time": self.execution_time,
+            "error": self.error,
+        }
+
+
+class BaseAgent(ABC):
+    """Agent 抽象基类"""
+
+    @abstractmethod
+    def __init__(
+        self,
+        model: str,
+        api_url: str,
+        api_key: str,
+        workspace: Path,
+        timeout: int = 300,
+        **kwargs,
+    ):
+        """初始化 Agent
+
+        Args:
+            model: 模型 ID (如 anthropic/claude-sonnet-4)
+            api_url: API 基础 URL
+            api_key: API 密钥
+            workspace: 工作目录
+            timeout: 超时时间（秒）
+        """
+        pass
+
+    @abstractmethod
+    def execute(self, prompt: str, session_id: str | None = None) -> AgentResult:
+        """执行单个 prompt
+
+        Args:
+            prompt: 用户输入
+            session_id: 会话 ID（用于多轮对话）
+
+        Returns:
+            AgentResult: 执行结果
+        """
+        pass
+
+    @abstractmethod
+    def execute_multi(
+        self, prompts: List[str], session_id: str | None = None
+    ) -> List[AgentResult]:
+        """执行多轮对话
+
+        Args:
+            prompts: 多个 prompt 列表
+            session_id: 会话 ID
+
+        Returns:
+            List[AgentResult]: 每个 prompt 的执行结果
+        """
+        pass
+
+    def cleanup(self) -> None:
+        """清理资源（如会话文件）"""
+        pass

@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.eggs/
+
+# Results
+results/
+
+# Benchmark repositories (cloned separately)
+agentbench-openclaw/
+claw-bench-official/
+claw-bench-tribe/
+nanobot/
+pinchbench/
+scikillbench/
+skillbench/
+skillsbench/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
