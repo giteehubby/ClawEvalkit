@@ -7,6 +7,7 @@ __pycache__/
 
 # Results
 results/
+!results/dashboard.html
 
 # Benchmark repositories (cloned separately)
 agentbench-openclaw/

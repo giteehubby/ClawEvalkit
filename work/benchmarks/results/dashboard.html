@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PinchBench 评估报告</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0f0f14;
+            --bg-secondary: #1a1a24;
+            --bg-tertiary: #252532;
+            --text-primary: #e8e8ec;
+            --text-secondary: #9999a8;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border: #2a2a3a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .stat-value.success { color: var(--success); }
+        .stat-value.warning { color: var(--warning); }
+        .stat-value.danger { color: var(--danger); }
+
+        .stat-detail {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-title::before {
+            content: '';
+            width: 4px;
+            height: 1.1rem;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .category-name {
+            width: 180px;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .category-bar {
+            flex: 1;
+            height: 8px;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .category-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .category-fill.high { background: var(--success); }
+        .category-fill.medium { background: var(--warning); }
+        .category-fill.low { background: var(--danger); }
+
+        .category-score {
+            width: 60px;
+            text-align: right;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .category-count {
+            width: 40px;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            text-align: right;
+        }
+
+        .task-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .task-table th,
+        .task-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .task-table th {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .task-table tbody tr:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .task-id {
+            font-family: 'SF Mono', Monaco, Consolas, monospace;
+            font-size: 0.85rem;
+            color: var(--accent);
+        }
+
+        .score-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .score-badge.high {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+        }
+
+        .score-badge.medium {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+
+        .score-badge.low {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+
+        .category-tag {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            background: var(--bg-tertiary);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .scrollable {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .scrollable::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .scrollable::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+            border-radius: 3px;
+        }
+
+        .scrollable::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>PinchBench 评估报告</h1>
+            <p class="subtitle">NanoBot Agent (gpt-4o-mini) | 2026-03-22</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">总分</div>
+                <div class="stat-value warning">28.26%</div>
+                <div class="stat-detail">6.5 / 23 任务</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">完成任务</div>
+                <div class="stat-value success">6</div>
+                <div class="stat-detail">完全通过 (>70%)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">部分完成</div>
+                <div class="stat-value warning">6</div>
+                <div class="stat-detail">中等分数 (30-70%)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">失败</div>
+                <div class="stat-value danger">11</div>
+                <div class="stat-detail">未通过 (<30%)</div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <h2 class="card-title">类别分布</h2>
+                <div class="chart-container">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+            <div class="card">
+                <h2 class="card-title">类别得分详情</h2>
+                <div class="category-list" id="categoryList"></div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 1.5rem;">
+            <h2 class="card-title">任务详细得分</h2>
+            <div class="scrollable">
+                <table class="task-table">
+                    <thead>
+                        <tr>
+                            <th>任务ID</th>
+                            <th>任务名称</th>
+                            <th>类别</th>
+                            <th>得分</th>
+                        </tr>
+                    </thead>
+                    <tbody id="taskTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer>
+            由 NanoBot Evaluation Framework 生成 | <a href="https://github.com/linjh1118/AwesomeSkill" style="color: var(--accent);">AwesomeSkill</a>
+        </footer>
+    </div>
+
+    <script>
+        const data = {
+            "benchmark": "pinchbench",
+            "timestamp": 1774188246.990478,
+            "overall_score": 28.26,
+            "total_tasks": 23,
+            "category_scores": {
+                "BASIC": { "score": 100.0, "count": 1 },
+                "CALENDAR": { "score": 0.0, "count": 1 },
+                "RESEARCH": { "score": 16.67, "count": 3 },
+                "WRITING": { "score": 50.0, "count": 2 },
+                "CODING": { "score": 0.0, "count": 1 },
+                "COMPREHENSION": { "score": 35.0, "count": 4 },
+                "CONTEXT": { "score": 0.0, "count": 1 },
+                "FILE_OPS": { "score": 0.0, "count": 3 },
+                "COMPLEX": { "score": 70.0, "count": 1 },
+                "CREATIVE": { "score": 50.0, "count": 1 },
+                "CONTENT_TRANSFORMATION": { "score": 70.0, "count": 1 },
+                "SYNTHESIS": { "score": 70.0, "count": 1 },
+                "ORGANIZATION": { "score": 0.0, "count": 1 },
+                "DATA_ANALYSIS": { "score": 0.0, "count": 1 },
+                "MEMORY": { "score": 0.0, "count": 1 }
+            },
+            "task_scores": {
+                "task_00_sanity": { "task_name": "Sanity Check", "category": "basic", "mean": 1.0 },
+                "task_01_calendar": { "task_name": "Calendar Event Creation", "category": "calendar", "mean": 0.0 },
+                "task_02_stock": { "task_name": "Stock Price Research", "category": "research", "mean": 0.0 },
+                "task_03_blog": { "task_name": "Blog Post Writing", "category": "writing", "mean": 0.5 },
+                "task_04_weather": { "task_name": "Weather Script Creation", "category": "coding", "mean": 0.0 },
+                "task_05_summary": { "task_name": "Document Summarization", "category": "comprehension", "mean": 0.7 },
+                "task_06_events": { "task_name": "Tech Conference Research", "category": "research", "mean": 0.5 },
+                "task_07_email": { "task_name": "Professional Email Drafting", "category": "writing", "mean": 0.5 },
+                "task_08_memory": { "task_name": "Memory Retrieval from Context", "category": "context", "mean": 0.0 },
+                "task_09_files": { "task_name": "File Structure Creation", "category": "file_ops", "mean": 0.0 },
+                "task_10_workflow": { "task_name": "Multi-step API Workflow", "category": "complex", "mean": 0.7 },
+                "task_11_clawdhub": { "task_name": "Create Project Structure", "category": "file_ops", "mean": 0.0 },
+                "task_12_skill_search": { "task_name": "Search and Replace in Files", "category": "file_ops", "mean": 0.0 },
+                "task_13_image_gen": { "task_name": "AI Image Generation", "category": "creative", "mean": 0.5 },
+                "task_14_humanizer": { "task_name": "Humanize AI-Generated Blog", "category": "content_transformation", "mean": 0.7 },
+                "task_15_daily_summary": { "task_name": "Daily Research Summary Generation", "category": "synthesis", "mean": 0.7 },
+                "task_16_email_triage": { "task_name": "Email Inbox Triage", "category": "organization", "mean": 0.0 },
+                "task_17_email_search": { "task_name": "Email Search and Summarization", "category": "comprehension", "mean": 0.0 },
+                "task_18_market_research": { "task_name": "Competitive Market Research", "category": "research", "mean": 0.0 },
+                "task_19_spreadsheet_summary": { "task_name": "CSV and Excel Data Summarization", "category": "data_analysis", "mean": 0.0 },
+                "task_20_eli5_pdf_summary": { "task_name": "ELI5 PDF Summarization", "category": "comprehension", "mean": 0.7 },
+                "task_21_openclaw_comprehension": { "task_name": "OpenClaw Report Comprehension", "category": "comprehension", "mean": 0.0 },
+                "task_22_second_brain": { "task_name": "Second Brain Knowledge Persistence", "category": "memory", "mean": 0.0 }
+            }
+        };
+
+        // Render category chart
+        const categories = Object.entries(data.category_scores).sort((a, b) => b[1].score - a[1].score);
+        const ctx = document.getElementById('categoryChart').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: categories.map(([name]) => name.replace('_', ' ')),
+                datasets: [{
+                    label: 'Score %',
+                    data: categories.map(([, val]) => val.score),
+                    backgroundColor: categories.map(([, val]) => {
+                        if (val.score >= 70) return 'rgba(34, 197, 94, 0.8)';
+                        if (val.score >= 30) return 'rgba(245, 158, 11, 0.8)';
+                        return 'rgba(239, 68, 68, 0.8)';
+                    }),
+                    borderRadius: 4,
+                    borderSkipped: false,
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        max: 100,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#9999a8' }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { color: '#e8e8ec', font: { size: 11 } }
+                    }
+                }
+            }
+        });
+
+        // Render category list
+        const categoryList = document.getElementById('categoryList');
+        categories.forEach(([name, val]) => {
+            const level = val.score >= 70 ? 'high' : val.score >= 30 ? 'medium' : 'low';
+            categoryList.innerHTML += `
+                <div class="category-item">
+                    <span class="category-name">${name.replace('_', ' ')}</span>
+                    <div class="category-bar">
+                        <div class="category-fill ${level}" style="width: ${val.score}%"></div>
+                    </div>
+                    <span class="category-score">${val.score.toFixed(0)}%</span>
+                    <span class="category-count">${val.count}</span>
+                </div>
+            `;
+        });
+
+        // Render task table
+        const taskTable = document.getElementById('taskTable');
+        Object.entries(data.task_scores).forEach(([id, task]) => {
+            const score = task.mean * 100;
+            const level = score >= 70 ? 'high' : score >= 30 ? 'medium' : 'low';
+            taskTable.innerHTML += `
+                <tr>
+                    <td><span class="task-id">${id.replace('task_', '')}</span></td>
+                    <td>${task.task_name}</td>
+                    <td><span class="category-tag">${task.category}</span></td>
+                    <td><span class="score-badge ${level}">${score.toFixed(0)}%</span></td>
+                </tr>
+            `;
+        });
+    </script>
+</body>
+</html>
