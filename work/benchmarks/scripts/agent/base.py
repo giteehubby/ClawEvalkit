@@ -41,6 +41,31 @@ class AgentResult:
             "error": self.error,
         }
 
+    def save_transcript(self, path: Path | str) -> None:
+        """保存 transcript 到 JSONL 文件
+
+        Args:
+            path: 保存路径（.jsonl 文件）
+        """
+        import json
+        path = Path(path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
+            for entry in self.transcript:
+                f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+    def save_result(self, path: Path | str) -> None:
+        """保存完整结果到 JSON 文件
+
+        Args:
+            path: 保存路径（.json 文件）
+        """
+        import json
+        path = Path(path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(self.to_dict(), f, ensure_ascii=False, indent=2)
+
 
 class BaseAgent(ABC):
     """Agent 抽象基类"""

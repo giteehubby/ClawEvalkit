@@ -444,6 +444,11 @@ class PinchBenchAdapter:
                 result.workspace = str(workspace)
                 task_results.append(result)
 
+                # 保存 transcript
+                transcript_path = self.output_dir / "transcripts" / f"{task.task_id}_{run_index}.jsonl"
+                result.save_transcript(transcript_path)
+                logger.info(f"   Transcript saved: {transcript_path}")
+
                 # 评分
                 grade = grade_task(task, result, self.skill_dir)
                 task_grades.append(grade)
@@ -485,17 +490,26 @@ class PinchBenchAdapter:
         # 复制 workspace files
         for file_spec in task.workspace_files:
             if isinstance(file_spec, dict):
-                source_name = file_spec.get("source") or file_spec.get("path", "")
-                dest_name = file_spec.get("dest") or source_name
+                dest_name = file_spec.get("dest") or file_spec.get("path", "")
+                content = file_spec.get("content")
+                source_name = file_spec.get("source")
             else:
+                dest_name = str(file_spec)
+                content = None
                 source_name = str(file_spec)
-                dest_name = source_name
 
-            source = self.skill_dir / "assets" / source_name
             dest = workspace / dest_name
-            if source.exists():
+
+            # 如果有 content，直接写入文件
+            if content:
                 dest.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copy2(source, dest)
+                dest.write_text(content)
+            # 否则从 assets 目录复制
+            elif source_name:
+                source = self.skill_dir / "assets" / source_name
+                if source.exists():
+                    dest.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(source, dest)
 
         # 复制 skills
         main_skills_dir = Path.home() / ".openclaw" / "workspace" / "skills"

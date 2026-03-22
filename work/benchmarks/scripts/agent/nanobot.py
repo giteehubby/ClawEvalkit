@@ -172,43 +172,64 @@ class NanoBotAgent(BaseAgent):
                         for tc in message.tool_calls
                     ]
 
-            # 添加 assistant 消息到历史
+            # 添加 assistant 消息到历史（兼容 OpenAI 格式）
             assistant_msg = {"role": "assistant", "content": content}
             if tool_calls:
-                assistant_msg["tool_calls"] = tool_calls
+                # 格式化工具调用（添加 type 字段）
+                formatted_calls = []
+                for tc in tool_calls:
+                    formatted_calls.append({
+                        "id": tc["id"],
+                        "type": "function",
+                        "function": tc["function"]
+                    })
+                assistant_msg["tool_calls"] = formatted_calls
             messages.append(assistant_msg)
 
             # 如果没有工具调用，返回
             if not tool_calls:
-                # 添加 assistant 消息到 transcript（格式兼容 pinchbench）
+                # 添加 assistant 消息到 transcript（格式兼容 pinchbench grading）
+                content_items = []
                 if content:
-                    self._transcript.append({
-                        "type": "message",
-                        "message": {
-                            "role": "assistant",
-                            "content": [content],  # pinchbench 期望 content 是列表
-                        }
-                    })
+                    content_items.append(content)
+                self._transcript.append({
+                    "type": "message",
+                    "message": {
+                        "role": "assistant",
+                        "content": content_items,
+                    }
+                })
                 return content
 
             # 执行工具调用
             for tool_call in tool_calls:
                 tool_result = await self._execute_tool(tool_call)
-                # 添加 assistant 消息到 transcript（格式兼容 pinchbench）
+
+                # 解析参数
+                args_str = tool_call["function"]["arguments"]
+                if isinstance(args_str, str):
+                    try:
+                        args = json.loads(args_str)
+                    except json.JSONDecodeError:
+                        args = {"raw": args_str}
+                else:
+                    args = args_str
+
+                # 添加 assistant 消息到 transcript（格式兼容 pinchbench grading）
+                # grading 代码期望: content = [{"type": "toolCall", "name": "...", "params": {...}}]
+                content_items = []
+                if content:
+                    content_items.append(content)
+                content_items.append({
+                    "type": "toolCall",
+                    "name": tool_call["function"]["name"],
+                    "params": args
+                })
                 self._transcript.append({
                     "type": "message",
                     "message": {
                         "role": "assistant",
-                        "content": [content] if content else [],  # pinchbench 期望 content 是列表
-                        "tool_calls": [
-                            {
-                                "id": tool_call["id"],
-                                "function": {
-                                    "name": tool_call["function"]["name"],
-                                    "arguments": tool_call["function"]["arguments"],
-                                }
-                            }
-                        ]
+                        "content": content_items,
                     }
                 })
                 # 添加 tool 结果到 transcript
