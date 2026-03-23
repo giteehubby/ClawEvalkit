@@ -44,21 +44,80 @@ class BaseAgent(ABC):
 - `--api-key`: API 密钥
 - `--model`: 模型 ID
 
+## 测试命令
+
+### PinchBench (23 个任务)
+
+```bash
+cd work/benchmarks/scripts
+
+# 运行全部任务
+python run.py --benchmark pinchbench \
+    --api-url https://openrouter.ai/api/v1 \
+    --api-key <your-api-key> \
+    --model gpt-4o-mini
+
+# 运行特定任务
+python run.py --benchmark pinchbench \
+    --api-url https://openrouter.ai/api/v1 \
+    --api-key <your-api-key> \
+    --model gpt-4o-mini \
+    --tasks task_00_sanity,task_01_calendar,task_04_weather
+
+# 运行 fast 测试（5个任务）
+python test_run.py
+```
+
+### OpenClawBench (40 个任务，7 个 suite)
+
+```bash
+cd work/benchmarks/scripts
+
+# 运行全部任务
+python run.py --benchmark openclawbench \
+    --api-url https://openrouter.ai/api/v1 \
+    --api-key <your-api-key> \
+    --model gpt-4o-mini
+
+# 运行特定 suite
+python run.py --benchmark openclawbench \
+    --api-url https://openrouter.ai/api/v1 \
+    --api-key <your-api-key> \
+    --model gpt-4o-mini \
+    --suite research
+
+# 运行 fast 测试（easy + medium 难度）
+python run.py --benchmark openclawbench \
+    --api-url https://openrouter.ai/api/v1 \
+    --api-key <your-api-key> \
+    --model gpt-4o-mini \
+    --difficulty fast
+
+# 运行 OpenClawBench 快速验证
+python test_openclawbench.py
+```
+
 ## 当前实现
 
 ### NanoBotAgent
 
-- 使用 nanobot CLI 的 `agent --message` 命令
-- 自动生成 nanobot 配置文件（使用 custom provider）
-- 支持单轮和多轮对话
-- 从会话文件中提取 transcript 和 usage
+- 使用 litellm 直接调用 LLM API
+- 支持 tool calling（read_file, write_file, edit_file, list_dir, exec, web_search, web_fetch）
+- 兼容 pinchbench grading 代码的 transcript 格式
 
 ### PinchBenchAdapter
 
-- 加载 `tasks/` 目录下的任务文件
+- 加载 `pinchbench/tasks/` 目录下的任务文件
 - 解析 YAML frontmatter
-- 执行 grading 代码进行评分
+- 执行任务内嵌的 grading 代码进行评分
 - 支持 automated / llm / hybrid 评分方式
+
+### OpenClawBenchAdapter
+
+- 加载 `agentbench-openclaw/tasks/` 目录下的 task.yaml 文件
+- 四层评分体系：L0(结构检查) / L1(指标分析) / L2(行为分析) / L3(输出质量)
+- 自动复制输入文件，运行 setup.sh 脚本
+- 支持 suite 和 difficulty 筛选
 
 ## 运行流程
 
