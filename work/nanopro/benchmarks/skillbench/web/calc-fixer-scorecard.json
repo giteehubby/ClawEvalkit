@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0.0",
+  "skill": {
+    "id": "calc-fixer",
+    "name": "Calc Fixer",
+    "version": null,
+    "artifact_digest": null
+  },
+  "run": {
+    "run_id": "798171a1-8392-4d3d-9eff-6920d9f9a030",
+    "executed_at": "2026-01-25T19:03:37.491251+00:00",
+    "runner_version": "0.1.0",
+    "agent": "claude-sonnet-4-20250514",
+    "execution_mode": "local"
+  },
+  "suite": {
+    "id": "core-bugfix",
+    "version": "1.0.0",
+    "task_count": 10,
+    "categories": [
+      "arithmetic",
+      "string",
+      "validation",
+      "loops"
+    ]
+  },
+  "baseline": {
+    "type": "no-skill",
+    "profile_id": null,
+    "digest": null
+  },
+  "metrics": {
+    "reliability": {
+      "baseline": 0.0,
+      "augmented": 0.1,
+      "delta": 0.1,
+      "tasks_passed_baseline": 0,
+      "tasks_passed_augmented": 1,
+      "total_tasks": 10
+    },
+    "efficiency": {
+      "baseline_avg_ms": 38.0,
+      "augmented_avg_ms": 37.0,
+      "delta_ms": -1.0
+    },
+    "robustness": null,
+    "legibility": {
+      "explicit_error_rate": 1.0,
+      "silent_failure_rate": 0.0
+    }
+  },
+  "summary": {
+    "headline": "This skill helped the agent fix arithmetic bugs it couldn't solve alone. No measurable impact on other bug types like string manipulation or validation logic.",
+    "recommendation": null
+  },
+  "artifacts": {
+    "profile_url": null,
+    "traces_url": null,
+    "profile_digest": "942e74362fb810f5e4b601f1a1a83c7c8c1bcb4db50a5f1d3a4b698ea3e21372",
+    "traces_digest": null
+  },
+  "signature": null
+}

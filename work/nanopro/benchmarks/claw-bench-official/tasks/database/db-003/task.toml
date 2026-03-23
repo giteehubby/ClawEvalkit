@@ -1,0 +1,10 @@
+id = "db-003"
+title = "Schema Design from Requirements"
+domain = "database"
+level = "L2"
+description = "Design a relational database schema for a blog system with users, posts, comments, tags, and many-to-many relationships"
+timeout = 180
+capabilities = ["file-read", "file-write"]
+skills_allowed = true
+tags = ["sql", "schema-design", "foreign-key", "many-to-many", "intermediate"]
+capability_types = ["reasoning", "tool-use"]

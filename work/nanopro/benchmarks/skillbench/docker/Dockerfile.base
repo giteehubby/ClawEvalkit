@@ -1,0 +1,26 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+      ca-certificates \
+      curl \
+      git \
+      jq \
+      python3 \
+      python3-pip \
+      python3-venv \
+      patch \
+      build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN python3 -m pip install --no-cache-dir PyYAML==6.0.1 certifi==2024.7.4
+
+RUN useradd -m -s /bin/bash agent
+USER agent
+
+WORKDIR /bench
+
+# Default to a no-op; runner will override.
+CMD ["bash", "-lc", "echo SkillBench base image ready"]

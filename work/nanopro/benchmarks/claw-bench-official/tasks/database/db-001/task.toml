@@ -1,0 +1,10 @@
+id = "db-001"
+title = "Basic SQL Query"
+domain = "database"
+level = "L1"
+description = "Write a SQL query to filter employees by department and salary threshold from a single table"
+timeout = 120
+capabilities = ["file-read", "file-write"]
+skills_allowed = true
+tags = ["sql", "select", "where", "filter", "beginner"]
+capability_types = ["reasoning", "tool-use"]

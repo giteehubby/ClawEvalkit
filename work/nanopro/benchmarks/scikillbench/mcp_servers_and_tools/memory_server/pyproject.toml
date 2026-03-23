@@ -1,0 +1,15 @@
+[project]
+name = "memory-server"
+version = "0.1.0"
+description = "Memory Server - Specialized MCP server for memory consolidation and retrieval using mem0 with hybrid vector-graph architecture"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "mem0ai[graph]==0.1.118",
+    "mcp==1.13.0",
+    "supabase==2.18.1",
+    "openai==1.102.0",
+    "python-dotenv==1.1.1",
+    "neo4j==5.28.2",
+    "vecs==0.4.5",
+]

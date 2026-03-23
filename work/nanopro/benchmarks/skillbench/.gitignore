@@ -1,0 +1,17 @@
+.DS_Store
+reports/*.json
+reports/tasks/
+predictions/
+__pycache__/
+.venv/
+.env
+
+# Server data (persisted separately)
+web/outputs/
+web/uploads/
+web/traces/
+data/
+*.db
+
+# Keys (never commit)
+keys/

@@ -1,0 +1,4 @@
+agentbench-results/
+/tmp/agentbench-*
+node_modules/
+.DS_Store

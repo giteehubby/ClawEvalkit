@@ -1,0 +1,10 @@
+id = "tool-005"
+title = "CI/CD Pipeline Design"
+domain = "real-tools"
+level = "L4"
+description = "Design a complete GitHub Actions CI/CD pipeline for a FastAPI web application with testing, linting, building, and deployment stages"
+timeout = 300
+capabilities = ["file-read", "file-write"]
+skills_allowed = true
+tags = ["ci-cd", "github-actions", "docker", "aws", "devops", "pipeline"]
+capability_types = ["reasoning", "tool-use"]

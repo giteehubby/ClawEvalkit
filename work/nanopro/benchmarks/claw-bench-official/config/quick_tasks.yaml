@@ -1,0 +1,27 @@
+# Quick test tasks — 20 representative tasks across 19 domains, balanced L1-L4
+# Updated to include tasks from 5 new domains (debugging, database, planning, math-reasoning, real-tools)
+tasks:
+  # L1 Easy (5)
+  - file-002
+  - code-002
+  - eml-001
+  - data-002
+  - debug-001
+  # L2 Medium (7)
+  - cal-006
+  - doc-004
+  - sys-004
+  - sec-004
+  - wfl-003
+  - db-002
+  - tool-002
+  # L3 Hard (5)
+  - web-006
+  - mem-005
+  - xdom-001
+  - plan-004
+  - math-004
+  # L4 Expert (3)
+  - code-014
+  - debug-005
+  - tool-005

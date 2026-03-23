@@ -1,0 +1,10 @@
+id = "math-001"
+title = "Financial Calculations"
+domain = "math-reasoning"
+level = "L1"
+description = "Solve five financial math problems: compound interest, percentage markup, tax calculation, loan payment, and break-even analysis"
+timeout = 180
+capabilities = ["file-read", "file-write"]
+skills_allowed = true
+tags = ["finance", "arithmetic", "math", "calculations", "beginner"]
+capability_types = ["reasoning", "tool-use"]

@@ -1,0 +1,10 @@
+id = "math-003"
+title = "Statistical Analysis"
+domain = "math-reasoning"
+level = "L2"
+description = "Perform a two-sample t-test on grouped data: compute means, standard deviations, t-statistic, p-value, and significance conclusion"
+timeout = 300
+capabilities = ["file-read", "file-write"]
+skills_allowed = true
+tags = ["statistics", "t-test", "hypothesis-testing", "data-analysis", "intermediate"]
+capability_types = ["reasoning", "tool-use"]

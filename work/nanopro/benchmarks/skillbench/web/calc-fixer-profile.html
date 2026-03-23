@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skill Profile - Calc Fixer</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #fafafa;
+      color: #1a1a1a;
+      line-height: 1.6;
+      padding: 2rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .skill-name {
+      font-size: 0.875rem;
+      color: #666;
+      margin-bottom: 0.25rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .summary {
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .summary-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+
+    .summary-text {
+      font-size: 1.125rem;
+      color: #1a1a1a;
+    }
+
+    .profile {
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .profile-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    .metric {
+      margin-bottom: 1.25rem;
+    }
+
+    .metric:last-child {
+      margin-bottom: 0;
+    }
+
+    .metric-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .metric-delta {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .metric-delta.positive {
+      color: #16a34a;
+    }
+
+    .metric-delta.neutral {
+      color: #666;
+    }
+
+    .metric-delta.negative {
+      color: #dc2626;
+    }
+
+    .bar-container {
+      height: 8px;
+      background: #e5e5e5;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+
+    .bar-fill.positive {
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+    }
+
+    .bar-fill.neutral {
+      background: #a3a3a3;
+    }
+
+    .bar-fill.negative {
+      background: linear-gradient(90deg, #f87171, #dc2626);
+    }
+
+    .disclosure {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .disclosure-toggle {
+      font-size: 0.75rem;
+      color: #666;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .disclosure-toggle:hover {
+      color: #1a1a1a;
+    }
+
+    .disclosure-content {
+      display: none;
+      margin-top: 0.75rem;
+      font-size: 0.75rem;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    .disclosure-content.open {
+      display: block;
+    }
+
+    .examples {
+      margin-bottom: 2rem;
+    }
+
+    .examples-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    .example-card {
+      background: white;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+    }
+
+    .example-header {
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .example-header:hover {
+      background: #fafafa;
+    }
+
+    .example-icon {
+      font-size: 1.25rem;
+    }
+
+    .example-title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .example-chevron {
+      color: #999;
+      transition: transform 0.2s ease;
+    }
+
+    .example-card.open .example-chevron {
+      transform: rotate(180deg);
+    }
+
+    .example-content {
+      display: none;
+      padding: 0 1.25rem 1.25rem;
+      border-top: 1px solid #f0f0f0;
+    }
+
+    .example-card.open .example-content {
+      display: block;
+    }
+
+    .example-description {
+      font-size: 0.875rem;
+      color: #444;
+      margin-top: 1rem;
+    }
+
+    .footer {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      padding-top: 1rem;
+      border-top: 1px solid #e5e5e5;
+    }
+
+    .footer-link {
+      font-size: 0.75rem;
+      color: #666;
+      text-decoration: none;
+    }
+
+    .footer-link:hover {
+      color: #1a1a1a;
+      text-decoration: underline;
+    }
+
+    .panel-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 100;
+    }
+
+    .panel-overlay.open {
+      display: block;
+    }
+
+    .panel {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      z-index: 101;
+      width: 90%;
+      max-width: 400px;
+      max-height: 80vh;
+      overflow: hidden;
+    }
+
+    .panel.panel-wide {
+      max-width: 500px;
+    }
+
+    .panel.open {
+      display: block;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .panel-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+    }
+
+    .panel-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #999;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .panel-close:hover {
+      color: #333;
+    }
+
+    .panel-content {
+      padding: 1.25rem;
+      overflow-y: auto;
+      max-height: calc(80vh - 60px);
+    }
+
+    .panel-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .panel-row:last-child {
+      border-bottom: none;
+    }
+
+    .panel-label {
+      font-size: 0.75rem;
+      color: #666;
+    }
+
+    .panel-value {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #1a1a1a;
+    }
+
+    .trace-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .trace-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.625rem 0.75rem;
+      background: #fafafa;
+      border-radius: 6px;
+      font-size: 0.75rem;
+    }
+
+    .trace-status {
+      font-size: 0.875rem;
+    }
+
+    .trace-name {
+      font-weight: 500;
+      min-width: 80px;
+    }
+
+    .trace-desc {
+      flex: 1;
+      color: #666;
+    }
+
+    .trace-badge {
+      padding: 0.125rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .trace-item.passed .trace-badge {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .trace-item.failed .trace-badge {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+  </style>
+</head>
+<body>
+  <div class="skill-name">Skill profile</div>
+  <h1>Calc Fixer</h1>
+
+  <section class="summary">
+    <div class="summary-label">Summary</div>
+    <p class="summary-text">This skill helped the agent fix arithmetic bugs it couldn't solve alone. No measurable impact on other bug types like string manipulation or validation logic.</p>
+  </section>
+
+  <section class="profile">
+    <div class="profile-title">Behavioral Profile</div>
+
+    <div class="metric">
+      <div class="metric-header">
+        <span class="metric-name">Reliability</span>
+        <span class="metric-delta positive">+10%</span>
+      </div>
+      <div class="bar-container">
+        <div class="bar-fill positive" style="width: 60.0%"></div>
+      </div>
+    </div>
+
+    <div class="metric">
+      <div class="metric-header">
+        <span class="metric-name">Efficiency</span>
+        <span class="metric-delta neutral">no change</span>
+      </div>
+      <div class="bar-container">
+        <div class="bar-fill neutral" style="width: 50%"></div>
+      </div>
+    </div>
+
+    <div class="disclosure">
+      <span class="disclosure-toggle" onclick="toggleDisclosure(this)">
+        How was this measured? <span>&#9662;</span>
+      </span>
+      <div class="disclosure-content">
+        Compared to a standard agent without this skill.<br>
+        Tested on <strong>Core Bugfix Suite v1.0</strong> (arithmetic + string bugs).<br><br>
+        Out of 10 bugfix tasks, the baseline agent solved 0; with this skill it solved 1.
+      </div>
+    </div>
+  </section>
+
+  <section class="examples">
+    <div class="examples-title">Examples</div>
+    
+    <div class="example-card" onclick="toggleExample(this)">
+      <div class="example-header">
+        <span class="example-icon">&#9989;</span>
+        <span class="example-title">A case where it helped</span>
+        <span class="example-chevron">&#9662;</span>
+      </div>
+      <div class="example-content">
+        <p class="example-description">
+          <strong>Task:</strong> Fix the add() function to return correct sum<br><br>
+          The skill provided guidance that helped the agent generate a correct fix.
+        </p>
+      </div>
+    </div>
+    
+    <div class="example-card" onclick="toggleExample(this)">
+      <div class="example-header">
+        <span class="example-icon">&#128528;</span>
+        <span class="example-title">A case where it didn't matter</span>
+        <span class="example-chevron">&#9662;</span>
+      </div>
+      <div class="example-content">
+        <p class="example-description">
+          <strong>Task:</strong> Fix slugify() to use hyphen-separated slugs<br><br>
+          The skill's guidance didn't apply to this type of bug.
+        </p>
+      </div>
+    </div>
+    
+    <div class="example-card" onclick="toggleExample(this)">
+      <div class="example-header">
+        <span class="example-icon">&#128269;</span>
+        <span class="example-title">What we observed</span>
+        <span class="example-chevron">&#9662;</span>
+      </div>
+      <div class="example-content">
+        <p class="example-description">
+          This skill is narrowly focused on specific bug patterns. It improved reliability on its target domain without negative side effects on unrelated tasks. Consider pairing with complementary skills for broader coverage.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <a href="#" class="footer-link" onclick="openPanel('tested-on'); return false;">What this was tested on</a>
+    <a href="#" class="footer-link" onclick="openPanel('traces'); return false;">View full traces</a>
+    <a href="scorecard.json" class="footer-link" download>Download scorecard.json</a>
+  </footer>
+
+  <div id="panel-overlay" class="panel-overlay" onclick="closePanel()"></div>
+
+  <div id="panel-tested-on" class="panel">
+    <div class="panel-header">
+      <span class="panel-title">What this was tested on</span>
+      <button class="panel-close" onclick="closePanel()">&times;</button>
+    </div>
+    <div class="panel-content">
+      <div class="panel-row">
+        <span class="panel-label">Suite</span>
+        <span class="panel-value">Core Bugfix Suite v1.0</span>
+      </div>
+      <div class="panel-row">
+        <span class="panel-label">Tasks</span>
+        <span class="panel-value">10 (arithmetic, string, validation)</span>
+      </div>
+      <div class="panel-row">
+        <span class="panel-label">Agent</span>
+        <span class="panel-value">Claude Sonnet</span>
+      </div>
+      <div class="panel-row">
+        <span class="panel-label">Runner</span>
+        <span class="panel-value">Local sandbox v0.1.0</span>
+      </div>
+      <div class="panel-row">
+        <span class="panel-label">Evaluated</span>
+        <span class="panel-value">January 25, 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-traces" class="panel panel-wide">
+    <div class="panel-header">
+      <span class="panel-title">Execution traces</span>
+      <button class="panel-close" onclick="closePanel()">&times;</button>
+    </div>
+    <div class="panel-content">
+      <div class="trace-list">
+        
+        <div class="trace-item passed">
+          <span class="trace-status">&#9989;</span>
+          <span class="trace-name">swe-lite-001</span>
+          <span class="trace-desc">Fix the add() function to return correct sum</span>
+          <span class="trace-badge">passed</span>
+        </div>
+        <div class="trace-item failed">
+          <span class="trace-status">&#10060;</span>
+          <span class="trace-name">swe-lite-002</span>
+          <span class="trace-desc">Fix slugify() to use hyphen-separated slugs</span>
+          <span class="trace-badge">failed</span>
+        </div>
+        <div class="trace-item failed">
+          <span class="trace-status">&#10060;</span>
+          <span class="trace-name">swe-lite-003</span>
+          <span class="trace-desc">Fix mean() to compute average correctly</span>
+          <span class="trace-badge">failed</span>
+        </div>
+        <div class="trace-item failed">
+          <span class="trace-status">&#10060;</span>
+          <span class="trace-name">swe-lite-004</span>
+          <span class="trace-desc">Fix off-by-one error in array slicing</span>
+          <span class="trace-badge">failed</span>
+        </div>
+        <div class="trace-item failed">
+          <span class="trace-status">&#10060;</span>
+          <span class="trace-name">swe-lite-005</span>
+          <span class="trace-desc">Fix comparison operator in age validation</span>
+          <span class="trace-badge">failed</span>
+        </div>
+        <div class="trace-item failed">
+          <span class="trace-status">&#10060;</span>
+          <span class="trace-name">swe-lite-006</span>
+          <span class="trace-desc">Add missing return statement</span>
+          <span class="trace-badge">failed</span>
+        </div>
+        <div class="trace-item failed">
+          <span class="trace-status">&#10060;</span>
+          <span class="trace-name">swe-lite-007</span>
+          <span class="trace-desc">Fix string method to collapse spaces</span>
+          <span class="trace-badge">failed</span>
+        </div>
+        <div class="trace-item failed">
+          <span class="trace-status">&#10060;</span>
+          <span class="trace-name">swe-lite-008</span>
+          <span class="trace-desc">Fix integer division bug</span>
+          <span class="trace-badge">failed</span>
+        </div>
+        <div class="trace-item failed">
+          <span class="trace-status">&#10060;</span>
+          <span class="trace-name">swe-lite-009</span>
+          <span class="trace-desc">Fix loop boundary in vowel counter</span>
+          <span class="trace-badge">failed</span>
+        </div>
+        <div class="trace-item failed">
+          <span class="trace-status">&#10060;</span>
+          <span class="trace-name">swe-lite-010</span>
+          <span class="trace-desc">Add null check for nickname</span>
+          <span class="trace-badge">failed</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleDisclosure(el) {
+      const content = el.nextElementSibling;
+      content.classList.toggle('open');
+    }
+
+    function toggleExample(card) {
+      card.classList.toggle('open');
+    }
+
+    function openPanel(name) {
+      document.getElementById('panel-overlay').classList.add('open');
+      document.getElementById('panel-' + name).classList.add('open');
+    }
+
+    function closePanel() {
+      document.getElementById('panel-overlay').classList.remove('open');
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('open'));
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closePanel();
+    });
+  </script>
+</body>
+</html>

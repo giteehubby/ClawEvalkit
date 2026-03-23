@@ -1,0 +1,38 @@
+# Environment files (secrets - never copy to container)
+.env
+.env.local
+
+# Virtual environments
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Large data files
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# Git
+.git/
+
+# IDE
+.vscode/
+.idea/
+
+# Benchmark data (not needed for running the app)
+benchmark_tasks_and_results/
+
+# Node modules (will be installed during build)
+node_modules/
+
+# Temporary files
+temp_code/
+saved_code/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

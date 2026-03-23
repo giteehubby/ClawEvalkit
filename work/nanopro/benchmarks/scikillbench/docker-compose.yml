@@ -1,0 +1,80 @@
+services:
+  # MLflow Tracking Server for observability
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v3.3.2
+    container_name: cascade_mlflow
+    network_mode: host  # Use host network for localhost access
+    user: "${UID:-1000}:${GID:-1000}"  # Run as current user to match permissions
+    environment:
+      - MLFLOW_HOST=0.0.0.0
+    volumes:
+      # Mount local mlruns directory for persistence across rebuilds
+      - ./conversational_system/mlruns:/mlruns
+    # Use file-based backend (same as non-Docker mlflow ui) for consistent trace display
+    command: mlflow server --host 0.0.0.0 --port 5001 --backend-store-uri file:///mlruns --default-artifact-root file:///mlruns
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5001/')"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  # CASCADE Conversational System
+  # NOTE: Neo4j is NOT included - uses your local Neo4j instance for data sharing
+  cascade:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: cascade_app
+    network_mode: host  # Use host network for localhost access to Neo4j
+    user: "${UID:-1000}:${GID:-1000}"  # Run as current user to match permissions
+    environment:
+      # Home directory for user-writable cache (crawl4ai, etc.)
+      - HOME=/app/.home
+      # Playwright browsers are installed in cascade_user's home during build
+      - PLAYWRIGHT_BROWSERS_PATH=/home/cascade_user/.cache/ms-playwright
+      # API Keys
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - TAVILY_API_KEY=${TAVILY_API_KEY}
+      - MP_API_KEY=${MP_API_KEY}
+      # Supabase
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
+      - SUPABASE_DATABASE_URL=${SUPABASE_DATABASE_URL}
+      # Neo4j
+      - NEO4J_URI=${NEO4J_URI:-bolt://localhost:7687}
+      - NEO4J_USER=${NEO4J_USER:-neo4j}
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD}
+      # Memory configuration
+      - MEM0_USE_LLM=${MEM0_USE_LLM:-true}
+      - MEM0_LLM_MODEL=${MEM0_LLM_MODEL:-gpt-4o-mini}
+      - ENABLE_GRAPH_MEMORY=${ENABLE_GRAPH_MEMORY:-true}
+      # Knowledge graph for code parsing (requires Neo4j)
+      - USE_KNOWLEDGE_GRAPH=${USE_KNOWLEDGE_GRAPH:-true}
+      # Generate AI summaries for extracted code (increases API usage)
+      - GENERATE_CODE_SUMMARY=${GENERATE_CODE_SUMMARY:-false}
+      # Agent model configuration
+      - AGENT_MODEL_NAME=${AGENT_MODEL_NAME:-o3}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      - USE_ADAPTIVE_AGENTS=${USE_ADAPTIVE_AGENTS:-false}
+      - REQUIRE_OPENAI_API_KEY=${REQUIRE_OPENAI_API_KEY:-true}
+      # Application paths
+      - PROJECT_ROOT=${PROJECT_ROOT:-/app}
+      - CODE_STORAGE_DIR=${CODE_STORAGE_DIR:-/app/temp_code}
+      - SAVED_FILES_DIR=${SAVED_FILES_DIR:-/app/saved_code}
+      # MLflow tracking
+      - MLFLOW_TRACKING_URI=${MLFLOW_TRACKING_URI:-http://localhost:5001}
+      # Streamlit settings
+      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+      # Database path (mounted in /app/data for write access)
+      - CONVERSATIONS_DB_PATH=/app/data/conversations.db
+    volumes:
+      # Mount local directories for persistence across rebuilds
+      - ./conversational_system/conversations.db:/app/data/conversations.db
+      - ./conversational_system/saved_code:/app/saved_code
+      - ./conversational_system/mlruns:/mlruns  # Same path as MLflow server for trace data
+    depends_on:
+      mlflow:
+        condition: service_healthy
+    restart: unless-stopped

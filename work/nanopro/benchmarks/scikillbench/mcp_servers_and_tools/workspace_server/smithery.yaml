@@ -1,0 +1,57 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - codeStorageDir
+      - savedFilesDir
+      - projectRoot
+      - forbiddenPath
+    properties:
+      codeStorageDir:
+        type: string
+        description: Directory where generated code files will be stored.
+      savedFilesDir:
+        type: string
+        description: Directory where saved files will be stored.
+      projectRoot:
+        type: string
+        description: Absolute path to the project root directory for security restrictions.
+      forbiddenPath:
+        type: string
+        description: Absolute path to the forbidden directory (e.g., benchmark) that should not be accessed.
+      envType:
+        type: string
+        enum: ["conda", "venv", "venv-uv"]
+        description: Type of Python environment to use.
+        default: "conda"
+      condaEnvName:
+        type: string
+        description: Name of the Conda environment for code execution (required if envType is conda).
+      venvPath:
+        type: string
+        description: Path to the virtualenv (required if envType is venv).
+      uvVenvPath:
+        type: string
+        description: Path to the UV virtualenv (required if envType is venv-uv).
+  commandFunction:
+    # A function that produces the CLI command to start the MCP on stdio.
+    |-
+    (config) => {
+      const env = {
+        CODE_STORAGE_DIR: config.codeStorageDir,
+        SAVED_FILES_DIR: config.savedFilesDir,
+        PROJECT_ROOT: config.projectRoot,
+        FORBIDDEN_PATH: config.forbiddenPath,
+        ENV_TYPE: config.envType || "conda"
+      };
+      
+      if (config.condaEnvName) env.CONDA_ENV_NAME = config.condaEnvName;
+      if (config.venvPath) env.VENV_PATH = config.venvPath;
+      if (config.uvVenvPath) env.UV_VENV_PATH = config.uvVenvPath;
+      
+      return {command:'node',args:['build/index.js'],env:env};
+    }

@@ -1,0 +1,14 @@
+[project]
+name = "research-server"
+version = "0.1.0"
+description = "Research Server - Specialized MCP server for comprehensive code research, analysis, and discovery workflows"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "crawl4ai>=0.7.3",
+    "mcp>=1.7.1",
+    "supabase>=2.18.1",
+    "openai>=1.81.0",
+    "python-dotenv>=1.0.1",
+    "neo4j>=5.28.2",
+]

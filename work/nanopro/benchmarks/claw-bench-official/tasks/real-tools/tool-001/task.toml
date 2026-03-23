@@ -1,0 +1,10 @@
+id = "tool-001"
+title = "Git Operations Script"
+domain = "real-tools"
+level = "L1"
+description = "Generate a bash script that performs specified git operations: branch creation, commit, and tagging"
+timeout = 120
+capabilities = ["file-read", "file-write"]
+skills_allowed = true
+tags = ["git", "bash", "version-control", "scripting", "beginner"]
+capability_types = ["reasoning", "tool-use"]

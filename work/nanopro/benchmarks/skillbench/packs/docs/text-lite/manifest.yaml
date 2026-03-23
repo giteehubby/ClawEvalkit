@@ -1,0 +1,13 @@
+name: docs/text-lite
+version: "0.0.1"
+description: >
+  Lightweight document tasks (plain text/markdown) to validate document skills.
+tasks:
+  - id: doc-lite-001
+    path: tasks/doc-lite-001
+    repo_path: tasks/doc-lite-001/repo
+    instructions: "Fill in the placeholders in report.md."
+  - id: doc-lite-002
+    path: tasks/doc-lite-002
+    repo_path: tasks/doc-lite-002/repo
+    instructions: "Fix the executive summary text in summary.md."

@@ -1,0 +1,10 @@
+id = "tool-004"
+title = "Build Script (Makefile)"
+domain = "real-tools"
+level = "L3"
+description = "Generate a comprehensive Makefile for a Python project with install, test, lint, build, clean, docs, and all targets"
+timeout = 240
+capabilities = ["file-read", "file-write"]
+skills_allowed = true
+tags = ["makefile", "build-system", "python", "automation", "devops"]
+capability_types = ["reasoning", "tool-use"]

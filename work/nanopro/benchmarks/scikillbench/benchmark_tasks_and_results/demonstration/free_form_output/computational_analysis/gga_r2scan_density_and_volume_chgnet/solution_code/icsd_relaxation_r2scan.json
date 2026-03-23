@@ -1,0 +1,112 @@
+[
+  {
+    "icsd_key": "icsd-15144",
+    "reduced formula": "ZnGeN2",
+    "num_atoms": 16,
+    "experimental_density": 6.045190923013725,
+    "relaxed_density": 6.043806575004274,
+    "density_absolute_error": 0.0013843480094504201,
+    "experimental_volume_per_atom": 11.403821094749999,
+    "relaxed_volume_per_atom": 11.406433166601857,
+    "volume_per_atom_absolute_error": 0.002612071851858744
+  },
+  {
+    "icsd_key": "icsd-635232",
+    "reduced formula": "TbGa3Ru",
+    "num_atoms": 15,
+    "experimental_density": 8.907346516125093,
+    "relaxed_density": 8.909815532085245,
+    "density_absolute_error": 0.0024690159601519213,
+    "experimental_volume_per_atom": 17.492655787200004,
+    "relaxed_volume_per_atom": 17.487808364021763,
+    "volume_per_atom_absolute_error": 0.004847423178240717
+  },
+  {
+    "icsd_key": "icsd-198329",
+    "reduced formula": "PrSi2",
+    "num_atoms": 12,
+    "experimental_density": 5.169108519787149,
+    "relaxed_density": 5.176400971373737,
+    "density_absolute_error": 0.0072924515865882,
+    "experimental_volume_per_atom": 21.103368,
+    "relaxed_volume_per_atom": 21.073637828341155,
+    "volume_per_atom_absolute_error": 0.029730171658844284
+  },
+  {
+    "icsd_key": "icsd-638925",
+    "reduced formula": "Hf3Si2",
+    "num_atoms": 10,
+    "experimental_density": 10.948994059555787,
+    "relaxed_density": 10.985497305992725,
+    "density_absolute_error": 0.03650324643693814,
+    "experimental_volume_per_atom": 17.94581292,
+    "relaxed_volume_per_atom": 17.886181533884,
+    "volume_per_atom_absolute_error": 0.059631386116002716
+  },
+  {
+    "icsd_key": "icsd-186088",
+    "reduced formula": "Yb11AlSb9",
+    "num_atoms": 84,
+    "experimental_density": 8.216550763156471,
+    "relaxed_density": 8.186289643018885,
+    "density_absolute_error": 0.030261120137586417,
+    "experimental_volume_per_atom": 29.123711410972366,
+    "relaxed_volume_per_atom": 29.23136899069303,
+    "volume_per_atom_absolute_error": 0.10765757972066581
+  },
+  {
+    "icsd_key": "icsd-23151",
+    "reduced formula": "KZnF3",
+    "num_atoms": 5,
+    "experimental_density": 4.037042334624951,
+    "relaxed_density": 4.05712323663139,
+    "density_absolute_error": 0.020080902006438528,
+    "experimental_volume_per_atom": 13.286024999999999,
+    "relaxed_volume_per_atom": 13.220265260766244,
+    "volume_per_atom_absolute_error": 0.065759739233755
+  },
+  {
+    "icsd_key": "icsd-2217",
+    "reduced formula": "Ce4S3O4",
+    "num_atoms": 22,
+    "experimental_density": 6.073762336466972,
+    "relaxed_density": 6.038096003794858,
+    "density_absolute_error": 0.03566633267211383,
+    "experimental_volume_per_atom": 17.91129501381818,
+    "relaxed_volume_per_atom": 18.01709495574519,
+    "volume_per_atom_absolute_error": 0.10579994192701037
+  },
+  {
+    "icsd_key": "icsd-657677",
+    "reduced formula": "YGaPd2",
+    "num_atoms": 16,
+    "experimental_density": 8.528207562747054,
+    "relaxed_density": 8.469434492436505,
+    "density_absolute_error": 0.0587730703105489,
+    "experimental_volume_per_atom": 18.082303161987376,
+    "relaxed_volume_per_atom": 18.207784087079276,
+    "volume_per_atom_absolute_error": 0.12548092509189956
+  },
+  {
+    "icsd_key": "icsd-136944",
+    "reduced formula": "Gd2Ga5Ni3",
+    "num_atoms": 80,
+    "experimental_density": 8.285454014482264,
+    "relaxed_density": 8.346038473716073,
+    "density_absolute_error": 0.06058445923380873,
+    "experimental_volume_per_atom": 16.8188298868642,
+    "relaxed_volume_per_atom": 16.696740860214007,
+    "volume_per_atom_absolute_error": 0.12208902665019394
+  },
+  {
+    "icsd_key": "icsd-45968",
+    "reduced formula": "Cu3SbS4",
+    "num_atoms": 16,
+    "experimental_density": 4.680260438773505,
+    "relaxed_density": 4.7178319309528485,
+    "density_absolute_error": 0.0375714921793433,
+    "experimental_volume_per_atom": 19.542978286265626,
+    "relaxed_volume_per_atom": 19.387343480577414,
+    "volume_per_atom_absolute_error": 0.1556348056882122
+  }
+]

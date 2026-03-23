@@ -1,0 +1,10 @@
+id = "db-005"
+title = "Query Optimization"
+domain = "database"
+level = "L4"
+description = "Optimize slow SQL queries by rewriting them and recommending appropriate indexes for large tables"
+timeout = 300
+capabilities = ["file-read", "file-write"]
+skills_allowed = true
+tags = ["sql", "optimization", "indexing", "performance", "expert"]
+capability_types = ["reasoning", "tool-use"]

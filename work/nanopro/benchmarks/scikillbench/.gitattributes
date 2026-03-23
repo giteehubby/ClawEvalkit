@@ -1,0 +1,5 @@
+deep_solver_benchmark/baselines/claude_code/lmp filter=lfs diff=lfs merge=lfs -text
+deep_solver_benchmark/baselines/claude_code/xtb filter=lfs diff=lfs merge=lfs -text
+deep_solver_benchmark/baselines/claude_code/enum.x filter=lfs diff=lfs merge=lfs -text
+deep_solver_benchmark/baselines/claude_code/*.whl filter=lfs diff=lfs merge=lfs -text
+deep_solver_benchmark/baselines/claude_code/lammps_potentials/** filter=lfs diff=lfs merge=lfs -text

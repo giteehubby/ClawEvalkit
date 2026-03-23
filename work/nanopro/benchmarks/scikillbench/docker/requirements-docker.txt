@@ -1,0 +1,91 @@
+# CASCADE Docker Requirements
+# Streamlined for conversational system
+# Python 3.12+ required
+
+# ============== CORE DEPENDENCIES ==============
+
+# --- AI/ML Core Frameworks ---
+openai>=1.50.0
+openai-agents==0.2.8
+tiktoken>=0.7.0
+
+# --- Materials Science/Chemistry Core ---
+pymatgen>=2024.0.0
+ase>=3.22.0
+mp-api>=0.40.0
+mpcontribs-client>=5.0.0
+rdkit>=2024.0.0
+smact>=2.5.0
+emmet-core>=0.80.0
+spglib>=2.0.0
+sympy>=1.12.0
+
+# --- Database Clients ---
+sqlalchemy>=2.0.0
+neo4j>=5.0.0
+pymongo>=4.0.0
+supabase>=2.0.0
+
+# --- Multi-turn Chat & Memory ---
+streamlit>=1.30.0
+mem0ai[graph]>=1.0.0
+vecs>=0.4.0
+
+# --- HTTP & Async ---
+httpx>=0.27.0
+httpx-sse>=0.4.0
+aiohttp>=3.9.0
+aiofiles>=24.0.0
+requests>=2.31.0
+anyio>=4.0.0
+
+# --- MCP Protocol ---
+mcp>=1.0.0
+
+# --- Search & Web Scraping ---
+tavily-python>=0.5.0
+crawl4ai>=0.5.0
+beautifulsoup4>=4.12.0
+playwright>=1.40.0
+lxml>=5.0.0
+selenium>=4.15.0
+
+# --- Observability ---
+mlflow>=3.3.0
+
+# --- Configuration & Utilities ---
+python-dotenv>=1.0.0
+pyyaml>=6.0.0
+click>=8.1.0
+rich>=13.0.0
+tqdm>=4.66.0
+
+# --- Scientific Computing ---
+numpy>=1.26.0,<2.0.0
+scipy>=1.11.0
+pandas>=2.0.0
+matplotlib>=3.8.0
+
+# --- Data Serialization ---
+jsonschema>=4.20.0
+orjson>=3.9.0
+
+# --- Security ---
+cryptography>=42.0.0
+bcrypt>=4.1.0
+pyjwt>=2.8.0
+
+# --- Data Validation ---
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+
+# --- Additional Core Dependencies ---
+monty>=2024.0.0
+packaging>=24.0
+pillow>=10.0.0
+jinja2>=3.1.0
+typing-extensions>=4.9.0
+attrs>=23.0.0
+filelock>=3.13.0
+fsspec>=2024.9.0,<2025.0.0
+cachetools>=5.3.0

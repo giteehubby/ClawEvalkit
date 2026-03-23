@@ -1,0 +1,10 @@
+id = "tool-003"
+title = "Environment Configuration"
+domain = "real-tools"
+level = "L2"
+description = "Generate a .env file from a template and config spec, and create a docker-compose.yml referencing the environment variables"
+timeout = 180
+capabilities = ["file-read", "file-write"]
+skills_allowed = true
+tags = ["docker", "environment", "configuration", "devops", "yaml"]
+capability_types = ["reasoning", "tool-use"]
