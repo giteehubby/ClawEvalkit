@@ -97,6 +97,35 @@ python run.py --benchmark openclawbench \
 python test_openclawbench.py
 ```
 
+### SkillsBench (87 个任务，多个类别)
+
+```bash
+cd work/benchmarks/scripts
+
+# 运行全部任务
+python run.py --benchmark skillsbench \
+    --api-url https://openrouter.ai/api/v1 \
+    --api-key <your-api-key> \
+    --model gpt-4o-mini
+
+# 运行特定难度
+python run.py --benchmark skillsbench \
+    --api-url https://openrouter.ai/api/v1 \
+    --api-key <your-api-key> \
+    --model gpt-4o-mini \
+    --difficulty easy
+
+# 运行特定类别
+python run.py --benchmark skillsbench \
+    --api-url https://openrouter.ai/api/v1 \
+    --api-key <your-api-key> \
+    --model gpt-4o-mini \
+    --category "data-analysis"
+
+# 运行 SkillsBench 快速验证
+python test_skillsbench.py
+```
+
 ## 当前实现
 
 ### NanoBotAgent
@@ -118,6 +147,14 @@ python test_openclawbench.py
 - 四层评分体系：L0(结构检查) / L1(指标分析) / L2(行为分析) / L3(输出质量)
 - 自动复制输入文件，运行 setup.sh 脚本
 - 支持 suite 和 difficulty 筛选
+
+### SkillsBenchAdapter
+
+- 加载 `skillsbench/tasks/` 目录下的 task.toml 和 instruction.md 文件
+- 基于难度和输出文件存在性进行评分
+- 自动复制环境文件到工作空间
+- 支持 difficulty 和 category 筛选
+- 包含 87 个任务，涵盖工程、数据分析、编译构建等多个领域
 
 ## 运行流程
 

@@ -25,6 +25,7 @@ from agent.base import AgentResult, BaseAgent
 from agent.nanobot import NanoBotAgent
 from adapters.pinchbench import PinchBenchAdapter
 from adapters.openclawbench import OpenClawBenchAdapter
+from adapters.skillsbench import SkillsBenchAdapter
 
 # 配置日志
 logging.basicConfig(
@@ -186,6 +187,68 @@ def run_openclawbench(args: argparse.Namespace) -> None:
     logger.info(f"Results saved to: {output_dir}")
 
 
+def run_skillsbench(args: argparse.Namespace) -> None:
+    """运行 SkillsBench 评估
+
+    Args:
+        args: 命令行参数
+    """
+    # 路径设置
+    benchmarks_dir = Path(__file__).parent.parent
+    skillsbench_dir = benchmarks_dir / "skillsbench"
+    tasks_dir = skillsbench_dir / "tasks"
+
+    if not tasks_dir.exists():
+        logger.error(f"Tasks directory not found: {tasks_dir}")
+        sys.exit(1)
+
+    # 创建工作目录
+    workspace = Path("/tmp/benchmarks/workspace")
+    workspace.mkdir(parents=True, exist_ok=True)
+
+    # 创建输出目录
+    output_dir = Path(args.output_dir) if args.output_dir else benchmarks_dir / "results"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # 创建 Agent
+    logger.info(f"Creating {args.agent} agent with model: {args.model}")
+    agent = create_agent(
+        agent_type=args.agent,
+        model=args.model,
+        api_url=args.api_url,
+        api_key=args.api_key,
+        workspace=workspace,
+        timeout=args.timeout,
+    )
+
+    # 创建适配器
+    adapter = SkillsBenchAdapter(
+        agent=agent,
+        tasks_dir=tasks_dir,
+        output_dir=output_dir,
+    )
+
+    # 加载任务
+    difficulty = getattr(args, 'difficulty', None)
+    category = getattr(args, 'category', None)
+    adapter.load_tasks(difficulty=difficulty, category=category)
+
+    # 运行评估
+    task_ids = None
+    if args.tasks:
+        task_ids = [t.strip() for t in args.tasks.split(",")]
+
+    results = adapter.run(
+        task_ids=task_ids,
+        runs_per_task=args.runs,
+    )
+
+    logger.info("\nBenchmark completed!")
+    logger.info(f"Overall Score: {results['overall_score']:.1f}%")
+    logger.info(f"Passed: {results['passed_tasks']}/{results['total_tasks']} tasks")
+    logger.info(f"Results saved to: {output_dir}")
+
+
 def run_benchmark(benchmark_name: str, args: argparse.Namespace) -> None:
     """运行指定的 benchmark
 
@@ -197,9 +260,11 @@ def run_benchmark(benchmark_name: str, args: argparse.Namespace) -> None:
         run_pinchbench(args)
     elif benchmark_name == "openclawbench":
         run_openclawbench(args)
+    elif benchmark_name == "skillsbench":
+        run_skillsbench(args)
     else:
         logger.error(f"Unknown benchmark: {benchmark_name}")
-        logger.info(f"Available benchmarks: pinchbench, openclawbench")
+        logger.info(f"Available benchmarks: pinchbench, openclawbench, skillsbench")
         sys.exit(1)
 
 
@@ -297,7 +362,14 @@ def main():
     parser.add_argument(
         "--difficulty",
         type=str,
-        help="OpenClawBench: 指定难度 (easy, medium, hard) 或 'fast' (easy+medium)",
+        help="OpenClawBench/SkillsBench: 指定难度 (easy, medium, hard) 或 'fast' (easy+medium)",
+    )
+
+    # SkillsBench 特定参数
+    parser.add_argument(
+        "--category",
+        type=str,
+        help="SkillsBench: 指定类别",
     )
 
     args = parser.parse_args()

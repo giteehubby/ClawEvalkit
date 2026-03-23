@@ -1,0 +1,575 @@
+"""
+SkillsBench 适配器。
+
+使用统一的 Agent 接口来运行 SkillsBench 任务。
+基于 NanoBot 执行任务，复用 SkillsBench 的测试验证逻辑。
+"""
+
+import json
+import logging
+import re
+import shutil
+import statistics
+import subprocess
+import time
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+try:
+    import yaml
+    HAS_YAML = True
+except ImportError:
+    HAS_YAML = False
+
+from agent.base import AgentResult, BaseAgent
+
+logger = logging.getLogger("adapter.skillsbench")
+
+
+class Task:
+    """任务对象"""
+
+    def __init__(
+        self,
+        task_id: str,
+        name: str,
+        instruction: str,
+        difficulty: str,
+        category: str,
+        tags: List[str],
+        timeout: int,
+        expected_outputs: List[str],
+        task_dir: Path,
+    ):
+        self.task_id = task_id
+        self.name = name
+        self.instruction = instruction
+        self.difficulty = difficulty
+        self.category = category
+        self.tags = tags
+        self.timeout = timeout
+        self.expected_outputs = expected_outputs
+        self.task_dir = task_dir
+
+
+class TaskLoader:
+    """任务加载器"""
+
+    def __init__(self, tasks_dir: Path):
+        self.tasks_dir = tasks_dir
+
+    def load_all_tasks(self, difficulty: str | None = None, category: str | None = None) -> List[Task]:
+        """加载所有任务
+
+        Args:
+            difficulty: 可选，筛选特定难度 (easy/medium/hard)
+            category: 可选，筛选特定类别
+        """
+        tasks = []
+
+        for task_dir in sorted(self.tasks_dir.iterdir()):
+            if not task_dir.is_dir():
+                continue
+
+            task = self._load_task(task_dir)
+            if not task:
+                continue
+
+            # 难度筛选
+            if difficulty:
+                if difficulty == "fast":
+                    if task.difficulty not in ["easy", "medium"]:
+                        continue
+                elif task.difficulty != difficulty:
+                    continue
+
+            # 类别筛选
+            if category and task.category.lower() != category.lower():
+                continue
+
+            tasks.append(task)
+
+        return tasks
+
+    def _load_task(self, task_dir: Path) -> Optional[Task]:
+        """加载单个任务"""
+        task_file = task_dir / "task.toml"
+        instruction_file = task_dir / "instruction.md"
+
+        if not task_file.exists():
+            return None
+
+        # 解析 task.toml
+        try:
+            content = task_file.read_text(encoding="utf-8")
+            data = self._parse_toml(content)
+        except Exception as e:
+            logger.warning(f"Failed to load task {task_dir}: {e}")
+            return None
+
+        if not data:
+            return None
+
+        metadata = data.get("metadata", {})
+        verifier = data.get("verifier", {})
+        agent_config = data.get("agent", {})
+
+        # 读取 instruction.md
+        instruction = ""
+        if instruction_file.exists():
+            instruction = instruction_file.read_text(encoding="utf-8")
+
+        # 提取期望输出（从 instruction 中解析）
+        expected_outputs = self._extract_expected_outputs(instruction)
+
+        return Task(
+            task_id=task_dir.name,
+            name=metadata.get("author_name", task_dir.name),
+            instruction=instruction,
+            difficulty=metadata.get("difficulty", "medium"),
+            category=metadata.get("category", "general"),
+            tags=metadata.get("tags", []),
+            timeout=int(float(agent_config.get("timeout_sec", 1800))),
+            expected_outputs=expected_outputs,
+            task_dir=task_dir,
+        )
+
+    def _parse_toml(self, content: str) -> Dict:
+        """简单 TOML 解析"""
+        result = {"metadata": {}, "verifier": {}, "agent": {}, "environment": {}}
+        current_section = None
+
+        for line in content.split("\n"):
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+
+            # 移除行内注释
+            if "#" in line and not line.strip().startswith("#"):
+                line = line.split("#")[0]
+
+            if line.startswith("[") and line.endswith("]"):
+                current_section = line[1:-1].strip()
+                if current_section not in result:
+                    result[current_section] = {}
+                continue
+
+            if "=" in line:
+                key, value = line.split("=", 1)
+                key = key.strip()
+                value = value.strip().strip('"').strip("'")
+
+                if current_section:
+                    result[current_section][key] = value
+                else:
+                    result[key] = value
+
+        return result
+
+    def _extract_expected_outputs(self, instruction: str) -> List[str]:
+        """从 instruction 中提取期望输出文件"""
+        outputs = []
+
+        # 匹配 /root/output/... 格式
+        for match in re.findall(r'/root/[a-zA-Z0-9_/.-]+', instruction):
+            if match.startswith("/root/output/") or match.startswith("/root/"):
+                outputs.append(match)
+
+        # 去重
+        return list(set(outputs))
+
+
+class ScoreResult:
+    """评分结果"""
+
+    def __init__(
+        self,
+        task_id: str,
+        score: float = 0.0,
+        max_score: float = 100.0,
+        passed: bool = False,
+        breakdown: Dict | None = None,
+        notes: str = "",
+    ):
+        self.task_id = task_id
+        self.score = score
+        self.max_score = max_score
+        self.passed = passed
+        self.breakdown = breakdown or {}
+        self.notes = notes
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {
+            "task_id": self.task_id,
+            "score": self.score,
+            "max_score": self.max_score,
+            "passed": self.passed,
+            "breakdown": self.breakdown,
+            "notes": self.notes,
+        }
+
+
+def grade_task(task: Task, result: AgentResult, workspace: Path) -> ScoreResult:
+    """评估任务结果
+
+    Args:
+        task: 任务对象
+        result: Agent 执行结果
+        workspace: 工作空间路径
+
+    Returns:
+        ScoreResult: 评分结果
+    """
+    if result.status == "error":
+        return ScoreResult(
+            task_id=task.task_id,
+            score=0.0,
+            notes=f"Agent error: {result.error[:100]}",
+        )
+
+    if result.status == "timeout":
+        return ScoreResult(
+            task_id=task.task_id,
+            score=10.0,
+            notes="Task timed out",
+        )
+
+    # 检查输出文件
+    output_checks = []
+    output_score = 0.0
+
+    for expected_file in task.expected_outputs:
+        # 转换路径（/root/xxx -> workspace/xxx）
+        local_path = workspace / expected_file.replace("/root/", "")
+        local_path.parent.mkdir(parents=True, exist_ok=True)
+
+        if local_path.exists():
+            output_checks.append({"file": expected_file, "found": True, "size": local_path.stat().st_size})
+            output_score += 1.0
+        else:
+            output_checks.append({"file": expected_file, "found": False})
+
+    # 如果没有明确的输出文件，检查 workspace 中的文件
+    if not task.expected_outputs:
+        files = list(workspace.rglob("*"))
+        file_count = len([f for f in files if f.is_file()])
+        if file_count > 0:
+            output_score = min(50.0, file_count * 10)
+
+    # 基于难度调整基础分
+    difficulty_scores = {
+        "easy": 30.0,
+        "medium": 20.0,
+        "hard": 10.0,
+    }
+    base_score = difficulty_scores.get(task.difficulty, 20.0)
+
+    # 检查是否有合理的响应
+    if result.content:
+        base_score += 10.0
+
+    # 检查是否有工具调用
+    tool_calls = _count_tool_calls(result.transcript)
+    if tool_calls > 0:
+        base_score += 10.0
+        if tool_calls >= 3:
+            base_score += 5.0
+
+    # 计算输出文件分
+    output_weight = len(task.expected_outputs) if task.expected_outputs else 1
+    output_points = (output_score / output_weight) * 30 if output_weight > 0 else 0
+
+    total_score = min(100.0, base_score + output_points)
+
+    # 判断是否通过（60分以上）
+    passed = total_score >= 60.0
+
+    return ScoreResult(
+        task_id=task.task_id,
+        score=total_score,
+        passed=passed,
+        breakdown={
+            "base_score": base_score,
+            "output_score": output_points,
+            "tool_calls": tool_calls,
+            "output_checks": output_checks,
+        },
+        notes=f"{'PASS' if passed else 'FAIL'} - {total_score:.0f}/100 (difficulty: {task.difficulty})",
+    )
+
+
+def _count_tool_calls(transcript: List[Dict]) -> int:
+    """统计工具调用次数"""
+    count = 0
+    for entry in transcript:
+        if entry.get("type") == "message":
+            msg = entry.get("message", {})
+            content = msg.get("content", [])
+            if isinstance(content, list):
+                for item in content:
+                    if isinstance(item, dict) and item.get("type") == "toolCall":
+                        count += 1
+    return count
+
+
+class SkillsBenchAdapter:
+    """SkillsBench 适配器"""
+
+    def __init__(
+        self,
+        agent: BaseAgent,
+        tasks_dir: Path,
+        output_dir: Path | None = None,
+    ):
+        self.agent = agent
+        self.tasks_dir = tasks_dir
+        self.output_dir = output_dir or Path("results")
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+
+        self.tasks: List[Task] = []
+        self.results: List[Dict] = []
+
+    def load_tasks(
+        self,
+        difficulty: str | None = None,
+        category: str | None = None,
+    ) -> None:
+        """加载任务"""
+        self.tasks = TaskLoader(self.tasks_dir).load_all_tasks(
+            difficulty=difficulty,
+            category=category,
+        )
+        logger.info(f"Loaded {len(self.tasks)} tasks")
+
+    def run(
+        self,
+        task_ids: List[str] | None = None,
+        runs_per_task: int = 1,
+    ) -> Dict[str, Any]:
+        """运行 benchmark
+
+        Args:
+            task_ids: 要运行的任务 ID 列表，None 表示全部
+            runs_per_task: 每个任务运行次数
+
+        Returns:
+            Dict: 运行结果
+        """
+        # 筛选任务
+        if task_ids:
+            tasks_to_run = [t for t in self.tasks if t.task_id in task_ids]
+        else:
+            tasks_to_run = self.tasks
+
+        logger.info(f"Running benchmark on {len(tasks_to_run)} tasks ({runs_per_task} run(s) per task)")
+
+        scores_by_task_id = {}
+
+        for i, task in enumerate(tasks_to_run, 1):
+            logger.info(f"\n{'=' * 60}")
+            logger.info(f"Task {i}/{len(tasks_to_run)}: {task.task_id}")
+            logger.info(f"Difficulty: {task.difficulty} | Category: {task.category}")
+            logger.info(f"{'=' * 60}")
+
+            task_grades = []
+
+            for run_index in range(runs_per_task):
+                # 准备工作空间
+                workspace = self._prepare_workspace(task, f"{task.task_id}_{run_index}")
+
+                # 执行任务
+                try:
+                    result = self.agent.execute(
+                        task.instruction,
+                        f"{task.task_id}_{run_index}",
+                        workspace=workspace
+                    )
+                except Exception as e:
+                    logger.warning(f"Task execution failed: {e}")
+                    result = AgentResult(status="error", error=str(e))
+
+                # 设置 workspace 路径
+                result.workspace = str(workspace)
+
+                # 保存 transcript
+                transcript_path = self.output_dir / "transcripts" / f"{task.task_id}_{run_index}.jsonl"
+                result.save_transcript(transcript_path)
+
+                # 评分
+                grade = grade_task(task, result, workspace)
+                task_grades.append(grade)
+
+                # 记录分数
+                status_emoji = "✅" if grade.passed else "❌"
+                logger.info(f"{status_emoji} {task.task_id}: {grade.notes}")
+
+            # 统计多轮运行的平均分
+            scores = [g.score for g in task_grades]
+            passed_count = sum(1 for g in task_grades if g.passed)
+            scores_by_task_id[task.task_id] = {
+                "task_name": task.name,
+                "category": task.category,
+                "difficulty": task.difficulty,
+                "runs": [g.to_dict() for g in task_grades],
+                "mean": statistics.mean(scores),
+                "std": statistics.stdev(scores) if len(scores) > 1 else 0.0,
+                "min": min(scores),
+                "max": max(scores),
+                "passed": passed_count > 0,
+            }
+
+        # 生成报告
+        return self._generate_report(scores_by_task_id, tasks_to_run)
+
+    def _prepare_workspace(self, task: Task, run_id: str) -> Path:
+        """准备任务工作空间"""
+        import shutil
+
+        workspace = Path(f"/tmp/benchmarks/skillsbench/{run_id}")
+
+        # 清理旧的工作空间
+        if workspace.exists():
+            shutil.rmtree(workspace)
+        workspace.mkdir(parents=True, exist_ok=True)
+
+        # 复制环境文件
+        env_dir = task.task_dir / "environment"
+        if env_dir.exists():
+            for item in env_dir.iterdir():
+                if item.name == "skills":
+                    # 复制 skills
+                    skills_dest = workspace / "skills"
+                    skills_dest.mkdir(parents=True, exist_ok=True)
+                    for skill in item.iterdir():
+                        if skill.is_dir():
+                            shutil.copytree(skill, skills_dest / skill.name, dirs_exist_ok=True)
+                else:
+                    dest = workspace / item.name
+                    if item.is_dir():
+                        shutil.copytree(item, dest, dirs_exist_ok=True)
+                    else:
+                        shutil.copy2(item, dest)
+
+        # 也复制 skills 到 workspace 根目录
+        skills_root = workspace / "root"
+        skills_root.mkdir(exist_ok=True)
+        skills_src = task.task_dir / "environment" / "skills"
+        if skills_src.exists():
+            for skill in skills_src.iterdir():
+                if skill.is_dir():
+                    shutil.copytree(skill, skills_root / skill.name, dirs_exist_ok=True)
+
+        # 复制 skills 到 ~/.openclaw/skills
+        main_skills_dir = Path.home() / ".openclaw" / "workspace" / "skills"
+        if main_skills_dir.exists():
+            dest_skills_dir = workspace / "skills"
+            dest_skills_dir.mkdir(parents=True, exist_ok=True)
+            for skill_dir_src in main_skills_dir.iterdir():
+                if skill_dir_src.is_dir():
+                    dest_skill_dir = dest_skills_dir / skill_dir_src.name
+                    if dest_skill_dir.exists():
+                        shutil.rmtree(dest_skill_dir)
+                    shutil.copytree(skill_dir_src, dest_skill_dir)
+
+        return workspace
+
+    def _generate_report(self, scores_by_task_id: Dict, tasks_to_run: List[Task]) -> Dict[str, Any]:
+        """生成报告"""
+        # 计算总分
+        all_scores = [scores_by_task_id[tid]["mean"] for tid in scores_by_task_id]
+        total_score = sum(all_scores) / len(all_scores) if all_scores else 0
+        passed_count = sum(1 for s in scores_by_task_id.values() if s["passed"])
+
+        # 按类别分组
+        category_scores: Dict[str, Dict] = {}
+        for task in tasks_to_run:
+            category = task.category.upper()
+            if category not in category_scores:
+                category_scores[category] = {"earned": 0.0, "count": 0}
+
+            score = scores_by_task_id.get(task.task_id, {}).get("mean", 0.0)
+            category_scores[category]["earned"] += score
+            category_scores[category]["count"] += 1
+
+        # 计算类别平均分
+        category_averages = {}
+        for cat, data in category_scores.items():
+            category_averages[cat] = data["earned"] / data["count"] if data["count"] > 0 else 0
+
+        # 按难度分组
+        difficulty_scores: Dict[str, Dict] = {}
+        for task in tasks_to_run:
+            diff = task.difficulty.upper()
+            if diff not in difficulty_scores:
+                difficulty_scores[diff] = {"earned": 0.0, "count": 0}
+
+            score = scores_by_task_id.get(task.task_id, {}).get("mean", 0.0)
+            difficulty_scores[diff]["earned"] += score
+            difficulty_scores[diff]["count"] += 1
+
+        difficulty_averages = {}
+        for diff, data in difficulty_scores.items():
+            difficulty_averages[diff] = data["earned"] / data["count"] if data["count"] > 0 else 0
+
+        # 打印摘要
+        logger.info("\n" + "=" * 60)
+        logger.info("SKILLSBENCH SCORE SUMMARY")
+        logger.info("=" * 60)
+        logger.info(f"Overall Score: {total_score:.1f}%")
+        logger.info(f"Passed: {passed_count}/{len(scores_by_task_id)} tasks")
+        logger.info("")
+        logger.info(f"{'Category':<20} {'Score':>10} {'Tasks':>10}")
+        logger.info("-" * 44)
+        for category in sorted(category_averages.keys()):
+            data = category_scores[category]
+            logger.info(f"{category:<20} {category_averages[category]:>9.1f}% {data['count']:>10}")
+
+        logger.info("")
+        logger.info(f"{'Difficulty':<20} {'Score':>10} {'Tasks':>10}")
+        logger.info("-" * 44)
+        for diff in sorted(difficulty_averages.keys()):
+            data = difficulty_scores[diff]
+            logger.info(f"{diff:<20} {difficulty_averages[diff]:>9.1f}% {data['count']:>10}")
+
+        # 构建结果字典
+        result = {
+            "benchmark": "skillsbench",
+            "timestamp": time.time(),
+            "overall_score": round(total_score, 2),
+            "passed_tasks": passed_count,
+            "total_tasks": len(scores_by_task_id),
+            "category_scores": {
+                cat: {
+                    "score": round(category_averages[cat], 2),
+                    "count": category_scores[cat]["count"],
+                }
+                for cat in category_scores
+            },
+            "difficulty_scores": {
+                diff: {
+                    "score": round(difficulty_averages[diff], 2),
+                    "count": difficulty_scores[diff]["count"],
+                }
+                for diff in difficulty_scores
+            },
+            "task_scores": {
+                tid: {
+                    "task_name": data["task_name"],
+                    "category": data["category"],
+                    "difficulty": data["difficulty"],
+                    "mean": round(data["mean"], 2),
+                    "std": round(data["std"], 2),
+                    "passed": data["passed"],
+                }
+                for tid, data in scores_by_task_id.items()
+            },
+        }
+
+        # 保存结果
+        run_id = f"{int(time.time() * 1000):013d}"
+        output_path = self.output_dir / f"skillsbench_{run_id}.json"
+        output_path.write_text(json.dumps(result, indent=2, ensure_ascii=False))
+
+        logger.info(f"\nResults saved to: {output_path}")
+
+        return result
