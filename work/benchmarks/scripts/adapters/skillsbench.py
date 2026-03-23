@@ -3,6 +3,7 @@ SkillsBench 适配器。
 
 使用统一的 Agent 接口来运行 SkillsBench 任务。
 基于 NanoBot 执行任务，复用 SkillsBench 的测试验证逻辑。
+支持并行执行。
 """
 
 import json
@@ -12,6 +13,8 @@ import shutil
 import statistics
 import subprocess
 import time
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -20,6 +23,12 @@ try:
     HAS_YAML = True
 except ImportError:
     HAS_YAML = False
+
+try:
+    from tqdm import tqdm
+    HAS_TQDM = True
+except ImportError:
+    HAS_TQDM = False
 
 from agent.base import AgentResult, BaseAgent
 
@@ -345,12 +354,16 @@ class SkillsBenchAdapter:
         self,
         task_ids: List[str] | None = None,
         runs_per_task: int = 1,
+        threads: int = 1,
+        progress_callback=None,
     ) -> Dict[str, Any]:
         """运行 benchmark
 
         Args:
             task_ids: 要运行的任务 ID 列表，None 表示全部
             runs_per_task: 每个任务运行次数
+            threads: 并行线程数（默认1，即串行执行）
+            progress_callback: 进度回调函数，接收 (completed, total, task_id, grade) 参数
 
         Returns:
             Dict: 运行结果
@@ -361,9 +374,22 @@ class SkillsBenchAdapter:
         else:
             tasks_to_run = self.tasks
 
-        logger.info(f"Running benchmark on {len(tasks_to_run)} tasks ({runs_per_task} run(s) per task)")
+        logger.info(f"Running benchmark on {len(tasks_to_run)} tasks ({runs_per_task} run(s) per task, {threads} thread(s))")
 
+        if threads > 1:
+            return self._run_parallel(tasks_to_run, runs_per_task, threads, progress_callback)
+        else:
+            return self._run_sequential(tasks_to_run, runs_per_task, progress_callback)
+
+    def _run_sequential(
+        self,
+        tasks_to_run: List[Task],
+        runs_per_task: int,
+        progress_callback=None,
+    ) -> Dict[str, Any]:
+        """串行执行任务"""
         scores_by_task_id = {}
+        total = len(tasks_to_run) * runs_per_task
 
         for i, task in enumerate(tasks_to_run, 1):
             logger.info(f"\n{'=' * 60}")
@@ -374,10 +400,8 @@ class SkillsBenchAdapter:
             task_grades = []
 
             for run_index in range(runs_per_task):
-                # 准备工作空间
                 workspace = self._prepare_workspace(task, f"{task.task_id}_{run_index}")
 
-                # 执行任务
                 try:
                     result = self.agent.execute(
                         task.instruction,
@@ -388,22 +412,20 @@ class SkillsBenchAdapter:
                     logger.warning(f"Task execution failed: {e}")
                     result = AgentResult(status="error", error=str(e))
 
-                # 设置 workspace 路径
                 result.workspace = str(workspace)
 
-                # 保存 transcript
                 transcript_path = self.output_dir / "transcripts" / f"{task.task_id}_{run_index}.jsonl"
                 result.save_transcript(transcript_path)
 
-                # 评分
                 grade = grade_task(task, result, workspace)
                 task_grades.append(grade)
 
-                # 记录分数
                 status_emoji = "✅" if grade.passed else "❌"
                 logger.info(f"{status_emoji} {task.task_id}: {grade.notes}")
 
-            # 统计多轮运行的平均分
+                if progress_callback:
+                    progress_callback(i, len(tasks_to_run), task.task_id, grade)
+
             scores = [g.score for g in task_grades]
             passed_count = sum(1 for g in task_grades if g.passed)
             scores_by_task_id[task.task_id] = {
@@ -418,7 +440,96 @@ class SkillsBenchAdapter:
                 "passed": passed_count > 0,
             }
 
-        # 生成报告
+        return self._generate_report(scores_by_task_id, tasks_to_run)
+
+    def _run_parallel(
+        self,
+        tasks_to_run: List[Task],
+        runs_per_task: int,
+        threads: int,
+        progress_callback=None,
+    ) -> Dict[str, Any]:
+        """并行执行任务"""
+        scores_by_task_id = {}
+        lock = threading.Lock()
+        completed_count = 0
+        total_count = len(tasks_to_run) * runs_per_task
+
+        def run_single_task(task: Task, run_index: int) -> tuple:
+            """运行单个任务（线程安全）"""
+            workspace = self._prepare_workspace(task, f"{task.task_id}_{run_index}")
+
+            try:
+                result = self.agent.execute(
+                    task.instruction,
+                    f"{task.task_id}_{run_index}",
+                    workspace=workspace
+                )
+            except Exception as e:
+                logger.warning(f"Task execution failed: {e}")
+                result = AgentResult(status="error", error=str(e))
+
+            result.workspace = str(workspace)
+
+            transcript_path = self.output_dir / "transcripts" / f"{task.task_id}_{run_index}.jsonl"
+            result.save_transcript(transcript_path)
+
+            grade = grade_task(task, result, workspace)
+            return task, run_index, grade
+
+        # 准备所有任务
+        all_work = [(task, run_index) for task in tasks_to_run for run_index in range(runs_per_task)]
+
+        logger.info(f"Starting parallel execution with {threads} threads on {len(all_work)} items")
+
+        with ThreadPoolExecutor(max_workers=threads) as executor:
+            futures = {executor.submit(run_single_task, task, run_idx): (task, run_idx) for task, run_idx in all_work}
+
+            # 进度条
+            if HAS_TQDM:
+                pbar = tqdm(total=total_count, desc="Benchmark", unit="task", ncols=100)
+
+            for future in as_completed(futures):
+                task, run_index, grade = future.result()
+
+                with lock:
+                    completed_count += 1
+                    status_emoji = "✅" if grade.passed else "❌"
+                    logger.info(f"[{completed_count}/{total_count}] {status_emoji} {task.task_id}: {grade.notes}")
+
+                    if progress_callback:
+                        progress_callback(completed_count, total_count, task.task_id, grade)
+
+                    if HAS_TQDM:
+                        pbar.update(1)
+
+                    # 收集结果
+                    if task.task_id not in scores_by_task_id:
+                        scores_by_task_id[task.task_id] = {
+                            "task_name": task.name,
+                            "category": task.category,
+                            "difficulty": task.difficulty,
+                            "runs": [],
+                            "scores": [],
+                        }
+
+                    scores_by_task_id[task.task_id]["runs"].append(grade.to_dict())
+                    scores_by_task_id[task.task_id]["scores"].append(grade.score)
+
+            if HAS_TQDM:
+                pbar.close()
+
+        # 汇总每个任务的分数
+        for task_id, data in scores_by_task_id.items():
+            scores = data["scores"]
+            passed_count = sum(1 for s, r in zip(scores, data["runs"]) if r["passed"])
+            data["mean"] = statistics.mean(scores)
+            data["std"] = statistics.stdev(scores) if len(scores) > 1 else 0.0
+            data["min"] = min(scores)
+            data["max"] = max(scores)
+            data["passed"] = passed_count > 0
+            del data["scores"]  # 清理临时字段
+
         return self._generate_report(scores_by_task_id, tasks_to_run)
 
     def _prepare_workspace(self, task: Task, run_id: str) -> Path:

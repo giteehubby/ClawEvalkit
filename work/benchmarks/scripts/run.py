@@ -241,6 +241,7 @@ def run_skillsbench(args: argparse.Namespace) -> None:
     results = adapter.run(
         task_ids=task_ids,
         runs_per_task=args.runs,
+        threads=args.threads,
     )
 
     logger.info("\nBenchmark completed!")
@@ -370,6 +371,12 @@ def main():
         "--category",
         type=str,
         help="SkillsBench: 指定类别",
+    )
+    parser.add_argument(
+        "--threads", "-t",
+        type=int,
+        default=1,
+        help="并行线程数（默认: 1，用于加速执行）",
     )
 
     args = parser.parse_args()
