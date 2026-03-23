@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NanoBot Benchmark Results - Gemini 3 Flash</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #3b82f6;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --purple: #a855f7;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        .model-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        .tldr-card {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+            border: 1px solid var(--accent);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .tldr-card h3 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            border: none;
+            border-radius: 0.5rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+        .tab:hover { background: var(--bg-card); }
+        .tab.active {
+            background: var(--accent);
+            color: white;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            border: 1px solid var(--bg-card);
+        }
+        .card h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .score-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+            border: 4px solid;
+        }
+        .score-high { border-color: var(--success); color: var(--success); }
+        .score-mid { border-color: var(--warning); color: var(--warning); }
+        .score-low { border-color: var(--danger); color: var(--danger); }
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--bg-card);
+        }
+        .stat:last-child { border-bottom: none; }
+        .stat-label { color: var(--text-secondary); }
+        .stat-value { font-weight: 600; }
+        .chart-container {
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .chart-title {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        .category-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .category-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--bg-card);
+        }
+        .category-item:last-child { border-bottom: none; }
+        .category-name {
+            flex: 1;
+            font-size: 0.875rem;
+        }
+        .category-bar {
+            width: 120px;
+            height: 8px;
+            background: var(--bg-card);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .category-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .category-score {
+            width: 50px;
+            text-align: right;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 24px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--bg-card);
+        }
+        th {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        td { font-size: 0.875rem; }
+        .rank-high { color: var(--success); }
+        .rank-mid { color: var(--warning); }
+        .rank-low { color: var(--danger); }
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>NanoBot Benchmark Results</h1>
+        <p class="subtitle">
+            <span class="model-badge">openrouter/google/gemini-3-flash-preview</span>
+            <br><br>
+            2026-03-23 22:02 ~ 22:56
+        </p>
+
+        <!-- TLDR Summary -->
+        <div class="tldr-card">
+            <h3>TLDR</h3>
+            <p>
+                Gemini 3 Flash 在三个 Benchmark 上的表现为：<strong>SkillsBench 73.41%</strong> (56/87任务通过)、
+                <strong>PinchBench 61.73%</strong> (14.2/23)、<strong>OpenClawBench 62.05%</strong> (24.8/40)。
+                模型在工程类任务（CONTROL-SYSTEMS、COMPILATION & BUILD）表现优异，但在需要记忆和数据分析的任务上较弱。
+                总耗时约25分钟（409s + 364s + 717s），使用10线程并行执行 SkillsBench。
+            </p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('overview')">总览</button>
+            <button class="tab" onclick="showTab('skillsbench')">SkillsBench (87)</button>
+            <button class="tab" onclick="showTab('pinchbench')">PinchBench (23)</button>
+            <button class="tab" onclick="showTab('openclawbench')">OpenClawBench (40)</button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content active">
+            <div class="grid">
+                <div class="card">
+                    <h3>SkillsBench</h3>
+                    <div class="score-circle score-mid" id="sb-circle">73.4%</div>
+                    <div class="stat">
+                        <span class="stat-label">通过任务</span>
+                        <span class="stat-value">56 / 87</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">耗时</span>
+                        <span class="stat-value">409s (6.8 min)</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">线程数</span>
+                        <span class="stat-value">10</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>PinchBench</h3>
+                    <div class="score-circle score-mid" id="pb-circle">61.7%</div>
+                    <div class="stat">
+                        <span class="stat-label">得分</span>
+                        <span class="stat-value">14.2 / 23</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">耗时</span>
+                        <span class="stat-value">364s (6.1 min)</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">任务数</span>
+                        <span class="stat-value">23</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>OpenClawBench</h3>
+                    <div class="score-circle score-mid" id="oc-circle">62.1%</div>
+                    <div class="stat">
+                        <span class="stat-label">得分</span>
+                        <span class="stat-value">24.8 / 40</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">耗时</span>
+                        <span class="stat-value">717s (12.0 min)</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">任务数</span>
+                        <span class="stat-value">40</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h4 class="chart-title">Benchmark Scores Comparison</h4>
+                <canvas id="overviewChart" height="120"></canvas>
+            </div>
+        </div>
+
+        <!-- SkillsBench Tab -->
+        <div id="skillsbench" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h3>整体评分</h3>
+                    <div class="score-circle score-mid">73.4%</div>
+                    <p style="text-align:center;color:var(--text-secondary);font-size:0.875rem;">
+                        56/87 任务通过
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>时间统计</h3>
+                    <div class="stat">
+                        <span class="stat-label">总耗时</span>
+                        <span class="stat-value">409s</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">平均每任务</span>
+                        <span class="stat-value">4.7s</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">并行线程</span>
+                        <span class="stat-value">10</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h4 class="chart-title">SkillsBench Category Scores</h4>
+                <canvas id="skillsbenchChart" height="300"></canvas>
+            </div>
+            <div class="card">
+                <h3>分类详细数据</h3>
+                <div class="category-list" id="skillsbench-categories"></div>
+            </div>
+        </div>
+
+        <!-- PinchBench Tab -->
+        <div id="pinchbench" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h3>整体评分</h3>
+                    <div class="score-circle score-mid">61.7%</div>
+                    <p style="text-align:center;color:var(--text-secondary);font-size:0.875rem;">
+                        14.2/23 分
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>时间统计</h3>
+                    <div class="stat">
+                        <span class="stat-label">总耗时</span>
+                        <span class="stat-value">364s</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">平均每任务</span>
+                        <span class="stat-value">15.8s</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h4 class="chart-title">PinchBench Category Scores</h4>
+                <canvas id="pinchbenchChart" height="200"></canvas>
+            </div>
+            <div class="card">
+                <h3>分类详细数据</h3>
+                <div class="category-list" id="pinchbench-categories"></div>
+            </div>
+        </div>
+
+        <!-- OpenClawBench Tab -->
+        <div id="openclawbench" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h3>整体评分</h3>
+                    <div class="score-circle score-mid">62.1%</div>
+                    <p style="text-align:center;color:var(--text-secondary);font-size:0.875rem;">
+                        24.8/40 分
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>时间统计</h3>
+                    <div class="stat">
+                        <span class="stat-label">总耗时</span>
+                        <span class="stat-value">717s</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">平均每任务</span>
+                        <span class="stat-value">17.9s</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h4 class="chart-title">OpenClawBench Suite Scores</h4>
+                <canvas id="openclawbenchChart" height="200"></canvas>
+            </div>
+            <div class="card">
+                <h3>Suite 详细数据</h3>
+                <div class="category-list" id="openclawbench-categories"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data
+        const data = {
+            skillsbench: {
+                overall: 73.41,
+                passed: 56,
+                total: 87,
+                time: 409,
+                categories: [
+                    {name: "CONTROL-SYSTEMS", score: 100.0, count: 3},
+                    {name: "BGP-ROUTE", score: 100.0, count: 1},
+                    {name: "GAMES", score: 100.0, count: 1},
+                    {name: "GAME", score: 100.0, count: 1},
+                    {name: "ENERGY", score: 100.0, count: 3},
+                    {name: "COMPILATION & BUILD", score: 100.0, count: 2},
+                    {name: "ERLANG BUGFIX", score: 100.0, count: 1},
+                    {name: "WEB-PERFORMANCE", score: 100.0, count: 2},
+                    {name: "FLINK", score: 100.0, count: 1},
+                    {name: "DEVOPS-ANALYTICS", score: 100.0, count: 1},
+                    {name: "DATA STATISTICS", score: 100.0, count: 1},
+                    {name: "FORMAL METHOD", score: 100.0, count: 1},
+                    {name: "MANUFACTURING", score: 100.0, count: 3},
+                    {name: "FILE-MANAGEMENT", score: 100.0, count: 1},
+                    {name: "PEDESTRIAN TRAFFIC COUNTING", score: 100.0, count: 1},
+                    {name: "QUANTUM-SIMULATION", score: 100.0, count: 1},
+                    {name: "LEGACY SYSTEMS", score: 100.0, count: 1},
+                    {name: "TRAVEL-PLANNING", score: 100.0, count: 1},
+                    {name: "SPREADSHEET", score: 100.0, count: 1},
+                    {name: "RESEARCH", score: 90.0, count: 4},
+                    {name: "FINANCIAL-ANALYSIS", score: 86.2, count: 4},
+                    {name: "MEDIA-PROCESSING", score: 77.5, count: 2},
+                    {name: "DATA-SCIENCE", score: 75.0, count: 2},
+                    {name: "DATA-ANALYSIS", score: 73.3, count: 3},
+                    {name: "DOCUMENT-PROCESSING", score: 70.0, count: 1},
+                    {name: "GEOPHYSICS", score: 67.5, count: 1},
+                    {name: "SECURITY", score: 66.0, count: 5},
+                    {name: "ML-IMPLEMENTATION", score: 65.0, count: 1},
+                    {name: "SECURITY & CTF", score: 65.0, count: 1},
+                    {name: "OFFICE OPERATION", score: 60.0, count: 1},
+                    {name: "ASTRONOMY", score: 60.0, count: 2},
+                    {name: "DATA-PROCESSING", score: 60.0, count: 2},
+                    {name: "IMAGE-PROCESSING", score: 60.0, count: 1},
+                    {name: "PARALLELIZATION", score: 60.0, count: 1},
+                    {name: "OFFICE-SUITE", score: 60.0, count: 1},
+                    {name: "CODE TRANSLATION", score: 60.0, count: 1},
+                    {name: "3D-GRAPHICS", score: 60.0, count: 2},
+                    {name: "ENVIRONMENTAL-MODELING", score: 57.5, count: 1},
+                    {name: "DATA-VALIDATION", score: 57.5, count: 1},
+                    {name: "ENGINEERING", score: 55.0, count: 1},
+                    {name: "VIDEO-ANALYSIS", score: 55.0, count: 1},
+                    {name: "DOCUMENT-GENERATION", score: 55.0, count: 1},
+                    {name: "DATA VISUALIZATION", score: 53.6, count: 1},
+                    {name: "SEISMOLOGY", score: 52.5, count: 2},
+                    {name: "SCHEDULING", score: 52.5, count: 1},
+                    {name: "MULTIMODAL-VIDEO-DUBBING", score: 51.0, count: 1},
+                    {name: "ML/NLP", score: 50.0, count: 1},
+                    {name: "MULTIMODAL-PROCESSING", score: 50.0, count: 1},
+                    {name: "CODE REPRODUCTION", score: 47.0, count: 1},
+                    {name: "MATERIALS_SCIENCE", score: 45.0, count: 1},
+                    {name: "ECONOMICS", score: 45.0, count: 1},
+                    {name: "ENTERPRISE-SEARCH", score: 45.0, count: 1},
+                    {name: "CHEMISTRY", score: 45.0, count: 1},
+                    {name: "HEALTHCARE", score: 45.0, count: 1},
+                    {name: "LATEX-EXTRACTION", score: 45.0, count: 1},
+                    {name: "DOCUMENT-EDITING", score: 45.0, count: 1},
+                    {name: "DATA-COMPARISON", score: 45.0, count: 1},
+                    {name: "SPEECH-SYNTHESIS", score: 45.0, count: 1},
+                    {name: "FINANCIAL MODELING", score: 35.0, count: 1},
+                    {name: "FINANCE", score: 35.0, count: 1},
+                    {name: "AUDIO-VISUAL", score: 35.0, count: 1}
+                ]
+            },
+            pinchbench: {
+                overall: 61.73,
+                passed: 14.2,
+                total: 23,
+                time: 364,
+                categories: [
+                    {name: "BASIC", score: 100.0, count: 1},
+                    {name: "CODING", score: 100.0, count: 1},
+                    {name: "FILE_OPS", score: 100.0, count: 3},
+                    {name: "ORGANIZATION", score: 86.4, count: 1},
+                    {name: "CALENDAR", score: 83.3, count: 1},
+                    {name: "WRITING", score: 70.0, count: 2},
+                    {name: "CONTEXT", score: 70.0, count: 1},
+                    {name: "COMPLEX", score: 70.0, count: 1},
+                    {name: "CONTENT_TRANSFORMATION", score: 70.0, count: 1},
+                    {name: "SYNTHESIS", score: 70.0, count: 1},
+                    {name: "CREATIVE", score: 50.0, count: 1},
+                    {name: "RESEARCH", score: 46.7, count: 3},
+                    {name: "COMPREHENSION", score: 35.0, count: 4},
+                    {name: "DATA_ANALYSIS", score: 0.0, count: 1},
+                    {name: "MEMORY", score: 0.0, count: 1}
+                ]
+            },
+            openclawbench: {
+                overall: 62.05,
+                passed: 24.8,
+                total: 40,
+                time: 717,
+                suites: [
+                    {name: "DATA-ANALYSIS", score: 69.4, count: 5},
+                    {name: "FILE-CREATION", score: 68.0, count: 9},
+                    {name: "RESEARCH", score: 67.5, count: 5},
+                    {name: "ERROR-HANDLING", score: 61.9, count: 6},
+                    {name: "MULTI-STEP", score: 57.6, count: 5},
+                    {name: "TOOL-EFFICIENCY", score: 53.9, count: 5},
+                    {name: "MEMORY", score: 51.2, count: 5}
+                ]
+            }
+        };
+
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function getScoreClass(score) {
+            if (score >= 80) return 'rank-high';
+            if (score >= 60) return 'rank-mid';
+            return 'rank-low';
+        }
+
+        function getColor(score) {
+            if (score >= 80) return '#22c55e';
+            if (score >= 60) return '#f59e0b';
+            return '#ef4444';
+        }
+
+        function renderCategoryList(containerId, categories) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = categories.map(cat => `
+                <div class="category-item">
+                    <span class="category-name">${cat.name}</span>
+                    <div class="category-bar">
+                        <div class="category-fill" style="width:${cat.score}%;background:${getColor(cat.score)}"></div>
+                    </div>
+                    <span class="category-score ${getScoreClass(cat.score)}">${cat.score.toFixed(1)}%</span>
+                </div>
+            `).join('');
+        }
+
+        // Overview Chart
+        new Chart(document.getElementById('overviewChart'), {
+            type: 'bar',
+            data: {
+                labels: ['SkillsBench', 'PinchBench', 'OpenClawBench'],
+                datasets: [{
+                    label: 'Overall Score (%)',
+                    data: [73.41, 61.73, 62.05],
+                    backgroundColor: ['#3b82f6', '#f59e0b', '#a855f7'],
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { color: '#334155' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // SkillsBench Chart
+        new Chart(document.getElementById('skillsbenchChart'), {
+            type: 'bar',
+            data: {
+                labels: data.skillsbench.categories.map(c => c.name),
+                datasets: [{
+                    label: 'Score (%)',
+                    data: data.skillsbench.categories.map(c => c.score),
+                    backgroundColor: data.skillsbench.categories.map(c => getColor(c.score)),
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { color: '#334155' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8', font: { size: 10 } }
+                    }
+                }
+            }
+        });
+
+        // PinchBench Chart
+        new Chart(document.getElementById('pinchbenchChart'), {
+            type: 'bar',
+            data: {
+                labels: data.pinchbench.categories.map(c => c.name),
+                datasets: [{
+                    label: 'Score (%)',
+                    data: data.pinchbench.categories.map(c => c.score),
+                    backgroundColor: data.pinchbench.categories.map(c => getColor(c.score)),
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { color: '#334155' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8', font: { size: 10 } }
+                    }
+                }
+            }
+        });
+
+        // OpenClawBench Chart
+        new Chart(document.getElementById('openclawbenchChart'), {
+            type: 'bar',
+            data: {
+                labels: data.openclawbench.suites.map(s => s.name),
+                datasets: [{
+                    label: 'Score (%)',
+                    data: data.openclawbench.suites.map(s => s.score),
+                    backgroundColor: data.openclawbench.suites.map(s => getColor(s.score)),
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { color: '#334155' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8', font: { size: 10 } }
+                    }
+                }
+            }
+        });
+
+        // Render category lists
+        renderCategoryList('skillsbench-categories', data.skillsbench.categories);
+        renderCategoryList('pinchbench-categories', data.pinchbench.categories);
+        renderCategoryList('openclawbench-categories', data.openclawbench.suites);
+
+        // Set score circles
+        document.getElementById('sb-circle').className = 'score-circle score-mid';
+        document.getElementById('pb-circle').className = 'score-circle score-mid';
+        document.getElementById('oc-circle').className = 'score-circle score-mid';
+    </script>
+</body>
+</html>

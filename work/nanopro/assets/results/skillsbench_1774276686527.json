@@ -1,0 +1,969 @@
+{
+  "benchmark": "skillsbench",
+  "timestamp": 1774276686.527745,
+  "overall_score": 73.41,
+  "passed_tasks": 56,
+  "total_tasks": 87,
+  "category_scores": {
+    "ENGINEERING": {
+      "score": 55.0,
+      "count": 1
+    },
+    "CONTROL-SYSTEMS": {
+      "score": 100.0,
+      "count": 3
+    },
+    "BGP-ROUTE": {
+      "score": 100.0,
+      "count": 1
+    },
+    "RESEARCH": {
+      "score": 90.0,
+      "count": 4
+    },
+    "GAMES": {
+      "score": 100.0,
+      "count": 1
+    },
+    "DOCUMENT-PROCESSING": {
+      "score": 70.0,
+      "count": 1
+    },
+    "MATERIALS_SCIENCE": {
+      "score": 45.0,
+      "count": 1
+    },
+    "SECURITY": {
+      "score": 66.0,
+      "count": 5
+    },
+    "DATA VISUALIZATION": {
+      "score": 53.57,
+      "count": 1
+    },
+    "GAME": {
+      "score": 100.0,
+      "count": 1
+    },
+    "VIDEO-ANALYSIS": {
+      "score": 55.0,
+      "count": 1
+    },
+    "SEISMOLOGY": {
+      "score": 52.5,
+      "count": 2
+    },
+    "GEOPHYSICS": {
+      "score": 67.5,
+      "count": 1
+    },
+    "ECONOMICS": {
+      "score": 45.0,
+      "count": 1
+    },
+    "ENERGY": {
+      "score": 100.0,
+      "count": 3
+    },
+    "ENTERPRISE-SEARCH": {
+      "score": 45.0,
+      "count": 1
+    },
+    "OFFICE OPERATION": {
+      "score": 60.0,
+      "count": 1
+    },
+    "ASTRONOMY": {
+      "score": 60.0,
+      "count": 2
+    },
+    "FINANCIAL MODELING": {
+      "score": 35.0,
+      "count": 1
+    },
+    "CHEMISTRY": {
+      "score": 45.0,
+      "count": 1
+    },
+    "COMPILATION & BUILD": {
+      "score": 100.0,
+      "count": 2
+    },
+    "ERLANG BUGFIX": {
+      "score": 100.0,
+      "count": 1
+    },
+    "WEB-PERFORMANCE": {
+      "score": 100.0,
+      "count": 2
+    },
+    "FLINK": {
+      "score": 100.0,
+      "count": 1
+    },
+    "DATA-PROCESSING": {
+      "score": 60.0,
+      "count": 2
+    },
+    "DEVOPS-ANALYTICS": {
+      "score": 100.0,
+      "count": 1
+    },
+    "ENVIRONMENTAL-MODELING": {
+      "score": 57.5,
+      "count": 1
+    },
+    "DATA-VALIDATION": {
+      "score": 57.5,
+      "count": 1
+    },
+    "DATA STATISTICS": {
+      "score": 100.0,
+      "count": 1
+    },
+    "HEALTHCARE": {
+      "score": 45.0,
+      "count": 1
+    },
+    "LATEX-EXTRACTION": {
+      "score": 45.0,
+      "count": 1
+    },
+    "FORMAL METHOD": {
+      "score": 100.0,
+      "count": 1
+    },
+    "MANUFACTURING": {
+      "score": 100.0,
+      "count": 3
+    },
+    "IMAGE-PROCESSING": {
+      "score": 60.0,
+      "count": 1
+    },
+    "DATA-SCIENCE": {
+      "score": 75.0,
+      "count": 2
+    },
+    "ML-IMPLEMENTATION": {
+      "score": 65.0,
+      "count": 1
+    },
+    "MULTIMODAL-VIDEO-DUBBING": {
+      "score": 51.0,
+      "count": 1
+    },
+    "DOCUMENT-GENERATION": {
+      "score": 55.0,
+      "count": 1
+    },
+    "FILE-MANAGEMENT": {
+      "score": 100.0,
+      "count": 1
+    },
+    "DOCUMENT-EDITING": {
+      "score": 45.0,
+      "count": 1
+    },
+    "PARALLELIZATION": {
+      "score": 60.0,
+      "count": 1
+    },
+    "DATA-COMPARISON": {
+      "score": 45.0,
+      "count": 1
+    },
+    "PEDESTRIAN TRAFFIC COUNTING": {
+      "score": 100.0,
+      "count": 1
+    },
+    "SPEECH-SYNTHESIS": {
+      "score": 45.0,
+      "count": 1
+    },
+    "DATA-ANALYSIS": {
+      "score": 73.33,
+      "count": 3
+    },
+    "OFFICE-SUITE": {
+      "score": 60.0,
+      "count": 1
+    },
+    "CODE TRANSLATION": {
+      "score": 60.0,
+      "count": 1
+    },
+    "QUANTUM-SIMULATION": {
+      "score": 100.0,
+      "count": 1
+    },
+    "FINANCIAL-ANALYSIS": {
+      "score": 86.25,
+      "count": 4
+    },
+    "SCHEDULING": {
+      "score": 52.5,
+      "count": 1
+    },
+    "FINANCE": {
+      "score": 35.0,
+      "count": 1
+    },
+    "CODE REPRODUCTION": {
+      "score": 47.0,
+      "count": 1
+    },
+    "AUDIO-VISUAL": {
+      "score": 35.0,
+      "count": 1
+    },
+    "LEGACY SYSTEMS": {
+      "score": 100.0,
+      "count": 1
+    },
+    "SECURITY & CTF": {
+      "score": 65.0,
+      "count": 1
+    },
+    "ML/NLP": {
+      "score": 50.0,
+      "count": 1
+    },
+    "3D-GRAPHICS": {
+      "score": 60.0,
+      "count": 2
+    },
+    "TRAVEL-PLANNING": {
+      "score": 100.0,
+      "count": 1
+    },
+    "MEDIA-PROCESSING": {
+      "score": 77.5,
+      "count": 2
+    },
+    "MULTIMODAL-PROCESSING": {
+      "score": 50.0,
+      "count": 1
+    },
+    "SPREADSHEET": {
+      "score": 100.0,
+      "count": 1
+    }
+  },
+  "difficulty_scores": {
+    "HARD": {
+      "score": 69.89,
+      "count": 28
+    },
+    "MEDIUM": {
+      "score": 74.03,
+      "count": 52
+    },
+    "EASY": {
+      "score": 80.0,
+      "count": 6
+    },
+    "MIDDLE": {
+      "score": 100.0,
+      "count": 1
+    }
+  },
+  "task_scores": {
+    "dapt-intrusion-detection": {
+      "task_name": "Shenghan Zheng",
+      "category": "security",
+      "difficulty": "hard",
+      "mean": 35.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "citation-check": {
+      "task_name": "Xuandong Zhao",
+      "category": "research",
+      "difficulty": "medium",
+      "mean": 60.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "3d-scan-calc": {
+      "task_name": "Wengao Ye",
+      "category": "engineering",
+      "difficulty": "hard",
+      "mean": 55.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "data-to-d3": {
+      "task_name": "Yizhuo He",
+      "category": "Data Visualization",
+      "difficulty": "medium",
+      "mean": 53.57,
+      "std": 0.0,
+      "passed": false
+    },
+    "adaptive-cruise-control": {
+      "task_name": "Jiachen Li",
+      "category": "control-systems",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "civ6-adjacency-optimizer": {
+      "task_name": "Songlin Li",
+      "category": "games",
+      "difficulty": "hard",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "azure-bgp-oscillation-route-leak": {
+      "task_name": "Yizhuo He",
+      "category": "bgp-route",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "dialogue-parser": {
+      "task_name": "scriptwonder",
+      "category": "game",
+      "difficulty": "easy",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "econ-detrending-correlation": {
+      "task_name": "Xuandong Zhao",
+      "category": "economics",
+      "difficulty": "medium",
+      "mean": 45.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "energy-ac-optimal-power-flow": {
+      "task_name": "Wenbo Chen",
+      "category": "energy",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "enterprise-information-search": {
+      "task_name": "Liqiang Jing",
+      "category": "enterprise-search",
+      "difficulty": "hard",
+      "mean": 45.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "energy-market-pricing": {
+      "task_name": "Wenbo Chen",
+      "category": "energy",
+      "difficulty": "hard",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "earthquake-plate-calculation": {
+      "task_name": "Zonglin Di",
+      "category": "geophysics",
+      "difficulty": "medium",
+      "mean": 67.5,
+      "std": 0.0,
+      "passed": true
+    },
+    "court-form-filling": {
+      "task_name": "Yizhuo He",
+      "category": "document-processing",
+      "difficulty": "easy",
+      "mean": 70.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "financial-modeling-qa": {
+      "task_name": "Liqiang Jing",
+      "category": "financial modeling",
+      "difficulty": "hard",
+      "mean": 35.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "exceltable-in-ppt": {
+      "task_name": "Xinyi Liu",
+      "category": "Office Operation",
+      "difficulty": "medium",
+      "mean": 60.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "exoplanet-detection-period": {
+      "task_name": "Steven Dillmann",
+      "category": "astronomy",
+      "difficulty": "medium",
+      "mean": 60.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "fix-build-agentops": {
+      "task_name": "Yifeng He",
+      "category": "Compilation & Build",
+      "difficulty": "easy",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "fix-build-google-auto": {
+      "task_name": "Yifeng He",
+      "category": "Compilation & Build",
+      "difficulty": "easy",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "fix-druid-loophole-cve": {
+      "task_name": "Xinyi Liu",
+      "category": "Security",
+      "difficulty": "hard",
+      "mean": 35.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "fix-erlang-ssh-cve": {
+      "task_name": "Yuanli Wang",
+      "category": "erlang bugfix",
+      "difficulty": "hard",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "fix-visual-stability": {
+      "task_name": "Roey Ben Chaim",
+      "category": "web-performance",
+      "difficulty": "hard",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "flink-query": {
+      "task_name": "Yuanli Wang",
+      "category": "flink",
+      "difficulty": "hard",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "find-topk-similiar-chemicals": {
+      "task_name": "Haoran Lyu",
+      "category": "chemistry",
+      "difficulty": "medium",
+      "mean": 45.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "glm-lake-mendota": {
+      "task_name": "Xin Lan",
+      "category": "environmental-modeling",
+      "difficulty": "hard",
+      "mean": 57.5,
+      "std": 0.0,
+      "passed": false
+    },
+    "grid-dispatch-operator": {
+      "task_name": "Wenbo Chen",
+      "category": "energy",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "flood-risk-analysis": {
+      "task_name": "Xin Lan",
+      "category": "data-processing",
+      "difficulty": "medium",
+      "mean": 60.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "earthquake-phase-association": {
+      "task_name": "Haotian Shen",
+      "category": "seismology",
+      "difficulty": "hard",
+      "mean": 55.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "hvac-control": {
+      "task_name": "Jiachen Li",
+      "category": "control-systems",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "invoice-fraud-detection": {
+      "task_name": "Wengao Ye",
+      "category": "data-validation",
+      "difficulty": "hard",
+      "mean": 57.5,
+      "std": 0.0,
+      "passed": false
+    },
+    "crystallographic-wyckoff-position-analysis": {
+      "task_name": "Haoran Lyu",
+      "category": "materials_science",
+      "difficulty": "medium",
+      "mean": 45.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "jax-computing-basics": {
+      "task_name": "Jack",
+      "category": "research",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "lake-warming-attribution": {
+      "task_name": "Xin Lan",
+      "category": "data-processing",
+      "difficulty": "medium",
+      "mean": 60.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "gravitational-wave-detection": {
+      "task_name": "Steven Dillmann",
+      "category": "astronomy",
+      "difficulty": "medium",
+      "mean": 60.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "lean4-proof": {
+      "task_name": "Yuanli Wang",
+      "category": "formal method",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "jpg-ocr-stat": {
+      "task_name": "Yuanli Wang",
+      "category": "data statistics",
+      "difficulty": "hard",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "lab-unit-harmonization": {
+      "task_name": "Yubo Li",
+      "category": "healthcare",
+      "difficulty": "medium",
+      "mean": 45.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "manufacturing-codebook-normalization": {
+      "task_name": "Di Wang @Foxconn",
+      "category": "manufacturing",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "latex-formula-extraction": {
+      "task_name": "Bingran You",
+      "category": "latex-extraction",
+      "difficulty": "medium",
+      "mean": 45.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "dynamic-object-aware-egomotion": {
+      "task_name": "Yue Zhang",
+      "category": "video-analysis",
+      "difficulty": "medium",
+      "mean": 55.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "manufacturing-equipment-maintenance": {
+      "task_name": "Di Wang @Foxconn",
+      "category": "manufacturing",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "gh-repo-analytics": {
+      "task_name": "SkillsBench",
+      "category": "devops-analytics",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "manufacturing-fjsp-optimization": {
+      "task_name": "Di Wang @Foxconn",
+      "category": "manufacturing",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "multilingual-video-dubbing": {
+      "task_name": "Yue Zhang",
+      "category": "multimodal-video-dubbing",
+      "difficulty": "medium",
+      "mean": 51.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "organize-messy-files": {
+      "task_name": "Bingran You",
+      "category": "file-management",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "paper-anonymizer": {
+      "task_name": "Yueqian Lin",
+      "category": "document-editing",
+      "difficulty": "medium",
+      "mean": 45.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "pddl-tpp-planning": {
+      "task_name": "Jack",
+      "category": "research",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "parallel-tfidf-search": {
+      "task_name": "Runhui Wang",
+      "category": "Parallelization",
+      "difficulty": "medium",
+      "mean": 60.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "mario-coin-counting": {
+      "task_name": "Xuanqing Liu",
+      "category": "image-processing",
+      "difficulty": "medium",
+      "mean": 60.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "pdf-excel-diff": {
+      "task_name": "Xuandong Zhao",
+      "category": "data-comparison",
+      "difficulty": "medium",
+      "mean": 45.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "mhc-layer-impl": {
+      "task_name": "Yimin Liu",
+      "category": "ml-implementation",
+      "difficulty": "hard",
+      "mean": 65.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "mars-clouds-clustering": {
+      "task_name": "Steven Dillmann",
+      "category": "data-science",
+      "difficulty": "hard",
+      "mean": 50.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "offer-letter-generator": {
+      "task_name": "Yueqian Lin",
+      "category": "document-generation",
+      "difficulty": "easy",
+      "mean": 55.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "powerlifting-coef-calc": {
+      "task_name": "Yifeng He",
+      "category": "data-analysis",
+      "difficulty": "easy",
+      "mean": 55.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "pedestrian-traffic-counting": {
+      "task_name": "Yijiang Li",
+      "category": "pedestrian traffic counting",
+      "difficulty": "hard",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "protein-expression-analysis": {
+      "task_name": "Seanium",
+      "category": "data-analysis",
+      "difficulty": "middle",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "python-scala-translation": {
+      "task_name": "Runhui Wang",
+      "category": "Code Translation",
+      "difficulty": "medium",
+      "mean": 60.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "pptx-reference-formatting": {
+      "task_name": "Jierun Chen",
+      "category": "office-suite",
+      "difficulty": "medium",
+      "mean": 60.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "react-performance-debugging": {
+      "task_name": "Roey Ben Chaim",
+      "category": "web-performance",
+      "difficulty": "hard",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "r2r-mpc-control": {
+      "task_name": "Jiachen Li",
+      "category": "control-systems",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "scheduling-email-assistant": {
+      "task_name": "Xinyi Liu",
+      "category": "Scheduling",
+      "difficulty": "medium",
+      "mean": 52.5,
+      "std": 0.0,
+      "passed": false
+    },
+    "sales-pivot-analysis": {
+      "task_name": "Roey Ben Chaim",
+      "category": "data-analysis",
+      "difficulty": "medium",
+      "mean": 65.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "sec-financial-report": {
+      "task_name": "Xuanqing Liu",
+      "category": "finance",
+      "difficulty": "hard",
+      "mean": 35.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "reserves-at-risk-calc": {
+      "task_name": "Shuyi Wang",
+      "category": "financial-analysis",
+      "difficulty": "medium",
+      "mean": 45.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "setup-fuzzing-py": {
+      "task_name": "Yifeng He",
+      "category": "security",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "seismic-phase-picking": {
+      "task_name": "Haotian Shen",
+      "category": "seismology",
+      "difficulty": "hard",
+      "mean": 50.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "speaker-diarization-subtitles": {
+      "task_name": "Yue Zhang",
+      "category": "audio-visual",
+      "difficulty": "hard",
+      "mean": 35.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "quantum-numerical-simulation": {
+      "task_name": "Bingran You",
+      "category": "quantum-simulation",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "spring-boot-jakarta-migration": {
+      "task_name": "spring-boot-jakarta-migration",
+      "category": "Legacy Systems",
+      "difficulty": "hard",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "simpo-code-reproduction": {
+      "task_name": "Liqiang Jing",
+      "category": "code reproduction",
+      "difficulty": "hard",
+      "mean": 47.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "suricata-custom-exfil": {
+      "task_name": "Shenghan Zheng",
+      "category": "Security & CTF",
+      "difficulty": "medium",
+      "mean": 65.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "software-dependency-audit": {
+      "task_name": "Zonglin Di",
+      "category": "security",
+      "difficulty": "medium",
+      "mean": 60.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "taxonomy-tree-merge": {
+      "task_name": "Jianheng Hou",
+      "category": "ML/NLP",
+      "difficulty": "hard",
+      "mean": 50.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "threejs-structure-parser": {
+      "task_name": "Yipeng Gao",
+      "category": "3d-graphics",
+      "difficulty": "medium",
+      "mean": 60.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "trend-anomaly-causal-inference": {
+      "task_name": "Jianheng Hou",
+      "category": "data-science",
+      "difficulty": "hard",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "shock-analysis-supply": {
+      "task_name": "Shuyi Wang",
+      "category": "financial-analysis",
+      "difficulty": "hard",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "syzkaller-ppdev-syzlang": {
+      "task_name": "Shenghan Zheng",
+      "category": "security",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "video-silence-remover": {
+      "task_name": "Ze Ma",
+      "category": "media-processing",
+      "difficulty": "hard",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "threejs-to-obj": {
+      "task_name": "Yipeng Gao",
+      "category": "3d-graphics",
+      "difficulty": "medium",
+      "mean": 60.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "pg-essay-to-audiobook": {
+      "task_name": "Yueqian Lin",
+      "category": "speech-synthesis",
+      "difficulty": "medium",
+      "mean": 45.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "shock-analysis-demand": {
+      "task_name": "Shuyi Wang",
+      "category": "financial-analysis",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "video-tutorial-indexer": {
+      "task_name": "Ze Ma",
+      "category": "multimodal-processing",
+      "difficulty": "hard",
+      "mean": 50.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "virtualhome-agent-planning": {
+      "task_name": "Jack",
+      "category": "research",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "xlsx-recover-data": {
+      "task_name": "Shenghan Zheng",
+      "category": "spreadsheet",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "weighted-gdp-calc": {
+      "task_name": "Xiangyi Li",
+      "category": "financial-analysis",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "travel-planning": {
+      "task_name": "Jiahao Liu",
+      "category": "travel-planning",
+      "difficulty": "medium",
+      "mean": 100.0,
+      "std": 0.0,
+      "passed": true
+    },
+    "video-filler-word-remover": {
+      "task_name": "Ze Ma",
+      "category": "media-processing",
+      "difficulty": "medium",
+      "mean": 55.0,
+      "std": 0.0,
+      "passed": false
+    }
+  }
+}

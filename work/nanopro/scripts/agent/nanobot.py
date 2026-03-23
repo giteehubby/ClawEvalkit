@@ -12,7 +12,7 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List
 
-# 添加 nanobot 源码路径
+# 添加 nanobot 源码路径 (nanobot/ 与 scripts/ 平级，nanobot/ 包含 nanobot Python 模块)
 NANOBOT_PATH = Path(__file__).parent.parent.parent / "nanobot"
 sys.path.insert(0, str(NANOBOT_PATH))
 

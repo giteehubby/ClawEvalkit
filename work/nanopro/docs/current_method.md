@@ -1,5 +1,29 @@
 # 统一评估框架设计文档
 
+## 项目结构
+
+```
+work/nanopro/
+├── nanobot/                # NanoBot Agent 核心代码
+├── benchmarks/             # 测试仓库
+│   ├── pinchbench/
+│   ├── skillsbench/
+│   ├── agentbench-openclaw/
+│   └── ...
+├── scripts/               # 测试脚本
+│   ├── agent/            # Agent 适配器
+│   ├── adapters/         # Benchmark 适配器
+│   ├── run.py           # 统一入口
+│   └── run_skillsbench_parallel.py
+├── docs/                 # 文档
+│   └── current_method.md
+└── assets/               # 资源文件
+    ├── visualizations/   # HTML 可视化 dashboards
+    ├── transcripts/      # 轨迹记录
+    ├── logs/            # 日志文件
+    └── results/          # JSON 测试结果
+```
+
 ## 目标
 
 使用统一的 Agent 推理框架（nanobot）运行多个 benchmark 的测评，通过简单的命令行参数配置即可开始测试。
@@ -49,7 +73,7 @@ class BaseAgent(ABC):
 ### PinchBench (23 个任务)
 
 ```bash
-cd work/benchmarks/scripts
+cd work/nanopro/scripts
 
 # 运行全部任务
 python run.py --benchmark pinchbench \
@@ -71,7 +95,7 @@ python test_run.py
 ### OpenClawBench (40 个任务，7 个 suite)
 
 ```bash
-cd work/benchmarks/scripts
+cd work/nanopro/scripts
 
 # 运行全部任务
 python run.py --benchmark openclawbench \
@@ -100,7 +124,7 @@ python test_openclawbench.py
 ### SkillsBench (87 个任务，多个类别)
 
 ```bash
-cd work/benchmarks/scripts
+cd work/nanopro/scripts
 
 # 运行全部任务
 python run.py --benchmark skillsbench \

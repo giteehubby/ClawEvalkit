@@ -37,14 +37,14 @@ def main():
     print(f'Model: {model}')
     print(f'Threads: {threads}')
 
-    benchmarks_dir = script_dir.parent
-    skillsbench_dir = benchmarks_dir / 'skillsbench'
+    nanopro_dir = script_dir.parent
+    skillsbench_dir = nanopro_dir / 'benchmarks' / 'skillsbench'
     tasks_dir = skillsbench_dir / 'tasks'
 
     workspace = Path('/tmp/benchmarks/workspace')
     workspace.mkdir(parents=True, exist_ok=True)
 
-    output_dir = benchmarks_dir / 'results'
+    output_dir = nanopro_dir / 'assets' / 'results'
     output_dir.mkdir(parents=True, exist_ok=True)
 
     agent = NanoBotAgent(
