@@ -44,6 +44,9 @@ class NanoBotAgent(BaseAgent):
         self.api_key = api_key
         self.workspace = workspace
         self.timeout = timeout
+        self.session_store_dir = Path(kwargs.get("session_store_dir") or (self.workspace / ".sessions"))
+        self.session_store_dir.mkdir(parents=True, exist_ok=True)
+        self.system_prompt = kwargs.get("system_prompt", "")
 
         # 准备工作空间
         workspace.mkdir(parents=True, exist_ok=True)
@@ -60,6 +63,38 @@ class NanoBotAgent(BaseAgent):
         self._usage = {}
         self._transcript: List[Dict] = []
         self._conversation_history: List[Dict] = []
+
+    def _session_file(self, session_id: str) -> Path:
+        safe_name = "".join(c if c.isalnum() or c in ("-", "_", ".") else "_" for c in session_id)
+        return self.session_store_dir / f"{safe_name}.json"
+
+    def _load_session_messages(self, session_id: str | None) -> List[Dict[str, Any]]:
+        if not session_id:
+            return []
+
+        session_file = self._session_file(session_id)
+        if not session_file.exists():
+            base_messages: List[Dict[str, Any]] = []
+            if self.system_prompt:
+                base_messages.append({"role": "system", "content": self.system_prompt})
+            return base_messages
+
+        try:
+            data = json.loads(session_file.read_text(encoding="utf-8"))
+            if isinstance(data, list):
+                return data
+        except Exception:
+            pass
+
+        return []
+
+    def _save_session_messages(self, session_id: str | None, messages: List[Dict[str, Any]]) -> None:
+        if not session_id:
+            return
+
+        session_file = self._session_file(session_id)
+        session_file.parent.mkdir(parents=True, exist_ok=True)
+        session_file.write_text(json.dumps(messages, ensure_ascii=False, indent=2), encoding="utf-8")
 
     def _register_tools(self) -> None:
         """注册工具"""
@@ -253,6 +288,8 @@ class NanoBotAgent(BaseAgent):
         """执行单个 prompt"""
         start_time = time.time()
         error_msg = ""
+        self._usage = {}
+        self._transcript = []
 
         # 使用传入的 workspace 或默认的
         if workspace is not None:
@@ -269,29 +306,18 @@ class NanoBotAgent(BaseAgent):
                 tool._workspace = current_workspace
 
         try:
-            # 构建消息
-            messages = [
-                {"role": "user", "content": prompt}
-            ]
+            # 构建消息，支持基于 session_id 的跨调用上下文持久化
+            messages = self._load_session_messages(session_id)
+            messages.append({"role": "user", "content": prompt})
 
             # 使用 asyncio 运行
             content = asyncio.run(self._run_loop(messages))
+            self._save_session_messages(session_id, messages)
 
         except Exception as e:
             content = ""
             error_msg = str(e)
             self._transcript = []  # 清空 transcript
-
-        # 构建最终的 transcript
-        final_transcript = []
-        if content:
-            final_transcript.append({
-                "type": "message",
-                "message": {
-                    "role": "assistant",
-                    "content": [content],  # pinchbench 期望 content 是列表
-                }
-            })
 
         execution_time = time.time() - start_time
 
@@ -315,8 +341,8 @@ class NanoBotAgent(BaseAgent):
     def execute_multi(self, prompts: List[str], session_id: str | None = None, workspace: Path | None = None) -> List[AgentResult]:
         """执行多轮对话"""
         results = []
-        for i, prompt in enumerate(prompts):
-            result = self.execute(prompt, session_id)
+        for prompt in prompts:
+            result = self.execute(prompt, session_id, workspace=workspace)
             results.append(result)
 
         return results

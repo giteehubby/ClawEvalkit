@@ -14,7 +14,9 @@
 
 import argparse
 import logging
+import os
 import sys
+import tempfile
 from pathlib import Path
 
 # 添加当前目录到 Python 路径
@@ -22,11 +24,11 @@ _scripts_dir = Path(__file__).parent
 sys.path.insert(0, str(_scripts_dir))
 
 from agent.base import AgentResult, BaseAgent
-from agent.nanobot import NanoBotAgent
 from adapters.pinchbench import PinchBenchAdapter
 from adapters.openclawbench import OpenClawBenchAdapter
 from adapters.skillsbench import SkillsBenchAdapter
 from adapters.clawbench_official import ClawBenchOfficialAdapter
+from adapters.claw_bench_tribe import ClawBenchTribeAdapter
 
 # 配置日志
 logging.basicConfig(
@@ -37,6 +39,14 @@ logging.basicConfig(
 logger = logging.getLogger("benchmark")
 
 
+def env_first(*names: str, default: str | None = None) -> str | None:
+    for name in names:
+        value = os.environ.get(name)
+        if value:
+            return value
+    return default
+
+
 def get_nanopro_dir() -> Path:
     """获取 nanopro 根目录"""
     return Path(__file__).parent.parent
@@ -45,6 +55,8 @@ def get_nanopro_dir() -> Path:
 def create_agent(agent_type: str, model: str, api_url: str, api_key: str, workspace: Path, **kwargs) -> BaseAgent:
     """创建 Agent 实例"""
     if agent_type == "nanobot":
+        from agent.nanobot import NanoBotAgent
+
         return NanoBotAgent(
             model=model,
             api_url=api_url,
@@ -67,7 +79,7 @@ def run_pinchbench(args: argparse.Namespace) -> None:
         logger.error(f"Tasks directory not found: {tasks_dir}")
         sys.exit(1)
 
-    workspace = Path("/tmp/benchmarks/workspace")
+    workspace = Path(tempfile.gettempdir()) / "benchmarks" / "workspace"
     workspace.mkdir(parents=True, exist_ok=True)
 
     output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "assets" / "results"
@@ -112,7 +124,7 @@ def run_openclawbench(args: argparse.Namespace) -> None:
         logger.error(f"Tasks directory not found: {tasks_dir}")
         sys.exit(1)
 
-    workspace = Path("/tmp/benchmarks/workspace")
+    workspace = Path(tempfile.gettempdir()) / "benchmarks" / "workspace"
     workspace.mkdir(parents=True, exist_ok=True)
 
     output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "assets" / "results"
@@ -158,7 +170,7 @@ def run_skillsbench(args: argparse.Namespace) -> None:
         logger.error(f"Tasks directory not found: {tasks_dir}")
         sys.exit(1)
 
-    workspace = Path("/tmp/benchmarks/workspace")
+    workspace = Path(tempfile.gettempdir()) / "benchmarks" / "workspace"
     workspace.mkdir(parents=True, exist_ok=True)
 
     output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "assets" / "results"
@@ -208,7 +220,7 @@ def run_clawbench_official(args: argparse.Namespace) -> None:
         logger.error(f"Tasks directory not found: {tasks_dir}")
         sys.exit(1)
 
-    workspace = Path("/tmp/benchmarks/workspace")
+    workspace = Path(tempfile.gettempdir()) / "benchmarks" / "workspace"
     workspace.mkdir(parents=True, exist_ok=True)
 
     output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "assets" / "results"
@@ -249,6 +261,48 @@ def run_clawbench_official(args: argparse.Namespace) -> None:
     logger.info(f"Results saved to: {output_dir}")
 
 
+def run_claw_bench_tribe(args: argparse.Namespace) -> None:
+    nanopro_dir = get_nanopro_dir()
+    benchmark_dir = nanopro_dir / "benchmarks" / "claw-bench-tribe"
+
+    if not benchmark_dir.exists():
+        logger.error(f"Benchmark directory not found: {benchmark_dir}")
+        sys.exit(1)
+    workspace = Path(tempfile.gettempdir()) / "benchmarks" / "workspace"
+    workspace.mkdir(parents=True, exist_ok=True)
+
+    output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "assets" / "results"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    agent = create_agent(
+        agent_type=args.agent,
+        model=args.model,
+        api_url=args.api_url,
+        api_key=args.api_key,
+        workspace=workspace,
+        timeout=args.timeout,
+    )
+
+    adapter = ClawBenchTribeAdapter(
+        agent=agent,
+        benchmark_dir=benchmark_dir,
+        output_dir=output_dir,
+    )
+    adapter.load_tasks()
+
+    task_ids = None
+    if args.tasks:
+        task_ids = [t.strip() for t in args.tasks.split(",")]
+
+    results = adapter.run(task_ids=task_ids, runs_per_task=args.runs, smoke=args.smoke)
+
+    logger.info("\nBenchmark completed!")
+    logger.info(f"Overall Score: {results['overall_score']:.1f}%")
+    logger.info(f"Passed: {results['passed_tasks']}/{results['total_tasks']} tests")
+    logger.info(f"Critical failures: {results['critical_failures']}")
+    logger.info(f"Results saved to: {output_dir}")
+
+
 def run_benchmark(benchmark_name: str, args: argparse.Namespace) -> None:
     if benchmark_name == "pinchbench":
         run_pinchbench(args)
@@ -258,9 +312,11 @@ def run_benchmark(benchmark_name: str, args: argparse.Namespace) -> None:
         run_skillsbench(args)
     elif benchmark_name == "clawbench_official":
         run_clawbench_official(args)
+    elif benchmark_name == "claw-bench-tribe":
+        run_claw_bench_tribe(args)
     else:
         logger.error(f"Unknown benchmark: {benchmark_name}")
-        logger.info(f"Available benchmarks: pinchbench, openclawbench, skillsbench, clawbench_official")
+        logger.info(f"Available benchmarks: pinchbench, openclawbench, skillsbench, clawbench_official, claw-bench-tribe")
         sys.exit(1)
 
 
@@ -312,8 +368,13 @@ def main():
     parser.add_argument("--level", type=str, help="ClawBench Official: 指定级别 (L1, L2, L3, L4)")
     parser.add_argument("--domain", type=str, help="ClawBench Official: 指定领域")
     parser.add_argument("--threads", "-t", type=int, default=1, help="并行线程数（默认: 1）")
+    parser.add_argument("--smoke", action="store_true", help="运行 benchmark 的最小 smoke 子集（部分 benchmark 支持）")
 
     args = parser.parse_args()
+
+    args.api_url = args.api_url or env_first("OPENAI_BASE_URL", "API_URL")
+    args.api_key = args.api_key or env_first("OPENAI_API_KEY", "API_KEY")
+    args.model = args.model or env_first("MODEL")
 
     if args.list:
         list_benchmarks()
