@@ -121,6 +121,46 @@ python run.py --benchmark openclawbench \
 python test_openclawbench.py
 ```
 
+### ClawBench Official (315 个任务，34 个领域)
+
+```bash
+cd work/nanopro/scripts
+
+# 运行全部任务
+python run.py --benchmark clawbench_official \
+    --api-url https://openrouter.ai/api/v1 \
+    --api-key <your-api-key> \
+    --model gpt-4o-mini
+
+# 运行特定级别 (L1/L2/L3/L4)
+python run.py --benchmark clawbench_official \
+    --api-url https://openrouter.ai/api/v1 \
+    --api-key <your-api-key> \
+    --model gpt-4o-mini \
+    --level L1
+
+# 运行 fast 测试 (L1 + L2)
+python run.py --benchmark clawbench_official \
+    --api-url https://openrouter.ai/api/v1 \
+    --api-key <your-api-key> \
+    --model gpt-4o-mini \
+    --level fast
+
+# 运行特定领域
+python run.py --benchmark clawbench_official \
+    --api-url https://openrouter.ai/api/v1 \
+    --api-key <your-api-key> \
+    --model gpt-4o-mini \
+    --domain calendar
+
+# 并行运行 (10线程)
+python run.py --benchmark clawbench_official \
+    --threads 10 \
+    --api-url https://openrouter.ai/api/v1 \
+    --api-key <your-api-key> \
+    --model gpt-4o-mini
+```
+
 ### SkillsBench (87 个任务，多个类别)
 
 ```bash
@@ -172,6 +212,13 @@ python test_skillsbench.py
 - 自动复制输入文件，运行 setup.sh 脚本
 - 支持 suite 和 difficulty 筛选
 
+### ClawBenchOfficialAdapter
+
+- 加载 `claw-bench-official/tasks/` 目录下的任务 (315个任务，34个领域)
+- 使用 pytest verifier 进行评分
+- 支持级别 (L1/L2/L3/L4) 和领域筛选
+- 递归检查 workspace 子目录中的输出文件
+
 ### SkillsBenchAdapter
 
 - 加载 `skillsbench/tasks/` 目录下的 task.toml 和 instruction.md 文件
@@ -192,9 +239,20 @@ python test_skillsbench.py
    - 评分
 6. 生成报告
 
+## 测试结果 (2026-03-24)
+
+| Benchmark | Score | Passed/Total | Time |
+|-----------|-------|-------------|------|
+| ClawBench Official | 57.3% | 156/315 | 597s |
+| SkillsBench | 73.41% | 56/87 | 409s |
+| PinchBench | 61.73% | 14.2/23 | 364s |
+| OpenClawBench | 62.05% | 24.8/40 | 717s |
+
+**模型**: openrouter/google/gemini-3-flash-preview
+
 ## 扩展计划
 
 1. 实现 OpenClaw Agent 适配器
-2. 添加更多 Benchmark 适配器
+2. 添加更多 Benchmark 适配器 (如 claw-bench-tribe)
 3. 支持分布式运行
 4. 生成 HTML 可视化报告

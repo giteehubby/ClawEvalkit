@@ -35,6 +35,7 @@ work/nanopro/
 - [x] SkillsBenchAdapter (87 tasks)
 - [x] PinchBenchAdapter (23 tasks)
 - [x] OpenClawBenchAdapter (40 tasks)
+- [x] ClawBenchOfficialAdapter (315 tasks, 34 domains)
 - [x] 统一命令行入口 run.py
 - [x] 并行执行支持 (--threads 参数)
 - [x] 轨迹记录 (transcripts JSONL)
@@ -44,6 +45,13 @@ work/nanopro/
 - [x] SkillsBench: 73.41% (56/87) - 409s
 - [x] PinchBench: 61.73% (14.2/23) - 364s
 - [x] OpenClawBench: 62.05% (24.8/40) - 717s
+
+### ClawBench Official 集成 (2026-03-24)
+- [x] ClawBenchOfficialAdapter (315 tasks, 34 domains)
+- [x] 支持级别筛选 (L1/L2/L3/L4/fast)
+- [x] 支持领域筛选
+- [x] 使用 pytest verifier 评分
+- [x] 测试运行: 57.3% (156/315) - 597s
 
 ### 可视化
 - [x] HTML Dashboard 生成 (benchmark_summary.html)

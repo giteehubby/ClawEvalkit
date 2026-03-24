@@ -26,6 +26,7 @@ from agent.nanobot import NanoBotAgent
 from adapters.pinchbench import PinchBenchAdapter
 from adapters.openclawbench import OpenClawBenchAdapter
 from adapters.skillsbench import SkillsBenchAdapter
+from adapters.clawbench_official import ClawBenchOfficialAdapter
 
 # 配置日志
 logging.basicConfig(
@@ -198,6 +199,56 @@ def run_skillsbench(args: argparse.Namespace) -> None:
     logger.info(f"Results saved to: {output_dir}")
 
 
+def run_clawbench_official(args: argparse.Namespace) -> None:
+    nanopro_dir = get_nanopro_dir()
+    clawbench_dir = nanopro_dir / "benchmarks" / "claw-bench-official"
+    tasks_dir = clawbench_dir / "tasks"
+
+    if not tasks_dir.exists():
+        logger.error(f"Tasks directory not found: {tasks_dir}")
+        sys.exit(1)
+
+    workspace = Path("/tmp/benchmarks/workspace")
+    workspace.mkdir(parents=True, exist_ok=True)
+
+    output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "assets" / "results"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    agent = create_agent(
+        agent_type=args.agent,
+        model=args.model,
+        api_url=args.api_url,
+        api_key=args.api_key,
+        workspace=workspace,
+        timeout=args.timeout,
+    )
+
+    adapter = ClawBenchOfficialAdapter(
+        agent=agent,
+        tasks_dir=tasks_dir,
+        output_dir=output_dir,
+    )
+
+    level = getattr(args, 'level', None)
+    domain = getattr(args, 'domain', None)
+    adapter.load_tasks(level=level, domain=domain)
+
+    task_ids = None
+    if args.tasks:
+        task_ids = [t.strip() for t in args.tasks.split(",")]
+
+    results = adapter.run(
+        task_ids=task_ids,
+        runs_per_task=args.runs,
+        threads=args.threads,
+    )
+
+    logger.info("\nBenchmark completed!")
+    logger.info(f"Overall Score: {results['overall_score']:.1f}%")
+    logger.info(f"Passed: {results['passed_tasks']}/{results['total_tasks']} tasks")
+    logger.info(f"Results saved to: {output_dir}")
+
+
 def run_benchmark(benchmark_name: str, args: argparse.Namespace) -> None:
     if benchmark_name == "pinchbench":
         run_pinchbench(args)
@@ -205,9 +256,11 @@ def run_benchmark(benchmark_name: str, args: argparse.Namespace) -> None:
         run_openclawbench(args)
     elif benchmark_name == "skillsbench":
         run_skillsbench(args)
+    elif benchmark_name == "clawbench_official":
+        run_clawbench_official(args)
     else:
         logger.error(f"Unknown benchmark: {benchmark_name}")
-        logger.info(f"Available benchmarks: pinchbench, openclawbench, skillsbench")
+        logger.info(f"Available benchmarks: pinchbench, openclawbench, skillsbench, clawbench_official")
         sys.exit(1)
 
 
@@ -256,6 +309,8 @@ def main():
     parser.add_argument("--suite", type=str, help="OpenClawBench: 指定 suite")
     parser.add_argument("--difficulty", type=str, help="指定难度 (easy, medium, hard)")
     parser.add_argument("--category", type=str, help="SkillsBench: 指定类别")
+    parser.add_argument("--level", type=str, help="ClawBench Official: 指定级别 (L1, L2, L3, L4)")
+    parser.add_argument("--domain", type=str, help="ClawBench Official: 指定领域")
     parser.add_argument("--threads", "-t", type=int, default=1, help="并行线程数（默认: 1）")
 
     args = parser.parse_args()

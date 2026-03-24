@@ -228,10 +228,11 @@
         <div class="tldr-card">
             <h3>TLDR</h3>
             <p>
-                Gemini 3 Flash 在三个 Benchmark 上的表现为：<strong>SkillsBench 73.41%</strong> (56/87任务通过)、
-                <strong>PinchBench 61.73%</strong> (14.2/23)、<strong>OpenClawBench 62.05%</strong> (24.8/40)。
+                Gemini 3 Flash 在四个 Benchmark 上的表现为：<strong>SkillsBench 73.41%</strong> (56/87任务通过)、
+                <strong>PinchBench 61.73%</strong> (14.2/23)、<strong>OpenClawBench 62.05%</strong> (24.8/40)、
+                <strong>ClawBench Official 57.3%</strong> (156/315任务通过)。
                 模型在工程类任务（CONTROL-SYSTEMS、COMPILATION & BUILD）表现优异，但在需要记忆和数据分析的任务上较弱。
-                总耗时约25分钟（409s + 364s + 717s），使用10线程并行执行 SkillsBench。
+                总耗时约32分钟（409s + 364s + 717s + 597s），使用10线程并行执行。
             </p>
         </div>
 
@@ -241,6 +242,7 @@
             <button class="tab" onclick="showTab('skillsbench')">SkillsBench (87)</button>
             <button class="tab" onclick="showTab('pinchbench')">PinchBench (23)</button>
             <button class="tab" onclick="showTab('openclawbench')">OpenClawBench (40)</button>
+            <button class="tab" onclick="showTab('clawbench')">ClawBench (315)</button>
         </div>
 
         <!-- Overview Tab -->
@@ -292,6 +294,22 @@
                     <div class="stat">
                         <span class="stat-label">任务数</span>
                         <span class="stat-value">40</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>ClawBench Official</h3>
+                    <div class="score-circle score-mid" id="cb-circle">57.3%</div>
+                    <div class="stat">
+                        <span class="stat-label">通过任务</span>
+                        <span class="stat-value">156 / 315</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">耗时</span>
+                        <span class="stat-value">597s (10.0 min)</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">任务数</span>
+                        <span class="stat-value">315</span>
                     </div>
                 </div>
             </div>
@@ -398,6 +416,42 @@
             <div class="card">
                 <h3>Suite 详细数据</h3>
                 <div class="category-list" id="openclawbench-categories"></div>
+            </div>
+        </div>
+
+        <!-- ClawBench Tab -->
+        <div id="clawbench" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h3>整体评分</h3>
+                    <div class="score-circle score-mid">57.3%</div>
+                    <p style="text-align:center;color:var(--text-secondary);font-size:0.875rem;">
+                        156/315 任务通过
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>时间统计</h3>
+                    <div class="stat">
+                        <span class="stat-label">总耗时</span>
+                        <span class="stat-value">597s</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">平均每任务</span>
+                        <span class="stat-value">1.9s</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">线程数</span>
+                        <span class="stat-value">10</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h4 class="chart-title">ClawBench Level Scores</h4>
+                <canvas id="clawbenchChart" height="200"></canvas>
+            </div>
+            <div class="card">
+                <h3>Domain 详细数据</h3>
+                <div class="category-list" id="clawbench-categories"></div>
             </div>
         </div>
     </div>
@@ -511,6 +565,30 @@
                     {name: "TOOL-EFFICIENCY", score: 53.9, count: 5},
                     {name: "MEMORY", score: 51.2, count: 5}
                 ]
+            },
+            clawbench: {
+                overall: 57.3,
+                passed: 156,
+                total: 315,
+                time: 597,
+                levels: [
+                    {name: "L1", score: 67.3, count: 45},
+                    {name: "L2", score: 52.8, count: 129},
+                    {name: "L3", score: 59.7, count: 111},
+                    {name: "L4", score: 52.7, count: 30}
+                ],
+                domains: [
+                    {name: "COMMUNICATION", score: 86.7, count: 15},
+                    {name: "WORKFLOW-AUTOMATION", score: 86.5, count: 17},
+                    {name: "DATA-ANALYSIS", score: 85.9, count: 17},
+                    {name: "EMAIL", score: 80.0, count: 18},
+                    {name: "DOCUMENT-EDITING", score: 79.4, count: 18},
+                    {name: "CROSS-DOMAIN", score: 70.6, count: 17},
+                    {name: "SYSTEM-ADMIN", score: 64.7, count: 15},
+                    {name: "MULTIMODAL", score: 63.3, count: 15},
+                    {name: "PLANNING", score: 60.0, count: 5},
+                    {name: "SCIENTIFIC-COMPUTING", score: 60.0, count: 5}
+                ]
             }
         };
 
@@ -550,11 +628,11 @@
         new Chart(document.getElementById('overviewChart'), {
             type: 'bar',
             data: {
-                labels: ['SkillsBench', 'PinchBench', 'OpenClawBench'],
+                labels: ['SkillsBench', 'PinchBench', 'OpenClawBench', 'ClawBench'],
                 datasets: [{
                     label: 'Overall Score (%)',
-                    data: [73.41, 61.73, 62.05],
-                    backgroundColor: ['#3b82f6', '#f59e0b', '#a855f7'],
+                    data: [73.41, 61.73, 62.05, 57.3],
+                    backgroundColor: ['#3b82f6', '#f59e0b', '#a855f7', '#ef4444'],
                     borderRadius: 8
                 }]
             },
@@ -673,11 +751,43 @@
         renderCategoryList('skillsbench-categories', data.skillsbench.categories);
         renderCategoryList('pinchbench-categories', data.pinchbench.categories);
         renderCategoryList('openclawbench-categories', data.openclawbench.suites);
+        renderCategoryList('clawbench-categories', data.clawbench.domains);
 
         // Set score circles
         document.getElementById('sb-circle').className = 'score-circle score-mid';
         document.getElementById('pb-circle').className = 'score-circle score-mid';
         document.getElementById('oc-circle').className = 'score-circle score-mid';
+        document.getElementById('cb-circle').className = 'score-circle score-mid';
+
+        // ClawBench Chart - Level
+        new Chart(document.getElementById('clawbenchChart'), {
+            type: 'bar',
+            data: {
+                labels: data.clawbench.levels.map(l => l.name),
+                datasets: [{
+                    label: 'Score (%)',
+                    data: data.clawbench.levels.map(l => l.score),
+                    backgroundColor: data.clawbench.levels.map(l => getColor(l.score)),
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { color: '#334155' },
+                        ticks: { color: '#94a3b8' }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
     </script>
 </body>
 </html>
