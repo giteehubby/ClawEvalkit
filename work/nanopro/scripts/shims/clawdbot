@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SHIM_PATH="${SCRIPT_DIR}/../clawdbot_shim.py"
+
+to_windows_path() {
+  local unix_path="$1"
+
+  if command -v cygpath >/dev/null 2>&1; then
+    cygpath -w "${unix_path}"
+    return
+  fi
+
+  case "${unix_path}" in
+    /mnt/[a-zA-Z]/*)
+      local drive="${unix_path:5:1}"
+      local rest="${unix_path:7}"
+      printf '%s:/%s\n' "${drive^^}" "${rest}"
+      ;;
+    /[a-zA-Z]/*)
+      local drive="${unix_path:1:1}"
+      local rest="${unix_path:3}"
+      printf '%s:/%s\n' "${drive^^}" "${rest}"
+      ;;
+    *)
+      printf '%s\n' "${unix_path}"
+      ;;
+  esac
+}
+
+if [[ -n "${CLAWDBOT_PYTHON:-}" ]]; then
+  PYTHON_BIN="${CLAWDBOT_PYTHON}"
+  if command -v cygpath >/dev/null 2>&1; then
+    PYTHON_BIN="$(cygpath -u "${PYTHON_BIN}")"
+  else
+    PYTHON_BIN="${PYTHON_BIN//\\//}"
+  fi
+elif command -v python.exe >/dev/null 2>&1; then
+  PYTHON_BIN="python.exe"
+elif command -v python3 >/dev/null 2>&1; then
+  PYTHON_BIN="python3"
+elif command -v python >/dev/null 2>&1; then
+  PYTHON_BIN="python"
+elif command -v py >/dev/null 2>&1; then
+  PYTHON_BIN="py"
+else
+  echo "No Python interpreter found for clawdbot shim" >&2
+  exit 127
+fi
+
+if [[ "${PYTHON_BIN}" == *.exe ]] || [[ "${PYTHON_BIN}" == "py" ]]; then
+  SHIM_PATH="$(to_windows_path "${SHIM_PATH}")"
+fi
+
+"${PYTHON_BIN}" "${SHIM_PATH}" "$@"
