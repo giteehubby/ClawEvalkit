@@ -1,0 +1,275 @@
+{
+  "benchmark": "claw-bench-tribe",
+  "timestamp": 1774363262.3166533,
+  "overall_score": 90.91,
+  "total_tasks": 33,
+  "passed_tasks": 30,
+  "failed_tasks": 3,
+  "critical_failures": 0,
+  "task_scores": {
+    "clawdbot_verify": {
+      "task_name": "clawdbot_verify",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "clawdbot verified in shim mode: clawdbot-shim 0.1.0 (nanobot-backed)\r",
+      "duration_ms": 0
+    },
+    "basic_chat": {
+      "task_name": "basic_chat",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Math correct: 15+27=42",
+      "duration_ms": 8000
+    },
+    "tool_use_response": {
+      "task_name": "tool_use_response",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Tool used AND response contains UUID",
+      "duration_ms": 32000
+    },
+    "web_fetch_json": {
+      "task_name": "web_fetch_json",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Correctly fetched and parsed JSON (Sample Slide Show)",
+      "duration_ms": 23000
+    },
+    "web_fetch_html": {
+      "task_name": "web_fetch_html",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Correctly understood example.com content",
+      "duration_ms": 13000
+    },
+    "data_extraction": {
+      "task_name": "data_extraction",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Extracted IP address: 185.220.236.100\r",
+      "duration_ms": 16000
+    },
+    "reasoning": {
+      "task_name": "reasoning",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Correct calculation: 4*2 + 5*3 = 23",
+      "duration_ms": 10000
+    },
+    "instruction_following": {
+      "task_name": "instruction_following",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Contains required text (with extras)",
+      "duration_ms": 9000
+    },
+    "reasoning_tags": {
+      "task_name": "reasoning_tags",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Correct answer, no leaked tags",
+      "duration_ms": 9000
+    },
+    "error_handling": {
+      "task_name": "error_handling",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Graceful error handling",
+      "duration_ms": 31000
+    },
+    "consecutive_tools": {
+      "task_name": "consecutive_tools",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Handled consecutive tool calls with response",
+      "duration_ms": 21000
+    },
+    "skill_installation": {
+      "task_name": "skill_installation",
+      "mean": 0.0,
+      "std": 0.0,
+      "status": "fail",
+      "message": "Skill installation failed: INSTALL_FAILED",
+      "duration_ms": 1000
+    },
+    "muse_extension": {
+      "task_name": "muse_extension",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Muse extension functional",
+      "duration_ms": 27000
+    },
+    "exec_command": {
+      "task_name": "exec_command",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "exec tool working: returned command output",
+      "duration_ms": 10000
+    },
+    "web_search": {
+      "task_name": "web_search",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "web_search working: returned relevant results",
+      "duration_ms": 14000
+    },
+    "browser_automation": {
+      "task_name": "browser_automation",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "browser tool working: returned technical status",
+      "duration_ms": 27000
+    },
+    "file_operations": {
+      "task_name": "file_operations",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "File write/read working: value matched",
+      "duration_ms": 12000
+    },
+    "subagent_spawn": {
+      "task_name": "subagent_spawn",
+      "mean": 0.0,
+      "std": 0.0,
+      "status": "fail",
+      "message": "agents_list returned no agents",
+      "duration_ms": 14000
+    },
+    "background_process": {
+      "task_name": "background_process",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "process tool verified: background status reported",
+      "duration_ms": 17000
+    },
+    "image_analysis": {
+      "task_name": "image_analysis",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "image tool check completed (not configured)",
+      "duration_ms": 9000
+    },
+    "session_status": {
+      "task_name": "session_status",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "session_status working: status reported",
+      "duration_ms": 9000
+    },
+    "multi_turn_context": {
+      "task_name": "multi_turn_context",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Context retained: secret code recalled correctly",
+      "duration_ms": 17000
+    },
+    "research_task": {
+      "task_name": "research_task",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Research complete: HTTP 418 teapot explained with structure",
+      "duration_ms": 31000
+    },
+    "code_generation": {
+      "task_name": "code_generation",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Code generation verified: correct output 55",
+      "duration_ms": 14000
+    },
+    "memory_operations": {
+      "task_name": "memory_operations",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Memory verified: fact stored and recalled",
+      "duration_ms": 9000
+    },
+    "skill_workflow": {
+      "task_name": "skill_workflow",
+      "mean": 0.0,
+      "std": 0.0,
+      "status": "fail",
+      "message": "Weather skill failed: no weather data found: timeout\r",
+      "duration_ms": 35000
+    },
+    "multi_tool_chain": {
+      "task_name": "multi_tool_chain",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Multi-tool chain working: data processed",
+      "duration_ms": 21000
+    },
+    "response_quality": {
+      "task_name": "response_quality",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Response quality excellent: structured, formatted, comprehensive",
+      "duration_ms": 12000
+    },
+    "error_recovery": {
+      "task_name": "error_recovery",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Error recovery excellent: explained error and suggested action",
+      "duration_ms": 13000
+    },
+    "complex_instructions": {
+      "task_name": "complex_instructions",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Complex instructions: all steps completed with format",
+      "duration_ms": 11000
+    },
+    "adversarial_input": {
+      "task_name": "adversarial_input",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Adversarial handled: correct answer (4), resisted misdirection",
+      "duration_ms": 9000
+    },
+    "long_context": {
+      "task_name": "long_context",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Long context: found and followed hidden instruction",
+      "duration_ms": 9000
+    },
+    "json_output": {
+      "task_name": "json_output",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "JSON output: valid JSON structure",
+      "duration_ms": 8000
+    }
+  }
+}

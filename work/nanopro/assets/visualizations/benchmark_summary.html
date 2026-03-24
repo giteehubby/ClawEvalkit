@@ -221,18 +221,19 @@
         <p class="subtitle">
             <span class="model-badge">openrouter/google/gemini-3-flash-preview</span>
             <br><br>
-            2026-03-23 22:02 ~ 22:56
+            2026-03-23 ~ 2026-03-24
         </p>
 
         <!-- TLDR Summary -->
         <div class="tldr-card">
             <h3>TLDR</h3>
             <p>
-                Gemini 3 Flash 在四个 Benchmark 上的表现为：<strong>SkillsBench 73.41%</strong> (56/87任务通过)、
+                Gemini 3 Flash 在五个 Benchmark 上的表现为：<strong>SkillsBench 73.41%</strong> (56/87任务通过)、
                 <strong>PinchBench 61.73%</strong> (14.2/23)、<strong>OpenClawBench 62.05%</strong> (24.8/40)、
-                <strong>ClawBench Official 57.3%</strong> (156/315任务通过)。
+                <strong>ClawBench Official 57.3%</strong> (156/315任务通过)、<strong>ClawBench Tribe 90.91%</strong> (30/33测试通过)。
                 模型在工程类任务（CONTROL-SYSTEMS、COMPILATION & BUILD）表现优异，但在需要记忆和数据分析的任务上较弱。
-                总耗时约32分钟（409s + 364s + 717s + 597s），使用10线程并行执行。
+                其中 Tribe 侧基础能力覆盖较完整，当前主要失败点集中在 skill installation、subagent list 和 skill workflow。
+                总耗时约43分钟（409s + 364s + 717s + 597s + 501s），主运行使用10线程并行执行。
             </p>
         </div>
 
@@ -242,7 +243,8 @@
             <button class="tab" onclick="showTab('skillsbench')">SkillsBench (87)</button>
             <button class="tab" onclick="showTab('pinchbench')">PinchBench (23)</button>
             <button class="tab" onclick="showTab('openclawbench')">OpenClawBench (40)</button>
-            <button class="tab" onclick="showTab('clawbench')">ClawBench (315)</button>
+            <button class="tab" onclick="showTab('clawbench')">ClawBench Official (315)</button>
+            <button class="tab" onclick="showTab('clawbenchtribe')">ClawBench Tribe (33)</button>
         </div>
 
         <!-- Overview Tab -->
@@ -310,6 +312,22 @@
                     <div class="stat">
                         <span class="stat-label">任务数</span>
                         <span class="stat-value">315</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>ClawBench Tribe</h3>
+                    <div class="score-circle score-high" id="ct-circle">90.9%</div>
+                    <div class="stat">
+                        <span class="stat-label">通过测试</span>
+                        <span class="stat-value">30 / 33</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">耗时</span>
+                        <span class="stat-value">501s (8.4 min)</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">关键失败</span>
+                        <span class="stat-value">0</span>
                     </div>
                 </div>
             </div>
@@ -454,6 +472,42 @@
                 <div class="category-list" id="clawbench-categories"></div>
             </div>
         </div>
+
+        <!-- ClawBench Tribe Tab -->
+        <div id="clawbenchtribe" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h3>整体评分</h3>
+                    <div class="score-circle score-high">90.9%</div>
+                    <p style="text-align:center;color:var(--text-secondary);font-size:0.875rem;">
+                        30/33 测试通过
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>时间统计</h3>
+                    <div class="stat">
+                        <span class="stat-label">总耗时</span>
+                        <span class="stat-value">501s</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">平均每测试</span>
+                        <span class="stat-value">15.2s</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">失败数</span>
+                        <span class="stat-value">3</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <h4 class="chart-title">ClawBench Tribe Task Scores</h4>
+                <canvas id="clawbenchTribeChart" height="160"></canvas>
+            </div>
+            <div class="card">
+                <h3>Task 详细数据</h3>
+                <div class="category-list" id="clawbenchtribe-categories"></div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -589,6 +643,247 @@
                     {name: "PLANNING", score: 60.0, count: 5},
                     {name: "SCIENTIFIC-COMPUTING", score: 60.0, count: 5}
                 ]
+            },
+            clawbenchtribe: {
+                overall: 90.91,
+                passed: 30,
+                failed: 3,
+                total: 33,
+                critical: 0,
+                time: 501,
+                tasks: [
+                    {
+                        name: "clawdbot_verify",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 0.0,
+                        message: "clawdbot verified in shim mode: clawdbot-shim 0.1.0 (nanobot-backed)"
+                    },
+                    {
+                        name: "basic_chat",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 8.0,
+                        message: "Math correct: 15+27=42"
+                    },
+                    {
+                        name: "tool_use_response",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 32.0,
+                        message: "Tool used AND response contains UUID"
+                    },
+                    {
+                        name: "web_fetch_json",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 23.0,
+                        message: "Correctly fetched and parsed JSON (Sample Slide Show)"
+                    },
+                    {
+                        name: "web_fetch_html",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 13.0,
+                        message: "Correctly understood example.com content"
+                    },
+                    {
+                        name: "data_extraction",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 16.0,
+                        message: "Extracted IP address: 185.220.236.100"
+                    },
+                    {
+                        name: "reasoning",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 10.0,
+                        message: "Correct calculation: 4*2 + 5*3 = 23"
+                    },
+                    {
+                        name: "instruction_following",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 9.0,
+                        message: "Contains required text (with extras)"
+                    },
+                    {
+                        name: "reasoning_tags",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 9.0,
+                        message: "Correct answer, no leaked tags"
+                    },
+                    {
+                        name: "error_handling",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 31.0,
+                        message: "Graceful error handling"
+                    },
+                    {
+                        name: "consecutive_tools",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 21.0,
+                        message: "Handled consecutive tool calls with response"
+                    },
+                    {
+                        name: "skill_installation",
+                        score: 0.0,
+                        status: "fail",
+                        duration: 1.0,
+                        message: "Skill installation failed: INSTALL_FAILED"
+                    },
+                    {
+                        name: "muse_extension",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 27.0,
+                        message: "Muse extension functional"
+                    },
+                    {
+                        name: "exec_command",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 10.0,
+                        message: "exec tool working: returned command output"
+                    },
+                    {
+                        name: "web_search",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 14.0,
+                        message: "web_search working: returned relevant results"
+                    },
+                    {
+                        name: "browser_automation",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 27.0,
+                        message: "browser tool working: returned technical status"
+                    },
+                    {
+                        name: "file_operations",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 12.0,
+                        message: "File write/read working: value matched"
+                    },
+                    {
+                        name: "subagent_spawn",
+                        score: 0.0,
+                        status: "fail",
+                        duration: 14.0,
+                        message: "agents_list returned no agents"
+                    },
+                    {
+                        name: "background_process",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 17.0,
+                        message: "process tool verified: background status reported"
+                    },
+                    {
+                        name: "image_analysis",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 9.0,
+                        message: "image tool check completed (not configured)"
+                    },
+                    {
+                        name: "session_status",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 9.0,
+                        message: "session_status working: status reported"
+                    },
+                    {
+                        name: "multi_turn_context",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 17.0,
+                        message: "Context retained: secret code recalled correctly"
+                    },
+                    {
+                        name: "research_task",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 31.0,
+                        message: "Research complete: HTTP 418 teapot explained with structure"
+                    },
+                    {
+                        name: "code_generation",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 14.0,
+                        message: "Code generation verified: correct output 55"
+                    },
+                    {
+                        name: "memory_operations",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 9.0,
+                        message: "Memory verified: fact stored and recalled"
+                    },
+                    {
+                        name: "skill_workflow",
+                        score: 0.0,
+                        status: "fail",
+                        duration: 35.0,
+                        message: "Weather skill failed: no weather data found: timeout"
+                    },
+                    {
+                        name: "multi_tool_chain",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 21.0,
+                        message: "Multi-tool chain working: data processed"
+                    },
+                    {
+                        name: "response_quality",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 12.0,
+                        message: "Response quality excellent: structured, formatted, comprehensive"
+                    },
+                    {
+                        name: "error_recovery",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 13.0,
+                        message: "Error recovery excellent: explained error and suggested action"
+                    },
+                    {
+                        name: "complex_instructions",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 11.0,
+                        message: "Complex instructions: all steps completed with format"
+                    },
+                    {
+                        name: "adversarial_input",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 9.0,
+                        message: "Adversarial handled: correct answer (4), resisted misdirection"
+                    },
+                    {
+                        name: "long_context",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 9.0,
+                        message: "Long context: found and followed hidden instruction"
+                    },
+                    {
+                        name: "json_output",
+                        score: 100.0,
+                        status: "pass",
+                        duration: 8.0,
+                        message: "JSON output: valid JSON structure"
+                    }
+                ]
             }
         };
 
@@ -624,15 +919,28 @@
             `).join('');
         }
 
+        function renderClawBenchTribeList(containerId, tasks) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = tasks.map(item => `
+                <div class="category-item">
+                    <span class="category-name">${item.name}<br><span style="color:var(--text-secondary);font-size:0.75rem;">${item.message} · ${item.duration.toFixed(1)}s</span></span>
+                    <div class="category-bar">
+                        <div class="category-fill" style="width:${item.score}%;background:${getColor(item.score)}"></div>
+                    </div>
+                    <span class="category-score ${getScoreClass(item.score)}">${item.score.toFixed(0)}%</span>
+                </div>
+            `).join('');
+        }
+
         // Overview Chart
         new Chart(document.getElementById('overviewChart'), {
             type: 'bar',
             data: {
-                labels: ['SkillsBench', 'PinchBench', 'OpenClawBench', 'ClawBench'],
+                labels: ['SkillsBench', 'PinchBench', 'OpenClawBench', 'ClawBench Official', 'ClawBench Tribe'],
                 datasets: [{
                     label: 'Overall Score (%)',
-                    data: [73.41, 61.73, 62.05, 57.3],
-                    backgroundColor: ['#3b82f6', '#f59e0b', '#a855f7', '#ef4444'],
+                    data: [73.41, 61.73, 62.05, 57.3, 90.91],
+                    backgroundColor: ['#3b82f6', '#f59e0b', '#a855f7', '#ef4444', '#22c55e'],
                     borderRadius: 8
                 }]
             },
@@ -752,12 +1060,14 @@
         renderCategoryList('pinchbench-categories', data.pinchbench.categories);
         renderCategoryList('openclawbench-categories', data.openclawbench.suites);
         renderCategoryList('clawbench-categories', data.clawbench.domains);
+        renderClawBenchTribeList('clawbenchtribe-categories', data.clawbenchtribe.tasks);
 
         // Set score circles
         document.getElementById('sb-circle').className = 'score-circle score-mid';
         document.getElementById('pb-circle').className = 'score-circle score-mid';
         document.getElementById('oc-circle').className = 'score-circle score-mid';
         document.getElementById('cb-circle').className = 'score-circle score-mid';
+        document.getElementById('ct-circle').className = 'score-circle score-high';
 
         // ClawBench Chart - Level
         new Chart(document.getElementById('clawbenchChart'), {
@@ -783,6 +1093,36 @@
                     },
                     x: {
                         grid: { display: false },
+                        ticks: { color: '#94a3b8' }
+                    }
+                }
+            }
+        });
+
+        // ClawBench Tribe Chart
+        new Chart(document.getElementById('clawbenchTribeChart'), {
+            type: 'bar',
+            data: {
+                labels: data.clawbenchtribe.tasks.map(t => t.name),
+                datasets: [{
+                    label: 'Score (%)',
+                    data: data.clawbenchtribe.tasks.map(t => t.score),
+                    backgroundColor: data.clawbenchtribe.tasks.map(t => getColor(t.score)),
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#94a3b8', font: { size: 10 } }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { color: '#334155' },
                         ticks: { color: '#94a3b8' }
                     }
                 }
