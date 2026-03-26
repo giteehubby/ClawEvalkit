@@ -18,6 +18,10 @@ import os
 import sys
 import tempfile
 from pathlib import Path
+from dotenv import load_dotenv
+
+# 加载 .env 配置
+load_dotenv('/Volumes/F/Clauding/.env')
 
 # 添加项目根目录到 Python 路径
 _root_dir = Path(__file__).parent.parent
@@ -83,7 +87,7 @@ def run_pinchbench(args: argparse.Namespace) -> None:
     workspace = Path(tempfile.gettempdir()) / "benchmarks" / "workspace"
     workspace.mkdir(parents=True, exist_ok=True)
 
-    output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "assets" / "results"
+    output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "artifacts" / "runs" / "results"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     agent = create_agent(
@@ -128,7 +132,7 @@ def run_openclawbench(args: argparse.Namespace) -> None:
     workspace = Path(tempfile.gettempdir()) / "benchmarks" / "workspace"
     workspace.mkdir(parents=True, exist_ok=True)
 
-    output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "assets" / "results"
+    output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "artifacts" / "runs" / "results"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     agent = create_agent(
@@ -174,7 +178,7 @@ def run_skillsbench(args: argparse.Namespace) -> None:
     workspace = Path(tempfile.gettempdir()) / "benchmarks" / "workspace"
     workspace.mkdir(parents=True, exist_ok=True)
 
-    output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "assets" / "results"
+    output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "artifacts" / "runs" / "results"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     agent = create_agent(
@@ -224,7 +228,7 @@ def run_clawbench_official(args: argparse.Namespace) -> None:
     workspace = Path(tempfile.gettempdir()) / "benchmarks" / "workspace"
     workspace.mkdir(parents=True, exist_ok=True)
 
-    output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "assets" / "results"
+    output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "artifacts" / "runs" / "results"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     agent = create_agent(
@@ -272,7 +276,7 @@ def run_claw_bench_tribe(args: argparse.Namespace) -> None:
     workspace = Path(tempfile.gettempdir()) / "benchmarks" / "workspace"
     workspace.mkdir(parents=True, exist_ok=True)
 
-    output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "assets" / "results"
+    output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "artifacts" / "runs" / "results"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     agent = create_agent(
