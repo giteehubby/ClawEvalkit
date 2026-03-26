@@ -45,6 +45,11 @@ work/nanopro/
 - [x] SkillsBench: 73.41% (56/87) - 409s
 - [x] PinchBench: 61.73% (14.2/23) - 364s
 - [x] OpenClawBench: 62.05% (24.8/40) - 717s
+- [x] TRIBE-INC/claw-bench: 已完成
+- [x] skillbench: 已完成
+
+### SciSkillBench 集成 (2026-03-26)
+- [ ] SciSkillBench 适配器 - 因难以适配已放弃
 
 ### ClawBench Official 集成 (2026-03-24)
 - [x] ClawBenchOfficialAdapter (315 tasks, 34 domains)
@@ -95,15 +100,19 @@ python run.py --benchmark skillsbench --threads 10
 open ../assets/visualizations/benchmark_summary.html
 ```
 
-## 最新测试结果 (2026-03-24)
+## 最新测试结果 (2026-03-26)
 
-| Benchmark | Score | Passed/Total | Time |
-|-----------|-------|-------------|------|
-| ClawBench Official | 57.3% | 156/315 | 597s |
-| SkillsBench | 73.41% | 56/87 | 409s |
-| PinchBench | 61.73% | 14.2/23 | 364s |
-| OpenClawBench | 62.05% | 24.8/40 | 717s |
+| Benchmark | Score | Passed/Total | Time | Status |
+|-----------|-------|-------------|------|--------|
+| ClawBench Official | 57.3% | 156/315 | 597s | ✅ |
+| SkillsBench | 73.41% | 56/87 | 409s | ✅ |
+| PinchBench | 61.73% | 14.2/23 | 364s | ✅ |
+| OpenClawBench | 62.05% | 24.8/40 | 717s | ✅ |
+| TRIBE-INC/claw-bench | - | - | - | ✅ |
+| skillbench | - | - | - | ✅ |
+| SciSkillBench | - | - | - | ❌ 放弃 |
 
-**总耗时**: ~32 分钟 (使用10线程并行)
+**已完成**: skillsbench, TRIBE-INC/claw-bench, Pinchbench, AgentBench-OpenClaw, claw-bench, skillbench
+**已放弃**: sciskillbench
 
 **模型**: openrouter/google/gemini-3-flash-preview
