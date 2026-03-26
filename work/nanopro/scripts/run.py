@@ -29,6 +29,7 @@ from adapters.openclawbench import OpenClawBenchAdapter
 from adapters.skillsbench import SkillsBenchAdapter
 from adapters.clawbench_official import ClawBenchOfficialAdapter
 from adapters.claw_bench_tribe import ClawBenchTribeAdapter
+from adapters.skillbench import SkillBenchAdapter
 
 # 配置日志
 logging.basicConfig(
@@ -301,7 +302,38 @@ def run_claw_bench_tribe(args: argparse.Namespace) -> None:
     logger.info(f"Passed: {results['passed_tasks']}/{results['total_tasks']} tests")
     logger.info(f"Critical failures: {results['critical_failures']}")
     logger.info(f"Results saved to: {output_dir}")
+    
+def run_skillbench(args: argparse.Namespace) -> None:
+    nanopro_dir = get_nanopro_dir()
+    skillbench_dir = nanopro_dir / "benchmarks" / "skillbench"
+    workspace = Path("/tmp/benchmarks/workspace")
+    workspace.mkdir(parents=True, exist_ok=True)
 
+    output_dir = nanopro_dir / "assets" / "results" / "skillbench"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    agent = create_agent(
+        agent_type=args.agent,
+        model=args.model,
+        api_url=args.api_url,
+        api_key=args.api_key,
+        workspace=workspace,
+        timeout=args.timeout,
+    )
+
+    adapter = SkillBenchAdapter(
+        agent=agent,
+        skillbench_dir=skillbench_dir,
+        output_dir=output_dir,
+    )
+    results = adapter.run()
+
+    logger.info("\nBenchmark completed!")
+    logger.info(f"Overall Score: {results['overall_score']:.1f}%")
+    logger.info(f"Passed: {results['passed_tasks']}/{results['total_tasks']} tasks")
+    logger.info(f"Results saved to: {output_dir}")
+
+    agent.cleanup()
 
 def run_benchmark(benchmark_name: str, args: argparse.Namespace) -> None:
     if benchmark_name == "pinchbench":
@@ -314,6 +346,8 @@ def run_benchmark(benchmark_name: str, args: argparse.Namespace) -> None:
         run_clawbench_official(args)
     elif benchmark_name == "claw-bench-tribe":
         run_claw_bench_tribe(args)
+    elif benchmark_name == "skillbench":
+        run_skillbench(args)
     else:
         logger.error(f"Unknown benchmark: {benchmark_name}")
         logger.info(f"Available benchmarks: pinchbench, openclawbench, skillsbench, clawbench_official, claw-bench-tribe")
