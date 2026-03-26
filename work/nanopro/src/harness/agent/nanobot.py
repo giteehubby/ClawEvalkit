@@ -12,13 +12,13 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List
 
-# 添加 nanobot 源码路径 (nanobot/ 与 scripts/ 平级，nanobot/ 包含 nanobot Python 模块)
-NANOBOT_PATH = Path(__file__).parent.parent.parent / "nanobot"
+# 添加 nanobot 源码路径 (nanobot/ 与 src/ 平级，nanobot/ 包含 nanobot Python 模块)
+NANOBOT_PATH = Path(__file__).parent.parent.parent.parent / "nanobot"
 sys.path.insert(0, str(NANOBOT_PATH))
 
 import litellm
 from litellm import acompletion
-from agent.base import AgentResult, BaseAgent
+from .base import AgentResult, BaseAgent
 from nanobot.bus.queue import MessageBus
 from nanobot.agent.tools.registry import ToolRegistry
 from nanobot.agent.tools.filesystem import ReadFileTool, WriteFileTool, ListDirTool, EditFileTool

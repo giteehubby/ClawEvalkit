@@ -15,10 +15,10 @@ import logging
 import time
 from pathlib import Path
 
-sys.path.insert(0, str(Path('.').absolute()))
+sys.path.insert(0, str(Path('..').absolute()))
 
-from agent.nanobot import NanoBotAgent
-from adapters.skillsbench import SkillsBenchAdapter
+from src.harness.agent.nanobot import NanoBotAgent
+from src.runners.adapters.skillsbench import SkillsBenchAdapter
 
 # 配置日志
 logging.basicConfig(

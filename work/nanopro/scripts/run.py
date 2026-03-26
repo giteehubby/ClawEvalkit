@@ -19,17 +19,17 @@ import sys
 import tempfile
 from pathlib import Path
 
-# 添加当前目录到 Python 路径
-_scripts_dir = Path(__file__).parent
-sys.path.insert(0, str(_scripts_dir))
+# 添加项目根目录到 Python 路径
+_root_dir = Path(__file__).parent.parent
+sys.path.insert(0, str(_root_dir))
 
-from agent.base import AgentResult, BaseAgent
-from adapters.pinchbench import PinchBenchAdapter
-from adapters.openclawbench import OpenClawBenchAdapter
-from adapters.skillsbench import SkillsBenchAdapter
-from adapters.clawbench_official import ClawBenchOfficialAdapter
-from adapters.claw_bench_tribe import ClawBenchTribeAdapter
-from adapters.skillbench import SkillBenchAdapter
+from src.harness.agent.base import AgentResult, BaseAgent
+from src.runners.adapters.pinchbench import PinchBenchAdapter
+from src.runners.adapters.openclawbench import OpenClawBenchAdapter
+from src.runners.adapters.skillsbench import SkillsBenchAdapter
+from src.runners.adapters.clawbench_official import ClawBenchOfficialAdapter
+from src.runners.adapters.claw_bench_tribe import ClawBenchTribeAdapter
+from src.runners.adapters.skillbench import SkillBenchAdapter
 
 # 配置日志
 logging.basicConfig(
@@ -56,7 +56,7 @@ def get_nanopro_dir() -> Path:
 def create_agent(agent_type: str, model: str, api_url: str, api_key: str, workspace: Path, **kwargs) -> BaseAgent:
     """创建 Agent 实例"""
     if agent_type == "nanobot":
-        from agent.nanobot import NanoBotAgent
+        from src.harness.agent.nanobot import NanoBotAgent
 
         return NanoBotAgent(
             model=model,

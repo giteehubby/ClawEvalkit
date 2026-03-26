@@ -15,16 +15,13 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-_scripts_dir = Path(__file__).parent
-sys.path.insert(0, str(_scripts_dir))
-
 try:
     import yaml
     HAS_YAML = True
 except ImportError:
     HAS_YAML = False
 
-from agent.base import AgentResult, BaseAgent
+from src.harness.agent.base import AgentResult, BaseAgent
 
 logger = logging.getLogger("adapter.skillbench")
 

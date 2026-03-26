@@ -14,12 +14,13 @@ from dotenv import load_dotenv
 load_dotenv('/Volumes/F/Clauding/.env')
 
 script_dir = Path(__file__).parent
-sys.path.insert(0, str(script_dir))
+_root_dir = script_dir.parent
+sys.path.insert(0, str(_root_dir))
 
-from agent.nanobot import NanoBotAgent
-from adapters.pinchbench import PinchBenchAdapter
-from adapters.openclawbench import OpenClawBenchAdapter
-from adapters.skillsbench import SkillsBenchAdapter
+from src.harness.agent.nanobot import NanoBotAgent
+from src.runners.adapters.pinchbench import PinchBenchAdapter
+from src.runners.adapters.openclawbench import OpenClawBenchAdapter
+from src.runners.adapters.skillsbench import SkillsBenchAdapter
 
 logging.basicConfig(
     level=logging.INFO,

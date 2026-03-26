@@ -16,7 +16,7 @@ import sys
 import time
 from pathlib import Path
 
-from agent.base import BaseAgent
+from src.harness.agent.base import BaseAgent
 
 logger = logging.getLogger("adapter.claw_bench_tribe")
 

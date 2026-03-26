@@ -23,7 +23,7 @@ try:
 except ImportError:
     HAS_YAML = False
 
-from agent.base import AgentResult, BaseAgent
+from src.harness.agent.base import AgentResult, BaseAgent
 
 logger = logging.getLogger("adapter.openclawbench")
 

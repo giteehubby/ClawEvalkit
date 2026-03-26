@@ -30,7 +30,7 @@ try:
 except ImportError:
     HAS_TQDM = False
 
-from agent.base import AgentResult, BaseAgent
+from src.harness.agent.base import AgentResult, BaseAgent
 
 logger = logging.getLogger("adapter.skillsbench")
 

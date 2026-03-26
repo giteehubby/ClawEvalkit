@@ -19,7 +19,8 @@ import tempfile
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-sys.path.insert(0, str(SCRIPT_DIR))
+ROOT_DIR = SCRIPT_DIR.parent
+sys.path.insert(0, str(ROOT_DIR))
 
 
 VERSION = "clawdbot-shim 0.1.0 (nanobot-backed)"
@@ -50,7 +51,7 @@ def _default_session_store() -> Path:
 
 
 def _build_agent():
-    from agent.nanobot import NanoBotAgent
+    from src.harness.agent.nanobot import NanoBotAgent
 
     api_url = _get_env("OPENAI_BASE_URL") or _get_env("API_URL")
     api_key = _get_env("OPENAI_API_KEY") or _get_env("API_KEY")

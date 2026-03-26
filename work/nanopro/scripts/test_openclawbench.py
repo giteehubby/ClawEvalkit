@@ -14,11 +14,11 @@ from dotenv import load_dotenv
 # 加载 .env 配置
 load_dotenv("/Volumes/F/Clauding/.env")
 
-# 添加脚本路径
-sys.path.insert(0, str(Path(__file__).parent))
+# 添加项目根目录到 Python 路径
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from agent.nanobot import NanoBotAgent
-from adapters.openclawbench import OpenClawBenchAdapter
+from src.harness.agent.nanobot import NanoBotAgent
+from src.runners.adapters.openclawbench import OpenClawBenchAdapter
 
 # API 配置 - 从环境变量获取
 API_URL = os.environ.get("OPENAI_BASE_URL", "") or os.environ.get("API_URL", "")
