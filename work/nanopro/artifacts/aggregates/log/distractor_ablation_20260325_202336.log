@@ -1,0 +1,871 @@
+2026-03-25 20:23:38,778 - INFO - 
+============================================================
+Running: P0_d0
+============================================================
+2026-03-25 20:23:38,778 - INFO - Running distractor experiment: skillsbench with P0, shuffle=False, distractors=0
+2026-03-25 20:23:38,787 - INFO - Loaded 20 tasks
+2026-03-25 20:23:38,787 - INFO - Running task: 3d-scan-calc
+[92m20:23:38 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:38,796 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:39,753 - INFO - Running task: adaptive-cruise-control
+[92m20:23:39 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:39,754 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:40,468 - INFO - Running task: azure-bgp-oscillation-route-leak
+[92m20:23:40 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:40,470 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:41,094 - INFO - Running task: citation-check
+[92m20:23:41 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:41,097 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:41,708 - INFO - Running task: civ6-adjacency-optimizer
+[92m20:23:41 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:41,709 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:43,425 - INFO - Running task: court-form-filling
+[92m20:23:43 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:43,427 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:44,072 - INFO - Running task: crystallographic-wyckoff-position-analysis
+[92m20:23:44 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:44,075 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:44,700 - INFO - Running task: dapt-intrusion-detection
+[92m20:23:44 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:44,701 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:45,472 - INFO - Running task: data-to-d3
+[92m20:23:45 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:45,474 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:46,096 - INFO - Running task: dialogue-parser
+[92m20:23:46 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:46,099 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:46,853 - INFO - Running task: dynamic-object-aware-egomotion
+[92m20:23:46 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:46,855 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:47,730 - INFO - Running task: earthquake-phase-association
+[92m20:23:47 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:47,733 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:49,409 - INFO - Running task: earthquake-plate-calculation
+[92m20:23:49 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:49,411 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:50,113 - INFO - Running task: econ-detrending-correlation
+[92m20:23:50 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:50,116 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:51,716 - INFO - Running task: energy-ac-optimal-power-flow
+[92m20:23:51 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:51,719 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:52,345 - INFO - Running task: energy-market-pricing
+[92m20:23:52 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:52,348 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:52,972 - INFO - Running task: enterprise-information-search
+[92m20:23:52 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:52,975 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:53,768 - INFO - Running task: exceltable-in-ppt
+[92m20:23:53 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:53,771 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:54,405 - INFO - Running task: exoplanet-detection-period
+[92m20:23:54 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:54,408 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:55,020 - INFO - Running task: financial-modeling-qa
+[92m20:23:55 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:55,022 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:55,651 - INFO - Results saved to /Volumes/F/Clauding/AwesomeSkill/work/nanopro/assets/results/distractor/distractor_skillsbench_P0_shuffle0_d0_20260325_202355.json
+2026-03-25 20:23:55,651 - INFO - 
+============================================================
+Running: P0_d5
+============================================================
+2026-03-25 20:23:55,651 - INFO - Running distractor experiment: skillsbench with P0, shuffle=False, distractors=5
+2026-03-25 20:23:55,655 - INFO - Loaded 20 tasks
+2026-03-25 20:23:55,655 - INFO - Running task: 3d-scan-calc
+[92m20:23:55 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:55,657 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:56,417 - INFO - Running task: adaptive-cruise-control
+[92m20:23:56 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:56,421 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:57,185 - INFO - Running task: azure-bgp-oscillation-route-leak
+[92m20:23:57 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:57,188 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:57,966 - INFO - Running task: citation-check
+[92m20:23:57 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:57,969 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:58,726 - INFO - Running task: civ6-adjacency-optimizer
+[92m20:23:58 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:58,729 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:59,348 - INFO - Running task: court-form-filling
+[92m20:23:59 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:23:59,351 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:01,075 - INFO - Running task: crystallographic-wyckoff-position-analysis
+[92m20:24:01 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:01,077 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:01,853 - INFO - Running task: dapt-intrusion-detection
+[92m20:24:01 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:01,855 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:02,499 - INFO - Running task: data-to-d3
+[92m20:24:02 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:02,503 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:03,120 - INFO - Running task: dialogue-parser
+[92m20:24:03 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:03,124 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:04,218 - INFO - Running task: dynamic-object-aware-egomotion
+[92m20:24:04 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:04,222 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:04,843 - INFO - Running task: earthquake-phase-association
+[92m20:24:04 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:04,844 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:05,453 - INFO - Running task: earthquake-plate-calculation
+[92m20:24:05 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:05,456 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:06,073 - INFO - Running task: econ-detrending-correlation
+[92m20:24:06 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:06,076 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:06,762 - INFO - Running task: energy-ac-optimal-power-flow
+[92m20:24:06 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:06,764 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:07,399 - INFO - Running task: energy-market-pricing
+[92m20:24:07 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:07,402 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:08,027 - INFO - Running task: enterprise-information-search
+[92m20:24:08 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:08,030 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:08,735 - INFO - Running task: exceltable-in-ppt
+[92m20:24:08 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:08,738 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:09,368 - INFO - Running task: exoplanet-detection-period
+[92m20:24:09 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:09,371 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:10,042 - INFO - Running task: financial-modeling-qa
+[92m20:24:10 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:10,045 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:10,975 - INFO - Results saved to /Volumes/F/Clauding/AwesomeSkill/work/nanopro/assets/results/distractor/distractor_skillsbench_P0_shuffle0_d5_20260325_202410.json
+2026-03-25 20:24:10,975 - INFO - 
+============================================================
+Running: P0_d10
+============================================================
+2026-03-25 20:24:10,975 - INFO - Running distractor experiment: skillsbench with P0, shuffle=False, distractors=10
+2026-03-25 20:24:10,987 - INFO - Loaded 20 tasks
+2026-03-25 20:24:10,987 - INFO - Running task: 3d-scan-calc
+[92m20:24:10 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:10,990 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:11,616 - INFO - Running task: adaptive-cruise-control
+[92m20:24:11 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:11,618 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:12,223 - INFO - Running task: azure-bgp-oscillation-route-leak
+[92m20:24:12 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:12,227 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:13,022 - INFO - Running task: citation-check
+[92m20:24:13 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:13,025 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:13,669 - INFO - Running task: civ6-adjacency-optimizer
+[92m20:24:13 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:13,671 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:14,400 - INFO - Running task: court-form-filling
+[92m20:24:14 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:14,403 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:15,041 - INFO - Running task: crystallographic-wyckoff-position-analysis
+[92m20:24:15 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:15,045 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:15,663 - INFO - Running task: dapt-intrusion-detection
+[92m20:24:15 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:15,666 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:16,334 - INFO - Running task: data-to-d3
+[92m20:24:16 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:16,336 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:17,016 - INFO - Running task: dialogue-parser
+[92m20:24:17 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:17,019 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:17,658 - INFO - Running task: dynamic-object-aware-egomotion
+[92m20:24:17 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:17,661 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:18,298 - INFO - Running task: earthquake-phase-association
+[92m20:24:18 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:18,301 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:18,904 - INFO - Running task: earthquake-plate-calculation
+[92m20:24:18 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:18,909 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:19,563 - INFO - Running task: econ-detrending-correlation
+[92m20:24:19 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:19,566 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:20,228 - INFO - Running task: energy-ac-optimal-power-flow
+[92m20:24:20 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:20,231 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:20,858 - INFO - Running task: energy-market-pricing
+[92m20:24:20 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:20,861 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:21,486 - INFO - Running task: enterprise-information-search
+[92m20:24:21 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:21,490 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:22,104 - INFO - Running task: exceltable-in-ppt
+[92m20:24:22 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:22,107 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:22,740 - INFO - Running task: exoplanet-detection-period
+[92m20:24:22 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:22,743 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:23,454 - INFO - Running task: financial-modeling-qa
+[92m20:24:23 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:23,458 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:24,072 - INFO - Results saved to /Volumes/F/Clauding/AwesomeSkill/work/nanopro/assets/results/distractor/distractor_skillsbench_P0_shuffle0_d10_20260325_202424.json
+2026-03-25 20:24:24,073 - INFO - 
+============================================================
+Running: P0_d20
+============================================================
+2026-03-25 20:24:24,073 - INFO - Running distractor experiment: skillsbench with P0, shuffle=False, distractors=20
+2026-03-25 20:24:24,086 - INFO - Loaded 20 tasks
+2026-03-25 20:24:24,086 - INFO - Running task: 3d-scan-calc
+[92m20:24:24 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:24,089 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:24,703 - INFO - Running task: adaptive-cruise-control
+[92m20:24:24 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:24,705 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:25,333 - INFO - Running task: azure-bgp-oscillation-route-leak
+[92m20:24:25 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:25,337 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:25,965 - INFO - Running task: citation-check
+[92m20:24:25 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:25,968 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:26,588 - INFO - Running task: civ6-adjacency-optimizer
+[92m20:24:26 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:26,591 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:27,213 - INFO - Running task: court-form-filling
+[92m20:24:27 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:27,216 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:27,971 - INFO - Running task: crystallographic-wyckoff-position-analysis
+[92m20:24:27 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:27,974 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:28,708 - INFO - Running task: dapt-intrusion-detection
+[92m20:24:28 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:28,709 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:29,443 - INFO - Running task: data-to-d3
+[92m20:24:29 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:29,446 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:30,093 - INFO - Running task: dialogue-parser
+[92m20:24:30 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:30,097 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:30,781 - INFO - Running task: dynamic-object-aware-egomotion
+[92m20:24:30 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:30,783 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:31,504 - INFO - Running task: earthquake-phase-association
+[92m20:24:31 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:31,508 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:32,140 - INFO - Running task: earthquake-plate-calculation
+[92m20:24:32 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:32,146 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:32,834 - INFO - Running task: econ-detrending-correlation
+[92m20:24:32 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:32,837 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:33,483 - INFO - Running task: energy-ac-optimal-power-flow
+[92m20:24:33 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:33,486 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:34,131 - INFO - Running task: energy-market-pricing
+[92m20:24:34 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:34,135 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:34,790 - INFO - Running task: enterprise-information-search
+[92m20:24:34 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:34,793 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:35,446 - INFO - Running task: exceltable-in-ppt
+[92m20:24:35 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:35,449 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:36,164 - INFO - Running task: exoplanet-detection-period
+[92m20:24:36 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:36,168 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:36,823 - INFO - Running task: financial-modeling-qa
+[92m20:24:36 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:36,827 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:37,501 - INFO - Results saved to /Volumes/F/Clauding/AwesomeSkill/work/nanopro/assets/results/distractor/distractor_skillsbench_P0_shuffle0_d20_20260325_202437.json
+2026-03-25 20:24:37,501 - INFO - 
+============================================================
+Running: P2_d0
+============================================================
+2026-03-25 20:24:37,501 - INFO - Running distractor experiment: skillsbench with P2, shuffle=False, distractors=0
+2026-03-25 20:24:37,505 - INFO - Loaded 20 tasks
+2026-03-25 20:24:37,505 - INFO - Running task: 3d-scan-calc
+[92m20:24:37 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:37,508 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:38,132 - INFO - Running task: adaptive-cruise-control
+[92m20:24:38 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:38,135 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:38,822 - INFO - Running task: azure-bgp-oscillation-route-leak
+[92m20:24:38 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:38,824 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:39,546 - INFO - Running task: citation-check
+[92m20:24:39 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:39,550 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:40,197 - INFO - Running task: civ6-adjacency-optimizer
+[92m20:24:40 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:40,201 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:40,923 - INFO - Running task: court-form-filling
+[92m20:24:40 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:40,926 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:41,643 - INFO - Running task: crystallographic-wyckoff-position-analysis
+[92m20:24:41 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:41,646 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:42,325 - INFO - Running task: dapt-intrusion-detection
+[92m20:24:42 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:42,329 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:43,076 - INFO - Running task: data-to-d3
+[92m20:24:43 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:43,078 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:43,820 - INFO - Running task: dialogue-parser
+[92m20:24:43 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:43,824 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:44,599 - INFO - Running task: dynamic-object-aware-egomotion
+[92m20:24:44 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:44,602 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:45,237 - INFO - Running task: earthquake-phase-association
+[92m20:24:45 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:45,240 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:45,924 - INFO - Running task: earthquake-plate-calculation
+[92m20:24:45 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:45,927 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:46,569 - INFO - Running task: econ-detrending-correlation
+[92m20:24:46 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:46,572 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:47,213 - INFO - Running task: energy-ac-optimal-power-flow
+[92m20:24:47 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:47,216 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:47,922 - INFO - Running task: energy-market-pricing
+[92m20:24:47 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:47,925 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:48,627 - INFO - Running task: enterprise-information-search
+[92m20:24:48 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:48,630 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:49,286 - INFO - Running task: exceltable-in-ppt
+[92m20:24:49 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:49,289 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:49,942 - INFO - Running task: exoplanet-detection-period
+[92m20:24:49 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:49,944 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:50,619 - INFO - Running task: financial-modeling-qa
+[92m20:24:50 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:50,621 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:51,268 - INFO - Results saved to /Volumes/F/Clauding/AwesomeSkill/work/nanopro/assets/results/distractor/distractor_skillsbench_P2_shuffle0_d0_20260325_202451.json
+2026-03-25 20:24:51,268 - INFO - 
+============================================================
+Running: P2_d5
+============================================================
+2026-03-25 20:24:51,268 - INFO - Running distractor experiment: skillsbench with P2, shuffle=False, distractors=5
+2026-03-25 20:24:51,271 - INFO - Loaded 20 tasks
+2026-03-25 20:24:51,271 - INFO - Running task: 3d-scan-calc
+[92m20:24:51 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:51,274 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:51,985 - INFO - Running task: adaptive-cruise-control
+[92m20:24:51 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:51,988 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:52,623 - INFO - Running task: azure-bgp-oscillation-route-leak
+[92m20:24:52 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:52,626 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:53,282 - INFO - Running task: citation-check
+[92m20:24:53 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:53,285 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:53,913 - INFO - Running task: civ6-adjacency-optimizer
+[92m20:24:53 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:53,916 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:54,531 - INFO - Running task: court-form-filling
+[92m20:24:54 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:54,534 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:55,173 - INFO - Running task: crystallographic-wyckoff-position-analysis
+[92m20:24:55 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:55,176 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:55,961 - INFO - Running task: dapt-intrusion-detection
+[92m20:24:55 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:55,964 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:56,592 - INFO - Running task: data-to-d3
+[92m20:24:56 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:56,595 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:57,228 - INFO - Running task: dialogue-parser
+[92m20:24:57 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:57,231 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:58,435 - INFO - Running task: dynamic-object-aware-egomotion
+[92m20:24:58 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:58,439 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:59,045 - INFO - Running task: earthquake-phase-association
+[92m20:24:59 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:59,049 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:59,722 - INFO - Running task: earthquake-plate-calculation
+[92m20:24:59 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:24:59,725 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:00,349 - INFO - Running task: econ-detrending-correlation
+[92m20:25:00 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:00,353 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:01,085 - INFO - Running task: energy-ac-optimal-power-flow
+[92m20:25:01 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:01,088 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:01,730 - INFO - Running task: energy-market-pricing
+[92m20:25:01 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:01,734 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:02,521 - INFO - Running task: enterprise-information-search
+[92m20:25:02 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:02,523 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:03,539 - INFO - Running task: exceltable-in-ppt
+[92m20:25:03 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:03,543 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:04,254 - INFO - Running task: exoplanet-detection-period
+[92m20:25:04 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:04,257 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:04,968 - INFO - Running task: financial-modeling-qa
+[92m20:25:04 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:04,970 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:05,580 - INFO - Results saved to /Volumes/F/Clauding/AwesomeSkill/work/nanopro/assets/results/distractor/distractor_skillsbench_P2_shuffle0_d5_20260325_202505.json
+2026-03-25 20:25:05,580 - INFO - 
+============================================================
+Running: P2_d10
+============================================================
+2026-03-25 20:25:05,580 - INFO - Running distractor experiment: skillsbench with P2, shuffle=False, distractors=10
+2026-03-25 20:25:05,584 - INFO - Loaded 20 tasks
+2026-03-25 20:25:05,584 - INFO - Running task: 3d-scan-calc
+[92m20:25:05 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:05,586 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:06,274 - INFO - Running task: adaptive-cruise-control
+[92m20:25:06 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:06,277 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:07,024 - INFO - Running task: azure-bgp-oscillation-route-leak
+[92m20:25:07 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:07,027 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:07,655 - INFO - Running task: citation-check
+[92m20:25:07 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:07,659 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:08,288 - INFO - Running task: civ6-adjacency-optimizer
+[92m20:25:08 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:08,291 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:08,908 - INFO - Running task: court-form-filling
+[92m20:25:08 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:08,910 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:09,501 - INFO - Running task: crystallographic-wyckoff-position-analysis
+[92m20:25:09 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:09,505 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:10,134 - INFO - Running task: dapt-intrusion-detection
+[92m20:25:10 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:10,137 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:10,762 - INFO - Running task: data-to-d3
+[92m20:25:10 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:10,766 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:11,425 - INFO - Running task: dialogue-parser
+[92m20:25:11 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:11,429 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:12,060 - INFO - Running task: dynamic-object-aware-egomotion
+[92m20:25:12 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:12,063 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:12,679 - INFO - Running task: earthquake-phase-association
+[92m20:25:12 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:12,681 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:13,365 - INFO - Running task: earthquake-plate-calculation
+[92m20:25:13 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:13,369 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:14,052 - INFO - Running task: econ-detrending-correlation
+[92m20:25:14 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:14,055 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:14,731 - INFO - Running task: energy-ac-optimal-power-flow
+[92m20:25:14 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:14,733 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:15,388 - INFO - Running task: energy-market-pricing
+[92m20:25:15 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:15,392 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:16,174 - INFO - Running task: enterprise-information-search
+[92m20:25:16 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:16,177 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:17,027 - INFO - Running task: exceltable-in-ppt
+[92m20:25:17 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:17,030 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:17,653 - INFO - Running task: exoplanet-detection-period
+[92m20:25:17 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:17,656 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:18,292 - INFO - Running task: financial-modeling-qa
+[92m20:25:18 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:18,296 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:18,907 - INFO - Results saved to /Volumes/F/Clauding/AwesomeSkill/work/nanopro/assets/results/distractor/distractor_skillsbench_P2_shuffle0_d10_20260325_202518.json
+2026-03-25 20:25:18,908 - INFO - 
+============================================================
+Running: P2_d20
+============================================================
+2026-03-25 20:25:18,908 - INFO - Running distractor experiment: skillsbench with P2, shuffle=False, distractors=20
+2026-03-25 20:25:18,910 - INFO - Loaded 20 tasks
+2026-03-25 20:25:18,910 - INFO - Running task: 3d-scan-calc
+[92m20:25:18 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:18,913 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:19,573 - INFO - Running task: adaptive-cruise-control
+[92m20:25:19 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:19,577 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:20,209 - INFO - Running task: azure-bgp-oscillation-route-leak
+[92m20:25:20 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:20,212 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:20,842 - INFO - Running task: citation-check
+[92m20:25:20 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:20,845 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:21,476 - INFO - Running task: civ6-adjacency-optimizer
+[92m20:25:21 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:21,479 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:22,101 - INFO - Running task: court-form-filling
+[92m20:25:22 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:22,104 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:22,735 - INFO - Running task: crystallographic-wyckoff-position-analysis
+[92m20:25:22 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:22,739 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:23,376 - INFO - Running task: dapt-intrusion-detection
+[92m20:25:23 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:23,380 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:24,007 - INFO - Running task: data-to-d3
+[92m20:25:24 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:24,010 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:24,695 - INFO - Running task: dialogue-parser
+[92m20:25:24 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:24,698 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:25,310 - INFO - Running task: dynamic-object-aware-egomotion
+[92m20:25:25 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:25,314 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:25,945 - INFO - Running task: earthquake-phase-association
+[92m20:25:25 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:25,947 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:26,589 - INFO - Running task: earthquake-plate-calculation
+[92m20:25:26 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:26,592 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:27,765 - INFO - Running task: econ-detrending-correlation
+[92m20:25:27 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:27,770 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:28,429 - INFO - Running task: energy-ac-optimal-power-flow
+[92m20:25:28 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:28,433 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:29,072 - INFO - Running task: energy-market-pricing
+[92m20:25:29 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:29,076 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:29,711 - INFO - Running task: enterprise-information-search
+[92m20:25:29 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:29,714 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:30,304 - INFO - Running task: exceltable-in-ppt
+[92m20:25:30 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:30,308 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:30,923 - INFO - Running task: exoplanet-detection-period
+[92m20:25:30 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:30,927 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:31,556 - INFO - Running task: financial-modeling-qa
+[92m20:25:31 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:31,561 - INFO - 
+LiteLLM completion() model= anthropic/claude-sonnet-4-6-20250514; provider = openrouter
+2026-03-25 20:25:32,209 - INFO - Results saved to /Volumes/F/Clauding/AwesomeSkill/work/nanopro/assets/results/distractor/distractor_skillsbench_P2_shuffle0_d20_20260325_202532.json
+
+================================================================================
+DISTRACTOR ABLATION SUMMARY
+================================================================================
+Config               Passed     Score      Skill Tokens   
+--------------------------------------------------------------------------------
+P0_d0                20/20        100.0%    0              
+P0_d5                20/20        100.0%    0              
+P0_d10               20/20        100.0%    0              
+P0_d20               20/20        100.0%    0              
+P2_d0                20/20        100.0%    60             
+P2_d5                20/20        100.0%    60             
+P2_d10               20/20        100.0%    60             
+P2_d20               20/20        100.0%    60             
+================================================================================

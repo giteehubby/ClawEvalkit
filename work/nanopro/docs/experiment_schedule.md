@@ -81,43 +81,43 @@ Base → Taxonomy → Train-free → Best Train-free → SFT → Appendix Probes
 
 ---
 
-## 3. 目录与工程组织 TODO
+## 3. 目录与工程组织
 
-### 3.1 目标目录结构（建议）
-项目需要至少具备如下逻辑目录：
+### 3.1 项目目录结构
 
-- `configs/`
-  - `benchmarks/`
-  - `conditions/`
-  - `experiments/`
-- `src/`
-  - `harness/`
-  - `runners/`
-  - `conditions/`
-  - `logging/`
-  - `analysis/`
-  - `annotation/`
-  - `training/`
-- `artifacts/`
-  - `runs/`
-  - `aggregates/`
-  - `plots/`
-  - `tables/`
-  - `failure_cases/`
-- `docs/`
-  - `paper_plan.md`
-  - `experiment_schedule.md`
-  - `taxonomy_rubric.md`
-  - `methods_notes.md`
-- `scripts/`
-  - run scripts
-  - aggregate scripts
-  - plotting scripts
-  - export scripts
+```
+nanopro/
+├── configs/               # 配置文件
+│   ├── benchmarks/       # Benchmark 配置
+│   ├── conditions/       # Condition 配置（training-free recipes）
+│   └── experiments/      # 实验配置
+├── src/                  # 源代码
+│   ├── harness/          # Agent harness（NanoBot）
+│   ├── runners/          # Benchmark runners
+│   ├── conditions/       # Training-free recipe 实现
+│   ├── logging/           # 日志工具
+│   ├── analysis/          # 分析工具
+│   ├── annotation/        # 标注工具
+│   └── training/          # SFT 训练工具
+├── artifacts/            # 实验输出
+│   ├── runs/             # 原始运行结果 & transcripts
+│   ├── aggregates/       # 聚合结果
+│   ├── plots/            # 可视化图表
+│   ├── tables/           # 结果表格
+│   └── failure_cases/    # 失败案例分析
+├── docs/                 # 文档
+│   ├── paper_plan.md
+│   ├── experiment_schedule.md
+│   ├── schedule.md
+│   ├── taxonomy_rubric.md
+│   └── methods_notes.md
+├── scripts/              # 实用脚本
+└── benchmarks/           # Benchmark 仓库
+```
 
 ### 3.2 TODO
-- [ ] 创建统一项目目录结构
-- [ ] 创建 README / quickstart
+- [x] 创建统一项目目录结构
+- [x] 创建 README
 - [ ] 创建统一 config schema
 - [ ] 创建统一 run manifest schema
 - [ ] 创建统一 results table schema

@@ -1,0 +1,314 @@
+{
+  "benchmark": "skillsbench",
+  "policy_id": "P0",
+  "model": "openrouter/anthropic/claude-sonnet-4-6-20250514",
+  "num_tasks": 20,
+  "passed": 20,
+  "score": 1.0,
+  "total_time": 13.41342282295227,
+  "total_skill_tokens": 0,
+  "shuffle": false,
+  "num_distractors": 20,
+  "results": [
+    {
+      "task_id": "3d-scan-calc",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6149559020996094,
+      "error": ""
+    },
+    {
+      "task_id": "adaptive-cruise-control",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6282520294189453,
+      "error": ""
+    },
+    {
+      "task_id": "azure-bgp-oscillation-route-leak",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6291611194610596,
+      "error": ""
+    },
+    {
+      "task_id": "citation-check",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6202619075775146,
+      "error": ""
+    },
+    {
+      "task_id": "civ6-adjacency-optimizer",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6223819255828857,
+      "error": ""
+    },
+    {
+      "task_id": "court-form-filling",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.7561578750610352,
+      "error": ""
+    },
+    {
+      "task_id": "crystallographic-wyckoff-position-analysis",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.7346968650817871,
+      "error": ""
+    },
+    {
+      "task_id": "dapt-intrusion-detection",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.7336881160736084,
+      "error": ""
+    },
+    {
+      "task_id": "data-to-d3",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6485209465026855,
+      "error": ""
+    },
+    {
+      "task_id": "dialogue-parser",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6848580837249756,
+      "error": ""
+    },
+    {
+      "task_id": "dynamic-object-aware-egomotion",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.7213397026062012,
+      "error": ""
+    },
+    {
+      "task_id": "earthquake-phase-association",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6335208415985107,
+      "error": ""
+    },
+    {
+      "task_id": "earthquake-plate-calculation",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6909070014953613,
+      "error": ""
+    },
+    {
+      "task_id": "econ-detrending-correlation",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6467139720916748,
+      "error": ""
+    },
+    {
+      "task_id": "energy-ac-optimal-power-flow",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6459541320800781,
+      "error": ""
+    },
+    {
+      "task_id": "energy-market-pricing",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6558210849761963,
+      "error": ""
+    },
+    {
+      "task_id": "enterprise-information-search",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6535460948944092,
+      "error": ""
+    },
+    {
+      "task_id": "exceltable-in-ppt",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.7158992290496826,
+      "error": ""
+    },
+    {
+      "task_id": "exoplanet-detection-period",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6556451320648193,
+      "error": ""
+    },
+    {
+      "task_id": "financial-modeling-qa",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6736533641815186,
+      "error": ""
+    }
+  ]
+}

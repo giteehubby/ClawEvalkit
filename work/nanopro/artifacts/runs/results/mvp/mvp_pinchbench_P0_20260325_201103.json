@@ -1,0 +1,357 @@
+{
+  "benchmark": "pinchbench",
+  "policy_id": "P0",
+  "model": "openrouter/anthropic/claude-sonnet-4-6-20250514",
+  "num_tasks": 23,
+  "passed": 23,
+  "score": 1.0,
+  "total_time": 17.683587074279785,
+  "total_skill_tokens": 0,
+  "results": [
+    {
+      "task_id": "task_00_sanity",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.8623530864715576,
+      "error": ""
+    },
+    {
+      "task_id": "task_01_calendar",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.8299949169158936,
+      "error": ""
+    },
+    {
+      "task_id": "task_02_stock",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.8963210582733154,
+      "error": ""
+    },
+    {
+      "task_id": "task_03_blog",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.7657051086425781,
+      "error": ""
+    },
+    {
+      "task_id": "task_04_weather",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6879801750183105,
+      "error": ""
+    },
+    {
+      "task_id": "task_05_summary",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6491580009460449,
+      "error": ""
+    },
+    {
+      "task_id": "task_06_events",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.7139551639556885,
+      "error": ""
+    },
+    {
+      "task_id": "task_07_email",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6430370807647705,
+      "error": ""
+    },
+    {
+      "task_id": "task_08_memory",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6641252040863037,
+      "error": ""
+    },
+    {
+      "task_id": "task_09_files",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.7799668312072754,
+      "error": ""
+    },
+    {
+      "task_id": "task_10_workflow",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6549687385559082,
+      "error": ""
+    },
+    {
+      "task_id": "task_11_clawdhub",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6731431484222412,
+      "error": ""
+    },
+    {
+      "task_id": "task_12_skill_search",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6159241199493408,
+      "error": ""
+    },
+    {
+      "task_id": "task_13_image_gen",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.7747268676757812,
+      "error": ""
+    },
+    {
+      "task_id": "task_14_humanizer",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.7170836925506592,
+      "error": ""
+    },
+    {
+      "task_id": "task_15_daily_summary",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.8578879833221436,
+      "error": ""
+    },
+    {
+      "task_id": "task_16_email_triage",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6535539627075195,
+      "error": ""
+    },
+    {
+      "task_id": "task_17_email_search",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.7027671337127686,
+      "error": ""
+    },
+    {
+      "task_id": "task_16_market_research",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.725661039352417,
+      "error": ""
+    },
+    {
+      "task_id": "task_18_spreadsheet_summary",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 1.7414262294769287,
+      "error": ""
+    },
+    {
+      "task_id": "task_20_eli5_pdf_summary",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6734988689422607,
+      "error": ""
+    },
+    {
+      "task_id": "task_21_openclaw_comprehension",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.6453161239624023,
+      "error": ""
+    },
+    {
+      "task_id": "task_22_second_brain",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 0,
+        "total_tokens": 0,
+        "refresh_count": 0,
+        "expansion_count": 0,
+        "loaded_skills": []
+      },
+      "usage": {},
+      "execution_time": 0.7102000713348389,
+      "error": ""
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "benchmark": "clawbench_official",
+  "timestamp": 1774352346.228724,
+  "overall_score": 30.0,
+  "passed_tasks": 0,
+  "total_tasks": 2,
+  "domain_scores": {
+    "CALENDAR": {
+      "score": 30.0,
+      "count": 2
+    }
+  },
+  "level_scores": {
+    "L1": {
+      "score": 30.0,
+      "count": 2
+    }
+  },
+  "task_scores": {
+    "cal-001": {
+      "task_name": "Create a Meeting",
+      "domain": "calendar",
+      "level": "L1",
+      "mean": 30.0,
+      "std": 0.0,
+      "passed": false
+    },
+    "cal-002": {
+      "task_name": "Delete a Meeting",
+      "domain": "calendar",
+      "level": "L1",
+      "mean": 30.0,
+      "std": 0.0,
+      "passed": false
+    }
+  }
+}

@@ -1,0 +1,1484 @@
+{
+  "benchmark": "pinchbench",
+  "policy_id": "P1",
+  "model": "openrouter/anthropic/claude-sonnet-4-6-20250514",
+  "num_tasks": 23,
+  "passed": 23,
+  "score": 1.0,
+  "total_time": 15.518651723861694,
+  "total_skill_tokens": 4462,
+  "results": [
+    {
+      "task_id": "task_00_sanity",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7436249256134033,
+      "error": ""
+    },
+    {
+      "task_id": "task_01_calendar",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7020518779754639,
+      "error": ""
+    },
+    {
+      "task_id": "task_02_stock",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6585428714752197,
+      "error": ""
+    },
+    {
+      "task_id": "task_03_blog",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6485199928283691,
+      "error": ""
+    },
+    {
+      "task_id": "task_04_weather",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6733288764953613,
+      "error": ""
+    },
+    {
+      "task_id": "task_05_summary",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6201791763305664,
+      "error": ""
+    },
+    {
+      "task_id": "task_06_events",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6729698181152344,
+      "error": ""
+    },
+    {
+      "task_id": "task_07_email",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7477200031280518,
+      "error": ""
+    },
+    {
+      "task_id": "task_08_memory",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6254498958587646,
+      "error": ""
+    },
+    {
+      "task_id": "task_09_files",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6473917961120605,
+      "error": ""
+    },
+    {
+      "task_id": "task_10_workflow",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6661999225616455,
+      "error": ""
+    },
+    {
+      "task_id": "task_11_clawdhub",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6447763442993164,
+      "error": ""
+    },
+    {
+      "task_id": "task_12_skill_search",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6802971363067627,
+      "error": ""
+    },
+    {
+      "task_id": "task_13_image_gen",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6392850875854492,
+      "error": ""
+    },
+    {
+      "task_id": "task_14_humanizer",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.658311128616333,
+      "error": ""
+    },
+    {
+      "task_id": "task_15_daily_summary",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6846380233764648,
+      "error": ""
+    },
+    {
+      "task_id": "task_16_email_triage",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6238589286804199,
+      "error": ""
+    },
+    {
+      "task_id": "task_17_email_search",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6938719749450684,
+      "error": ""
+    },
+    {
+      "task_id": "task_16_market_research",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7438488006591797,
+      "error": ""
+    },
+    {
+      "task_id": "task_18_spreadsheet_summary",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6535618305206299,
+      "error": ""
+    },
+    {
+      "task_id": "task_20_eli5_pdf_summary",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6486051082611084,
+      "error": ""
+    },
+    {
+      "task_id": "task_21_openclaw_comprehension",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6355891227722168,
+      "error": ""
+    },
+    {
+      "task_id": "task_22_second_brain",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 8,
+        "total_tokens": 194,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "github",
+            "tokens": 62,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "tmux",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "weather",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "cron",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.763422966003418,
+      "error": ""
+    }
+  ]
+}

@@ -1,0 +1,2936 @@
+{
+  "benchmark": "skillsbench",
+  "policy_id": "P2",
+  "model": "openrouter/anthropic/claude-sonnet-4-6-20250514",
+  "num_tasks": 86,
+  "passed": 86,
+  "score": 1.0,
+  "total_time": 479.143837928772,
+  "total_skill_tokens": 383,
+  "results": [
+    {
+      "task_id": "3d-scan-calc",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6193599700927734,
+      "error": ""
+    },
+    {
+      "task_id": "adaptive-cruise-control",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.864260196685791,
+      "error": ""
+    },
+    {
+      "task_id": "azure-bgp-oscillation-route-leak",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6333048343658447,
+      "error": ""
+    },
+    {
+      "task_id": "citation-check",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6315720081329346,
+      "error": ""
+    },
+    {
+      "task_id": "civ6-adjacency-optimizer",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6297998428344727,
+      "error": ""
+    },
+    {
+      "task_id": "court-form-filling",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.652925968170166,
+      "error": ""
+    },
+    {
+      "task_id": "crystallographic-wyckoff-position-analysis",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6372900009155273,
+      "error": ""
+    },
+    {
+      "task_id": "dapt-intrusion-detection",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6468038558959961,
+      "error": ""
+    },
+    {
+      "task_id": "data-to-d3",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.8802258968353271,
+      "error": ""
+    },
+    {
+      "task_id": "dialogue-parser",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6265223026275635,
+      "error": ""
+    },
+    {
+      "task_id": "dynamic-object-aware-egomotion",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6564316749572754,
+      "error": ""
+    },
+    {
+      "task_id": "earthquake-phase-association",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6995110511779785,
+      "error": ""
+    },
+    {
+      "task_id": "earthquake-plate-calculation",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7301969528198242,
+      "error": ""
+    },
+    {
+      "task_id": "econ-detrending-correlation",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7687828540802002,
+      "error": ""
+    },
+    {
+      "task_id": "energy-ac-optimal-power-flow",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.679084062576294,
+      "error": ""
+    },
+    {
+      "task_id": "energy-market-pricing",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.9909958839416504,
+      "error": ""
+    },
+    {
+      "task_id": "enterprise-information-search",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6616649627685547,
+      "error": ""
+    },
+    {
+      "task_id": "exceltable-in-ppt",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6098260879516602,
+      "error": ""
+    },
+    {
+      "task_id": "exoplanet-detection-period",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.758439302444458,
+      "error": ""
+    },
+    {
+      "task_id": "financial-modeling-qa",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6420607566833496,
+      "error": ""
+    },
+    {
+      "task_id": "find-topk-similiar-chemicals",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7820999622344971,
+      "error": ""
+    },
+    {
+      "task_id": "fix-build-agentops",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6151840686798096,
+      "error": ""
+    },
+    {
+      "task_id": "fix-build-google-auto",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.628446102142334,
+      "error": ""
+    },
+    {
+      "task_id": "fix-erlang-ssh-cve",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.63431715965271,
+      "error": ""
+    },
+    {
+      "task_id": "fix-visual-stability",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.645838737487793,
+      "error": ""
+    },
+    {
+      "task_id": "flink-query",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.659311056137085,
+      "error": ""
+    },
+    {
+      "task_id": "flood-risk-analysis",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7304439544677734,
+      "error": ""
+    },
+    {
+      "task_id": "gh-repo-analytics",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 420.54449582099915,
+      "error": ""
+    },
+    {
+      "task_id": "glm-lake-mendota",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.9141581058502197,
+      "error": ""
+    },
+    {
+      "task_id": "gravitational-wave-detection",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6351051330566406,
+      "error": ""
+    },
+    {
+      "task_id": "grid-dispatch-operator",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6262810230255127,
+      "error": ""
+    },
+    {
+      "task_id": "hvac-control",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6740021705627441,
+      "error": ""
+    },
+    {
+      "task_id": "invoice-fraud-detection",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6193718910217285,
+      "error": ""
+    },
+    {
+      "task_id": "jax-computing-basics",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6751890182495117,
+      "error": ""
+    },
+    {
+      "task_id": "jpg-ocr-stat",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6456489562988281,
+      "error": ""
+    },
+    {
+      "task_id": "lab-unit-harmonization",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6861391067504883,
+      "error": ""
+    },
+    {
+      "task_id": "lake-warming-attribution",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6012957096099854,
+      "error": ""
+    },
+    {
+      "task_id": "latex-formula-extraction",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6884100437164307,
+      "error": ""
+    },
+    {
+      "task_id": "lean4-proof",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.830826997756958,
+      "error": ""
+    },
+    {
+      "task_id": "manufacturing-codebook-normalization",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6324260234832764,
+      "error": ""
+    },
+    {
+      "task_id": "manufacturing-equipment-maintenance",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7525999546051025,
+      "error": ""
+    },
+    {
+      "task_id": "manufacturing-fjsp-optimization",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7659032344818115,
+      "error": ""
+    },
+    {
+      "task_id": "mario-coin-counting",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 128,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "skill-creator",
+            "tokens": 126,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6952929496765137,
+      "error": ""
+    },
+    {
+      "task_id": "mars-clouds-clustering",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7793309688568115,
+      "error": ""
+    },
+    {
+      "task_id": "mhc-layer-impl",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7211940288543701,
+      "error": ""
+    },
+    {
+      "task_id": "multilingual-video-dubbing",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.647676944732666,
+      "error": ""
+    },
+    {
+      "task_id": "offer-letter-generator",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6434900760650635,
+      "error": ""
+    },
+    {
+      "task_id": "organize-messy-files",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6252508163452148,
+      "error": ""
+    },
+    {
+      "task_id": "paper-anonymizer",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6561739444732666,
+      "error": ""
+    },
+    {
+      "task_id": "parallel-tfidf-search",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7939980030059814,
+      "error": ""
+    },
+    {
+      "task_id": "pddl-tpp-planning",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6094632148742676,
+      "error": ""
+    },
+    {
+      "task_id": "pdf-excel-diff",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6568210124969482,
+      "error": ""
+    },
+    {
+      "task_id": "pedestrian-traffic-counting",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7263069152832031,
+      "error": ""
+    },
+    {
+      "task_id": "pg-essay-to-audiobook",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6876721382141113,
+      "error": ""
+    },
+    {
+      "task_id": "powerlifting-coef-calc",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7200961112976074,
+      "error": ""
+    },
+    {
+      "task_id": "pptx-reference-formatting",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.9577488899230957,
+      "error": ""
+    },
+    {
+      "task_id": "protein-expression-analysis",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6324150562286377,
+      "error": ""
+    },
+    {
+      "task_id": "python-scala-translation",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7283420562744141,
+      "error": ""
+    },
+    {
+      "task_id": "quantum-numerical-simulation",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6349058151245117,
+      "error": ""
+    },
+    {
+      "task_id": "r2r-mpc-control",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6250307559967041,
+      "error": ""
+    },
+    {
+      "task_id": "react-performance-debugging",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6535460948944092,
+      "error": ""
+    },
+    {
+      "task_id": "reserves-at-risk-calc",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6912150382995605,
+      "error": ""
+    },
+    {
+      "task_id": "sales-pivot-analysis",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6490199565887451,
+      "error": ""
+    },
+    {
+      "task_id": "scheduling-email-assistant",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6786892414093018,
+      "error": ""
+    },
+    {
+      "task_id": "sec-financial-report",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6868610382080078,
+      "error": ""
+    },
+    {
+      "task_id": "seismic-phase-picking",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7151670455932617,
+      "error": ""
+    },
+    {
+      "task_id": "setup-fuzzing-py",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7232880592346191,
+      "error": ""
+    },
+    {
+      "task_id": "shock-analysis-demand",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6230618953704834,
+      "error": ""
+    },
+    {
+      "task_id": "shock-analysis-supply",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.972161054611206,
+      "error": ""
+    },
+    {
+      "task_id": "simpo-code-reproduction",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6197690963745117,
+      "error": ""
+    },
+    {
+      "task_id": "software-dependency-audit",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6379251480102539,
+      "error": ""
+    },
+    {
+      "task_id": "speaker-diarization-subtitles",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6310057640075684,
+      "error": ""
+    },
+    {
+      "task_id": "spring-boot-jakarta-migration",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6291298866271973,
+      "error": ""
+    },
+    {
+      "task_id": "suricata-custom-exfil",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.638092041015625,
+      "error": ""
+    },
+    {
+      "task_id": "syzkaller-ppdev-syzlang",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.650479793548584,
+      "error": ""
+    },
+    {
+      "task_id": "taxonomy-tree-merge",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6523559093475342,
+      "error": ""
+    },
+    {
+      "task_id": "threejs-structure-parser",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6496930122375488,
+      "error": ""
+    },
+    {
+      "task_id": "threejs-to-obj",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6831719875335693,
+      "error": ""
+    },
+    {
+      "task_id": "travel-planning",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6355431079864502,
+      "error": ""
+    },
+    {
+      "task_id": "trend-anomaly-causal-inference",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6231729984283447,
+      "error": ""
+    },
+    {
+      "task_id": "video-filler-word-remover",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7078609466552734,
+      "error": ""
+    },
+    {
+      "task_id": "video-silence-remover",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6392149925231934,
+      "error": ""
+    },
+    {
+      "task_id": "video-tutorial-indexer",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6564867496490479,
+      "error": ""
+    },
+    {
+      "task_id": "virtualhome-agent-planning",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6387288570404053,
+      "error": ""
+    },
+    {
+      "task_id": "weighted-gdp-calc",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6624000072479248,
+      "error": ""
+    },
+    {
+      "task_id": "xlsx-recover-data",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6707990169525146,
+      "error": ""
+    }
+  ]
+}

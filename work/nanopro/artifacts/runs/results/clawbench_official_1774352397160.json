@@ -1,0 +1,29 @@
+{
+  "benchmark": "clawbench_official",
+  "timestamp": 1774352397.160437,
+  "overall_score": 30.0,
+  "passed_tasks": 0,
+  "total_tasks": 1,
+  "domain_scores": {
+    "CALENDAR": {
+      "score": 30.0,
+      "count": 1
+    }
+  },
+  "level_scores": {
+    "L1": {
+      "score": 30.0,
+      "count": 1
+    }
+  },
+  "task_scores": {
+    "cal-001": {
+      "task_name": "Create a Meeting",
+      "domain": "calendar",
+      "level": "L1",
+      "mean": 30.0,
+      "std": 0.0,
+      "passed": false
+    }
+  }
+}

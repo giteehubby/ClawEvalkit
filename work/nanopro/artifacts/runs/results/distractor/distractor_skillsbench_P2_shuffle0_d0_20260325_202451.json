@@ -1,0 +1,694 @@
+{
+  "benchmark": "skillsbench",
+  "policy_id": "P2",
+  "model": "openrouter/anthropic/claude-sonnet-4-6-20250514",
+  "num_tasks": 20,
+  "passed": 20,
+  "score": 1.0,
+  "total_time": 13.75777792930603,
+  "total_skill_tokens": 60,
+  "shuffle": false,
+  "num_distractors": 0,
+  "results": [
+    {
+      "task_id": "3d-scan-calc",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6242568492889404,
+      "error": ""
+    },
+    {
+      "task_id": "adaptive-cruise-control",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6885030269622803,
+      "error": ""
+    },
+    {
+      "task_id": "azure-bgp-oscillation-route-leak",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7224509716033936,
+      "error": ""
+    },
+    {
+      "task_id": "citation-check",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6475119590759277,
+      "error": ""
+    },
+    {
+      "task_id": "civ6-adjacency-optimizer",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7234997749328613,
+      "error": ""
+    },
+    {
+      "task_id": "court-form-filling",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7175371646881104,
+      "error": ""
+    },
+    {
+      "task_id": "crystallographic-wyckoff-position-analysis",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.680401086807251,
+      "error": ""
+    },
+    {
+      "task_id": "dapt-intrusion-detection",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.747772216796875,
+      "error": ""
+    },
+    {
+      "task_id": "data-to-d3",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7431540489196777,
+      "error": ""
+    },
+    {
+      "task_id": "dialogue-parser",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7761440277099609,
+      "error": ""
+    },
+    {
+      "task_id": "dynamic-object-aware-egomotion",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.635706901550293,
+      "error": ""
+    },
+    {
+      "task_id": "earthquake-phase-association",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6857688426971436,
+      "error": ""
+    },
+    {
+      "task_id": "earthquake-plate-calculation",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6424219608306885,
+      "error": ""
+    },
+    {
+      "task_id": "econ-detrending-correlation",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6422169208526611,
+      "error": ""
+    },
+    {
+      "task_id": "energy-ac-optimal-power-flow",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7071988582611084,
+      "error": ""
+    },
+    {
+      "task_id": "energy-market-pricing",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.7023248672485352,
+      "error": ""
+    },
+    {
+      "task_id": "enterprise-information-search",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6566369533538818,
+      "error": ""
+    },
+    {
+      "task_id": "exceltable-in-ppt",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6544342041015625,
+      "error": ""
+    },
+    {
+      "task_id": "exoplanet-detection-period",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.67519211769104,
+      "error": ""
+    },
+    {
+      "task_id": "financial-modeling-qa",
+      "status": "success",
+      "passed": true,
+      "skill_stats": {
+        "loaded_count": 3,
+        "total_tokens": 3,
+        "refresh_count": 1,
+        "expansion_count": 0,
+        "loaded_skills": [
+          {
+            "name": "memory",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "summarize",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          },
+          {
+            "name": "clawhub",
+            "tokens": 1,
+            "loaded_at_step": 0,
+            "expanded": false
+          }
+        ]
+      },
+      "usage": {},
+      "execution_time": 0.6428849697113037,
+      "error": ""
+    }
+  ]
+}
