@@ -727,29 +727,38 @@ Claude Code 在推进过程中必须维护以下小节：
 
 ---
 
-## 18. Progress Snapshot（初始化模板）
+## 18. Progress Snapshot
 
 ### 当前阶段
-Stage 0 — Harness setup
+Stage 1 — Benchmark 接入完成，开始 Base Baseline 测试
 
 ### 已完成
-- [ ] paper_plan.md drafted
-- [ ] experiment_schedule.md drafted
+- [x] paper_plan.md drafted
+- [x] experiment_schedule.md drafted
+- [x] 项目目录结构重组（configs/, src/, artifacts/, docs/）
+- [x] Benchmark 接入：
+  - [x] SkillsBench (87 tasks)
+  - [x] PinchBench (23 tasks)
+  - [x] OpenClawBench (40 tasks)
+  - [x] claw-bench-official (315 tasks)
+  - [x] TRIBE-INC/claw-bench
+  - [x] skillbench
+  - [x] SciSkillBench (放弃 - 难以适配)
+- [x] 统一框架 import 路径修复
+- [x] run.py 添加 dotenv 加载
+- [x] output_dir 路径修正为 artifacts/runs/results
 
 ### 进行中
-- [ ] project structure setup
-- [ ] config schema draft
-- [ ] benchmark runner inspection
+- [ ] 运行 Base OpenClaw baseline（所有 benchmark）
+- [ ] 验证 smoke test 通过
 
 ### 下一步
-1. 创建统一目录和 schema
-2. 接入第一个 benchmark runner
-3. 跑 Base smoke test
-4. 打通 logging pipeline
+1. 运行完整 benchmark 测试（10 线程并行）
+2. 收集 baseline 结果
+3. 开始 Failure Taxonomy 阶段
 
 ### 当前风险
-- benchmark 接入复杂度未知
-- scoring implementation 可能不统一
+- benchmark scoring implementation 需验证一致性
 - trace 保存粒度可能不足以支持 taxonomy
 
 ---
