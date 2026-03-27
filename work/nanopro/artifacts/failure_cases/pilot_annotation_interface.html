@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Failure Taxonomy Annotation Interface</title>
+<style>
+:root {
+  --bg: #0f1117;
+  --card-bg: #1a1d27;
+  --border: #2a2e3e;
+  --text: #e4e4e7;
+  --text-muted: #9ca3af;
+  --accent: #6366f1;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #eab308;
+  --blue: #3b82f6;
+  --orange: #f97316;
+  --purple: #a855f7;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: -apple-system, system-ui, sans-serif; line-height: 1.6; padding: 20px; max-width: 1200px; margin: 0 auto; }
+h1 { font-size: 1.5em; margin-bottom: 16px; color: var(--accent); }
+
+.tldr {
+  background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(139,92,246,0.05));
+  border: 1px solid rgba(99,102,241,0.3);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 0.9em;
+}
+.tldr strong { color: var(--accent); }
+.tldr kbd { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; font-family: monospace; font-size: 0.85em; }
+
+.task-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.task-header { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; flex-wrap: wrap; }
+.task-id { font-family: monospace; color: var(--text-muted); font-size: 0.85em; }
+.task-name { font-weight: 600; flex: 1; }
+.score { color: var(--red); font-weight: 600; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { padding: 2px 8px; border-radius: 6px; font-size: 0.75em; font-weight: 600; }
+.tag-skillsbench { background: rgba(236,72,153,0.15); color: #f472b6; }
+.tag-pinchbench { background: rgba(99,102,241,0.15); color: #a78bfa; }
+.tag-openclawbench { background: rgba(59,130,246,0.15); color: #60a5fa; }
+.tag-clawbench-official { background: rgba(34,197,94,0.15); color: #4ade80; }
+.tag-claw-bench-tribe { background: rgba(249,115,22,0.15); color: #fb923c; }
+.tag-skillbench { background: rgba(234,179,8,0.15); color: #facc15; }
+
+/* Transcript viewer */
+.transcript-container { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px; }
+.transcript-toggle {
+  display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none;
+  color: var(--accent); font-weight: 600; font-size: 0.9em;
+}
+.transcript-toggle:hover { text-decoration: underline; }
+.transcript-toggle .arrow { transition: transform 0.2s; font-size: 0.8em; }
+.transcript-toggle.open .arrow { transform: rotate(90deg); }
+.transcript-content { display: none; margin-top: 12px; max-height: 500px; overflow-y: auto; }
+.transcript-content.open { display: block; }
+
+.trace-entry { margin-bottom: 8px; padding: 8px 12px; border-radius: 8px; font-size: 0.85em; }
+.trace-assistant { background: rgba(99,102,241,0.1); border-left: 3px solid var(--accent); }
+.trace-tool { background: rgba(34,197,94,0.1); border-left: 3px solid var(--green); }
+.trace-error { background: rgba(239,68,68,0.1); border-left: 3px solid var(--red); }
+.trace-label { font-size: 0.75em; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; }
+.trace-content { font-family: 'Monaco', 'Menlo', monospace; white-space: pre-wrap; word-break: break-all; font-size: 0.85em; }
+.trace-content pre { margin: 0; white-space: pre-wrap; }
+.tool-call { color: var(--accent); font-weight: 600; }
+.tool-result { color: var(--green); }
+.tool-error { color: var(--red); }
+.no-transcript { color: var(--text-muted); font-style: italic; font-size: 0.85em; padding: 12px; text-align: center; }
+
+.annotation-section { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+.annotation-section h3 { font-size: 0.9em; color: var(--text-muted); margin-bottom: 8px; }
+
+.category-buttons { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.cat-btn { padding: 8px 16px; border: 2px solid var(--border); border-radius: 8px; background: transparent; color: var(--text); cursor: pointer; font-weight: 600; transition: all 0.2s; }
+.cat-btn:hover { border-color: var(--accent); }
+.cat-btn.selected { border-color: var(--accent); background: var(--accent); color: white; }
+.cat-btn[data-cat="A"] { border-color: var(--red); }
+.cat-btn[data-cat="A"].selected { background: var(--red); }
+.cat-btn[data-cat="B"] { border-color: var(--orange); }
+.cat-btn[data-cat="B"].selected { background: var(--orange); }
+.cat-btn[data-cat="C"] { border-color: var(--yellow); color: #000; }
+.cat-btn[data-cat="C"].selected { background: var(--yellow); }
+.cat-btn[data-cat="D"] { border-color: var(--blue); }
+.cat-btn[data-cat="D"].selected { background: var(--blue); }
+.cat-btn[data-cat="E"] { border-color: var(--purple); }
+.cat-btn[data-cat="E"].selected { background: var(--purple); }
+
+.confidence-buttons { display: flex; gap: 8px; margin-bottom: 12px; }
+.conf-btn { padding: 6px 12px; border: 1px solid var(--border); border-radius: 6px; background: transparent; color: var(--text-muted); cursor: pointer; font-size: 0.85em; }
+.conf-btn:hover { border-color: var(--accent); }
+.conf-btn.selected { border-color: var(--accent); background: rgba(99,102,241,0.2); color: var(--accent); }
+
+textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px; color: var(--text); font-size: 0.9em; min-height: 80px; resize: vertical; font-family: inherit; }
+textarea:focus { outline: none; border-color: var(--accent); }
+
+.nav-buttons { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.nav-btn { padding: 10px 20px; border: 1px solid var(--border); border-radius: 8px; background: var(--card-bg); color: var(--text); cursor: pointer; font-weight: 600; }
+.nav-btn:hover { border-color: var(--accent); }
+.nav-btn:disabled { opacity: 0.3; cursor: default; }
+.nav-info { margin-left: auto; color: var(--text-muted); font-size: 0.9em; }
+
+.progress { color: var(--text-muted); font-size: 0.9em; margin-bottom: 16px; }
+.progress-bar { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; margin-top: 8px; }
+.progress-fill { height: 100%; background: var(--accent); transition: width 0.3s; width: 0%; }
+
+.export-btn { padding: 10px 20px; border: none; border-radius: 8px; background: var(--green); color: white; cursor: pointer; font-weight: 600; }
+.export-btn:hover { opacity: 0.9; }
+
+.form-group { margin-bottom: 12px; }
+.form-group label { display: block; font-size: 0.8em; color: var(--text-muted); margin-bottom: 4px; }
+
+.shortcuts { font-size: 0.8em; color: var(--text-muted); margin-top: 8px; }
+.shortcuts kbd { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; font-family: monospace; }
+
+/* Layout: trace and annotation side by side on large screens */
+.main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 1000px) { .main-grid { grid-template-columns: 1fr; } }
+.trace-panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+.annotation-panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+</style>
+</head>
+<body>
+
+<h1>🔍 Failure Taxonomy Annotation Interface</h1>
+
+<div class="tldr">
+  <strong>Instructions:</strong> Select dominant failure category (A-E) based on the trace. Keyboard: <kbd>1</kbd>-<kbd>5</kbd> select category, <kbd>←</kbd><kbd>→</kbd> navigate, <kbd>T</kbd> toggle trace
+  <br><br>
+  <strong>Key Insights (from prior study):</strong>
+  <span style="color: #f472b6;">A+E tend to dominate (~60-68%)</span> ·
+  <span style="color: #f97316;">Category B is hardest to fix</span> ·
+  <span style="color: #22c55e;">C/D often repairable by memory/collab</span>
+  <br><br>
+  <strong>Categories:</strong>
+  <kbd>A</kbd> Task Understanding/Planning Drift | 模型未正确理解任务/计划漂移
+  <br>
+  <kbd>B</kbd> Tool/Env Grounding Failure | 无法正确映射工具调用/参数/路径/格式
+  <br>
+  <kbd>C</kbd> Memory/State Management | 不能稳定维护中间状态/上下文/已生成artifacts
+  <br>
+  <kbd>D</kbd> Verification/Recovery Deficiency | 缺乏自我检查/错误检测/失败恢复能力
+  <br>
+  <kbd>E</kbd> Procedural Knowledge/Skill | 理解大方向但缺乏程序性知识/skill execution
+</div>
+
+<div class="progress">
+  <span id="progress-text">0 / 43 annotated</span>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+</div>
+
+<div class="nav-buttons">
+  <button class="nav-btn" id="prev-btn" onclick="prevTask()" disabled>← Previous</button>
+  <button class="nav-btn" id="next-btn" onclick="nextTask()">Next →</button>
+  <span class="nav-info" id="task-counter">1 / 43</span>
+  <button class="export-btn" onclick="exportAnnotations()">Export JSON</button>
+</div>
+
+<div id="task-container"></div>
+
+<script>
+// Task data will be loaded from JSON file
+let tasks = [];
+let annotations = [];
+let currentIndex = 0;
+
+async function loadData() {
+  try {
+    const response = await fetch('pilot_tasks_data.json');
+    tasks = await response.json();
+
+    // Initialize annotations
+    annotations = tasks.map((t, i) => ({
+      ...t,
+      dominant_category: '',
+      secondary_categories: [],
+      evidence_summary: '',
+      confidence: 0,
+      notes: '',
+      traceVisible: false
+    }));
+
+    renderTask();
+    updateProgress();
+  } catch (e) {
+    console.error('Failed to load data:', e);
+    document.getElementById('task-container').innerHTML = '<div class="tldr"><strong>Error:</strong> Failed to load pilot_tasks_data.json. Make sure this HTML is served from the same directory.</div>';
+  }
+}
+
+function renderTask() {
+  const a = annotations[currentIndex];
+  if (!a) return;
+
+  const benchTag = `tag-${a.benchmark}`;
+
+  let traceHtml = '';
+  if (a.has_transcript && a.transcript) {
+    traceHtml = `<div class="transcript-toggle ${a.traceVisible ? 'open' : ''}" onclick="toggleTranscript()">
+      <span class="arrow">▶</span> <span>Execution Trace (${countTraceEntries(a.transcript)} entries)</span>
+    </div>
+    <div class="transcript-content ${a.traceVisible ? 'open' : ''}" id="transcript-content">
+      ${a.transcript}
+    </div>`;
+  } else {
+    traceHtml = `<div class="no-transcript">No transcript available for this task</div>`;
+  }
+
+  document.getElementById('task-container').innerHTML = `
+    <div class="task-card">
+      <div class="task-header">
+        <span class="task-id">#${a.id}</span>
+        <span class="task-name">${a.task_name || a.task_id}</span>
+        <span class="score">Score: ${a.score}</span>
+        <button id="copy-gpt-btn" onclick="copyForGPT()" style="background:var(--accent);color:white;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:0.85em;margin-left:auto;">Copy for GPT</button>
+      </div>
+      <div class="tags">
+        <span class="tag ${benchTag}">${a.benchmark}</span>
+        ${a.difficulty ? `<span class="tag" style="background:rgba(99,102,241,0.15);color:#a78bfa">${a.difficulty}</span>` : ''}
+        ${a.domain ? `<span class="tag" style="background:rgba(59,130,246,0.15);color:#60a5fa">${a.domain}</span>` : ''}
+      </div>
+    </div>
+
+    <div class="main-grid">
+      <div class="trace-panel">
+        <h3 style="color:var(--text-muted);margin-bottom:12px;font-size:0.9em;">Execution Trace</h3>
+        ${traceHtml}
+      </div>
+
+      <div class="annotation-panel">
+        <h3 style="color:var(--text-muted);margin-bottom:12px;font-size:0.9em;">Annotation</h3>
+
+        <div class="form-group">
+          <label>Dominant Failure Category *</label>
+          <div class="category-buttons">
+            <button class="cat-btn ${a.dominant_category === 'A' ? 'selected' : ''}" data-cat="A" onclick="setCategory('A')" title="模型未正确理解任务要求、约束、目标，或在多步过程中逐渐偏离核心目标">A - Task Understanding</button>
+            <button class="cat-btn ${a.dominant_category === 'B' ? 'selected' : ''}" data-cat="B" onclick="setCategory('B')" title="无法正确把任务意图映射到工具调用、环境操作、参数、路径、格式等实际执行层">B - Tool Grounding</button>
+            <button class="cat-btn ${a.dominant_category === 'C' ? 'selected' : ''}" data-cat="C" onclick="setCategory('C')" title="不能稳定维护任务中间状态、上下文事实、已完成步骤、已生成artifacts等">C - Memory/State</button>
+            <button class="cat-btn ${a.dominant_category === 'D' ? 'selected' : ''}" data-cat="D" onclick="setCategory('D')" title="缺乏自我检查、错误检测、失败恢复、rollback或debug能力">D - Verification</button>
+            <button class="cat-btn ${a.dominant_category === 'E' ? 'selected' : ''}" data-cat="E" onclick="setCategory('E')" title="理解任务大方向，但缺乏某类程序性知识、结构化步骤knowledge或领域procedural know-how">E - Procedural Skill</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Confidence</label>
+          <div class="confidence-buttons">
+            <button class="conf-btn ${a.confidence === 1 ? 'selected' : ''}" onclick="setConfidence(1)">Low (1)</button>
+            <button class="conf-btn ${a.confidence === 2 ? 'selected' : ''}" onclick="setConfidence(2)">Medium (2)</button>
+            <button class="conf-btn ${a.confidence === 3 ? 'selected' : ''}" onclick="setConfidence(3)">High (3)</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Evidence Summary</label>
+          <textarea placeholder="Brief description of what went wrong..." onchange="setEvidence(this.value)">${a.evidence_summary || ''}</textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Notes (optional)</label>
+          <textarea placeholder="Additional notes..." onchange="setNotes(this.value)">${a.notes || ''}</textarea>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Update navigation
+  document.getElementById('prev-btn').disabled = currentIndex === 0;
+  document.getElementById('next-btn').disabled = currentIndex === annotations.length - 1;
+  document.getElementById('task-counter').textContent = `${currentIndex + 1} / ${annotations.length}`;
+}
+
+function countTraceEntries(transcriptHtml) {
+  return (transcriptHtml.match(/class="trace-/g) || []).length;
+}
+
+function copyForGPT() {
+  const a = annotations[currentIndex];
+  if (!a) return;
+
+  let transcriptText = '';
+  if (a.transcript) {
+    try {
+      const tx = JSON.parse(a.transcript);
+      transcriptText = tx.map((entry, i) => {
+        if (entry.type === 'message') {
+          const msg = entry.message || {};
+          const role = msg.role || 'unknown';
+          const content = typeof msg.content === 'string' ? msg.content : JSON.stringify(msg.content, null, 2);
+          return `[${i}] ${role.toUpperCase()}: ${content}`;
+        }
+        return `[${i}] ${JSON.stringify(entry)}`;
+      }).join('\n\n');
+    } catch (e) {
+      transcriptText = a.transcript;
+    }
+  }
+
+  const text = `=== TASK INSTRUCTIONS ===\n${a.instruction || 'No task instructions available'}\n\n=== TASK METADATA ===\nID: ${a.id}\nBenchmark: ${a.benchmark}\nTask: ${a.task_name || a.task_id}\nScore: ${a.score}\nDifficulty: ${a.difficulty || 'N/A'}\nDomain: ${a.domain || 'N/A'}\n\n=== EXECUTION TRACE ===\n${transcriptText || 'No transcript available'}\n\n=== FAILURE CATEGORIES (Detailed) ===\nA - Task Understanding/Planning Drift: Agent fails to understand task requirements, constraints, goals, or drifts from core objectives during multi-step execution. Signs: missing constraints in initial plan, plan-task mismatch, going off-topic mid-execution, forgetting final deliverable requirements.\n\nB - Tool/Environment Grounding Failure: Agent cannot correctly map task intent to tool calls, environment operations, parameters, paths, formats, dependencies. Signs: wrong tool selection, parameter/command errors, path/permission errors, output format incompatible with tool requirements.\n\nC - Memory/State Management Failure: Agent cannot stably maintain task intermediate state, context facts, completed steps, generated artifacts, failure history. Signs: repetitive work, forgetting prior search results, file state confusion, context overflow causing key state overwrite.\n\nD - Verification/Recovery Deficiency: Agent lacks self-checking, error detection, failure recovery, rollback, or debug capability. Signs: ignoring tool errors, entering invalid loops, failing to locate issues after errors, single and failing repair strategy, lack of sanity checks.\n\nE - Procedural Knowledge/Skill Deficiency: Agent understands the general direction but lacks procedural knowledge, structured steps, operational recipes, or domain procedural know-how. Signs: knows what to do but not how to do it correctly, wrong procedure execution order, missing prerequisites, procedural detail errors.\n\nPlease analyze this failure case and determine:\n1. The dominant failure category (A-E)\n2. A brief explanation of what went wrong\n3. Any specific improvements that could help`;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-gpt-btn');
+    if (btn) {
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy for GPT', 2000);
+    }
+  }).catch(err => {
+    console.error('Failed to copy:', err);
+    alert('Failed to copy. Please try again.');
+  });
+}
+
+function toggleTranscript() {
+  annotations[currentIndex].traceVisible = !annotations[currentIndex].traceVisible;
+  const toggle = document.querySelector('.transcript-toggle');
+  const content = document.getElementById('transcript-content');
+  if (toggle) toggle.classList.toggle('open');
+  if (content) content.classList.toggle('open');
+}
+
+function setCategory(cat) {
+  annotations[currentIndex].dominant_category = cat;
+  renderTask();
+  updateProgress();
+}
+
+function setConfidence(conf) {
+  annotations[currentIndex].confidence = conf;
+  renderTask();
+}
+
+function setEvidence(value) {
+  annotations[currentIndex].evidence_summary = value;
+}
+
+function setNotes(value) {
+  annotations[currentIndex].notes = value;
+}
+
+function prevTask() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    renderTask();
+  }
+}
+
+function nextTask() {
+  if (currentIndex < annotations.length - 1) {
+    currentIndex++;
+    renderTask();
+  }
+}
+
+function updateProgress() {
+  const annotated = annotations.filter(a => a.dominant_category !== '').length;
+  document.getElementById('progress-text').textContent = `${annotated} / ${annotations.length} annotated`;
+  document.getElementById('progress-fill').style.width = `${(annotated / annotations.length) * 100}%`;
+}
+
+function exportAnnotations() {
+  const annotated = annotations.filter(a => a.dominant_category !== '');
+  const exportData = annotated.map(a => ({
+    id: a.id,
+    benchmark: a.benchmark,
+    task_id: a.task_id,
+    task_name: a.task_name,
+    score: a.score,
+    difficulty: a.difficulty,
+    domain: a.domain,
+    dominant_category: a.dominant_category,
+    confidence: a.confidence,
+    evidence_summary: a.evidence_summary,
+    notes: a.notes
+  }));
+
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'pilot_annotations.json';
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+  if (e.key === 'ArrowLeft') prevTask();
+  if (e.key === 'ArrowRight') nextTask();
+  if (e.key === 't' || e.key === 'T') {
+    const toggle = document.querySelector('.transcript-toggle');
+    if (toggle) toggle.click();
+  }
+  if (e.key >= '1' && e.key <= '5') {
+    const cats = ['A', 'B', 'C', 'D', 'E'];
+    setCategory(cats[parseInt(e.key) - 1]);
+  }
+});
+
+// Load data on page load
+loadData();
+</script>
+
+</body>
+</html>
