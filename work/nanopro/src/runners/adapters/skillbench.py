@@ -170,6 +170,7 @@ class _SingleModeAdapter:
                     shutil.copy2(item, dest)
 
         if self.skill_path and self.skill_path.exists():
+            # 复制到 .claude/skills/ (Harbor 框架兼容)
             skill_dest = workspace / ".claude" / "skills"
             skill_dest.mkdir(parents=True, exist_ok=True)
             for item in self.skill_path.iterdir():
@@ -177,6 +178,17 @@ class _SingleModeAdapter:
                     shutil.copytree(item, skill_dest / item.name, dirs_exist_ok=True)
                 else:
                     shutil.copy2(item, skill_dest / item.name)
+
+            # 复制到 workspace/skills/ (SkillsLoader 标准位置)
+            skill_dest_standard = workspace / "skills"
+            skill_dest_standard.mkdir(parents=True, exist_ok=True)
+            for item in self.skill_path.iterdir():
+                if item.is_dir():
+                    dest = skill_dest_standard / item.name
+                    if not dest.exists():
+                        shutil.copytree(item, dest)
+                else:
+                    shutil.copy2(item, skill_dest_standard / item.name)
 
         return workspace
 

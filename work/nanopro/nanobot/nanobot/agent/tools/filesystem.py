@@ -2,6 +2,7 @@
 
 import difflib
 import mimetypes
+import threading
 from pathlib import Path
 from typing import Any
 
@@ -52,15 +53,28 @@ def _is_under(path: Path, directory: Path) -> bool:
 class _FsTool(Tool):
     """Shared base for filesystem tools — common init and path resolution."""
 
+    # Thread-local storage for workspace
+    _thread_local = threading.local()
+
     def __init__(
         self,
         workspace: Path | None = None,
         allowed_dir: Path | None = None,
         extra_allowed_dirs: list[Path] | None = None,
     ):
-        self._workspace = workspace
+        self._default_workspace = workspace
         self._allowed_dir = allowed_dir
         self._extra_allowed_dirs = extra_allowed_dirs
+
+    @property
+    def _workspace(self) -> Path | None:
+        """Thread-local workspace storage."""
+        return getattr(self._thread_local, 'workspace', self._default_workspace)
+
+    @_workspace.setter
+    def _workspace(self, value: Path | None) -> None:
+        """Set thread-local workspace."""
+        self._thread_local.workspace = value
 
     def _resolve(self, path: str) -> Path:
         return _resolve_path(path, self._workspace, self._allowed_dir, self._extra_allowed_dirs)

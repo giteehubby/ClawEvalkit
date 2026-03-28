@@ -533,6 +533,9 @@ class PinchBenchAdapter:
         max_score = float(len(grades_by_task_id))
         score_pct = (total_score / max_score * 100) if max_score > 0 else 0
 
+        # 计算 passed_tasks (默认阈值 0.7)
+        passed_tasks = sum(1 for s in all_scores if s >= 0.7)
+
         # 按类别分组
         category_scores: Dict[str, Dict] = {}
         for task in tasks_to_run:
@@ -563,6 +566,7 @@ class PinchBenchAdapter:
             "benchmark": "pinchbench",
             "timestamp": time.time(),
             "overall_score": round(score_pct, 2),
+            "passed_tasks": passed_tasks,
             "total_tasks": len(grades_by_task_id),
             "category_scores": {
                 cat: {

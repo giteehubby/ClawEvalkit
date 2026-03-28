@@ -597,6 +597,9 @@ class OpenClawBenchAdapter:
         all_scores = [scores_by_task_id[tid]["mean"] for tid in scores_by_task_id]
         total_score = sum(all_scores) / len(all_scores) if all_scores else 0
 
+        # 计算 passed_tasks (阈值 >= 60)
+        passed_tasks = sum(1 for s in all_scores if s >= 60)
+
         # 按 suite 分组
         suite_scores: Dict[str, Dict] = {}
         for task in tasks_to_run:
@@ -631,6 +634,7 @@ class OpenClawBenchAdapter:
             "benchmark": "openclawbench",
             "timestamp": time.time(),
             "overall_score": round(total_score, 2),
+            "passed_tasks": passed_tasks,
             "total_tasks": len(scores_by_task_id),
             "suite_scores": {
                 suite: {

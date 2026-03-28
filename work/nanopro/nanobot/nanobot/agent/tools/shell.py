@@ -3,6 +3,7 @@
 import asyncio
 import os
 import re
+import threading
 from pathlib import Path
 from typing import Any
 
@@ -11,6 +12,9 @@ from nanobot.agent.tools.base import Tool
 
 class ExecTool(Tool):
     """Tool to execute shell commands."""
+
+    # Thread-local storage for workspace
+    _thread_local = threading.local()
 
     def __init__(
         self,
@@ -38,7 +42,17 @@ class ExecTool(Tool):
         self.allow_patterns = allow_patterns or []
         self.restrict_to_workspace = restrict_to_workspace
         self.path_append = path_append
-        self._workspace = workspace
+        self._default_workspace = workspace
+
+    @property
+    def _workspace(self) -> Path | None:
+        """Thread-local workspace storage."""
+        return getattr(self._thread_local, 'workspace', self._default_workspace)
+
+    @_workspace.setter
+    def _workspace(self, value: Path | None) -> None:
+        """Set thread-local workspace."""
+        self._thread_local.workspace = value
 
     @property
     def name(self) -> str:

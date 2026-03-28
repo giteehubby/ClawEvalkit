@@ -615,6 +615,12 @@ class ClawBenchOfficialAdapter:
                 else:
                     shutil.copy2(item, dest)
 
+        # 复制 skills (skills/curated -> workspace/skills/)
+        skills_src = self.tasks_dir.parent / "skills" / "curated"
+        if skills_src.exists():
+            dest_skills = workspace / "skills"
+            shutil.copytree(skills_src, dest_skills, dirs_exist_ok=True)
+
         return workspace
 
     def _generate_report(self, scores_by_task_id: Dict, tasks_to_run: List[Task]) -> Dict[str, Any]:

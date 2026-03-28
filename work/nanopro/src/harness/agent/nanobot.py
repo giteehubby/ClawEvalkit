@@ -9,9 +9,10 @@ import json
 import logging
 import os
 import sys
+import threading
 import time
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 # 添加 nanobot 源码路径 (nanobot/ 与 src/ 平级，nanobot/ 包含 nanobot Python 模块)
 NANOBOT_PATH = Path(__file__).parent.parent.parent.parent / "nanobot"
@@ -87,8 +88,24 @@ class NanoBotAgent(BaseAgent):
 
         # 状态跟踪
         self._usage = {}
-        self._transcript: List[Dict] = []
+        self._thread_local = threading.local()
         self._conversation_history: List[Dict] = []
+
+        # Skills loading (T1 baseline skills)
+        self._skills_summary: Optional[str] = None
+        self._load_workspace_skills(workspace)
+
+    @property
+    def _transcript(self) -> List[Dict]:
+        """Thread-local transcript storage."""
+        if not hasattr(self._thread_local, 'transcript'):
+            self._thread_local.transcript = []
+        return self._thread_local.transcript
+
+    @_transcript.setter
+    def _transcript(self, value: List[Dict]) -> None:
+        """Thread-local transcript storage setter for reset operations."""
+        self._thread_local.transcript = value
 
     def _session_file(self, session_id: str) -> Path:
         safe_name = "".join(c if c.isalnum() or c in ("-", "_", ".") else "_" for c in session_id)
@@ -101,6 +118,9 @@ class NanoBotAgent(BaseAgent):
         session_file = self._session_file(session_id)
         if not session_file.exists():
             base_messages: List[Dict[str, Any]] = []
+            # 注入 skills summary 到 system prompt 之前
+            if self._skills_summary:
+                base_messages.append({"role": "system", "content": self._skills_summary})
             if self.system_prompt:
                 base_messages.append({"role": "system", "content": self.system_prompt})
             return base_messages
@@ -108,6 +128,20 @@ class NanoBotAgent(BaseAgent):
         try:
             data = json.loads(session_file.read_text(encoding="utf-8"))
             if isinstance(data, list):
+                # 如果 session 已有内容但没有 skills summary，注入它
+                if self._skills_summary and not any(
+                    "skills" in msg.get("content", "").lower()[:100] for msg in data if msg.get("role") == "system"
+                ):
+                    # 在第一个 system message 前插入 skills
+                    has_system = any(msg.get("role") == "system" for msg in data)
+                    if has_system:
+                        # 找到第一个 system message 的位置
+                        for i, msg in enumerate(data):
+                            if msg.get("role") == "system":
+                                data.insert(i, {"role": "system", "content": self._skills_summary})
+                                break
+                    else:
+                        data.insert(0, {"role": "system", "content": self._skills_summary})
                 return data
         except Exception:
             pass
@@ -142,6 +176,28 @@ class NanoBotAgent(BaseAgent):
         self._tools.register(WebFetchTool())
 
         # 不注册消息工具（不需要发送到其他 channel）
+
+    def _load_workspace_skills(self, workspace: Path) -> None:
+        """从 workspace 加载 skills 并构建 summary
+
+        Args:
+            workspace: 工作空间目录
+        """
+        try:
+            from nanobot.agent.skills import SkillsLoader
+
+            skills_loader = SkillsLoader(workspace)
+            all_skills = skills_loader.list_skills(filter_unavailable=False)
+
+            if all_skills:
+                self._skills_summary = skills_loader.build_skills_summary()
+                self._logger.info(f"Loaded {len(all_skills)} skills from workspace")
+            else:
+                self._skills_summary = None
+                self._logger.debug("No skills found in workspace")
+        except Exception as e:
+            self._skills_summary = None
+            self._logger.debug(f"Failed to load workspace skills: {e}")
 
     def _init_control_modules(self) -> None:
         """初始化 control 模块"""
@@ -238,9 +294,16 @@ class NanoBotAgent(BaseAgent):
     ) -> Dict[str, Any]:
         """调用 LLM"""
         try:
+            # 确定使用的 model（添加 openrouter/ 前缀如果使用 OpenRouter）
+            model = self.model
+            if self.api_url and "openrouter" in self.api_url.lower():
+                # 需要添加 openrouter/ 前缀
+                if not model.startswith("openrouter/"):
+                    model = f"openrouter/{model}"
+
             # 准备参数
             kwargs = {
-                "model": self.model,
+                "model": model,
                 "messages": messages,
                 "api_key": self.api_key,
                 "api_base": self.api_url,
@@ -626,6 +689,10 @@ class NanoBotAgent(BaseAgent):
             current_workspace = workspace
         else:
             current_workspace = self.workspace
+
+        # 如果 workspace 发生变化，重新加载 skills
+        if current_workspace != self.workspace:
+            self._load_workspace_skills(current_workspace)
 
         # 更新工具的 workspace
         for tool in self._tools._tools.values():
