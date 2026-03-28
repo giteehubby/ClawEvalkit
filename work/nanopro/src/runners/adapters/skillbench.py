@@ -201,9 +201,6 @@ class _SingleModeAdapter:
 
         instructions = self.skill_instructions + task.instructions
 
-        # 记录当前 transcript 长度，用于只统计本次任务的工具调用
-        transcript_before = len(self.agent._transcript)
-
         try:
             result = self.agent.execute(instructions, f"{task.task_id}_{self.mode}", workspace=workspace)
         except Exception as e:
@@ -213,14 +210,12 @@ class _SingleModeAdapter:
         execution_time = time.time() - start_time
         passed, notes = run_unittest(workspace)
 
-        # 只统计本次新增的 transcript 条目，避免跨任务累积
-        transcript_after = len(self.agent._transcript)
-        current_task_transcript = self.agent._transcript[transcript_before:transcript_after]
+        # 直接使用 result.transcript，因为 execute() 内部会重置 _transcript
+        current_task_transcript = result.transcript or []
         tool_calls = self._count_tool_calls(current_task_transcript)
 
         # 保存 transcript
         transcript_path = self.output_dir / "transcripts" / f"{task.task_id}_{self.mode}.jsonl"
-        # 保存本次任务的 transcript 片段
         result.workspace = str(workspace)
         tmp_result = AgentResult(
             status=result.status,

@@ -6,6 +6,7 @@ NanoBot Agent 适配器。
 
 import asyncio
 import json
+import logging
 import os
 import sys
 import time
@@ -19,6 +20,7 @@ sys.path.insert(0, str(NANOBOT_PATH))
 import litellm
 from litellm import acompletion
 from .base import AgentResult, BaseAgent
+from .memory import MemoryConfig, EpisodicMemoryStore
 from nanobot.bus.queue import MessageBus
 from nanobot.agent.tools.registry import ToolRegistry
 from nanobot.agent.tools.filesystem import ReadFileTool, WriteFileTool, ListDirTool, EditFileTool
@@ -29,6 +31,7 @@ from nanobot.agent.tools.message import MessageTool
 
 class NanoBotAgent(BaseAgent):
     """NanoBot Agent 实现 - 使用 litellm 直接调用"""
+    _logger = logging.getLogger("agent.nanobot")
 
     def __init__(
         self,
@@ -37,6 +40,7 @@ class NanoBotAgent(BaseAgent):
         api_key: str,
         workspace: Path,
         timeout: int = 300,
+        memory_config: MemoryConfig | None = None,
         **kwargs,
     ):
         self.model = model
@@ -47,6 +51,10 @@ class NanoBotAgent(BaseAgent):
         self.session_store_dir = Path(kwargs.get("session_store_dir") or (self.workspace / ".sessions"))
         self.session_store_dir.mkdir(parents=True, exist_ok=True)
         self.system_prompt = kwargs.get("system_prompt", "")
+
+        # 初始化 memory store
+        self._memory_config = memory_config or MemoryConfig(enabled=False)
+        self._memory_store = EpisodicMemoryStore(self._memory_config)
 
         # 准备工作空间
         workspace.mkdir(parents=True, exist_ok=True)
@@ -108,6 +116,7 @@ class NanoBotAgent(BaseAgent):
         self._tools.register(ExecTool(
             working_dir=str(self.workspace),
             restrict_to_workspace=True,
+            workspace=self.workspace,
         ))
 
         # 注册 web 工具
@@ -138,6 +147,7 @@ class NanoBotAgent(BaseAgent):
                 kwargs["tools"] = tools
 
             response = await acompletion(**kwargs)
+            self._logger.debug(f"[_call_llm] response received, choices: {len(response.choices) if hasattr(response, 'choices') else 0}")
 
             # 提取 usage
             if hasattr(response, "usage") and response.usage:
@@ -181,11 +191,32 @@ class NanoBotAgent(BaseAgent):
 
         while iteration < max_iterations:
             iteration += 1
+            self._memory_store.increment_iteration()
+
+            # 检索 memory 并注入到 messages
+            if self._memory_store.is_enabled:
+                memory_context = self._memory_store.format_for_prompt()
+                if memory_context:
+                    # 在 system message 后插入 memory context
+                    memory_msg = {
+                        "role": "system",
+                        "content": f"\n\n{memory_context}"
+                    }
+                    # 找到 system 消息的位置并插入
+                    system_idx = None
+                    for i, msg in enumerate(messages):
+                        if msg.get("role") == "system":
+                            system_idx = i
+                    if system_idx is not None:
+                        messages.insert(system_idx + 1, memory_msg)
+                    else:
+                        messages.insert(0, memory_msg)
 
             # 调用 LLM
             try:
                 response = await self._call_llm(messages, tools=tool_defs)
             except Exception as e:
+                self._logger.error(f"[_run_loop] _call_llm exception: {type(e).__name__}: {e}")
                 return f"Error: {e}"
 
             # 获取响应内容
@@ -240,6 +271,19 @@ class NanoBotAgent(BaseAgent):
             for tool_call in tool_calls:
                 tool_result = await self._execute_tool(tool_call)
 
+                # 写入 memory (根据 write policy)
+                tool_name = tool_call.get("function", {}).get("name", "")
+                is_error = tool_result.startswith("Error:")
+                event_type = "error" if is_error else "tool_result"
+                if self._memory_store.should_write_event(event_type, tool_result):
+                    self._memory_store.write(
+                        content=tool_result,
+                        source=event_type,
+                        source_detail=tool_name,
+                        memory_type="error" if is_error else "result",
+                    )
+                    self._logger.debug(f"[_run_loop] Wrote {event_type} to memory: {tool_name}")
+
                 # 解析参数
                 args_str = tool_call["function"]["arguments"]
                 if isinstance(args_str, str):
@@ -291,6 +335,11 @@ class NanoBotAgent(BaseAgent):
         self._usage = {}
         self._transcript = []
 
+        # 重置 memory store
+        self._memory_store.reset()
+
+        self._logger.debug(f"[execute] prompt length: {len(prompt)}, session_id: {session_id}, workspace: {workspace}")
+
         # 使用传入的 workspace 或默认的
         if workspace is not None:
             workspace.mkdir(parents=True, exist_ok=True)
@@ -312,9 +361,11 @@ class NanoBotAgent(BaseAgent):
 
             # 使用 asyncio 运行
             content = asyncio.run(self._run_loop(messages))
+            self._logger.debug(f"[execute] _run_loop returned, content length: {len(content) if content else 0}, transcript entries: {len(self._transcript)}")
             self._save_session_messages(session_id, messages)
 
         except Exception as e:
+            self._logger.error(f"[execute] Exception caught: {type(e).__name__}: {e}")
             content = ""
             error_msg = str(e)
             self._transcript = []  # 清空 transcript
@@ -327,6 +378,16 @@ class NanoBotAgent(BaseAgent):
             status = "error"
             if "timed out" in error_msg.lower():
                 status = "timeout"
+
+        # 记录 memory summary 到 transcript
+        if self._memory_store.is_enabled and self._transcript:
+            memory_summary = self._memory_store.get_summary()
+            self._transcript.append({
+                "type": "memory_event",
+                "event": "memory_summary",
+                "summary": memory_summary,
+            })
+            self._logger.debug(f"[execute] Memory summary: {memory_summary}")
 
         return AgentResult(
             status=status,

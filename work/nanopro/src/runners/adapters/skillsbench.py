@@ -187,7 +187,6 @@ class TaskLoader:
         # 去重
         return list(set(outputs))
 
-
 class ScoreResult:
     """评分结果"""
 
@@ -248,15 +247,26 @@ def grade_task(task: Task, result: AgentResult, workspace: Path) -> ScoreResult:
     output_score = 0.0
 
     for expected_file in task.expected_outputs:
-        # 转换路径（/root/xxx -> workspace/xxx）
-        local_path = workspace / expected_file.replace("/root/", "")
-        local_path.parent.mkdir(parents=True, exist_ok=True)
+        # 转换路径：尝试多个可能的写入位置
+        # 1. workspace/xxx (标准)
+        # 2. workspace/root/xxx (agent 误以为在 /root/ 下)
+        relative_path = expected_file.replace("/root/", "")
+        local_path = workspace / relative_path
+        alt_path = workspace / "root" / relative_path
 
-        if local_path.exists():
-            output_checks.append({"file": expected_file, "found": True, "size": local_path.stat().st_size})
+        found = False
+        found_path = None
+        for check_path in [local_path, alt_path]:
+            if check_path.exists():
+                found = True
+                found_path = check_path
+                break
+
+        if found:
+            output_checks.append({"file": expected_file, "found": True, "size": found_path.stat().st_size, "path": str(found_path)})
             output_score += 1.0
         else:
-            output_checks.append({"file": expected_file, "found": False})
+            output_checks.append({"file": expected_file, "found": False, "tried": [str(local_path), str(alt_path)]})
 
     # 如果没有明确的输出文件，检查 workspace 中的文件
     if not task.expected_outputs:

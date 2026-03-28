@@ -17,6 +17,20 @@ def _resolve_path(
 ) -> Path:
     """Resolve path against workspace (if relative) and enforce directory restriction."""
     p = Path(path).expanduser()
+
+    # Remap /root/ to workspace/root/ for SkillsBench compatibility
+    path_str = str(p)
+    if path_str.startswith('/root/') or path_str == '/root':
+        if workspace:
+            # /root/xxx -> workspace/root/xxx
+            rel_path = path_str.replace('/root', '', 1).lstrip('/')
+            p = workspace / 'root' / rel_path
+            resolved = p.resolve()
+            # Ensure directory exists
+            p.parent.mkdir(parents=True, exist_ok=True)
+            # Skip allowed_dir check since we're remapping to workspace
+            return resolved
+
     if not p.is_absolute() and workspace:
         p = workspace / p
     resolved = p.resolve()

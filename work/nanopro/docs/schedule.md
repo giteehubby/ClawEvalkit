@@ -29,6 +29,24 @@ work/nanopro/
 
 ## 已完成
 
+### Recipe T1 — Memory (2026-03-27)
+- [x] Memory 模块创建 (`src/harness/agent/memory/`)
+  - `item.py`: MemoryItem dataclass
+  - `store.py`: EpisodicMemoryStore
+  - `policy.py`: WritePolicy, RetrievalPolicy enums
+  - `config.py`: MemoryConfig dataclass
+- [x] NanoBotAgent 集成 memory
+  - `__init__`: 添加 memory_config 参数
+  - `_run_loop()`: 迭代前检索 memory 并注入 prompt
+  - `_execute_tool()`: 工具执行后根据 write policy 写入 memory
+  - `execute()`: 任务结束时记录 memory summary 到 transcript
+- [x] run.py CLI 参数
+  - `--memory-enabled`: 启用 memory
+  - `--memory-max-items`: 最大 items 数量 (默认 20)
+  - `--memory-retrieval-max`: 每次检索最大 items (默认 5)
+  - `--memory-write-policy`: 写入策略 (默认 tool_result_or_error)
+  - `--memory-retrieval-policy`: 检索策略 (默认 recent)
+
 ### 核心功能
 - [x] BaseAgent 抽象基类定义
 - [x] NanoBotAgent 实现 (使用 litellm)

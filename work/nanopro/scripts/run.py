@@ -28,6 +28,7 @@ _root_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(_root_dir))
 
 from src.harness.agent.base import AgentResult, BaseAgent
+from src.harness.agent.memory import MemoryConfig, WritePolicy, RetrievalPolicy
 from src.runners.adapters.pinchbench import PinchBenchAdapter
 from src.runners.adapters.openclawbench import OpenClawBenchAdapter
 from src.runners.adapters.skillsbench import SkillsBenchAdapter
@@ -57,7 +58,7 @@ def get_nanopro_dir() -> Path:
     return Path(__file__).parent.parent
 
 
-def create_agent(agent_type: str, model: str, api_url: str, api_key: str, workspace: Path, **kwargs) -> BaseAgent:
+def create_agent(agent_type: str, model: str, api_url: str, api_key: str, workspace: Path, memory_config: MemoryConfig | None = None, **kwargs) -> BaseAgent:
     """创建 Agent 实例"""
     if agent_type == "nanobot":
         from src.harness.agent.nanobot import NanoBotAgent
@@ -67,12 +68,26 @@ def create_agent(agent_type: str, model: str, api_url: str, api_key: str, worksp
             api_url=api_url,
             api_key=api_key,
             workspace=workspace,
+            memory_config=memory_config,
             **kwargs,
         )
     elif agent_type == "openclaw":
         raise NotImplementedError("OpenClaw agent not implemented yet")
     else:
         raise ValueError(f"Unknown agent type: {agent_type}")
+
+
+def build_memory_config(args: argparse.Namespace) -> MemoryConfig | None:
+    """从 args 构建 MemoryConfig"""
+    if not getattr(args, 'memory_enabled', False):
+        return None
+    return MemoryConfig(
+        enabled=True,
+        max_items=getattr(args, 'memory_max_items', 20),
+        retrieval_max=getattr(args, 'memory_retrieval_max', 5),
+        write_policy=WritePolicy(getattr(args, 'memory_write_policy', 'tool_result_or_error')),
+        retrieval_policy=RetrievalPolicy(getattr(args, 'memory_retrieval_policy', 'recent')),
+    )
 
 
 def run_pinchbench(args: argparse.Namespace) -> None:
@@ -97,6 +112,7 @@ def run_pinchbench(args: argparse.Namespace) -> None:
         api_key=args.api_key,
         workspace=workspace,
         timeout=args.timeout,
+        memory_config=build_memory_config(args),
     )
 
     adapter = PinchBenchAdapter(
@@ -142,6 +158,7 @@ def run_openclawbench(args: argparse.Namespace) -> None:
         api_key=args.api_key,
         workspace=workspace,
         timeout=args.timeout,
+        memory_config=build_memory_config(args),
     )
 
     adapter = OpenClawBenchAdapter(
@@ -188,6 +205,7 @@ def run_skillsbench(args: argparse.Namespace) -> None:
         api_key=args.api_key,
         workspace=workspace,
         timeout=args.timeout,
+        memory_config=build_memory_config(args),
     )
 
     adapter = SkillsBenchAdapter(
@@ -238,6 +256,7 @@ def run_clawbench_official(args: argparse.Namespace) -> None:
         api_key=args.api_key,
         workspace=workspace,
         timeout=args.timeout,
+        memory_config=build_memory_config(args),
     )
 
     adapter = ClawBenchOfficialAdapter(
@@ -286,6 +305,7 @@ def run_claw_bench_tribe(args: argparse.Namespace) -> None:
         api_key=args.api_key,
         workspace=workspace,
         timeout=args.timeout,
+        memory_config=build_memory_config(args),
     )
 
     adapter = ClawBenchTribeAdapter(
@@ -313,7 +333,7 @@ def run_skillbench(args: argparse.Namespace) -> None:
     workspace = Path("/tmp/benchmarks/workspace")
     workspace.mkdir(parents=True, exist_ok=True)
 
-    output_dir = nanopro_dir / "assets" / "results" / "skillbench"
+    output_dir = nanopro_dir / "artifacts" / "runs" / "results"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     agent = create_agent(
@@ -323,6 +343,7 @@ def run_skillbench(args: argparse.Namespace) -> None:
         api_key=args.api_key,
         workspace=workspace,
         timeout=args.timeout,
+        memory_config=build_memory_config(args),
     )
 
     adapter = SkillBenchAdapter(
@@ -407,6 +428,25 @@ def main():
     parser.add_argument("--domain", type=str, help="ClawBench Official: 指定领域")
     parser.add_argument("--threads", "-t", type=int, default=1, help="并行线程数（默认: 1）")
     parser.add_argument("--smoke", action="store_true", help="运行 benchmark 的最小 smoke 子集（部分 benchmark 支持）")
+
+    # Memory arguments (Recipe T1)
+    parser.add_argument("--memory-enabled", action="store_true", help="启用 episodic memory")
+    parser.add_argument("--memory-max-items", type=int, default=20, help="最大 memory items 数量 (默认: 20)")
+    parser.add_argument("--memory-retrieval-max", type=int, default=5, help="每次检索最大 items 数量 (默认: 5)")
+    parser.add_argument(
+        "--memory-write-policy",
+        type=str,
+        default="tool_result_or_error",
+        choices=["always", "never", "tool_result", "error", "tool_result_or_error", "long_content"],
+        help="Memory 写入策略 (默认: tool_result_or_error)",
+    )
+    parser.add_argument(
+        "--memory-retrieval-policy",
+        type=str,
+        default="recent",
+        choices=["recent", "frequency", "hybrid"],
+        help="Memory 检索策略 (默认: recent)",
+    )
 
     args = parser.parse_args()
 

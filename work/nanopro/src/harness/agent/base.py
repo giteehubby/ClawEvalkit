@@ -48,11 +48,20 @@ class AgentResult:
             path: 保存路径（.jsonl 文件）
         """
         import json
+        import logging
+        logger = logging.getLogger("agent.result")
         path = Path(path)
         path.parent.mkdir(parents=True, exist_ok=True)
+
+        if not self.transcript:
+            logger.warning(f"save_transcript called with empty transcript for {path.name}")
+
         with open(path, "w", encoding="utf-8") as f:
             for entry in self.transcript:
                 f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+        actual_lines = len(self.transcript)
+        logger.info(f"Saved transcript: {path.name} ({actual_lines} entries)")
 
     def save_result(self, path: Path | str) -> None:
         """保存完整结果到 JSON 文件

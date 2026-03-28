@@ -20,6 +20,7 @@ class ExecTool(Tool):
         allow_patterns: list[str] | None = None,
         restrict_to_workspace: bool = False,
         path_append: str = "",
+        workspace: Path | None = None,
     ):
         self.timeout = timeout
         self.working_dir = working_dir
@@ -37,6 +38,7 @@ class ExecTool(Tool):
         self.allow_patterns = allow_patterns or []
         self.restrict_to_workspace = restrict_to_workspace
         self.path_append = path_append
+        self._workspace = workspace
 
     @property
     def name(self) -> str:
@@ -79,6 +81,10 @@ class ExecTool(Tool):
         self, command: str, working_dir: str | None = None,
         timeout: int | None = None, **kwargs: Any,
     ) -> str:
+        # Remap /root/ to workspace/root/ for SkillsBench compatibility
+        if self._workspace:
+            command = self._remap_root_path(command, self._workspace)
+
         cwd = working_dir or self.working_dir or os.getcwd()
         guard_error = self._guard_command(command, cwd)
         if guard_error:
@@ -174,6 +180,24 @@ class ExecTool(Tool):
                     return "Error: Command blocked by safety guard (path outside working dir)"
 
         return None
+
+    def _remap_root_path(self, command: str, workspace: Path) -> str:
+        """Replace /root/ with workspace/root/ in command strings for SkillsBench compatibility."""
+        if '/root' not in command:
+            return command
+
+        root_path = workspace / 'root'
+        # Replace /root/ with workspace/root/ and /root with workspace/root
+        # Need to handle both cases carefully to avoid double slashes or missing slashes
+        result = command
+
+        # First replace /root/ (with trailing slash) to avoid partial matches
+        result = re.sub(r'/root/', f'{root_path}/', result)
+
+        # Then replace any remaining /root (not followed by /) at end or before space
+        result = re.sub(r'/root($|[\s])', f'{root_path}\\1', result)
+
+        return result
 
     @staticmethod
     def _extract_absolute_paths(command: str) -> list[str]:
