@@ -21,6 +21,9 @@ import litellm
 from litellm import acompletion
 from .base import AgentResult, BaseAgent
 from .memory import MemoryConfig, EpisodicMemoryStore
+from .control import ControlConfig, PlanFirst, ReplanTrigger, FailureReflection, PreflightCheck, RetryPolicy
+from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, get_collab_summary
+from .procedure import ProceduralConfig, ProceduralStore, ProceduralTrigger, ProceduralExpander, get_procedure_summary
 from nanobot.bus.queue import MessageBus
 from nanobot.agent.tools.registry import ToolRegistry
 from nanobot.agent.tools.filesystem import ReadFileTool, WriteFileTool, ListDirTool, EditFileTool
@@ -41,6 +44,9 @@ class NanoBotAgent(BaseAgent):
         workspace: Path,
         timeout: int = 300,
         memory_config: MemoryConfig | None = None,
+        control_config: ControlConfig | None = None,
+        collab_config: CollabConfig | None = None,
+        procedural_config: ProceduralConfig | None = None,
         **kwargs,
     ):
         self.model = model
@@ -55,6 +61,18 @@ class NanoBotAgent(BaseAgent):
         # 初始化 memory store
         self._memory_config = memory_config or MemoryConfig(enabled=False)
         self._memory_store = EpisodicMemoryStore(self._memory_config)
+
+        # 初始化 control 模块
+        self._control_config = control_config or ControlConfig(enabled=False)
+        self._init_control_modules()
+
+        # 初始化 collaboration 模块 (T3)
+        self._collab_config = collab_config or CollabConfig(enabled=False)
+        self._init_collab_modules()
+
+        # 初始化 procedural 模块 (T4)
+        self._procedural_config = procedural_config or ProceduralConfig(enabled=False)
+        self._init_procedural_modules()
 
         # 准备工作空间
         workspace.mkdir(parents=True, exist_ok=True)
@@ -125,6 +143,93 @@ class NanoBotAgent(BaseAgent):
 
         # 不注册消息工具（不需要发送到其他 channel）
 
+    def _init_control_modules(self) -> None:
+        """初始化 control 模块"""
+        config = self._control_config
+
+        # PlanFirst
+        self._plan_first = PlanFirst(config.plan_first, self)
+
+        # ReplanTrigger
+        self._replan_trigger = ReplanTrigger(config.replan)
+
+        # FailureReflection
+        self._failure_reflection = FailureReflection(config.reflection, self)
+
+        # PreflightCheck
+        self._preflight_check = PreflightCheck(
+            enabled=config.preflight_enabled,
+            check_params=config.preflight_check_params,
+            check_suitability=config.preflight_check_suitability,
+        )
+
+        # RetryPolicy
+        self._retry_policy = RetryPolicy(config.retry)
+
+        self._logger.info(f"Control modules initialized: enabled={config.enabled}")
+
+    def _init_collab_modules(self) -> None:
+        """初始化 collaboration 模块 (T3)"""
+        config = self._collab_config
+        if not config.enabled:
+            self._handoff_manager = None
+            return
+
+        # Create async LLM caller wrapper
+        async def llm_call_fn(messages, tools=None, max_tokens=4096):
+            return await self._call_llm(messages, tools=tools, max_tokens=max_tokens)
+
+        # Create roles
+        planner_model = config.planner_model or self.model
+        verifier_model = config.verifier_model or self.model
+
+        self._planner_role = PlannerRole(
+            config=config,
+            llm_call_fn=llm_call_fn,
+            model=planner_model,
+        )
+
+        self._executor_role = ExecutorRole(
+            config=config,
+            llm_call_fn=llm_call_fn,
+            execute_tool_fn=self._execute_tool,
+            model=self.model,
+        )
+
+        if config.mode == "executor_verifier":
+            self._verifier_role = VerifierRole(
+                config=config,
+                llm_call_fn=llm_call_fn,
+                model=verifier_model,
+            )
+        else:
+            self._verifier_role = None
+
+        # Create handoff manager
+        self._handoff_manager = HandoffManager(
+            config=config,
+            planner=self._planner_role,
+            executor=self._executor_role,
+            verifier=self._verifier_role,
+        )
+
+        self._logger.info(f"Collaboration modules initialized: mode={config.mode}, max_handoffs={config.max_handoffs}")
+
+    def _init_procedural_modules(self) -> None:
+        """初始化 procedural 模块 (T4)"""
+        config = self._procedural_config
+        if not config.enabled:
+            self._procedural_store = None
+            self._procedural_trigger = None
+            self._procedural_expander = None
+            return
+
+        self._procedural_store = ProceduralStore(config)
+        self._procedural_trigger = ProceduralTrigger(config, self._procedural_store)
+        self._procedural_expander = ProceduralExpander()
+
+        self._logger.info(f"Procedural modules initialized: cards_dir={config.cards_dir}, card_count={self._procedural_store.get_card_count()}")
+
     async def _call_llm(
         self,
         messages: List[Dict],
@@ -188,10 +293,51 @@ class NanoBotAgent(BaseAgent):
         """运行 agent loop"""
         tool_defs = self._tools.get_definitions()
         iteration = 0
+        current_task = ""
+        # 从 messages 中提取 task description（用于 control 模块）
+        for msg in messages:
+            if msg.get("role") == "user":
+                current_task = msg.get("content", "")[:500] if len(msg.get("content", "")) > 500 else msg.get("content", "")
+                break
+
+        # Control: Plan-first - 在第一次迭代前生成计划
+        if self._control_config.enabled and self._plan_first.config.enabled:
+            if self._plan_first.should_generate_plan("task_start"):
+                plan = await self._plan_first.generate_plan(current_task)
+                plan_context = plan.to_context()
+                if plan_context:
+                    self._transcript.append({
+                        "type": "control_event",
+                        "event": "plan_first",
+                        "plan": plan_context,
+                    })
 
         while iteration < max_iterations:
             iteration += 1
             self._memory_store.increment_iteration()
+
+            # Control: 检查是否需要重规划
+            if self._control_config.enabled and self._replan_trigger.config.enabled:
+                replan_decision = self._replan_trigger.should_replan(iteration)
+                if replan_decision.should_replan:
+                    self._logger.info(f"Replan triggered at iteration {iteration}: {replan_decision.reason}")
+                    self._transcript.append({
+                        "type": "control_event",
+                        "event": "replan_triggered",
+                        "reason": replan_decision.reason,
+                        "signals": [{"type": s.signal_type, "desc": s.description} for s in replan_decision.signals],
+                    })
+                    # 生成新计划
+                    if self._plan_first.config.enabled:
+                        new_plan = await self._plan_first.generate_plan(current_task, context="Previous plan failed. ")
+                        plan_context = new_plan.to_context()
+                        if plan_context:
+                            self._transcript.append({
+                                "type": "control_event",
+                                "event": "new_plan",
+                                "plan": plan_context,
+                            })
+                    self._replan_trigger.confirm_replan()
 
             # 检索 memory 并注入到 messages
             if self._memory_store.is_enabled:
@@ -211,6 +357,61 @@ class NanoBotAgent(BaseAgent):
                         messages.insert(system_idx + 1, memory_msg)
                     else:
                         messages.insert(0, memory_msg)
+
+            # T4: Procedural - 检查触发并注入 procedure context
+            if self._procedural_config.enabled and self._procedural_trigger:
+                self._procedural_trigger.increment_iteration()
+                # Build context from recent messages
+                context_for_trigger = ""
+                for msg in messages[-5:]:  # Last 5 messages as context
+                    if msg.get("role") == "user":
+                        context_for_trigger = msg.get("content", "")[:200]
+                        break
+
+                triggered = self._procedural_trigger.check(current_task, context=context_for_trigger)
+                if triggered:
+                    cards = [card for card, _ in triggered]
+                    # Update executor role tool defs for T3
+                    if self._executor_role:
+                        self._executor_role.set_tool_definitions(tool_defs)
+                    # Format and inject
+                    procedure_context = self._procedural_expander.format_multiple(cards)
+                    # Insert after memory context if present, else after system
+                    procedure_msg = {"role": "system", "content": procedure_context}
+                    # Find insertion point (after memory msg if exists)
+                    insert_idx = 1  # Default after system
+                    for i, msg in enumerate(messages):
+                        if msg.get("role") == "system" and "memory" in msg.get("content", "").lower():
+                            insert_idx = i + 1
+                            break
+                    messages.insert(insert_idx, procedure_msg)
+
+            # T3: Collaboration - 在第一次迭代前使用 Planner 生成计划
+            if self._collab_config.enabled and self._handoff_manager and iteration == 1:
+                self._executor_role.set_tool_definitions(tool_defs)
+                # Build context from memory and previous messages
+                collab_context = ""
+                if self._memory_store.is_enabled:
+                    collab_context = self._memory_store.format_for_prompt() or ""
+
+                plan_result = await self._planner_role.generate_plan(
+                    current_task,
+                    context=collab_context,
+                    iteration=0,
+                )
+                plan_events = self._planner_role.get_events()
+                for event in plan_events:
+                    self._transcript.append({
+                        "type": "collab_event",
+                        **event.to_dict(),
+                    })
+                if plan_result.get("plan"):
+                    plan_context = f"\n## Collaborative Plan\n"
+                    for step in plan_result["plan"]:
+                        plan_context += f"- Step {step['step']}: {step['description']}\n"
+                    # Insert plan after procedure context if present
+                    plan_msg = {"role": "system", "content": plan_context}
+                    messages.insert(len([m for m in messages if m.get("role") == "system"]) - 1 if any(m.get("role") == "system" for m in messages) else 0, plan_msg)
 
             # 调用 LLM
             try:
@@ -269,20 +470,7 @@ class NanoBotAgent(BaseAgent):
 
             # 执行工具调用
             for tool_call in tool_calls:
-                tool_result = await self._execute_tool(tool_call)
-
-                # 写入 memory (根据 write policy)
                 tool_name = tool_call.get("function", {}).get("name", "")
-                is_error = tool_result.startswith("Error:")
-                event_type = "error" if is_error else "tool_result"
-                if self._memory_store.should_write_event(event_type, tool_result):
-                    self._memory_store.write(
-                        content=tool_result,
-                        source=event_type,
-                        source_detail=tool_name,
-                        memory_type="error" if is_error else "result",
-                    )
-                    self._logger.debug(f"[_run_loop] Wrote {event_type} to memory: {tool_name}")
 
                 # 解析参数
                 args_str = tool_call["function"]["arguments"]
@@ -293,6 +481,82 @@ class NanoBotAgent(BaseAgent):
                         args = {"raw": args_str}
                 else:
                     args = args_str
+
+                # Control: Preflight check
+                if self._control_config.enabled and self._preflight_check.enabled:
+                    preflight_result = self._preflight_check.check_tool_call(tool_name, args, current_task)
+                    if not preflight_result.passed:
+                        self._logger.warning(f"Preflight check failed for {tool_name}: {preflight_result.errors}")
+                        self._transcript.append({
+                            "type": "control_event",
+                            "event": "preflight_failed",
+                            "tool": tool_name,
+                            "errors": preflight_result.errors,
+                            "warnings": preflight_result.warnings,
+                        })
+                    elif preflight_result.warnings:
+                        self._transcript.append({
+                            "type": "control_event",
+                            "event": "preflight_warning",
+                            "tool": tool_name,
+                            "warnings": preflight_result.warnings,
+                        })
+
+                # Control: Retry policy
+                tool_result = ""
+                if self._control_config.enabled and self._retry_policy.config.enabled:
+                    success, result = await self._retry_policy.execute_with_retry(
+                        tool_name,
+                        self._execute_tool,
+                        tool_call,
+                    )
+                    tool_result = result if success else result
+                else:
+                    tool_result = await self._execute_tool(tool_call)
+
+                is_error = tool_result.startswith("Error:")
+
+                # Control: 记录错误和重试信号
+                if is_error:
+                    error_msg = tool_result
+                    self._replan_trigger.record_error(error_msg, iteration, tool_name)
+                    self._replan_trigger.record_action(f"{tool_name}({args.get('path', args.get('command', ''))})")
+
+                    if self._failure_reflection.config.enabled:
+                        self._failure_reflection.record_failure(
+                            iteration=iteration,
+                            tool_name=tool_name,
+                            error_message=error_msg,
+                            error_type="execution_error",
+                            context=current_task,
+                        )
+
+                # Control: 成功后重置失败计数
+                if not is_error and self._failure_reflection.config.enabled:
+                    self._failure_reflection.record_success()
+
+                # Control: Failure reflection
+                if self._control_config.enabled and self._failure_reflection.config.enabled:
+                    if self._failure_reflection.should_reflect():
+                        reflection = await self._failure_reflection.reflect()
+                        self._transcript.append({
+                            "type": "control_event",
+                            "event": "failure_reflection",
+                            "reflection": reflection.reflection_text,
+                            "root_cause": reflection.root_cause,
+                            "suggested_correction": reflection.suggested_correction,
+                        })
+
+                # 写入 memory (根据 write policy)
+                event_type = "error" if is_error else "tool_result"
+                if self._memory_store.should_write_event(event_type, tool_result):
+                    self._memory_store.write(
+                        content=tool_result,
+                        source=event_type,
+                        source_detail=tool_name,
+                        memory_type="error" if is_error else "result",
+                    )
+                    self._logger.debug(f"[_run_loop] Wrote {event_type} to memory: {tool_name}")
 
                 # 添加 assistant 消息到 transcript（格式兼容 pinchbench grading）
                 # grading 代码期望: content = [{"type": "toolCall", "name": "...", "params": {...}}]
@@ -337,6 +601,22 @@ class NanoBotAgent(BaseAgent):
 
         # 重置 memory store
         self._memory_store.reset()
+
+        # 重置 control 模块状态
+        if self._control_config.enabled:
+            self._replan_trigger.reset()
+            self._failure_reflection.clear()
+            self._retry_policy.reset()
+            self._preflight_check.clear_history()
+            self._plan_first.clear()
+
+        # 重置 collaboration 模块状态 (T3)
+        if self._collab_config.enabled and self._handoff_manager:
+            self._handoff_manager._handoff_count = 0
+
+        # 重置 procedural 模块状态 (T4)
+        if self._procedural_config.enabled and self._procedural_trigger:
+            self._procedural_trigger.reset()
 
         self._logger.debug(f"[execute] prompt length: {len(prompt)}, session_id: {session_id}, workspace: {workspace}")
 
@@ -388,6 +668,52 @@ class NanoBotAgent(BaseAgent):
                 "summary": memory_summary,
             })
             self._logger.debug(f"[execute] Memory summary: {memory_summary}")
+
+        # 记录 control summary 到 transcript
+        if self._control_config.enabled and self._transcript:
+            control_summary = {
+                "replan_stats": self._replan_trigger.get_replan_stats(),
+                "failure_stats": self._failure_reflection.get_failure_stats(),
+                "retry_stats": self._retry_policy.get_retry_stats(),
+                "preflight_stats": self._preflight_check.get_check_stats(),
+            }
+            self._transcript.append({
+                "type": "control_event",
+                "event": "control_summary",
+                "summary": control_summary,
+            })
+            self._logger.debug(f"[execute] Control summary: {control_summary}")
+
+        # 记录 collaboration summary 到 transcript (T3)
+        if self._collab_config.enabled and self._transcript:
+            collab_summary = None
+            if self._handoff_manager:
+                collab_summary = self._handoff_manager.get_summary()
+            if collab_summary is None:
+                collab_summary = {"enabled": True, "mode": self._collab_config.mode}
+            self._transcript.append({
+                "type": "collab_event",
+                "event": "collab_summary",
+                "summary": collab_summary,
+            })
+            self._logger.debug(f"[execute] Collaboration summary: {collab_summary}")
+
+        # 记录 procedural summary 到 transcript (T4)
+        if self._procedural_config.enabled and self._transcript:
+            proc_summary = None
+            if self._procedural_trigger and self._procedural_expander:
+                proc_summary = get_procedure_summary(
+                    self._procedural_trigger.get_events(),
+                    self._procedural_expander.get_events(),
+                )
+            if proc_summary is None:
+                proc_summary = {"enabled": True, "cards_dir": self._procedural_config.cards_dir}
+            self._transcript.append({
+                "type": "procedural_event",
+                "event": "procedural_summary",
+                "summary": proc_summary,
+            })
+            self._logger.debug(f"[execute] Procedural summary: {proc_summary}")
 
         return AgentResult(
             status=status,

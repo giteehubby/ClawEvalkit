@@ -47,6 +47,70 @@ work/nanopro/
   - `--memory-write-policy`: 写入策略 (默认 tool_result_or_error)
   - `--memory-retrieval-policy`: 检索策略 (默认 recent)
 
+### Recipe T2 — Single-agent control (2026-03-28)
+- [x] Control 模块创建 (`src/harness/agent/control/`)
+  - `__init__.py`: 模块导出
+  - `config.py`: ControlConfig, PlanFirstConfig, ReplanConfig, RetryConfig, ReflectionConfig
+  - `plan_first.py`: PlanFirst 模块 - 任务开始前生成执行计划
+  - `replan.py`: ReplanTrigger 模块 - 检测需要重新规划的信号
+  - `reflection.py`: FailureReflection 模块 - 失败后进行反思
+  - `preflight.py`: PreflightCheck 模块 - 工具调用前检查
+  - `retry.py`: RetryPolicy 模块 - 失败重试策略
+- [x] NanoBotAgent 集成 control
+  - `__init__`: 添加 control_config 参数，初始化各 control 模块
+  - `_run_loop()`: 集成 plan-first, replan, preflight, retry, reflection
+  - `execute()`: 任务结束时重置 control 状态，记录 control summary 到 transcript
+- [x] run.py CLI 参数
+  - `--control-enabled`: 启用 control 模块
+  - `--plan-first-enabled`: 启用 plan-first
+  - `--replan-enabled`: 启用 replan trigger
+  - `--retry-enabled`: 启用 retry policy
+  - `--reflection-enabled`: 启用 failure reflection
+  - `--preflight-enabled`: 启用 preflight check
+
+### Recipe T3 — Minimal Collaboration (2026-03-28)
+- [x] Collaboration 模块创建 (`src/harness/agent/collaboration/`)
+  - `__init__.py`: 模块导出
+  - `config.py`: CollabConfig, HandoffPolicy, RoleDefinition
+  - `event.py`: CollabEvent dataclass
+  - `roles.py`: PlannerRole, ExecutorRole, VerifierRole
+  - `handoff.py`: HandoffManager
+- [x] NanoBotAgent 集成 collaboration
+  - `__init__`: 添加 collab_config 参数，初始化 collaboration 模块
+  - `_run_loop()`: 集成 planner 生成计划，executor 执行步骤
+  - `execute()`: 任务结束时重置 collaboration 状态，记录 collab summary 到 transcript
+- [x] run.py CLI 参数
+  - `--collab-enabled`: 启用 collaboration 模块
+  - `--collab-mode`: 模式选择 (planner_executor / executor_verifier)
+  - `--collab-critique-frequency`: critique 频率 (on_error / every_step / never)
+  - `--collab-max-handoffs`: 最大 handoff 次数
+  - `--collab-handoff-trigger`: handoff 触发时机
+  - `--collab-planner-model`: planner 使用的模型
+  - `--collab-verifier-model`: verifier 使用的模型
+
+### Recipe T4 — Procedural Support (2026-03-28)
+- [x] Procedure 模块创建 (`src/harness/agent/procedure/`)
+  - `__init__.py`: 模块导出
+  - `config.py`: ProceduralConfig, SkillCard
+  - `event.py`: ProceduralEvent dataclass
+  - `store.py`: ProceduralStore - skill card 存储
+  - `trigger.py`: ProceduralTrigger - 关键词匹配触发
+  - `expander.py`: ProceduralExpander - 格式化 skill card 内容
+- [x] NanoBotAgent 集成 procedural
+  - `__init__`: 添加 procedural_config 参数，初始化 procedural 模块
+  - `_run_loop()`: 每次 LLM 调用前检查 trigger，注入 expanded skill context
+  - `execute()`: 任务结束时重置 procedural 状态，记录 procedural summary 到 transcript
+- [x] run.py CLI 参数
+  - `--procedural-enabled`: 启用 procedural 模块
+  - `--procedural-cards-dir`: skill cards 目录路径
+  - `--procedural-max-expansions`: 每次迭代最大展开数量
+  - `--procedural-show-skill-list`: 显示 skill 列表
+  - `--procedural-cache-triggers`: 缓存已触发的 skills
+
+### Recipe T5 — Memory + Control (2026-03-28)
+- [x] `--recipe-t5` 便捷 flag
+  - 同时启用 `--memory-enabled --control-enabled --plan-first-enabled --replan-enabled --reflection-enabled`
+
 ### 核心功能
 - [x] BaseAgent 抽象基类定义
 - [x] NanoBotAgent 实现 (使用 litellm)
