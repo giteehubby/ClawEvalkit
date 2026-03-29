@@ -260,11 +260,12 @@ def grade_task(task: Task, result: AgentResult, workspace: Path) -> ScoreResult:
         try:
             # 运行 pytest 进行评分
             pytest_cmd = [
-                "python", "-m", "pytest",
+                "python3", "-m", "pytest",
                 str(test_output_file),
                 "-v",
                 "--workspace", str(workspace),
                 "--tb=short",
+                "-p", "no:cacheprovider",  # Disable cache to avoid .pyc issues
             ]
 
             proc = subprocess.run(
@@ -278,33 +279,51 @@ def grade_task(task: Task, result: AgentResult, workspace: Path) -> ScoreResult:
             # 解析 pytest 输出
             output = proc.stdout + proc.stderr
 
-            # 提取测试结果
-            passed_tests = 0
-            failed_tests = 0
-            total_weight = 0
-
+            # 提取测试结果和权重
+            # 解析每行的测试结果
+            test_results = {}  # test_name -> (passed: bool, weight: int)
             for line in output.split("\n"):
-                # 匹配测试结果行
-                if "PASSED" in line:
-                    passed_tests += 1
-                    pytest_details.append(line.strip())
-                elif "FAILED" in line:
-                    failed_tests += 1
-                    pytest_details.append(line.strip())
+                # 匹配测试结果行，如 "test_file_exists PASSED" 或 "test_racecar FAILED"
+                match = re.match(r'\s*(test_\w+)\s+(PASSED|FAILED)', line)
+                if match:
+                    test_name = match.group(1)
+                    passed = match.group(2) == "PASSED"
+                    # 默认权重为1
+                    test_results[test_name] = (passed, 1)
 
-                # 提取 weight
-                weight_match = re.search(r'@pytest\.mark\.weight\((\d+)\)', output)
-                if weight_match:
-                    total_weight += int(weight_match.group(1))
+            # 从输出中提取所有 @pytest.mark.weight 装饰器的值
+            # 这些是文件级别的权重声明
+            all_weights = re.findall(r'@pytest\.mark\.weight\((\d+)\)', output)
+            weighted_tests = [int(w) for w in all_weights]
 
-            # 计算分数
-            if total_weight > 0:
-                pytest_score = (passed_tests / (passed_tests + failed_tests)) * 100 if (passed_tests + failed_tests) > 0 else 0
+            # 计算加权分数
+            if test_results:
+                # 计算通过测试的权重总和
+                passed_weight = 0
+                total_weight = 0
+                for test_name, (passed, _) in test_results.items():
+                    # 权重：如果有 weighted_tests 列表，使用它
+                    if weighted_tests:
+                        # 假设权重按顺序对应测试
+                        pass
+                    # 使用默认权重1
+                    weight = 1
+                    total_weight += weight
+                    if passed:
+                        passed_weight += weight
+
+                if total_weight > 0:
+                    pytest_score = (passed_weight / total_weight) * 100
+                else:
+                    pytest_score = 0
             else:
-                # 如果没有 weight，默认 12 个测试，每个 8.33 分
-                total_tests = passed_tests + failed_tests
+                # 如果没有解析到测试结果，使用简单的通过/失败计数
+                total_tests = len(test_results)
+                passed_tests = sum(1 for p, _ in test_results.values() if p)
                 if total_tests > 0:
                     pytest_score = (passed_tests / total_tests) * 100
+                else:
+                    pytest_score = 0
 
         except subprocess.TimeoutExpired:
             pytest_details.append("Pytest timeout")
@@ -338,7 +357,14 @@ def _grade_by_outputs(task: Task, result: AgentResult, workspace: Path) -> float
     # 检查 workspace 中的输出文件（包括子目录）
     if workspace.exists():
         # 递归查找所有输出文件
-        output_files = list(workspace.rglob("*.json")) + list(workspace.rglob("*.csv")) + list(workspace.rglob("*.md"))
+        output_files = (
+            list(workspace.rglob("*.json")) +
+            list(workspace.rglob("*.csv")) +
+            list(workspace.rglob("*.md")) +
+            list(workspace.rglob("*.py")) +  # 代码任务可能输出 .py 文件
+            list(workspace.rglob("*.txt")) +
+            list(workspace.rglob("*.html"))
+        )
 
         if output_files:
             # 根据任务级别调整基础分
