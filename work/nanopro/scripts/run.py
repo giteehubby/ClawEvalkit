@@ -38,6 +38,7 @@ from src.runners.adapters.skillsbench import SkillsBenchAdapter
 from src.runners.adapters.clawbench_official import ClawBenchOfficialAdapter
 from src.runners.adapters.claw_bench_tribe import ClawBenchTribeAdapter
 from src.runners.adapters.skillbench import SkillBenchAdapter
+from src.runners.adapters.wildclawbench import WildClawBenchAdapter
 
 # 配置日志
 logging.basicConfig(
@@ -195,16 +196,26 @@ def save_transcripts_to_dir(output_dir: Path, transcript_dir: Path | None) -> No
     if not transcript_dir:
         return
 
+    import shutil
+
     transcript_dir = Path(transcript_dir)
     transcript_dir.mkdir(parents=True, exist_ok=True)
 
     # 从 output_dir/transcripts/ 复制
     src_transcripts = output_dir / "transcripts"
     if src_transcripts.exists():
-        import shutil
+        copied = 0
         for f in src_transcripts.glob("*.jsonl"):
-            shutil.copy(f, transcript_dir / f.name)
-        logger.info(f"Copied {len(list(src_transcripts.glob('*.jsonl')))} transcripts to {transcript_dir}")
+            dst = transcript_dir / f.name
+            # Skip if source and destination are the same file (SameFileError)
+            try:
+                if f.resolve() == dst.resolve():
+                    continue
+                shutil.copy2(f, dst)
+                copied += 1
+            except shutil.SameFileError:
+                continue
+        logger.info(f"Copied {copied} transcripts to {transcript_dir}")
 
 
 def run_pinchbench(args: argparse.Namespace) -> None:
@@ -353,6 +364,7 @@ def run_skillsbench(args: argparse.Namespace) -> None:
         tasks_dir=tasks_dir,
         output_dir=output_dir,
         agent_factory=make_agent if args.threads > 1 else None,
+        transcript_dir=Path(args.transcript_dir) if args.transcript_dir else None,
     )
 
     difficulty = getattr(args, 'difficulty', None)
@@ -373,9 +385,8 @@ def run_skillsbench(args: argparse.Namespace) -> None:
     logger.info(f"Overall Score: {results['overall_score']:.1f}%")
     logger.info(f"Passed: {results['passed_tasks']}/{results['total_tasks']} tasks")
     logger.info(f"Results saved to: {output_dir}")
-
-    # 保存 transcripts 到指定目录
-    save_transcripts_to_dir(output_dir, args.transcript_dir)
+    if args.transcript_dir:
+        logger.info(f"Transcripts saved to: {args.transcript_dir}")
 
 
 def run_clawbench_official(args: argparse.Namespace) -> None:
@@ -534,6 +545,61 @@ def run_skillbench(args: argparse.Namespace) -> None:
     agent.cleanup()
 
 
+def run_wildclawbench(args: argparse.Namespace) -> None:
+    nanopro_dir = get_nanopro_dir()
+    wildclawbench_dir = nanopro_dir / "benchmarks" / "wildclawbench"
+    tasks_dir = wildclawbench_dir / "tasks"
+
+    if not tasks_dir.exists():
+        logger.error(f"Tasks directory not found: {tasks_dir}")
+        sys.exit(1)
+
+    # Workspace is a temp directory - agent writes results here
+    workspace = Path(tempfile.gettempdir()) / "benchmarks" / "workspace"
+    workspace.mkdir(parents=True, exist_ok=True)
+
+    output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "artifacts" / "runs" / "results"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    agent = create_agent(
+        agent_type=args.agent,
+        model=args.model,
+        api_url=args.api_url,
+        api_key=args.api_key,
+        workspace=workspace,
+        timeout=args.timeout,
+        memory_config=build_memory_config(args),
+        control_config=build_control_config(args),
+        collab_config=build_collab_config(args),
+        procedural_config=build_procedural_config(args),
+    )
+
+    adapter = WildClawBenchAdapter(
+        agent=agent,
+        tasks_dir=tasks_dir,
+        wildclawbench_dir=wildclawbench_dir,
+        output_dir=output_dir,
+        use_docker=not getattr(args, 'no_docker', False),
+    )
+
+    category = getattr(args, 'category', None)
+    adapter.load_tasks(category=category)
+
+    task_ids = None
+    if args.tasks:
+        task_ids = [t.strip() for t in args.tasks.split(",")]
+
+    results = adapter.run(task_ids=task_ids, runs_per_task=args.runs)
+
+    logger.info("\nBenchmark completed!")
+    logger.info(f"Overall Score: {results['overall_score']:.2f}")
+    logger.info(f"Total Tasks: {results['total_tasks']}")
+    logger.info(f"Results saved to: {output_dir}")
+
+    # 保存 transcripts 到指定目录
+    save_transcripts_to_dir(output_dir, args.transcript_dir)
+
+
 def run_benchmark(benchmark_name: str, args: argparse.Namespace) -> None:
     if benchmark_name == "pinchbench":
         run_pinchbench(args)
@@ -547,9 +613,11 @@ def run_benchmark(benchmark_name: str, args: argparse.Namespace) -> None:
         run_claw_bench_tribe(args)
     elif benchmark_name == "skillbench":
         run_skillbench(args)
+    elif benchmark_name == "wildclawbench":
+        run_wildclawbench(args)
     else:
         logger.error(f"Unknown benchmark: {benchmark_name}")
-        logger.info(f"Available benchmarks: pinchbench, openclawbench, skillsbench, clawbench_official, claw-bench-tribe")
+        logger.info(f"Available benchmarks: pinchbench, openclawbench, skillsbench, clawbench_official, claw-bench-tribe, wildclawbench")
         sys.exit(1)
 
 
@@ -597,7 +665,7 @@ def main():
 
     parser.add_argument("--suite", type=str, help="OpenClawBench: 指定 suite")
     parser.add_argument("--difficulty", type=str, help="指定难度 (easy, medium, hard)")
-    parser.add_argument("--category", type=str, help="SkillsBench: 指定类别")
+    parser.add_argument("--category", type=str, help="SkillsBench/WildClawBench: 指定类别")
     parser.add_argument("--level", type=str, help="ClawBench Official: 指定级别 (L1, L2, L3, L4)")
     parser.add_argument("--domain", type=str, help="ClawBench Official: 指定领域")
     parser.add_argument("--threads", "-t", type=int, default=1, help="并行线程数（默认: 1）")
@@ -669,6 +737,9 @@ def main():
     parser.add_argument("--procedural-max-expansions", type=int, default=3, help="每次迭代最大展开的 cards 数量 (默认: 3)")
     parser.add_argument("--procedural-show-skill-list", action="store_true", default=True, help="在 prompt 中显示 skill 列表")
     parser.add_argument("--procedural-cache-triggers", action="store_true", default=True, help="缓存已触发的 skills")
+
+    # WildClawBench specific
+    parser.add_argument("--no-docker", action="store_true", help="WildClawBench: 不使用 Docker，直接在本地运行 (用于无法安装 Docker 的环境)")
 
     args = parser.parse_args()
 

@@ -241,17 +241,28 @@ def run_pytest_verification(task: Task, workspace: Path, output_dir: Path | None
     output_path = workspace / "app" / "output"
     output_path.mkdir(parents=True, exist_ok=True)
 
-    # 预处理测试文件：将硬编码的 /app/output 路径替换为实际的 output_path
-    # 因为测试文件 (test_outputs.py) 硬编码了 Path("/app/output")
+    # /root/ 应该对应 workspace/root/ (SkillsBench 任务的文件通常在 /root/ 下)
+    root_path = workspace / "root"
+
+    # 预处理测试文件：替换硬编码的路径
+    # SkillsBench 任务中，测试文件可能硬编码 /root/ 或 /app/output 路径
     try:
         content = test_output_file.read_text(encoding="utf-8")
+        modified = False
+
+        # 替换 /app/output 为实际的 output_path 目录
         if "/app/output" in content:
-            # 替换 /app/output 为实际的 output_path 目录
             content = content.replace("/app/output", str(output_path))
-            # 写回临时文件（避免修改原始任务文件）
-            test_output_file_tmp = tests_dir / "test_outputs.py.tmp"
-            test_output_file_tmp.write_text(content, encoding="utf-8")
-            test_output_file = test_output_file_tmp
+            modified = True
+
+        # 替换 /root/ 为 workspace/root/ 目录
+        if "/root/" in content:
+            content = content.replace("/root/", str(root_path) + "/")
+            modified = True
+
+        if modified:
+            # 直接覆盖 test_outputs.py（这是在 workspace 的副本，不影响原始任务文件）
+            test_output_file.write_text(content, encoding="utf-8")
     except Exception:
         pass  # 如果预处理失败，继续使用原始文件
 
@@ -451,12 +462,18 @@ class SkillsBenchAdapter:
         tasks_dir: Path,
         output_dir: Path | None = None,
         agent_factory: Optional[Callable[[Path], BaseAgent]] = None,
+        transcript_dir: Path | None = None,
     ):
         self.agent = agent
         self.tasks_dir = tasks_dir
         self.output_dir = output_dir or Path("results")
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.agent_factory = agent_factory
+        # transcript_dir: if set, transcripts go directly here (e.g. exp/transcripts/skillsbench/)
+        # instead of output_dir/transcripts/
+        self.transcript_dir = transcript_dir
+        if self.transcript_dir:
+            self.transcript_dir.mkdir(parents=True, exist_ok=True)
 
         self.tasks: List[Task] = []
         self.results: List[Dict] = []
@@ -537,7 +554,7 @@ class SkillsBenchAdapter:
 
                 result.workspace = str(workspace)
 
-                transcript_path = self.output_dir / "transcripts" / f"{task.task_id}_{run_index}.jsonl"
+                transcript_path = (self.transcript_dir or (self.output_dir / "transcripts")) / f"{task.task_id}_{run_index}.jsonl"
                 result.save_transcript(transcript_path)
 
                 grade = grade_task(task, result, workspace)
@@ -601,7 +618,7 @@ class SkillsBenchAdapter:
 
             result.workspace = str(workspace)
 
-            transcript_path = self.output_dir / "transcripts" / f"{task.task_id}_{run_index}.jsonl"
+            transcript_path = (self.transcript_dir or (self.output_dir / "transcripts")) / f"{task.task_id}_{run_index}.jsonl"
             result.save_transcript(transcript_path)
 
             grade = grade_task(task, result, workspace)
@@ -694,6 +711,15 @@ class SkillsBenchAdapter:
             gen_script = env_dir / "generate_data.py"
             if gen_script.exists():
                 shutil.copy2(gen_script, app_dir / "generate_data.py")
+
+            # 复制 environment/ 根目录下的其他文件到 workspace/root/
+            # （如 .pdf, .toml 等任务指令中引用的文件）
+            # 排除已处理的子目录和 Dockerfile
+            root_dest = workspace / "root"
+            root_dest.mkdir(parents=True, exist_ok=True)
+            for item in env_dir.iterdir():
+                if item.is_file() and item.name not in ("Dockerfile",):
+                    shutil.copy2(item, root_dest / item.name)
 
         # 复制 skills 到 /app/ 和 workspace
         skills_src = env_dir / "skills"

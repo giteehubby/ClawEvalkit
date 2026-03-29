@@ -99,7 +99,14 @@ class ExecTool(Tool):
         if self._workspace:
             command = self._remap_root_path(command, self._workspace)
 
-        cwd = working_dir or self.working_dir or os.getcwd()
+        # Use runtime workspace (_workspace) if set, otherwise fall back to init-time working_dir
+        # This ensures guard check uses the same workspace path that _remap_root_path uses
+        if working_dir:
+            cwd = working_dir
+        elif self._workspace:
+            cwd = str(self._workspace)
+        else:
+            cwd = self.working_dir or os.getcwd()
         guard_error = self._guard_command(command, cwd)
         if guard_error:
             return guard_error
