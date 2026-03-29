@@ -158,6 +158,27 @@ class RetryPolicy:
         while True:
             try:
                 result = await func(*args, **kwargs)
+                # 兼容工具层“返回错误字符串”而非抛异常的实现
+                if isinstance(result, str) and result.startswith("Error:"):
+                    last_error = result
+                    last_error_type = self._classify_error(RuntimeError(result))
+
+                    decision = self.should_retry(tool_name, last_error, last_error_type)
+                    if not decision.should_retry:
+                        logger.warning(f"Retry exhausted for {tool_name}: {last_error}")
+                        return False, last_error
+
+                    self._record_attempt(
+                        tool_name,
+                        last_error,
+                        last_error_type,
+                        delay_used=decision.delay,
+                    )
+                    if decision.delay > 0:
+                        logger.info(f"Retrying {tool_name} in {decision.delay:.1f}s (attempt {decision.retry_count + 1})")
+                        await asyncio.sleep(decision.delay)
+                    continue
+
                 self._mark_success(tool_name)
                 return True, result
 
@@ -171,11 +192,17 @@ class RetryPolicy:
                     logger.warning(f"Retry exhausted for {tool_name}: {last_error}")
                     return False, last_error
 
+                self._record_attempt(
+                    tool_name,
+                    last_error,
+                    last_error_type,
+                    delay_used=decision.delay,
+                )
+
                 # 执行延迟
                 if decision.delay > 0:
                     logger.info(f"Retrying {tool_name} in {decision.delay:.1f}s (attempt {decision.retry_count + 1})")
                     await asyncio.sleep(decision.delay)
-                    self._record_attempt(tool_name, last_error, last_error_type, delay_used=decision.delay)
 
     def _mark_success(self, tool_name: str) -> None:
         """标记成功"""

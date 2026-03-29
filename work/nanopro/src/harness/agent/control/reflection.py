@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import logging
 import time
+from collections import Counter
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -34,14 +35,25 @@ class FailureRecord:
 
 
 class FailureReflection:
-    """失败反思模块"""
+    """失败反思模块
 
-    def __init__(self, config: "ReflectionConfig", llm_client: Any | None = None):
+    专注于反思分析，帮助模型从失败中学习和恢复。
+    """
+
+    def __init__(self, config: "ReflectionConfig", llm_fn: Any | None = None):
+        """初始化 FailureReflection。
+
+        Args:
+            config: ReflectionConfig 配置
+            llm_fn: 异步 LLM 调用函数，签名为:
+                    async def llm_fn(prompt: str, max_tokens: int, temperature: float) -> str
+        """
         self.config = config
-        self.llm_client = llm_client
+        self.llm_fn = llm_fn
         self.failure_history: list[FailureRecord] = []
         self.consecutive_failures = 0
         self.last_reflection_time = 0.0
+        self._last_reflected_failure_count = 0
 
     def record_failure(
         self,
@@ -76,8 +88,12 @@ class FailureReflection:
         if not self.config.enabled:
             return False
 
+        has_new_failure = len(self.failure_history) > self._last_reflected_failure_count
+        if not has_new_failure:
+            return False
+
         if self.config.trigger == "on_failure":
-            return len(self.failure_history) > 0 and self.failure_history[-1].iteration == self._get_last_iteration()
+            return True
         elif self.config.trigger == "on_consecutive_failures":
             return self.consecutive_failures >= self.config.consecutive_failure_threshold
         elif self.config.trigger == "manual":
@@ -97,13 +113,14 @@ class FailureReflection:
 
         start_time = time.time()
 
-        if self.llm_client and self.config.enabled:
+        if self.llm_fn and self.config.enabled:
             result = await self._llm_reflect(current_plan)
         else:
             result = self._rule_based_reflect()
 
         result.reflection_text = result.reflection_text[:self.config.max_reflection_length]
         self.last_reflection_time = time.time() - start_time
+        self._last_reflected_failure_count = len(self.failure_history)
         logger.info(f"Reflection completed in {self.last_reflection_time:.2f}s: {result.root_cause}")
 
         return result
@@ -162,7 +179,7 @@ Provide a brief reflection (max 300 tokens) covering:
 """
 
         try:
-            response = await self.llm_client.complete(
+            response = await self.llm_fn(
                 prompt=prompt,
                 max_tokens=self.config.max_reflection_length,
                 temperature=0.3,
@@ -210,10 +227,11 @@ Provide a brief reflection (max 300 tokens) covering:
 
     def get_failure_stats(self) -> dict[str, Any]:
         """获取失败统计"""
+        error_types = Counter(f.error_type for f in self.failure_history)
         return {
             "total_failures": len(self.failure_history),
             "consecutive_failures": self.consecutive_failures,
-            "error_types": {},
+            "error_types": dict(error_types),
             "last_failure_time": self.failure_history[-1].timestamp if self.failure_history else None,
         }
 
@@ -221,6 +239,7 @@ Provide a brief reflection (max 300 tokens) covering:
         """清除失败历史"""
         self.failure_history = []
         self.consecutive_failures = 0
+        self._last_reflected_failure_count = 0
 
 
 # 前向引用

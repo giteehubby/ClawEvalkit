@@ -147,6 +147,10 @@ class ReplanTrigger:
     def confirm_replan(self) -> None:
         """确认已执行重规划"""
         self.replan_count += 1
+        if self.signals:
+            # 使用最新信号的 iteration 作为 last_replan_iteration，避免重复触发
+            self.last_replan_iteration = max(s.iteration for s in self.signals)
+            self.last_replan_time = time.time()
         # 保留最后一次重规划的信号用于分析
         self.signals = []
         self._action_history = []
@@ -166,6 +170,7 @@ class ReplanTrigger:
         self.signals = []
         self.last_replan_iteration = 0
         self.last_replan_time = 0.0
+        self.replan_count = 0
         self._action_history = []
 
 

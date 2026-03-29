@@ -10,13 +10,19 @@ from typing import Literal
 
 @dataclass
 class PlanFirstConfig:
-    """Plan-first 配置"""
+    """Plan-first 配置
+
+    策略：
+    1. task_start 触发：在任务开始时生成初始计划
+    2. on_failure 触发：失败后生成恢复计划
+    3. 所有计划都暴露给模型，帮助模型理解和执行任务
+    """
     enabled: bool = False
     # 何时生成计划: "always" | "task_start" | "on_failure"
     trigger: Literal["always", "task_start", "on_failure"] = "task_start"
     # 计划最大长度（token 估算）
     max_plan_length: int = 500
-    # 是否要求模型先输出计划再执行
+    # 是否要求模型先输出计划再执行（目前未使用）
     require_explicit_plan: bool = False
 
 

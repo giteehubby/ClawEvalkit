@@ -41,7 +41,7 @@ class ExecutionPlan:
         return "\n".join(lines)
 
     def to_context(self) -> str:
-        """转换为注入到 prompt 的格式"""
+        """转换为注入到 prompt 的格式（无触发判断）"""
         if not self.steps:
             return ""
         lines = ["[EXECUTION PLAN]", f"Task: {self.task}", ""]
@@ -54,35 +54,128 @@ class ExecutionPlan:
 
 
 class PlanFirst:
-    """Plan-first 控制模块"""
+    """Plan-first 控制模块
 
-    def __init__(self, config: "PlanFirstConfig", llm_client: Any):
+    策略：
+    1. task_start 触发：在任务开始时生成初始计划
+    2. on_failure 触发：失败后生成恢复计划
+    3. 所有计划都暴露给模型，帮助模型理解和执行任务
+    """
+
+    # 简单任务关键词 - 包含这些词的任务被认为是简单的
+    SIMPLE_TASK_KEYWORDS = [
+        "search", "find", "look up", "查询", "搜索",
+        "read", "查看", "读取",
+        "get", "获取", "拿到",
+        "check", "检查",
+        "retrieve", "取回",
+    ]
+
+    # 复杂任务关键词 - 包含这些词的任务需要规划
+    COMPLEX_TASK_KEYWORDS = [
+        "create", "write", "build", "make", "generate",
+        "schedule", "organize", "plan", "arrange",
+        "analyze", "compare", "research",
+        "summarize", "synthesize",
+        "debug", "fix", "repair",
+        "implement", "develop", "design",
+        "setup", "configure", "deploy",
+        "transform", "convert", "migrate",
+        "split", "divide", "separate",
+    ]
+
+    def __init__(self, config: "PlanFirstConfig", llm_fn: Any):
+        """初始化 PlanFirst。
+
+        Args:
+            config: PlanFirstConfig 配置
+            llm_fn: 异步 LLM 调用函数，签名为:
+                     async def llm_fn(prompt: str, max_tokens: int, temperature: float) -> str
+        """
         self.config = config
-        self.llm_client = llm_client
+        self.llm_fn = llm_fn
         self.current_plan: ExecutionPlan | None = None
         self.plan_history: list[ExecutionPlan] = []
 
-    def should_generate_plan(self, trigger_reason: str) -> bool:
-        """判断是否应该生成计划"""
+    def should_generate_plan(self, trigger_reason: str, task_description: str = "") -> bool:
+        """判断是否应该生成计划
+
+        Args:
+            trigger_reason: 触发原因 ("task_start", "failure", etc.)
+            task_description: 任务描述，用于复杂度检测
+
+        Returns:
+            是否应该生成计划
+        """
         if not self.config.enabled:
             return False
 
+        # on_failure 和 always 触发按配置处理
         if self.config.trigger == "always":
             return True
-        elif self.config.trigger == "task_start":
-            return trigger_reason == "task_start"
         elif self.config.trigger == "on_failure":
             return trigger_reason == "failure"
+        elif self.config.trigger == "task_start":
+            if trigger_reason != "task_start":
+                return False
+            # 任务复杂度检测：简单任务跳过规划
+            if task_description and self._is_simple_task(task_description):
+                logger.info(f"Skipping plan generation for simple task: {task_description[:50]}...")
+                return False
+            return True
         return False
 
-    async def generate_plan(self, task: str, context: str = "") -> ExecutionPlan:
-        """生成执行计划"""
+    def to_context(self) -> str:
+        """将当前计划转换为注入到 prompt 的格式
+
+        所有计划都暴露给模型，帮助模型理解和执行任务。
+        """
+        if not self.current_plan:
+            return ""
+        return self.current_plan.to_context()
+
+    def _is_simple_task(self, task: str) -> bool:
+        """检测任务是否简单（不需要详细规划）
+
+        策略：
+        - 如果任务同时包含简单词和复杂词，倾向于规划
+        - 如果只有简单词，不规划
+        - 如果只有复杂词，规划
+        - 如果都几乎没有，使用中等长度阈值判断
+        """
+        task_lower = task.lower()
+
+        has_simple = any(kw in task_lower for kw in self.SIMPLE_TASK_KEYWORDS)
+        has_complex = any(kw in task_lower for kw in self.COMPLEX_TASK_KEYWORDS)
+
+        # 简单任务：只有简单词
+        if has_simple and not has_complex:
+            return True
+
+        # 复杂任务：有复杂词
+        if has_complex:
+            return False
+
+        # 不确定：检查任务长度（短任务倾向于简单）
+        if len(task.split()) < 15:
+            return True
+
+        return False
+
+    async def generate_plan(self, task: str, context: str = "", trigger: str = "") -> ExecutionPlan:
+        """生成执行计划
+
+        Args:
+            task: 任务描述
+            context: 额外上下文（如"Previous plan failed"）
+            trigger: 触发原因 ("task_start", "failure", "replan")，未使用但保留接口兼容
+        """
         import time
 
         prompt = self._build_plan_prompt(task, context)
 
         try:
-            response = await self.llm_client.complete(
+            response = await self.llm_fn(
                 prompt=prompt,
                 max_tokens=self.config.max_plan_length,
                 temperature=0.3,  # 较低温度保证计划稳定性
@@ -153,6 +246,15 @@ Focus on:
     def get_current_plan(self) -> ExecutionPlan | None:
         """获取当前计划"""
         return self.current_plan
+
+    def get_plan_summary(self) -> dict:
+        """获取计划统计"""
+        return {
+            "plan_count": len(self.plan_history),
+            "current_plan_steps": len(self.current_plan.steps) if self.current_plan else 0,
+            "current_plan_raw_length": len(self.current_plan.raw_plan) if self.current_plan and self.current_plan.raw_plan else 0,
+            "has_current_plan": self.current_plan is not None,
+        }
 
     def clear_plan(self) -> None:
         """清除当前计划"""

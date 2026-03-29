@@ -80,6 +80,7 @@ class PreflightCheck:
         warnings = []
         errors = []
         suggestions = []
+        normalized_tool = (tool_name or "").strip().lower()
 
         # 检查空参数
         for key, value in tool_input.items():
@@ -90,31 +91,49 @@ class PreflightCheck:
                 suggestions.append(f"Consider if '{key}' needs to be this long")
 
         # 特定工具检查
-        if tool_name == "Read":
+        if normalized_tool == "read_file":
             path = tool_input.get("path", "")
             if path and not any(path.startswith(p) for p in ["/", "./", "../"]):
                 warnings.append(f"Read path '{path}' may be relative; consider using absolute path")
 
-        elif tool_name == "Write":
+        elif normalized_tool == "write_file":
             path = tool_input.get("path", "")
             content = tool_input.get("content", "")
             if not path:
-                errors.append("Write requires 'path' parameter")
+                errors.append("write_file requires 'path' parameter")
             if not content:
-                warnings.append("Write content is empty")
+                warnings.append("write_file content is empty")
 
-        elif tool_name == "Bash":
+        elif normalized_tool == "edit_file":
+            path = tool_input.get("path", "")
+            old_text = tool_input.get("old_text", "")
+            if not path:
+                errors.append("edit_file requires 'path' parameter")
+            if old_text == "":
+                warnings.append("edit_file old_text is empty")
+
+        elif normalized_tool == "list_dir":
+            path = tool_input.get("path", "")
+            if not path:
+                errors.append("list_dir requires 'path' parameter")
+
+        elif normalized_tool == "exec":
             command = tool_input.get("command", "")
             if not command:
-                errors.append("Bash requires 'command' parameter")
+                errors.append("exec requires 'command' parameter")
             elif any(danger in command.lower() for danger in ["rm -rf", "sudo", "chmod 777"]):
                 warnings.append(f"Bash command contains potentially dangerous operation: {command[:50]}...")
                 suggestions.append("Verify this command is intentional and safe")
 
-        elif tool_name == "WebFetch":
+        elif normalized_tool == "web_fetch":
             url = tool_input.get("url", "")
             if url and not (url.startswith("http://") or url.startswith("https://")):
-                errors.append(f"WebFetch requires valid URL, got: {url}")
+                errors.append(f"web_fetch requires valid URL, got: {url}")
+
+        elif normalized_tool == "web_search":
+            query = tool_input.get("query", "")
+            if not query:
+                errors.append("web_search requires 'query' parameter")
 
         return PreflightResult(passed=len(errors) == 0, warnings=warnings, errors=errors, suggestions=suggestions)
 
@@ -130,18 +149,19 @@ class PreflightCheck:
 
         # 简单的关键词检查
         task_lower = task_context.lower()
+        normalized_tool = (tool_name or "").strip().lower()
 
-        if tool_name == "WebFetch" and any(word in task_lower for word in ["file", "local", "disk"]):
+        if normalized_tool == "web_fetch" and any(word in task_lower for word in ["file", "local", "disk"]):
             warnings.append("Task mentions local operations but WebFetch is being used")
-            suggestions.append("Consider using Read tool for local files")
+            suggestions.append("Consider using read_file for local files")
 
-        elif tool_name == "Read" and any(word in task_lower for word in ["web", "url", "http"]):
+        elif normalized_tool == "read_file" and any(word in task_lower for word in ["web", "url", "http"]):
             warnings.append("Task mentions web operations but Read is being used")
-            suggestions.append("Consider using WebFetch for URLs")
+            suggestions.append("Consider using web_fetch for URLs")
 
-        elif tool_name == "Bash" and any(word in task_lower for word in ["edit", "write", "create file"]):
+        elif normalized_tool == "exec" and any(word in task_lower for word in ["edit", "write", "create file"]):
             warnings.append("Task involves file editing but Bash is being used")
-            suggestions.append("Consider using Write tool for file creation/editing")
+            suggestions.append("Consider using write_file/edit_file for file operations")
 
         return PreflightResult(passed=True, warnings=warnings, suggestions=suggestions)
 
