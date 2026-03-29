@@ -115,12 +115,12 @@ class BaseAgent(ABC):
 
     @abstractmethod
     def execute_multi(
-        self, prompts: List[str], session_id: str | None = None
+        self, prompts: List[str | Dict[str, Any]], session_id: str | None = None
     ) -> List[AgentResult]:
         """执行多轮对话
 
         Args:
-            prompts: 多个 prompt 列表
+            prompts: 多个 prompt 列表，支持纯字符串或带元数据的 session dict
             session_id: 会话 ID
 
         Returns:

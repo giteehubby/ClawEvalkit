@@ -17,7 +17,7 @@ import time
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 try:
     import yaml
@@ -450,11 +450,13 @@ class SkillsBenchAdapter:
         agent: BaseAgent,
         tasks_dir: Path,
         output_dir: Path | None = None,
+        agent_factory: Optional[Callable[[Path], BaseAgent]] = None,
     ):
         self.agent = agent
         self.tasks_dir = tasks_dir
         self.output_dir = output_dir or Path("results")
         self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.agent_factory = agent_factory
 
         self.tasks: List[Task] = []
         self.results: List[Dict] = []
@@ -579,9 +581,10 @@ class SkillsBenchAdapter:
         def run_single_task(task: Task, run_index: int) -> tuple:
             """运行单个任务（线程安全）"""
             workspace = self._prepare_workspace(task, f"{task.task_id}_{run_index}")
+            agent = self.agent_factory(workspace) if self.agent_factory else self.agent
 
             try:
-                result = self.agent.execute(
+                result = agent.execute(
                     task.instruction,
                     f"{task.task_id}_{run_index}",
                     workspace=workspace
@@ -589,6 +592,12 @@ class SkillsBenchAdapter:
             except Exception as e:
                 logger.warning(f"Task execution failed: {e}")
                 result = AgentResult(status="error", error=str(e))
+            finally:
+                if self.agent_factory:
+                    try:
+                        agent.cleanup()
+                    except Exception:
+                        pass
 
             result.workspace = str(workspace)
 
@@ -825,7 +834,7 @@ class SkillsBenchAdapter:
         # 保存结果
         run_id = f"{int(time.time() * 1000):013d}"
         output_path = self.output_dir / f"skillsbench_{run_id}.json"
-        output_path.write_text(json.dumps(result, indent=2, ensure_ascii=False))
+        output_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
 
         logger.info(f"\nResults saved to: {output_path}")
 

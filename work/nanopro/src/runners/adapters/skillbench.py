@@ -12,8 +12,9 @@ import subprocess
 import sys
 import tempfile
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 try:
     import yaml
@@ -139,12 +140,16 @@ class _SingleModeAdapter:
         mode: str,
         skill_path: Optional[Path],
         output_dir: Path,
+        threads: int = 1,
+        agent_factory: Optional[Callable[[Path], BaseAgent]] = None,
     ):
         self.agent = agent
         self.pack_dir = pack_dir
         self.mode = mode
         self.skill_path = skill_path
         self.output_dir = output_dir
+        self.threads = max(1, threads)
+        self.agent_factory = agent_factory
         self.skill_instructions = ""
         if mode == "augmented" and skill_path:
             self.skill_instructions = _load_skill_instructions(skill_path)
@@ -212,12 +217,19 @@ class _SingleModeAdapter:
         start_time = time.time()
 
         instructions = self.skill_instructions + task.instructions
+        agent = self.agent_factory(workspace) if self.agent_factory else self.agent
 
         try:
-            result = self.agent.execute(instructions, f"{task.task_id}_{self.mode}", workspace=workspace)
+            result = agent.execute(instructions, f"{task.task_id}_{self.mode}", workspace=workspace)
         except Exception as e:
             logger.warning(f"Task execution failed: {e}")
             result = AgentResult(status="error", error=str(e))
+        finally:
+            if self.agent_factory:
+                try:
+                    agent.cleanup()
+                except Exception:
+                    pass
 
         execution_time = time.time() - start_time
         passed, notes = run_unittest(workspace)
@@ -266,13 +278,52 @@ class _SingleModeAdapter:
 
         logger.info(f"Running {self.mode} on {len(tasks)} tasks")
 
-        results = []
-        for i, task in enumerate(tasks, 1):
-            logger.info(f"\n[{i}/{len(tasks)}] {task.task_id}")
-            result = self.run_single_task(task)
-            results.append(result)
-            status = "PASS" if result["passed"] else "FAIL"
-            logger.info(f"[{self.mode}] {task.task_id}: {status} - {result['notes']}")
+        results: List[Dict[str, Any]] = []
+        if self.threads == 1 or len(tasks) <= 1:
+            for i, task in enumerate(tasks, 1):
+                logger.info(f"\n[{i}/{len(tasks)}] {task.task_id}")
+                result = self.run_single_task(task)
+                results.append(result)
+                status = "PASS" if result["passed"] else "FAIL"
+                logger.info(f"[{self.mode}] {task.task_id}: {status} - {result['notes']}")
+        else:
+            logger.info(f"Running {self.mode} with {self.threads} threads")
+            with ThreadPoolExecutor(max_workers=self.threads) as executor:
+                future_to_task = {
+                    executor.submit(self.run_single_task, task): task
+                    for task in tasks
+                }
+                completed = 0
+                for future in as_completed(future_to_task):
+                    task = future_to_task[future]
+                    completed += 1
+                    try:
+                        result = future.result()
+                    except Exception as e:
+                        logger.warning(f"Task execution failed: {task.task_id}: {e}")
+                        result = {
+                            "task_id": task.task_id,
+                            "mode": self.mode,
+                            "status": "failed",
+                            "passed": False,
+                            "execution_time": 0,
+                            "notes": f"Error: {e}",
+                            "workspace": "",
+                            "tool_calls": 0,
+                            "input_tokens": 0,
+                            "output_tokens": 0,
+                            "total_tokens": 0,
+                            "has_error": True,
+                        }
+                    results.append(result)
+                    status = "PASS" if result["passed"] else "FAIL"
+                    logger.info(
+                        f"\n[{completed}/{len(tasks)}] [{self.mode}] {task.task_id}: "
+                        f"{status} - {result['notes']}"
+                    )
+
+            task_order = {task.task_id: i for i, task in enumerate(tasks)}
+            results.sort(key=lambda r: task_order.get(r["task_id"], sys.maxsize))
 
         return self._aggregate(results)
 
@@ -292,7 +343,7 @@ class _SingleModeAdapter:
         skill_name = self.skill_path.name if self.skill_path else "none"
         output_path = self.output_dir / f"skillbench_{self.mode}_{skill_name}_{int(time.time())}.json"
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        output_path.write_text(json.dumps(results, indent=2, ensure_ascii=False))
+        output_path.write_text(json.dumps(results, indent=2, ensure_ascii=False), encoding="utf-8")
 
         return {
             "mode": self.mode,
@@ -322,11 +373,37 @@ class SkillBenchAdapter:
         agent: BaseAgent,
         skillbench_dir: Path,
         output_dir: Path,
+        threads: int = 1,
     ):
         self.agent = agent
         self.skillbench_dir = skillbench_dir
         self.output_dir = output_dir
+        self.threads = max(1, threads)
         self.output_dir.mkdir(parents=True, exist_ok=True)
+
+    def _make_agent(self, workspace: Path) -> BaseAgent:
+        agent_type = type(self.agent)
+        kwargs: Dict[str, Any] = {}
+
+        if hasattr(self.agent, "_memory_config"):
+            kwargs["memory_config"] = getattr(self.agent, "_memory_config")
+        if hasattr(self.agent, "_control_config"):
+            kwargs["control_config"] = getattr(self.agent, "_control_config")
+        if hasattr(self.agent, "_collab_config"):
+            kwargs["collab_config"] = getattr(self.agent, "_collab_config")
+        if hasattr(self.agent, "_procedural_config"):
+            kwargs["procedural_config"] = getattr(self.agent, "_procedural_config")
+        if hasattr(self.agent, "system_prompt"):
+            kwargs["system_prompt"] = getattr(self.agent, "system_prompt")
+
+        return agent_type(
+            model=getattr(self.agent, "model"),
+            api_url=getattr(self.agent, "api_url"),
+            api_key=getattr(self.agent, "api_key"),
+            workspace=workspace,
+            timeout=getattr(self.agent, "timeout", 300),
+            **kwargs,
+        )
 
     def run(self) -> Dict[str, Any]:
         """
@@ -360,9 +437,6 @@ class SkillBenchAdapter:
 
             pack_result = self._run_pack(pack_dir, pack_name, skill_names)
             all_pack_results.append(pack_result)
-
-            # pack 间 sleep
-            time.sleep(10)
 
         # 汇总
         total_baseline_passed = sum(r["baseline"]["passed"] for r in all_pack_results)
@@ -422,6 +496,8 @@ class SkillBenchAdapter:
                 mode="augmented",
                 skill_path=skill_path,
                 output_dir=self.output_dir,
+                threads=self.threads,
+                agent_factory=self._make_agent if self.threads > 1 else None,
             )
             result = adapter.run()
             skill_results[skill_name] = result
@@ -435,8 +511,6 @@ class SkillBenchAdapter:
                 f"avg_tool_calls={agg['avg_tool_calls']}"
             )
 
-            time.sleep(10)
-
         # baseline
         baseline_adapter = _SingleModeAdapter(
             agent=self.agent,
@@ -444,6 +518,8 @@ class SkillBenchAdapter:
             mode="baseline",
             skill_path=None,
             output_dir=self.output_dir,
+            threads=self.threads,
+            agent_factory=self._make_agent if self.threads > 1 else None,
         )
         baseline_result = baseline_adapter.run()
         b_agg = baseline_result

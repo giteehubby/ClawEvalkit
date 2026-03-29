@@ -391,6 +391,32 @@ class PinchBenchAdapter:
         self.tasks = self.task_loader.load_all_tasks()
         logger.info(f"Loaded {len(self.tasks)} tasks")
 
+    @staticmethod
+    def _merge_multi_session_results(results_list: List[AgentResult]) -> AgentResult:
+        """将多轮 session 结果合并成单个结果，便于统一评分和 transcript 保存。"""
+        if not results_list:
+            return AgentResult(status="error", error="No results")
+
+        combined_transcript: List[Dict[str, Any]] = []
+        combined_content: List[str] = []
+        last_result = results_list[-1]
+
+        for result in results_list:
+            if result.transcript:
+                combined_transcript.extend(result.transcript)
+            if result.content:
+                combined_content.append(result.content)
+
+        return AgentResult(
+            status=last_result.status,
+            content=last_result.content or "\n\n".join(combined_content),
+            transcript=combined_transcript,
+            usage=last_result.usage,
+            workspace=last_result.workspace,
+            execution_time=sum(r.execution_time for r in results_list),
+            error=last_result.error,
+        )
+
     def run(
         self,
         task_ids: List[str] | None = None,
@@ -432,7 +458,7 @@ class PinchBenchAdapter:
                     if task.sessions:
                         # 多轮对话
                         results_list = self.agent.execute_multi(task.sessions, f"{task.task_id}_{run_index}", workspace=workspace)
-                        result = results_list[-1] if results_list else AgentResult(status="error", error="No results")
+                        result = self._merge_multi_session_results(results_list)
                     else:
                         # 单轮对话
                         result = self.agent.execute(task.prompt, f"{task.task_id}_{run_index}", workspace=workspace)
@@ -479,8 +505,9 @@ class PinchBenchAdapter:
     def _prepare_workspace(self, task: Task, run_id: str) -> Path:
         """准备任务工作空间"""
         import shutil
+        import tempfile
 
-        workspace = Path(f"/tmp/benchmarks/pinchbench/{run_id}")
+        workspace = Path(tempfile.gettempdir()) / "benchmarks" / "pinchbench" / run_id
 
         # 清理旧的工作空间
         if workspace.exists():
@@ -503,7 +530,7 @@ class PinchBenchAdapter:
             # 如果有 content，直接写入文件
             if content:
                 dest.parent.mkdir(parents=True, exist_ok=True)
-                dest.write_text(content)
+                dest.write_text(content, encoding="utf-8")
             # 否则从 assets 目录复制
             elif source_name:
                 source = self.skill_dir / "assets" / source_name
@@ -589,7 +616,7 @@ class PinchBenchAdapter:
         # 保存结果
         run_id = f"{int(time.time() * 1000):013d}"
         output_path = self.output_dir / f"pinchbench_{run_id}.json"
-        output_path.write_text(json.dumps(result, indent=2, ensure_ascii=False))
+        output_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
 
         logger.info(f"\nResults saved to: {output_path}")
 

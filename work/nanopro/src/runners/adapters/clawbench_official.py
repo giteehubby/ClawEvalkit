@@ -16,7 +16,7 @@ import time
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Optional
 
 try:
     from tqdm import tqdm
@@ -415,11 +415,13 @@ class ClawBenchOfficialAdapter:
         agent: BaseAgent,
         tasks_dir: Path,
         output_dir: Path | None = None,
+        agent_factory: Optional[Callable[[Path], BaseAgent]] = None,
     ):
         self.agent = agent
         self.tasks_dir = tasks_dir
         self.output_dir = output_dir or Path("results")
         self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.agent_factory = agent_factory
 
         self.tasks: List[Task] = []
         self.results: List[Dict] = []
@@ -486,24 +488,25 @@ class ClawBenchOfficialAdapter:
             task_grades = []
 
             for run_index in range(runs_per_task):
-                workspace = self._prepare_workspace(task, f"{task.task_id}_{run_index}")
+                runtime_root = self._prepare_workspace(task, f"{task.task_id}_{run_index}")
+                grade_workspace = self._get_grade_workspace(runtime_root)
 
                 try:
                     result = self.agent.execute(
                         task.instruction,
                         f"{task.task_id}_{run_index}",
-                        workspace=workspace
+                        workspace=runtime_root
                     )
                 except Exception as e:
                     logger.warning(f"Task execution failed: {e}")
                     result = AgentResult(status="error", error=str(e))
 
-                result.workspace = str(workspace)
+                result.workspace = str(runtime_root)
 
                 transcript_path = self.output_dir / "transcripts" / f"{task.task_id}_{run_index}.jsonl"
                 result.save_transcript(transcript_path)
 
-                grade = grade_task(task, result, workspace)
+                grade = grade_task(task, result, grade_workspace)
                 task_grades.append(grade)
 
                 status_emoji = "✅" if grade.passed else "❌"
@@ -543,24 +546,32 @@ class ClawBenchOfficialAdapter:
 
         def run_single_task(task: Task, run_index: int) -> tuple:
             """运行单个任务（线程安全）"""
-            workspace = self._prepare_workspace(task, f"{task.task_id}_{run_index}")
+            runtime_root = self._prepare_workspace(task, f"{task.task_id}_{run_index}")
+            grade_workspace = self._get_grade_workspace(runtime_root)
+            agent = self.agent_factory(runtime_root) if self.agent_factory else self.agent
 
             try:
-                result = self.agent.execute(
+                result = agent.execute(
                     task.instruction,
                     f"{task.task_id}_{run_index}",
-                    workspace=workspace
+                    workspace=runtime_root
                 )
             except Exception as e:
                 logger.warning(f"Task execution failed: {e}")
                 result = AgentResult(status="error", error=str(e))
+            finally:
+                if self.agent_factory:
+                    try:
+                        agent.cleanup()
+                    except Exception:
+                        pass
 
-            result.workspace = str(workspace)
+            result.workspace = str(runtime_root)
 
             transcript_path = self.output_dir / "transcripts" / f"{task.task_id}_{run_index}.jsonl"
             result.save_transcript(transcript_path)
 
-            grade = grade_task(task, result, workspace)
+            grade = grade_task(task, result, grade_workspace)
             return task, run_index, grade
 
         # 准备所有任务
@@ -648,46 +659,70 @@ class ClawBenchOfficialAdapter:
     def _prepare_workspace(self, task: Task, run_id: str) -> Path:
         """准备任务工作空间
 
-        使用 base_workspace 作为工作空间，
-        agent 会把文件直接写入这个目录。
+        为官方任务保留运行时目录结构：
+        - runtime_root/environment/*
+        - runtime_root/workspace/*
+
+        许多官方 setup.sh 会通过相对路径定位 environment/ 和 workspace/，
+        因此不能再把 environment/* 摊平复制到根目录。
         """
-        workspace = Path(f"/tmp/benchmarks/clawbench_official/{run_id}")
+        runtime_root = Path(f"/tmp/benchmarks/clawbench_official/{run_id}")
 
         # 清理旧的工作空间
-        if workspace.exists():
-            shutil.rmtree(workspace)
-        workspace.mkdir(parents=True, exist_ok=True)
+        if runtime_root.exists():
+            shutil.rmtree(runtime_root)
+        runtime_root.mkdir(parents=True, exist_ok=True)
+
+        task_workspace = runtime_root / "workspace"
+        task_workspace.mkdir(parents=True, exist_ok=True)
 
         # 复制环境文件
         env_dir = task.task_dir / "environment"
         if env_dir.exists():
-            for item in env_dir.iterdir():
-                if item.name == "setup.sh":
-                    continue  # 不复制 setup.sh，而是执行它
-                dest = workspace / item.name
-                if item.is_dir():
-                    shutil.copytree(item, dest, dirs_exist_ok=True)
-                else:
-                    shutil.copy2(item, dest)
+            runtime_env_dir = runtime_root / "environment"
+            shutil.copytree(env_dir, runtime_env_dir, dirs_exist_ok=True)
+            self._normalize_shell_scripts(runtime_env_dir)
+            self._run_setup_script(task, runtime_root, task_workspace)
 
-        # 执行 setup.sh 初始化 workspace
-        setup_script = env_dir / "setup.sh"
-        if setup_script.exists():
-            try:
-                result = subprocess.run(
-                    ["bash", str(setup_script), str(workspace)],
-                    cwd=str(task.task_dir),  # setup.sh 依赖 TASK_DIR，需要在 task_dir 下执行
-                    capture_output=True,
-                    timeout=30,
-                )
-                if result.returncode != 0:
-                    logger.warning(f"setup.sh failed for {task.task_id}: {result.stderr.decode()[:200]}")
-            except subprocess.TimeoutExpired:
-                logger.warning(f"setup.sh timed out for {task.task_id}")
-            except Exception as e:
-                logger.warning(f"setup.sh error for {task.task_id}: {e}")
+        return runtime_root
 
-        return workspace
+    def _get_grade_workspace(self, runtime_root: Path) -> Path:
+        """返回 verifier 应该读取的真实 workspace。"""
+        task_workspace = runtime_root / "workspace"
+        if task_workspace.exists():
+            return task_workspace
+        return runtime_root
+
+    def _normalize_shell_scripts(self, env_dir: Path) -> None:
+        """将拷贝出来的 shell 脚本统一为 LF，避免 Windows checkout 导致 bash 解析失败。"""
+        for script in env_dir.rglob("*.sh"):
+            raw = script.read_bytes()
+            normalized = raw.replace(b"\r\n", b"\n")
+            if normalized != raw:
+                script.write_bytes(normalized)
+
+    def _run_setup_script(self, task: Task, runtime_root: Path, task_workspace: Path) -> None:
+        """执行官方 setup.sh 来初始化 workspace。"""
+        setup_script = runtime_root / "environment" / "setup.sh"
+        if not setup_script.exists():
+            return
+
+        try:
+            subprocess.run(
+                ["bash", str(setup_script), str(task_workspace)],
+                cwd=str(runtime_root),
+                capture_output=True,
+                text=True,
+                timeout=60,
+                check=True,
+            )
+        except subprocess.CalledProcessError as e:
+            stderr = (e.stderr or "").strip()
+            stdout = (e.stdout or "").strip()
+            details = stderr or stdout or f"exit code {e.returncode}"
+            logger.warning(f"Setup failed for {task.task_id}: {details[:300]}")
+        except subprocess.TimeoutExpired:
+            logger.warning(f"Setup timed out for {task.task_id}")
 
     def _generate_report(self, scores_by_task_id: Dict, tasks_to_run: List[Task]) -> Dict[str, Any]:
         """生成报告"""
@@ -785,7 +820,7 @@ class ClawBenchOfficialAdapter:
         run_id = f"{int(time.time() * 1000):013d}"
         output_path = self.output_dir / f"clawbench_official_{run_id}.json"
         result["status"] = "complete"
-        output_path.write_text(json.dumps(result, indent=2, ensure_ascii=False))
+        output_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
 
         # 删除中间结果文件
         intermediate_path = self.output_dir / "clawbench_official_intermediate.json"

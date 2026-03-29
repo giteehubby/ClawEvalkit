@@ -111,6 +111,21 @@ class NanoBotAgent(BaseAgent):
         safe_name = "".join(c if c.isalnum() or c in ("-", "_", ".") else "_" for c in session_id)
         return self.session_store_dir / f"{safe_name}.json"
 
+    @staticmethod
+    def _as_text_item(content: str) -> Dict[str, Any]:
+        return {
+            "type": "text",
+            "text": content,
+        }
+
+    @staticmethod
+    def _normalize_transcript_tool_params(tool_name: str, args: Dict[str, Any]) -> Dict[str, Any]:
+        """Add compatibility aliases expected by some benchmark graders."""
+        normalized = dict(args)
+        if tool_name in {"read_file", "readFile"} and "path" in normalized and "files" not in normalized:
+            normalized["files"] = [normalized["path"]]
+        return normalized
+
     def _load_session_messages(self, session_id: str | None) -> List[Dict[str, Any]]:
         if not session_id:
             return []
@@ -199,6 +214,46 @@ class NanoBotAgent(BaseAgent):
             self._skills_summary = None
             self._logger.debug(f"Failed to load workspace skills: {e}")
 
+    def _build_collab_platform_guidance(self) -> str:
+        """Build platform-aware guidance for collaboration sub-roles."""
+        if os.name == "nt":
+            return (
+                "Execution environment: Windows.\n"
+                "- Do not assume POSIX shell syntax or GNU utilities are available.\n"
+                "- Avoid commands like `mkdir -p`, `touch`, `rm`, `mv`, `ls`, `cat`, `grep`, `sed`, and `awk` unless you have verified a Windows-safe equivalent.\n"
+                "- For shell-based text search on Windows, prefer `findstr` or `powershell -Command Select-String` instead of `grep`.\n"
+                "- Prefer filesystem tools for file tasks: `write_file` creates parent directories automatically, `read_file` verifies contents, `list_dir` checks structure, and `edit_file` updates existing files.\n"
+                "- Create files directly in the current task workspace unless the prompt explicitly asks for another top-level directory.\n"
+            )
+        return (
+            "Execution environment: POSIX.\n"
+            "- Prefer filesystem tools when they are simpler or more reliable than shell commands.\n"
+            "- Create files directly in the current task workspace unless the prompt explicitly asks for another top-level directory.\n"
+        )
+
+    def _build_planner_system_prompt(self) -> str:
+        base_prompt = PlannerRole.DEFAULT_SYSTEM_PROMPT.strip()
+        return (
+            f"{base_prompt}\n\n"
+            "Additional execution guidance:\n"
+            f"{self._build_collab_platform_guidance()}"
+            "- When a task mainly asks for files or directories, plan around filesystem tools first instead of shell commands.\n"
+            "- When a task asks for several facts from one document or dataset, prefer a compact extraction strategy (for example a focused script or targeted searches) over many repeated full-file reads.\n"
+            "- Keep paths aligned with the user request and avoid inventing wrapper directories unless requested.\n"
+        )
+
+    def _build_executor_system_prompt(self) -> str:
+        return (
+            "You are an executor agent. Execute the current step precisely using the available tools.\n\n"
+            "Execution guidance:\n"
+            f"{self._build_collab_platform_guidance()}"
+            "- Prefer `write_file` for creating new files, including nested paths such as `src/main.py`.\n"
+            "- Use `list_dir` to verify directory structure and `read_file` to verify file contents.\n"
+            "- Use `exec` only when shell execution is genuinely necessary.\n"
+            "- For document/data extraction tasks, avoid repeating the same full-file read. Use a focused command or short script to gather the needed facts, then write the requested output artifact promptly.\n"
+            "- Do not create extra top-level directories unless the task explicitly requests them.\n"
+        )
+
     def _init_control_modules(self) -> None:
         """初始化 control 模块"""
         config = self._control_config
@@ -227,13 +282,16 @@ class NanoBotAgent(BaseAgent):
     def _init_collab_modules(self) -> None:
         """初始化 collaboration 模块 (T3)"""
         config = self._collab_config
+        self._planner_role = None
+        self._executor_role = None
+        self._verifier_role = None
+        self._handoff_manager = None
         if not config.enabled:
-            self._handoff_manager = None
             return
 
         # Create async LLM caller wrapper
-        async def llm_call_fn(messages, tools=None, max_tokens=4096):
-            return await self._call_llm(messages, tools=tools, max_tokens=max_tokens)
+        async def llm_call_fn(messages, model=None, tools=None, max_tokens=4096):
+            return await self._call_llm(messages, model=model, tools=tools, max_tokens=max_tokens)
 
         # Create roles
         planner_model = config.planner_model or self.model
@@ -243,6 +301,7 @@ class NanoBotAgent(BaseAgent):
             config=config,
             llm_call_fn=llm_call_fn,
             model=planner_model,
+            system_prompt=self._build_planner_system_prompt(),
         )
 
         self._executor_role = ExecutorRole(
@@ -250,6 +309,7 @@ class NanoBotAgent(BaseAgent):
             llm_call_fn=llm_call_fn,
             execute_tool_fn=self._execute_tool,
             model=self.model,
+            system_prompt=self._build_executor_system_prompt(),
         )
 
         if config.mode == "executor_verifier":
@@ -289,21 +349,19 @@ class NanoBotAgent(BaseAgent):
     async def _call_llm(
         self,
         messages: List[Dict],
+        model: str | None = None,
         tools: List[Dict] | None = None,
         max_tokens: int = 4096,
     ) -> Dict[str, Any]:
         """调用 LLM"""
         try:
-            # 确定使用的 model（添加 openrouter/ 前缀如果使用 OpenRouter）
-            model = self.model
+            requested_model = model or self.model
             if self.api_url and "openrouter" in self.api_url.lower():
-                # 需要添加 openrouter/ 前缀
-                if not model.startswith("openrouter/"):
-                    model = f"openrouter/{model}"
+                if not requested_model.startswith("openrouter/"):
+                    requested_model = f"openrouter/{requested_model}"
 
-            # 准备参数
             kwargs = {
-                "model": model,
+                "model": requested_model,
                 "messages": messages,
                 "api_key": self.api_key,
                 "api_base": self.api_url,
@@ -351,6 +409,95 @@ class NanoBotAgent(BaseAgent):
             return str(result)
         except Exception as e:
             return f"Error executing {tool_name}: {e}"
+
+    def _is_tool_error(self, tool_result: str) -> bool:
+        """Best-effort detection for tool execution failures."""
+        normalized = (tool_result or "").strip().lower()
+        return (
+            normalized.startswith("error:")
+            or normalized.startswith("error ")
+            or normalized.startswith("error executing")
+        )
+
+    def _record_collab_events(self, events: List[Dict], register_manager: bool = True) -> None:
+        """Persist collaboration events to transcript and session summary."""
+        if not events:
+            return
+        if register_manager and self._handoff_manager:
+            self._handoff_manager.register_events(events)
+        for event in events:
+            self._transcript.append({
+                "type": "collab_event",
+                **event.to_dict(),
+            })
+
+    def _consume_role_events(self) -> None:
+        """Flush buffered collaboration role events into the transcript."""
+        if self._planner_role:
+            self._record_collab_events(self._planner_role.consume_events())
+        if self._executor_role:
+            self._record_collab_events(self._executor_role.consume_events())
+        if self._verifier_role:
+            self._record_collab_events(self._verifier_role.consume_events())
+
+    def _build_plan_system_message(self, plan: List[Dict[str, Any]], revision: bool = False) -> Dict[str, str]:
+        """Format a collaboration plan as a system message."""
+        heading = "## Collaborative Plan Revision" if revision else "## Collaborative Plan"
+        lines = [heading]
+        for step in plan:
+            lines.append(f"- Step {step.get('step', '?')}: {step.get('description', '')}")
+        return {"role": "system", "content": "\n" + "\n".join(lines) + "\n"}
+
+    async def _generate_collab_plan(
+        self,
+        current_task: str,
+        messages: List[Dict],
+        iteration: int,
+        revision_reason: str | None = None,
+    ) -> None:
+        """Generate or revise a planner_executor plan and inject it into messages."""
+        if not (self._collab_config.enabled and self._handoff_manager and self._planner_role):
+            return
+        if self._collab_config.mode != "planner_executor":
+            return
+        if revision_reason and not self._handoff_manager.can_handoff():
+            return
+
+        context_parts: List[str] = []
+        if revision_reason:
+            context_parts.append(revision_reason)
+        if self._memory_store.is_enabled and self._collab_config.handoff_policy.include_memory:
+            memory_context = self._memory_store.format_for_prompt()
+            if memory_context:
+                context_parts.append(memory_context)
+
+        plan_result = await self._planner_role.generate_plan(
+            current_task,
+            context="\n\n".join(context_parts) if context_parts else None,
+            iteration=iteration,
+        )
+        self._consume_role_events()
+
+        plan = plan_result.get("plan") or []
+        if not plan:
+            return
+
+        if revision_reason and self._handoff_manager.can_handoff():
+            self._handoff_manager._handoff_count += 1
+            handoff_event = self._handoff_manager.record_handoff(
+                from_role="executor",
+                to_role="planner",
+                reason="tool_error",
+                iteration=iteration,
+                detail=revision_reason[:500],
+            )
+            self._record_collab_events([handoff_event], register_manager=False)
+
+        messages[:] = [
+            msg for msg in messages
+            if not (msg.get("role") == "system" and "## Collaborative Plan" in msg.get("content", ""))
+        ]
+        messages.append(self._build_plan_system_message(plan, revision=bool(revision_reason)))
 
     async def _run_loop(self, messages: List[Dict], max_iterations: int = 10) -> str:
         """运行 agent loop"""
@@ -449,32 +596,12 @@ class NanoBotAgent(BaseAgent):
                             break
                     messages.insert(insert_idx, procedure_msg)
 
-            # T3: Collaboration - 在第一次迭代前使用 Planner 生成计划
-            if self._collab_config.enabled and self._handoff_manager and iteration == 1:
-                self._executor_role.set_tool_definitions(tool_defs)
-                # Build context from memory and previous messages
-                collab_context = ""
-                if self._memory_store.is_enabled:
-                    collab_context = self._memory_store.format_for_prompt() or ""
-
-                plan_result = await self._planner_role.generate_plan(
-                    current_task,
-                    context=collab_context,
-                    iteration=0,
-                )
-                plan_events = self._planner_role.get_events()
-                for event in plan_events:
-                    self._transcript.append({
-                        "type": "collab_event",
-                        **event.to_dict(),
-                    })
-                if plan_result.get("plan"):
-                    plan_context = f"\n## Collaborative Plan\n"
-                    for step in plan_result["plan"]:
-                        plan_context += f"- Step {step['step']}: {step['description']}\n"
-                    # Insert plan after procedure context if present
-                    plan_msg = {"role": "system", "content": plan_context}
-                    messages.insert(len([m for m in messages if m.get("role") == "system"]) - 1 if any(m.get("role") == "system" for m in messages) else 0, plan_msg)
+            # T3: Collaboration - planner_executor uses planner for initial plan and bounded revisions.
+            if self._collab_config.enabled and self._handoff_manager:
+                if self._executor_role:
+                    self._executor_role.set_tool_definitions(tool_defs)
+                if iteration == 1:
+                    await self._generate_collab_plan(current_task, messages, iteration=0)
 
             # 调用 LLM
             try:
@@ -521,7 +648,7 @@ class NanoBotAgent(BaseAgent):
                 # 添加 assistant 消息到 transcript（格式兼容 pinchbench grading）
                 content_items = []
                 if content:
-                    content_items.append(content)
+                    content_items.append(self._as_text_item(content))
                 self._transcript.append({
                     "type": "message",
                     "message": {
@@ -544,6 +671,7 @@ class NanoBotAgent(BaseAgent):
                         args = {"raw": args_str}
                 else:
                     args = args_str
+                transcript_args = self._normalize_transcript_tool_params(tool_name, args)
 
                 # Control: Preflight check
                 if self._control_config.enabled and self._preflight_check.enabled:
@@ -577,13 +705,32 @@ class NanoBotAgent(BaseAgent):
                 else:
                     tool_result = await self._execute_tool(tool_call)
 
-                is_error = tool_result.startswith("Error:")
+                is_error = self._is_tool_error(tool_result)
 
                 # Control: 记录错误和重试信号
                 if is_error:
                     error_msg = tool_result
                     self._replan_trigger.record_error(error_msg, iteration, tool_name)
                     self._replan_trigger.record_action(f"{tool_name}({args.get('path', args.get('command', ''))})")
+
+                    if (
+                        self._collab_config.enabled
+                        and self._handoff_manager
+                        and self._collab_config.mode == "planner_executor"
+                        and self._handoff_manager.can_handoff()
+                    ):
+                        revision_reason = (
+                            f"Tool execution failed.\n"
+                            f"Tool: {tool_name}\n"
+                            f"Arguments: {json.dumps(args, ensure_ascii=False)}\n"
+                            f"Error: {error_msg}"
+                        )
+                        await self._generate_collab_plan(
+                            current_task,
+                            messages,
+                            iteration=iteration,
+                            revision_reason=revision_reason,
+                        )
 
                     if self._failure_reflection.config.enabled:
                         self._failure_reflection.record_failure(
@@ -625,11 +772,11 @@ class NanoBotAgent(BaseAgent):
                 # grading 代码期望: content = [{"type": "toolCall", "name": "...", "params": {...}}]
                 content_items = []
                 if content:
-                    content_items.append(content)
+                    content_items.append(self._as_text_item(content))
                 content_items.append({
                     "type": "toolCall",
                     "name": tool_call["function"]["name"],
-                    "params": args
+                    "params": transcript_args
                 })
                 self._transcript.append({
                     "type": "message",
@@ -675,7 +822,13 @@ class NanoBotAgent(BaseAgent):
 
         # 重置 collaboration 模块状态 (T3)
         if self._collab_config.enabled and self._handoff_manager:
-            self._handoff_manager._handoff_count = 0
+            self._handoff_manager.reset()
+            if self._planner_role:
+                self._planner_role.reset()
+            if self._executor_role:
+                self._executor_role.reset()
+            if self._verifier_role:
+                self._verifier_role.reset()
 
         # 重置 procedural 模块状态 (T4)
         if self._procedural_config.enabled and self._procedural_trigger:
@@ -694,12 +847,17 @@ class NanoBotAgent(BaseAgent):
         if current_workspace != self.workspace:
             self._load_workspace_skills(current_workspace)
 
+        self.session_store_dir = current_workspace / ".sessions"
+        self.session_store_dir.mkdir(parents=True, exist_ok=True)
+
         # 更新工具的 workspace
         for tool in self._tools._tools.values():
             if hasattr(tool, 'workspace'):
                 tool.workspace = current_workspace
             if hasattr(tool, '_workspace'):
                 tool._workspace = current_workspace
+            if hasattr(tool, 'working_dir'):
+                tool.working_dir = str(current_workspace)
 
         try:
             # 构建消息，支持基于 session_id 的跨调用上下文持久化
@@ -792,11 +950,29 @@ class NanoBotAgent(BaseAgent):
             error=error_msg,
         )
 
-    def execute_multi(self, prompts: List[str], session_id: str | None = None, workspace: Path | None = None) -> List[AgentResult]:
+    def execute_multi(
+        self,
+        prompts: List[str | Dict[str, Any]],
+        session_id: str | None = None,
+        workspace: Path | None = None,
+    ) -> List[AgentResult]:
         """执行多轮对话"""
         results = []
-        for prompt in prompts:
-            result = self.execute(prompt, session_id, workspace=workspace)
+        current_session_id = session_id
+        for index, prompt_entry in enumerate(prompts):
+            prompt_text = prompt_entry
+            if isinstance(prompt_entry, dict):
+                prompt_text = prompt_entry.get("prompt", "")
+                entry_session_id = prompt_entry.get("id") or f"turn_{index}"
+                if prompt_entry.get("new_session"):
+                    current_session_id = f"{session_id}_{entry_session_id}" if session_id else entry_session_id
+                elif current_session_id is None:
+                    current_session_id = f"{session_id}_{entry_session_id}" if session_id else entry_session_id
+
+            if not isinstance(prompt_text, str):
+                prompt_text = str(prompt_text)
+
+            result = self.execute(prompt_text, current_session_id, workspace=workspace)
             results.append(result)
 
         return results

@@ -7,7 +7,7 @@ Manages role handoffs, queues, and context passing between planner and executor.
 from __future__ import annotations
 
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from .config import CollabConfig, HandoffPolicy
 from .event import CollabEvent
@@ -42,6 +42,33 @@ class HandoffManager:
         self._handoff_count = 0
         self._events: List[CollabEvent] = []
         self._current_context: Dict[str, Any] = {}
+
+    def reset(self) -> None:
+        """Reset collaboration session state."""
+        self._handoff_count = 0
+        self._events.clear()
+        self._current_context.clear()
+
+    def register_events(self, events: List[CollabEvent]) -> None:
+        """Register external collaboration events into the session log."""
+        if events:
+            self._events.extend(events)
+
+    def record_handoff(self, from_role: str, to_role: str, reason: str, iteration: int = 0, **data) -> CollabEvent:
+        """Record a role handoff event."""
+        event = CollabEvent(
+            event_type="handoff",
+            role=from_role,
+            iteration=iteration,
+            data={
+                "from": from_role,
+                "to": to_role,
+                "reason": reason,
+                **data,
+            },
+        )
+        self._events.append(event)
+        return event
 
     def should_handoff(self, trigger: str) -> bool:
         """Check if a handoff should occur based on the policy."""
@@ -199,11 +226,20 @@ class HandoffManager:
 
     def get_summary(self) -> Dict[str, Any]:
         """Get a summary of the collaboration session."""
+        event_summary = {
+            "total_events": len(self._events),
+            "by_type": {},
+            "by_role": {},
+        }
+        for event in self._events:
+            event_summary["by_type"][event.event_type] = event_summary["by_type"].get(event.event_type, 0) + 1
+            event_summary["by_role"][event.role] = event_summary["by_role"].get(event.role, 0) + 1
         return {
             "total_handoffs": self._handoff_count,
             "max_handoffs": self.config.max_handoffs,
             "mode": self.config.mode,
             "event_count": len(self._events),
+            "events": event_summary,
         }
 
     def get_events(self) -> List[CollabEvent]:

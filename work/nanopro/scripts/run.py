@@ -327,23 +327,32 @@ def run_skillsbench(args: argparse.Namespace) -> None:
     output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "artifacts" / "runs" / "results"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    agent = create_agent(
-        agent_type=args.agent,
-        model=args.model,
-        api_url=args.api_url,
-        api_key=args.api_key,
-        workspace=workspace,
-        timeout=args.timeout,
-        memory_config=build_memory_config(args),
-        control_config=build_control_config(args),
-        collab_config=build_collab_config(args),
-        procedural_config=build_procedural_config(args),
-    )
+    memory_config = build_memory_config(args)
+    control_config = build_control_config(args)
+    collab_config = build_collab_config(args)
+    procedural_config = build_procedural_config(args)
+
+    def make_agent(agent_workspace: Path) -> BaseAgent:
+        return create_agent(
+            agent_type=args.agent,
+            model=args.model,
+            api_url=args.api_url,
+            api_key=args.api_key,
+            workspace=agent_workspace,
+            timeout=args.timeout,
+            memory_config=memory_config,
+            control_config=control_config,
+            collab_config=collab_config,
+            procedural_config=procedural_config,
+        )
+
+    agent = make_agent(workspace)
 
     adapter = SkillsBenchAdapter(
         agent=agent,
         tasks_dir=tasks_dir,
         output_dir=output_dir,
+        agent_factory=make_agent if args.threads > 1 else None,
     )
 
     difficulty = getattr(args, 'difficulty', None)
@@ -384,23 +393,32 @@ def run_clawbench_official(args: argparse.Namespace) -> None:
     output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "artifacts" / "runs" / "results"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    agent = create_agent(
-        agent_type=args.agent,
-        model=args.model,
-        api_url=args.api_url,
-        api_key=args.api_key,
-        workspace=workspace,
-        timeout=args.timeout,
-        memory_config=build_memory_config(args),
-        control_config=build_control_config(args),
-        collab_config=build_collab_config(args),
-        procedural_config=build_procedural_config(args),
-    )
+    memory_config = build_memory_config(args)
+    control_config = build_control_config(args)
+    collab_config = build_collab_config(args)
+    procedural_config = build_procedural_config(args)
+
+    def make_agent(agent_workspace: Path) -> BaseAgent:
+        return create_agent(
+            agent_type=args.agent,
+            model=args.model,
+            api_url=args.api_url,
+            api_key=args.api_key,
+            workspace=agent_workspace,
+            timeout=args.timeout,
+            memory_config=memory_config,
+            control_config=control_config,
+            collab_config=collab_config,
+            procedural_config=procedural_config,
+        )
+
+    agent = make_agent(workspace)
 
     adapter = ClawBenchOfficialAdapter(
         agent=agent,
         tasks_dir=tasks_dir,
         output_dir=output_dir,
+        agent_factory=make_agent if args.threads > 1 else None,
     )
 
     level = getattr(args, 'level', None)
@@ -481,7 +499,7 @@ def run_skillbench(args: argparse.Namespace) -> None:
     workspace = Path("/tmp/benchmarks/workspace")
     workspace.mkdir(parents=True, exist_ok=True)
 
-    output_dir = nanopro_dir / "artifacts" / "runs" / "results"
+    output_dir = Path(args.output_dir) if args.output_dir else nanopro_dir / "artifacts" / "runs" / "results"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     agent = create_agent(
@@ -501,6 +519,7 @@ def run_skillbench(args: argparse.Namespace) -> None:
         agent=agent,
         skillbench_dir=skillbench_dir,
         output_dir=output_dir,
+        threads=args.threads,
     )
     results = adapter.run()
 

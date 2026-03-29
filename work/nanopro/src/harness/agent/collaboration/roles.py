@@ -10,9 +10,6 @@ import json
 import logging
 from typing import Any, Dict, List
 
-import litellm
-from litellm import acompletion
-
 from .config import CollabConfig, RoleDefinition
 from .event import CollabEvent
 
@@ -71,7 +68,7 @@ Be specific about what tools to use and what the expected outcomes are."""
             messages.append({"role": "user", "content": task})
 
         try:
-            response = await self._llm_call(messages, max_tokens=1024)
+            response = await self._llm_call(messages, model=self.model, max_tokens=1024)
             content = ""
             if hasattr(response, "choices") and response.choices:
                 content = response.choices[0].message.content or ""
@@ -134,6 +131,16 @@ Be specific about what tools to use and what the expected outcomes are."""
         """Get all events recorded by this role."""
         return self._events.copy()
 
+    def consume_events(self) -> List[CollabEvent]:
+        """Return and clear buffered events."""
+        events = self._events.copy()
+        self._events.clear()
+        return events
+
+    def reset(self) -> None:
+        """Reset role-local state."""
+        self._events.clear()
+
 
 class ExecutorRole:
     """Executor role - executes plan steps using tools."""
@@ -178,11 +185,17 @@ class ExecutorRole:
             {"role": "system", "content": self.system_prompt} if self.system_prompt else {"role": "system", "content": "You are an executor agent."},
         ]
 
+        user_content = f"Current step to execute: {step_desc}"
         if context:
-            messages.append({"role": "user", "content": f"Previous context:\n{context}\n\nCurrent step to execute: {step_desc}"})
+            user_content = f"Previous context:\n{context}\n\n{user_content}"
+        messages.append({"role": "user", "content": user_content})
 
         try:
-            response = await self._llm_call(messages, tools=self._tool_defs if self._tool_defs else None)
+            response = await self._llm_call(
+                messages,
+                model=self.model,
+                tools=self._tool_defs if self._tool_defs else None,
+            )
 
             # Check if LLM wants to call tools
             if hasattr(response, "choices") and response.choices:
@@ -257,6 +270,16 @@ class ExecutorRole:
         """Get all events recorded by this role."""
         return self._events.copy()
 
+    def consume_events(self) -> List[CollabEvent]:
+        """Return and clear buffered events."""
+        events = self._events.copy()
+        self._events.clear()
+        return events
+
+    def reset(self) -> None:
+        """Reset role-local state."""
+        self._events.clear()
+
 
 class VerifierRole:
     """Verifier role - checks executor output for errors."""
@@ -305,7 +328,7 @@ Respond with:
         ]
 
         try:
-            response = await self._llm_call(messages, max_tokens=512)
+            response = await self._llm_call(messages, model=self.model, max_tokens=512)
 
             if hasattr(response, "choices") and response.choices:
                 content = response.choices[0].message.content or ""
@@ -343,3 +366,13 @@ Respond with:
     def get_events(self) -> List[CollabEvent]:
         """Get all events recorded by this role."""
         return self._events.copy()
+
+    def consume_events(self) -> List[CollabEvent]:
+        """Return and clear buffered events."""
+        events = self._events.copy()
+        self._events.clear()
+        return events
+
+    def reset(self) -> None:
+        """Reset role-local state."""
+        self._events.clear()

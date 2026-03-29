@@ -553,6 +553,7 @@ class OpenClawBenchAdapter:
     def _prepare_workspace(self, task: Task, run_id: str) -> Path:
         """准备任务工作空间"""
         import shutil
+        import tempfile
 
         workspace = Path(f"/tmp/benchmarks/openclawbench/{run_id}")
 
@@ -571,11 +572,40 @@ class OpenClawBenchAdapter:
         # 运行 setup.sh 如果存在
         setup_sh = task.task_dir / "setup.sh"
         if setup_sh.exists():
+            normalized_setup_path = None
             try:
-                subprocess.run(["bash", str(setup_sh), str(workspace)],
-                             capture_output=True, timeout=30, check=False)
+                # Normalize line endings before invoking task setup on Linux.
+                # Some task repos may be checked out with CRLF from Windows.
+                with tempfile.NamedTemporaryFile(
+                    mode="wb",
+                    suffix=".sh",
+                    prefix="openclaw_setup_",
+                    dir=workspace.parent,
+                    delete=False,
+                ) as tmp_setup:
+                    tmp_setup.write(setup_sh.read_bytes().replace(b"\r\n", b"\n"))
+                    normalized_setup_path = Path(tmp_setup.name)
+
+                proc = subprocess.run(
+                    ["bash", str(normalized_setup_path), str(workspace)],
+                    capture_output=True,
+                    timeout=30,
+                    check=False,
+                    text=True,
+                )
+                if proc.returncode != 0:
+                    logger.warning(
+                        "setup.sh failed for %s (exit=%s)\nstdout:\n%s\nstderr:\n%s",
+                        task.task_id,
+                        proc.returncode,
+                        proc.stdout.strip(),
+                        proc.stderr.strip(),
+                    )
             except Exception as e:
                 logger.warning(f"setup.sh failed: {e}")
+            finally:
+                if normalized_setup_path and normalized_setup_path.exists():
+                    normalized_setup_path.unlink(missing_ok=True)
 
         # 复制 skills
         main_skills_dir = Path.home() / ".openclaw" / "workspace" / "skills"
@@ -658,7 +688,7 @@ class OpenClawBenchAdapter:
         # 保存结果
         run_id = f"{int(time.time() * 1000):013d}"
         output_path = self.output_dir / f"openclawbench_{run_id}.json"
-        output_path.write_text(json.dumps(result, indent=2, ensure_ascii=False))
+        output_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
 
         logger.info(f"\nResults saved to: {output_path}")
 
