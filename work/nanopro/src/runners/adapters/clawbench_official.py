@@ -602,6 +602,9 @@ class ClawBenchOfficialAdapter:
                     scores_by_task_id[task.task_id]["runs"].append(grade.to_dict())
                     scores_by_task_id[task.task_id]["scores"].append(grade.score)
 
+                    # 每完成一个任务就保存中间结果
+                    self._save_intermediate_results(scores_by_task_id, completed_count, total_count)
+
             if HAS_TQDM:
                 pbar.close()
 
@@ -617,6 +620,30 @@ class ClawBenchOfficialAdapter:
             del data["scores"]  # 清理临时字段
 
         return self._generate_report(scores_by_task_id, tasks_to_run)
+
+    def _save_intermediate_results(self, scores_by_task_id: Dict, completed: int, total: int) -> None:
+        """每完成一个任务就保存中间结果，避免最后卡住导致结果丢失"""
+        try:
+            # 汇总当前分数
+            all_scores = [s for data in scores_by_task_id.values() for s in data.get("scores", [])]
+            total_score = sum(all_scores) / len(all_scores) if all_scores else 0
+            passed_count = sum(1 for s in scores_by_task_id.values() if s.get("passed"))
+
+            intermediate = {
+                "benchmark": "clawbench_official",
+                "timestamp": time.time(),
+                "overall_score": round(total_score, 2),
+                "passed_tasks": passed_count,
+                "total_tasks": len(scores_by_task_id),
+                "completed_tasks": completed,
+                "total_tasks_expected": total,
+                "status": "running",
+            }
+
+            output_path = self.output_dir / "clawbench_official_intermediate.json"
+            output_path.write_text(json.dumps(intermediate, indent=2, ensure_ascii=False))
+        except Exception as e:
+            logger.warning(f"Failed to save intermediate results: {e}")
 
     def _prepare_workspace(self, task: Task, run_id: str) -> Path:
         """准备任务工作空间
@@ -754,10 +781,16 @@ class ClawBenchOfficialAdapter:
             },
         }
 
-        # 保存结果
+        # 保存最终结果
         run_id = f"{int(time.time() * 1000):013d}"
         output_path = self.output_dir / f"clawbench_official_{run_id}.json"
+        result["status"] = "complete"
         output_path.write_text(json.dumps(result, indent=2, ensure_ascii=False))
+
+        # 删除中间结果文件
+        intermediate_path = self.output_dir / "clawbench_official_intermediate.json"
+        if intermediate_path.exists():
+            intermediate_path.unlink()
 
         logger.info(f"\nResults saved to: {output_path}")
 
