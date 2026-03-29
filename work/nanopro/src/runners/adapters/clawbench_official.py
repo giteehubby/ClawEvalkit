@@ -609,17 +609,30 @@ class ClawBenchOfficialAdapter:
         env_dir = task.task_dir / "environment"
         if env_dir.exists():
             for item in env_dir.iterdir():
+                if item.name == "setup.sh":
+                    continue  # 不复制 setup.sh，而是执行它
                 dest = workspace / item.name
                 if item.is_dir():
                     shutil.copytree(item, dest, dirs_exist_ok=True)
                 else:
                     shutil.copy2(item, dest)
 
-        # 复制 skills (skills/curated -> workspace/skills/)
-        skills_src = self.tasks_dir.parent / "skills" / "curated"
-        if skills_src.exists():
-            dest_skills = workspace / "skills"
-            shutil.copytree(skills_src, dest_skills, dirs_exist_ok=True)
+        # 执行 setup.sh 初始化 workspace
+        setup_script = env_dir / "setup.sh"
+        if setup_script.exists():
+            try:
+                result = subprocess.run(
+                    ["bash", str(setup_script), str(workspace)],
+                    cwd=str(task.task_dir),  # setup.sh 依赖 TASK_DIR，需要在 task_dir 下执行
+                    capture_output=True,
+                    timeout=30,
+                )
+                if result.returncode != 0:
+                    logger.warning(f"setup.sh failed for {task.task_id}: {result.stderr.decode()[:200]}")
+            except subprocess.TimeoutExpired:
+                logger.warning(f"setup.sh timed out for {task.task_id}")
+            except Exception as e:
+                logger.warning(f"setup.sh error for {task.task_id}: {e}")
 
         return workspace
 

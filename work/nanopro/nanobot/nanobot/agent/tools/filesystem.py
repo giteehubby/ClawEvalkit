@@ -2,7 +2,6 @@
 
 import difflib
 import mimetypes
-import threading
 from pathlib import Path
 from typing import Any
 
@@ -32,6 +31,21 @@ def _resolve_path(
             # Skip allowed_dir check since we're remapping to workspace
             return resolved
 
+    # Remap workspace/ prefix: workspace/file.txt -> workspace/file.txt (strip leading "workspace/")
+    # This is for clawbench-official compatibility where setup.sh creates files at
+    # workspace root (not workspace/workspace/) and task instructions use "workspace/xxx"
+    if path_str.startswith('workspace/'):
+        if workspace:
+            # workspace/xxx -> workspace/xxx (just use workspace as-is, no double nesting)
+            rel_path = path_str[len('workspace/'):]
+            p = workspace / rel_path
+            resolved = p.resolve()
+            if allowed_dir:
+                all_dirs = [allowed_dir] + (extra_allowed_dirs or [])
+                if not any(_is_under(resolved, d) for d in all_dirs):
+                    raise PermissionError(f"Path {path} is outside allowed directory {allowed_dir}")
+            return resolved
+
     if not p.is_absolute() and workspace:
         p = workspace / p
     resolved = p.resolve()
@@ -53,28 +67,15 @@ def _is_under(path: Path, directory: Path) -> bool:
 class _FsTool(Tool):
     """Shared base for filesystem tools — common init and path resolution."""
 
-    # Thread-local storage for workspace
-    _thread_local = threading.local()
-
     def __init__(
         self,
         workspace: Path | None = None,
         allowed_dir: Path | None = None,
         extra_allowed_dirs: list[Path] | None = None,
     ):
-        self._default_workspace = workspace
+        self._workspace = workspace
         self._allowed_dir = allowed_dir
         self._extra_allowed_dirs = extra_allowed_dirs
-
-    @property
-    def _workspace(self) -> Path | None:
-        """Thread-local workspace storage."""
-        return getattr(self._thread_local, 'workspace', self._default_workspace)
-
-    @_workspace.setter
-    def _workspace(self, value: Path | None) -> None:
-        """Set thread-local workspace."""
-        self._thread_local.workspace = value
 
     def _resolve(self, path: str) -> Path:
         return _resolve_path(path, self._workspace, self._allowed_dir, self._extra_allowed_dirs)
