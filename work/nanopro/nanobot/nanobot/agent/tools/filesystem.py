@@ -32,6 +32,15 @@ def _resolve_path(
             # Skip allowed_dir check since we're remapping to workspace
             return resolved
 
+    # Remap /app/ to workspace/ for SkillsBench compatibility (e.g., /app/data/ -> workspace/data/)
+    if path_str.startswith('/app/') or path_str == '/app':
+        if workspace:
+            rel_path = path_str.replace('/app', '', 1).lstrip('/')
+            p = workspace / rel_path
+            resolved = p.resolve()
+            p.parent.mkdir(parents=True, exist_ok=True)
+            return resolved
+
     # Remap workspace/ prefix: workspace/file.txt -> workspace/file.txt (strip leading "workspace/")
     # This is for clawbench-official compatibility where setup.sh creates files at
     # workspace root (not workspace/workspace/) and task instructions use "workspace/xxx"

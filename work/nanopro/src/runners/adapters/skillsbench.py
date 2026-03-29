@@ -8,6 +8,7 @@ SkillsBench 适配器。
 
 import json
 import logging
+import os
 import re
 import shutil
 import statistics
@@ -217,13 +218,97 @@ class ScoreResult:
         }
 
 
-def grade_task(task: Task, result: AgentResult, workspace: Path) -> ScoreResult:
+def run_pytest_verification(task: Task, workspace: Path, output_dir: Path | None = None) -> dict[str, Any]:
+    """使用 pytest 运行任务的测试验证
+
+    Args:
+        task: 任务对象
+        workspace: 工作空间路径
+        output_dir: 测试输出目录
+
+    Returns:
+        dict: 包含 passed, score, details 的字典
+    """
+    tests_dir = workspace / "tests"
+    if not tests_dir.exists():
+        return {"passed": False, "score": 0.0, "details": "No tests directory found"}
+
+    test_output_file = tests_dir / "test_outputs.py"
+    if not test_output_file.exists():
+        return {"passed": False, "score": 0.0, "details": "No test_outputs.py found"}
+
+    # /app/output/ 应该对应 workspace/app/output/
+    output_path = workspace / "app" / "output"
+    output_path.mkdir(parents=True, exist_ok=True)
+
+    # 预处理测试文件：将硬编码的 /app/output 路径替换为实际的 output_path
+    # 因为测试文件 (test_outputs.py) 硬编码了 Path("/app/output")
+    try:
+        content = test_output_file.read_text(encoding="utf-8")
+        if "/app/output" in content:
+            # 替换 /app/output 为实际的 output_path 目录
+            content = content.replace("/app/output", str(output_path))
+            # 写回临时文件（避免修改原始任务文件）
+            test_output_file_tmp = tests_dir / "test_outputs.py.tmp"
+            test_output_file_tmp.write_text(content, encoding="utf-8")
+            test_output_file = test_output_file_tmp
+    except Exception:
+        pass  # 如果预处理失败，继续使用原始文件
+
+    # 运行 pytest，设置 HOME
+    env = os.environ.copy()
+    env["HOME"] = str(Path.home())
+
+    try:
+        result = subprocess.run(
+            [
+                "pytest",
+                str(test_output_file),
+                "-v",
+                "--tb=short",
+            ],
+            cwd=str(workspace),
+            capture_output=True,
+            text=True,
+            timeout=120,
+            env=env,
+        )
+
+        passed = result.returncode == 0
+
+        # 解析 pytest 输出获取详细信息
+        details = {
+            "stdout": result.stdout[-2000:] if result.stdout else "",
+            "stderr": result.stderr[-1000:] if result.stderr else "",
+            "returncode": result.returncode,
+        }
+
+        # 计算分数：所有测试通过得 100 分，否则得 0 分
+        # 这是 SkillsBench 原生的评判方式
+        score = 100.0 if passed else 0.0
+
+        return {
+            "passed": passed,
+            "score": score,
+            "details": details,
+        }
+
+    except subprocess.TimeoutExpired:
+        return {"passed": False, "score": 0.0, "details": "pytest timed out"}
+    except FileNotFoundError:
+        return {"passed": False, "score": 0.0, "details": "pytest not installed"}
+    except Exception as e:
+        return {"passed": False, "score": 0.0, "details": f"pytest error: {str(e)}"}
+
+
+def grade_task(task: Task, result: AgentResult, workspace: Path, use_pytest: bool = True) -> ScoreResult:
     """评估任务结果
 
     Args:
         task: 任务对象
         result: Agent 执行结果
         workspace: 工作空间路径
+        use_pytest: 是否使用 pytest 验证（默认 True）
 
     Returns:
         ScoreResult: 评分结果
@@ -242,21 +327,46 @@ def grade_task(task: Task, result: AgentResult, workspace: Path) -> ScoreResult:
             notes="Task timed out",
         )
 
-    # 检查输出文件
+    # 尝试使用 pytest 验证（原生评判）
+    pytest_result = None
+    if use_pytest:
+        pytest_result = run_pytest_verification(task, workspace)
+
+        if pytest_result["passed"]:
+            return ScoreResult(
+                task_id=task.task_id,
+                score=pytest_result["score"],
+                passed=True,
+                breakdown={"pytest": pytest_result["details"]},
+                notes=f"PASS - pytest passed (100/100)",
+            )
+        elif "pytest not installed" not in pytest_result["details"]:
+            # pytest 运行了但测试失败
+            return ScoreResult(
+                task_id=task.task_id,
+                score=pytest_result["score"],
+                passed=False,
+                breakdown={"pytest": pytest_result["details"]},
+                notes=f"FAIL - pytest failed (0/100): {str(pytest_result['details'])[:100]}",
+            )
+
+    # 回退到启发式评分（当 pytest 不可用或没有测试时）
     output_checks = []
     output_score = 0.0
 
     for expected_file in task.expected_outputs:
         # 转换路径：尝试多个可能的写入位置
-        # 1. workspace/xxx (标准)
-        # 2. workspace/root/xxx (agent 误以为在 /root/ 下)
+        # 1. workspace/app/output/xxx (标准)
+        # 2. workspace/xxx (标准)
+        # 3. workspace/root/xxx (agent 误以为在 /root/ 下)
         relative_path = expected_file.replace("/root/", "")
         local_path = workspace / relative_path
         alt_path = workspace / "root" / relative_path
+        app_path = workspace / "app" / "output" / relative_path.replace("output/", "")
 
         found = False
         found_path = None
-        for check_path in [local_path, alt_path]:
+        for check_path in [app_path, local_path, alt_path]:
             if check_path.exists():
                 found = True
                 found_path = check_path
@@ -266,7 +376,7 @@ def grade_task(task: Task, result: AgentResult, workspace: Path) -> ScoreResult:
             output_checks.append({"file": expected_file, "found": True, "size": found_path.stat().st_size, "path": str(found_path)})
             output_score += 1.0
         else:
-            output_checks.append({"file": expected_file, "found": False, "tried": [str(local_path), str(alt_path)]})
+            output_checks.append({"file": expected_file, "found": False, "tried": [str(app_path), str(local_path), str(alt_path)]})
 
     # 如果没有明确的输出文件，检查 workspace 中的文件
     if not task.expected_outputs:
@@ -312,6 +422,7 @@ def grade_task(task: Task, result: AgentResult, workspace: Path) -> ScoreResult:
             "output_score": output_points,
             "tool_calls": tool_calls,
             "output_checks": output_checks,
+            "pytest_fallback": pytest_result is not None,
         },
         notes=f"{'PASS' if passed else 'FAIL'} - {total_score:.0f}/100 (difficulty: {task.difficulty})",
     )
@@ -553,29 +664,48 @@ class SkillsBenchAdapter:
             shutil.rmtree(workspace)
         workspace.mkdir(parents=True, exist_ok=True)
 
-        # 复制环境文件
+        # 创建 /app/ 目录结构（模拟容器内环境）
+        app_dir = workspace / "app"
+        app_data_dir = app_dir / "data"
+        app_output_dir = app_dir / "output"
+        app_data_dir.mkdir(parents=True, exist_ok=True)
+        app_output_dir.mkdir(parents=True, exist_ok=True)
+
+        # 复制环境文件到 /app/data/（符合任务指令期望）
         env_dir = task.task_dir / "environment"
         if env_dir.exists():
-            for item in env_dir.iterdir():
-                if item.name == "skills":
-                    # 复制 skills
-                    skills_dest = workspace / "skills"
-                    skills_dest.mkdir(parents=True, exist_ok=True)
-                    for skill in item.iterdir():
-                        if skill.is_dir():
-                            shutil.copytree(skill, skills_dest / skill.name, dirs_exist_ok=True)
-                else:
-                    dest = workspace / item.name
+            data_src = env_dir / "data"
+            if data_src.exists():
+                for item in data_src.iterdir():
                     if item.is_dir():
-                        shutil.copytree(item, dest, dirs_exist_ok=True)
+                        shutil.copytree(item, app_data_dir / item.name, dirs_exist_ok=True)
                     else:
-                        shutil.copy2(item, dest)
+                        shutil.copy2(item, app_data_dir / item.name)
+            # 也复制 generate_data.py 到 /app/（如果存在）
+            gen_script = env_dir / "generate_data.py"
+            if gen_script.exists():
+                shutil.copy2(gen_script, app_dir / "generate_data.py")
 
-        # 也复制 skills 到 workspace 根目录
-        skills_root = workspace / "root"
-        skills_root.mkdir(exist_ok=True)
-        skills_src = task.task_dir / "environment" / "skills"
+        # 复制 skills 到 /app/ 和 workspace
+        skills_src = env_dir / "skills"
         if skills_src.exists():
+            # /app/ 下的 skills
+            app_skills_dir = app_dir / "skills"
+            app_skills_dir.mkdir(exist_ok=True)
+            for skill in skills_src.iterdir():
+                if skill.is_dir():
+                    shutil.copytree(skill, app_skills_dir / skill.name, dirs_exist_ok=True)
+
+            # workspace 下的 skills
+            skills_dest = workspace / "skills"
+            skills_dest.mkdir(parents=True, exist_ok=True)
+            for skill in skills_src.iterdir():
+                if skill.is_dir():
+                    shutil.copytree(skill, skills_dest / skill.name, dirs_exist_ok=True)
+
+            # workspace/root/ 下的 skills（兼容性）
+            skills_root = workspace / "root"
+            skills_root.mkdir(exist_ok=True)
             for skill in skills_src.iterdir():
                 if skill.is_dir():
                     shutil.copytree(skill, skills_root / skill.name, dirs_exist_ok=True)
@@ -591,6 +721,12 @@ class SkillsBenchAdapter:
                     if dest_skill_dir.exists():
                         shutil.rmtree(dest_skill_dir)
                     shutil.copytree(skill_dir_src, dest_skill_dir)
+
+        # 复制 tests 到 workspace（用于 pytest 验证）
+        tests_dir = task.task_dir / "tests"
+        if tests_dir.exists():
+            tests_dest = workspace / "tests"
+            shutil.copytree(tests_dir, tests_dest, dirs_exist_ok=True)
 
         return workspace
 
