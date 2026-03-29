@@ -1,0 +1,318 @@
+{
+  "benchmark": "openclawbench",
+  "timestamp": 1774724825.7490413,
+  "overall_score": 71.89,
+  "total_tasks": 40,
+  "suite_scores": {
+    "DATA-ANALYSIS": {
+      "score": 71.45,
+      "count": 5
+    },
+    "ERROR-HANDLING": {
+      "score": 69.18,
+      "count": 6
+    },
+    "FILE-CREATION": {
+      "score": 78.79,
+      "count": 9
+    },
+    "MEMORY": {
+      "score": 53.65,
+      "count": 5
+    },
+    "MULTI-STEP": {
+      "score": 69.44,
+      "count": 5
+    },
+    "RESEARCH": {
+      "score": 77.5,
+      "count": 5
+    },
+    "TOOL-EFFICIENCY": {
+      "score": 78.2,
+      "count": 5
+    }
+  },
+  "task_scores": {
+    "data-analysis-cross-reference": {
+      "task_name": "Cross-Reference Inventory and Orders",
+      "suite": "data-analysis",
+      "difficulty": "hard",
+      "mean": 80.5,
+      "std": 0.0
+    },
+    "data-analysis-find-anomalies": {
+      "task_name": "Find Data Anomalies in Sales Data",
+      "suite": "data-analysis",
+      "difficulty": "medium",
+      "mean": 55.0,
+      "std": 0.0
+    },
+    "data-analysis-log-pattern-detection": {
+      "task_name": "Detect Root Cause from Service Log Patterns",
+      "suite": "data-analysis",
+      "difficulty": "expert",
+      "mean": 55.0,
+      "std": 0.0
+    },
+    "data-analysis-multi-format-reconciliation": {
+      "task_name": "Reconcile Multi-Format Financial Data",
+      "suite": "data-analysis",
+      "difficulty": "hard",
+      "mean": 79.25,
+      "std": 0.0
+    },
+    "data-analysis-summary-statistics": {
+      "task_name": "Generate Summary Statistics from Survey",
+      "suite": "data-analysis",
+      "difficulty": "easy",
+      "mean": 87.5,
+      "std": 0.0
+    },
+    "error-handling-cascading-failures": {
+      "task_name": "Debug Silent Data Loss in Pipeline",
+      "suite": "error-handling",
+      "difficulty": "hard",
+      "mean": 69.25,
+      "std": 0.0
+    },
+    "error-handling-corrupted-input": {
+      "task_name": "Handle Corrupted JSON Input",
+      "suite": "error-handling",
+      "difficulty": "medium",
+      "mean": 84.0,
+      "std": 0.0
+    },
+    "error-handling-impossible-request": {
+      "task_name": "Identify Contradictions in Impossible Request",
+      "suite": "error-handling",
+      "difficulty": "medium",
+      "mean": 55.0,
+      "std": 0.0
+    },
+    "error-handling-misleading-error-message": {
+      "task_name": "Debug Misleading Error Stack Trace",
+      "suite": "error-handling",
+      "difficulty": "hard",
+      "mean": 80.5,
+      "std": 0.0
+    },
+    "error-handling-missing-dependency": {
+      "task_name": "Handle Missing Input File Gracefully",
+      "suite": "error-handling",
+      "difficulty": "easy",
+      "mean": 57.5,
+      "std": 0.0
+    },
+    "error-handling-partial-recovery": {
+      "task_name": "Implement Partial Recovery for Data Import",
+      "suite": "error-handling",
+      "difficulty": "hard",
+      "mean": 68.83,
+      "std": 0.0
+    },
+    "file-creation-data-spreadsheet": {
+      "task_name": "Organize Employee Data into CSV",
+      "suite": "file-creation",
+      "difficulty": "easy",
+      "mean": 82.5,
+      "std": 0.0
+    },
+    "file-creation-linked-project-scaffold": {
+      "task_name": "Scaffold Linked Multi-Module Python Project",
+      "suite": "file-creation",
+      "difficulty": "hard",
+      "mean": 69.59,
+      "std": 0.0
+    },
+    "file-creation-migration-script": {
+      "task_name": "Write Config Migration Script",
+      "suite": "file-creation",
+      "difficulty": "hard",
+      "mean": 80.5,
+      "std": 0.0
+    },
+    "file-creation-pitch-deck-outline": {
+      "task_name": "Create Pitch Deck Outline",
+      "suite": "file-creation",
+      "difficulty": "medium",
+      "mean": 84.0,
+      "std": 0.0
+    },
+    "file-creation-project-proposal": {
+      "task_name": "Create Project Proposal from Brief",
+      "suite": "file-creation",
+      "difficulty": "medium",
+      "mean": 74.0,
+      "std": 0.0
+    },
+    "file-creation-project-scaffold": {
+      "task_name": "Scaffold Project from Requirements",
+      "suite": "file-creation",
+      "difficulty": "hard",
+      "mean": 75.5,
+      "std": 0.0
+    },
+    "file-creation-skill-graph-creation": {
+      "task_name": "Create Skill Graph with Cross-References",
+      "suite": "file-creation",
+      "difficulty": "medium",
+      "mean": 78.38,
+      "std": 0.0
+    },
+    "file-creation-skill-graph-refactor": {
+      "task_name": "Refactor Flat Skills into Linked Graph",
+      "suite": "file-creation",
+      "difficulty": "hard",
+      "mean": 77.17,
+      "std": 0.0
+    },
+    "file-creation-structured-form": {
+      "task_name": "Create Conference Registration Form Template",
+      "suite": "file-creation",
+      "difficulty": "easy",
+      "mean": 87.5,
+      "std": 0.0
+    },
+    "memory-constraint-accumulation": {
+      "task_name": "Accumulate Constraints Across Turns",
+      "suite": "memory",
+      "difficulty": "expert",
+      "mean": 58.75,
+      "std": 0.0
+    },
+    "memory-context-retention": {
+      "task_name": "Retain Constraints Across Multiple Turns",
+      "suite": "memory",
+      "difficulty": "hard",
+      "mean": 45.75,
+      "std": 0.0
+    },
+    "memory-interleaved-projects": {
+      "task_name": "Maintain Context Across Interleaved Projects",
+      "suite": "memory",
+      "difficulty": "hard",
+      "mean": 51.5,
+      "std": 0.0
+    },
+    "memory-memory-organization": {
+      "task_name": "Persist and Recall User Preferences",
+      "suite": "memory",
+      "difficulty": "medium",
+      "mean": 49.75,
+      "std": 0.0
+    },
+    "memory-recall-distraction": {
+      "task_name": "Recall Details After Distraction Task",
+      "suite": "memory",
+      "difficulty": "medium",
+      "mean": 62.5,
+      "std": 0.0
+    },
+    "multi-step-data-pipeline": {
+      "task_name": "Clean and Analyze Customer Feedback Data",
+      "suite": "multi-step",
+      "difficulty": "hard",
+      "mean": 80.5,
+      "std": 0.0
+    },
+    "multi-step-log-analysis-report": {
+      "task_name": "Analyze Server Logs and Generate Report",
+      "suite": "multi-step",
+      "difficulty": "hard",
+      "mean": 55.0,
+      "std": 0.0
+    },
+    "multi-step-meeting-to-tasks": {
+      "task_name": "Convert Meeting Notes to Organized Task List",
+      "suite": "multi-step",
+      "difficulty": "medium",
+      "mean": 84.0,
+      "std": 0.0
+    },
+    "multi-step-release-preparation": {
+      "task_name": "Prepare a Software Release",
+      "suite": "multi-step",
+      "difficulty": "expert",
+      "mean": 60.19,
+      "std": 0.0
+    },
+    "multi-step-repo-refactor": {
+      "task_name": "Execute Multi-File Refactor Plan",
+      "suite": "multi-step",
+      "difficulty": "expert",
+      "mean": 67.5,
+      "std": 0.0
+    },
+    "research-codebase-archaeology": {
+      "task_name": "Investigate Skipped Test via Git Archaeology",
+      "suite": "research",
+      "difficulty": "hard",
+      "mean": 55.0,
+      "std": 0.0
+    },
+    "research-compare-technologies": {
+      "task_name": "Compare Database Technologies",
+      "suite": "research",
+      "difficulty": "medium",
+      "mean": 84.0,
+      "std": 0.0
+    },
+    "research-extract-structured-data": {
+      "task_name": "Extract Structured Data from Meeting Notes",
+      "suite": "research",
+      "difficulty": "medium",
+      "mean": 84.0,
+      "std": 0.0
+    },
+    "research-multi-source-synthesis": {
+      "task_name": "Synthesize Conflicting Stakeholder Requirements",
+      "suite": "research",
+      "difficulty": "hard",
+      "mean": 80.5,
+      "std": 0.0
+    },
+    "research-summarize-doc": {
+      "task_name": "Summarize Whitepaper Document",
+      "suite": "research",
+      "difficulty": "medium",
+      "mean": 84.0,
+      "std": 0.0
+    },
+    "tool-efficiency-large-codebase-navigation": {
+      "task_name": "Navigate Large Codebase Efficiently",
+      "suite": "tool-efficiency",
+      "difficulty": "hard",
+      "mean": 87.25,
+      "std": 0.0
+    },
+    "tool-efficiency-minimal-reads": {
+      "task_name": "Answer Simple Question with Minimal Tool Use",
+      "suite": "tool-efficiency",
+      "difficulty": "easy",
+      "mean": 70.75,
+      "std": 0.0
+    },
+    "tool-efficiency-no-unnecessary-changes": {
+      "task_name": "Review Without Making Unnecessary Changes",
+      "suite": "tool-efficiency",
+      "difficulty": "easy",
+      "mean": 70.75,
+      "std": 0.0
+    },
+    "tool-efficiency-right-tool-choice": {
+      "task_name": "Extract Data Using Appropriate Tools",
+      "suite": "tool-efficiency",
+      "difficulty": "easy",
+      "mean": 90.75,
+      "std": 0.0
+    },
+    "tool-efficiency-targeted-fix": {
+      "task_name": "Fix Bug with Minimal File Reads",
+      "suite": "tool-efficiency",
+      "difficulty": "hard",
+      "mean": 71.5,
+      "std": 0.0
+    }
+  }
+}
