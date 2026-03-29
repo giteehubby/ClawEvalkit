@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clawbench-official 深度分析</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            padding: 20px;
+        }
+        h1 { color: #00d4ff; margin-bottom: 10px; font-size: 1.8rem; }
+        h2 { color: #ff6b6b; margin: 25px 0 10px; font-size: 1.3rem; border-left: 4px solid #ff6b6b; padding-left: 10px; }
+        h3 { color: #4ecdc4; margin: 15px 0 8px; font-size: 1.1rem; }
+        .summary {
+            background: #16213e;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .card {
+            background: #0f3460;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        .card-val { font-size: 2rem; font-weight: bold; color: #00d4ff; }
+        .card-label { font-size: 0.8rem; color: #aaa; margin-top: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #333; }
+        th { color: #00d4ff; }
+        .bug { background: #2d1f3d; border-left: 4px solid #ff6b6b; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        .fix { background: #1f3d2d; border-left: 4px solid #4ecdc4; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        code { background: #333; padding: 2px 6px; border-radius: 3px; color: #ffe66d; }
+        .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-right: 5px;
+        }
+        .tag-bug { background: #ff6b6b; color: #000; }
+        .tag-fix { background: #4ecdc4; color: #000; }
+        .tag-info { background: #00d4ff; color: #000; }
+        .case {
+            background: #16213e;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .case-title { color: #ffe66d; font-weight: bold; margin-bottom: 8px; }
+        .error-msg { color: #ff6b6b; font-size: 0.9rem; font-family: monospace; }
+        .chart-container { background: #16213e; border-radius: 10px; padding: 20px; margin: 20px 0; }
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    </style>
+</head>
+<body>
+    <h1>clawbench-official 深度分析报告</h1>
+    <p style="color:#aaa;">2026-03-29 | gpt-4o-mini | T1 Memory</p>
+
+    <div class="summary">
+        <h2>关键发现</h2>
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-val">2</div>
+                <div class="card-label">评分代码Bug (已修复)</div>
+            </div>
+            <div class="card">
+                <div class="card-val">192</div>
+                <div class="card-label">Benchmark数据缺失</div>
+            </div>
+            <div class="card">
+                <div class="card-val">44</div>
+                <div class="card-label">真正任务失败</div>
+            </div>
+        </div>
+    </div>
+
+    <h2>一、评分系统Bug分析</h2>
+
+    <div class="bug">
+        <span class="tag tag-bug">BUG 1</span>
+        <strong>Python命令错误</strong>
+        <p style="margin-top:8px;color:#aaa;">位置: line 263 | 使用<code>"python"</code>而非<code>"python3"</code></p>
+        <p style="margin-top:5px;color:#ccc;">影响: pytest命令永远失败，所有评分回退到fallback</p>
+    </div>
+
+    <div class="fix">
+        <span class="tag tag-fix">FIX 1</span>
+        <strong>已修复为python3</strong>
+        <div style="margin-top:8px;background:#0a0a0a;padding:10px;border-radius:5px;">
+            <code>"python3", "-m", "pytest", "-p", "no:cacheprovider"</code>
+        </div>
+    </div>
+
+    <div class="bug">
+        <span class="tag tag-bug">BUG 2</span>
+        <strong>权重计算错误</strong>
+        <p style="margin-top:8px;color:#aaa;">位置: lines 296-307 | <code>re.search()</code>只找到最后一个权重</p>
+        <p style="margin-top:5px;color:#ccc;">影响: 分数计算不考虑实际测试权重</p>
+    </div>
+
+    <div class="bug">
+        <span class="tag tag-bug">BUG 3</span>
+        <strong>Fallback评分奖励幻觉内容</strong>
+        <p style="margin-top:8px;color:#aaa;">位置: <code>_grade_by_outputs</code> | 只检查.json/.csv/.md文件</p>
+        <p style="margin-top:5px;color:#ccc;">影响: 代码任务输出.py文件被忽略，hallucinated内容获得高分</p>
+    </div>
+
+    <div class="fix">
+        <span class="tag tag-fix">FIX 3</span>
+        <strong>增加.py等文件格式支持</strong>
+        <div style="margin-top:8px;background:#0a0a0a;padding:10px;border-radius:5px;">
+            <code>*.py, *.txt, *.html</code> 也能被检查
+        </div>
+    </div>
+
+    <h2>二、失败轨迹分类</h2>
+
+    <div class="two-col">
+        <div class="summary">
+            <h3>环境初始化失败 (199个)</h3>
+            <table>
+                <tr><th>失败类型</th><th>数量</th></tr>
+                <tr><td>cp: cannot stat (文件缺失)</td><td>192</td></tr>
+                <tr><td>Python语法错误</td><td>2</td></tr>
+                <tr><td>bash变量错误</td><td>2</td></tr>
+                <tr><td>其他</td><td>3</td></tr>
+            </table>
+        </div>
+        <div class="summary">
+            <h3>真正失败 (44个)</h3>
+            <table>
+                <tr><th>问题类型</th><th>示例</th></tr>
+                <tr><td>路径理解偏差</td><td>bio-001猜错文件名</td></tr>
+                <tr><td>Agent放弃过早</td><td>code-002未验证</td></tr>
+                <tr><td>任务理解不足</td><td>cont-002</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <h2>三、详细案例</h2>
+
+    <div class="case">
+        <div class="case-title">案例1: comm-001 (通过但内容错误)</div>
+        <p><span class="tag tag-info">setup.sh失败</span></p>
+        <p class="error-msg">cp: cannot stat '.../message.json': No such file or directory</p>
+        <p style="margin-top:10px;color:#aaa;">→ Agent幻觉生成假的"Subject", "Body text goes here."</p>
+        <p style="color:#4ecdc4;">→ Fallback评分发现文件存在 → 给予100分</p>
+    </div>
+
+    <div class="case">
+        <div class="case-title">案例2: code-002 (失败但代码正确)</div>
+        <p><span class="tag tag-info">路径问题</span></p>
+        <p>Agent正确实现<code>is_palindrome()</code>，但:</p>
+        <p style="margin-top:5px;">1. pytest用<code>python</code>运行 → 失败</p>
+        <p>2. Fallback评分找不到.json/.csv/.md → 30分</p>
+        <p style="margin-top:10px;color:#4ecdc4;">实际验证: 9/10测试通过 (90分)</p>
+    </div>
+
+    <div class="case">
+        <div class="case-title">案例3: bio-001 (Agent文件名猜错)</div>
+        <p><span class="tag tag-info">任务理解偏差</span></p>
+        <p>指令说:<code>workspace/sequences.fasta</code></p>
+        <p>Agent找:<code>workspace/species_sequences.fasta</code> ❌</p>
+        <p style="margin-top:10px;"><code>read_file("workspace/species_sequences.fasta")</code> → Error</p>
+        <p><code>exec("cat workspace/species_sequences.fasta")</code> → 成功!</p>
+        <p style="margin-top:10px;color:#aaa;">发现: exec工具正常，但read_file有路径解析问题</p>
+    </div>
+
+    <h2>四、路径解析问题</h2>
+
+    <div class="summary">
+        <p><strong>问题现象</strong></p>
+        <ul style="margin:10px 0;color:#ccc;">
+            <li><code>exec("cat workspace/xxx")</code> → 成功 (bash直接执行)</li>
+            <li><code>read_file("workspace/xxx")</code> → Error (经过_resolve_path)</li>
+        </ul>
+        <p style="color:#aaa;margin-top:15px;"><strong>原因</strong>: exec不经过路径解析，但read_file/write_file/list_dir会经过</p>
+    </div>
+
+    <h2>五、Docker使用情况</h2>
+
+    <div class="summary">
+        <p style="color:#4ecdc4;font-size:1.2rem;">✓ clawbench-official 不使用Docker</p>
+        <p style="color:#aaa;margin-top:10px;">所有任务使用<code>setup.sh</code>脚本初始化环境，无需Docker</p>
+    </div>
+
+    <h2>六、修复验证</h2>
+
+    <div class="summary">
+        <table>
+            <tr><th>修复项</th><th>状态</th></tr>
+            <tr><td>python → python3 (pytest)</td><td style="color:#4ecdc4;">✓ 已修复</td></tr>
+            <tr><td>权重计算逻辑</td><td style="color:#4ecdc4;">✓ 已修复</td></tr>
+            <tr><td>Fallback增加.py支持</td><td style="color:#4ecdc4;">✓ 已修复</td></tr>
+            <tr><td>添加cacheprovider禁用</td><td style="color:#4ecdc4;">✓ 已修复</td></tr>
+        </table>
+    </div>
+
+    <h2>七、建议行动</h2>
+
+    <div class="grid-3">
+        <div class="card">
+            <div class="card-label" style="color:#4ecdc4;font-size:1rem;margin-bottom:10px;">立即行动</div>
+            <p style="font-size:0.85rem;color:#ccc;">使用修复后代码重新运行benchmark</p>
+        </div>
+        <div class="card">
+            <div class="card-label" style="color:#ffe66d;font-size:1rem;margin-bottom:10px;">短期优化</div>
+            <p style="font-size:0.85rem;color:#ccc;">修复setup.sh数据缺失问题</p>
+        </div>
+        <div class="card">
+            <div class="card-label" style="color:#ff6b6b;font-size:1rem;margin-bottom:10px;">长期改进</div>
+            <p style="font-size:0.85rem;color:#ccc;">评分系统增加内容正确性验证</p>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <h2>失败原因分布</h2>
+        <canvas id="pieChart" height="300"></canvas>
+    </div>
+
+    <script>
+        new Chart(document.getElementById('pieChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Benchmark数据缺失(setup.sh)', '真正任务失败(模型能力)', '评分系统Bug(已修复)'],
+                datasets: [{
+                    data: [192, 44, 45],
+                    backgroundColor: ['#ff6b6b', '#ffe66d', '#4ecdc4']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#eee' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
