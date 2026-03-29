@@ -487,12 +487,61 @@ nanopro/
 - 不做复杂多 agent 群体
 
 #### TODO
-- [ ] 选定 collaboration mode
-- [ ] 定义角色职责
-- [ ] 实现 handoff protocol
-- [ ] 实现 collaboration event logging
-- [ ] 在 dev 上跑 smoke ablation
+- [x] 选定 collaboration mode
+- [x] 定义角色职责
+- [x] 实现 handoff protocol
+- [x] 实现 collaboration event logging
+- [x] 在 dev 上跑 smoke ablation
 - [ ] 比较 collaboration 的额外成本
+
+#### 当前实现状态
+- Chosen mode: `planner_executor`
+- Scope intentionally frozen to one minimal two-role path; `executor_verifier` not yet hardened
+- Planner generates an initial plan before the first main-agent iteration
+- On tool execution error, executor can hand off back to planner for bounded plan revision (`max_handoffs`)
+- Collaboration events are written into transcript and summarized at task end
+- Planner / verifier model overrides are now respected by role-local LLM calls
+
+#### Smoke 验证
+- Date: 2026-03-28
+- Benchmark: `pinchbench`
+- Task subset: `task_00_sanity`
+- Model: `openrouter/google/gemini-3-flash-preview`
+- Result: startup + transcript logging passed, score `100.0% (1/1)`
+- Transcript contains `plan_generated` and `collab_summary` events
+- Additional smoke: `task_01_calendar`, score `83.3% (0.8333/1)`, confirmed planner + tool-use path works on a real file-writing task
+- Observed behavior on `task_01_calendar`: planner generated a 6-step plan; final run completed via direct `write_file` without triggering a revision handoff
+- Additional smoke: `task_19_spreadsheet_summary`, score `0.0%`, but confirmed real revision behavior under repeated tool failures
+- Observed behavior on `task_19_spreadsheet_summary`: planner generated an initial plan, repeated `exec` failures triggered bounded planner handoffs, and transcript summary recorded `plan_generated: 4` plus `handoff: 3` with `total_handoffs: 3`
+
+#### 正式实验结果
+- Date: 2026-03-29
+- Model: `openrouter/google/gemini-3-flash-preview`
+- Results location: `work/nanopro/artifacts/runs/results/t3_collaboration/`
+- `skillsbench`: `74.31% (58/87)`
+- `pinchbench`: `78.84% (23 tasks)`
+- `openclawbench`: `71.89% (40 tasks)`
+- `clawbench_official`: `60.01% (180/315)`
+- `skillbench`: `95.45% (21/22)`
+- `claw-bench-tribe`: skipped for now due to known benchmark bug per team instruction
+
+#### Base vs T3 对照
+- Baseline reference: use the "Latest Re-run Results" in Section 7.4 to keep one comparison baseline
+
+| Benchmark | Base | T3 | Delta |
+|-----------|------|----|-------|
+| SkillsBench | 70.1% | 74.31% | +4.21pp |
+| PinchBench | 62.0% | 78.84% | +16.84pp |
+| OpenClawBench | 58.2% | 71.89% | +13.69pp |
+| clawbench-official | 53.0% | 60.01% | +7.01pp |
+| skillbench | 36.4% | 95.45% | +59.05pp |
+
+- Note: `skillbench` has an older `50.0% (11/22)` baseline record elsewhere in this document; the table above uses the newer re-run baseline from Section 7.4 for consistency
+- Note: `claw-bench-tribe` is excluded from the comparison because the benchmark is currently skipped due to a known bug
+
+#### 当前已知问题 / 后续
+- Need a richer smoke case that exercises tool calls and ideally triggers a real revision handoff
+- `claw-bench-tribe` remains skipped per current team instruction
 
 ---
 
