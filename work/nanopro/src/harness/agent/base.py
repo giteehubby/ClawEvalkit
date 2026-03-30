@@ -53,14 +53,30 @@ class AgentResult:
         path = Path(path)
         path.parent.mkdir(parents=True, exist_ok=True)
 
-        if not self.transcript:
+        # 构建完整 transcript：先放 initial prompt/content，再放 tool calls
+        full_transcript = []
+
+        # 加入 initial prompt/content 作为第一条记录
+        if self.content:
+            full_transcript.append({
+                "type": "message",
+                "message": {
+                    "role": "user",
+                    "content": self.content
+                }
+            })
+
+        # 加入所有 tool call entries
+        full_transcript.extend(self.transcript or [])
+
+        if not full_transcript:
             logger.warning(f"save_transcript called with empty transcript for {path.name}")
 
         with open(path, "w", encoding="utf-8") as f:
-            for entry in self.transcript:
+            for entry in full_transcript:
                 f.write(json.dumps(entry, ensure_ascii=False) + "\n")
 
-        actual_lines = len(self.transcript)
+        actual_lines = len(full_transcript)
         logger.info(f"Saved transcript: {path.name} ({actual_lines} entries)")
 
     def save_result(self, path: Path | str) -> None:
