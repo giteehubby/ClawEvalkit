@@ -204,6 +204,19 @@ open ../assets/visualizations/benchmark_summary.html
   - 修复: adapter.py grading 代码路径预处理
   - 20/60 任务可执行（其余 40 个无 workspace）
   - 核心问题: grading 找不到输出文件（路径不匹配）
+- **Round 3** (`exp_baseline_20260330_183412`): 0% 通过率（overall），但 task_1 从 0.16% 提升到 16%
+  - 关键修复: `_run_grading_local` 预处理 grading 代码，将 `/tmp_workspace` 替换为实际 workspace_path
+  - 核心发现: grading 代码中的 `workspace = Path("/tmp_workspace/results")` 忽略了传入的 `workspace_path` 参数
+  - 问题: 40/60 任务因 workspace 目录缺失而无法执行（03_Social_Interaction, 04_Search_Retrieval 整个类别缺失）
+  - 残留问题: `write_file` 等非 exec 工具的路径不经过 `_remap_root_path`，导致文件写入位置不一致
 **已放弃**: sciskillbench
 
 **模型**: openrouter/google/gemini-3-flash-preview
+
+### WildClawBench 技术问题分析
+1. **Safety Guard 阻止 /tmp_workspace**: 已通过 shell.py 路径映射解决
+2. **Grading 路径不匹配**: grading 代码硬编码 `/tmp_workspace/results`，忽略 `workspace_path` 参数
+   - 修复方案: 预处理 grading 代码，将 `/tmp_workspace` 替换为 `workspace_path`
+   - 验证: task_1 从 0.16% 提升到 16%（100x 提升）
+3. **Workspace 目录缺失**: 03_Social_Interaction, 04_Search_Retrieval 整个类别 workspace 缺失
+4. **工具路径不一致**: `write_file` 等工具不经过 `_remap_root_path`，与 `exec` 行为不一致

@@ -7,7 +7,6 @@ WildClawBench 适配器。
 
 import json
 import logging
-import re
 import os
 import shutil
 import statistics
@@ -264,7 +263,11 @@ class WildClawBenchAdapter:
             # This replaces the previous copy-based approach.
             tmp_workspace_link = workspace_path / "tmp_workspace"
             if tmp_workspace_link.exists() or tmp_workspace_link.is_symlink():
-                tmp_workspace_link.unlink()
+                # Use rmtree to handle both directories and symlinks
+                if tmp_workspace_link.is_dir() and not tmp_workspace_link.is_symlink():
+                    shutil.rmtree(tmp_workspace_link)
+                else:
+                    tmp_workspace_link.unlink()
             # Create symlink: workspace/tmp_workspace -> workspace (self-referential)
             tmp_workspace_link.symlink_to(".")
             logger.info(f"[{run_id}] Created symlink {tmp_workspace_link} -> .")
@@ -320,26 +323,43 @@ class WildClawBenchAdapter:
             }
 
         finally:
-            # Cleanup tmp_workspace
-            tmp_workspace = workspace_path / "tmp_workspace"
-            if tmp_workspace.exists():
-                shutil.rmtree(tmp_workspace, ignore_errors=True)
+            # Cleanup tmp_workspace symlink
+            tmp_workspace_link = workspace_path / "tmp_workspace"
+            try:
+                if tmp_workspace_link.is_symlink() or (tmp_workspace_link.exists() and not tmp_workspace_link.is_dir()):
+                    tmp_workspace_link.unlink()
+                    logger.info(f"[{run_id}] Removed symlink {tmp_workspace_link}")
+                elif tmp_workspace_link.is_dir():
+                    shutil.rmtree(tmp_workspace_link)
+                    logger.info(f"[{run_id}] Removed directory {tmp_workspace_link}")
+            except Exception as e:
+                logger.warning(f"[{run_id}] Failed to cleanup {tmp_workspace_link}: {e}")
 
     def _run_grading_local(self, task: WildClawTask, workspace_path: Path) -> dict:
         """在本地运行 grading（不使用 Docker）"""
-        tmp_workspace = workspace_path / "tmp_workspace"
+        # The agent writes to /tmp_workspace/results/ which via shell tool remapping
+        # and the symlink (workspace_path/tmp_workspace -> .) ends up at workspace_path/results/.
+        # But the grading code has hardcoded /tmp_workspace/ paths that ignore workspace_path.
+        # We must preprocess the grading code to replace /tmp_workspace/ with workspace_path
+        # so grading finds files where the agent actually wrote them.
 
-        # Preprocess automated_checks: replace /tmp_workspace/ with tmp_workspace path
+        # Preprocess: replace /tmp_workspace/ with workspace_path in grading code
+        # This handles cases like: workspace = Path("/tmp_workspace/results")
+        # Since workspace_path/tmp_workspace -> . (self-referential symlink),
+        # /tmp_workspace/ resolves to workspace_path, so we replace it directly.
         grading_code = task.automated_checks
-        if '/tmp_workspace' in grading_code:
-            grading_code = re.sub(r'/tmp_workspace/', f'{tmp_workspace}/', grading_code)
-            grading_code = re.sub(r'/tmp_workspace($|[\s])', f'{tmp_workspace}\\1', grading_code)
+        if "/tmp_workspace" in grading_code:
+            # Use a placeholder to avoid double-replacement if workspace_path contains tmp_workspace
+            placeholder = "__WORKSPACE_PATH__"
+            grading_code = grading_code.replace(str(workspace_path), placeholder)
+            grading_code = grading_code.replace("/tmp_workspace", str(workspace_path))
+            grading_code = grading_code.replace(placeholder, str(workspace_path))
 
         runner_code = "\n".join([
-            "import json, sys, re",
+            "import json, sys",
             grading_code,
             "",
-            f'result = grade(transcript=[], workspace_path="{tmp_workspace}")',
+            f'result = grade(transcript=[], workspace_path="{workspace_path}")',
             "print(json.dumps(result))",
         ]) + "\n"
 

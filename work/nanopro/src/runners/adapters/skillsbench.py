@@ -218,6 +218,44 @@ class ScoreResult:
         }
 
 
+def _download_wget_files(env_dir: Path, workspace: Path) -> None:
+    """解析 Dockerfile 并下载 wget/curl 下载的文件（不使用 Docker 时）"""
+    dockerfile = env_dir / "Dockerfile"
+    if not dockerfile.exists():
+        return
+
+    content = dockerfile.read_text()
+    import re
+
+    # 匹配 wget -O /path URL 或 curl -L -o /path URL
+    # wget -O /root/xxx https://...
+    wget_pattern = re.compile(r'(?:wget|curl).*?\s+-O\s+(\S+)\s+(https?://\S+)', re.MULTILINE)
+    for match in wget_pattern.finditer(content):
+        dest_path = match.group(1)
+        url = match.group(2)
+        # 跳过安装脚本（不下载到 /usr, /tmp/uv 等）
+        if any(x in dest_path for x in ['/usr/', '/tmp/uv', '/tmp/elan', '/opt/', '/home/']):
+            continue
+        # 解析目标路径相对于 /root/ 或 /app/
+        if dest_path.startswith('/root/'):
+            rel = dest_path[6:]  # 去掉 /root/
+            local_path = workspace / "root" / rel
+        elif dest_path.startswith('/app/'):
+            rel = dest_path[5:]  # 去掉 /app/
+            local_path = workspace / "app" / rel
+        else:
+            continue
+        # 如果文件不存在，下载它
+        if not local_path.exists():
+            local_path.parent.mkdir(parents=True, exist_ok=True)
+            try:
+                import urllib.request
+                print(f"  Downloading {url} -> {local_path}")
+                urllib.request.urlretrieve(url, local_path)
+            except Exception as e:
+                print(f"  Failed to download {url}: {e}")
+
+
 def run_pytest_verification(task: Task, workspace: Path, output_dir: Path | None = None) -> dict[str, Any]:
     """使用 pytest 运行任务的测试验证
 
@@ -233,9 +271,19 @@ def run_pytest_verification(task: Task, workspace: Path, output_dir: Path | None
     if not tests_dir.exists():
         return {"passed": False, "score": 0.0, "details": "No tests directory found"}
 
+    # 先尝试下载 wget/curl 的文件（如 pdf-excel-diff 需要的 employee 文件）
+    env_dir = task.task_dir / "environment"
+    _download_wget_files(env_dir, workspace)
+
+    # 查找测试文件：优先 test_outputs.py，也支持其他 test_*.py
     test_output_file = tests_dir / "test_outputs.py"
     if not test_output_file.exists():
-        return {"passed": False, "score": 0.0, "details": "No test_outputs.py found"}
+        # 尝试其他 test_*.py 文件
+        other_tests = sorted(tests_dir.glob("test_*.py"))
+        if other_tests:
+            test_output_file = other_tests[0]
+        else:
+            return {"passed": False, "score": 0.0, "details": f"No test_*.py found in {tests_dir}"}
 
     # /app/output/ 应该对应 workspace/app/output/
     output_path = workspace / "app" / "output"
@@ -692,54 +740,43 @@ class SkillsBenchAdapter:
 
         # 创建 /app/ 目录结构（模拟容器内环境）
         app_dir = workspace / "app"
-        app_data_dir = app_dir / "data"
         app_output_dir = app_dir / "output"
-        app_data_dir.mkdir(parents=True, exist_ok=True)
         app_output_dir.mkdir(parents=True, exist_ok=True)
 
-        # 复制环境文件到 /app/data/（符合任务指令期望）
+        # 将整个 environment/ 复制到 /app/，与 Dockerfile 的行为一致
+        # 例如: environment/video/ -> /app/video/, environment/workspace/ -> /app/workspace/
         env_dir = task.task_dir / "environment"
         if env_dir.exists():
-            data_src = env_dir / "data"
-            if data_src.exists():
-                for item in data_src.iterdir():
-                    if item.is_dir():
-                        shutil.copytree(item, app_data_dir / item.name, dirs_exist_ok=True)
-                    else:
-                        shutil.copy2(item, app_data_dir / item.name)
-            # 也复制 generate_data.py 到 /app/（如果存在）
-            gen_script = env_dir / "generate_data.py"
-            if gen_script.exists():
-                shutil.copy2(gen_script, app_dir / "generate_data.py")
-
-            # 复制 environment/ 根目录下的其他文件到 workspace/root/
-            # （如 .pdf, .toml 等任务指令中引用的文件）
-            # 排除已处理的子目录和 Dockerfile
-            root_dest = workspace / "root"
-            root_dest.mkdir(parents=True, exist_ok=True)
+            # 复制所有子目录和文件（排除 Dockerfile 等容器相关文件）
             for item in env_dir.iterdir():
-                if item.is_file() and item.name not in ("Dockerfile", "docker-compose.yaml"):
-                    shutil.copy2(item, root_dest / item.name)
+                if item.name in ("Dockerfile", "docker-compose.yaml"):
+                    continue
+                dest = app_dir / item.name
+                if item.is_dir():
+                    if dest.exists():
+                        shutil.rmtree(dest)
+                    shutil.copytree(item, dest, dirs_exist_ok=True)
+                else:
+                    shutil.copy2(item, dest)
 
-            # 部分任务的 Dockerfile 将 environment/ 下的子目录复制到 /root/xxx/
-            # 例如: COPY src /root/src (mhc-layer-impl), COPY data /root/data (data-to-d3)
-            # 将 environment/src/ 复制到 workspace/root/src/
-            src_dir = env_dir / "src"
-            if src_dir.exists() and src_dir.is_dir():
-                root_src = root_dest / "src"
-                if root_src.exists():
-                    shutil.rmtree(root_src)
-                shutil.copytree(src_dir, root_src)
+        # 复制 environment/ 根目录下的文件到 /root/
+        # 部分任务的 Dockerfile 使用 "COPY xxx /root/xxx"（如 COPY data /root/data）
+        root_dest = workspace / "root"
+        root_dest.mkdir(parents=True, exist_ok=True)
+        for item in env_dir.iterdir():
+            if item.is_file() and item.name not in ("Dockerfile", "docker-compose.yaml"):
+                shutil.copy2(item, root_dest / item.name)
 
-            # 创建 symlink: workspace/root/environment -> workspace/app
-            # 这样 /root/environment/data/ 和 /app/data/ 都能访问数据
-            # 部分任务的 Dockerfile 使用 "COPY data /root/environment/data" 路径
-            env_link = root_dest / "environment"
-            if env_link.is_symlink():
-                env_link.unlink()
-                env_link.symlink_to("../app")
-            elif not env_link.exists():
-                env_link.symlink_to("../app")
+        # 创建 symlink: workspace/root/environment -> workspace/app
+        # 这样 /root/environment/xxx/ 和 /app/xxx/ 都能访问
+        env_link = root_dest / "environment"
+        if env_link.is_symlink():
+            env_link.unlink()
+        if not env_link.exists():
+            env_link.symlink_to("../app")
+
+        # 下载 Dockerfile 中 wget/curl 下载的文件（如 employee Excel/PDF 文件）
+        _download_wget_files(env_dir, workspace)
 
         # 复制 skills 到 /app/ 和 workspace
         skills_src = env_dir / "skills"
