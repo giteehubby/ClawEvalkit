@@ -456,6 +456,32 @@ class SkillBenchAdapter:
             },
         }
 
+        # 将所有结果展开为 tasks 数组（供 harness CLI 使用）
+        all_tasks = []
+        for pack_result in all_pack_results:
+            pack_name = pack_result["pack"]
+            for task_result in pack_result.get("baseline", {}).get("results", []):
+                all_tasks.append({
+                    "task_id": task_result.get("task_id"),
+                    "mode": "baseline",
+                    "status": task_result.get("status"),
+                    "patch_path": task_result.get("workspace", ""),
+                    "meta": task_result,
+                    "_pack": pack_name,
+                })
+            for skill_name, skill_data in pack_result.get("skills", {}).items():
+                for task_result in skill_data.get("results", []):
+                    all_tasks.append({
+                        "task_id": task_result.get("task_id"),
+                        "mode": "augmented",
+                        "status": task_result.get("status"),
+                        "patch_path": task_result.get("workspace", ""),
+                        "meta": task_result,
+                        "_pack": pack_name,
+                        "_skill": skill_name,
+                    })
+        full_report["tasks"] = all_tasks
+
         report_path = self.output_dir / f"skillbench_full_{timestamp}.json"
         report_path.parent.mkdir(parents=True, exist_ok=True)
         with open(report_path, "w", encoding="utf-8") as f:

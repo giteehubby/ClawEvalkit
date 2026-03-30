@@ -843,12 +843,15 @@ class NanoBotAgent(BaseAgent):
         else:
             current_workspace = self.workspace
 
-        # 如果 workspace 发生变化，重新加载 skills
+        # 如果 workspace 发生变化，重新加载 skills 并更新 session store 路径
         if current_workspace != self.workspace:
             self._load_workspace_skills(current_workspace)
-
-        self.session_store_dir = current_workspace / ".sessions"
-        self.session_store_dir.mkdir(parents=True, exist_ok=True)
+            self.workspace = current_workspace
+            self.session_store_dir = self.workspace / ".sessions"
+            self.session_store_dir.mkdir(parents=True, exist_ok=True)
+        else:
+            self.session_store_dir = current_workspace / ".sessions"
+            self.session_store_dir.mkdir(parents=True, exist_ok=True)
 
         # 更新工具的 workspace
         for tool in self._tools._tools.values():
@@ -863,6 +866,15 @@ class NanoBotAgent(BaseAgent):
             # 构建消息，支持基于 session_id 的跨调用上下文持久化
             messages = self._load_session_messages(session_id)
             messages.append({"role": "user", "content": prompt})
+
+            # 记录 user message 到 transcript
+            self._transcript.append({
+                "type": "message",
+                "message": {
+                    "role": "user",
+                    "content": [prompt],
+                }
+            })
 
             # 使用 asyncio 运行
             content = asyncio.run(self._run_loop(messages))

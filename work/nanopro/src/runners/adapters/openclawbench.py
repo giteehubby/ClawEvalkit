@@ -115,10 +115,17 @@ class TaskLoader:
         if not data:
             return None
 
+        # 支持 turns 格式（多轮对话任务，如 memory suite）
+        turns = data.get("turns", [])
+        if turns and isinstance(turns[0], dict):
+            first_message = turns[0].get("message", "") or ""
+        else:
+            first_message = data.get("user_message", "")
+
         return Task(
             task_id=data.get("id", task_dir.name),
             name=data.get("name", task_dir.name),
-            user_message=data.get("user_message", ""),
+            user_message=first_message,
             suite=data.get("suite", task_dir.parent.name),
             difficulty=data.get("difficulty", "medium"),
             mode=data.get("mode", "real"),
@@ -434,7 +441,7 @@ def _grade_layer3(task: Task, result: AgentResult, workspace: Path) -> float:
             break
 
     if not has_outputs:
-        return 25.0
+        return 0.0
 
     # 基于任务难度调整
     difficulty = task.difficulty
