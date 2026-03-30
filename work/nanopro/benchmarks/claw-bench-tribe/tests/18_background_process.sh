@@ -20,6 +20,8 @@ test_background_process() {
 
   if claw_is_empty "$response"; then
     claw_critical "Empty response on process test" "background_process" "$duration"
+  elif ! claw_last_session_has_tool "process"; then
+    claw_fail "process tool not actually called" "background_process" "$duration"
   # STRICT: Require explicit status about background processes
   elif [[ "$response" == *"No background"* ]] || [[ "$response" == *"no background"* ]] || \
        [[ "$response" == *"currently running"* ]] || [[ "$response" == *"clear"* ]]; then
@@ -27,7 +29,8 @@ test_background_process() {
   elif [[ "$response" == *"HEARTBEAT"* ]]; then
     # HEARTBEAT_OK is a known response format
     claw_pass "process tool verified: heartbeat response" "background_process" "$duration"
-  elif [[ "$response" == *"exec session"* ]] || [[ "$response" == *"background session"* ]]; then
+  elif [[ "$response" == *"exec session"* ]] || [[ "$response" == *"background session"* ]] || \
+       [[ "$response" == *"execution session"* ]] || [[ "$response" == *"execution sessions"* ]]; then
     claw_pass "process tool verified: session info returned" "background_process" "$duration"
   elif [[ "$response" == *"0 process"* ]] || [[ "$response" == *"zero"* ]] || \
        [[ "$response" == *"none running"* ]]; then

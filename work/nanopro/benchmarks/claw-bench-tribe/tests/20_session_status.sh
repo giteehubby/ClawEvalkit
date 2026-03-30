@@ -19,6 +19,8 @@ test_session_status() {
 
   if claw_is_empty "$response"; then
     claw_critical "Empty response on session status test" "session_status" "$duration"
+  elif ! claw_last_session_has_tool "session_status"; then
+    claw_fail "session_status tool not actually called" "session_status" "$duration"
   elif [[ "$response" == *"model"* ]] || [[ "$response" == *"token"* ]] || \
        [[ "$response" == *"usage"* ]] || [[ "$response" == *"session"* ]]; then
     # Check for model name

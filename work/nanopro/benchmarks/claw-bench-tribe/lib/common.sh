@@ -67,24 +67,31 @@ claw_ask() {
   local message="$1"
   local json_result
   local result
+  local cmd_exit=0
   # Use unique session ID per call to prevent context overflow
   local call_session="${CLAW_SESSION}-$(date +%s%N | cut -c1-13)"
+  CLAW_LAST_CALL_SESSION="$call_session"
+  export CLAW_LAST_CALL_SESSION
 
   case "$CLAW_MODE" in
     local)
-      json_result=$(timeout "$CLAW_TIMEOUT" clawdbot agent \
+      if ! json_result=$(timeout "$CLAW_TIMEOUT" clawdbot agent \
         --session-id "$call_session" \
         --message "$message" \
-        --json 2>/dev/null) || json_result='{"error":"timeout"}'
+        --json 2>/dev/null); then
+        cmd_exit=$?
+      fi
       ;;
 
     ssh)
       # Use base64 encoding for reliable message transmission through SSH
       local encoded_message
       encoded_message=$(echo -n "$message" | base64)
-      json_result=$(ssh -n -i "$CLAW_SSH_KEY" $CLAW_SSH_OPTS "$CLAW_HOST" \
+      if ! json_result=$(ssh -n -i "$CLAW_SSH_KEY" $CLAW_SSH_OPTS "$CLAW_HOST" \
         "timeout $CLAW_TIMEOUT clawdbot agent --session-id '$call_session' --message \"\$(echo '$encoded_message' | base64 -d)\" --json 2>/dev/null" \
-        2>/dev/null) || json_result='{"error":"timeout"}'
+        2>/dev/null); then
+        cmd_exit=$?
+      fi
       ;;
 
     api)
@@ -95,6 +102,20 @@ claw_ask() {
       return
       ;;
   esac
+
+  # Preserve valid stdout even when the wrapper returns non-zero.
+  # This avoids false "timeout" failures when the agent already produced
+  # a usable JSON response but the shell wrapper/timeout layer exits non-zero.
+  if [ -z "${json_result:-}" ]; then
+    case "$cmd_exit" in
+      124|137)
+        json_result='{"error":"timeout"}'
+        ;;
+      *)
+        json_result='{"error":"command_failed"}'
+        ;;
+    esac
+  fi
 
   # Extract text from JSON payload
   # Try multiple paths since response format varies
@@ -120,22 +141,27 @@ claw_ask() {
 claw_ask_json() {
   local message="$1"
   local result
+  local cmd_exit=0
 
   case "$CLAW_MODE" in
     local)
-      result=$(timeout "$CLAW_TIMEOUT" clawdbot agent \
+      if ! result=$(timeout "$CLAW_TIMEOUT" clawdbot agent \
         --session-id "$CLAW_SESSION" \
         --message "$message" \
-        --json 2>/dev/null)
+        --json 2>/dev/null); then
+        cmd_exit=$?
+      fi
       ;;
 
     ssh)
       # Use base64 encoding for reliable message transmission through SSH
       local encoded_message
       encoded_message=$(echo -n "$message" | base64)
-      result=$(ssh -n -i "$CLAW_SSH_KEY" $CLAW_SSH_OPTS "$CLAW_HOST" \
+      if ! result=$(ssh -n -i "$CLAW_SSH_KEY" $CLAW_SSH_OPTS "$CLAW_HOST" \
         "timeout $CLAW_TIMEOUT clawdbot agent --session-id '$CLAW_SESSION' --message \"\$(echo '$encoded_message' | base64 -d)\" --json 2>/dev/null" \
-        2>/dev/null)
+        2>/dev/null); then
+        cmd_exit=$?
+      fi
       ;;
 
     api)
@@ -143,7 +169,57 @@ claw_ask_json() {
       ;;
   esac
 
+  if [ -z "${result:-}" ]; then
+    case "$cmd_exit" in
+      124|137)
+        result='{"error":"timeout"}'
+        ;;
+      *)
+        result='{"error":"command_failed"}'
+        ;;
+    esac
+  fi
+
   echo "$result"
+}
+
+claw_last_session_file() {
+  local workspace_session=""
+  local shim_session=""
+
+  if [ -n "${CLAWDBOT_SHIM_WORKSPACE:-}" ] && [ -n "${CLAW_LAST_CALL_SESSION:-}" ]; then
+    workspace_session="${CLAWDBOT_SHIM_WORKSPACE}/.sessions/${CLAW_LAST_CALL_SESSION}.json"
+    if [ -f "$workspace_session" ]; then
+      echo "$workspace_session"
+      return 0
+    fi
+  fi
+
+  if [ -n "${CLAWDBOT_SHIM_SESSION_STORE:-}" ] && [ -n "${CLAW_LAST_CALL_SESSION:-}" ]; then
+    shim_session="${CLAWDBOT_SHIM_SESSION_STORE}/${CLAW_LAST_CALL_SESSION}.json"
+    if [ -f "$shim_session" ]; then
+      echo "$shim_session"
+      return 0
+    fi
+  fi
+
+  return 1
+}
+
+claw_last_session_has_tool() {
+  local tool_name="$1"
+  local session_file=""
+
+  if ! session_file=$(claw_last_session_file); then
+    return 1
+  fi
+
+  jq -e --arg tool "$tool_name" '
+    any(
+      .[]?;
+      .role == "assistant" and any(.tool_calls[]?; .function.name == $tool)
+    )
+  ' "$session_file" >/dev/null 2>&1
 }
 
 #=============================================================================

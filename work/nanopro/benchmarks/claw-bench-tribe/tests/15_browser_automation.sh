@@ -20,6 +20,8 @@ test_browser_automation() {
 
   if claw_is_empty "$response"; then
     claw_critical "Empty response on browser test" "browser_automation" "$duration"
+  elif ! claw_last_session_has_tool "browser"; then
+    claw_fail "browser tool not actually called" "browser_automation" "$duration"
   # STRICT: Require technical details that only come from actual tool use
   elif [[ "$response" == *"127.0.0.1"* ]] || [[ "$response" == *"localhost"* ]] || \
        [[ "$response" == *"CDP"* ]] || [[ "$response" == *"cdp"* ]] || \
