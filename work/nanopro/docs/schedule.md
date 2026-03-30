@@ -193,8 +193,17 @@ open ../assets/visualizations/benchmark_summary.html
 | TRIBE-INC/claw-bench | - | - | - | ✅ |
 | skillbench | - | - | - | ✅ |
 | SciSkillBench | - | - | - | ❌ 放弃 |
+| WildClawBench | 0% | 0/10 | ~10min | ❌ 环境问题 |
 
 **已完成**: skillsbench, TRIBE-INC/claw-bench, Pinchbench, AgentBench-OpenClaw, claw-bench, skillbench
+
+### WildClawBench Baseline 实验 (2026-03-30)
+- **Round 1** (`exp_baseline_20260330_163143`): 0% 通过率，Safety Guard 阻止 /tmp_workspace
+- **Round 2** (`exp_baseline_20260330_173743`): 0.01% 通过率，修复 Safety Guard 后 grading 路径不匹配
+  - 修复: shell.py `_remap_root_path` 添加 `/tmp_workspace` → `workspace/tmp_workspace` 映射
+  - 修复: adapter.py grading 代码路径预处理
+  - 20/60 任务可执行（其余 40 个无 workspace）
+  - 核心问题: grading 找不到输出文件（路径不匹配）
 **已放弃**: sciskillbench
 
 **模型**: openrouter/google/gemini-3-flash-preview

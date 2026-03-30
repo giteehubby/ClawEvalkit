@@ -82,10 +82,10 @@ class ToolRegistry:
                 if '/root' in result:
                     result = re.sub(r'/root/', f'{workspace}/root/', result)
                     result = re.sub(r'/root($|[\s])', f'{workspace}/root\\1', result)
-                # Replace /app/ with workspace/ for SkillsBench compatibility
+                # Replace /app/ with workspace/app/ for SkillsBench compatibility
                 if '/app' in result:
-                    result = re.sub(r'/app/', f'{workspace}/', result)
-                    result = re.sub(r'/app($|[\s])', f'{workspace}\\1', result)
+                    result = re.sub(r'/app/', f'{workspace}/app/', result)
+                    result = re.sub(r'/app($|[\s])', f'{workspace}/app\\1', result)
                 return result
             elif isinstance(value, dict):
                 return {k: _remap_value(v) for k, v in value.items()}

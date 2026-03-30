@@ -214,11 +214,17 @@ class ExecTool(Tool):
             # Then replace any remaining /root (not followed by /) at end or before space
             result = re.sub(r'/root($|[\s])', f'{root_path}\\1', result)
 
-        # Replace /app/ with workspace/ for SkillsBench compatibility (e.g., /app/data/ -> workspace/data/)
+        # Replace /app/ with workspace/app/ for SkillsBench compatibility (e.g., /app/data/ -> workspace/app/data/)
         if '/app' in command:
             app_path = str(workspace)
-            result = re.sub(r'/app/', f'{app_path}/', result)
-            result = re.sub(r'/app($|[\s])', f'{app_path}\\1', result)
+            result = re.sub(r'/app/', f'{app_path}/app/', result)
+            result = re.sub(r'/app($|[\s])', f'{app_path}/app\\1', result)
+
+        # Replace /tmp_workspace/ with workspace/tmp_workspace/ for WildClawBench compatibility
+        if '/tmp_workspace' in command:
+            tmp_ws_path = workspace / 'tmp_workspace'
+            result = re.sub(r'/tmp_workspace/', f'{tmp_ws_path}/', result)
+            result = re.sub(r'/tmp_workspace($|[\s])', f'{tmp_ws_path}\\1', result)
 
         return result
 

@@ -718,8 +718,28 @@ class SkillsBenchAdapter:
             root_dest = workspace / "root"
             root_dest.mkdir(parents=True, exist_ok=True)
             for item in env_dir.iterdir():
-                if item.is_file() and item.name not in ("Dockerfile",):
+                if item.is_file() and item.name not in ("Dockerfile", "docker-compose.yaml"):
                     shutil.copy2(item, root_dest / item.name)
+
+            # 部分任务的 Dockerfile 将 environment/ 下的子目录复制到 /root/xxx/
+            # 例如: COPY src /root/src (mhc-layer-impl), COPY data /root/data (data-to-d3)
+            # 将 environment/src/ 复制到 workspace/root/src/
+            src_dir = env_dir / "src"
+            if src_dir.exists() and src_dir.is_dir():
+                root_src = root_dest / "src"
+                if root_src.exists():
+                    shutil.rmtree(root_src)
+                shutil.copytree(src_dir, root_src)
+
+            # 创建 symlink: workspace/root/environment -> workspace/app
+            # 这样 /root/environment/data/ 和 /app/data/ 都能访问数据
+            # 部分任务的 Dockerfile 使用 "COPY data /root/environment/data" 路径
+            env_link = root_dest / "environment"
+            if env_link.is_symlink():
+                env_link.unlink()
+                env_link.symlink_to("../app")
+            elif not env_link.exists():
+                env_link.symlink_to("../app")
 
         # 复制 skills 到 /app/ 和 workspace
         skills_src = env_dir / "skills"

@@ -32,11 +32,11 @@ def _resolve_path(
             # Skip allowed_dir check since we're remapping to workspace
             return resolved
 
-    # Remap /app/ to workspace/ for SkillsBench compatibility (e.g., /app/data/ -> workspace/data/)
+    # Remap /app/ to workspace/app/ for SkillsBench compatibility (e.g., /app/data/ -> workspace/app/data/)
     if path_str.startswith('/app/') or path_str == '/app':
         if workspace:
             rel_path = path_str.replace('/app', '', 1).lstrip('/')
-            p = workspace / rel_path
+            p = workspace / 'app' / rel_path
             resolved = p.resolve()
             p.parent.mkdir(parents=True, exist_ok=True)
             return resolved

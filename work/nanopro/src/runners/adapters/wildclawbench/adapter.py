@@ -7,6 +7,7 @@ WildClawBench 适配器。
 
 import json
 import logging
+import re
 import os
 import shutil
 import statistics
@@ -258,12 +259,15 @@ class WildClawBenchAdapter:
             # Step 1: Setup workspace locally
             logger.info(f"[{run_id}] Setting up local workspace: {workspace_path}")
 
-            # Create tmp_workspace directory locally (simulates container's /tmp_workspace)
-            tmp_workspace = workspace_path.parent / "tmp_workspace"
-            if tmp_workspace.exists():
-                shutil.rmtree(tmp_workspace)
-            shutil.copytree(workspace_path, tmp_workspace, dirs_exist_ok=True)
-            logger.info(f"[{run_id}] Copied workspace to {tmp_workspace}")
+            # Create a symlink /tmp_workspace -> workspace_path so that agent's
+            # file operations to /tmp_workspace/ go directly to the workspace.
+            # This replaces the previous copy-based approach.
+            tmp_workspace_link = workspace_path / "tmp_workspace"
+            if tmp_workspace_link.exists() or tmp_workspace_link.is_symlink():
+                tmp_workspace_link.unlink()
+            # Create symlink: workspace/tmp_workspace -> workspace (self-referential)
+            tmp_workspace_link.symlink_to(".")
+            logger.info(f"[{run_id}] Created symlink {tmp_workspace_link} -> .")
 
             # Step 2: Run warmup commands locally
             if task.warmup.strip():
@@ -317,17 +321,23 @@ class WildClawBenchAdapter:
 
         finally:
             # Cleanup tmp_workspace
-            tmp_workspace = workspace_path.parent / "tmp_workspace"
+            tmp_workspace = workspace_path / "tmp_workspace"
             if tmp_workspace.exists():
                 shutil.rmtree(tmp_workspace, ignore_errors=True)
 
     def _run_grading_local(self, task: WildClawTask, workspace_path: Path) -> dict:
         """在本地运行 grading（不使用 Docker）"""
-        tmp_workspace = workspace_path.parent / "tmp_workspace"
+        tmp_workspace = workspace_path / "tmp_workspace"
+
+        # Preprocess automated_checks: replace /tmp_workspace/ with tmp_workspace path
+        grading_code = task.automated_checks
+        if '/tmp_workspace' in grading_code:
+            grading_code = re.sub(r'/tmp_workspace/', f'{tmp_workspace}/', grading_code)
+            grading_code = re.sub(r'/tmp_workspace($|[\s])', f'{tmp_workspace}\\1', grading_code)
 
         runner_code = "\n".join([
-            "import json, sys",
-            task.automated_checks,
+            "import json, sys, re",
+            grading_code,
             "",
             f'result = grade(transcript=[], workspace_path="{tmp_workspace}")',
             "print(json.dumps(result))",
