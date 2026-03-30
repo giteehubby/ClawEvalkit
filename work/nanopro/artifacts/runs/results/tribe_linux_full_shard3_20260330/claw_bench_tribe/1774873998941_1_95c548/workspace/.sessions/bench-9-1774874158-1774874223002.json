@@ -1,0 +1,166 @@
+[
+  {
+    "role": "system",
+    "content": "<skills>\n  <skill available=\"true\">\n    <name>clawhub</name>\n    <description>Search and install agent skills from ClawHub, the public skill registry.</description>\n    <location>/workspace/nanobot/nanobot/skills/clawhub/SKILL.md</location>\n  </skill>\n  <skill available=\"true\">\n    <name>cron</name>\n    <description>Schedule reminders and recurring tasks.</description>\n    <location>/workspace/nanobot/nanobot/skills/cron/SKILL.md</location>\n  </skill>\n  <skill available=\"false\">\n    <name>github</name>\n    <description>Interact with GitHub using the `gh` CLI. Use `gh issue`, `gh pr`, `gh run`, and `gh api` for issues, PRs, CI runs, and advanced queries.</description>\n    <location>/workspace/nanobot/nanobot/skills/github/SKILL.md</location>\n    <requires>CLI: gh</requires>\n  </skill>\n  <skill available=\"true\">\n    <name>memory</name>\n    <description>Two-layer memory system with grep-based recall.</description>\n    <location>/workspace/nanobot/nanobot/skills/memory/SKILL.md</location>\n  </skill>\n  <skill available=\"true\">\n    <name>skill-creator</name>\n    <description>Create or update AgentSkills. Use when designing, structuring, or packaging skills with scripts, references, and assets.</description>\n    <location>/workspace/nanobot/nanobot/skills/skill-creator/SKILL.md</location>\n  </skill>\n  <skill available=\"false\">\n    <name>summarize</name>\n    <description>Summarize or extract text/transcripts from URLs, podcasts, and local files (great fallback for “transcribe this YouTube/video”).</description>\n    <location>/workspace/nanobot/nanobot/skills/summarize/SKILL.md</location>\n    <requires>CLI: summarize</requires>\n  </skill>\n  <skill available=\"false\">\n    <name>tmux</name>\n    <description>Remote-control tmux sessions for interactive CLIs by sending keystrokes and scraping pane output.</description>\n    <location>/workspace/nanobot/nanobot/skills/tmux/SKILL.md</location>\n    <requires>CLI: tmux</requires>\n  </skill>\n  <skill available=\"true\">\n    <name>weather</name>\n    <description>Get current weather and forecasts (no API key required).</description>\n    <location>/workspace/nanobot/nanobot/skills/weather/SKILL.md</location>\n  </skill>\n</skills>"
+  },
+  {
+    "role": "user",
+    "content": "Get the current weather for New York City."
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "tool_exec_HgW8UrWlid51dOoXmu9A",
+        "type": "function",
+        "function": {
+          "name": "exec",
+          "arguments": "{\"command\":\"/workspace/nanobot/nanobot/skills/weather/weather.sh \\\"New York City\\\"\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "tool_exec_HgW8UrWlid51dOoXmu9A",
+    "content": "Error: Command blocked by safety guard (path outside working dir)"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "tool_exec_kjoWYuCLJQafNviLT5vT",
+        "type": "function",
+        "function": {
+          "name": "exec",
+          "arguments": "{\"command\":\"./nanobot/skills/weather/weather.sh \\\"New York City\\\"\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "tool_exec_kjoWYuCLJQafNviLT5vT",
+    "content": "STDERR:\n/bin/sh: 1: ./nanobot/skills/weather/weather.sh: not found\n\n\nExit code: 127"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "tool_list_dir_EgwNSOYNKH7uh0UADsPf",
+        "type": "function",
+        "function": {
+          "name": "list_dir",
+          "arguments": "{\"path\":\"nanobot/skills/weather\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "tool_list_dir_EgwNSOYNKH7uh0UADsPf",
+    "content": "Error: Directory not found: nanobot/skills/weather"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "tool_list_dir_Yoq8ut8iasC4kRuDyC0Y",
+        "type": "function",
+        "function": {
+          "name": "list_dir",
+          "arguments": "{\"path\":\".\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "tool_list_dir_Yoq8ut8iasC4kRuDyC0Y",
+    "content": "📁 .sessions\n📁 memory"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "tool_list_dir_kNYgbisHQytTuUzRbg5U",
+        "type": "function",
+        "function": {
+          "name": "list_dir",
+          "arguments": "{\"path\":\"..\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "tool_list_dir_kNYgbisHQytTuUzRbg5U",
+    "content": "📁 benchmark\n📁 sessions\n📁 shims\n📁 workspace"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "tool_list_dir_ub5zzlTSOiaXicgGyW2v",
+        "type": "function",
+        "function": {
+          "name": "list_dir",
+          "arguments": "{\"path\":\"/workspace/nanobot/nanobot/skills/weather\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "tool_list_dir_ub5zzlTSOiaXicgGyW2v",
+    "content": "📄 SKILL.md"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "tool_read_file_Qk8i1tKEnsmwFkGPuvkF",
+        "type": "function",
+        "function": {
+          "name": "read_file",
+          "arguments": "{\"path\":\"/workspace/nanobot/nanobot/skills/weather/SKILL.md\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "tool_read_file_Qk8i1tKEnsmwFkGPuvkF",
+    "content": "1| ---\n2| name: weather\n3| description: Get current weather and forecasts (no API key required).\n4| homepage: https://wttr.in/:help\n5| metadata: {\"nanobot\":{\"emoji\":\"🌤️\",\"requires\":{\"bins\":[\"curl\"]}}}\n6| ---\n7| \n8| # Weather\n9| \n10| Two free services, no API keys needed.\n11| \n12| ## wttr.in (primary)\n13| \n14| Quick one-liner:\n15| ```bash\n16| curl -s \"wttr.in/London?format=3\"\n17| # Output: London: ⛅️ +8°C\n18| ```\n19| \n20| Compact format:\n21| ```bash\n22| curl -s \"wttr.in/London?format=%l:+%c+%t+%h+%w\"\n23| # Output: London: ⛅️ +8°C 71% ↙5km/h\n24| ```\n25| \n26| Full forecast:\n27| ```bash\n28| curl -s \"wttr.in/London?T\"\n29| ```\n30| \n31| Format codes: `%c` condition · `%t` temp · `%h` humidity · `%w` wind · `%l` location · `%m` moon\n32| \n33| Tips:\n34| - URL-encode spaces: `wttr.in/New+York`\n35| - Airport codes: `wttr.in/JFK`\n36| - Units: `?m` (metric) `?u` (USCS)\n37| - Today only: `?1` · Current only: `?0`\n38| - PNG: `curl -s \"wttr.in/Berlin.png\" -o /tmp/weather.png`\n39| \n40| ## Open-Meteo (fallback, JSON)\n41| \n42| Free, no key, good for programmatic use:\n43| ```bash\n44| curl -s \"https://api.open-meteo.com/v1/forecast?latitude=51.5&longitude=-0.12&current_weather=true\"\n45| ```\n46| \n47| Find coordinates for a city, then query. Returns JSON with temp, windspeed, weathercode.\n48| \n49| Docs: https://open-meteo.com/en/docs\n\n(End of file — 49 lines total)"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "tool_exec_B2UOFAXm8vOoiI4SkYPC",
+        "type": "function",
+        "function": {
+          "name": "exec",
+          "arguments": "{\"command\":\"curl -s \\\"wttr.in/New+York+City?format=3\\\"\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "tool_exec_B2UOFAXm8vOoiI4SkYPC",
+    "content": "new york city: ☀️   +9°C\n\n\nExit code: 0"
+  },
+  {
+    "role": "assistant",
+    "content": "The current weather in New York City is sunny with a temperature of +9°C."
+  }
+]

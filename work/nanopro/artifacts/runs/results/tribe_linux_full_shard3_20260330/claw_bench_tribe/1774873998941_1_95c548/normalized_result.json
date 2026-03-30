@@ -1,0 +1,113 @@
+{
+  "benchmark": "claw-bench-tribe",
+  "timestamp": 1774874308.7071614,
+  "overall_score": 100.0,
+  "requested_tests": [
+    "22_multi_turn_context",
+    "23_research_task",
+    "24_code_generation",
+    "25_memory_operations",
+    "26_skill_workflow",
+    "27_multi_tool_chain",
+    "28_response_quality",
+    "30_complex_instructions",
+    "31_adversarial_input",
+    "32_long_context",
+    "33_json_output"
+  ],
+  "total_tasks": 11,
+  "passed_tasks": 11,
+  "failed_tasks": 0,
+  "critical_failures": 0,
+  "return_code": 0,
+  "task_scores": {
+    "multi_turn_context": {
+      "task_name": "multi_turn_context",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Context retained: secret code recalled correctly",
+      "duration_ms": 27000
+    },
+    "research_task": {
+      "task_name": "research_task",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Research complete: HTTP 418 teapot explained with structure",
+      "duration_ms": 11000
+    },
+    "code_generation": {
+      "task_name": "code_generation",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Code generation verified: correct output 55",
+      "duration_ms": 10000
+    },
+    "memory_operations": {
+      "task_name": "memory_operations",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Memory verified: fact stored and recalled",
+      "duration_ms": 16000
+    },
+    "skill_workflow": {
+      "task_name": "skill_workflow",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Weather skill working: temperature returned",
+      "duration_ms": 27000
+    },
+    "multi_tool_chain": {
+      "task_name": "multi_tool_chain",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Multi-tool chain verified: correct byte count",
+      "duration_ms": 16000
+    },
+    "response_quality": {
+      "task_name": "response_quality",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Response quality excellent: structured, formatted, comprehensive",
+      "duration_ms": 11000
+    },
+    "complex_instructions": {
+      "task_name": "complex_instructions",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Complex instructions: all steps completed with format",
+      "duration_ms": 10000
+    },
+    "adversarial_input": {
+      "task_name": "adversarial_input",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Adversarial handled: correct answer (4), resisted misdirection",
+      "duration_ms": 7000
+    },
+    "long_context": {
+      "task_name": "long_context",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Long context: found and followed hidden instruction",
+      "duration_ms": 8000
+    },
+    "json_output": {
+      "task_name": "json_output",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "JSON output: valid JSON with exact values",
+      "duration_ms": 7000
+    }
+  }
+}

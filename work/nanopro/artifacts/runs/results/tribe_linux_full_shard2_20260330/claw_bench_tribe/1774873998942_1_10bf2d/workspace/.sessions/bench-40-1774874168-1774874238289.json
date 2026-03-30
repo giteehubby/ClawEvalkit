@@ -1,0 +1,52 @@
+[
+  {
+    "role": "system",
+    "content": "<skills>\n  <skill available=\"true\">\n    <name>clawhub</name>\n    <description>Search and install agent skills from ClawHub, the public skill registry.</description>\n    <location>/workspace/nanobot/nanobot/skills/clawhub/SKILL.md</location>\n  </skill>\n  <skill available=\"true\">\n    <name>cron</name>\n    <description>Schedule reminders and recurring tasks.</description>\n    <location>/workspace/nanobot/nanobot/skills/cron/SKILL.md</location>\n  </skill>\n  <skill available=\"false\">\n    <name>github</name>\n    <description>Interact with GitHub using the `gh` CLI. Use `gh issue`, `gh pr`, `gh run`, and `gh api` for issues, PRs, CI runs, and advanced queries.</description>\n    <location>/workspace/nanobot/nanobot/skills/github/SKILL.md</location>\n    <requires>CLI: gh</requires>\n  </skill>\n  <skill available=\"true\">\n    <name>memory</name>\n    <description>Two-layer memory system with grep-based recall.</description>\n    <location>/workspace/nanobot/nanobot/skills/memory/SKILL.md</location>\n  </skill>\n  <skill available=\"true\">\n    <name>skill-creator</name>\n    <description>Create or update AgentSkills. Use when designing, structuring, or packaging skills with scripts, references, and assets.</description>\n    <location>/workspace/nanobot/nanobot/skills/skill-creator/SKILL.md</location>\n  </skill>\n  <skill available=\"false\">\n    <name>summarize</name>\n    <description>Summarize or extract text/transcripts from URLs, podcasts, and local files (great fallback for “transcribe this YouTube/video”).</description>\n    <location>/workspace/nanobot/nanobot/skills/summarize/SKILL.md</location>\n    <requires>CLI: summarize</requires>\n  </skill>\n  <skill available=\"false\">\n    <name>tmux</name>\n    <description>Remote-control tmux sessions for interactive CLIs by sending keystrokes and scraping pane output.</description>\n    <location>/workspace/nanobot/nanobot/skills/tmux/SKILL.md</location>\n    <requires>CLI: tmux</requires>\n  </skill>\n  <skill available=\"true\">\n    <name>weather</name>\n    <description>Get current weather and forecasts (no API key required).</description>\n    <location>/workspace/nanobot/nanobot/skills/weather/SKILL.md</location>\n  </skill>\n</skills>"
+  },
+  {
+    "role": "user",
+    "content": "Use the write tool to create a file at /tmp/clawbench-test-40.txt with the content 'CLAWBENCH_FILE_TEST_1774874238'. Then use the read tool to read it back and tell me what it contains."
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "tool_write_file_zxmEvO17WHBCpcf3zG9g",
+        "type": "function",
+        "function": {
+          "name": "write_file",
+          "arguments": "{\"content\":\"CLAWBENCH_FILE_TEST_1774874238\",\"path\":\"/tmp/clawbench-test-40.txt\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "tool_write_file_zxmEvO17WHBCpcf3zG9g",
+    "content": "Successfully wrote 30 bytes to /tmp/clawbench-test-40.txt"
+  },
+  {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "tool_read_file_bAYKpOW3PPtvh4a6XMyY",
+        "type": "function",
+        "function": {
+          "name": "read_file",
+          "arguments": "{\"path\":\"/tmp/clawbench-test-40.txt\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "tool_read_file_bAYKpOW3PPtvh4a6XMyY",
+    "content": "1| CLAWBENCH_FILE_TEST_1774874238\n\n(End of file — 1 lines total)"
+  },
+  {
+    "role": "assistant",
+    "content": "The file `/tmp/clawbench-test-40.txt` contains: `CLAWBENCH_FILE_TEST_1774874238`."
+  }
+]

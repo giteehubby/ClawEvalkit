@@ -1,0 +1,13 @@
+[
+  "22_multi_turn_context",
+  "23_research_task",
+  "24_code_generation",
+  "25_memory_operations",
+  "26_skill_workflow",
+  "27_multi_tool_chain",
+  "28_response_quality",
+  "30_complex_instructions",
+  "31_adversarial_input",
+  "32_long_context",
+  "33_json_output"
+]

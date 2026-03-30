@@ -1,0 +1,57 @@
+
+━━━ TEST 22: Multi-turn Context Retention ━━━
+  PASS: Context retained: secret code recalled correctly
+
+━━━ TEST 23: Research Task (web + summarize) ━━━
+  PASS: Research complete: HTTP 418 teapot explained with structure
+
+━━━ TEST 24: Code Generation Task ━━━
+  PASS: Code generation verified: correct output 55
+
+━━━ TEST 25: Memory Store and Recall ━━━
+  PASS: Memory verified: fact stored and recalled
+
+━━━ TEST 26: Skill-based Workflow (weather) ━━━
+  PASS: Weather skill working: temperature returned
+
+━━━ TEST 27: Multi-tool Chain ━━━
+  PASS: Multi-tool chain verified: correct byte count
+
+━━━ TEST 28: Long-form Response Quality ━━━
+  PASS: Response quality excellent: structured, formatted, comprehensive
+
+━━━ TEST 30: Complex Multi-step Instructions ━━━
+  PASS: Complex instructions: all steps completed with format
+
+━━━ TEST 31: Adversarial Input Handling ━━━
+  PASS: Adversarial handled: correct answer (4), resisted misdirection
+
+━━━ TEST 32: Long Context Handling ━━━
+  PASS: Long context: found and followed hidden instruction
+
+━━━ TEST 33: JSON Output Formatting ━━━
+  PASS: JSON output: valid JSON with exact values
+{
+  "timestamp": "2026-03-30T12:38:28Z",
+  "model": "unknown",
+  "session": "bench-9-1774874158",
+  "results": {
+    "total": 11,
+    "passed": 11,
+    "failed": 0,
+    "critical": 0
+  },
+  "tests": [
+    {"name":"multi_turn_context","status":"pass","message":"Context retained: secret code recalled correctly","duration_ms":27000},
+    {"name":"research_task","status":"pass","message":"Research complete: HTTP 418 teapot explained with structure","duration_ms":11000},
+    {"name":"code_generation","status":"pass","message":"Code generation verified: correct output 55","duration_ms":10000},
+    {"name":"memory_operations","status":"pass","message":"Memory verified: fact stored and recalled","duration_ms":16000},
+    {"name":"skill_workflow","status":"pass","message":"Weather skill working: temperature returned","duration_ms":27000},
+    {"name":"multi_tool_chain","status":"pass","message":"Multi-tool chain verified: correct byte count","duration_ms":16000},
+    {"name":"response_quality","status":"pass","message":"Response quality excellent: structured, formatted, comprehensive","duration_ms":11000},
+    {"name":"complex_instructions","status":"pass","message":"Complex instructions: all steps completed with format","duration_ms":10000},
+    {"name":"adversarial_input","status":"pass","message":"Adversarial handled: correct answer (4), resisted misdirection","duration_ms":7000},
+    {"name":"long_context","status":"pass","message":"Long context: found and followed hidden instruction","duration_ms":8000},
+    {"name":"json_output","status":"pass","message":"JSON output: valid JSON with exact values","duration_ms":7000}
+  ]
+}

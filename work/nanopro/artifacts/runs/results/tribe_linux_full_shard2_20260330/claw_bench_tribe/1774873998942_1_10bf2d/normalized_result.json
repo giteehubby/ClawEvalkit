@@ -1,0 +1,104 @@
+{
+  "benchmark": "claw-bench-tribe",
+  "timestamp": 1774874323.1599574,
+  "overall_score": 60.0,
+  "requested_tests": [
+    "11_skill_installation",
+    "12_muse_extension",
+    "13_exec_command",
+    "14_web_search",
+    "15_browser_automation",
+    "16_file_operations",
+    "17_subagent_spawn",
+    "18_background_process",
+    "19_image_analysis",
+    "20_session_status"
+  ],
+  "total_tasks": 10,
+  "passed_tasks": 6,
+  "failed_tasks": 4,
+  "critical_failures": 0,
+  "return_code": 1,
+  "task_scores": {
+    "skill_installation": {
+      "task_name": "skill_installation",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Skill installed and verified: lulu-monitor",
+      "duration_ms": 7000
+    },
+    "muse_extension": {
+      "task_name": "muse_extension",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Muse extension loaded (local-only mode)",
+      "duration_ms": 11000
+    },
+    "exec_command": {
+      "task_name": "exec_command",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "exec tool working: returned command output",
+      "duration_ms": 10000
+    },
+    "web_search": {
+      "task_name": "web_search",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "web_search working: returned relevant results",
+      "duration_ms": 12000
+    },
+    "browser_automation": {
+      "task_name": "browser_automation",
+      "mean": 0.0,
+      "std": 0.0,
+      "status": "fail",
+      "message": "browser tool not actually called",
+      "duration_ms": 30000
+    },
+    "file_operations": {
+      "task_name": "file_operations",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "File write/read working: value matched",
+      "duration_ms": 12000
+    },
+    "subagent_spawn": {
+      "task_name": "subagent_spawn",
+      "mean": 0.0,
+      "std": 0.0,
+      "status": "fail",
+      "message": "agents_list did not return agent info: Max iterations reached",
+      "duration_ms": 35000
+    },
+    "background_process": {
+      "task_name": "background_process",
+      "mean": 0.0,
+      "std": 0.0,
+      "status": "fail",
+      "message": "process tool not actually called",
+      "duration_ms": 10000
+    },
+    "image_analysis": {
+      "task_name": "image_analysis",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "image tool check completed (not configured)",
+      "duration_ms": 7000
+    },
+    "session_status": {
+      "task_name": "session_status",
+      "mean": 0.0,
+      "std": 0.0,
+      "status": "fail",
+      "message": "session_status tool not actually called",
+      "duration_ms": 21000
+    }
+  }
+}

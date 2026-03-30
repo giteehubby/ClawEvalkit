@@ -1,0 +1,104 @@
+{
+  "benchmark": "claw-bench-tribe",
+  "timestamp": 1774874283.5844173,
+  "overall_score": 100.0,
+  "requested_tests": [
+    "01_basic_chat",
+    "02_tool_use_response",
+    "03_web_fetch_json",
+    "04_web_fetch_html",
+    "05_data_extraction",
+    "06_reasoning",
+    "07_instruction_following",
+    "08_reasoning_tags",
+    "09_error_handling",
+    "10_consecutive_tools"
+  ],
+  "total_tasks": 10,
+  "passed_tasks": 10,
+  "failed_tasks": 0,
+  "critical_failures": 0,
+  "return_code": 0,
+  "task_scores": {
+    "basic_chat": {
+      "task_name": "basic_chat",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Math correct: 15+27=42",
+      "duration_ms": 7000
+    },
+    "tool_use_response": {
+      "task_name": "tool_use_response",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Tool used AND response contains UUID",
+      "duration_ms": 25000
+    },
+    "web_fetch_json": {
+      "task_name": "web_fetch_json",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Correctly fetched and parsed JSON (Sample Slide Show)",
+      "duration_ms": 13000
+    },
+    "web_fetch_html": {
+      "task_name": "web_fetch_html",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Correctly understood example.com content",
+      "duration_ms": 11000
+    },
+    "data_extraction": {
+      "task_name": "data_extraction",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Extracted IP address: 185.220.236.91",
+      "duration_ms": 12000
+    },
+    "reasoning": {
+      "task_name": "reasoning",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Correct calculation: 4*2 + 5*3 = 23",
+      "duration_ms": 8000
+    },
+    "instruction_following": {
+      "task_name": "instruction_following",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Exact instruction following",
+      "duration_ms": 7000
+    },
+    "reasoning_tags": {
+      "task_name": "reasoning_tags",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Correct answer, no leaked tags",
+      "duration_ms": 8000
+    },
+    "error_handling": {
+      "task_name": "error_handling",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Graceful error handling",
+      "duration_ms": 10000
+    },
+    "consecutive_tools": {
+      "task_name": "consecutive_tools",
+      "mean": 100.0,
+      "std": 0.0,
+      "status": "pass",
+      "message": "Handled consecutive tool calls with response",
+      "duration_ms": 16000
+    }
+  }
+}
