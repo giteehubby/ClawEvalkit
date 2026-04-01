@@ -1,7 +1,7 @@
 """SkillBench — 22 个任务，local harness + pytest 验证。
 
-评分方式: Agent 生成 diff patch → apply → pytest 验证 (pass/fail)。
-需要 ark_adapter.py 将 ARK API 适配为 SkillBench 的 agent 接口。
+评分方式: NanoBotAgent 直接在 repo 中修改代码 → pytest 验证 (pass/fail)。
+使用 nanobot_adapter.py 将 NanoBotAgent 适配为 SkillBench 的 agent 接口。
 """
 from __future__ import annotations
 
@@ -35,7 +35,7 @@ class SkillBench(BaseBenchmark):
             report_name = f"{model_key}_{pack.replace('/', '_')}.json"
             cmd = ["python3", "-m", "harness.cli", "run",
                    "--runner", "local", "--pack", f"packs/{pack}",
-                   "--mode", "baseline", "--agent-cmd", "python3 -m harness.agents.ark_adapter",
+                   "--mode", "baseline", "--agent-cmd", "python3 -m harness.agents.nanobot_adapter",
                    "--output", f"reports/{report_name}"]
             try:
                 subprocess.run(cmd, cwd=str(bench_dir), capture_output=True, text=True, timeout=1800, env=env)

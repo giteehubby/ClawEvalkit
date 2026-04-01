@@ -1,14 +1,16 @@
 """Claw-Bench-Tribe — 8 个纯 LLM 推理测试。
 
-评分方式: 发送 prompt → 检查回复是否包含预期答案 (pass/fail)。
-不需要 Agent 环境，纯 API 调用。
+评分方式: 通过 NanoBotAgent 发送 prompt → 检查回复是否包含预期答案 (pass/fail)。
+使用 NanoBotAgent 保持与其他 benchmark 统一的推理引擎。
 """
 from __future__ import annotations
 
 import json
 import re
+import shutil
+from pathlib import Path
 
-from ..utils.api import call_llm
+from ..utils.nanobot import import_nanobot_agent
 from .base import BaseBenchmark
 
 TESTS = [
@@ -59,11 +61,31 @@ class TribeBench(BaseBenchmark):
     SCORE_RANGE = "0-100"
 
     def evaluate(self, model_key: str, config: dict, sample: int = 0, **kwargs) -> dict:
+        """运行 Tribe 评测: 通过 NanoBotAgent 执行 8 个纯 LLM 推理测试。
+
+        流程: 创建 NanoBotAgent → 逐个执行 test prompt → 检查回复是否包含预期答案。
+        虽然 Tribe 是纯问答，NanoBotAgent 的 tools 不会被触发，但统一了推理引擎。
+        """
+        NanoBotAgent = import_nanobot_agent()
+
+        workspace = Path(f"/tmp/eval_tribe_{model_key}")
+        if workspace.exists():
+            shutil.rmtree(workspace)
+        workspace.mkdir(parents=True, exist_ok=True)
+
+        agent = NanoBotAgent(model=config["model"], api_url=config["api_url"],
+                             api_key=config["api_key"], workspace=workspace, timeout=60)
+
         results = []
         passed = 0
 
         for test in TESTS:
-            response = call_llm([{"role": "user", "content": test["prompt"]}], config, max_tokens=2048)
+            try:
+                result = agent.execute(test["prompt"], session_id=f"tribe_{model_key}_{test['id']}")
+                response = result.content or ""
+            except Exception as e:
+                response = f"ERROR: {e}"
+
             # 清理 reasoning tags
             clean = re.sub(r"<think>.*?</think>", "", response, flags=re.DOTALL)
             clean = re.sub(r"<reasoning>.*?</reasoning>", "", clean, flags=re.DOTALL)
@@ -74,6 +96,8 @@ class TribeBench(BaseBenchmark):
             if ok:
                 passed += 1
             results.append({"id": test["id"], "desc": test["desc"], "passed": ok, "response": response[:500]})
+
+        shutil.rmtree(workspace, ignore_errors=True)
 
         total = len(TESTS)
         score = round(passed / total * 100, 1)

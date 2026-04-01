@@ -1,22 +1,21 @@
 """SkillsBench — 56+ 个纯 Python 任务 (无 Docker)，多轮 Agent 模式。
 
-评分方式: LLM 生成代码 → 执行 → pytest 验证 (pass/fail)。
-支持多轮迭代: 若 pytest 失败，把错误反馈给 LLM 让它修正，最多 MAX_TURNS 轮。
+评分方式: NanoBotAgent 在 workspace 中自主编写代码 → pytest 验证 (pass/fail)。
+支持多轮迭代: 若 pytest 失败，把错误反馈给 NanoBotAgent 让它修正，最多 MAX_TURNS 轮。
 
-工作流: 读 instruction.md → 调 LLM 获取代码 → 执行代码 → 若失败则把错误反馈
-→ LLM 修正 → 再执行 → 最多 max_turns 轮 → 跑 pytest 验证。
+工作流: 读 instruction.md → NanoBotAgent 在 workspace 中写文件/执行代码 →
+跑 pytest 验证 → 失败则反馈修正 → 最多 max_turns 轮。
 """
 from __future__ import annotations
 
 import json
 import os
-import re
 import shutil
 import subprocess
 import time
 from pathlib import Path
 
-from ..utils.api import call_llm
+from ..utils.nanobot import import_nanobot_agent
 from .base import BaseBenchmark
 
 # 需要 Docker 或特殊系统依赖的任务（跳过）
@@ -48,109 +47,6 @@ SKIP_TASKS = {
 }
 
 
-def _call_llm_multi(messages: list, config: dict, max_tokens: int = 8192, timeout: float = 180) -> str:
-    """调用 LLM 多轮对话接口，支持重试。底层复用 utils/api.call_llm。"""
-    return call_llm(messages, config, max_tokens=max_tokens, timeout=timeout)
-
-
-def _extract_files(response: str) -> dict:
-    """从 LLM 响应中提取文件内容，返回 {文件名: 内容}。
-
-    支持三种格式:
-    1. ```language\\n# filename\\ncontent```
-    2. ### filename.py\\n```\\ncontent```
-    3. File: filename.py\\n```\\ncontent```
-    """
-    files = {}
-    ext_pat = r"(?:py|json|txt|csv|md|sh|yaml|yml|toml|cfg|ini|xml|html|css|js|ts|sql|r|R|jl|m|ipynb)"
-
-    # 模式1: ```language\n# filename\ncontent```
-    blocks = re.findall(r"```(?:\w*)\s*\n(.*?)```", response, re.DOTALL)
-    for block in blocks:
-        lines = block.strip().splitlines()
-        if not lines:
-            continue
-        first = lines[0].strip()
-        fname = None
-        for prefix in ["# ", "// ", "-- ", "<!-- ", "% "]:
-            if first.startswith(prefix):
-                candidate = first[len(prefix):].strip()
-                if re.match(r"^[\w/.-]+\.\w+$", candidate):
-                    fname = candidate
-                    break
-        if fname:
-            files[fname] = "\n".join(lines[1:])
-
-    # 模式2: 标题+代码块
-    pattern = rf"(?:###?\s+|[*]{{2}})([^\n*]+\.{ext_pat})[*]{{0,2}}\s*\n```(?:\w*)\s*\n(.*?)```"
-    for m in re.finditer(pattern, response, re.DOTALL):
-        fname = m.group(1).strip().strip("`")
-        files[fname] = m.group(2).strip()
-
-    # 模式3: File: filename\n```\ncontent```
-    pattern2 = rf"(?:File|Output|Create):\s*`?([^\n`]+\.{ext_pat})`?\s*\n```(?:\w*)\s*\n(.*?)```"
-    for m in re.finditer(pattern2, response, re.DOTALL | re.IGNORECASE):
-        fname = m.group(1).strip()
-        files[fname] = m.group(2).strip()
-
-    return files
-
-
-def _write_files(files: dict, workspace: Path):
-    """把提取的文件写入 workspace，处理 /root/ 前缀。"""
-    for fname, content in files.items():
-        clean_name = fname.lstrip("/")
-        if clean_name.startswith("root/"):
-            clean_name = clean_name[5:]
-        target = workspace / clean_name
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(content + "\n", encoding="utf-8")
-
-
-def _execute_scripts(workspace: Path, files: dict) -> str:
-    """执行 workspace 中的 Python 脚本，返回执行结果摘要。
-
-    先安装 requirements.txt（如果有），再执行 LLM 产出的 .py 文件，
-    收集所有 stdout/stderr 结果。
-    """
-    outputs = []
-    env = {**os.environ, "HOME": str(workspace)}
-
-    req_file = workspace / "requirements.txt"
-    if req_file.exists():
-        try:
-            proc = subprocess.run(
-                ["python3", "-m", "pip", "install", "-q", "-r", str(req_file)],
-                capture_output=True, text=True, timeout=120, env=env,
-            )
-            if proc.returncode != 0:
-                outputs.append(f"[pip install failed] {proc.stderr[-300:]}")
-        except Exception:
-            pass
-
-    py_scripts = [f for f in files.keys() if f.endswith(".py") and "test" not in f.lower()]
-    if not py_scripts:
-        py_scripts = [f.name for f in workspace.glob("*.py") if "test" not in f.name.lower()]
-
-    for script in py_scripts:
-        script_path = workspace / script
-        if not script_path.exists():
-            continue
-        try:
-            proc = subprocess.run(
-                ["python3", str(script_path)], cwd=workspace,
-                capture_output=True, text=True, timeout=120, env=env,
-            )
-            if proc.returncode != 0:
-                outputs.append(f"[{script} FAILED (rc={proc.returncode})]\nstdout: {proc.stdout[-500:]}\nstderr: {proc.stderr[-500:]}")
-            else:
-                outputs.append(f"[{script} OK]\nstdout: {proc.stdout[-300:]}")
-        except subprocess.TimeoutExpired:
-            outputs.append(f"[{script} TIMEOUT after 120s]")
-        except Exception as exc:
-            outputs.append(f"[{script} ERROR: {exc}]")
-
-    return "\n".join(outputs)
 
 
 def _run_pytest(workspace: Path, task_dir: Path) -> tuple:
@@ -258,11 +154,17 @@ class SkillsBench(BaseBenchmark):
 
     def _run_single_task(self, task_name: str, config: dict, tasks_dir: Path,
                          workspace_base: Path, max_turns: int = 3) -> dict:
-        """运行单个 SkillsBench 任务 (多轮 agent 模式)。
+        """运行单个 SkillsBench 任务 (NanoBotAgent 多轮模式)。
 
-        流程: 读 instruction.md → 列出 environment/ 文件 → 发送给 LLM →
-        提取文件 → 写入 workspace → 执行 → pytest → 失败则反馈修正
+        流程: 读 instruction.md → 复制 environment 文件到 workspace →
+        NanoBotAgent 在 workspace 中自主写文件/执行代码 → pytest 验证 →
+        失败则反馈给 agent 修正，最多 max_turns 轮。
+
+        NanoBotAgent 内置 WriteFile、Exec 等 tools，可直接在 workspace 中操作，
+        无需手动从 LLM 回复中提取代码。
         """
+        NanoBotAgent = import_nanobot_agent()
+
         task_dir = tasks_dir / task_name
         instruction = (task_dir / "instruction.md").read_text(encoding="utf-8")
 
@@ -271,103 +173,53 @@ class SkillsBench(BaseBenchmark):
             shutil.rmtree(workspace)
         workspace.mkdir(parents=True)
 
-        # 复制 environment/ 下的文件
-        env_dir = task_dir / "environment"
-        input_files_info = []
-        if env_dir.exists():
-            for f in env_dir.rglob("*"):
-                if f.is_file() and f.name != "Dockerfile":
-                    rel = f.relative_to(env_dir)
-                    dst = workspace / rel
-                    dst.parent.mkdir(parents=True, exist_ok=True)
-                    shutil.copy2(f, dst)
-                    size = f.stat().st_size
-                    input_files_info.append(f"  {rel} ({size} bytes)")
-                    if size < 5000 and f.suffix in ('.txt', '.csv', '.json', '.yaml', '.yml', '.md', '.py', '.cfg', '.ini', '.toml'):
-                        try:
-                            content = f.read_text(encoding="utf-8")
-                            input_files_info.append(f"    Content:\n{content[:2000]}")
-                        except Exception:
-                            pass
+        # 复制 environment/ 下的文件到 workspace
+        self._setup_workspace(task_dir, workspace)
 
-        input_files_str = "\n".join(input_files_info) if input_files_info else "  (no input files)"
+        agent = NanoBotAgent(model=config["model"], api_url=config["api_url"],
+                             api_key=config["api_key"], workspace=workspace, timeout=300)
 
-        system_msg = """You are an expert programmer solving a coding task in an iterative environment.
-
-RULES:
-- The working directory is /root/ (I will execute your code there)
-- Write ALL files needed to produce the required outputs
-- For each file, format as: ### filename.py\n```python\n<complete code>\n```
-- Install any needed pip packages by including: ### requirements.txt\n```\npackage1\npackage2\n```
-- Your code will be EXECUTED. Make sure it runs correctly with real data.
-- If I show you errors, fix them and provide the COMPLETE corrected files (not just the diff)."""
-
-        user_msg = f"""Solve this programming task.
-
-TASK INSTRUCTIONS:
-{instruction}
-
-INPUT FILES in /root/:
-{input_files_str}
-
-Write the complete solution. All output files must be created by your code at the paths specified in the instructions."""
-
-        messages = [
-            {"role": "system", "content": system_msg},
-            {"role": "user", "content": user_msg},
-        ]
-
-        all_files = {}
+        prompt = (
+            f"Complete this programming task in the workspace {workspace}.\n\n"
+            f"TASK INSTRUCTIONS:\n{instruction}\n\n"
+            f"Use the tools to write files and execute code directly in the workspace. "
+            f"All output files must be created at the paths specified in the instructions."
+        )
 
         for turn in range(max_turns):
-            response = _call_llm_multi(messages, config, max_tokens=4096)
-            if response.startswith("ERROR:"):
-                return {"task": task_name, "status": "error", "error": response, "turns": turn + 1}
+            try:
+                result = agent.execute(prompt, session_id=f"skills_{task_name}_t{turn}")
+            except Exception as e:
+                return {"task": task_name, "status": "error", "error": str(e)[:500], "turns": turn + 1}
 
-            messages.append({"role": "assistant", "content": response})
-
-            files = _extract_files(response)
-            if not files:
-                code_blocks = re.findall(r"```(?:python|py)?\s*\n(.*?)```", response, re.DOTALL)
-                if code_blocks:
-                    main_code = max(code_blocks, key=len)
-                    files["solution.py"] = main_code.strip()
-                json_blocks = re.findall(r"```(?:json)?\s*\n(\{.*?\})```", response, re.DOTALL)
-                for jb in json_blocks:
-                    for guess in ["answer.json", "output.json", "result.json", "results.json"]:
-                        if guess in instruction.lower():
-                            files[guess] = jb.strip()
-                            break
-
-            all_files.update(files)
-            _write_files(files, workspace)
-
-            exec_output = _execute_scripts(workspace, files)
-            passed, test_output = _run_pytest(workspace, task_dir)
-
+            # Harness 负责最终 pytest 验证
+            passed, test_output = self._run_pytest(workspace, task_dir)
             if passed:
-                return {"task": task_name, "status": "passed", "turns": turn + 1,
-                        "files_written": list(all_files.keys())}
+                return {"task": task_name, "status": "passed", "turns": turn + 1}
 
+            # pytest 失败 → 反馈给 agent
             if turn < max_turns - 1:
-                workspace_files = _list_workspace_files(workspace)
-                feedback = f"""Your code was executed but the tests FAILED. Here's what happened:
-
-EXECUTION OUTPUT:
-{exec_output[-2000:] if exec_output else "(no script output)"}
-
-PYTEST OUTPUT:
-{test_output[-2000:]}
-
-FILES IN WORKSPACE:
-{workspace_files}
-
-Please fix the issues and provide the COMPLETE corrected files."""
-                messages.append({"role": "user", "content": feedback})
+                workspace_files = self._list_workspace_files(workspace)
+                prompt = (
+                    f"The tests FAILED. Fix the code in the workspace.\n\n"
+                    f"PYTEST OUTPUT:\n{test_output[-2000:]}\n\n"
+                    f"FILES IN WORKSPACE:\n{workspace_files}"
+                )
 
         return {"task": task_name, "status": "failed", "turns": max_turns,
-                "stdout": test_output[-1000:], "exec_output": exec_output[-500:],
-                "files_written": list(all_files.keys())}
+                "test_output": test_output[-1000:]}
+
+    def _setup_workspace(self, task_dir: Path, workspace: Path):
+        """复制 environment/ 下的文件到 workspace（排除 Dockerfile）。"""
+        env_dir = task_dir / "environment"
+        if not env_dir.exists():
+            return
+        for f in env_dir.rglob("*"):
+            if f.is_file() and f.name != "Dockerfile":
+                rel = f.relative_to(env_dir)
+                dst = workspace / rel
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(f, dst)
 
     def collect(self, model_key: str) -> dict | None:
         result_dir = self._find_result_dir("skillsbench")

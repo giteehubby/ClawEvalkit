@@ -12,37 +12,10 @@ from __future__ import annotations
 import json
 import os
 import shutil
-import sys
 from pathlib import Path
 
+from ..utils.nanobot import import_nanobot_agent
 from .base import BaseBenchmark
-
-
-def _import_nanobot_agent():
-    """从 OpenClawPro 导入 NanoBotAgent。"""
-    try:
-        from openclawpro.harness.agent import NanoBotAgent
-        return NanoBotAgent
-    except ImportError:
-        pass
-
-    candidates = [
-        os.getenv("OPENCLAWPRO_DIR"),
-        str(Path(__file__).parent.parent.parent / "OpenClawPro"),
-    ]
-    for path_str in candidates:
-        if not path_str:
-            continue
-        p = Path(path_str)
-        if (p / "harness" / "agent" / "nanobot.py").exists():
-            if str(p) not in sys.path:
-                sys.path.insert(0, str(p))
-            from harness.agent.nanobot import NanoBotAgent
-            return NanoBotAgent
-
-    raise ImportError(
-        "NanoBotAgent not found. Install OpenClawPro or set OPENCLAWPRO_DIR env var."
-    )
 
 
 class WildClawBench(BaseBenchmark):
@@ -59,7 +32,7 @@ class WildClawBench(BaseBenchmark):
         3. 使用 Judge Model 对执行轨迹进行评分
         4. 汇总所有任务的评分，返回平均分
         """
-        NanoBotAgent = _import_nanobot_agent()
+        NanoBotAgent = import_nanobot_agent()
         from clawevalkit.grading import run_judge_eval
 
         tasks = self._load_tasks()

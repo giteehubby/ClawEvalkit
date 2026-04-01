@@ -12,9 +12,9 @@ from __future__ import annotations
 import json
 import os
 import shutil
-import sys
 from pathlib import Path
 
+from ..utils.nanobot import import_nanobot_agent
 from .base import BaseBenchmark
 
 RUNNABLE_IDS = [
@@ -23,39 +23,6 @@ RUNNABLE_IDS = [
     "zcb_076", "zcb_078", "zcb_082", "zcb_083",
     "zcb_053", "zcb_055", "zcb_066", "zcb_088",
 ]
-
-
-def _import_nanobot_agent():
-    """从 OpenClawPro 导入 NanoBotAgent。
-
-    优先使用已安装的 openclawpro 包，
-    否则通过 OPENCLAWPRO_DIR 环境变量或仓库内子模块路径导入。
-    """
-    try:
-        from openclawpro.harness.agent import NanoBotAgent
-        return NanoBotAgent
-    except ImportError:
-        pass
-
-    # 尝试子模块路径: ClawEvalKit/OpenClawPro/
-    candidates = [
-        os.getenv("OPENCLAWPRO_DIR"),
-        str(Path(__file__).parent.parent.parent / "OpenClawPro"),
-    ]
-    for path_str in candidates:
-        if not path_str:
-            continue
-        p = Path(path_str)
-        if (p / "harness" / "agent" / "nanobot.py").exists():
-            if str(p) not in sys.path:
-                sys.path.insert(0, str(p))
-            from harness.agent.nanobot import NanoBotAgent
-            return NanoBotAgent
-
-    raise ImportError(
-        "NanoBotAgent not found. Install OpenClawPro or set OPENCLAWPRO_DIR env var.\n"
-        "  pip install openclawpro   OR   export OPENCLAWPRO_DIR=/path/to/OpenClawPro"
-    )
 
 
 class ZClawBench(BaseBenchmark):
@@ -72,7 +39,7 @@ class ZClawBench(BaseBenchmark):
         3. 使用 Judge Model 对执行轨迹进行评分
         4. 汇总所有任务的评分，返回平均分
         """
-        NanoBotAgent = _import_nanobot_agent()
+        NanoBotAgent = import_nanobot_agent()
         from clawevalkit.grading import run_judge_eval
 
         tasks = self._load_tasks()
