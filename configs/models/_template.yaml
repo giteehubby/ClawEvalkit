@@ -1,0 +1,18 @@
+# Template for adding custom models
+# Copy this file and fill in your model details.
+#
+# Required fields:
+#   name:        Display name for the model
+#   api_url:     Base URL of the API endpoint (OpenAI-compatible)
+#   api_key_env: Name of the environment variable holding the API key
+#   model:       Model identifier (endpoint ID or model name)
+#   provider:    One of: ark, gpt_proxy, openrouter, openai
+#
+# Example:
+#
+# my-model:
+#   name: My Custom Model
+#   api_url: https://api.example.com/v1
+#   api_key_env: MY_API_KEY
+#   model: my-model-v1
+#   provider: openai

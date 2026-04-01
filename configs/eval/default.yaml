@@ -1,0 +1,13 @@
+# Default evaluation config — all 8 benchmarks, full tasks
+benchmarks:
+  - zclawbench
+  - wildclawbench
+  - clawbench-official
+  - pinchbench
+  - agentbench
+  - skillbench
+  - skillsbench
+  - tribe
+
+default_model: claude-sonnet
+sample: 0  # 0 = all tasks

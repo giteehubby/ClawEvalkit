@@ -1,9 +1,0 @@
-version: '3.8'
-
-services:
-  claude-code-baseline:
-    build: .
-    container_name: claude_code_evaluation
-    environment:
-      - MP_API_KEY=${MP_API_KEY}
-      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}

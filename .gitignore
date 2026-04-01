@@ -27,17 +27,35 @@ conda-envs/
 *.swo
 *~
 
-# NanoBot / benchmark artifacts
-work/nanopro/artifacts/
-work/nanopro/results/
-work/nanopro/output/
+# ClawEvalKit outputs (regenerated at runtime)
+outputs/
+
+# Environment files
+.env
+
+# Internal symlinks & tools (not part of the package)
+0001_utils
+
+# Claude Code internal
+.claude/
+
+# Internal artifacts (not for distribution)
+useless/
+paper/
+assets/log/
+assets/output/
+
+# Benchmark data (large files excluded)
+benchmarks/**/environment/*.zip
+benchmarks/**/environment/*.tar.gz
+benchmarks/**/environment/*.mp4
+benchmarks/**/environment/*.pdf
+benchmarks/**/skill_matcher/indexes/embeddings.npy
+benchmarks/**/skills-research/skill_embeddings*.npy
+benchmarks/**/skills-research/skill_embeddings*.npz
 
 # Transcript files
 *.jsonl
-
-# Results
-*.json
-!task.yaml
 
 # Logs
 *.log
@@ -46,18 +64,6 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
-
-# Large data files (benchmark data that should be downloaded, not committed)
-# These are typically downloaded at runtime; do not track them if untracked
-work/nanopro/benchmarks/**/environment/*.zip
-work/nanopro/benchmarks/**/environment/*.tar.gz
-work/nanopro/benchmarks/**/environment/*.mp4
-work/nanopro/benchmarks/**/environment/*.pdf
-
-# Embedding indexes (regenerate at runtime)
-work/nanopro/benchmarks/**/skill_matcher/indexes/embeddings.npy
-work/nanopro/benchmarks/**/skills-research/skill_embeddings*.npy
-work/nanopro/benchmarks/**/skills-research/skill_embeddings*.npz
 
 # Downloaded/cached models
 *.gguf

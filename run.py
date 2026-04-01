@@ -1,0 +1,100 @@
+#!/usr/bin/env python3
+"""
+ClawEvalKit — 8-Benchmark Agent Evaluation Toolkit
+
+Unified evaluation entry point (VLMEvalKit style).
+  - clawevalkit/dataset/  每个 benchmark 独立一个文件
+  - configs/models/       YAML 模型配置 (OpenCompass style)
+
+Usage:
+  python3 run.py                                    # 全量: 所有 bench × claude-sonnet
+  python3 run.py --model claude-opus                   # 指定模型
+  python3 run.py --bench tribe,pinchbench           # 指定 bench
+  python3 run.py --bench tribe --model claude-sonnet     # 单个 bench × 单个模型
+  python3 run.py --sample 5                         # 每 bench 采样 5 个任务
+  python3 run.py --summary                          # 只汇总已有结果 (不重新跑)
+  python3 run.py --list                             # 列出所有 bench 和模型
+
+8 Benchmarks:
+  zclawbench        ZClawBench Subset     18 tasks   NanoBotAgent + Judge (0~1)
+  wildclawbench     WildClawBench         10 tasks   NanoBotAgent + Judge (0~1)
+  clawbench-official ClawBench Official   250 tasks  ReAct + Pytest (0~100)
+  pinchbench        PinchBench            23 tasks   Rule-based (0~100)
+  agentbench        AgentBench-OpenClaw   40 tasks   L0+L1 (0~100)
+  skillbench        SkillBench            22 tasks   Harness + Pytest (%)
+  skillsbench       SkillsBench           56+ tasks  LLM + Pytest (%)
+  tribe             Claw-Bench-Tribe      8 tasks    Pure LLM (0~100)
+"""
+import argparse
+import sys
+from pathlib import Path
+
+# 确保包可导入
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from clawevalkit.config import load_env, list_models, MODELS
+from clawevalkit.dataset import BENCHMARKS, list_benchmarks
+from clawevalkit.inference import infer_all
+from clawevalkit.summarizer import Summarizer
+from clawevalkit.utils.log import log
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="ClawEvalKit — 8-Benchmark Agent Evaluation Toolkit",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="Example: python3 run.py --bench tribe --model claude-sonnet",
+    )
+    parser.add_argument("--bench", "-b", help="Comma-separated benchmark keys (default: all)")
+    parser.add_argument("--model", "-m", default="claude-sonnet", help="Comma-separated model keys (default: claude-sonnet)")
+    parser.add_argument("--sample", "-s", type=int, default=0, help="Sample N tasks per bench (0=all)")
+    parser.add_argument("--summary", action="store_true", help="Only print summary of existing results")
+    parser.add_argument("--list", action="store_true", help="List available benchmarks and models")
+    parser.add_argument("--force", action="store_true", help="Force re-evaluation (ignore cache)")
+    parser.add_argument("--env", help="Path to .env file (default: auto-detect)")
+    args = parser.parse_args()
+
+    # 加载环境变量
+    load_env(args.env)
+
+    if args.list:
+        print("\n  Available Benchmarks:")
+        for key, name, count in list_benchmarks():
+            print(f"    {key:22s} {name:25s} ({count} tasks)")
+        print("\n  Available Models:")
+        for key, name, provider in list_models():
+            print(f"    {key:22s} {name:25s} [{provider}]")
+        print()
+        return
+
+    summarizer = Summarizer()
+
+    if args.summary:
+        summarizer.summary()
+        return
+
+    # 解析 bench 和 model
+    bench_keys = args.bench.split(",") if args.bench else list(BENCHMARKS.keys())
+    model_keys = args.model.split(",") if args.model else ["claude-sonnet"]
+
+    for bk in bench_keys:
+        if bk not in BENCHMARKS:
+            print(f"Unknown benchmark: {bk}. Use --list to see available benchmarks.")
+            sys.exit(1)
+    for mk in model_keys:
+        if mk not in MODELS:
+            print(f"Unknown model: {mk}. Use --list to see available models.")
+            sys.exit(1)
+
+    log(f"Config: bench={bench_keys}, models={model_keys}, sample={args.sample or 'all'}")
+
+    # 执行评测
+    infer_all(bench_keys, model_keys, sample=args.sample, force=args.force)
+
+    # 打印汇总
+    log("\n")
+    summarizer.summary()
+
+
+if __name__ == "__main__":
+    main()

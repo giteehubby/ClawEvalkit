@@ -1,0 +1,7 @@
+# Quick evaluation config — lightweight benchmarks for CI/testing
+benchmarks:
+  - tribe
+  - pinchbench
+
+default_model: claude-sonnet
+sample: 5

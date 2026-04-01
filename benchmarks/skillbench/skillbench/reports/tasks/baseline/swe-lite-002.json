@@ -1,0 +1,20 @@
+{
+  "task_id": "swe-lite-002",
+  "mode": "baseline",
+  "pack": "coding/swe-lite",
+  "skill": null,
+  "agent_cmd": "python3 -m harness.agents.ark_adapter",
+  "agent_status": 2,
+  "skill_name": null,
+  "skill_description": null,
+  "skill_names": [],
+  "skill_count": 0,
+  "status": "failed",
+  "exit_code": 1,
+  "runtime_s": 0.132,
+  "stdout": "",
+  "stderr": "FF\n======================================================================\nFAIL: test_slugify_punct (test_string_utils.TestStringUtils.test_slugify_punct)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/tmp/skillbench/swe-lite-002/baseline/tests/test_string_utils.py\", line 11, in test_slugify_punct\n    self.assertEqual(slugify(\"Hello, World!!!\"), \"hello-world\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'helloworld' != 'hello-world'\n- helloworld\n+ hello-world\n?      +\n\n\n======================================================================\nFAIL: test_slugify_spaces (test_string_utils.TestStringUtils.test_slugify_spaces)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/tmp/skillbench/swe-lite-002/baseline/tests/test_string_utils.py\", line 8, in test_slugify_spaces\n    self.assertEqual(slugify(\"Hello World\"), \"hello-world\")\n    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'helloworld' != 'hello-world'\n- helloworld\n+ hello-world\n?      +\n\n\n----------------------------------------------------------------------\nRan 2 tests in 0.001s\n\nFAILED (failures=2)\n",
+  "agent_timeout_s": 374,
+  "agent_stdout": "",
+  "agent_stderr": "patch failed: patch: **** malformed patch at line 12:\n"
+}
