@@ -21,3 +21,10 @@ gemini-3.1-pro:
   api_key_env: OPENROUTER_API_KEY
   model: google/gemini-3.1-pro-preview
   provider: openrouter
+
+gemini-2.5-flash:
+  name: Gemini 2.5 Flash
+  api_url: https://openrouter.ai/api/v1
+  api_key_env: OPENROUTER_API_KEY
+  model: google/gemini-2.5-flash
+  provider: openrouter

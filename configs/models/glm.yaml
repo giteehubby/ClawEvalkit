@@ -1,0 +1,8 @@
+# GLM-4.7 (Anthropic-compatible API from ZhipuAI)
+# Note: requires sufficient balance on ZhipuAI account
+glm-4.7:
+  name: GLM 4.7
+  api_url: https://open.bigmodel.cn/api/anthropic
+  api_key_env: GLM_API_KEY
+  model: glm-4.7
+  provider: glm
