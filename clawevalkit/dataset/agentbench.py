@@ -51,9 +51,10 @@ class AgentBench(BaseBenchmark):
             # 准备输入文件
             task_dir = Path(task["yaml_path"]).parent
             for inp in cfg.get("input_files", []):
-                src = task_dir / inp
+                fname = inp["name"] if isinstance(inp, dict) else inp
+                src = task_dir / fname
                 if src.exists():
-                    dst = workspace / inp
+                    dst = workspace / fname
                     dst.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy2(src, dst)
 
