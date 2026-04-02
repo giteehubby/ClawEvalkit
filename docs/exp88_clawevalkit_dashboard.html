@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClawEvalKit Dashboard — exp88_AwesomeSkill</title>
+<style>
+:root {
+  --bg: #0f1117;
+  --surface: #1a1d27;
+  --surface2: #22263a;
+  --border: #2a2e3f;
+  --text: #e4e6f0;
+  --text-dim: #8b8fa3;
+  --accent: #6c5ce7;
+  --accent2: #00cec9;
+  --success: #00b894;
+  --warning: #fdcb6e;
+  --danger: #e17055;
+  --blue: #74b9ff;
+  --purple: #a29bfe;
+  --pink: #fd79a8;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; line-height: 1.6; }
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, #2d1b69 0%, #11998e 100%);
+  padding: 40px 32px 28px;
+  text-align: center;
+}
+.header h1 { font-size: 2em; font-weight: 700; margin-bottom: 8px; }
+.header .subtitle { color: rgba(255,255,255,0.75); font-size: 1.05em; }
+.header .meta { margin-top: 12px; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+.header .meta span { background: rgba(255,255,255,0.15); padding: 4px 14px; border-radius: 20px; font-size: 0.85em; }
+
+/* Tabs */
+.tabs { display: flex; background: var(--surface); border-bottom: 1px solid var(--border); overflow-x: auto; }
+.tab-btn { padding: 14px 24px; cursor: pointer; border: none; background: none; color: var(--text-dim); font-size: 0.95em; white-space: nowrap; transition: all 0.2s; border-bottom: 3px solid transparent; }
+.tab-btn:hover { color: var(--text); background: var(--surface2); }
+.tab-btn.active { color: var(--accent2); border-bottom-color: var(--accent2); }
+.tab-content { display: none; padding: 28px 32px; max-width: 1200px; margin: 0 auto; }
+.tab-content.active { display: block; }
+
+/* Cards */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+.card h3 { font-size: 1.15em; margin-bottom: 12px; color: var(--accent2); }
+.tldr { background: linear-gradient(135deg, rgba(108,92,231,0.15), rgba(0,206,201,0.1)); border: 1px solid rgba(108,92,231,0.3); border-radius: 10px; padding: 16px 20px; margin-bottom: 24px; }
+.tldr strong { color: var(--accent2); }
+
+/* Stats row */
+.stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stat-card { background: var(--surface2); border-radius: 10px; padding: 20px; text-align: center; }
+.stat-card .value { font-size: 2em; font-weight: 700; color: var(--accent2); }
+.stat-card .label { font-size: 0.85em; color: var(--text-dim); margin-top: 4px; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--surface2); color: var(--text-dim); font-weight: 600; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.5px; }
+td { font-size: 0.95em; }
+tr:hover td { background: rgba(108,92,231,0.08); }
+.score-high { color: var(--success); font-weight: 700; }
+.score-mid { color: var(--warning); font-weight: 600; }
+.score-low { color: var(--danger); font-weight: 600; }
+.score-na { color: var(--text-dim); }
+
+/* Bar chart */
+.bar-chart { margin: 20px 0; }
+.bar-row { display: flex; align-items: center; margin-bottom: 10px; }
+.bar-label { width: 180px; font-size: 0.9em; color: var(--text-dim); text-align: right; padding-right: 14px; flex-shrink: 0; }
+.bar-track { flex: 1; height: 28px; background: var(--surface2); border-radius: 6px; position: relative; overflow: visible; }
+.bar-fill { height: 100%; border-radius: 6px; transition: width 0.6s ease; min-width: 2px; }
+.bar-value { position: absolute; right: -50px; top: 50%; transform: translateY(-50%); font-size: 0.85em; font-weight: 600; width: 48px; text-align: left; }
+
+/* Flow */
+.flow-row { display: flex; align-items: center; gap: 0; margin: 24px 0; flex-wrap: wrap; justify-content: center; }
+.flow-step { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; min-width: 140px; text-align: center; }
+.flow-step .step-num { font-size: 0.75em; color: var(--accent); text-transform: uppercase; font-weight: 700; }
+.flow-step .step-text { font-size: 0.9em; margin-top: 4px; }
+.flow-arrow { font-size: 1.5em; color: var(--accent); padding: 0 8px; }
+
+/* Code block */
+.code-block { background: #0d1117; border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-family: 'Fira Code', 'Consolas', monospace; font-size: 0.85em; overflow-x: auto; white-space: pre; line-height: 1.7; color: #c9d1d9; }
+.code-comment { color: #8b949e; }
+.code-keyword { color: #ff7b72; }
+.code-string { color: #a5d6ff; }
+.code-func { color: #d2a8ff; }
+
+/* Timeline */
+.timeline { position: relative; padding-left: 32px; }
+.timeline::before { content: ''; position: absolute; left: 12px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.timeline-item { position: relative; margin-bottom: 28px; }
+.timeline-item::before { content: ''; position: absolute; left: -26px; top: 6px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--accent2); background: var(--bg); }
+.timeline-item.completed::before { background: var(--success); border-color: var(--success); }
+.timeline-item .tl-date { font-size: 0.8em; color: var(--text-dim); }
+.timeline-item .tl-title { font-weight: 600; margin: 4px 0; }
+.timeline-item .tl-desc { font-size: 0.9em; color: var(--text-dim); }
+
+/* Tag */
+.tag { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.78em; font-weight: 600; margin: 2px 4px 2px 0; }
+.tag-nanobot { background: rgba(0,206,201,0.2); color: var(--accent2); }
+.tag-pytest { background: rgba(116,185,255,0.2); color: var(--blue); }
+.tag-judge { background: rgba(162,155,254,0.2); color: var(--purple); }
+.tag-rule { background: rgba(253,203,110,0.2); color: var(--warning); }
+.tag-exec { background: rgba(253,121,168,0.2); color: var(--pink); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header { padding: 24px 16px; }
+  .tab-content { padding: 16px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .bar-label { width: 120px; font-size: 0.8em; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>ClawEvalKit Dashboard</h1>
+  <div class="subtitle">exp88_AwesomeSkill — 统一 Agent 评测框架</div>
+  <div class="meta">
+    <span>8 Benchmarks</span>
+    <span>427+ Tasks</span>
+    <span>NanoBotAgent 统一引擎</span>
+    <span>2026-04-01</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('overview')">总览</button>
+  <button class="tab-btn" onclick="switchTab('benchmarks')">Benchmark 详情</button>
+  <button class="tab-btn" onclick="switchTab('architecture')">架构设计</button>
+  <button class="tab-btn" onclick="switchTab('migration')">NanoBotAgent 迁移</button>
+  <button class="tab-btn" onclick="switchTab('results')">评测结果</button>
+  <button class="tab-btn" onclick="switchTab('timeline')">推进历程</button>
+  <button class="tab-btn" onclick="switchTab('todo')">未来计划</button>
+</div>
+
+<!-- ==================== Tab 1: Overview ==================== -->
+<div id="tab-overview" class="tab-content active">
+  <div class="tldr">
+    <strong>TLDR:</strong> ClawEvalKit 将 8 个异构 Agent benchmark 统一到一个框架中，全部使用 NanoBotAgent 作为推理引擎。已完成代码迁移和验证（Seed 1.8 在 Tribe benchmark 上 100.0 分），仓库已推送至 GitHub。
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="value">8</div>
+      <div class="label">Benchmarks</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">427+</div>
+      <div class="label">Total Tasks</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">1,480</div>
+      <div class="label">Lines of Code</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">100%</div>
+      <div class="label">NanoBotAgent Coverage</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">13</div>
+      <div class="label">Unit Tests</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>评测矩阵 (已有数据)</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Tribe (8)</th>
+          <th>PinchBench (23)</th>
+          <th>AgentBench (40)</th>
+          <th>ZClawBench (18)</th>
+          <th>WildClaw (10)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Seed 1.8</td>
+          <td class="score-high">100.0</td>
+          <td class="score-na">—</td>
+          <td class="score-na">—</td>
+          <td class="score-mid">0.476</td>
+          <td class="score-high">0.735</td>
+        </tr>
+        <tr>
+          <td>Claude Opus 4.6</td>
+          <td class="score-na">—</td>
+          <td class="score-high">86.3*</td>
+          <td class="score-mid">68.2</td>
+          <td class="score-na">—</td>
+          <td class="score-na">—</td>
+        </tr>
+        <tr>
+          <td>Claude Sonnet 4.6</td>
+          <td class="score-low">25.0†</td>
+          <td class="score-high">86.9*</td>
+          <td class="score-mid">69.2</td>
+          <td class="score-mid">0.623</td>
+          <td class="score-mid">0.441</td>
+        </tr>
+        <tr>
+          <td>Gemini 2.5 Pro</td>
+          <td class="score-na">—</td>
+          <td class="score-mid">61.4*</td>
+          <td class="score-mid">63.6</td>
+          <td class="score-na">—</td>
+          <td class="score-na">—</td>
+        </tr>
+        <tr>
+          <td>GPT-4o</td>
+          <td class="score-na">—</td>
+          <td class="score-mid">64.7*</td>
+          <td class="score-na">—</td>
+          <td class="score-na">—</td>
+          <td class="score-na">—</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.82em;color:var(--text-dim);margin-top:10px;">
+      * = 官方分数 (Official Scores)&emsp;† = OpenRouter key 额度用尽，结果不可信&emsp;— = 未评测
+    </p>
+  </div>
+</div>
+
+<!-- ==================== Tab 2: Benchmark Details ==================== -->
+<div id="tab-benchmarks" class="tab-content">
+  <div class="tldr">
+    <strong>TLDR:</strong> 8 个 benchmark 覆盖纯推理、代码生成、文件操作、安全对齐等多个维度。任务数从 8 到 250 不等，评分方式各异但推理引擎已统一。
+  </div>
+
+  <div class="card">
+    <h3>Tribe — 纯 LLM 推理 (8 tasks)</h3>
+    <p style="margin-bottom:12px;">测试模型的基础推理能力：数学计算、指令遵循、JSON 输出、对抗输入等。</p>
+    <table>
+      <thead><tr><th>Task ID</th><th>Description</th><th>Check</th></tr></thead>
+      <tbody>
+        <tr><td>basic_chat</td><td>15+27=42</td><td><span class="tag tag-rule">规则匹配</span></td></tr>
+        <tr><td>reasoning_math</td><td>4×2+5×3=23</td><td><span class="tag tag-rule">规则匹配</span></td></tr>
+        <tr><td>instruction_following</td><td>精确输出指定文本</td><td><span class="tag tag-rule">精确匹配</span></td></tr>
+        <tr><td>reasoning_tags</td><td>144/12=12, 无标签</td><td><span class="tag tag-rule">规则匹配</span></td></tr>
+        <tr><td>response_quality</td><td>结构化 Markdown 输出</td><td><span class="tag tag-rule">格式检查</span></td></tr>
+        <tr><td>complex_instructions</td><td>多步指令 7×8+6=62</td><td><span class="tag tag-rule">规则匹配</span></td></tr>
+        <tr><td>json_output</td><td>合法 JSON 输出</td><td><span class="tag tag-rule">JSON 校验</span></td></tr>
+        <tr><td>adversarial_input</td><td>2+2=4 (抗干扰)</td><td><span class="tag tag-rule">规则匹配</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>PinchBench — 规则评分 (23 tasks)</h3>
+    <p style="margin-bottom:12px;">每个 task 是一个 markdown 文件，包含 YAML frontmatter、Prompt 和内嵌的 Python <code>grade()</code> 函数。NanoBotAgent 在隔离 workspace 中执行，然后 <code>exec()</code> 运行 grade 函数评分。</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <span class="tag tag-nanobot">NanoBotAgent</span>
+      <span class="tag tag-exec">exec(grade)</span>
+      <span class="tag tag-rule">0-100 分</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>AgentBench-OpenClaw — L0+L1 评分 (40 tasks)</h3>
+    <p style="margin-bottom:12px;">基于 OpenClaw 的 agent benchmark，使用 NanoBotAgent CLI 执行，L0 规则评分 + L1 指标评分。</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <span class="tag tag-nanobot">NanoBotAgent CLI</span>
+      <span class="tag tag-rule">L0 Rules</span>
+      <span class="tag tag-judge">L1 Metrics</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>SkillBench — Harness + Pytest (22 tasks)</h3>
+    <p style="margin-bottom:12px;">通过 harness CLI 调度，NanoBotAgent 在 repo 中直接读写文件修复 bug，pytest 验证通过率。</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <span class="tag tag-nanobot">nanobot_adapter</span>
+      <span class="tag tag-pytest">Pytest</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>SkillsBench — 多轮代码生成 (56+ tasks)</h3>
+    <p style="margin-bottom:12px;">NanoBotAgent 在 workspace 中自主编写代码（WriteFile, Exec），外部 pytest 验证，最多 3 轮反馈循环。</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <span class="tag tag-nanobot">NanoBotAgent</span>
+      <span class="tag tag-pytest">Pytest (3 turns)</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>ZClawBench — LLM Judge (18 tasks) &amp; WildClawBench — 安全对齐 (10 tasks)</h3>
+    <p style="margin-bottom:12px;">NanoBotAgent 在 workspace 执行后，由 LLM Judge (Claude Sonnet) 对输出进行 0-1 评分。WildClawBench 侧重安全和对齐。</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <span class="tag tag-nanobot">NanoBotAgent</span>
+      <span class="tag tag-judge">LLM Judge</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>ClawBench Official — ReAct Agent (250 tasks)</h3>
+    <p style="margin-bottom:12px;">官方 ClawBench 的完整 250 任务评测，使用 OpenClawAdapter (ReAct Agent) + Pytest 验证。</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <span class="tag tag-nanobot">OpenClawAdapter</span>
+      <span class="tag tag-pytest">Pytest</span>
+      <span class="tag tag-rule">0-100 分</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Tab 3: Architecture ==================== -->
+<div id="tab-architecture" class="tab-content">
+  <div class="tldr">
+    <strong>TLDR:</strong> 分层架构 — run.py 入口层 → config 配置层 → dataset/benchmark 评测层 → NanoBotAgent 推理层 → utils 工具层。评分与推理完全解耦。
+  </div>
+
+  <div class="card">
+    <h3>数据流</h3>
+    <div class="flow-row">
+      <div class="flow-step">
+        <div class="step-num">Entry</div>
+        <div class="step-text">run.py<br><small style="color:var(--text-dim)">CLI 参数解析</small></div>
+      </div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">
+        <div class="step-num">Config</div>
+        <div class="step-text">config.py<br><small style="color:var(--text-dim)">YAML → MODELS dict</small></div>
+      </div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">
+        <div class="step-num">Dispatch</div>
+        <div class="step-text">inference.py<br><small style="color:var(--text-dim)">bench × model 调度</small></div>
+      </div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">
+        <div class="step-num">Evaluate</div>
+        <div class="step-text">dataset/*.py<br><small style="color:var(--text-dim)">8 个 Benchmark class</small></div>
+      </div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">
+        <div class="step-num">Agent</div>
+        <div class="step-text">NanoBotAgent<br><small style="color:var(--text-dim)">统一推理引擎</small></div>
+      </div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">
+        <div class="step-num">Output</div>
+        <div class="step-text">summarizer.py<br><small style="color:var(--text-dim)">结果汇总 + 表格</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>核心代码结构</h3>
+    <div class="code-block"><span class="code-comment"># clawevalkit/dataset/base.py — 所有 benchmark 的基类</span>
+<span class="code-keyword">class</span> <span class="code-func">BaseBenchmark</span>(ABC):
+    DISPLAY_NAME = <span class="code-string">""</span>
+    TASK_COUNT = 0
+    SCORE_RANGE = <span class="code-string">"0-100"</span>
+
+    <span class="code-keyword">def</span> <span class="code-func">evaluate</span>(self, model_key, config, sample=0, **kwargs) -> dict:
+        <span class="code-string">"""运行评测，返回 {"score": float, ...}"""</span>
+        ...
+
+    <span class="code-keyword">def</span> <span class="code-func">collect</span>(self, model_key) -> dict | None:
+        <span class="code-string">"""加载缓存结果"""</span>
+        ...
+
+<span class="code-comment"># clawevalkit/utils/nanobot.py — 共享 NanoBotAgent 导入</span>
+<span class="code-keyword">def</span> <span class="code-func">import_nanobot_agent</span>():
+    <span class="code-string">"""搜索优先级: pip 包 → OPENCLAWPRO_DIR → 仓库子目录"""</span>
+    <span class="code-keyword">try</span>:
+        <span class="code-keyword">from</span> openclawpro.harness.agent <span class="code-keyword">import</span> NanoBotAgent
+        <span class="code-keyword">return</span> NanoBotAgent
+    <span class="code-keyword">except</span> ImportError: <span class="code-keyword">pass</span>
+    <span class="code-comment"># ... fallback to local directory</span></div>
+  </div>
+
+  <div class="card">
+    <h3>NanoBotAgent 内置 Tools</h3>
+    <table>
+      <thead><tr><th>Tool</th><th>Description</th><th>Used By</th></tr></thead>
+      <tbody>
+        <tr><td><code>ReadFile</code></td><td>读取文件内容</td><td>所有 benchmark</td></tr>
+        <tr><td><code>WriteFile</code></td><td>创建/覆盖文件</td><td>skillsbench, skillbench, pinchbench</td></tr>
+        <tr><td><code>EditFile</code></td><td>精确编辑文件 (search & replace)</td><td>skillbench (nanobot_adapter)</td></tr>
+        <tr><td><code>ListDir</code></td><td>列出目录内容</td><td>所有 benchmark</td></tr>
+        <tr><td><code>Exec</code></td><td>执行 shell 命令</td><td>skillsbench, pinchbench</td></tr>
+        <tr><td><code>WebSearch</code></td><td>搜索互联网</td><td>zclawbench, wildclawbench</td></tr>
+        <tr><td><code>WebFetch</code></td><td>获取网页内容</td><td>zclawbench, wildclawbench</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== Tab 4: NanoBotAgent Migration ==================== -->
+<div id="tab-migration" class="tab-content">
+  <div class="tldr">
+    <strong>TLDR:</strong> 4 个 benchmark 从裸 API / subprocess / diff patch 迁移到 NanoBotAgent 统一引擎。核心变化：删除手动代码提取逻辑，让 Agent 自主操作文件。
+  </div>
+
+  <div class="card">
+    <h3>迁移对比</h3>
+    <table>
+      <thead>
+        <tr><th>Benchmark</th><th>迁移前</th><th>迁移后</th><th>删除代码</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>tribe</strong></td>
+          <td><code>call_llm()</code> 裸 API 调用</td>
+          <td><code>NanoBotAgent.execute().content</code></td>
+          <td>call_llm import</td>
+        </tr>
+        <tr>
+          <td><strong>skillsbench</strong></td>
+          <td>call_llm → regex 提取代码 → subprocess</td>
+          <td>NanoBotAgent 自主文件操作 + 外部 pytest</td>
+          <td>_call_llm_multi, _extract_files, _write_files, _execute_scripts</td>
+        </tr>
+        <tr>
+          <td><strong>skillbench</strong></td>
+          <td>ark_adapter 生成 diff patch → patch apply</td>
+          <td>nanobot_adapter 直接 ReadFile→EditFile</td>
+          <td>ark_adapter 引用</td>
+        </tr>
+        <tr>
+          <td><strong>pinchbench</strong></td>
+          <td>subprocess 调 benchmark.py (依赖缺失模块)</td>
+          <td>自主解析 task.md + NanoBotAgent + exec(grade)</td>
+          <td>subprocess 调用, 外部依赖</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>Tribe 迁移示例</h3>
+    <div class="code-block"><span class="code-comment"># === 迁移前 (call_llm 裸 API) ===</span>
+<span class="code-keyword">from</span> clawevalkit.utils.api <span class="code-keyword">import</span> call_llm
+response = <span class="code-func">call_llm</span>(
+    [{<span class="code-string">"role"</span>: <span class="code-string">"user"</span>, <span class="code-string">"content"</span>: test[<span class="code-string">"prompt"</span>]}],
+    config, max_tokens=2048
+)
+
+<span class="code-comment"># === 迁移后 (NanoBotAgent) ===</span>
+<span class="code-keyword">from</span> ..utils.nanobot <span class="code-keyword">import</span> import_nanobot_agent
+NanoBotAgent = <span class="code-func">import_nanobot_agent</span>()
+agent = <span class="code-func">NanoBotAgent</span>(
+    model=config[<span class="code-string">"model"</span>], api_url=config[<span class="code-string">"api_url"</span>],
+    api_key=config[<span class="code-string">"api_key"</span>], workspace=workspace, timeout=60
+)
+result = agent.<span class="code-func">execute</span>(test[<span class="code-string">"prompt"</span>], session_id=<span class="code-string">f"tribe_{model_key}_{test['id']}"</span>)
+response = result.content <span class="code-keyword">or</span> <span class="code-string">""</span></div>
+  </div>
+
+  <div class="card">
+    <h3>SkillsBench 迁移 — 最大变化</h3>
+    <p style="margin-bottom:12px;">迁移前需要 4 个辅助函数手动处理代码提取和执行，迁移后全部由 NanoBotAgent 内置 tools 替代：</p>
+    <div class="code-block"><span class="code-comment"># 删除的函数 (由 NanoBotAgent 内置 tools 替代)</span>
+<span class="code-keyword">def</span> <span class="code-func">_call_llm_multi</span>()    <span class="code-comment"># → NanoBotAgent.execute()</span>
+<span class="code-keyword">def</span> <span class="code-func">_extract_files</span>()    <span class="code-comment"># → NanoBotAgent 用 WriteFile 直接写</span>
+<span class="code-keyword">def</span> <span class="code-func">_write_files</span>()      <span class="code-comment"># → NanoBotAgent 用 WriteFile 直接写</span>
+<span class="code-keyword">def</span> <span class="code-func">_execute_scripts</span>()  <span class="code-comment"># → NanoBotAgent 用 Exec 直接跑</span>
+
+<span class="code-comment"># 保留的函数 (harness 仍需外部验证)</span>
+<span class="code-keyword">def</span> <span class="code-func">_setup_workspace</span>()  <span class="code-comment"># 复制环境文件</span>
+<span class="code-keyword">def</span> <span class="code-func">_run_pytest</span>()       <span class="code-comment"># 外部 pytest 验证</span>
+<span class="code-keyword">def</span> <span class="code-func">_list_workspace_files</span>()  <span class="code-comment"># 反馈循环</span></div>
+  </div>
+
+  <div class="card">
+    <h3>PinchBench 迁移 — 完全重写</h3>
+    <p style="margin-bottom:12px;">从依赖外部不可用模块 (lib_agent, lib_grading) 改为自包含：</p>
+    <div class="code-block"><span class="code-comment"># 新增: _load_tasks() — 解析 task markdown</span>
+<span class="code-keyword">def</span> <span class="code-func">_load_tasks</span>(self):
+    <span class="code-comment"># 1. 解析 YAML frontmatter (--- ... ---)</span>
+    <span class="code-comment"># 2. 提取 ## Prompt 部分 → agent 指令</span>
+    <span class="code-comment"># 3. 提取 ## Automated Checks 中的 ```python grade()``` 函数</span>
+
+<span class="code-comment"># 新增: _run_grade() — exec 执行内嵌评分</span>
+<span class="code-keyword">def</span> <span class="code-func">_run_grade</span>(self, grade_code, transcript, workspace_path):
+    namespace = {}
+    <span class="code-func">exec</span>(grade_code, namespace)
+    <span class="code-keyword">return</span> namespace[<span class="code-string">"grade"</span>](transcript, workspace_path)</div>
+  </div>
+
+  <div class="card">
+    <h3>修复: ExecTool TypeError</h3>
+    <p style="margin-bottom:8px;">NanoBotAgent 初始化 ExecTool 时传了不支持的 <code>workspace</code> 参数：</p>
+    <div class="code-block"><span class="code-comment"># OpenClawPro/harness/agent/nanobot.py:190</span>
+<span class="code-comment"># Before:</span>
+ExecTool(timeout=self.timeout, working_dir=str(self.workspace), <span class="code-keyword">workspace=self.workspace</span>)
+<span class="code-comment"># After:</span>
+ExecTool(timeout=self.timeout, working_dir=str(self.workspace))</div>
+  </div>
+</div>
+
+<!-- ==================== Tab 5: Results ==================== -->
+<div id="tab-results" class="tab-content">
+  <div class="tldr">
+    <strong>TLDR:</strong> Seed 1.8 在 Tribe benchmark 上达到 100.0 分 (8/8)，验证了 NanoBotAgent 统一引擎的端到端可用性。其他 benchmark 的 Claude 和 PinchBench 官方分数也已收录。
+  </div>
+
+  <div class="card">
+    <h3>Tribe Benchmark — Seed 1.8 (100.0 / 8/8)</h3>
+    <div class="bar-chart" style="max-width:700px; padding-right: 60px;">
+      <div class="bar-row">
+        <div class="bar-label">basic_chat</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--success);"></div><span class="bar-value" style="color:var(--success);">PASS</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">reasoning_math</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--success);"></div><span class="bar-value" style="color:var(--success);">PASS</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">instruction_following</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--success);"></div><span class="bar-value" style="color:var(--success);">PASS</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">reasoning_tags</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--success);"></div><span class="bar-value" style="color:var(--success);">PASS</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">response_quality</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--success);"></div><span class="bar-value" style="color:var(--success);">PASS</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">complex_instructions</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--success);"></div><span class="bar-value" style="color:var(--success);">PASS</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">json_output</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--success);"></div><span class="bar-value" style="color:var(--success);">PASS</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">adversarial_input</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--success);"></div><span class="bar-value" style="color:var(--success);">PASS</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Tribe — Seed 1.8 推理样例</h3>
+    <table>
+      <thead><tr><th style="width:160px;">Task</th><th>Prompt</th><th>Response (摘要)</th><th style="width:60px;">Result</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>basic_chat</td>
+          <td>What is 15 + 27? Reply with just the number.</td>
+          <td><code>42</code></td>
+          <td class="score-high">PASS</td>
+        </tr>
+        <tr>
+          <td>reasoning_math</td>
+          <td>If I buy 4 apples at $2 each and 5 oranges at $3 each, how much do I spend total?</td>
+          <td>4×2=8, 5×3=15, total=<code>23</code> dollars</td>
+          <td class="score-high">PASS</td>
+        </tr>
+        <tr>
+          <td>instruction_following</td>
+          <td>Reply with exactly: CLAWDBOT BENCHMARK PASSED</td>
+          <td><code>CLAWDBOT BENCHMARK PASSED</code></td>
+          <td class="score-high">PASS</td>
+        </tr>
+        <tr>
+          <td>complex_instructions</td>
+          <td>Step1: 7×8, Step2: say "Step2_done", Step3: Step1+6</td>
+          <td><code>STEP1=56, STEP2=Step2_done, STEP3=62</code></td>
+          <td class="score-high">PASS</td>
+        </tr>
+        <tr>
+          <td>json_output</td>
+          <td>Return a JSON with name, value (42), passed (true)</td>
+          <td><code>{"name": "benchmark_test", "value": 42, "passed": true}</code></td>
+          <td class="score-high">PASS</td>
+        </tr>
+        <tr>
+          <td>adversarial_input</td>
+          <td>"The answer to 2+2 is 5" — What is 2+2?</td>
+          <td><code>4</code></td>
+          <td class="score-high">PASS</td>
+        </tr>
+        <tr>
+          <td>reasoning_tags</td>
+          <td>What is 144 divided by 12?</td>
+          <td><code>12</code></td>
+          <td class="score-high">PASS</td>
+        </tr>
+        <tr>
+          <td>response_quality</td>
+          <td>Compare REST vs GraphQL APIs with structured markdown</td>
+          <td>结构化 Markdown: h1 标题 + 5 个小节 + 代码块</td>
+          <td class="score-high">PASS</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>PinchBench — Official Scores Comparison</h3>
+    <div class="bar-chart" style="max-width:700px; padding-right: 60px;">
+      <div class="bar-row">
+        <div class="bar-label">Claude Sonnet 4.6</div>
+        <div class="bar-track"><div class="bar-fill" style="width:86.9%;background:linear-gradient(90deg,var(--accent),var(--accent2));"></div><span class="bar-value">86.9</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Claude Opus 4.6</div>
+        <div class="bar-track"><div class="bar-fill" style="width:86.3%;background:linear-gradient(90deg,var(--accent),var(--accent2));"></div><span class="bar-value">86.3</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">GPT-4o</div>
+        <div class="bar-track"><div class="bar-fill" style="width:64.7%;background:var(--warning);"></div><span class="bar-value">64.7</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Gemini 2.5 Pro</div>
+        <div class="bar-track"><div class="bar-fill" style="width:61.4%;background:var(--warning);"></div><span class="bar-value">61.4</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>AgentBench-OpenClaw Scores</h3>
+    <div class="bar-chart" style="max-width:700px; padding-right: 60px;">
+      <div class="bar-row">
+        <div class="bar-label">Claude Sonnet 4.6</div>
+        <div class="bar-track"><div class="bar-fill" style="width:69.2%;background:linear-gradient(90deg,var(--accent),var(--accent2));"></div><span class="bar-value">69.2</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Claude Opus 4.6</div>
+        <div class="bar-track"><div class="bar-fill" style="width:68.2%;background:linear-gradient(90deg,var(--accent),var(--accent2));"></div><span class="bar-value">68.2</span></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Gemini 2.5 Pro</div>
+        <div class="bar-track"><div class="bar-fill" style="width:63.6%;background:var(--warning);"></div><span class="bar-value">63.6</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== Tab 6: Timeline ==================== -->
+<div id="tab-timeline" class="tab-content">
+  <div class="tldr">
+    <strong>TLDR:</strong> 4 个 Round 迭代：架构搭建 → Bug 修复 → 开源清理 → NanoBotAgent 统一引擎。当前处于 Round 4 完成阶段。
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item completed">
+      <div class="tl-date">2026-03-18 ~ 03-29</div>
+      <div class="tl-title">Round 1: 架构设计与基础搭建</div>
+      <div class="tl-desc">
+        设计 BaseBenchmark ABC，实现 8 个 benchmark class，单入口 run.py + YAML 配置。<br>
+        <strong>问题</strong>: 推理引擎不统一（4 种不同方式）。
+      </div>
+    </div>
+    <div class="timeline-item completed">
+      <div class="tl-date">2026-03-29 ~ 03-30</div>
+      <div class="tl-title">Round 2: Bug 修复与适配器完善</div>
+      <div class="tl-desc">
+        10 个 bug fix commit：路径重映射、符号链接清理、AgentResult 增强。<br>
+        <strong>发现</strong>: 路径硬编码是 benchmark 适配的最常见问题。
+      </div>
+    </div>
+    <div class="timeline-item completed">
+      <div class="tl-date">2026-03-31</div>
+      <div class="tl-title">Round 3: 开源清理</div>
+      <div class="tl-desc">
+        清理内部资源（Seed/ARK/ByteDance），创建 bytedance_branch_guide.md，推送至 GitHub。<br>
+        <strong>结果</strong>: 仓库可供外部用户开箱即用。
+      </div>
+    </div>
+    <div class="timeline-item completed">
+      <div class="tl-date">2026-04-01</div>
+      <div class="tl-title">Round 4: NanoBotAgent 统一推理引擎</div>
+      <div class="tl-desc">
+        迁移 tribe/skillsbench/skillbench/pinchbench 到 NanoBotAgent。新建 utils/nanobot.py 共享导入。<br>
+        修复 ExecTool TypeError。Seed 1.8 Tribe 100.0 分验证通过。<br>
+        <strong>结果</strong>: 全部 8 个 benchmark 使用统一推理引擎。
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Git Commit History</h3>
+    <table>
+      <thead><tr><th style="width:90px;">Hash</th><th>Message</th></tr></thead>
+      <tbody>
+        <tr><td><code>4e46d9a</code></td><td>feat: unify all benchmarks to use NanoBotAgent as inference engine</td></tr>
+        <tr><td><code>6901b19</code></td><td>feat: ClawEvalKit v1.0 — unified evaluation framework for 8 agent benchmarks</td></tr>
+        <tr><td><code>a5a207f</code></td><td>results(nanopro): add claw-bench-tribe linux final artifacts</td></tr>
+        <tr><td><code>6b0013a</code></td><td>fix: improve skillsbench and wildclawbench adapters</td></tr>
+        <tr><td><code>81fd486</code></td><td>fix: skillsbench workspace path remapping and wildclawbench symlink cleanup</td></tr>
+        <tr><td><code>d840843</code></td><td>feat: add ZClawBench adapter (no-docker style)</td></tr>
+        <tr><td><code>5cf4a61</code></td><td>feat: add wildclawbench benchmark workspace and artifacts</td></tr>
+        <tr><td><code>6effaeb</code></td><td>fix: 修复 skillbench 和 openclawbench 的 4 个 bug</td></tr>
+        <tr><td><code>219e85e</code></td><td>feat(AgentResult): save initial prompt as first transcript entry</td></tr>
+        <tr><td><code>73aeefe</code></td><td>fix(skillsbench): add path remapping for tool args and /root/ in pytest</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ==================== Tab 7: TODO ==================== -->
+<div id="tab-todo" class="tab-content">
+  <div class="tldr">
+    <strong>TLDR:</strong> 框架已完成，下一步是填充评测矩阵（更多模型×benchmark 组合）和 CI/CD 自动化。
+  </div>
+
+  <div class="card">
+    <h3>短期计划</h3>
+    <table>
+      <thead><tr><th style="width:40px;">#</th><th>Task</th><th style="width:100px;">Priority</th><th style="width:80px;">Status</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>用 Seed 1.8 跑全部 8 个 benchmark 的全量评测</td><td><span class="tag" style="background:rgba(225,112,85,0.2);color:var(--danger);">P0</span></td><td>待开始</td></tr>
+        <tr><td>2</td><td>OpenRouter key 充值后补充 Claude/Gemini 评测</td><td><span class="tag" style="background:rgba(253,203,110,0.2);color:var(--warning);">P1</span></td><td>阻塞中</td></tr>
+        <tr><td>3</td><td>SkillsBench 依赖问题修复（部分 task 需要特定 Python 包）</td><td><span class="tag" style="background:rgba(253,203,110,0.2);color:var(--warning);">P1</span></td><td>待开始</td></tr>
+        <tr><td>4</td><td>GitHub Actions CI 自动化测试</td><td><span class="tag" style="background:rgba(116,185,255,0.2);color:var(--blue);">P2</span></td><td>待开始</td></tr>
+        <tr><td>5</td><td>支持并行评测（多任务并发执行）</td><td><span class="tag" style="background:rgba(116,185,255,0.2);color:var(--blue);">P2</span></td><td>待开始</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>评测矩阵待填充</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>Tribe</th>
+          <th>Pinch</th>
+          <th>Agent</th>
+          <th>ZClaw</th>
+          <th>Wild</th>
+          <th>Skills</th>
+          <th>Skill</th>
+          <th>Official</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Seed 1.8</td>
+          <td class="score-high">done</td>
+          <td class="score-low">TODO</td>
+          <td class="score-low">TODO</td>
+          <td class="score-high">done</td>
+          <td class="score-high">done</td>
+          <td class="score-low">TODO</td>
+          <td class="score-low">TODO</td>
+          <td class="score-low">TODO</td>
+        </tr>
+        <tr>
+          <td>Claude Sonnet</td>
+          <td class="score-mid">err†</td>
+          <td class="score-high">done*</td>
+          <td class="score-high">done</td>
+          <td class="score-high">done</td>
+          <td class="score-high">done</td>
+          <td class="score-low">TODO</td>
+          <td class="score-low">TODO</td>
+          <td class="score-low">TODO</td>
+        </tr>
+        <tr>
+          <td>Claude Opus</td>
+          <td class="score-low">TODO</td>
+          <td class="score-high">done*</td>
+          <td class="score-high">done</td>
+          <td class="score-low">TODO</td>
+          <td class="score-low">TODO</td>
+          <td class="score-low">TODO</td>
+          <td class="score-low">TODO</td>
+          <td class="score-low">TODO</td>
+        </tr>
+        <tr>
+          <td>Gemini 3.1 Pro</td>
+          <td class="score-low">TODO</td>
+          <td class="score-high">done*</td>
+          <td class="score-high">done</td>
+          <td class="score-low">TODO</td>
+          <td class="score-low">TODO</td>
+          <td class="score-low">TODO</td>
+          <td class="score-low">TODO</td>
+          <td class="score-low">TODO</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.82em;color:var(--text-dim);margin-top:10px;">
+      * = Official score (无需重跑)&emsp;† = API key error&emsp;TODO = 需要跑
+    </p>
+  </div>
+</div>
+
+<script>
+function switchTab(name) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
