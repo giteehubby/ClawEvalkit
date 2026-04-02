@@ -1,3 +1,0 @@
-data.csv
-config.yaml
-missing.txt

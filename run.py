@@ -52,6 +52,8 @@ def main():
     parser.add_argument("--list", action="store_true", help="List available benchmarks and models")
     parser.add_argument("--force", action="store_true", help="Force re-evaluation (ignore cache)")
     parser.add_argument("--env", help="Path to .env file (default: auto-detect)")
+    parser.add_argument("--output-dir", help="Output directory for results (default: ./outputs)")
+    parser.add_argument("--transcripts-dir", help="Directory to save agent transcripts (default: {output_dir}/transcripts)")
     args = parser.parse_args()
 
     # 加载环境变量
@@ -67,7 +69,7 @@ def main():
         print()
         return
 
-    summarizer = Summarizer()
+    summarizer = Summarizer(output_dir=args.output_dir)
 
     if args.summary:
         summarizer.summary()
@@ -89,7 +91,8 @@ def main():
     log(f"Config: bench={bench_keys}, models={model_keys}, sample={args.sample or 'all'}")
 
     # 执行评测
-    infer_all(bench_keys, model_keys, sample=args.sample, force=args.force)
+    infer_all(bench_keys, model_keys, sample=args.sample, force=args.force,
+              output_dir=args.output_dir, transcripts_dir=args.transcripts_dir)
 
     # 打印汇总
     log("\n")

@@ -11,7 +11,7 @@ from .utils.log import log
 
 
 def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
-                   output_dir: Path = None, **kwargs) -> dict:
+                   output_dir: Path = None, transcripts_dir: Path = None, **kwargs) -> dict:
     """Run a single benchmark × model evaluation job.
 
     整体流程:
@@ -51,7 +51,7 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
             return cached
 
     log(f"  [{bench_key}×{model_key}] evaluating...")
-    result = bench.evaluate(model_key, config, sample=sample, **kwargs)
+    result = bench.evaluate(model_key, config, sample=sample, transcripts_dir=transcripts_dir, **kwargs)
 
     score = result.get("score", 0)
     total = result.get("total", 0)
@@ -65,7 +65,7 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
 
 
 def infer_all(bench_keys: list = None, model_keys: list = None,
-              sample: int = 0, output_dir: Path = None, **kwargs) -> dict:
+              sample: int = 0, output_dir: Path = None, transcripts_dir: Path = None, **kwargs) -> dict:
     """Run all benchmark × model combinations.
 
     Args:
@@ -89,7 +89,7 @@ def infer_all(bench_keys: list = None, model_keys: list = None,
 
         for mkey in model_keys:
             result = infer_data_job(bkey, mkey, sample=sample,
-                                   output_dir=output_dir, **kwargs)
+                                   output_dir=output_dir, transcripts_dir=transcripts_dir, **kwargs)
             results[(bkey, mkey)] = result
 
     return results

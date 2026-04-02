@@ -23,7 +23,7 @@ class WildClawBench(BaseBenchmark):
     TASK_COUNT = 10
     SCORE_RANGE = "0-1"
 
-    def evaluate(self, model_key: str, config: dict, sample: int = 0, **kwargs) -> dict:
+    def evaluate(self, model_key: str, config: dict, sample: int = 0, transcripts_dir: Path = None, **kwargs) -> dict:
         """运行 WildClawBench 评测: 加载本地任务 → NanoBotAgent 执行 → Judge 评分。
 
         流程:
@@ -69,6 +69,12 @@ class WildClawBench(BaseBenchmark):
                 result = agent.execute(task["prompt"], session_id=f"eval_wild_{model_key}_{tid}", workspace=workspace)
                 if result.transcript:
                     normalized = [e["message"] if isinstance(e, dict) and "message" in e else e for e in result.transcript]
+                    # Save transcript before grading/deleting workspace
+                    if transcripts_dir:
+                        trans_dir = Path(transcripts_dir) / "wildclawbench" / model_key
+                        trans_dir.mkdir(parents=True, exist_ok=True)
+                        (trans_dir / f"{tid}_transcript.json").write_text(
+                            json.dumps(normalized, indent=2, ensure_ascii=False), encoding="utf-8")
                     score = run_judge_eval(trajectory=normalized, task_id=tid, category="Safety",
                                            task_prompt=task["prompt"], judge_model=judge_model,
                                            api_key=judge_key, base_url=judge_base, model_name=config["name"])

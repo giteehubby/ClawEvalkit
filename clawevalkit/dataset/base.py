@@ -22,7 +22,10 @@ class BaseBenchmark(ABC):
     def __init__(self, base_dir: Path = None, output_dir: Path = None):
         self.base_dir = base_dir or Path(__file__).resolve().parent.parent.parent
         # output_dir: configurable, defaults to ./outputs/ (like VLMEvalKit)
-        self.output_dir = output_dir or self.base_dir / "outputs"
+        if output_dir is None:
+            self.output_dir = self.base_dir / "outputs"
+        else:
+            self.output_dir = Path(output_dir) if not isinstance(output_dir, Path) else output_dir
         # Legacy fallback: also check assets/results/ for old data
         self._legacy_results_dir = self.base_dir / "assets" / "results"
 

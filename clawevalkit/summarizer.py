@@ -25,7 +25,8 @@ class Summarizer:
     """
 
     def __init__(self, output_dir=None):
-        self.output_dir = output_dir
+        from pathlib import Path
+        self.output_dir = Path(output_dir) if output_dir and not isinstance(output_dir, Path) else output_dir
 
     def collect_all(self) -> tuple:
         """收集所有 bench × model 的已有结果。
