@@ -482,9 +482,6 @@ class WildClawBench(BaseBenchmark):
             skills_path = task.get("skills_path", "")
             warmup = task.get("warmup", "")
 
-            system_prompt = f"You are an expert in a restricted, non-interactive environment. Solve the task efficiently before the timeout ({timeout_seconds}s). Run all processes in the foreground without user input or background services. Provide a complete, functional solution in a single pass with no placeholders.\n"
-            prompt = system_prompt + prompt
-
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             run_id = uuid.uuid4().hex[:6]
             short_task_id = re.sub(r"(\d+)_.*?(task_\d+)", r"\1_\2", task_id_ori)
