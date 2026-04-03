@@ -27,23 +27,35 @@ SKIP_TASKS = {
     # Erlang
     "fix-erlang-ssh-cve",
     # Go build
-    "azure-bgp-oscillation-route-leak", "syzkaller-ppdev-syzlang",
+    "syzkaller-ppdev-syzlang",
     # Lean4
     "lean4-proof",
     # Rust
     "multilingual-video-dubbing",
     # FFmpeg/视频
     "dynamic-object-aware-egomotion", "mario-coin-counting", "pedestrian-traffic-counting",
-    "pg-essay-to-audiobook", "video-filler-word-remover", "video-silence-remover", "video-tutorial-indexer",
+    "pg-essay-to-audiobook", "video-filler-word-remover",
     # Node.js
-    "data-to-d3", "fix-visual-stability", "react-performance-debugging",
-    "scheduling-email-assistant", "threejs-structure-parser", "threejs-to-obj",
+    "threejs-structure-parser", "threejs-to-obj",
     # Graphviz/特殊工具
-    "dialogue-parser", "software-dependency-audit",
-    # GPU/JAX
-    "jax-computing-basics",
-    # 大量数据/特殊API
-    "enterprise-information-search", "gh-repo-analytics",
+    "software-dependency-audit",
+}
+
+# 依赖"容易解决"的任务（不使用 Docker 时可评测）
+# pip install graphviz, pip install jax, npm install d3, pip install moviepy,
+# apt install ffmpeg, npm install (Next.js), apt install gh, Gmail API
+EASY_SKIP_TASKS = {
+    "azure-bgp-oscillation-route-leak",  # 纯 Python
+    "dialogue-parser",                   # graphviz: pip install graphviz
+    "jax-computing-basics",              # JAX: pip install jax
+    "data-to-d3",                        # Node.js + D3: npm install
+    "video-silence-remover",              # FFmpeg + moviepy: pip install moviepy
+    "video-tutorial-indexer",            # FFmpeg: apt install ffmpeg
+    "fix-visual-stability",              # Next.js/React: npm install
+    "react-performance-debugging",       # Next.js/React: npm install
+    "gh-repo-analytics",                 # gh CLI: apt install gh
+    "enterprise-information-search",     # gh CLI: apt install gh
+    "scheduling-email-assistant",         # Gmail API: 纯 Python
 }
 
 
@@ -51,17 +63,41 @@ SKIP_TASKS = {
 
 def _run_pytest(workspace: Path, task_dir: Path) -> tuple:
     """运行 pytest 验证，返回 (passed: bool, output: str)。"""
-    test_py = task_dir / "tests" / "test_outputs.py"
+    tests_src = task_dir / "tests"
+    if not tests_src.exists():
+        return False, "no tests/ directory"
+
+    test_py = tests_src / "test_outputs.py"
     if not test_py.exists():
         return False, "no test_outputs.py"
 
     tests_workspace = workspace / "tests"
-    tests_workspace.mkdir(exist_ok=True)
-    test_content = test_py.read_text(encoding="utf-8")
-    test_content = test_content.replace("/root/", f"{workspace}/")
-    test_content = test_content.replace("'/root'", f"'{workspace}'")
-    test_content = test_content.replace('"/root"', f'"{workspace}"')
-    (tests_workspace / "test_outputs.py").write_text(test_content, encoding="utf-8")
+    tests_workspace.mkdir(parents=True, exist_ok=True)
+
+    # 复制所有测试相关文件（不仅是 test_outputs.py）
+    for f in tests_src.glob("*"):
+        if f.is_file() and f.name != "Dockerfile":
+            dst = tests_workspace / f.name
+            # 对 test_outputs.py 进行路径替换（仅文本文件）
+            if f.suffix in [".py", ".md", ".sh", ".txt", ".json"]:
+                test_content = f.read_text(encoding="utf-8")
+                if f.name == "test_outputs.py":
+                    # 替换字符串中的路径
+                    test_content = test_content.replace("/root/", f"{workspace}/")
+                    test_content = test_content.replace("'/root'", f"'{workspace}'")
+                    test_content = test_content.replace('"/root"', f'"{workspace}"')
+                    # Docker 容器内路径映射
+                    test_content = test_content.replace("/app/", f"{workspace}/")
+                    test_content = test_content.replace("'/app/", f"'{workspace}/")
+                    test_content = test_content.replace('"/app/', f'"{workspace}/')
+                    # 替换 Path("/root/...") 和 Path("/app/...") 格式
+                    import re
+                    test_content = re.sub(r'Path\("(?:/root/|/app/)', f'Path("{workspace}/', test_content)
+                    test_content = re.sub(r"Path\('(?:/root/|/app/)", f"Path('{workspace}/", test_content)
+                dst.write_text(test_content, encoding="utf-8")
+            else:
+                # 二进制文件直接复制
+                shutil.copy2(f, dst)
 
     env = os.environ.copy()
     env["HOME"] = str(workspace)
@@ -96,6 +132,10 @@ class SkillsBench(BaseBenchmark):
     TASK_COUNT = 56
     SCORE_RANGE = "0-100%"
 
+    def __init__(self, use_docker: bool = True, **kwargs):
+        self.use_docker = use_docker
+        super().__init__(**kwargs)
+
     def _get_tasks_dir(self) -> Path:
         """SkillsBench 任务目录，优先 NANOPRO_DIR 环境变量。"""
         # 优先检查仓库内 benchmarks/ 目录，其次通过环境变量
@@ -107,7 +147,8 @@ class SkillsBench(BaseBenchmark):
             return Path(ext) / "tasks"
         return local  # 返回本地路径（不存在时 evaluate 会报错）
 
-    def evaluate(self, model_key: str, config: dict, sample: int = 0, **kwargs) -> dict:
+    def evaluate(self, model_key: str, config: dict, sample: int = 0,
+                 transcripts_dir: Path = None, **kwargs) -> dict:
         """运行 SkillsBench 多轮 agent 评测。
 
         整体流程:
@@ -122,7 +163,14 @@ class SkillsBench(BaseBenchmark):
 
         max_turns = kwargs.get("max_turns", 3)
         all_tasks = sorted([d.name for d in tasks_dir.iterdir() if d.is_dir()])
-        task_names = [t for t in all_tasks if t not in SKIP_TASKS]
+        # 根据 use_docker 决定跳过哪些任务
+        if self.use_docker:
+            # 使用 Docker：跳过需要特殊依赖的任务
+            skip_set = SKIP_TASKS
+        else:
+            # 不使用 Docker：跳过 Docker 专用任务，但保留依赖容易解决的任务
+            skip_set = SKIP_TASKS - EASY_SKIP_TASKS
+        task_names = [t for t in all_tasks if t not in skip_set]
 
         if sample and sample < len(task_names):
             import random
@@ -135,7 +183,8 @@ class SkillsBench(BaseBenchmark):
 
         for i, task_name in enumerate(task_names):
             start = time.time()
-            result = self._run_single_task(task_name, config, tasks_dir, workspace_base, max_turns)
+            result = self._run_single_task(task_name, config, tasks_dir, workspace_base, max_turns,
+                                           transcripts_dir=transcripts_dir, model_key=model_key)
             result["elapsed_s"] = round(time.time() - start, 2)
             if result.get("status") == "passed":
                 passed += 1
@@ -153,7 +202,8 @@ class SkillsBench(BaseBenchmark):
         return summary
 
     def _run_single_task(self, task_name: str, config: dict, tasks_dir: Path,
-                         workspace_base: Path, max_turns: int = 3) -> dict:
+                         workspace_base: Path, max_turns: int = 3,
+                         transcripts_dir: Path = None, model_key: str = None) -> dict:
         """运行单个 SkillsBench 任务 (NanoBotAgent 多轮模式)。
 
         流程: 读 instruction.md → 复制 environment 文件到 workspace →
@@ -186,28 +236,58 @@ class SkillsBench(BaseBenchmark):
             f"All output files must be created at the paths specified in the instructions."
         )
 
+        all_transcripts = []
         for turn in range(max_turns):
             try:
                 result = agent.execute(prompt, session_id=f"skills_{task_name}_t{turn}")
             except Exception as e:
                 return {"task": task_name, "status": "error", "error": str(e)[:500], "turns": turn + 1}
 
+            # 保存 transcript
+            if result and hasattr(result, "transcript") and result.transcript:
+                all_transcripts.extend(result.transcript)
+
             # Harness 负责最终 pytest 验证
-            passed, test_output = self._run_pytest(workspace, task_dir)
+            passed, test_output = _run_pytest(workspace, task_dir)
             if passed:
+                # 保存成功的 transcript
+                if transcripts_dir and model_key and all_transcripts:
+                    self._save_transcript(transcripts_dir, model_key, task_name, all_transcripts)
                 return {"task": task_name, "status": "passed", "turns": turn + 1}
 
             # pytest 失败 → 反馈给 agent
             if turn < max_turns - 1:
-                workspace_files = self._list_workspace_files(workspace)
+                workspace_files = _list_workspace_files(workspace)
                 prompt = (
                     f"The tests FAILED. Fix the code in the workspace.\n\n"
                     f"PYTEST OUTPUT:\n{test_output[-2000:]}\n\n"
                     f"FILES IN WORKSPACE:\n{workspace_files}"
                 )
 
+        # 保存失败的 transcript
+        if transcripts_dir and model_key and all_transcripts:
+            self._save_transcript(transcripts_dir, model_key, task_name, all_transcripts)
         return {"task": task_name, "status": "failed", "turns": max_turns,
                 "test_output": test_output[-1000:]}
+
+    def _save_transcript(self, transcripts_dir: Path, model_key: str, task_name: str,
+                         transcript: list):
+        """保存 agent 轨迹到文件。"""
+        try:
+            trans_path = Path(transcripts_dir) / "skillsbench" / model_key
+            trans_path.mkdir(parents=True, exist_ok=True)
+            normalized = []
+            for e in transcript:
+                if isinstance(e, dict) and "message" in e:
+                    normalized.append(e["message"])
+                else:
+                    normalized.append(e)
+            (trans_path / f"{task_name}_transcript.json").write_text(
+                json.dumps(normalized, indent=2, ensure_ascii=False),
+                encoding="utf-8",
+            )
+        except Exception:
+            pass  # transcript 保存失败不影响主流程
 
     def _setup_workspace(self, task_dir: Path, workspace: Path):
         """复制 environment/ 下的文件到 workspace（排除 Dockerfile）。"""
