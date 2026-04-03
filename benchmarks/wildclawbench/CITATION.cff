@@ -1,0 +1,47 @@
+cff-version: 1.2.0
+message: "If you use WildClawBench in your research, please cite it using the metadata below."
+title: "WildClawBench"
+type: software
+license: MIT
+abstract: "WildClawBench is an in-the-wild benchmark for AI agents in the OpenClaw environment, designed to evaluate end-to-end agent performance across 60 tasks spanning productivity, coding, social interaction, search, creative synthesis, and safety alignment."
+repository-code: "https://github.com/InternLM/WildClawBench"
+url: "https://github.com/InternLM/WildClawBench"
+keywords:
+  - AI agents
+  - benchmark
+  - evaluation
+  - OpenClaw
+  - multimodal agents
+authors:
+  - family-names: "Ding"
+    given-names: "Shuangrui"
+  - family-names: "Dai"
+    given-names: "Xuanlang"
+  - family-names: "Xing"
+    given-names: "Long"
+  - family-names: "Ding"
+    given-names: "Shengyuan"
+  - family-names: "Liu"
+    given-names: "Ziyu"
+  - family-names: "Yang"
+    given-names: "Jingyi"
+  - family-names: "Yang"
+    given-names: "Penghui"
+  - family-names: "Zhang"
+    given-names: "Zhixiong"
+  - family-names: "Wei"
+    given-names: "Xilin"
+  - family-names: "Ma"
+    given-names: "Yubo"
+  - family-names: "Duan"
+    given-names: "Haodong"
+  - family-names: "Shao"
+    given-names: "Jing"
+  - family-names: "Wang"
+    given-names: "Jiaqi"
+  - family-names: "Lin"
+    given-names: "Dahua"
+  - family-names: "Chen"
+    given-names: "Kai"
+  - family-names: "Zang"
+    given-names: "Yuhang"

@@ -66,7 +66,7 @@ ClawEvalKit/                        # v0.1.0, ~1,480 LOC 核心包
 | `skillbench` | SkillBench | 22 | 0-100% | NanoBotAgent adapter | harness + pytest |
 | `skillsbench` | SkillsBench | 56+ | 0-100% | NanoBotAgent | 多轮 + pytest |
 | `zclawbench` | ZClawBench Subset | 18 | 0-1 | NanoBotAgent | LLM Judge |
-| `wildclawbench` | WildClawBench | 10 | 0-1 | NanoBotAgent | LLM Judge |
+| `wildclawbench` | WildClawBench | 60 | 0-1 | NanoBotAgent | 自动化 checks + LLM Judge |
 | `clawbench-official` | ClawBench Official | 250 | 0-100 | OpenClawAdapter | ReAct + Pytest |
 
 ## 已配置的模型
@@ -285,3 +285,28 @@ python3 run.py --summary
 - [ ] ClawBench-Official 需要 OpenClaw 执行环境
 - [ ] 支持并行评测（单 benchmark 内多任务并发）
 - [ ] CI/CD: GitHub Actions 自动化测试
+
+## WildClawBench Native 实现 (2026-04-02)
+
+**设计动机**: 原 WildClawBench 依赖 Docker 容器内 OpenClaw 环境，需要在宿主机上无 Docker 运行。
+
+**具体方案**:
+- 修改 `wildclawbench.py`: 支持全部 6 个类别（60 tasks），不再仅限于 Safety Alignment
+- 使用 task parser 提取 prompt、workspace path、automated checks
+- 添加 `ensure_agent_browser()` 检测/安装函数
+- 使用 temp dir + symlink 实现 /tmp_workspace 路径隔离
+- Skills 作为 system prompt 注入 NanoBotAgent
+- 在 `wildclawbench_grading.py` 添加 `run_automated_checks()` 函数
+- 直接在宿主机运行 Python grading 代码，不依赖 Docker
+
+**结果**:
+- ✅ 60 tasks 全部分类加载正确
+- ✅ 自动化 checks 函数测试通过
+- ✅ 支持 category 过滤评测
+
+**核心改动**:
+| 文件 | 改动 |
+|------|------|
+| `clawevalkit/dataset/wildclawbench.py` | 重写，支持全 60 任务 + native grading |
+| `clawevalkit/grading/wildclawbench_grading.py` | 添加 `run_automated_checks()` 函数 |
+| `clawevalkit/grading/__init__.py` | 导出新函数 |

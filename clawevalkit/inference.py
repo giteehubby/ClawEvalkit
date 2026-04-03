@@ -36,7 +36,14 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
         return {"score": 0, "total": 0, "error": f"Unknown model: {model_key}"}
 
     bcls = BENCHMARKS[bench_key]
-    bench = bcls()
+    # Pass use_docker to benchmarks that support it via constructor
+    use_docker = kwargs.pop("use_docker", None)
+    if bench_key == "skillsbench":
+        bench = bcls(use_docker=use_docker if use_docker is not None else True)
+    elif bench_key == "wildclawbench":
+        bench = bcls(use_docker=use_docker if use_docker is not None else False)
+    else:
+        bench = bcls()
     if output_dir:
         bench.output_dir = Path(output_dir)
 

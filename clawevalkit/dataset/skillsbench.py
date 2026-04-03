@@ -5,20 +5,27 @@
 
 工作流: 读 instruction.md → NanoBotAgent 在 workspace 中写文件/执行代码 →
 跑 pytest 验证 → 失败则反馈修正 → 最多 max_turns 轮。
+
+Docker 支持: 使用 --docker 时，每个任务用自己的 Dockerfile 构建镜像，在容器内运行 NanoBotAgent。
 """
 from __future__ import annotations
 
 import json
 import os
+import random
+import re
 import shutil
 import subprocess
+import tempfile
 import time
+import uuid
+from datetime import datetime
 from pathlib import Path
 
 from ..utils.nanobot import import_nanobot_agent
 from .base import BaseBenchmark
 
-# 需要 Docker 或特殊系统依赖的任务（跳过）
+# 需要 Docker 或特殊系统依赖的任务（不使用 Docker 时跳过）
 SKIP_TASKS = {
     # Docker only
     "fix-build-agentops", "fix-build-google-auto", "setup-fuzzing-py", "suricata-custom-exfil",
@@ -39,6 +46,12 @@ SKIP_TASKS = {
     "threejs-structure-parser", "threejs-to-obj",
     # Graphviz/特殊工具
     "software-dependency-audit",
+}
+
+# 即使在 Docker 模式下也跳过的任务（环境有问题或需要 GPU 等）
+SKIP_TASKS_DOCKER = {
+    "jpg-ocr-stat",  # tesseract 相关问题
+    # 需要 GPU 的任务可以在这里添加
 }
 
 # 依赖"容易解决"的任务（不使用 Docker 时可评测）
@@ -156,7 +169,18 @@ class SkillsBench(BaseBenchmark):
         2. 对每个任务: 读 instruction.md → 发送给 LLM → 提取代码 → 执行 → pytest
         3. 若 pytest 失败，反馈错误让 LLM 修正，最多 max_turns 轮
         4. 汇总结果并保存
+
+        Docker 模式 (use_docker=True):
+        - 每个任务用自己的 Dockerfile 构建镜像
+        - 在容器内运行 NanoBotAgent
+        - 挂载 OpenClawPro 实现代码热更新
         """
+        use_docker = kwargs.get("use_docker", False)
+
+        # Docker 模式走专用路径
+        if use_docker:
+            return self._evaluate_docker(model_key, config, sample, transcripts_dir, **kwargs)
+
         tasks_dir = self._get_tasks_dir()
         if not tasks_dir.exists():
             return {"score": 0, "total": 0, "error": f"tasks dir not found: {tasks_dir}"}
@@ -173,7 +197,6 @@ class SkillsBench(BaseBenchmark):
         task_names = [t for t in all_tasks if t not in skip_set]
 
         if sample and sample < len(task_names):
-            import random
             random.seed(42)
             task_names = random.sample(task_names, sample)
 
@@ -300,6 +323,383 @@ class SkillsBench(BaseBenchmark):
                 dst = workspace / rel
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(f, dst)
+
+    def _remove_container(self, container_name: str):
+        """清理 Docker 容器（如果存在）。"""
+        try:
+            subprocess.run(["docker", "rm", "-f", container_name],
+                          capture_output=True, text=True, timeout=30)
+        except Exception:
+            pass
+
+    def _evaluate_docker(self, model_key: str, config: dict, sample: int = 0,
+                         transcripts_dir: Path = None, **kwargs) -> dict:
+        """Per-task Docker 模式: 每个任务用自己的 Dockerfile 构建镜像，在容器内运行 NanoBotAgent。
+
+        工作流:
+        1. 遍历所有任务（排除 SKIP_TASKS_DOCKER）
+        2. 对每个任务:
+           - 构建镜像: docker build -t task-{task_name} task/environment/
+           - 启动容器（挂载 OpenClawPro 实现热更新）
+           - 复制 environment 文件到 /workspace
+           - 执行 NanoBotAgent
+           - pytest 验证
+           - 收集结果并清理
+        """
+        # Determine OpenClawPro directory for volume mount
+        openclawpro_dir = Path(os.getenv("OPENCLAWPRO_DIR",
+            str(Path(__file__).parent.parent.parent / "OpenClawPro")))
+        if not openclawpro_dir.exists():
+            raise FileNotFoundError(f"OpenClawPro directory not found: {openclawpro_dir}")
+
+        tasks_dir = self._get_tasks_dir()
+        if not tasks_dir.exists():
+            return {"score": 0, "total": 0, "error": f"tasks dir not found: {tasks_dir}"}
+
+        max_turns = kwargs.get("max_turns", 3)
+        all_tasks = sorted([d.name for d in tasks_dir.iterdir() if d.is_dir()])
+        # Docker 模式下跳过 SKIP_TASKS_DOCKER，但不再跳过 SKIP_TASKS（Docker 可以处理）
+        task_names = [t for t in all_tasks if t not in SKIP_TASKS_DOCKER]
+
+        if sample and sample < len(task_names):
+            random.seed(42)
+            task_names = random.sample(task_names, sample)
+
+        results = []
+        passed = 0
+
+        openrouter_api_key = os.getenv("OPENROUTER_API_KEY", "")
+        proxy_http = os.environ.get('HTTP_PROXY_INNER', '')
+        proxy_https = os.environ.get('HTTPS_PROXY_INNER', '')
+
+        for i, task_name in enumerate(task_names):
+            start = time.time()
+            result = self._run_single_task_docker(
+                task_name, config, tasks_dir, max_turns,
+                openclawpro_dir, openrouter_api_key, proxy_http, proxy_https,
+                transcripts_dir=transcripts_dir, model_key=model_key
+            )
+            result["elapsed_s"] = round(time.time() - start, 2)
+            if result.get("status") == "passed":
+                passed += 1
+            results.append(result)
+
+        total = len(task_names)
+        score = round(passed / total * 100, 1) if total else 0
+        summary = {
+            "model": model_key, "total": total, "passed": passed,
+            "failed": total - passed, "score": score,
+            "pass_rate": f"{passed}/{total}", "max_turns": max_turns,
+            "skipped_docker": len(SKIP_TASKS_DOCKER), "results": results,
+        }
+        self.save_result("skillsbench_docker", model_key, summary)
+        return summary
+
+    def _setup_container_paths(self, container_name: str, instruction: str, mount_point: str):
+        """Detect instruction paths and create appropriate symlinks in container.
+
+        Different tasks use different path patterns:
+        - /root/input/ + /root/output/ (e.g., edit-pdf)
+        - /workspace/ (e.g., spring-boot-jakarta-migration)
+        - /app/workspace/ (e.g., flink-query, lean4-proof, jpg-ocr-stat)
+        - /root/workspace/ (e.g., parallel-tfidf-search)
+
+        The mount_point is determined by the task pattern:
+        - /app/workspace/ tasks: mount at /app/workspace
+        - All other tasks: mount at /workspace
+
+        We create symlinks for /root/input and /root/output based on the mount point.
+        """
+        # Pattern: /root/input/ and /root/output/
+        if "/root/input/" in instruction or "/root/output/" in instruction:
+            subprocess.run(["docker", "exec", container_name, "mkdir", "-p", f"{mount_point}/input", f"{mount_point}/output"],
+                          capture_output=True, text=True)
+            subprocess.run(["docker", "exec", container_name, "ln", "-sf", f"{mount_point}/input", "/root/input"],
+                          capture_output=True, text=True)
+            subprocess.run(["docker", "exec", container_name, "ln", "-sf", f"{mount_point}/output", "/root/output"],
+                          capture_output=True, text=True)
+
+        # Pattern: /app/output/ (used alongside /app/workspace/ in some tasks)
+        if "/app/output/" in instruction:
+            subprocess.run(["docker", "exec", container_name, "mkdir", "-p", f"{mount_point}/output"],
+                          capture_output=True, text=True)
+            subprocess.run(["docker", "exec", container_name, "rm", "-rf", "/app/output"],
+                          capture_output=True, text=True)
+            subprocess.run(["docker", "exec", container_name, "ln", "-sf", f"{mount_point}/output", "/app/output"],
+                          capture_output=True, text=True)
+
+        # Pattern: /root/workspace/ - mount at /workspace already works since /workspace != /root/workspace
+        # No symlink needed for this pattern
+
+    def _run_single_task_docker(self, task_name: str, config: dict, tasks_dir: Path,
+                                 max_turns: int, openclawpro_dir: Path,
+                                 openrouter_api_key: str, proxy_http: str, proxy_https: str,
+                                 transcripts_dir: Path = None, model_key: str = None) -> dict:
+        """在 per-task Docker 容器内运行单个 SkillsBench 任务。"""
+        task_dir = tasks_dir / task_name
+        instruction = (task_dir / "instruction.md").read_text(encoding="utf-8")
+        env_dockerfile = task_dir / "environment" / "Dockerfile"
+
+        if not env_dockerfile.exists():
+            return {"task": task_name, "status": "skipped", "error": "no Dockerfile"}
+
+        # Build per-task Docker image
+        task_image = f"skillsbench-task-{task_name}:latest"
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        run_id = uuid.uuid4().hex[:6]
+        container_name = f"sb_{task_name}_{timestamp}_{run_id}"
+
+        build_cmd = ["docker", "build", "-t", task_image, "-f", str(env_dockerfile)]
+        if proxy_http:
+            build_cmd.insert(1, "--build-arg")
+            build_cmd.insert(2, f"http_proxy={proxy_http}")
+            build_cmd.insert(1, "--build-arg")
+            build_cmd.insert(2, f"https_proxy={proxy_https}")
+        build_cmd.append(str(task_dir / "environment"))
+
+        try:
+            build_proc = subprocess.run(build_cmd, capture_output=True, text=True, timeout=600)
+            if build_proc.returncode != 0:
+                return {"task": task_name, "status": "skipped",
+                        "error": f"docker build failed: {build_proc.stderr[:500]}"}
+        except subprocess.TimeoutExpired:
+            return {"task": task_name, "status": "skipped", "error": "docker build timeout"}
+        except Exception as e:
+            return {"task": task_name, "status": "skipped", "error": str(e)}
+
+        # Create workspace directory for this task
+        workspace_host = Path(f"/tmp/skillsbench_workspace/{task_name}")
+        if workspace_host.exists():
+            shutil.rmtree(workspace_host)
+        workspace_host.mkdir(parents=True)
+
+        # Copy environment files (except Dockerfile) to workspace
+        env_dir = task_dir / "environment"
+        for f in env_dir.rglob("*"):
+            if f.is_file() and f.name != "Dockerfile":
+                rel = f.relative_to(env_dir)
+                dst = workspace_host / rel
+                dst.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(f, dst)
+
+        # Prepare env args
+        env_args = [
+            "-e", f"http_proxy={proxy_http}",
+            "-e", f"https_proxy={proxy_https}",
+            "-e", f"HTTP_PROXY={proxy_http}",
+            "-e", f"HTTPS_PROXY={proxy_https}",
+            "-e", f"OPENROUTER_API_KEY={openrouter_api_key}",
+        ]
+
+        # Start container
+        # Determine mount point based on instruction path pattern
+        # /app/workspace/ tasks need mount at /app/workspace, all others at /workspace
+        mount_point = "/app/workspace" if "/app/workspace/" in instruction else "/workspace"
+
+        docker_run_cmd = [
+            "docker", "run", "-d",
+            "--name", container_name,
+            "-v", f"{workspace_host}:{mount_point}:rw",
+            "-v", f"{openclawpro_dir}:/root/OpenClawPro:rw",
+            *env_args,
+            task_image,
+            "/bin/bash", "-c", "tail -f /dev/null",
+        ]
+
+        try:
+            run_proc = subprocess.run(docker_run_cmd, capture_output=True, text=True, timeout=60)
+            if run_proc.returncode != 0:
+                return {"task": task_name, "status": "error",
+                        "error": f"container start failed: {run_proc.stderr[:500]}"}
+        except subprocess.TimeoutExpired:
+            return {"task": task_name, "status": "error", "error": "container start timeout"}
+        except Exception as e:
+            return {"task": task_name, "status": "error", "error": str(e)}
+
+        # Dynamically create symlinks based on instruction paths
+        self._setup_container_paths(container_name, instruction, mount_point)
+
+        try:
+            result = self._execute_nanobot_in_container(
+                container_name, task_name, config, instruction, workspace_host,
+                max_turns, model_key, transcripts_dir, mount_point
+            )
+        except Exception as e:
+            result = {"task": task_name, "status": "error", "error": str(e)[:500]}
+        finally:
+            # Clean up container
+            self._remove_container(container_name)
+            # Clean up image
+            try:
+                subprocess.run(["docker", "rmi", "-f", task_image],
+                              capture_output=True, text=True, timeout=60)
+            except Exception:
+                pass
+
+        return result
+
+    def _execute_nanobot_in_container(self, container_name: str, task_name: str,
+                                      config: dict, instruction: str, workspace_host: Path,
+                                      max_turns: int, model_key: str,
+                                      transcripts_dir: Path = None,
+                                      mount_point: str = "/workspace") -> dict:
+        """在容器内执行 NanoBotAgent 多轮任务。"""
+        NanoBotAgent = import_nanobot_agent()
+
+        prompt = (
+            f"Complete this programming task in the workspace {mount_point}.\n\n"
+            f"TASK INSTRUCTIONS:\n{instruction}\n\n"
+            f"Use the tools to write files and execute code directly in the workspace. "
+            f"All output files must be created at the paths specified in the instructions."
+        )
+
+        session_id = f"skills_{task_name}"
+        all_transcripts = []
+        test_output = ""
+
+        for turn in range(max_turns):
+            exec_script = f"""
+import sys
+import json
+import time
+from pathlib import Path
+
+sys.path.insert(0, '/root/OpenClawPro')
+from harness.agent.nanobot import NanoBotAgent
+
+workspace = Path('{mount_point}')
+session_id = '{session_id}_t{turn}'
+
+agent = NanoBotAgent(
+    model='{config["model"]}',
+    api_url='{config["api_url"]}',
+    api_key='{config["api_key"]}',
+    workspace=workspace,
+    timeout=300,
+)
+
+prompt = '''{prompt.replace("'", "\\'")}'''
+
+try:
+    start_time = time.time()
+    result = agent.execute(prompt, session_id=session_id)
+    elapsed = time.time() - start_time
+
+    # Try to load transcript from session file
+    transcript_file = workspace / '.sessions' / f'{{session_id}}.json'
+    if transcript_file.exists():
+        transcript_data = json.loads(transcript_file.read_text())
+    else:
+        transcript_data = result.transcript if result.transcript else []
+
+    output = {{
+        'status': result.status,
+        'content': result.content,
+        'transcript': transcript_data,
+        'usage': result.usage or {{}},
+        'execution_time': elapsed,
+        'error': result.error,
+    }}
+except Exception as e:
+    output = {{
+        'status': 'error',
+        'content': '',
+        'transcript': [],
+        'usage': {{}},
+        'execution_time': 0,
+        'error': str(e),
+    }}
+
+(workspace / 'agent_result.json').write_text(json.dumps(output, ensure_ascii=False, indent=2))
+print('DONE')
+"""
+
+            # Copy script into container and execute
+            with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
+                f.write(exec_script)
+                script_path = f.name
+
+            try:
+                subprocess.run(["docker", "cp", script_path, f"{container_name}:/tmp/exec_nanobot.py"],
+                              check=True, timeout=30)
+            finally:
+                Path(script_path).unlink(missing_ok=True)
+
+            exec_cmd = ["docker", "exec", container_name, "python3", "/tmp/exec_nanobot.py"]
+            exec_proc = subprocess.run(exec_cmd, capture_output=True, text=True, timeout=360)
+
+            if exec_proc.returncode != 0:
+                return {"task": task_name, "status": "error",
+                        "error": f"exec failed: {exec_proc.stderr[:500]}", "turns": turn + 1}
+
+            # Load result from container
+            result_file_host = workspace_host / "agent_result.json"
+            subprocess.run(["docker", "cp", f"{container_name}:{mount_point}/agent_result.json",
+                          str(result_file_host)], capture_output=True)
+
+            if not result_file_host.exists():
+                return {"task": task_name, "status": "error",
+                        "error": "no result file", "turns": turn + 1}
+
+            agent_result = json.loads(result_file_host.read_text(encoding="utf-8"))
+
+            # Collect transcript
+            if agent_result.get("transcript"):
+                all_transcripts.extend(agent_result["transcript"])
+
+            # Run pytest inside container
+            passed, test_output = self._run_pytest_docker(container_name, workspace_host, mount_point)
+
+            if passed:
+                # Save transcript on success
+                if transcripts_dir and model_key and all_transcripts:
+                    self._save_transcript(transcripts_dir, model_key, task_name, all_transcripts)
+                return {"task": task_name, "status": "passed", "turns": turn + 1}
+
+            # pytest failed → prepare feedback prompt for next turn
+            if turn < max_turns - 1:
+                workspace_files = _list_workspace_files(workspace_host)
+                prompt = (
+                    f"The tests FAILED. Fix the code in the workspace.\n\n"
+                    f"PYTEST OUTPUT:\n{test_output[-2000:]}\n\n"
+                    f"FILES IN WORKSPACE:\n{workspace_files}"
+                )
+
+        # Save failed transcript
+        if transcripts_dir and model_key and all_transcripts:
+            self._save_transcript(transcripts_dir, model_key, task_name, all_transcripts)
+        return {"task": task_name, "status": "failed", "turns": max_turns,
+                "test_output": test_output[-1000:]}
+
+    def _run_pytest_docker(self, container_name: str, workspace_host: Path, mount_point: str = "/workspace") -> tuple:
+        """在 Docker 容器内运行 pytest 验证。"""
+        # Find task name from workspace path
+        task_name = workspace_host.name
+        # Task tests are in the original benchmarks directory, not in the workspace copy
+        task_tests_src = self._get_tasks_dir() / task_name / "tests"
+        if not task_tests_src.exists():
+            return False, "no tests/ directory"
+
+        # Copy test files to container's workspace (use mount_point, not hardcoded /workspace)
+        subprocess.run(["docker", "exec", container_name, "mkdir", "-p", f"{mount_point}/tests"],
+                      capture_output=True, text=True)
+        for f in task_tests_src.glob("*"):
+            if f.is_file() and f.name != "Dockerfile":
+                subprocess.run(["docker", "cp", str(f), f"{container_name}:{mount_point}/tests/"],
+                              capture_output=True, text=True)
+
+        # Run pytest inside container
+        pytest_cmd = [
+            "docker", "exec", "-w", mount_point, container_name,
+            "python3", "-m", "pytest", f"{mount_point}/tests/test_outputs.py", "-v", "--tb=short"
+        ]
+        try:
+            proc = subprocess.run(pytest_cmd, capture_output=True, text=True, timeout=120)
+            return proc.returncode == 0, proc.stdout[-1500:] + "\n" + proc.stderr[-500:]
+        except subprocess.TimeoutExpired:
+            return False, "pytest timeout"
+        except Exception as exc:
+            return False, f"pytest error: {exc}"
 
     def collect(self, model_key: str) -> dict | None:
         result_dir = self._find_result_dir("skillsbench")

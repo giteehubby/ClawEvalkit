@@ -1,0 +1,16 @@
+name: WildClawBench
+description: Hard, practical, end-to-end evaluation for AI agents — in the wild.
+evaluation_framework: wildclawbench
+tasks:
+  - id: overall
+    name: Overall
+    config: default
+    split: test
+  - id: avg_time
+    name: Avg Time (min)
+    config: default
+    split: test
+  - id: avg_cost
+    name: Avg Cost ($)
+    config: default
+    split: test

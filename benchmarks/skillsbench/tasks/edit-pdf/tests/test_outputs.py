@@ -19,7 +19,7 @@ import pytest
 from pypdf import PdfReader
 
 OUTPUT_PDF = "/root/output/output.pdf"
-VERIFIER_DIR = "/logs/verifier"
+VERIFIER_DIR = "/root/.verifier"
 
 
 def save_pdf_to_verifier():

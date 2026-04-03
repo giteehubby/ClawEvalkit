@@ -51,6 +51,9 @@ def main():
     parser.add_argument("--summary", action="store_true", help="Only print summary of existing results")
     parser.add_argument("--list", action="store_true", help="List available benchmarks and models")
     parser.add_argument("--force", action="store_true", help="Force re-evaluation (ignore cache)")
+    parser.add_argument("--docker", action="store_true", help="使用 Docker 容器运行 (wildclawbench + skillsbench per-task 模式)")
+    parser.add_argument("--use_nanobot_in_docker", action="store_true", help="Docker 模式下使用 NanoBotAgent 替代 OpenClaw CLI")
+    parser.add_argument("--parallel", "-p", type=int, default=1, help="并行任务数 (Docker 模式下有效)")
     parser.add_argument("--env", help="Path to .env file (default: auto-detect)")
     parser.add_argument("--output-dir", help="Output directory for results (default: ./outputs)")
     parser.add_argument("--transcripts-dir", help="Directory to save agent transcripts (default: {output_dir}/transcripts)")
@@ -91,8 +94,15 @@ def main():
     log(f"Config: bench={bench_keys}, models={model_keys}, sample={args.sample or 'all'}")
 
     # 执行评测
-    infer_all(bench_keys, model_keys, sample=args.sample, force=args.force,
-              output_dir=args.output_dir, transcripts_dir=args.transcripts_dir)
+    bench_kwargs = {"force": args.force}
+    if args.docker:
+        bench_kwargs["use_docker"] = True
+    if args.use_nanobot_in_docker:
+        bench_kwargs["use_nanobot_in_docker"] = True
+    if args.parallel > 1:
+        bench_kwargs["parallel"] = args.parallel
+    infer_all(bench_keys, model_keys, sample=args.sample,
+              output_dir=args.output_dir, transcripts_dir=args.transcripts_dir, **bench_kwargs)
 
     # 打印汇总
     log("\n")
