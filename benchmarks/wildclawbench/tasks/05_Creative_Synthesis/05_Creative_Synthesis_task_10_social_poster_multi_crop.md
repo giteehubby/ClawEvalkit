@@ -47,7 +47,7 @@ def grade(**kwargs) -> dict:
     from pathlib import Path
 
     OPENROUTER_API_KEY = os.environ["OPENROUTER_API_KEY"]
-    GT_DIR = Path("/tmp_workspace/gt")
+    GT_DIR = Path(os.environ.get("TMP_WORKSPACE", "/tmp_workspace")) / "workspace" / "gt"
     VLM_MODEL = os.environ.get("JUDGE_MODEL", "openai/gpt-5.4")
     OPENROUTER_BASE_URL = os.environ["OPENROUTER_BASE_URL"]
 

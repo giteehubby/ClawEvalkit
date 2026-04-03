@@ -53,7 +53,7 @@ def grade(**kwargs) -> dict:
     from openai import OpenAI
     from pathlib import Path
 
-    GT_DIR = Path("/tmp_workspace/gt")
+    GT_DIR = Path(os.environ.get("TMP_WORKSPACE", "/tmp_workspace")) / "workspace" / "gt"
     GT_FILE = GT_DIR / "ground_truth.json"
 
     VLM_MODEL = os.environ.get("JUDGE_MODEL", "openai/gpt-5.4")
