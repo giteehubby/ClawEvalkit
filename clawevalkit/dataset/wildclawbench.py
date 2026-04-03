@@ -228,7 +228,6 @@ class WildClawBench(BaseBenchmark):
         use_automated_checks: bool = True,
         use_docker: bool = None,
         parallel: int = 1,
-        use_nanobot_in_docker: bool = False,
         openclawpro_dir: Path = None,
         **kwargs,
     ) -> dict:
@@ -243,34 +242,22 @@ class WildClawBench(BaseBenchmark):
             use_automated_checks: 是否使用自动化 checks
             use_docker: 是否使用 Docker 容器运行 (默认 False, 使用 NanoBotAgent)
             parallel: 并行任务数 (Docker 模式下有效)
-            use_nanobot_in_docker: Docker 模式下是否使用 NanoBotAgent 替代 OpenClaw CLI
             openclawpro_dir: OpenClawPro 源码目录 (用于 Docker 卷挂载)
         """
         # Use instance default if not explicitly specified
         if use_docker is None:
             use_docker = self._use_docker_default
         if use_docker:
-            if use_nanobot_in_docker:
-                return self._evaluate_docker_nanobot(
-                    model_key=model_key,
-                    config=config,
-                    sample=sample,
-                    transcripts_dir=transcripts_dir,
-                    category=category,
-                    use_automated_checks=use_automated_checks,
-                    parallel=parallel,
-                    openclawpro_dir=openclawpro_dir,
-                )
-            else:
-                return self._evaluate_docker(
-                    model_key=model_key,
-                    config=config,
-                    sample=sample,
-                    transcripts_dir=transcripts_dir,
-                    category=category,
-                    use_automated_checks=use_automated_checks,
-                    parallel=parallel,
-                )
+            return self._evaluate_docker_nanobot(
+                model_key=model_key,
+                config=config,
+                sample=sample,
+                transcripts_dir=transcripts_dir,
+                category=category,
+                use_automated_checks=use_automated_checks,
+                parallel=parallel,
+                openclawpro_dir=openclawpro_dir,
+            )
         else:
             return self._evaluate_native(
                 model_key=model_key,
@@ -436,305 +423,6 @@ class WildClawBench(BaseBenchmark):
         return {
             "score": avg,
             "passed": len(scores),
-            "total": len(tasks),
-            "details": results,
-        }
-
-    def _evaluate_docker(
-        self,
-        model_key: str,
-        config: dict,
-        sample: int = 0,
-        transcripts_dir: Path = None,
-        category: str = None,
-        use_automated_checks: bool = True,
-        parallel: int = 1,
-    ) -> dict:
-        """Docker 模式: 在 wildclawbench-ubuntu:v0.4 容器内运行 OpenClaw。"""
-        import sys
-
-        # Add benchmarks/wildclawbench to path for docker_utils
-        benchmarks_dir = Path(__file__).parent.parent.parent / "benchmarks" / "wildclawbench"
-        sys.path.insert(0, str(benchmarks_dir))
-
-        from utils.docker_utils import (
-            remove_container,
-            start_container,
-            setup_workspace,
-            setup_skills,
-            inject_openclaw_models,
-            run_warmup,
-            run_background,
-            close_proc_log,
-            collect_output_from_container,
-        )
-        from utils.grading import run_grading, format_scores
-
-        tasks = self._load_tasks(
-            categories=[category] if category else TASK_CATEGORIES,
-            use_docker=True,
-        )
-        if sample and sample < len(tasks):
-            random.seed(42)
-            tasks = random.sample(tasks, sample)
-
-        out_dir = self.results_dir / "wildclawbench" / "docker" / model_key
-        out_dir.mkdir(parents=True, exist_ok=True)
-        results = []
-
-        judge_key = os.getenv("JUDGE_API_KEY", os.getenv("OPENROUTER_API_KEY", ""))
-        judge_model = os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
-        judge_base = os.getenv("JUDGE_BASE_URL", "https://openrouter.ai/api/v1")
-
-        openrouter_api_key = os.getenv("OPENROUTER_API_KEY", "")
-
-        def run_single_task_docker(task: dict, model: str) -> dict:
-            """Execute a single task inside Docker container."""
-            task_id_ori = task["task_id"]
-            workspace_path = task["workspace_path"]
-            prompt = task["prompt"]
-            timeout_seconds = task["timeout_seconds"]
-            env = task.get("env", "")
-            skills = task.get("skills", "")
-            skills_path = task.get("skills_path", "")
-            warmup = task.get("warmup", "")
-
-            system_prompt = f"You are an expert in a restricted, non-interactive environment. Solve the task efficiently before the timeout ({timeout_seconds}s). Run all processes in the foreground without user input or background services. Provide a complete, functional solution in a single pass with no placeholders.\n"
-            prompt = system_prompt + prompt
-
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            run_id = uuid.uuid4().hex[:6]
-            short_task_id = re.sub(r"(\d+)_.*?(task_\d+)", r"\1_\2", task_id_ori)
-            if not short_task_id:
-                short_task_id = task_id_ori
-            short_model = re.sub(r"[^a-zA-Z0-9.\-_]", "_", model.rsplit("/", 1)[-1])
-            suffix = f"{short_model}_{timestamp}_{run_id}"
-            container_name = f"{short_task_id}_{suffix}"
-
-            task_output_dir = out_dir / task["category"] / task_id_ori / suffix
-            task_output_dir.mkdir(parents=True, exist_ok=True)
-
-            result = {"task_id": container_name, "scores": {}, "error": None}
-            gateway_proc = None
-            agent_proc = None
-            elapsed_time = float(timeout_seconds)
-
-            try:
-                exec_path = os.path.join(workspace_path, "exec")
-                tmp_path = os.path.join(workspace_path, "tmp")
-                os.makedirs(exec_path, exist_ok=True)
-
-                start_container(
-                    container_name,
-                    exec_path,
-                    extra_env=env,
-                    tmp_path=tmp_path,
-                )
-                setup_workspace(container_name, thinking=None)
-                setup_skills(container_name, skills, skills_path)
-                if warmup:
-                    run_warmup(container_name, warmup)
-
-                # Inject OPENROUTER_API_KEY
-                if openrouter_api_key:
-                    auth_profile_path = "/root/.openclaw/agents/main/agent/auth-profiles.json"
-                    inject_cmd = (
-                        f"python3 -c \""
-                        f"import json, pathlib; "
-                        f"p = pathlib.Path('{auth_profile_path}'); "
-                        f"d = json.loads(p.read_text()) if p.exists() else {{'version':1,'profiles':{{}}}}; "
-                        f"d.setdefault('profiles',{{}})['openrouter:default'] = "
-                        f"{{'type':'api_key','provider':'openrouter','key':'{openrouter_api_key}'}}; "
-                        f"p.write_text(json.dumps(d, indent=2))\""
-                    )
-                    subprocess.run(
-                        ["docker", "exec", container_name, "/bin/bash", "-c", inject_cmd],
-                        capture_output=True, text=True,
-                    )
-                    logger.info("[%s] Injected OPENROUTER_API_KEY", container_name)
-
-                # Set model
-                r = subprocess.run(
-                    ["docker", "exec", container_name, "/bin/bash", "-c", f"openclaw models set '{model}'"],
-                    capture_output=True, text=True,
-                )
-                if r.returncode != 0:
-                    raise RuntimeError(f"Model setup failed:\n{r.stderr}")
-                logger.info("[%s] Model set: %s", container_name, model)
-
-                # Start gateway
-                gateway_proc = run_background(
-                    container_name,
-                    bash_cmd=f"export OPENROUTER_API_KEY='{openrouter_api_key}' && openclaw gateway --port 18789",
-                    log_path=task_output_dir / "gateway.log",
-                )
-                logger.info("[%s] Waiting for gateway to be ready...", container_name)
-                time.sleep(2)
-
-                safe_prompt = prompt.replace("'", "'\\''")
-                start_time = time.perf_counter()
-                agent_proc = run_background(
-                    container_name,
-                    bash_cmd=f"openclaw agent --session-id chat --timeout {timeout_seconds} --message '{safe_prompt}'",
-                    log_path=task_output_dir / "agent.log",
-                )
-
-                logger.info("[%s] Waiting for agent to finish...", container_name)
-                try:
-                    agent_proc.wait(timeout=timeout_seconds)
-                    elapsed_time = time.perf_counter() - start_time
-                    logger.info("[%s] Agent finished, elapsed: %.2f seconds", container_name, elapsed_time)
-                except subprocess.TimeoutExpired:
-                    logger.info("[%s] Agent timed out...", container_name)
-                    elapsed_time = timeout_seconds
-                    agent_proc.kill()
-                    agent_proc.wait()
-                logger.info("[%s] Agent exit code: %s", container_name, agent_proc.returncode)
-
-            except Exception as exc:
-                logger.error("[%s] Execution error: %s", container_name, exc)
-                elapsed_time = timeout_seconds
-                result["error"] = str(exc)
-
-            finally:
-                # Collect transcript for grading
-                transcript_container = "/root/.openclaw/agents/main/sessions/chat.jsonl"
-                transcript_host = task_output_dir / "chat.jsonl"
-                r_cp = subprocess.run(
-                    ["docker", "cp", f"{container_name}:{transcript_container}", str(transcript_host)],
-                    capture_output=True, text=True,
-                )
-                if r_cp.returncode == 0 and transcript_host.exists():
-                    from clawevalkit.grading import extract_usage_from_jsonl
-                    usage = extract_usage_from_jsonl(transcript_host)
-                else:
-                    usage = {
-                        "input_tokens": 0, "output_tokens": 0, "cache_read_tokens": 0,
-                        "cache_write_tokens": 0, "total_tokens": 0,
-                        "cost_usd": 0.0, "request_count": 0,
-                    }
-                usage["elapsed_time"] = round(elapsed_time, 2)
-                result["usage"] = usage
-
-                # Grading
-                scores = {}
-                score_source = []
-                if not result.get("error") and task.get("automated_checks"):
-                    try:
-                        auto_scores = run_grading(
-                            task_id=container_name,
-                            automated_checks=task["automated_checks"],
-                            output_dir=task_output_dir,
-                        )
-                        if auto_scores and "error" not in auto_scores:
-                            scores.update(auto_scores)
-                            score_source.append("automated")
-                        logger.info("[%s] Automated grading complete", container_name)
-                    except Exception as exc:
-                        logger.error("[%s] Grading failed: %s", container_name, exc)
-
-                # LLM Judge scoring
-                if transcript_host.exists():
-                    try:
-                        from clawevalkit.grading import run_judge_eval
-                        transcript_content = transcript_host.read_text(encoding="utf-8")
-                        trajectory = []
-                        for line in transcript_content.strip().splitlines():
-                            if line.strip():
-                                try:
-                                    entry = json.loads(line)
-                                    if isinstance(entry, dict) and "message" in entry:
-                                        trajectory.append(entry["message"])
-                                    else:
-                                        trajectory.append(entry)
-                                except json.JSONDecodeError:
-                                    continue
-
-                        if trajectory:
-                            judge_score = run_judge_eval(
-                                trajectory=trajectory,
-                                task_id=container_name,
-                                category=task.get("category", "unknown"),
-                                task_prompt=task["prompt"],
-                                judge_model=judge_model,
-                                api_key=judge_key,
-                                base_url=judge_base,
-                                model_name=config.get("name", "unknown"),
-                            )
-                            if judge_score:
-                                scores["judge_overall"] = judge_score.overall_score
-                                scores["judge_task_completion"] = judge_score.task_completion
-                                scores["judge_tool_usage"] = judge_score.tool_usage
-                                scores["judge_reasoning"] = judge_score.reasoning
-                                scores["judge_answer_quality"] = judge_score.answer_quality
-                                score_source.append("judge")
-                                logger.info("[%s] LLM judge scoring complete", container_name)
-                    except Exception as exc:
-                        logger.error("[%s] LLM judge failed: %s", container_name, exc)
-
-                # Determine final score
-                if scores:
-                    if "overall_score" in scores:
-                        final_score = scores["overall_score"]
-                    elif "judge_overall" in scores:
-                        final_score = scores["judge_overall"]
-                    else:
-                        numeric_vals = [v for v in scores.values() if isinstance(v, (int, float))]
-                        final_score = sum(numeric_vals) / len(numeric_vals) if numeric_vals else 0.0
-                    result["scores"] = scores
-                    result["scores"]["overall_score"] = final_score
-                    result["score_source"] = score_source
-                elif not result.get("error"):
-                    result["scores"] = {"overall_score": 0.0}
-
-                # Collect output files
-                try:
-                    collect_output_from_container(container_name, task_output_dir)
-                except Exception as exc:
-                    logger.warning("[%s] Failed to collect task output: %s", container_name, exc)
-
-                if gateway_proc is not None:
-                    try:
-                        gateway_proc.terminate()
-                    except Exception:
-                        pass
-                for proc in [gateway_proc, agent_proc]:
-                    if proc is not None:
-                        try:
-                            close_proc_log(proc)
-                        except Exception:
-                            pass
-
-                remove_container(container_name)
-                logger.info("[%s] Container cleaned up", container_name)
-
-            return result
-
-        # Execute tasks
-        if parallel <= 1:
-            for task in tasks:
-                results.append(run_single_task_docker(task, config["model"]))
-        else:
-            with ThreadPoolExecutor(max_workers=parallel) as pool:
-                futures = {
-                    pool.submit(run_single_task_docker, task, config["model"]): task["task_id"]
-                    for task in tasks
-                }
-                for future in as_completed(futures):
-                    tid = futures[future]
-                    try:
-                        results.append(future.result())
-                    except Exception as exc:
-                        logger.error("[%s] Thread exception: %s", tid, exc)
-                        results.append({"task_id": tid, "scores": {}, "error": str(exc)})
-
-        # Compute average
-        valid_scores = [r["scores"].get("overall_score", 0) for r in results if r.get("scores") and "error" not in r["scores"]]
-        avg = round(sum(valid_scores) / len(valid_scores), 3) if valid_scores else 0
-
-        return {
-            "score": avg,
-            "passed": len(valid_scores),
             "total": len(tasks),
             "details": results,
         }
