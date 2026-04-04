@@ -574,24 +574,109 @@ class SkillsBench(BaseBenchmark):
         # Dynamically create symlinks based on instruction paths
         self._setup_container_paths(container_name, instruction, mount_point)
 
-        # Install Python 3.11 and necessary packages
-        # (OpenClawPro requires Python 3.11+, but task Dockerfiles use Python 3.10)
-        install_py311 = (
-            "apt-get update && "
-            "apt-get install -y build-essential wget libssl-dev zlib1g-dev libncursesw6 libffi-dev libsqlite3-dev liblzma-dev && "
-            "cd /tmp && "
-            "wget -q https://www.python.org/ftp/python/3.11.9/Python-3.11.9.tgz && "
-            "tar -xf Python-3.11.9.tgz && "
-            "cd Python-3.11.9 && "
-            "./configure --prefix=/usr/local --enable-optimizations && "
-            "make -j$(nproc) && "
-            "make altinstall"
+        # Setup Python 3.11 for the container
+        # (OpenClawPro requires Python 3.11+, but task Dockerfiles may use older Python)
+        log(f"[{task_name}] Setting up Python 3.11...")
+
+        def copy_python311_from_image(src_image: str, container_name: str, task_name: str) -> bool:
+            """Copy Python 3.11 from a source image to target container."""
+            tmp_dir = f"/tmp/py311_{uuid.uuid4().hex[:8]}"
+            try:
+                src_name = f"py311_src_{uuid.uuid4().hex[:8]}"
+                subprocess.run(["docker", "create", "--name", src_name, src_image],
+                             capture_output=True, text=True, timeout=30)
+
+                os.makedirs(tmp_dir, exist_ok=True)
+
+                subprocess.run(
+                    ["docker", "cp", f"{src_name}:/usr/local/bin/python3.11", f"{tmp_dir}/python3.11"],
+                    capture_output=True, text=True, timeout=120
+                )
+                subprocess.run(
+                    ["docker", "cp", f"{src_name}:/usr/local/lib/python3.11", tmp_dir],
+                    capture_output=True, text=True, timeout=300
+                )
+
+                subprocess.run(
+                    ["docker", "cp", f"{tmp_dir}/python3.11", f"{container_name}:/usr/local/bin/python3.11"],
+                    capture_output=True, text=True, timeout=120
+                )
+                subprocess.run(
+                    ["docker", "exec", container_name, "mkdir", "-p", "/usr/local/lib/python3.11"],
+                    capture_output=True, text=True, timeout=10
+                )
+                subprocess.run(
+                    ["docker", "cp", f"{tmp_dir}/python3.11/.", f"{container_name}:/usr/local/lib/python3.11/"],
+                    capture_output=True, text=True, timeout=300
+                )
+
+                subprocess.run(["docker", "rm", "-f", src_name], capture_output=True, text=True, timeout=10)
+                shutil.rmtree(tmp_dir, ignore_errors=True)
+                log(f"[{task_name}] Python 3.11 copied from {src_image}")
+                return True
+            except Exception as e:
+                log(f"[{task_name}] Python 3.11 copy from {src_image} failed: {e}")
+                try:
+                    subprocess.run(["docker", "rm", "-f", src_name], capture_output=True, text=True, timeout=10)
+                except Exception:
+                    pass
+                shutil.rmtree(tmp_dir, ignore_errors=True)
+                return False
+
+        # Check if Python 3.11 already exists and pip works
+        check_pip = subprocess.run(
+            ["docker", "exec", container_name, "python3.11", "-m", "pip", "--version"],
+            capture_output=True, text=True, timeout=30
         )
-        log(f"[{task_name}] Installing Python 3.11 (may take a few minutes)...")
-        py_install = subprocess.run(["docker", "exec", container_name, "bash", "-c", install_py311],
-                      capture_output=True, text=True, timeout=600)
-        if py_install.returncode != 0:
-            log(f"[{task_name}] Python 3.11 install failed: {py_install.stderr[:300]}")
+        if check_pip.returncode == 0:
+            log(f"[{task_name}] Python 3.11 with pip already available")
+        else:
+            # Python 3.11 not available or pip not working
+            log(f"[{task_name}] Python 3.11 not functional, setting up...")
+
+            # Detect container base image type by checking /etc/os-release
+            check_ubuntu24 = subprocess.run(
+                ["docker", "exec", container_name, "grep", "-q", "Ubuntu 24", "/etc/os-release"],
+                capture_output=True, text=True, timeout=10
+            )
+            is_ubuntu24 = check_ubuntu24.returncode == 0
+
+            # Check if python3.11 binary exists
+            check_py311 = subprocess.run(
+                ["docker", "exec", container_name, "python3.11", "--version"],
+                capture_output=True, text=True, timeout=30
+            )
+
+            if check_py311.returncode != 0:
+                # Python 3.11 binary doesn't exist, need to copy or install
+                if is_ubuntu24:
+                    # For Ubuntu 24.04, use skillsbench-py311-ubuntu24
+                    log(f"[{task_name}] Detected Ubuntu 24.04 container, using skillsbench-py311-ubuntu24...")
+                    copy_python311_from_image("skillsbench-py311-ubuntu24:latest", container_name, task_name)
+                else:
+                    # For other containers (python:3.10-slim, debian, etc.), try skillsbench-py311 first
+                    log(f"[{task_name}] Copying Python 3.11 from skillsbench-py311...")
+                    success = copy_python311_from_image("skillsbench-py311:latest", container_name, task_name)
+                    if not success:
+                        # If skillsbench-py311 fails (e.g., glibc incompatibility), try ubuntu24 version
+                        log(f"[{task_name}] skillsbench-py311 failed, trying skillsbench-py311-ubuntu24...")
+                        copy_python311_from_image("skillsbench-py311-ubuntu24:latest", container_name, task_name)
+
+            # Now try to install pip if it's not working
+            check_pip_again = subprocess.run(
+                ["docker", "exec", container_name, "python3.11", "-m", "pip", "--version"],
+                capture_output=True, text=True, timeout=30
+            )
+            if check_pip_again.returncode != 0:
+                log(f"[{task_name}] pip not working, trying ensurepip...")
+                ensurepip = subprocess.run(
+                    ["docker", "exec", container_name, "python3.11", "-m", "ensurepip", "--upgrade"],
+                    capture_output=True, text=True, timeout=60
+                )
+                if ensurepip.returncode != 0:
+                    log(f"[{task_name}] ensurepip failed: {ensurepip.stderr[:200]}")
+                else:
+                    log(f"[{task_name}] ensurepip succeeded")
 
         # Install necessary packages using Python 3.11's pip
         pip_proc = subprocess.run(
@@ -600,6 +685,23 @@ class SkillsBench(BaseBenchmark):
         )
         if pip_proc.returncode != 0:
             log(f"[{task_name}] pip install failed: {pip_proc.stderr[:500]}")
+            # Check if pip itself works
+            pip_check = subprocess.run(
+                ["docker", "exec", container_name, "python3.11", "-m", "pip", "--version"],
+                capture_output=True, text=True, timeout=30
+            )
+            if pip_check.returncode != 0:
+                log(f"[{task_name}] pip not functional, skipping task")
+                self._remove_container(container_name)
+                try:
+                    subprocess.run(["docker", "rmi", "-f", task_image],
+                                  capture_output=True, text=True, timeout=60)
+                except Exception:
+                    pass
+                return {"task": task_name, "status": "skipped", "error": "Python 3.11 pip not functional"}
+            log(f"[{task_name}] pip install failed but pip works, continuing anyway")
+        else:
+            log(f"[{task_name}] pip install succeeded")
 
         try:
             result = self._execute_nanobot_in_container(
@@ -709,15 +811,38 @@ print('DONE')
             finally:
                 Path(script_path).unlink(missing_ok=True)
 
+            # Start the exec process
             exec_cmd = ["docker", "exec", container_name, "python3.11", "/tmp/exec_nanobot.py"]
-            exec_proc = subprocess.run(exec_cmd, capture_output=True, text=True, timeout=360)
+            exec_proc = subprocess.Popen(exec_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
-            if exec_proc.returncode != 0:
-                return {"task": task_name, "status": "error",
-                        "error": f"exec failed: {exec_proc.stderr[:500]}", "turns": turn + 1}
+            # Wait for the process with timeout, checking for result file periodically
+            result_file_host = workspace_host / "agent_result.json"
+            start_time = time.time()
+            timeout = 360
+
+            while time.time() - start_time < timeout:
+                if exec_proc.poll() is not None:
+                    # Process finished
+                    break
+
+                # Check if result file exists in container
+                check_result = subprocess.run(
+                    ["docker", "exec", container_name, "test", "-f", f"{mount_point}/agent_result.json"],
+                    capture_output=True, text=True, timeout=10
+                )
+                if check_result.returncode == 0:
+                    # Result file exists, kill the process and read result
+                    exec_proc.kill()
+                    break
+
+                time.sleep(5)
+
+            # Clean up process
+            if exec_proc.poll() is None:
+                exec_proc.kill()
+                exec_proc.wait()
 
             # Load result from container
-            result_file_host = workspace_host / "agent_result.json"
             subprocess.run(["docker", "cp", f"{container_name}:{mount_point}/agent_result.json",
                           str(result_file_host)], capture_output=True)
 
