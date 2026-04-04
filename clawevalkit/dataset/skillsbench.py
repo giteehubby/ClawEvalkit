@@ -295,9 +295,10 @@ class SkillsBench(BaseBenchmark):
 
     def _save_transcript(self, transcripts_dir: Path, model_key: str, task_name: str,
                          transcript: list):
-        """保存 agent 轨迹到文件。"""
+        """保存 agent 轨迹到文件（统一结构）。"""
         try:
-            trans_path = Path(transcripts_dir) / "skillsbench" / model_key
+            # 保存到统一路径: outputs/skillsbench/{model}/{task}/transcript.json
+            trans_path = self.results_dir / "skillsbench" / model_key / task_name
             trans_path.mkdir(parents=True, exist_ok=True)
             normalized = []
             for e in transcript:
@@ -305,10 +306,11 @@ class SkillsBench(BaseBenchmark):
                     normalized.append(e["message"])
                 else:
                     normalized.append(e)
-            (trans_path / f"{task_name}_transcript.json").write_text(
+            (trans_path / "transcript.json").write_text(
                 json.dumps(normalized, indent=2, ensure_ascii=False),
                 encoding="utf-8",
             )
+            logger.info("[%s] Saved transcript to %s", task_name, trans_path / "transcript.json")
         except Exception:
             pass  # transcript 保存失败不影响主流程
 
@@ -373,6 +375,22 @@ class SkillsBench(BaseBenchmark):
         proxy_https = os.environ.get('HTTPS_PROXY_INNER', '')
 
         for i, task_name in enumerate(task_names):
+            # Per-task deduplication: check for existing result before running
+            task_result_dir = self.results_dir / "skillsbench" / model_key / task_name
+            dedup_file = task_result_dir / "result.json"
+            if dedup_file.exists():
+                try:
+                    cached = json.loads(dedup_file.read_text())
+                    if cached.get("status") in ("passed", "failed"):
+                        logger.info("[%s] Found cached result, skipping", task_name)
+                        cached["_from_cache"] = True
+                        results.append(cached)
+                        if cached.get("status") == "passed":
+                            passed += 1
+                        continue
+                except Exception:
+                    pass
+
             start = time.time()
             result = self._run_single_task_docker(
                 task_name, config, tasks_dir, max_turns,
@@ -380,6 +398,15 @@ class SkillsBench(BaseBenchmark):
                 transcripts_dir=transcripts_dir, model_key=model_key
             )
             result["elapsed_s"] = round(time.time() - start, 2)
+
+            # Save result to dedup location (unified structure)
+            task_result_dir = self.results_dir / "skillsbench" / model_key / task_name
+            task_result_dir.mkdir(parents=True, exist_ok=True)
+            (task_result_dir / "result.json").write_text(
+                json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8"
+            )
+            logger.info("[%s] Saved result to %s", task_name, task_result_dir / "result.json")
+
             if result.get("status") == "passed":
                 passed += 1
             results.append(result)
@@ -392,7 +419,7 @@ class SkillsBench(BaseBenchmark):
             "pass_rate": f"{passed}/{total}", "max_turns": max_turns,
             "skipped_docker": len(SKIP_TASKS_DOCKER), "results": results,
         }
-        self.save_result("skillsbench_docker", model_key, summary)
+        self.save_result("skillsbench", model_key, summary)
         return summary
 
     def _setup_container_paths(self, container_name: str, instruction: str, mount_point: str):

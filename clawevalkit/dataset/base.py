@@ -36,7 +36,7 @@ class BaseBenchmark(ABC):
 
     @abstractmethod
     def evaluate(self, model_key: str, config: dict, sample: int = 0, **kwargs) -> dict:
-        """Run evaluation. Returns {"score": float, "passed": int, "total": int, ...}."""
+        """Run evaluation. Returns {"score": float, "scored": int, "total": int, ...}."""
         ...
 
     def collect(self, model_key: str) -> dict | None:

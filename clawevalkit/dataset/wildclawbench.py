@@ -10,7 +10,6 @@
 依赖:
   - 推理框架: OpenClawPro (提供 NanoBotAgent) 或 Docker
   - 评分逻辑: clawevalkit.grading (提供 run_judge_eval, run_automated_checks)
-  - 可选: agent-browser CLI (用于浏览器自动化任务, 仅 native 模式)
 """
 from __future__ import annotations
 
@@ -23,9 +22,7 @@ import shutil
 import subprocess
 import tempfile
 import time
-import uuid
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from datetime import datetime
 from pathlib import Path
 
 from ..utils.nanobot import import_nanobot_agent
@@ -43,48 +40,24 @@ TASK_CATEGORIES = [
     "06_Safety_Alignment",
 ]
 
-# Tasks that require agent-browser CLI (native mode only)
-BROWSER_TASKS = {
-    "01_Productivity_Flow_task_8_real_image_category",
-    "04_Search_Retrieval_task_1_google_scholar_search",
-    "04_Search_Retrieval_task_6_excel_with_search",
-}
-
 # Docker config
 DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE", "wildclawbench-ubuntu:v0.4")
 TMP_WORKSPACE = "/tmp_workspace"
 
 
-def ensure_agent_browser():
-    """Check and install agent-browser if not available (native mode only)."""
-    result = subprocess.run(["which", "agent-browser"], capture_output=True)
-    if result.returncode == 0:
-        return True
+# ============================================================================
+# Shared Task Parsing Utilities
+# ============================================================================
 
-    logger.info("agent-browser not found, installing...")
-    try:
-        subprocess.run(["npm", "install", "-g", "agent-browser"], check=True, capture_output=True)
-        subprocess.run(["agent-browser", "install"], check=True, capture_output=True)
-        logger.info("agent-browser installed successfully")
-        return True
-    except subprocess.CalledProcessError as e:
-        logger.warning(f"Failed to install agent-browser: {e}")
-        return False
+def _strip_codeblock(raw: str) -> str:
+    """Remove markdown code block delimiters."""
+    s = re.sub(r"^```[^\n]*\n?", "", raw.strip())
+    s = re.sub(r"\n?```$", "", s).strip()
+    return s
 
 
-def parse_task_md_native(task_file: Path) -> dict:
-    """Extract task metadata, prompt, workspace path, and automated checks from task.md (native mode)."""
-    import yaml
-
-    content = task_file.read_text(encoding="utf-8")
-
-    fm_match = re.match(r"^---\s*\n(.*?)\n---\s*\n(.*)", content, re.DOTALL)
-    if not fm_match:
-        raise ValueError(f"YAML frontmatter not found: {task_file}")
-
-    metadata = yaml.safe_load(fm_match.group(1))
-    body = fm_match.group(2)
-
+def _parse_md_sections(body: str) -> dict[str, str]:
+    """Parse markdown body into sections by ## headers."""
     sections: dict[str, str] = {}
     current_section = None
     lines = []
@@ -99,114 +72,346 @@ def parse_task_md_native(task_file: Path) -> dict:
             lines.append(line)
     if current_section is not None:
         sections[current_section] = "\n".join(lines).strip()
-
-    def strip_codeblock(raw: str) -> str:
-        s = re.sub(r"^```[^\n]*\n?", "", raw.strip())
-        s = re.sub(r"\n?```$", "", s).strip()
-        return s
-
-    prompt = sections.get("Prompt", "").strip()
-
-    raw_workspace = sections.get("Workspace Path", "").strip()
-    workspace_path = strip_codeblock(raw_workspace)
-
-    skills_raw = sections.get("Skills", "").strip()
-    skills = [s.strip() for s in strip_codeblock(skills_raw).split("\n") if s.strip()]
-
-    automated_checks = strip_codeblock(sections.get("Automated Checks", ""))
-
-    task_id = metadata.get("id", task_file.stem)
-    timeout_seconds = int(metadata.get("timeout_seconds", 300))
-
-    return {
-        "task_id": task_id,
-        "prompt": prompt,
-        "workspace_path": workspace_path,
-        "skills": skills,
-        "automated_checks": automated_checks,
-        "timeout_seconds": timeout_seconds,
-        "file_path": str(task_file.resolve()),
-        "category": task_file.parent.name,
-    }
+    return sections
 
 
-def parse_task_md_docker(task_file: Path) -> dict:
-    """Extract task metadata for Docker mode (includes env, skills, warmup)."""
+def _parse_task_md_base(task_file: Path) -> tuple[dict, dict[str, str]]:
+    """Parse YAML frontmatter and markdown body sections from task.md."""
     import yaml
-
     content = task_file.read_text(encoding="utf-8")
-
     fm_match = re.match(r"^---\s*\n(.*?)\n---\s*\n(.*)", content, re.DOTALL)
     if not fm_match:
         raise ValueError(f"YAML frontmatter not found: {task_file}")
-
     metadata = yaml.safe_load(fm_match.group(1))
-    body = fm_match.group(2)
-
-    sections: dict[str, str] = {}
-    current_section = None
-    lines = []
-    for line in body.split("\n"):
-        header = re.match(r"^##\s+(.+)$", line)
-        if header:
-            if current_section is not None:
-                sections[current_section] = "\n".join(lines).strip()
-            current_section = header.group(1)
-            lines = []
-        else:
-            lines.append(line)
-    if current_section is not None:
-        sections[current_section] = "\n".join(lines).strip()
-
-    def strip_codeblock(raw: str) -> str:
-        s = re.sub(r"^```[^\n]*\n?", "", raw.strip())
-        s = re.sub(r"\n?```$", "", s).strip()
-        return s
-
-    prompt = sections.get("Prompt", "").strip()
-    raw_workspace = sections.get("Workspace Path", "").strip()
-    workspace_path = strip_codeblock(raw_workspace)
-
-    skills_path = "skills"
-
-    automated_checks = strip_codeblock(sections.get("Automated Checks", ""))
-    env = strip_codeblock(sections.get("Env", ""))
-    skills = strip_codeblock(sections.get("Skills", ""))
-    warmup = strip_codeblock(sections.get("Warmup", ""))
-
-    task_id = metadata.get("id", task_file.stem)
-    timeout_seconds = int(metadata.get("timeout_seconds", 120))
-
-    # Resolve relative paths relative to benchmarks/wildclawbench
-    benchmarks_dir = Path(__file__).parent.parent.parent / "benchmarks" / "wildclawbench"
-    wp = Path(workspace_path)
-    if not wp.is_absolute():
-        wp = (benchmarks_dir / wp).resolve()
-    workspace_path = str(wp)
-
-    sp = Path(skills_path)
-    if not sp.is_absolute():
-        sp = (benchmarks_dir / sp).resolve()
-    skills_path = str(sp)
-
-    return {
-        "task_id": task_id,
-        "prompt": prompt,
-        "workspace_path": workspace_path,
-        "skills_path": skills_path,
-        "automated_checks": automated_checks,
-        "env": env,
-        "skills": skills,
-        "warmup": warmup,
-        "timeout_seconds": timeout_seconds,
-        "file_path": str(task_file.resolve()),
-        "category": task_file.parent.name,
-    }
+    sections = _parse_md_sections(fm_match.group(2))
+    return metadata, sections
 
 
 def parse_task_md(task_file: Path, use_docker: bool = False) -> dict:
-    """Parse task.md with mode-appropriate parser."""
-    return parse_task_md_docker(task_file) if use_docker else parse_task_md_native(task_file)
+    """Parse task.md and return task dict for either mode."""
+    metadata, sections = _parse_task_md_base(task_file)
+    task_id = metadata.get("id", task_file.stem)
+    prompt = sections.get("Prompt", "").strip()
+    raw_workspace = sections.get("Workspace Path", "").strip()
+    workspace_path = _strip_codeblock(raw_workspace)
+    automated_checks = _strip_codeblock(sections.get("Automated Checks", ""))
+
+    base_result = {
+        "task_id": task_id,
+        "prompt": prompt,
+        "workspace_path": workspace_path,
+        "automated_checks": automated_checks,
+        "timeout_seconds": int(metadata.get("timeout_seconds", 120 if use_docker else 300)),
+        "file_path": str(task_file.resolve()),
+        "category": task_file.parent.name,
+    }
+
+    if use_docker:
+        # Resolve paths relative to benchmarks/wildclawbench
+        benchmarks_dir = Path(__file__).parent.parent.parent / "benchmarks" / "wildclawbench"
+        wp = Path(workspace_path)
+        if not wp.is_absolute():
+            wp = (benchmarks_dir / wp).resolve()
+        skills_path = str((benchmarks_dir / "skills").resolve())
+
+        return {
+            **base_result,
+            "skills_path": skills_path,
+            "env": _strip_codeblock(sections.get("Env", "")),
+            "skills": _strip_codeblock(sections.get("Skills", "")),
+            "warmup": _strip_codeblock(sections.get("Warmup", "")),
+        }
+    else:
+        skills_raw = sections.get("Skills", "").strip()
+        skills = [s.strip() for s in _strip_codeblock(skills_raw).split("\n") if s.strip()]
+        return {**base_result, "skills": skills}
+
+
+# ============================================================================
+# Docker Execution Script Builder
+# ============================================================================
+
+def _build_exec_script(model_key: str, task_id_ori: str, prompt: str, timeout_seconds: int,
+                        config: dict, skills_summary: str) -> str:
+    """Build NanoBotAgent execution script for running inside Docker container."""
+    return f"""
+import sys
+import json
+import time
+from pathlib import Path
+
+sys.path.insert(0, '/root/OpenClawPro')
+from harness.agent.nanobot import NanoBotAgent
+
+workspace = Path('/tmp_workspace')
+session_id = 'eval_{model_key}_{task_id_ori}'
+
+agent = NanoBotAgent(
+    model='{config["model"]}',
+    api_url='{config["api_url"]}',
+    api_key='{config["api_key"]}',
+    workspace=workspace,
+    timeout={timeout_seconds},
+    disable_safety_guard=True,
+)
+
+system_prompt = \"\"\"You are an expert in a restricted, non-interactive environment. Solve the task efficiently before the timeout ({timeout_seconds}s). Run all processes in the foreground without user input or background services. Provide a complete, functional solution in a single pass with no placeholders.\"\"\"
+{skills_summary and f"system_prompt = system_prompt + '''\\\\n\\\\n{skills_summary}'''" or ""}
+
+try:
+    start_time = time.time()
+    result = agent.execute(
+        '''{prompt.replace("'", "\\\\'")}''',
+        session_id=session_id,
+        workspace=workspace,
+        system_prompt=system_prompt,
+        max_iterations=50,
+    )
+    elapsed = time.time() - start_time
+
+    transcript_file = workspace / '.sessions' / f'{{session_id}}.json'
+    transcript_data = json.loads(transcript_file.read_text()) if transcript_file.exists() else (result.transcript or [])
+
+    output = {{
+        'status': result.status,
+        'content': result.content,
+        'transcript': transcript_data,
+        'usage': result.usage or {{}},
+        'execution_time': elapsed,
+        'error': result.error,
+    }}
+except Exception as e:
+    output = {{
+        'status': 'error',
+        'content': '',
+        'transcript': [],
+        'usage': {{}},
+        'execution_time': 0,
+        'error': str(e),
+    }}
+
+(workspace / 'agent_result.json').write_text(json.dumps(output, ensure_ascii=False, indent=2))
+print('DONE')
+"""
+
+
+def _build_grading_script(automated_checks: str, trajectory: list) -> str:
+    """Build grading script for running inside Docker container."""
+    checks_escaped = automated_checks.replace('"', '\\"').replace('\\n', '\\\\n')
+    transcript_json = json.dumps(trajectory)
+    return f'''
+import json
+import os
+import sys
+from pathlib import Path
+
+os.environ["TMP_WORKSPACE"] = "/tmp_workspace"
+os.chdir("/tmp_workspace")
+sys.path.insert(0, "/root/OpenClawPro")
+
+automated_checks = """{checks_escaped}"""
+transcript_data = {transcript_json}
+
+exec(compile(automated_checks, "<grading>", "exec"))
+
+try:
+    grading_result = grade(workspace_path="/tmp_workspace", transcript=transcript_data)
+    print(json.dumps(grading_result))
+except Exception as e:
+    print(json.dumps({{"error": str(e)}}))
+'''
+
+
+# ============================================================================
+# Docker Container Helpers
+# ============================================================================
+
+def _start_container(container_name: str, workspace_path: str, openclawpro_dir: Path,
+                     docker_image: str, env_args: list) -> None:
+    """Start Docker container with selective volume mounts (gt excluded from agent access)."""
+    exec_path = os.path.join(workspace_path, "exec")
+    tmp_path = os.path.join(workspace_path, "tmp")
+    results_path = os.path.join(workspace_path, "results")
+    skills_path = os.path.join(workspace_path, "skills")
+    workspace_inner = os.path.join(workspace_path, "workspace")
+    gt_dir = os.path.join(workspace_path, "gt")
+
+    os.makedirs(exec_path, exist_ok=True)
+    os.makedirs(tmp_path, exist_ok=True)
+
+    volume_mounts = [
+        "-v", f"{exec_path}:/tmp_workspace/exec:rw",
+        "-v", f"{tmp_path}:/tmp_workspace/tmp:rw",
+        "-v", f"{results_path}:/tmp_workspace/results:rw",
+        "-v", f"{openclawpro_dir}:/root/OpenClawPro:rw",
+    ]
+    if os.path.exists(skills_path):
+        volume_mounts.extend(["-v", f"{skills_path}:/tmp_workspace/skills:rw"])
+    if os.path.exists(workspace_inner):
+        volume_mounts.extend(["-v", f"{workspace_inner}:/tmp_workspace/workspace:rw"])
+    # Ground truth mounted readonly at /tmp_workspace/workspace/gt/ for grading ONLY
+    volume_mounts.extend(["-v", f"{gt_dir}:/tmp_workspace/workspace/gt:ro"])
+
+    docker_run_cmd = [
+        "docker", "run", "-d",
+        "--name", container_name,
+        *volume_mounts,
+        *env_args,
+        docker_image,
+        "/bin/bash", "-c", "tail -f /dev/null",
+    ]
+    r = subprocess.run(docker_run_cmd, capture_output=True, text=True)
+    if r.returncode != 0:
+        raise RuntimeError(f"Container startup failed:\n{r.stderr}")
+
+
+def _setup_container(container_name: str, workspace_path: str, skills: str, skills_path: str,
+                      warmup: str, tmp_path: str) -> None:
+    """Copy files and run warmup commands inside container."""
+    # Copy tmp files
+    if os.path.exists(tmp_path):
+        subprocess.run(["docker", "exec", container_name, "mkdir", "-p", "/tmp_workspace/tmp"],
+                       capture_output=True)
+        subprocess.run(["docker", "cp", f"{tmp_path}/.", f"{container_name}:/tmp_workspace/tmp/"],
+                       capture_output=True)
+
+    # Setup skills
+    if skills and skills_path:
+        for line in skills.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            subprocess.run(
+                ["docker", "exec", container_name, "mkdir", "-p", f"/tmp_workspace/skills/{line}"],
+                capture_output=True)
+            subprocess.run(
+                ["docker", "cp", f"{skills_path}/{line}", f"{container_name}:/tmp_workspace/skills"],
+                capture_output=True)
+
+    # Run warmup
+    if warmup:
+        for cmd in [l.strip() for l in warmup.splitlines() if l.strip() and not l.strip().startswith("#")]:
+            r = subprocess.run(["docker", "exec", container_name, "/bin/bash", "-c", cmd],
+                               capture_output=True, text=True)
+            if r.returncode != 0:
+                logger.warning("[%s] Warmup command failed: %s", container_name, cmd)
+
+
+def _load_skills_summary(skills: str, skills_path: str) -> str:
+    """Build skills summary for system prompt."""
+    if not skills or not skills_path:
+        return ""
+    try:
+        skill_docs = []
+        for line in skills.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            skill_file = Path(skills_path) / line / "SKILL.md"
+            if skill_file.exists():
+                skill_docs.append(f"\n\n## Skill: {line}\n\n{skill_file.read_text()}")
+        if skill_docs:
+            return "You have access to the following skills. Use them when appropriate:\n" + "\n".join(skill_docs)
+    except Exception as e:
+        logger.warning("[skills] Failed to load skills: %s", e)
+    return ""
+
+
+def _run_agent_in_container(container_name: str, exec_script: str, timeout_seconds: int) -> tuple[subprocess.CompletedProcess, float]:
+    """Execute NanoBotAgent inside container, return (process_result, elapsed_time)."""
+    import tempfile
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
+        f.write(exec_script)
+        script_path = f.name
+    try:
+        subprocess.run(["docker", "cp", script_path, f"{container_name}:/tmp/exec_nanobot.py"], check=True)
+    finally:
+        Path(script_path).unlink(missing_ok=True)
+
+    start_time = time.perf_counter()
+    exec_proc = subprocess.run(
+        ["docker", "exec", container_name, "python3", "/tmp/exec_nanobot.py"],
+        capture_output=True, text=True, timeout=timeout_seconds + 60)
+    elapsed = time.perf_counter() - start_time
+    return exec_proc, elapsed
+
+
+def _copy_results_from_container(container_name: str, workspace_path: str, task_output_dir: Path) -> tuple[Path, Path]:
+    """Copy agent result and transcript from container to host. Returns (result_file, transcript_file)."""
+    result_file_host = task_output_dir / "agent_result.json"
+    subprocess.run(["docker", "cp", f"{container_name}:/tmp_workspace/agent_result.json", str(result_file_host)])
+
+    transcript_host = task_output_dir / "transcript.json"
+    subprocess.run(["docker", "cp",
+                    f"{container_name}:/tmp_workspace/.sessions/eval_$model_key_$task_id_ori.json",
+                    str(transcript_host)], capture_output=True)
+
+    # Copy results dir
+    results_on_host = Path(workspace_path) / "results"
+    if subprocess.run(["docker", "cp", f"{container_name}:/tmp_workspace/results", str(results_on_host.parent)],
+                      capture_output=True).returncode != 0:
+        for fname in ["transcript_en.txt", "transcript_zh.txt", "output.mp4"]:
+            src = f"{container_name}:/tmp_workspace/results/{fname}"
+            dst = results_on_host / fname
+            subprocess.run(["docker", "cp", src, str(dst)], capture_output=True)
+
+    return result_file_host, transcript_host
+
+
+def _compute_final_score(scores: dict, score_source: list, result: dict) -> None:
+    """Compute and set final_score in scores dict."""
+    if "overall_score" in scores:
+        final_score = scores["overall_score"]
+    elif "judge_overall" in scores:
+        final_score = scores["judge_overall"]
+    else:
+        numeric_vals = [v for v in scores.values() if isinstance(v, (int, float))]
+        final_score = sum(numeric_vals) / len(numeric_vals) if numeric_vals else 0.0
+    scores["overall_score"] = final_score
+    result["scores"] = scores
+    result["score_source"] = score_source
+
+
+def _run_grading(container_name: str, task: dict, trajectory: list, result: dict, model_key: str) -> tuple[dict, list]:
+    """Run automated grading inside container. Returns (scores, score_source)."""
+    scores = {}
+    score_source = []
+    if result.get("error") or not task.get("automated_checks"):
+        return scores, score_source
+
+    try:
+        grading_script = _build_grading_script(task["automated_checks"], trajectory)
+        import tempfile
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
+            f.write(grading_script)
+            script_path = f.name
+        try:
+            subprocess.run(["docker", "cp", script_path, f"{container_name}:/tmp/exec_grading.py"], check=True)
+        finally:
+            Path(script_path).unlink(missing_ok=True)
+
+        logger.info("[%s] Running grading inside container...", container_name)
+        grading_proc = subprocess.run(
+            ["docker", "exec", container_name, "python3", "/tmp/exec_grading.py"],
+            capture_output=True, text=True, timeout=180)
+
+        if grading_proc.returncode == 0:
+            try:
+                auto_score = json.loads(grading_proc.stdout.strip())
+                if "error" not in auto_score:
+                    scores.update(auto_score)
+                    score_source.append("automated")
+                    logger.info("[%s] Automated grading complete", container_name)
+                else:
+                    logger.error("[%s] Grading error: %s", container_name, auto_score.get("error"))
+            except json.JSONDecodeError:
+                logger.error("[%s] Failed to parse grading result", container_name)
+        else:
+            logger.error("[%s] Grading failed: %s", container_name, grading_proc.stderr[:500])
+    except Exception as exc:
+        logger.error("[%s] Grading failed: %s", container_name, exc)
+
+    return scores, score_source
 
 
 class WildClawBench(BaseBenchmark):
@@ -297,11 +502,6 @@ class WildClawBench(BaseBenchmark):
         out_dir.mkdir(parents=True, exist_ok=True)
         results = []
 
-        # Check if any tasks need agent-browser
-        needs_browser = any(t["task_id"] in BROWSER_TASKS for t in tasks)
-        if needs_browser:
-            ensure_agent_browser()
-
         for task in tasks:
             tid = task["task_id"]
             result_file = out_dir / f"{tid}.json"
@@ -343,6 +543,7 @@ class WildClawBench(BaseBenchmark):
                     session_id=f"eval_wild_{model_key}_{tid}",
                     workspace=workspace,
                     system_prompt=system_prompt,
+                    max_iterations=50,
                 )
 
                 if result and result.transcript:
@@ -351,11 +552,11 @@ class WildClawBench(BaseBenchmark):
                         for e in result.transcript
                     ]
 
-                    # Save transcript
+                    # Save transcript (unified structure: outputs/wildclawbench/{model}/{task}/transcript.json)
                     if transcripts_dir:
-                        trans_dir = Path(transcripts_dir) / "wildclawbench" / model_key
+                        trans_dir = Path(transcripts_dir) / model_key / tid
                         trans_dir.mkdir(parents=True, exist_ok=True)
-                        (trans_dir / f"{tid}_transcript.json").write_text(
+                        (trans_dir / "transcript.json").write_text(
                             json.dumps(normalized, indent=2, ensure_ascii=False),
                             encoding="utf-8",
                         )
@@ -422,7 +623,7 @@ class WildClawBench(BaseBenchmark):
         avg = round(sum(scores) / len(scores), 3) if scores else 0
         return {
             "score": avg,
-            "passed": len(scores),
+            "scored": len(scores),
             "total": len(tasks),
             "details": results,
         }
@@ -475,409 +676,124 @@ class WildClawBench(BaseBenchmark):
             """Execute a single task inside Docker container using NanoBotAgent."""
             task_id_ori = task["task_id"]
             workspace_path = task["workspace_path"]
-            prompt = task["prompt"]
             timeout_seconds = task["timeout_seconds"]
-            env = task.get("env", "")
-            skills = task.get("skills", "")
-            skills_path = task.get("skills_path", "")
-            warmup = task.get("warmup", "")
 
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            run_id = uuid.uuid4().hex[:6]
-            short_task_id = re.sub(r"(\d+)_.*?(task_\d+)", r"\1_\2", task_id_ori)
-            if not short_task_id:
-                short_task_id = task_id_ori
-            short_model = re.sub(r"[^a-zA-Z0-9.\-_]", "_", model.rsplit("/", 1)[-1])
-            suffix = f"{short_model}_{timestamp}_{run_id}"
-            container_name = f"nano_{short_task_id}_{suffix}"
-
-            task_output_dir = out_dir / task["category"] / task_id_ori / suffix
+            # Check cache
+            task_output_dir = out_dir / task_id_ori
             task_output_dir.mkdir(parents=True, exist_ok=True)
+            dedup_file = task_output_dir / "result.json"
+            if dedup_file.exists():
+                try:
+                    cached = json.loads(dedup_file.read_text())
+                    if cached.get("status") == "success" and cached.get("scores", {}).get("overall_score") is not None:
+                        logger.info("[%s] Found cached result, skipping", task_id_ori)
+                        return {**cached, "_from_cache": True}
+                except Exception:
+                    pass
+
+            # Generate container name
+            import time
+            timestamp = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
+            short_task = re.sub(r"(\d+)_.*?(task_\d+)", r"\1_\2", task_id_ori) or task_id_ori
+            short_model = re.sub(r"[^a-zA-Z0-9.\-_]", "_", model.rsplit("/", 1)[-1])
+            container_name = f"nano_{short_task}_{short_model}_{timestamp}"
 
             result = {"task_id": container_name, "scores": {}, "error": None}
-            elapsed_time = float(timeout_seconds)
 
             try:
-                exec_path = os.path.join(workspace_path, "exec")
-                tmp_path = os.path.join(workspace_path, "tmp")
-                os.makedirs(exec_path, exist_ok=True)
-
-                # Build env args for docker run
+                # Build env args
                 proxy_http = os.environ.get('HTTP_PROXY_INNER', '')
                 proxy_https = os.environ.get('HTTPS_PROXY_INNER', '')
                 env_args = [
                     "-e", f"http_proxy={proxy_http}",
                     "-e", f"https_proxy={proxy_https}",
-                    "-e", f"HTTP_PROXY={proxy_http}",
                     "-e", f"HTTPS_PROXY={proxy_https}",
                     "-e", f"no_proxy={'' if not proxy_http else os.environ.get('NO_PROXY_INNER', '')}",
                     "-e", f"OPENROUTER_API_KEY={openrouter_api_key}",
                 ]
-                # Add extra env vars from task
-                for line in env.splitlines():
+                for line in task.get("env", "").splitlines():
                     key = line.strip()
-                    if not key or key.startswith("#"):
-                        continue
-                    value = os.environ.get(key, "")
-                    env_args += ["-e", f"{key}={value}"]
+                    if key and not key.startswith("#"):
+                        env_args += ["-e", f"{key}={os.environ.get(key, '')}"]
 
-                # Start container with volume mount for OpenClawPro (hot-reload)
-                # Mount workspace at /tmp_workspace (read-write) so grading finds files at /tmp_workspace/workspace/gt/
-                docker_run_cmd = [
-                    "docker", "run", "-d",
-                    "--name", container_name,
-                    "-v", f"{workspace_path}:/tmp_workspace:rw",
-                    "-v", f"{openclawpro_dir}:/root/OpenClawPro:rw",
-                    *env_args,
-                    docker_image,
-                    "/bin/bash", "-c", "tail -f /dev/null",
-                ]
-                logger.info("[%s] Starting container with OpenClawPro volume mount", container_name)
-                r = subprocess.run(docker_run_cmd, capture_output=True, text=True)
-                if r.returncode != 0:
-                    raise RuntimeError(f"Container startup failed:\n{r.stderr}")
-                logger.info("[%s] Container ID: %s", container_name, r.stdout.strip()[:12])
+                # Start container
+                _start_container(container_name, workspace_path, openclawpro_dir, docker_image, env_args)
+                logger.info("[%s] Container started", container_name)
 
-                # Workspace is mounted at /tmp_workspace directly
-                # Create symlink /tmp_workspace/workspace -> /tmp_workspace (.) for grading code compatibility
-                # The grading code expects TMP_WORKSPACE/workspace/gt/ but files are at TMP_WORKSPACE/gt/
-                subprocess.run(
-                    ["docker", "exec", container_name, "/bin/bash", "-c",
-                     "cd /tmp_workspace && ln -sf . workspace 2>/dev/null || true"],
-                    capture_output=True, text=True,
-                )
+                # Setup container
+                _setup_container(container_name, workspace_path, task.get("skills", ""),
+                               task.get("skills_path", ""), task.get("warmup", ""),
+                               os.path.join(workspace_path, "tmp"))
 
-                # Copy tmp files if exists
-                if tmp_path and os.path.exists(tmp_path):
-                    mkdir_cmd = ["docker", "exec", container_name, "mkdir", "-p", "/tmp_workspace/tmp"]
-                    subprocess.run(mkdir_cmd, capture_output=True)
-                    cp_cmd = ["docker", "cp", f"{tmp_path}/.", f"{container_name}:/tmp_workspace/tmp/"]
-                    subprocess.run(cp_cmd, capture_output=True, text=True)
+                # Build and run agent
+                skills_summary = _load_skills_summary(task.get("skills", ""), task.get("skills_path", ""))
+                exec_script = _build_exec_script(model_key, task_id_ori, task["prompt"],
+                                                timeout_seconds, config, skills_summary)
+                exec_proc, elapsed_time = _run_agent_in_container(container_name, exec_script, timeout_seconds)
+                logger.info("[%s] Agent finished in %.2fs", container_name, elapsed_time)
 
-                # Setup skills inside container
-                if skills and skills_path:
-                    for line in skills.splitlines():
-                        line = line.strip()
-                        if not line:
-                            continue
-                        subprocess.run(
-                            ["docker", "exec", container_name, "mkdir", "-p", f"/tmp_workspace/skills/{line}"],
-                            capture_output=True, text=True,
-                        )
-                        subprocess.run(
-                            ["docker", "cp", f"{skills_path}/{line}", f"{container_name}:/tmp_workspace/skills"],
-                            capture_output=True, text=True,
-                        )
+                # Copy results
+                result_file, transcript_file = _copy_results_from_container(
+                    container_name, workspace_path, task_output_dir)
 
-                # Run warmup commands
-                if warmup:
-                    commands = [
-                        line.strip() for line in warmup.splitlines()
-                        if line.strip() and not line.strip().startswith("#")
-                    ]
-                    for cmd in commands:
-                        r = subprocess.run(
-                            ["docker", "exec", container_name, "/bin/bash", "-c", cmd],
-                            capture_output=True, text=True,
-                        )
-                        if r.returncode != 0:
-                            logger.warning("[%s] Warmup command failed: %s", container_name, cmd)
-
-                # Prepare NanoBotAgent execution script
-                # Build system prompt with skills
-                skills_summary = ""
-                if skills and skills_path:
-                    try:
-                        skill_docs = []
-                        for line in skills.splitlines():
-                            line = line.strip()
-                            if not line:
-                                continue
-                            skill_file = Path(skills_path) / line / "SKILL.md"
-                            if skill_file.exists():
-                                skill_docs.append(f"\n\n## Skill: {line}\n\n{skill_file.read_text()}")
-                        if skill_docs:
-                            skills_summary = "You have access to the following skills. Use them when appropriate:\n" + "\n".join(skill_docs)
-                    except Exception as e:
-                        logger.warning("[%s] Failed to load skills: %s", container_name, e)
-
-                # Write execution script to a temp file, copy into container, execute
-                exec_script = f"""
-import sys
-import json
-import time
-from pathlib import Path
-
-# Add OpenClawPro to path
-sys.path.insert(0, '/root/OpenClawPro')
-
-from harness.agent.nanobot import NanoBotAgent
-
-workspace = Path('/tmp_workspace')
-session_id = 'eval_{model_key}_{task_id_ori}'
-
-agent = NanoBotAgent(
-    model='{model}',
-    api_url='{config["api_url"]}',
-    api_key='{config["api_key"]}',
-    workspace=workspace,
-    timeout={timeout_seconds},
-)
-
-# Build system prompt
-system_prompt = '''You are an expert in a restricted, non-interactive environment. Solve the task efficiently before the timeout ({timeout_seconds}s). Run all processes in the foreground without user input or background services. Provide a complete, functional solution in a single pass with no placeholders.'''
-{skills_summary and f"system_prompt = system_prompt + '''\\n\\n{skills_summary}'''" or ""}
-
-try:
-    start_time = time.time()
-    result = agent.execute(
-        '''{prompt.replace("'", "\\'")}''',
-        session_id=session_id,
-        workspace=workspace,
-        system_prompt=system_prompt,
-    )
-    elapsed = time.time() - start_time
-
-    # Save transcript to workspace
-    transcript_file = workspace / '.sessions' / f'{{session_id}}.json'
-    if transcript_file.exists():
-        transcript_data = json.loads(transcript_file.read_text())
-    else:
-        transcript_data = result.transcript if result.transcript else []
-
-    output = {{
-        'status': result.status,
-        'content': result.content,
-        'transcript': transcript_data,
-        'usage': result.usage or {{}},
-        'execution_time': elapsed,
-        'error': result.error,
-    }}
-except Exception as e:
-    output = {{
-        'status': 'error',
-        'content': '',
-        'transcript': [],
-        'usage': {{}},
-        'execution_time': 0,
-        'error': str(e),
-    }}
-
-# Write result to file
-(workspace / 'agent_result.json').write_text(json.dumps(output, ensure_ascii=False, indent=2))
-print('DONE')
-"""
-
-                # Copy script into container and execute
-                import tempfile
-                with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
-                    f.write(exec_script)
-                    script_path = f.name
-
-                try:
-                    subprocess.run(["docker", "cp", script_path, f"{container_name}:/tmp/exec_nanobot.py"], check=True)
-                finally:
-                    Path(script_path).unlink(missing_ok=True)
-
-                logger.info("[%s] Executing NanoBotAgent...", container_name)
-                start_time = time.perf_counter()
-
-                exec_cmd = [
-                    "docker", "exec", container_name,
-                    "python3", "/tmp/exec_nanobot.py"
-                ]
-                exec_proc = subprocess.run(exec_cmd, capture_output=True, text=True, timeout=timeout_seconds + 60)
-                elapsed_time = time.perf_counter() - start_time
-
-                if exec_proc.returncode != 0:
-                    logger.warning("[%s] NanoBotAgent exec returned non-zero: %s", container_name, exec_proc.stderr)
-                logger.info("[%s] NanoBotAgent finished in %.2f seconds", container_name, elapsed_time)
-
-                # Copy results from container
-                result_file_host = task_output_dir / "agent_result.json"
-                subprocess.run(["docker", "cp", f"{container_name}:/tmp_workspace/agent_result.json", str(result_file_host)])
-
-                # Copy transcript if exists
-                transcript_host = task_output_dir / "transcript.json"
-                subprocess.run([
-                    "docker", "cp",
-                    f"{container_name}:/tmp_workspace/.sessions/eval_{model_key}_{task_id_ori}.json",
-                    str(transcript_host)
-                ], capture_output=True)
-
-                # Copy output files from container's /tmp_workspace/ to host workspace for grading
-                # This is needed because the agent writes to /tmp_workspace/ but grading checks the host workspace
-                results_in_container = f"{container_name}:/tmp_workspace/results"
-                results_on_host = Path(workspace_path) / "results"
-                if subprocess.run(
-                    ["docker", "cp", results_in_container, str(results_on_host.parent)],
-                    capture_output=True
-                ).returncode == 0:
-                    logger.info("[%s] Copied results from container to host", container_name)
-                else:
-                    # Try individual files if directory copy fails
-                    for fname in ["transcript_en.txt", "transcript_zh.txt", "output.mp4"]:
-                        src = f"{container_name}:/tmp_workspace/results/{fname}"
-                        dst = results_on_host / fname
-                        if subprocess.run(["docker", "cp", src, str(dst)], capture_output=True).returncode == 0:
-                            logger.info("[%s] Copied %s from container", container_name, fname)
-
-                # Load result
-                if result_file_host.exists():
-                    agent_result = json.loads(result_file_host.read_text(encoding="utf-8"))
-                else:
-                    agent_result = {"status": "error", "error": "No result file found"}
-
+                # Load agent result
+                agent_result = json.loads(result_file.read_text()) if result_file.exists() else {"status": "error"}
                 result["status"] = agent_result.get("status", "error")
                 result["error"] = agent_result.get("error", "")
-                result["usage"] = agent_result.get("usage", {})
-                result["usage"]["elapsed_time"] = round(elapsed_time, 2)
+                result["usage"] = {**agent_result.get("usage", {}), "elapsed_time": round(elapsed_time, 2)}
 
-                # Build trajectory for grading
+                # Build trajectory
                 trajectory = agent_result.get("transcript", [])
-                if not trajectory and transcript_host.exists():
+                if not trajectory and transcript_file.exists():
                     try:
-                        trajectory = json.loads(transcript_host.read_text(encoding="utf-8"))
-                        if isinstance(trajectory, list):
-                            trajectory = trajectory
+                        trajectory = json.loads(transcript_file.read_text())
                     except Exception:
                         trajectory = []
 
                 # Save transcript
                 if transcripts_dir and trajectory:
-                    trans_dir = Path(transcripts_dir) / "wildclawbench" / model_key
+                    trans_dir = Path(transcripts_dir) / model_key / task_id_ori
                     trans_dir.mkdir(parents=True, exist_ok=True)
-                    (trans_dir / f"{task_id_ori}_transcript.json").write_text(
-                        json.dumps(trajectory, indent=2, ensure_ascii=False),
-                        encoding="utf-8",
-                    )
+                    (trans_dir / "transcript.json").write_text(json.dumps(trajectory, ensure_ascii=False))
 
-                # Grading - run inside container for path consistency
-                scores = {}
-                score_source = []
+                # Grading
+                scores, score_source = _run_grading(
+                    container_name, task, trajectory, result, model_key)
 
-                if not result.get("error") and task.get("automated_checks"):
-                    try:
-                        # Build grading script that runs inside container
-                        grading_script = f'''
-import json
-import os
-import sys
-from pathlib import Path
-
-# Set up environment for grading
-os.environ["TMP_WORKSPACE"] = "/tmp_workspace"
-os.chdir("/tmp_workspace")
-
-# Add OpenClawPro to path for any needed imports
-sys.path.insert(0, "/root/OpenClawPro")
-
-automated_checks = """{task["automated_checks"].replace('"', '\\"').replace('\\n', '\\\\n')}"""
-transcript_data = {json.dumps(trajectory)}
-
-# Execute the grading code
-exec(compile(automated_checks, "<grading>", "exec"))
-
-# Call grade function
-try:
-    grading_result = grade(
-        workspace_path="/tmp_workspace",
-        transcript=transcript_data
-    )
-    print(json.dumps(grading_result))
-except Exception as e:
-    print(json.dumps({{"error": str(e)}}))
-'''
-                        # Write and copy grading script to container
-                        import tempfile as tmp
-                        with tmp.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
-                            f.write(grading_script)
-                            grading_script_path = f.name
-
-                        try:
-                            subprocess.run(
-                                ["docker", "cp", grading_script_path, f"{container_name}:/tmp/exec_grading.py"],
-                                check=True
-                            )
-                        finally:
-                            Path(grading_script_path).unlink(missing_ok=True)
-
-                        # Execute grading in container
-                        logger.info("[%s] Running grading inside container...", container_name)
-                        grading_proc = subprocess.run(
-                            ["docker", "exec", container_name, "python3", "/tmp/exec_grading.py"],
-                            capture_output=True, text=True, timeout=180
-                        )
-
-                        if grading_proc.returncode == 0:
-                            try:
-                                auto_score = json.loads(grading_proc.stdout.strip())
-                                if "error" not in auto_score:
-                                    scores.update(auto_score)
-                                    score_source.append("automated")
-                                    logger.info("[%s] Automated grading complete", container_name)
-                                else:
-                                    logger.error("[%s] Grading returned error: %s", container_name, auto_score.get("error"))
-                            except json.JSONDecodeError:
-                                logger.error("[%s] Failed to parse grading result", container_name)
-                        else:
-                            logger.error("[%s] Grading failed: %s", container_name, grading_proc.stderr[:500])
-
-                    except Exception as exc:
-                        logger.error("[%s] Grading failed: %s", container_name, exc)
-
-                # LLM Judge scoring
+                # LLM Judge
                 if trajectory:
                     try:
                         from clawevalkit.grading import run_judge_eval
                         judge_score = run_judge_eval(
-                            trajectory=trajectory,
-                            task_id=container_name,
-                            category=task.get("category", "unknown"),
-                            task_prompt=task["prompt"],
-                            judge_model=judge_model,
-                            api_key=judge_key,
-                            base_url=judge_base,
-                            model_name=config.get("name", "unknown"),
-                        )
+                            trajectory=trajectory, task_id=container_name,
+                            category=task.get("category", "unknown"), task_prompt=task["prompt"],
+                            judge_model=judge_model, api_key=judge_key, base_url=judge_base,
+                            model_name=config.get("name", "unknown"))
                         if judge_score:
-                            scores["judge_overall"] = judge_score.overall_score
-                            scores["judge_task_completion"] = judge_score.task_completion
-                            scores["judge_tool_usage"] = judge_score.tool_usage
-                            scores["judge_reasoning"] = judge_score.reasoning
-                            scores["judge_answer_quality"] = judge_score.answer_quality
+                            scores.update({
+                                "judge_overall": judge_score.overall_score,
+                                "judge_task_completion": judge_score.task_completion,
+                                "judge_tool_usage": judge_score.tool_usage,
+                                "judge_reasoning": judge_score.reasoning,
+                                "judge_answer_quality": judge_score.answer_quality,
+                            })
                             score_source.append("judge")
-                            logger.info("[%s] LLM judge scoring complete", container_name)
                     except Exception as exc:
                         logger.error("[%s] LLM judge failed: %s", container_name, exc)
 
-                # Determine final score
-                if scores:
-                    if "overall_score" in scores:
-                        final_score = scores["overall_score"]
-                    elif "judge_overall" in scores:
-                        final_score = scores["judge_overall"]
-                    else:
-                        numeric_vals = [v for v in scores.values() if isinstance(v, (int, float))]
-                        final_score = sum(numeric_vals) / len(numeric_vals) if numeric_vals else 0.0
-                    result["scores"] = scores
-                    result["scores"]["overall_score"] = final_score
-                    result["score_source"] = score_source
-                elif not result.get("error"):
-                    result["scores"] = {"overall_score": 0.0}
+                _compute_final_score(scores, score_source, result)
 
             except subprocess.TimeoutExpired:
-                logger.info("[%s] Agent timed out...", container_name)
-                elapsed_time = timeout_seconds
                 result["error"] = f"Timeout after {timeout_seconds} seconds"
             except Exception as exc:
                 logger.error("[%s] Execution error: %s", container_name, exc)
-                elapsed_time = timeout_seconds
                 result["error"] = str(exc)
             finally:
-                # Cleanup container
                 subprocess.run(["docker", "rm", "-f", container_name], capture_output=True)
-                logger.info("[%s] Container cleaned up", container_name)
+
+            # Save cache
+            if result.get("status") == "success" and result.get("scores", {}).get("overall_score") is not None:
+                dedup_file.write_text(json.dumps(result, indent=2, ensure_ascii=False))
 
             return result
 
@@ -905,18 +821,40 @@ except Exception as e:
 
         return {
             "score": avg,
-            "passed": len(valid_scores),
+            "scored": len(valid_scores),
             "total": len(tasks),
             "details": results,
         }
 
     def collect(self, model_key: str) -> dict | None:
+        """Collect results for a model from both native and docker_nanobot output directories.
+
+        Native: wildclawbench/subset/{model_key}/{tid}.json
+        Docker: wildclawbench/docker_nanobot/{model_key}/{task_id}/result.json
+        """
         result_dir = self._find_result_dir("wildclawbench")
         if not result_dir:
             return None
-        out_dir = result_dir / "subset" / model_key
-        if not out_dir.exists():
+
+        scores = []
+
+        # Try native path first
+        native_dir = result_dir / "subset" / model_key
+        if native_dir.exists():
+            scores = self._collect_from_native_dir(native_dir)
+
+        # If native path has no results, try docker_nanobot path
+        if not scores:
+            docker_dir = result_dir / "docker_nanobot" / model_key
+            if docker_dir.exists():
+                scores = self._collect_from_docker_dir(docker_dir)
+
+        if not scores:
             return None
+        return {"score": round(sum(scores) / len(scores), 3), "scored": len(scores), "total": self.TASK_COUNT}
+
+    def _collect_from_native_dir(self, out_dir: Path) -> list:
+        """Collect scores from native mode output directory."""
         scores = []
         for f in out_dir.glob("*.json"):
             try:
@@ -926,9 +864,25 @@ except Exception as e:
                     scores.append(float(s))
             except Exception:
                 pass
-        if not scores:
-            return None
-        return {"score": round(sum(scores) / len(scores), 3), "passed": len(scores), "total": self.TASK_COUNT}
+        return scores
+
+    def _collect_from_docker_dir(self, docker_dir: Path) -> list:
+        """Collect scores from docker_nanobot output directory.
+
+        Unified structure: docker_nanobot/{model_key}/{task_id}/result.json
+        (created after successful grading in run_single_task_docker_nanobot).
+        """
+        scores = []
+        # Collect from result.json files in each task directory
+        for result_file in docker_dir.glob("*/result.json"):
+            try:
+                r = json.loads(result_file.read_text())
+                s = r.get("scores", {}).get("overall_score")
+                if r.get("status") == "success" and s is not None:
+                    scores.append(float(s))
+            except Exception:
+                pass
+        return scores
 
     def _load_tasks(self, categories: list = None, use_docker: bool = False) -> list:
         """加载 WildClawBench 任务（从 ClawEvalKit 的 benchmarks/ 目录）。

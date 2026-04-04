@@ -39,6 +39,13 @@
   - 60 tasks 全部加载正确
   - 自动化 checks 测试通过
 
+- [x] **结果缓存与 collect() 修复**:
+  - `collect()` 方法同时支持 native 和 docker_nanobot 结果路径
+  - 新增 `_collect_from_native_dir()` 和 `_collect_from_docker_dir()` 辅助方法
+  - Docker 模式增加 per-task 去重（检查 `{task_id}.json` 是否存在）
+  - 成功结果自动保存到 dedup 文件供后续缓存检测
+  - `passed` 字段重命名为 `scored` 避免语义歧义（实际含义是"获得有效分数的任务数"）
+
 ### SkillsBench
 
 - [x] **Per-task Docker 模式 (`skillsbench.py`)**:

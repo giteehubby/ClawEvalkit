@@ -14,6 +14,7 @@ Usage:
   python3 run.py --sample 5                         # 每 bench 采样 5 个任务
   python3 run.py --summary                          # 只汇总已有结果 (不重新跑)
   python3 run.py --list                             # 列出所有 bench 和模型
+  python3 run.py --bench skillsbench --docker --max-turns 5  # 指定迭代次数
 
 8 Benchmarks:
   zclawbench        ZClawBench Subset     18 tasks   NanoBotAgent + Judge (0~1)
@@ -56,7 +57,12 @@ def main():
     parser.add_argument("--env", help="Path to .env file (default: auto-detect)")
     parser.add_argument("--output-dir", help="Output directory for results (default: ./outputs)")
     parser.add_argument("--transcripts-dir", help="Directory to save agent transcripts (default: {output_dir}/transcripts)")
+    parser.add_argument("--max-turns", type=int, default=3, help="Max retry turns for SkillsBench (default: 3)")
     args = parser.parse_args()
+
+    # 设置 transcripts_dir 默认值
+    if not args.transcripts_dir:
+        args.transcripts_dir = str(Path(args.output_dir or "outputs") / "transcripts")
 
     # 加载环境变量
     load_env(args.env)
@@ -93,7 +99,7 @@ def main():
     log(f"Config: bench={bench_keys}, models={model_keys}, sample={args.sample or 'all'}")
 
     # 执行评测
-    bench_kwargs = {"force": args.force}
+    bench_kwargs = {"force": args.force, "max_turns": args.max_turns}
     if args.docker:
         bench_kwargs["use_docker"] = True
     if args.parallel > 1:

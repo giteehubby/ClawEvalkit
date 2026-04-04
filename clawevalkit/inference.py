@@ -62,8 +62,8 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
 
     score = result.get("score", 0)
     total = result.get("total", 0)
-    passed = result.get("passed", 0)
-    log(f"  [{bench_key}×{model_key}] done: score={score}, passed={passed}/{total}")
+    scored = result.get("scored", result.get("passed", 0))  #兼容新旧字段
+    log(f"  [{bench_key}×{model_key}] done: score={score}, scored={scored}/{total}")
 
     if result.get("error"):
         log(f"  [{bench_key}×{model_key}] error: {result['error'][:200]}")
