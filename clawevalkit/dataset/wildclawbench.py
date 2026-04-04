@@ -112,6 +112,7 @@ def parse_task_md(task_file: Path, use_docker: bool = False) -> dict:
         wp = Path(workspace_path)
         if not wp.is_absolute():
             wp = (benchmarks_dir / wp).resolve()
+        base_result["workspace_path"] = str(wp)
         skills_path = str((benchmarks_dir / "skills").resolve())
 
         return {
@@ -166,6 +167,7 @@ try:
         workspace=workspace,
         system_prompt=system_prompt,
         max_iterations=50,
+        max_output_tokens=8192,
     )
     elapsed = time.time() - start_time
 
@@ -197,19 +199,22 @@ print('DONE')
 
 def _build_grading_script(automated_checks: str, trajectory: list) -> str:
     """Build grading script for running inside Docker container."""
-    checks_escaped = automated_checks.replace('"', '\\"').replace('\\n', '\\\\n')
+    # Use base64 to safely embed the Python code as bytes
+    import base64
+    checks_b64 = base64.b64encode(automated_checks.encode('utf-8')).decode('ascii')
     transcript_json = json.dumps(trajectory)
     return f'''
 import json
 import os
 import sys
+import base64
 from pathlib import Path
 
 os.environ["TMP_WORKSPACE"] = "/tmp_workspace"
 os.chdir("/tmp_workspace")
 sys.path.insert(0, "/root/OpenClawPro")
 
-automated_checks = """{checks_escaped}"""
+automated_checks = base64.b64decode("{checks_b64}").decode("utf-8")
 transcript_data = {transcript_json}
 
 exec(compile(automated_checks, "<grading>", "exec"))
@@ -372,7 +377,9 @@ def _compute_final_score(scores: dict, score_source: list, result: dict) -> None
     result["score_source"] = score_source
 
 
-def _run_grading(container_name: str, task: dict, trajectory: list, result: dict, model_key: str) -> tuple[dict, list]:
+def _run_grading(container_name: str, task: dict, trajectory: list, result: dict, model_key: str,
+                 judge_key: str = "", judge_model: str = "anthropic/claude-sonnet-4.6",
+                 judge_base: str = "https://openrouter.ai/api/v1") -> tuple[dict, list]:
     """Run automated grading inside container. Returns (scores, score_source)."""
     scores = {}
     score_source = []
@@ -392,20 +399,24 @@ def _run_grading(container_name: str, task: dict, trajectory: list, result: dict
 
         logger.info("[%s] Running grading inside container...", container_name)
         grading_proc = subprocess.run(
-            ["docker", "exec", container_name, "python3", "/tmp/exec_grading.py"],
-            capture_output=True, text=True, timeout=180)
+            ["docker", "exec", "-e", f"JUDGE_MODEL={judge_model}", "-e", f"JUDGE_API_KEY={judge_key}",
+             "-e", f"JUDGE_BASE_URL={judge_base}", "-e", f"OPENROUTER_API_KEY={judge_key}",
+             container_name, "python3", "/tmp/exec_grading.py"],
+            capture_output=True, text=True, timeout=600)
 
         if grading_proc.returncode == 0:
             try:
-                auto_score = json.loads(grading_proc.stdout.strip())
+                stdout = grading_proc.stdout.strip()
+                logger.info("[%s] Grading stdout (first 500): %s", container_name, stdout[:500])
+                auto_score = json.loads(stdout)
                 if "error" not in auto_score:
                     scores.update(auto_score)
                     score_source.append("automated")
                     logger.info("[%s] Automated grading complete", container_name)
                 else:
                     logger.error("[%s] Grading error: %s", container_name, auto_score.get("error"))
-            except json.JSONDecodeError:
-                logger.error("[%s] Failed to parse grading result", container_name)
+            except json.JSONDecodeError as e:
+                logger.error("[%s] Failed to parse grading result: %s, stdout: %s", container_name, e, grading_proc.stdout[:500])
         else:
             logger.error("[%s] Grading failed: %s", container_name, grading_proc.stderr[:500])
     except Exception as exc:
@@ -452,6 +463,7 @@ class WildClawBench(BaseBenchmark):
         # Use instance default if not explicitly specified
         if use_docker is None:
             use_docker = self._use_docker_default
+        force = kwargs.pop("force", False)
         if use_docker:
             return self._evaluate_docker_nanobot(
                 model_key=model_key,
@@ -462,6 +474,7 @@ class WildClawBench(BaseBenchmark):
                 use_automated_checks=use_automated_checks,
                 parallel=parallel,
                 openclawpro_dir=openclawpro_dir,
+                force=force,
             )
         else:
             return self._evaluate_native(
@@ -552,9 +565,9 @@ class WildClawBench(BaseBenchmark):
                         for e in result.transcript
                     ]
 
-                    # Save transcript (unified structure: outputs/wildclawbench/{model}/{task}/transcript.json)
+                    # Save transcript (unified structure: outputs/wildclawbench/transcripts/{model}/{task}/transcript.json)
                     if transcripts_dir:
-                        trans_dir = Path(transcripts_dir) / model_key / tid
+                        trans_dir = self.results_dir / "wildclawbench" / "transcripts" / model_key / tid
                         trans_dir.mkdir(parents=True, exist_ok=True)
                         (trans_dir / "transcript.json").write_text(
                             json.dumps(normalized, indent=2, ensure_ascii=False),
@@ -638,6 +651,7 @@ class WildClawBench(BaseBenchmark):
         use_automated_checks: bool = True,
         parallel: int = 1,
         openclawpro_dir: Path = None,
+        force: bool = False,
     ) -> dict:
         """Docker NanoBotAgent 模式: 在容器内运行 NanoBotAgent，通过卷挂载实现代码热更新。
 
@@ -662,7 +676,7 @@ class WildClawBench(BaseBenchmark):
             random.seed(42)
             tasks = random.sample(tasks, sample)
 
-        out_dir = self.results_dir / "wildclawbench" / "docker_nanobot" / model_key
+        out_dir = self.results_dir / "wildclawbench" / model_key
         out_dir.mkdir(parents=True, exist_ok=True)
         results = []
 
@@ -672,17 +686,17 @@ class WildClawBench(BaseBenchmark):
 
         openrouter_api_key = os.getenv("OPENROUTER_API_KEY", "")
 
-        def run_single_task_docker_nanobot(task: dict, model: str) -> dict:
+        def run_single_task_docker_nanobot(task: dict, model: str, force: bool = False) -> dict:
             """Execute a single task inside Docker container using NanoBotAgent."""
             task_id_ori = task["task_id"]
             workspace_path = task["workspace_path"]
             timeout_seconds = task["timeout_seconds"]
 
-            # Check cache
+            # Check cache (skip if force=True)
             task_output_dir = out_dir / task_id_ori
             task_output_dir.mkdir(parents=True, exist_ok=True)
             dedup_file = task_output_dir / "result.json"
-            if dedup_file.exists():
+            if not force and dedup_file.exists():
                 try:
                     cached = json.loads(dedup_file.read_text())
                     if cached.get("status") == "success" and cached.get("scores", {}).get("overall_score") is not None:
@@ -751,14 +765,15 @@ class WildClawBench(BaseBenchmark):
                         trajectory = []
 
                 # Save transcript
-                if transcripts_dir and trajectory:
-                    trans_dir = Path(transcripts_dir) / model_key / task_id_ori
+                if trajectory:
+                    trans_dir = self.results_dir / "wildclawbench" / "transcripts" / model_key / task_id_ori
                     trans_dir.mkdir(parents=True, exist_ok=True)
                     (trans_dir / "transcript.json").write_text(json.dumps(trajectory, ensure_ascii=False))
 
                 # Grading
                 scores, score_source = _run_grading(
-                    container_name, task, trajectory, result, model_key)
+                    container_name, task, trajectory, result, model_key,
+                    judge_key=judge_key, judge_model=judge_model, judge_base=judge_base)
 
                 # LLM Judge
                 if trajectory:
@@ -800,11 +815,11 @@ class WildClawBench(BaseBenchmark):
         # Execute tasks
         if parallel <= 1:
             for task in tasks:
-                results.append(run_single_task_docker_nanobot(task, config["model"]))
+                results.append(run_single_task_docker_nanobot(task, config["model"], force=force))
         else:
             with ThreadPoolExecutor(max_workers=parallel) as pool:
                 futures = {
-                    pool.submit(run_single_task_docker_nanobot, task, config["model"]): task["task_id"]
+                    pool.submit(run_single_task_docker_nanobot, task, config["model"], force): task["task_id"]
                     for task in tasks
                 }
                 for future in as_completed(futures):
@@ -830,7 +845,7 @@ class WildClawBench(BaseBenchmark):
         """Collect results for a model from both native and docker_nanobot output directories.
 
         Native: wildclawbench/subset/{model_key}/{tid}.json
-        Docker: wildclawbench/docker_nanobot/{model_key}/{task_id}/result.json
+        Docker: wildclawbench/{model_key}/{task_id}/result.json
         """
         result_dir = self._find_result_dir("wildclawbench")
         if not result_dir:
@@ -843,9 +858,9 @@ class WildClawBench(BaseBenchmark):
         if native_dir.exists():
             scores = self._collect_from_native_dir(native_dir)
 
-        # If native path has no results, try docker_nanobot path
+        # If native path has no results, try docker path (now at wildclawbench/{model_key})
         if not scores:
-            docker_dir = result_dir / "docker_nanobot" / model_key
+            docker_dir = result_dir / model_key
             if docker_dir.exists():
                 scores = self._collect_from_docker_dir(docker_dir)
 
@@ -869,7 +884,7 @@ class WildClawBench(BaseBenchmark):
     def _collect_from_docker_dir(self, docker_dir: Path) -> list:
         """Collect scores from docker_nanobot output directory.
 
-        Unified structure: docker_nanobot/{model_key}/{task_id}/result.json
+        Unified structure: wildclawbench/{model_key}/{task_id}/result.json
         (created after successful grading in run_single_task_docker_nanobot).
         """
         scores = []

@@ -23,6 +23,7 @@ from datetime import datetime
 from pathlib import Path
 
 from ..utils.nanobot import import_nanobot_agent
+from ..utils.log import log
 from .base import BaseBenchmark
 
 # 需要 Docker 或特殊系统依赖的任务（不使用 Docker 时跳过）
@@ -175,7 +176,7 @@ class SkillsBench(BaseBenchmark):
         - 在容器内运行 NanoBotAgent
         - 挂载 OpenClawPro 实现代码热更新
         """
-        use_docker = kwargs.get("use_docker", False)
+        use_docker = kwargs.get("use_docker", self.use_docker)
 
         # Docker 模式走专用路径
         if use_docker:
@@ -275,7 +276,7 @@ class SkillsBench(BaseBenchmark):
             if passed:
                 # 保存成功的 transcript
                 if transcripts_dir and model_key and all_transcripts:
-                    self._save_transcript(transcripts_dir, model_key, task_name, all_transcripts)
+                    self._save_transcript(model_key, task_name, all_transcripts)
                 return {"task": task_name, "status": "passed", "turns": turn + 1}
 
             # pytest 失败 → 反馈给 agent
@@ -289,16 +290,17 @@ class SkillsBench(BaseBenchmark):
 
         # 保存失败的 transcript
         if transcripts_dir and model_key and all_transcripts:
-            self._save_transcript(transcripts_dir, model_key, task_name, all_transcripts)
+            self._save_transcript(model_key, task_name, all_transcripts)
         return {"task": task_name, "status": "failed", "turns": max_turns,
                 "test_output": test_output[-1000:]}
 
-    def _save_transcript(self, transcripts_dir: Path, model_key: str, task_name: str,
-                         transcript: list):
-        """保存 agent 轨迹到文件（统一结构）。"""
+    def _save_transcript(self, model_key: str, task_name: str, transcript: list):
+        """保存 agent 轨迹到文件（统一结构）。
+
+        保存到: outputs/skillsbench/transcripts/{model}/{task}/transcript.json
+        """
         try:
-            # 保存到统一路径: outputs/skillsbench/{model}/{task}/transcript.json
-            trans_path = self.results_dir / "skillsbench" / model_key / task_name
+            trans_path = self.results_dir / "skillsbench" / "transcripts" / model_key / task_name
             trans_path.mkdir(parents=True, exist_ok=True)
             normalized = []
             for e in transcript:
@@ -310,7 +312,7 @@ class SkillsBench(BaseBenchmark):
                 json.dumps(normalized, indent=2, ensure_ascii=False),
                 encoding="utf-8",
             )
-            logger.info("[%s] Saved transcript to %s", task_name, trans_path / "transcript.json")
+            log(f"[{task_name}] Saved transcript to {trans_path / 'transcript.json'}")
         except Exception:
             pass  # transcript 保存失败不影响主流程
 
@@ -382,7 +384,7 @@ class SkillsBench(BaseBenchmark):
                 try:
                     cached = json.loads(dedup_file.read_text())
                     if cached.get("status") in ("passed", "failed"):
-                        logger.info("[%s] Found cached result, skipping", task_name)
+                        log(f"[{task_name}] Found cached result, skipping")
                         cached["_from_cache"] = True
                         results.append(cached)
                         if cached.get("status") == "passed":
@@ -405,7 +407,7 @@ class SkillsBench(BaseBenchmark):
             (task_result_dir / "result.json").write_text(
                 json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8"
             )
-            logger.info("[%s] Saved result to %s", task_name, task_result_dir / "result.json")
+            log(f"[{task_name}] Saved result to {task_result_dir / 'result.json'}")
 
             if result.get("status") == "passed":
                 passed += 1
@@ -446,14 +448,21 @@ class SkillsBench(BaseBenchmark):
             subprocess.run(["docker", "exec", container_name, "ln", "-sf", f"{mount_point}/output", "/root/output"],
                           capture_output=True, text=True)
 
-        # Pattern: /app/output/ (used alongside /app/workspace/ in some tasks)
-        if "/app/output/" in instruction:
-            subprocess.run(["docker", "exec", container_name, "mkdir", "-p", f"{mount_point}/output"],
+        # Pattern: /app/ (but not /app/workspace which is the mount point itself)
+        # Create symlink so /app maps to mount_point, and subdirectories work automatically
+        if "/app/" in instruction and "/app/workspace/" not in instruction:
+            # Remove original /app directory and replace with symlink to mount_point
+            subprocess.run(["docker", "exec", container_name, "rm", "-rf", "/app"],
                           capture_output=True, text=True)
-            subprocess.run(["docker", "exec", container_name, "rm", "-rf", "/app/output"],
+            subprocess.run(["docker", "exec", container_name, "ln", "-sf", mount_point, "/app"],
                           capture_output=True, text=True)
-            subprocess.run(["docker", "exec", container_name, "ln", "-sf", f"{mount_point}/output", "/app/output"],
-                          capture_output=True, text=True)
+            # Ensure data and output directories exist inside mount_point
+            if "/app/data/" in instruction:
+                subprocess.run(["docker", "exec", container_name, "mkdir", "-p", f"{mount_point}/data"],
+                              capture_output=True, text=True)
+            if "/app/output/" in instruction:
+                subprocess.run(["docker", "exec", container_name, "mkdir", "-p", f"{mount_point}/output"],
+                              capture_output=True, text=True)
 
         # Pattern: /root/workspace/ - mount at /workspace already works since /workspace != /root/workspace
         # No symlink needed for this pattern
@@ -528,6 +537,7 @@ class SkillsBench(BaseBenchmark):
             "--name", container_name,
             "-v", f"{workspace_host}:{mount_point}:rw",
             "-v", f"{openclawpro_dir}:/root/OpenClawPro:rw",
+            "-w", "/",
             *env_args,
             task_image,
             "/bin/bash", "-c", "tail -f /dev/null",
@@ -543,8 +553,53 @@ class SkillsBench(BaseBenchmark):
         except Exception as e:
             return {"task": task_name, "status": "error", "error": str(e)}
 
+        # For /app/ tasks: copy data and skills BEFORE creating symlinks
+        # (Once /app -> /workspace symlink exists, /app/data and /app/skills would resolve to /workspace/*)
+        if "/app/" in instruction and "/app/workspace/" not in instruction:
+            # Copy data from image's /app/data to /workspace/data before symlink is created
+            subprocess.run(["docker", "exec", container_name, "mkdir", "-p", "/workspace/data"],
+                          capture_output=True, text=True)
+            subprocess.run(
+                ["docker", "exec", container_name, "cp", "-r", "/app/data/.", "/workspace/data"],
+                capture_output=True, text=True, timeout=60
+            )
+            # Copy skills from image's /app/skills to /workspace/skills
+            subprocess.run(["docker", "exec", container_name, "mkdir", "-p", "/workspace/skills"],
+                          capture_output=True, text=True)
+            subprocess.run(
+                ["docker", "exec", container_name, "cp", "-r", "/app/skills/.", "/workspace/skills"],
+                capture_output=True, text=True, timeout=60
+            )
+
         # Dynamically create symlinks based on instruction paths
         self._setup_container_paths(container_name, instruction, mount_point)
+
+        # Install Python 3.11 and necessary packages
+        # (OpenClawPro requires Python 3.11+, but task Dockerfiles use Python 3.10)
+        install_py311 = (
+            "apt-get update && "
+            "apt-get install -y build-essential wget libssl-dev zlib1g-dev libncursesw6 libffi-dev libsqlite3-dev liblzma-dev && "
+            "cd /tmp && "
+            "wget -q https://www.python.org/ftp/python/3.11.9/Python-3.11.9.tgz && "
+            "tar -xf Python-3.11.9.tgz && "
+            "cd Python-3.11.9 && "
+            "./configure --prefix=/usr/local --enable-optimizations && "
+            "make -j$(nproc) && "
+            "make altinstall"
+        )
+        log(f"[{task_name}] Installing Python 3.11 (may take a few minutes)...")
+        py_install = subprocess.run(["docker", "exec", container_name, "bash", "-c", install_py311],
+                      capture_output=True, text=True, timeout=600)
+        if py_install.returncode != 0:
+            log(f"[{task_name}] Python 3.11 install failed: {py_install.stderr[:300]}")
+
+        # Install necessary packages using Python 3.11's pip
+        pip_proc = subprocess.run(
+            ["docker", "exec", container_name, "python3.11", "-m", "pip", "install", "-q", "-e", "/root/OpenClawPro", "litellm", "pytest"],
+            capture_output=True, text=True, timeout=300
+        )
+        if pip_proc.returncode != 0:
+            log(f"[{task_name}] pip install failed: {pip_proc.stderr[:500]}")
 
         try:
             result = self._execute_nanobot_in_container(
@@ -589,6 +644,7 @@ class SkillsBench(BaseBenchmark):
 import sys
 import json
 import time
+import traceback
 from pathlib import Path
 
 sys.path.insert(0, '/root/OpenClawPro')
@@ -603,6 +659,7 @@ agent = NanoBotAgent(
     api_key='{config["api_key"]}',
     workspace=workspace,
     timeout=300,
+    disable_safety_guard=True,
 )
 
 prompt = '''{prompt.replace("'", "\\'")}'''
@@ -634,7 +691,7 @@ except Exception as e:
         'transcript': [],
         'usage': {{}},
         'execution_time': 0,
-        'error': str(e),
+        'error': traceback.format_exc(),
     }}
 
 (workspace / 'agent_result.json').write_text(json.dumps(output, ensure_ascii=False, indent=2))
@@ -652,7 +709,7 @@ print('DONE')
             finally:
                 Path(script_path).unlink(missing_ok=True)
 
-            exec_cmd = ["docker", "exec", container_name, "python3", "/tmp/exec_nanobot.py"]
+            exec_cmd = ["docker", "exec", container_name, "python3.11", "/tmp/exec_nanobot.py"]
             exec_proc = subprocess.run(exec_cmd, capture_output=True, text=True, timeout=360)
 
             if exec_proc.returncode != 0:
@@ -680,7 +737,7 @@ print('DONE')
             if passed:
                 # Save transcript on success
                 if transcripts_dir and model_key and all_transcripts:
-                    self._save_transcript(transcripts_dir, model_key, task_name, all_transcripts)
+                    self._save_transcript(model_key, task_name, all_transcripts)
                 return {"task": task_name, "status": "passed", "turns": turn + 1}
 
             # pytest failed → prepare feedback prompt for next turn
@@ -694,7 +751,7 @@ print('DONE')
 
         # Save failed transcript
         if transcripts_dir and model_key and all_transcripts:
-            self._save_transcript(transcripts_dir, model_key, task_name, all_transcripts)
+            self._save_transcript(model_key, task_name, all_transcripts)
         return {"task": task_name, "status": "failed", "turns": max_turns,
                 "test_output": test_output[-1000:]}
 
