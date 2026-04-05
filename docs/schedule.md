@@ -61,6 +61,14 @@
   3. pytest 验证 → 反馈修正（最多 max_turns 轮）
   4. 收集结果并清理容器/镜像
 
+### AgentBench
+
+- [x] **AgentBench Docker 模式**:
+  - 40 任务支持
+  - Docker 容器内运行 NanoBotAgent
+  - 使用 volume mount 挂载 OpenClawPro 和 workspace
+  - 支持 parallel 并行执行
+
 ---
 
 ## 数据下载状态 ⚠️
@@ -159,6 +167,14 @@ python run.py --bench skillsbench --model gemini-3-flash-preview --sample 1
 
 # Docker per-task 模式测试
 python run.py --bench skillsbench --model gemini-3-flash-preview --sample 1 --docker
+
+# === AgentBench ===
+
+# Native 模式测试
+python run.py --bench agentbench --model minimax-m2.7 --sample 1
+
+# Docker 模式测试
+python run.py --bench agentbench --model minimax-m2.7 --sample 1 --docker
 ```
 
 ## Docker NanoBotAgent 模式使用指南
@@ -181,6 +197,22 @@ docker build -f Dockerfile.nanobot -t wildclawbench-nanobot:latest .
 | `DOCKER_IMAGE_NANOBOT` | NanoBotAgent Docker 镜像名 | `wildclawbench-nanobot:latest` |
 | `OPENCLAWPRO_DIR` | OpenClawPro 源码目录 | `ClawEvalkit/OpenClawPro` |
 | `OPENROUTER_API_KEY` | LLM API Key | - |
+
+---
+
+## AgentBench
+
+- [x] **AgentBench Docker 模式 (`agentbench.py`)**:
+  - 支持 40 个任务
+  - 新增 `_evaluate_docker()` 方法: 在容器内执行 NanoBotAgent
+  - 复用 WildClawBench 的容器管理逻辑
+  - 支持并行执行 (`parallel` 参数)
+  - `evaluate()` 方法支持 `use_docker` 参数
+
+- [x] **AgentBench 局限性**:
+  - 评分仅基于文件存在性 (L0)，不支持 L1/L2/L3 评分
+  - 部分任务（如 `impossible-request`）没有 expected_outputs，依赖 expected_behavior 验证
+  - 当前实现对这些任务返回 0 分
 
 ---
 

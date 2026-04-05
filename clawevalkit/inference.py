@@ -25,7 +25,7 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
         model_key: 模型注册名 (如 "claude-sonnet", "gpt-4.1")
         sample: 采样任务数 (0=全量)
         output_dir: 结果输出目录 (默认 ./outputs/)
-        **kwargs: force=True 强制重跑, max_turns=N 等传给 benchmark
+        **kwargs: force=True 强制重跑, max_turns=N, task_ids=[], category= 等传给 benchmark
 
     Returns:
         {"score": float, "passed": int, "total": int, ...}
@@ -41,6 +41,8 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
     if bench_key == "skillsbench":
         bench = bcls(use_docker=use_docker if use_docker is not None else True)
     elif bench_key == "wildclawbench":
+        bench = bcls(use_docker=use_docker if use_docker is not None else False)
+    elif bench_key == "agentbench":
         bench = bcls(use_docker=use_docker if use_docker is not None else False)
     else:
         bench = bcls()
@@ -58,7 +60,13 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
             return cached
 
     log(f"  [{bench_key}×{model_key}] evaluating...")
-    result = bench.evaluate(model_key, config, sample=sample, **kwargs)
+    # 传递task_ids和category参数
+    evaluate_kwargs = {"sample": sample}
+    if "task_ids" in kwargs:
+        evaluate_kwargs["task_ids"] = kwargs.pop("task_ids")
+    if "category" in kwargs:
+        evaluate_kwargs["category"] = kwargs.pop("category")
+    result = bench.evaluate(model_key, config, **evaluate_kwargs, **kwargs)
 
     score = result.get("score", 0)
     total = result.get("total", 0)
