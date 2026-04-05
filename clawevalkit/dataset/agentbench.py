@@ -26,7 +26,7 @@ from .base import BaseBenchmark
 logger = logging.getLogger(__name__)
 
 DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE_NANOBOT", "wildclawbench-nanobot:v3")
-TMP_WORKSPACE = "/tmp_workspace"
+TMP_WORKSPACE = "/tmp/agentbench_workspace"
 
 
 # ============================================================================
@@ -36,7 +36,7 @@ TMP_WORKSPACE = "/tmp_workspace"
 def _check_file_exists(container_name: str, pattern: str) -> bool:
     """Check if file exists in container workspace."""
     check_proc = subprocess.run(
-        ["docker", "exec", container_name, "test", "-f", f"/tmp_workspace/{pattern}"],
+        ["docker", "exec", container_name, "test", "-f", f"/tmp/agentbench_workspace/{pattern}"],
         capture_output=True)
     return check_proc.returncode == 0
 
@@ -46,7 +46,7 @@ def _check_directory_structure(container_name: str, expected: list[str]) -> tupl
     passed = 0
     for path in expected:
         check_proc = subprocess.run(
-            ["docker", "exec", container_name, "test", "-e", f"/tmp_workspace/{path}"],
+            ["docker", "exec", container_name, "test", "-e", f"/tmp/agentbench_workspace/{path}"],
             capture_output=True)
         if check_proc.returncode == 0:
             passed += 1
@@ -61,7 +61,7 @@ def _check_content_contains(container_name: str, pattern: str, sections: list[st
 
     try:
         subprocess.run(
-            ["docker", "cp", f"{container_name}:/tmp_workspace/{pattern}", temp_path],
+            ["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/{pattern}", temp_path],
             capture_output=True)
 
         if not os.path.exists(temp_path) or os.path.getsize(temp_path) == 0:
@@ -81,7 +81,7 @@ def _check_word_count_range(container_name: str, pattern: str, min_words: int, m
 
     try:
         subprocess.run(
-            ["docker", "cp", f"{container_name}:/tmp_workspace/{pattern}", temp_path],
+            ["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/{pattern}", temp_path],
             capture_output=True)
 
         if not os.path.exists(temp_path):
@@ -103,7 +103,7 @@ def _check_word_count_range(container_name: str, pattern: str, min_words: int, m
 def _check_git_log_contains(container_name: str, expected: list[str]) -> tuple[int, int]:
     """Check git log for expected strings."""
     result = subprocess.run(
-        ["docker", "exec", container_name, "git", "-C", "/tmp_workspace", "log", "--oneline"],
+        ["docker", "exec", container_name, "git", "-C", "/tmp/agentbench_workspace", "log", "--oneline"],
         capture_output=True, text=True)
 
     if result.returncode != 0:
@@ -117,7 +117,7 @@ def _check_git_log_contains(container_name: str, expected: list[str]) -> tuple[i
 def _check_command_output_contains(container_name: str, command: str, expected: list[str]) -> tuple[int, int]:
     """Run command and check output contains all expected strings."""
     result = subprocess.run(
-        ["docker", "exec", container_name, "/bin/bash", "-c", f"cd /tmp_workspace && {command}"],
+        ["docker", "exec", container_name, "/bin/bash", "-c", f"cd /tmp/agentbench_workspace && {command}"],
         capture_output=True, text=True)
 
     output = result.stdout + result.stderr
@@ -130,7 +130,7 @@ def _check_link_consistency(container_name: str, files_pattern: str) -> float:
     # Get list of files
     result = subprocess.run(
         ["docker", "exec", container_name, "/bin/bash", "-c",
-         f"cd /tmp_workspace && find . -path './{files_pattern}' -type f 2>/dev/null"],
+         f"cd /tmp/agentbench_workspace && find . -path './{files_pattern}' -type f 2>/dev/null"],
         capture_output=True, text=True)
 
     if result.returncode != 0 or not result.stdout.strip():
@@ -148,7 +148,7 @@ def _check_link_consistency(container_name: str, files_pattern: str) -> float:
             tmp_path = tmp.name
         try:
             subprocess.run(
-                ["docker", "cp", f"{container_name}:/tmp_workspace/{f}", tmp_path],
+                ["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/{f}", tmp_path],
                 capture_output=True)
             content = Path(tmp_path).read_text()
 
@@ -407,12 +407,12 @@ def _start_container(container_name: str, workspace_path: str, openclawpro_dir: 
     os.makedirs(tmp_path, exist_ok=True)
 
     volume_mounts = [
-        "-v", f"{exec_path}:/tmp_workspace/exec:rw",
-        "-v", f"{tmp_path}:/tmp_workspace/tmp:rw",
+        "-v", f"{exec_path}:/tmp/agentbench_workspace/exec:rw",
+        "-v", f"{tmp_path}:/tmp/agentbench_workspace/tmp:rw",
         "-v", f"{openclawpro_dir}:/root/OpenClawPro:rw",
     ]
     if os.path.exists(workspace_inner):
-        volume_mounts.extend(["-v", f"{workspace_inner}:/tmp_workspace/workspace:rw"])
+        volume_mounts.extend(["-v", f"{workspace_inner}:/tmp/agentbench_workspace/workspace:rw"])
 
     docker_run_cmd = [
         "docker", "run", "-d",
@@ -433,18 +433,22 @@ def _build_exec_script(model_key: str, task_id: str, user_message: str, config: 
 import sys
 import json
 import time
+import os
 from pathlib import Path
 
 sys.path.insert(0, '/root/OpenClawPro')
 from harness.agent.nanobot import NanoBotAgent
 
-workspace = Path('/tmp_workspace')
+workspace = Path('/tmp/agentbench_workspace')
 session_id = 'eval_{model_key}_{task_id}'
+
+# Get API key from environment variable
+api_key = os.environ.get('OPENROUTER_API_KEY', '')
 
 agent = NanoBotAgent(
     model='{config["model"]}',
     api_url='{config["api_url"]}',
-    api_key='{config["api_key"]}',
+    api_key=api_key,
     workspace=workspace,
     timeout=300,
     disable_safety_guard=True,
@@ -513,7 +517,7 @@ def _run_agent_in_container(container_name: str, exec_script: str, timeout_secon
 def _copy_results_from_container(container_name: str, workspace_path: str, task_output_dir: Path) -> Path:
     """Copy agent result from container to host. Returns result_file path."""
     result_file_host = task_output_dir / "agent_result.json"
-    subprocess.run(["docker", "cp", f"{container_name}:/tmp_workspace/agent_result.json", str(result_file_host)],
+    subprocess.run(["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/agent_result.json", str(result_file_host)],
                    capture_output=True)
     return result_file_host
 
@@ -752,16 +756,22 @@ class AgentBench(BaseBenchmark):
                 logger.info("[%s] Container started", container_name)
 
                 # Copy workspace to container
-                subprocess.run(["docker", "exec", container_name, "mkdir", "-p", "/tmp_workspace"],
+                subprocess.run(["docker", "exec", container_name, "mkdir", "-p", "/tmp/agentbench_workspace"],
                              capture_output=True)
-                subprocess.run(["docker", "cp", f"{tmp_workspace}/.", f"{container_name}:/tmp_workspace/"],
+                subprocess.run(["docker", "cp", f"{tmp_workspace}/.", f"{container_name}:/tmp/agentbench_workspace/"],
                              capture_output=True)
 
                 # Build and run agent
                 user_msg = cfg.get("user_message", "")
                 exec_script = _build_exec_script(model_key, tid, user_msg, config)
                 exec_proc, elapsed_time = _run_agent_in_container(container_name, exec_script, 300)
-                logger.info("[%s] Agent finished in %.2fs", container_name, elapsed_time)
+                logger.info("[%s] Agent finished in %.2fs, returncode=%d", container_name, elapsed_time, exec_proc.returncode)
+
+                # Log stdout/stderr for debugging
+                if exec_proc.stdout:
+                    logger.debug("[%s] Agent stdout: %s", container_name, exec_proc.stdout[:500])
+                if exec_proc.stderr:
+                    logger.debug("[%s] Agent stderr: %s", container_name, exec_proc.stderr[:500])
 
                 # Copy results back
                 result_file_host = _copy_results_from_container(container_name, workspace_path, task_output_dir)
@@ -770,12 +780,21 @@ class AgentBench(BaseBenchmark):
                 transcript = []
                 model_output = ""
                 if result_file_host.exists():
-                    agent_result = json.loads(result_file_host.read_text())
-                    result["status"] = agent_result.get("status", "error")
-                    result["error"] = agent_result.get("error", "")
-                    result["usage"] = {**agent_result.get("usage", {}), "elapsed_time": round(elapsed_time, 2)}
-                    transcript = agent_result.get("transcript", [])
-                    model_output = agent_result.get("content", "")
+                    try:
+                        agent_result = json.loads(result_file_host.read_text())
+                        result["status"] = agent_result.get("status", "error")
+                        result["error"] = agent_result.get("error", "")
+                        result["usage"] = {**agent_result.get("usage", {}), "elapsed_time": round(elapsed_time, 2)}
+                        transcript = agent_result.get("transcript", [])
+                        model_output = agent_result.get("content", "")
+                        logger.info("[%s] Agent result loaded: status=%s, transcript_len=%d",
+                                   container_name, result["status"], len(transcript))
+                    except Exception as e:
+                        logger.error("[%s] Failed to load agent result: %s", container_name, e)
+                        result["error"] = f"Failed to load agent result: {e}"
+                else:
+                    logger.warning("[%s] agent_result.json not found at %s", container_name, result_file_host)
+                    result["error"] = "agent_result.json not found"
 
                 # ==================== 4-Layer Scoring ====================
 
@@ -841,9 +860,12 @@ class AgentBench(BaseBenchmark):
                 subprocess.run(["docker", "rm", "-f", container_name], capture_output=True)
                 shutil.rmtree(workspace_path, ignore_errors=True)
 
-            # Save cache
-            if result.get("status") == "success":
+            # Save cache (always save, not just on success)
+            try:
                 result_file.write_text(json.dumps(result, indent=2, ensure_ascii=False))
+                logger.info("[%s] Result saved to %s", container_name, result_file)
+            except Exception as e:
+                logger.error("[%s] Failed to save result: %s", container_name, e)
 
             return result
 
