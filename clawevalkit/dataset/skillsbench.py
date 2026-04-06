@@ -493,18 +493,28 @@ class SkillsBench(BaseBenchmark):
 
         # Pattern: pure /root/ paths (e.g., /root/scan_data.stl, /root/mass_report.json)
         # If instruction or tests use /root/ but not /root/input/, /root/output/, or /root/workspace/
-        # we need to symlink /root to mount_point so files written to /root/ appear in workspace
-        if "/root/" in combined_content and "/root/input/" not in combined_content and "/root/output/" not in combined_content and "/root/workspace/" not in combined_content:
-            # IMPORTANT: /root/OpenClawPro is a volume mount from host!
-            # We must unmount it BEFORE deleting /root, otherwise the deletion propagates to host
-            # Use umount to safely detach the volume
+        # AND mount_point is /workspace (not /root), we need to symlink /root to mount_point
+        # However, if mount_point is already /root, no symlink is needed
+        if mount_point != "/root" and "/root/" in combined_content and "/root/input/" not in combined_content and "/root/output/" not in combined_content and "/root/workspace/" not in combined_content:
+            # Create symlink /root -> mount_point
+            # But first we need to move any data from /root to mount_point
+            # and unmount /root/OpenClawPro to prevent deletion propagation
+            subprocess.run(["docker", "exec", container_name, "bash", "-c",
+                          f"mkdir -p {mount_point}/data {mount_point}/.claude/skills 2>/dev/null || true"],
+                          capture_output=True, text=True)
+            # Copy data from /root to mount_point (preserves Dockerfile COPIED data)
+            subprocess.run(["docker", "exec", container_name, "bash", "-c",
+                          "cp -r /root/data/* " + mount_point + "/data/ 2>/dev/null || true"],
+                          capture_output=True, text=True)
+            # Unmount /root/OpenClawPro before removing /root
             subprocess.run(["docker", "exec", container_name, "umount", "/root/OpenClawPro"],
                           capture_output=True, text=True)
-            # Now safe to remove /root
+            # Now safe to replace /root with symlink
             subprocess.run(["docker", "exec", container_name, "rm", "-rf", "/root"],
                           capture_output=True, text=True)
             subprocess.run(["docker", "exec", container_name, "ln", "-sf", mount_point, "/root"],
                           capture_output=True, text=True)
+            print(f"  [{task_name}] Created symlink /root -> {mount_point} for /root/ path pattern")
 
     def _run_single_task_docker(self, task_name: str, config: dict, tasks_dir: Path,
                                  max_turns: int, openclawpro_dir: Path,
@@ -578,8 +588,15 @@ class SkillsBench(BaseBenchmark):
                 shutil.copy2(f, dst)
 
         # Determine mount point based on instruction path pattern
-        # /app/workspace/ tasks need mount at /app/workspace, all others at /workspace
-        mount_point = "/app/workspace" if "/app/workspace/" in instruction else "/workspace"
+        # /app/workspace/ tasks need mount at /app/workspace
+        # /root/ tasks (without /root/input, /root/output, /root/workspace) need mount at /root
+        # All others at /workspace
+        if "/app/workspace/" in instruction:
+            mount_point = "/app/workspace"
+        elif "/root/" in instruction and "/root/input/" not in instruction and "/root/output/" not in instruction and "/root/workspace/" not in instruction:
+            mount_point = "/root"
+        else:
+            mount_point = "/workspace"
 
         # Start container (if not reusing)
         if not (reuse_container and container_exists):

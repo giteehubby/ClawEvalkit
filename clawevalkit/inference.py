@@ -41,13 +41,15 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
     bcls = BENCHMARKS[bench_key]
     # Pass use_docker to benchmarks that support it via constructor
     use_docker = kwargs.pop("use_docker", None)
+    reuse_container = kwargs.pop("reuse_container", False)
     if bench_key == "skillsbench":
-        bench = bcls(use_docker=use_docker if use_docker is not None else True)
+        bench = bcls(use_docker=use_docker if use_docker is not None else True,
+                     reuse_container=reuse_container)
     elif bench_key == "wildclawbench":
         bench = bcls(use_docker=use_docker if use_docker is not None else False)
     elif bench_key == "agentbench":
         bench = bcls(use_docker=use_docker if use_docker is not None else False)
-    elif bench_key == "pinchbench":
+    elif bench_key == "clawbench-official":
         bench = bcls(use_docker=use_docker if use_docker is not None else False)
     else:
         bench = bcls()
