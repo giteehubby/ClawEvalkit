@@ -542,6 +542,7 @@ class SkillsBench(BaseBenchmark):
 
         # Build image (only if container doesn't exist or not in reuse mode)
         if not (reuse_container and container_exists):
+            log(f"[{task_name}] 🔨 Building Docker image {task_image}...")
             build_cmd = ["docker", "build", "-t", task_image, "-f", str(env_dockerfile)]
             if proxy_http:
                 build_cmd.insert(1, "--build-arg")
@@ -555,6 +556,7 @@ class SkillsBench(BaseBenchmark):
                 if build_proc.returncode != 0:
                     return {"task": task_name, "status": "skipped",
                             "error": f"docker build failed: {build_proc.stderr[:500]}"}
+                log(f"[{task_name}] ✅ Image built successfully")
             except subprocess.TimeoutExpired:
                 return {"task": task_name, "status": "skipped", "error": "docker build timeout"}
             except Exception as e:
@@ -581,6 +583,7 @@ class SkillsBench(BaseBenchmark):
 
         # Start container (if not reusing)
         if not (reuse_container and container_exists):
+            log(f"[{task_name}] 🐳 Starting container {container_name}...")
             # Prepare env args
             env_args = [
                 "-e", f"http_proxy={proxy_http}",
@@ -606,6 +609,7 @@ class SkillsBench(BaseBenchmark):
                 if run_proc.returncode != 0:
                     return {"task": task_name, "status": "error",
                             "error": f"container start failed: {run_proc.stderr[:500]}"}
+                log(f"[{task_name}] ✅ Container started")
             except subprocess.TimeoutExpired:
                 return {"task": task_name, "status": "error", "error": "container start timeout"}
             except Exception as e:
@@ -741,7 +745,10 @@ class SkillsBench(BaseBenchmark):
             disable_safety_guard=True,
         )
 
+        log(f"[{task_name}] 🤖 Running agent (max {max_turns} turns)...")
+
         for turn in range(max_turns):
+            log(f"[{task_name}] 🔄 Agent turn {turn + 1}/{max_turns}")
             try:
                 result = agent.execute(prompt, session_id=f"{session_id}_t{turn}")
             except Exception as e:
@@ -752,15 +759,18 @@ class SkillsBench(BaseBenchmark):
                 all_transcripts.extend(result.transcript)
 
             # Run pytest inside container via docker exec
+            log(f"[{task_name}] 🧪 Running pytest...")
             passed, test_output = self._run_pytest_harbor(container_name, workspace_host, mount_point)
 
             if passed:
+                log(f"[{task_name}] ✅ Pytest passed!")
                 # Save transcript on success
                 if transcripts_dir and model_key and all_transcripts:
                     self._save_transcript(model_key, task_name, all_transcripts)
                 return {"task": task_name, "status": "passed", "turns": turn + 1}
 
             # pytest failed → prepare feedback prompt for next turn
+            log(f"[{task_name}] ❌ Pytest failed, preparing feedback...")
             if turn < max_turns - 1:
                 workspace_files = _list_workspace_files(workspace_host)
                 prompt = (
