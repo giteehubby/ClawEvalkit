@@ -145,8 +145,9 @@ class SkillsBench(BaseBenchmark):
     TASK_COUNT = 56
     SCORE_RANGE = "0-100%"
 
-    def __init__(self, use_docker: bool = True, **kwargs):
+    def __init__(self, use_docker: bool = True, reuse_container: bool = False, **kwargs):
         self.use_docker = use_docker
+        self.reuse_container = reuse_container
         super().__init__(**kwargs)
 
     def _get_tasks_dir(self) -> Path:
@@ -494,7 +495,12 @@ class SkillsBench(BaseBenchmark):
         # If instruction or tests use /root/ but not /root/input/, /root/output/, or /root/workspace/
         # we need to symlink /root to mount_point so files written to /root/ appear in workspace
         if "/root/" in combined_content and "/root/input/" not in combined_content and "/root/output/" not in combined_content and "/root/workspace/" not in combined_content:
-            # Remove original /root directory and replace with symlink to mount_point
+            # IMPORTANT: /root/OpenClawPro is a volume mount from host!
+            # We must unmount it BEFORE deleting /root, otherwise the deletion propagates to host
+            # Use umount to safely detach the volume
+            subprocess.run(["docker", "exec", container_name, "umount", "/root/OpenClawPro"],
+                          capture_output=True, text=True)
+            # Now safe to remove /root
             subprocess.run(["docker", "exec", container_name, "rm", "-rf", "/root"],
                           capture_output=True, text=True)
             subprocess.run(["docker", "exec", container_name, "ln", "-sf", mount_point, "/root"],
@@ -514,29 +520,47 @@ class SkillsBench(BaseBenchmark):
 
         # Build per-task Docker image
         task_image = f"skillsbench-task-{task_name}:latest"
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        run_id = uuid.uuid4().hex[:6]
-        container_name = f"sb_{task_name}_{timestamp}_{run_id}"
+        # Use stable container name for reuse mode, otherwise unique name
+        reuse_container = getattr(self, 'reuse_container', False)
+        if reuse_container:
+            container_name = f"skillsbench-task-{task_name}"
+        else:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            run_id = uuid.uuid4().hex[:6]
+            container_name = f"sb_{task_name}_{timestamp}_{run_id}"
 
-        build_cmd = ["docker", "build", "-t", task_image, "-f", str(env_dockerfile)]
-        if proxy_http:
-            build_cmd.insert(1, "--build-arg")
-            build_cmd.insert(2, f"http_proxy={proxy_http}")
-            build_cmd.insert(1, "--build-arg")
-            build_cmd.insert(2, f"https_proxy={proxy_https}")
-        build_cmd.append(str(task_dir / "environment"))
+        # Check if container already exists (reuse mode)
+        container_exists = False
+        if reuse_container:
+            check_proc = subprocess.run(
+                ["docker", "ps", "-a", "--filter", f"name={container_name}", "--format", "{{.Names}}"],
+                capture_output=True, text=True
+            )
+            if container_name in check_proc.stdout.strip():
+                container_exists = True
+                print(f"  [reuse-container] Reusing existing container: {container_name}")
 
-        try:
-            build_proc = subprocess.run(build_cmd, capture_output=True, text=True, timeout=1800)
-            if build_proc.returncode != 0:
-                return {"task": task_name, "status": "skipped",
-                        "error": f"docker build failed: {build_proc.stderr[:500]}"}
-        except subprocess.TimeoutExpired:
-            return {"task": task_name, "status": "skipped", "error": "docker build timeout"}
-        except Exception as e:
-            return {"task": task_name, "status": "skipped", "error": str(e)}
+        # Build image (only if container doesn't exist or not in reuse mode)
+        if not (reuse_container and container_exists):
+            build_cmd = ["docker", "build", "-t", task_image, "-f", str(env_dockerfile)]
+            if proxy_http:
+                build_cmd.insert(1, "--build-arg")
+                build_cmd.insert(2, f"http_proxy={proxy_http}")
+                build_cmd.insert(1, "--build-arg")
+                build_cmd.insert(2, f"https_proxy={proxy_https}")
+            build_cmd.append(str(task_dir / "environment"))
 
-        # Create workspace directory for this task
+            try:
+                build_proc = subprocess.run(build_cmd, capture_output=True, text=True, timeout=1800)
+                if build_proc.returncode != 0:
+                    return {"task": task_name, "status": "skipped",
+                            "error": f"docker build failed: {build_proc.stderr[:500]}"}
+            except subprocess.TimeoutExpired:
+                return {"task": task_name, "status": "skipped", "error": "docker build timeout"}
+            except Exception as e:
+                return {"task": task_name, "status": "skipped", "error": str(e)}
+
+        # Create workspace directory for this task (always fresh)
         workspace_host = Path(f"/tmp/skillsbench_workspace/{task_name}")
         if workspace_host.exists():
             shutil.rmtree(workspace_host)
@@ -551,40 +575,53 @@ class SkillsBench(BaseBenchmark):
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(f, dst)
 
-        # Prepare env args
-        env_args = [
-            "-e", f"http_proxy={proxy_http}",
-            "-e", f"https_proxy={proxy_https}",
-            "-e", f"HTTP_PROXY={proxy_http}",
-            "-e", f"HTTPS_PROXY={proxy_https}",
-            "-e", f"OPENROUTER_API_KEY={openrouter_api_key}",
-        ]
-
-        # Start container
         # Determine mount point based on instruction path pattern
         # /app/workspace/ tasks need mount at /app/workspace, all others at /workspace
         mount_point = "/app/workspace" if "/app/workspace/" in instruction else "/workspace"
 
-        docker_run_cmd = [
-            "docker", "run", "-d",
-            "--name", container_name,
-            "-v", f"{workspace_host}:{mount_point}:rw",
-            "-v", f"{openclawpro_dir}:/root/OpenClawPro:rw",
-            "-w", "/",
-            *env_args,
-            task_image,
-            "/bin/bash", "-c", "tail -f /dev/null",
-        ]
+        # Start container (if not reusing)
+        if not (reuse_container and container_exists):
+            # Prepare env args
+            env_args = [
+                "-e", f"http_proxy={proxy_http}",
+                "-e", f"https_proxy={proxy_https}",
+                "-e", f"HTTP_PROXY={proxy_http}",
+                "-e", f"HTTPS_PROXY={proxy_https}",
+                "-e", f"OPENROUTER_API_KEY={openrouter_api_key}",
+            ]
 
-        try:
-            run_proc = subprocess.run(docker_run_cmd, capture_output=True, text=True, timeout=60)
-            if run_proc.returncode != 0:
+            docker_run_cmd = [
+                "docker", "run", "-d",
+                "--name", container_name,
+                "-v", f"{workspace_host}:{mount_point}:rw",
+                "-v", f"{openclawpro_dir}:/root/OpenClawPro:ro",  # Read-only to protect host files
+                "-w", "/",
+                *env_args,
+                task_image,
+                "/bin/bash", "-c", "tail -f /dev/null",
+            ]
+
+            try:
+                run_proc = subprocess.run(docker_run_cmd, capture_output=True, text=True, timeout=60)
+                if run_proc.returncode != 0:
+                    return {"task": task_name, "status": "error",
+                            "error": f"container start failed: {run_proc.stderr[:500]}"}
+            except subprocess.TimeoutExpired:
+                return {"task": task_name, "status": "error", "error": "container start timeout"}
+            except Exception as e:
+                return {"task": task_name, "status": "error", "error": str(e)}
+        else:
+            # Reusing container: ensure it's running
+            # Note: workspace_host path is fixed (/tmp/skillsbench_workspace/{task_name}),
+            # so the existing volume mount still works after we recreate the directory
+            start_proc = subprocess.run(
+                ["docker", "start", container_name],
+                capture_output=True, text=True, timeout=30
+            )
+            if start_proc.returncode != 0:
                 return {"task": task_name, "status": "error",
-                        "error": f"container start failed: {run_proc.stderr[:500]}"}
-        except subprocess.TimeoutExpired:
-            return {"task": task_name, "status": "error", "error": "container start timeout"}
-        except Exception as e:
-            return {"task": task_name, "status": "error", "error": str(e)}
+                        "error": f"failed to start existing container: {start_proc.stderr[:500]}"}
+            print(f"  [reuse-container] Container started with fresh workspace mount")
 
         # For /app/ tasks: copy data and skills BEFORE creating symlinks
         # (Once /app -> /workspace symlink exists, /app/data and /app/skills would resolve to /workspace/*)
@@ -625,14 +662,18 @@ class SkillsBench(BaseBenchmark):
         except Exception as e:
             result = {"task": task_name, "status": "error", "error": str(e)[:500]}
         finally:
-            # Clean up container
-            self._remove_container(container_name)
-            # Clean up image
-            try:
-                subprocess.run(["docker", "rmi", "-f", task_image],
-                              capture_output=True, text=True, timeout=60)
-            except Exception:
-                pass
+            # Clean up container (unless reuse_container is True)
+            keep_for_debug = getattr(self, 'reuse_container', False)
+            if not keep_for_debug:
+                self._remove_container(container_name)
+                # Clean up image
+                try:
+                    subprocess.run(["docker", "rmi", "-f", task_image],
+                                  capture_output=True, text=True, timeout=60)
+                except Exception:
+                    pass
+            else:
+                print(f"  [keep-container] Container '{container_name}' preserved for debugging.")
 
         return result
 
@@ -675,8 +716,9 @@ class SkillsBench(BaseBenchmark):
 
         from harness.agent.nanobot import HarborNanoBotAgent
 
+        # In Harbor architecture, agent sees container paths, not host paths
         prompt = (
-            f"Complete this programming task in the workspace {workspace_host}.\n\n"
+            f"Complete this programming task in the workspace {mount_point}.\n\n"
             f"TASK INSTRUCTIONS:\n{instruction}\n\n"
             f"Use the tools to write files and execute code directly in the workspace. "
             f"All output files must be created at the paths specified in the instructions."
@@ -722,7 +764,7 @@ class SkillsBench(BaseBenchmark):
             if turn < max_turns - 1:
                 workspace_files = _list_workspace_files(workspace_host)
                 prompt = (
-                    f"The tests FAILED. Fix the code in the workspace.\n\n"
+                    f"The tests FAILED. Fix the code in the workspace {mount_point}.\n\n"
                     f"PYTEST OUTPUT:\n{test_output[-2000:]}\n\n"
                     f"FILES IN WORKSPACE:\n{workspace_files}"
                 )

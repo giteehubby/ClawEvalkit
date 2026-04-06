@@ -352,14 +352,17 @@ def _run_agent_in_container(container_name: str, exec_script: str, timeout_secon
     return exec_proc, elapsed
 
 
-def _copy_results_from_container(container_name: str, workspace_path: str, task_output_dir: Path) -> tuple[Path, Path]:
+def _copy_results_from_container(container_name: str, workspace_path: str, task_output_dir: Path,
+                                  model_key: str = "", task_id_ori: str = "") -> tuple[Path, Path]:
     """Copy agent result and transcript from container to host. Returns (result_file, transcript_file)."""
     result_file_host = task_output_dir / "agent_result.json"
     subprocess.run(["docker", "cp", f"{container_name}:/tmp_workspace/agent_result.json", str(result_file_host)])
 
     transcript_host = task_output_dir / "transcript.json"
+    # Use Python f-string instead of shell variables
+    session_file = f"eval_{model_key}_{task_id_ori}.json"
     subprocess.run(["docker", "cp",
-                    f"{container_name}:/tmp_workspace/.sessions/eval_$model_key_$task_id_ori.json",
+                    f"{container_name}:/tmp_workspace/.sessions/{session_file}",
                     str(transcript_host)], capture_output=True)
 
     # Copy results dir
@@ -498,6 +501,7 @@ class WildClawBench(BaseBenchmark):
                 transcripts_dir=transcripts_dir,
                 category=category,
                 use_automated_checks=use_automated_checks,
+                task_ids=task_ids,
             )
 
     def _evaluate_native(
@@ -789,7 +793,7 @@ class WildClawBench(BaseBenchmark):
 
                 # Copy results
                 result_file, transcript_file = _copy_results_from_container(
-                    container_name, workspace_path, task_output_dir)
+                    container_name, workspace_path, task_output_dir, model_key, task_id_ori)
 
                 # Load agent result
                 agent_result = json.loads(result_file.read_text()) if result_file.exists() else {"status": "error"}

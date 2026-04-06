@@ -230,6 +230,7 @@ class PinchBench(BaseBenchmark):
             }
 
             workspace_path = None
+            transcript = []
 
             try:
                 # Prepare workspace on host
@@ -263,12 +264,15 @@ class PinchBench(BaseBenchmark):
                 logger.info("[%s] Container started", container_name)
 
                 # Build and run agent
-                exec_script = self._build_exec_script(model_key, tid, task["prompt"], config, task.get("timeout", 120))
+                exec_script = self._build_exec_script(
+                    model_key, tid, task["prompt"], config, task.get("timeout", 120),
+                    multi_session=task.get("multi_session", False),
+                    sessions=task.get("sessions", [])
+                )
                 exec_proc, elapsed_time = self._run_agent_in_container(container_name, exec_script, task.get("timeout", 120))
                 logger.info("[%s] Agent finished in %.2fs, returncode=%d", container_name, elapsed_time, exec_proc.returncode)
 
                 # Copy results back
-                transcript = []
                 try:
                     result_json = self._copy_result_from_container(container_name, workspace_path)
                     if result_json.exists():
@@ -302,7 +306,7 @@ class PinchBench(BaseBenchmark):
                     shutil.rmtree(workspace_path, ignore_errors=True)
 
             # Save transcript
-            if transcripts_dir and transcript:
+            if transcript:
                 self._save_transcript(model_key, tid, transcript)
 
             # Save result
@@ -356,6 +360,7 @@ class PinchBench(BaseBenchmark):
 
         docker_run_cmd = [
             "docker", "run", "-d",
+            "--network", "host",
             "--name", container_name,
             *volume_mounts,
             *env_args,
@@ -366,7 +371,16 @@ class PinchBench(BaseBenchmark):
         if r.returncode != 0:
             raise RuntimeError(f"Container startup failed:\n{r.stderr}")
 
-    def _build_exec_script(self, model_key: str, task_id: str, prompt: str, config: dict, timeout: int) -> str:
+    def _build_exec_script(
+        self,
+        model_key: str,
+        task_id: str,
+        prompt: str,
+        config: dict,
+        timeout: int,
+        multi_session: bool = False,
+        sessions: list = None
+    ) -> str:
         """Build NanoBotAgent execution script for running inside Docker container."""
         # Determine API key env var based on provider
         provider = config.get("provider", "openrouter")
@@ -375,7 +389,98 @@ class PinchBench(BaseBenchmark):
         else:
             api_key_env = "OPENROUTER_API_KEY"
 
-        return f"""
+        if multi_session and sessions:
+            # Build sessions as properly escaped Python literal
+            sessions_repr = repr(sessions)
+
+            # Multi-session task: run multiple execute() calls
+            return f"""
+import sys
+import json
+import time
+import os
+from pathlib import Path
+
+sys.path.insert(0, '/root/OpenClawPro')
+from harness.agent.nanobot import NanoBotAgent
+
+workspace = Path('{TMP_WORKSPACE}')
+base_session_id = 'pinch_{model_key}_{task_id}'
+
+api_key = os.environ.get('{api_key_env}', '')
+
+agent = NanoBotAgent(
+    model='{config["model"]}',
+    api_url='{config["api_url"]}',
+    api_key=api_key,
+    workspace=workspace,
+    timeout={timeout},
+    disable_safety_guard=True,
+)
+
+system_prompt = \"\"\"You are an expert agent working in a restricted environment.\nSolve the task efficiently. Run all processes in the foreground without user input.\nProvide a complete, functional solution.\"\"\"
+
+sessions = {sessions_repr}
+all_transcripts = []
+all_errors = []
+overall_status = 'success'
+
+try:
+    start_time = time.time()
+
+    for i, session in enumerate(sessions):
+        session_prompt = session.get('prompt', '')
+        new_session = session.get('new_session', False)
+
+        # For new_session tasks, reset session_id to simulate fresh start
+        if new_session:
+            session_id = f'{{base_session_id}}_new_{{i}}'
+        else:
+            session_id = f'{{base_session_id}}_turn{{i}}'
+
+        result = agent.execute(
+            session_prompt,
+            session_id=session_id,
+            workspace=workspace,
+            system_prompt=system_prompt,
+            max_iterations=100,
+            max_output_tokens=8192,
+        )
+
+        if result.transcript:
+            all_transcripts.extend(result.transcript)
+
+        if result.status != 'success':
+            overall_status = result.status
+        if result.error:
+            all_errors.append(result.error)
+
+    elapsed = time.time() - start_time
+
+    output = {{
+        'status': overall_status,
+        'content': '',
+        'transcript': all_transcripts,
+        'usage': {{}},
+        'execution_time': elapsed,
+        'error': '; '.join(all_errors) if all_errors else '',
+    }}
+except Exception as e:
+    output = {{
+        'status': 'error',
+        'content': '',
+        'transcript': [],
+        'usage': {{}},
+        'execution_time': 0,
+        'error': str(e),
+    }}
+
+(workspace / 'agent_result.json').write_text(json.dumps(output, ensure_ascii=False, indent=2))
+print('DONE')
+"""
+        else:
+            # Single-session task (original behavior)
+            return f"""
 import sys
 import json
 import time
@@ -627,6 +732,8 @@ print(json.dumps(scores))
             tid = frontmatter.get("id", md.stem)
             timeout = int(frontmatter.get("timeout_seconds", 120))
             workspace_files = frontmatter.get("workspace_files", [])
+            multi_session = frontmatter.get("multi_session", False)
+            sessions = frontmatter.get("sessions", [])
 
             tasks.append({
                 "id": tid,
@@ -634,6 +741,8 @@ print(json.dumps(scores))
                 "grade_code": grade_code,
                 "timeout": timeout,
                 "workspace_files": workspace_files,
+                "multi_session": multi_session,
+                "sessions": sessions,
             })
 
         return tasks

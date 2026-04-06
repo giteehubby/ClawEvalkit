@@ -60,6 +60,7 @@ def main():
     parser.add_argument("--max-turns", type=int, default=3, help="Max retry turns for SkillsBench (default: 3)")
     parser.add_argument("--task", "-t", help="指定特定任务ID (如 01_Productivity_Flow_task_6_calendar_scheduling)")
     parser.add_argument("--category", "-c", help="指定任务类别 (如 01_Productivity_Flow)")
+    parser.add_argument("--reuse-container", action="store_true", help="Reuse existing containers (skip rebuild, preserves pip installs)")
     args = parser.parse_args()
 
     # 设置 transcripts_dir 默认值
@@ -104,6 +105,8 @@ def main():
     bench_kwargs = {"force": args.force, "max_turns": args.max_turns}
     if args.docker:
         bench_kwargs["use_docker"] = True
+    if args.reuse_container:
+        bench_kwargs["reuse_container"] = True
     if args.parallel > 1:
         bench_kwargs["parallel"] = args.parallel
     if args.task:
