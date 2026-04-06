@@ -36,7 +36,7 @@ TMP_WORKSPACE = "/tmp/agentbench_workspace"
 def _check_file_exists(container_name: str, pattern: str) -> bool:
     """Check if file exists in container workspace."""
     check_proc = subprocess.run(
-        ["docker", "exec", container_name, "test", "-f", f"/tmp/agentbench_workspace/{pattern}"],
+        ["docker", "exec", container_name, "test", "-f", f"/tmp/agentbench_workspace/workspace/{pattern}"],
         capture_output=True)
     return check_proc.returncode == 0
 
@@ -46,7 +46,7 @@ def _check_directory_structure(container_name: str, expected: list[str]) -> tupl
     passed = 0
     for path in expected:
         check_proc = subprocess.run(
-            ["docker", "exec", container_name, "test", "-e", f"/tmp/agentbench_workspace/{path}"],
+            ["docker", "exec", container_name, "test", "-e", f"/tmp/agentbench_workspace/workspace/{path}"],
             capture_output=True)
         if check_proc.returncode == 0:
             passed += 1
@@ -61,7 +61,7 @@ def _check_content_contains(container_name: str, pattern: str, sections: list[st
 
     try:
         subprocess.run(
-            ["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/{pattern}", temp_path],
+            ["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/workspace/{pattern}", temp_path],
             capture_output=True)
 
         if not os.path.exists(temp_path) or os.path.getsize(temp_path) == 0:
@@ -81,7 +81,7 @@ def _check_word_count_range(container_name: str, pattern: str, min_words: int, m
 
     try:
         subprocess.run(
-            ["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/{pattern}", temp_path],
+            ["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/workspace/{pattern}", temp_path],
             capture_output=True)
 
         if not os.path.exists(temp_path):
@@ -103,7 +103,7 @@ def _check_word_count_range(container_name: str, pattern: str, min_words: int, m
 def _check_git_log_contains(container_name: str, expected: list[str]) -> tuple[int, int]:
     """Check git log for expected strings."""
     result = subprocess.run(
-        ["docker", "exec", container_name, "git", "-C", "/tmp/agentbench_workspace", "log", "--oneline"],
+        ["docker", "exec", container_name, "git", "-C", "/tmp/agentbench_workspace/workspace", "log", "--oneline"],
         capture_output=True, text=True)
 
     if result.returncode != 0:
@@ -117,7 +117,7 @@ def _check_git_log_contains(container_name: str, expected: list[str]) -> tuple[i
 def _check_command_output_contains(container_name: str, command: str, expected: list[str]) -> tuple[int, int]:
     """Run command and check output contains all expected strings."""
     result = subprocess.run(
-        ["docker", "exec", container_name, "/bin/bash", "-c", f"cd /tmp/agentbench_workspace && {command}"],
+        ["docker", "exec", container_name, "/bin/bash", "-c", f"cd /tmp/agentbench_workspace/workspace && {command}"],
         capture_output=True, text=True)
 
     output = result.stdout + result.stderr
@@ -130,7 +130,7 @@ def _check_link_consistency(container_name: str, files_pattern: str) -> float:
     # Get list of files
     result = subprocess.run(
         ["docker", "exec", container_name, "/bin/bash", "-c",
-         f"cd /tmp/agentbench_workspace && find . -path './{files_pattern}' -type f 2>/dev/null"],
+         f"cd /tmp/agentbench_workspace/workspace && find . -path './{files_pattern}' -type f 2>/dev/null"],
         capture_output=True, text=True)
 
     if result.returncode != 0 or not result.stdout.strip():
@@ -148,7 +148,7 @@ def _check_link_consistency(container_name: str, files_pattern: str) -> float:
             tmp_path = tmp.name
         try:
             subprocess.run(
-                ["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/{f}", tmp_path],
+                ["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/workspace/{f}", tmp_path],
                 capture_output=True)
             content = Path(tmp_path).read_text()
 
@@ -429,6 +429,15 @@ def _start_container(container_name: str, workspace_path: str, openclawpro_dir: 
 
 def _build_exec_script(model_key: str, task_id: str, user_message: str, config: dict) -> str:
     """Build NanoBotAgent execution script for running inside Docker container."""
+    # Determine API key env var based on provider
+    provider = config.get("provider", "openrouter")
+    if provider == "minimax":
+        api_key_env = "MINIMAX_API_KEY"
+    elif provider == "openrouter":
+        api_key_env = "OPENROUTER_API_KEY"
+    else:
+        api_key_env = "OPENROUTER_API_KEY"
+
     return f"""
 import sys
 import json
@@ -439,11 +448,11 @@ from pathlib import Path
 sys.path.insert(0, '/root/OpenClawPro')
 from harness.agent.nanobot import NanoBotAgent
 
-workspace = Path('/tmp/agentbench_workspace')
+workspace = Path('/tmp/agentbench_workspace/workspace')
 session_id = 'eval_{model_key}_{task_id}'
 
 # Get API key from environment variable
-api_key = os.environ.get('OPENROUTER_API_KEY', '')
+api_key = os.environ.get('{api_key_env}', '')
 
 agent = NanoBotAgent(
     model='{config["model"]}',
@@ -517,7 +526,7 @@ def _run_agent_in_container(container_name: str, exec_script: str, timeout_secon
 def _copy_results_from_container(container_name: str, workspace_path: str, task_output_dir: Path) -> Path:
     """Copy agent result from container to host. Returns result_file path."""
     result_file_host = task_output_dir / "agent_result.json"
-    subprocess.run(["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/agent_result.json", str(result_file_host)],
+    subprocess.run(["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/workspace/agent_result.json", str(result_file_host)],
                    capture_output=True)
     return result_file_host
 
@@ -561,6 +570,9 @@ class AgentBench(BaseBenchmark):
             use_docker = self._use_docker_default
         force = kwargs.pop("force", False)
 
+        # Extract task_ids from kwargs if present
+        task_ids = kwargs.pop("task_ids", None)
+
         if use_docker:
             return self._evaluate_docker(
                 model_key=model_key,
@@ -570,6 +582,7 @@ class AgentBench(BaseBenchmark):
                 openclawpro_dir=openclawpro_dir,
                 force=force,
                 use_judge=use_judge,
+                task_ids=task_ids,
             )
         else:
             return self._evaluate_native(
@@ -577,6 +590,7 @@ class AgentBench(BaseBenchmark):
                 config=config,
                 sample=sample,
                 use_judge=use_judge,
+                task_ids=task_ids,
             )
 
     def _evaluate_native(self, model_key: str, config: dict, sample: int = 0, use_judge: bool = True) -> dict:
@@ -667,6 +681,7 @@ class AgentBench(BaseBenchmark):
         openclawpro_dir: Path = None,
         force: bool = False,
         use_judge: bool = True,
+        task_ids: list = None,
     ) -> dict:
         """Docker mode: run NanoBotAgent inside Docker container with full 4-layer scoring."""
         import yaml
@@ -677,11 +692,26 @@ class AgentBench(BaseBenchmark):
         if not openclawpro_dir.exists():
             raise FileNotFoundError(f"OpenClawPro directory not found: {openclawpro_dir}")
 
+        # Check if OpenClawPro is empty (submodule not initialized)
+        if not any(openclawpro_dir.iterdir()):
+            raise FileNotFoundError(
+                f"OpenClawPro directory is empty. Please run:\n"
+                f"  git submodule update --init --recursive\n"
+                f"in the project root directory."
+            )
+
         tasks_dir = self.base_dir / "benchmarks" / "agentbench-openclaw" / "tasks"
         if not tasks_dir.exists():
             return {"score": 0, "total": 0, "error": f"tasks dir not found: {tasks_dir}"}
 
         tasks = self._load_tasks(tasks_dir)
+
+        # Filter by task_ids if specified
+        if task_ids:
+            tasks = [t for t in tasks if t["task_id"] in task_ids]
+            if not tasks:
+                return {"score": 0, "total": 0, "error": f"No tasks found matching task_ids: {task_ids}"}
+
         if sample and sample < len(tasks):
             random.seed(42)
             tasks = random.sample(tasks, sample)
@@ -727,17 +757,20 @@ class AgentBench(BaseBenchmark):
             try:
                 # Prepare workspace on host
                 workspace_path = tempfile.mkdtemp(prefix=f"agentbench_docker_{tid}_")
-                tmp_workspace = Path(workspace_path) / "tmp_workspace"
-                tmp_workspace.mkdir(parents=True, exist_ok=True)
+                # Use 'workspace' subdir which gets mounted to container
+                host_workspace = Path(workspace_path) / "workspace"
+                host_workspace.mkdir(parents=True, exist_ok=True)
 
                 # Copy input files to workspace
                 cfg = yaml.safe_load(Path(yaml_path).read_text())
                 task_dir = Path(yaml_path).parent
+                inputs_dir = task_dir / "inputs"
                 for inp in cfg.get("input_files", []):
                     fname = inp["name"] if isinstance(inp, dict) else inp
-                    src = task_dir / fname
+                    # Try inputs/ subdirectory first, then task root
+                    src = inputs_dir / fname if inputs_dir.exists() else task_dir / fname
                     if src.exists():
-                        dst = tmp_workspace / fname
+                        dst = host_workspace / fname
                         dst.parent.mkdir(parents=True, exist_ok=True)
                         shutil.copy2(src, dst)
 
@@ -748,18 +781,21 @@ class AgentBench(BaseBenchmark):
                     "-e", f"http_proxy={proxy_http}",
                     "-e", f"https_proxy={proxy_https}",
                     "-e", f"HTTPS_PROXY={proxy_https}",
-                    "-e", f"OPENROUTER_API_KEY={openrouter_api_key}",
                 ]
 
-                # Start container
+                # Pass correct API key based on provider
+                provider = config.get("provider", "openrouter")
+                if provider == "minimax":
+                    minimax_api_key = os.getenv("MINIMAX_API_KEY", "")
+                    env_args.extend(["-e", f"MINIMAX_API_KEY={minimax_api_key}"])
+                else:
+                    env_args.extend(["-e", f"OPENROUTER_API_KEY={openrouter_api_key}"])
+
+                # Start container (mounts workspace/ to /tmp/agentbench_workspace/workspace/)
                 _start_container(container_name, workspace_path, openclawpro_dir, DOCKER_IMAGE, env_args)
                 logger.info("[%s] Container started", container_name)
 
-                # Copy workspace to container
-                subprocess.run(["docker", "exec", container_name, "mkdir", "-p", "/tmp/agentbench_workspace"],
-                             capture_output=True)
-                subprocess.run(["docker", "cp", f"{tmp_workspace}/.", f"{container_name}:/tmp/agentbench_workspace/"],
-                             capture_output=True)
+                # No need to docker cp - files are already mounted via volume
 
                 # Build and run agent
                 user_msg = cfg.get("user_message", "")

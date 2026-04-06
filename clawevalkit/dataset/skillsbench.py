@@ -197,6 +197,13 @@ class SkillsBench(BaseBenchmark):
             skip_set = SKIP_TASKS - EASY_SKIP_TASKS
         task_names = [t for t in all_tasks if t not in skip_set]
 
+        # Support task_ids filter from --task argument
+        task_ids = kwargs.get("task_ids")
+        if task_ids:
+            task_names = [t for t in task_names if t in task_ids]
+            if not task_names:
+                return {"score": 0, "total": 0, "error": f"no tasks match task_ids: {task_ids}"}
+
         if sample and sample < len(task_names):
             random.seed(42)
             task_names = random.sample(task_names, sample)
@@ -365,6 +372,13 @@ class SkillsBench(BaseBenchmark):
         # Docker 模式下跳过 SKIP_TASKS_DOCKER，但不再跳过 SKIP_TASKS（Docker 可以处理）
         task_names = [t for t in all_tasks if t not in SKIP_TASKS_DOCKER]
 
+        # Support task_ids filter from --task argument
+        task_ids = kwargs.get("task_ids")
+        if task_ids:
+            task_names = [t for t in task_names if t in task_ids]
+            if not task_names:
+                return {"score": 0, "total": 0, "error": f"no tasks match task_ids: {task_ids}"}
+
         if sample and sample < len(task_names):
             random.seed(42)
             task_names = random.sample(task_names, sample)
@@ -466,6 +480,16 @@ class SkillsBench(BaseBenchmark):
 
         # Pattern: /root/workspace/ - mount at /workspace already works since /workspace != /root/workspace
         # No symlink needed for this pattern
+
+        # Pattern: pure /root/ paths (e.g., /root/scan_data.stl, /root/mass_report.json)
+        # If instruction uses /root/ but not /root/input/, /root/output/, or /root/workspace/
+        # we need to symlink /root to mount_point so files written to /root/ appear in workspace
+        if "/root/" in instruction and "/root/input/" not in instruction and "/root/output/" not in instruction and "/root/workspace/" not in instruction:
+            # Remove original /root directory and replace with symlink to mount_point
+            subprocess.run(["docker", "exec", container_name, "rm", "-rf", "/root"],
+                          capture_output=True, text=True)
+            subprocess.run(["docker", "exec", container_name, "ln", "-sf", mount_point, "/root"],
+                          capture_output=True, text=True)
 
     def _run_single_task_docker(self, task_name: str, config: dict, tasks_dir: Path,
                                  max_turns: int, openclawpro_dir: Path,
@@ -574,35 +598,9 @@ class SkillsBench(BaseBenchmark):
         # Dynamically create symlinks based on instruction paths
         self._setup_container_paths(container_name, instruction, mount_point)
 
-        # Install Python 3.11 and necessary packages
-        # (OpenClawPro requires Python 3.11+, but task Dockerfiles use Python 3.10)
-        install_py311 = (
-            "apt-get update && "
-            "apt-get install -y build-essential wget libssl-dev zlib1g-dev libncursesw6 libffi-dev libsqlite3-dev liblzma-dev && "
-            "cd /tmp && "
-            "wget -q https://www.python.org/ftp/python/3.11.9/Python-3.11.9.tgz && "
-            "tar -xf Python-3.11.9.tgz && "
-            "cd Python-3.11.9 && "
-            "./configure --prefix=/usr/local --enable-optimizations && "
-            "make -j$(nproc) && "
-            "make altinstall"
-        )
-        log(f"[{task_name}] Installing Python 3.11 (may take a few minutes)...")
-        py_install = subprocess.run(["docker", "exec", container_name, "bash", "-c", install_py311],
-                      capture_output=True, text=True, timeout=600)
-        if py_install.returncode != 0:
-            log(f"[{task_name}] Python 3.11 install failed: {py_install.stderr[:300]}")
-
-        # Install necessary packages using Python 3.11's pip
-        pip_proc = subprocess.run(
-            ["docker", "exec", container_name, "python3.11", "-m", "pip", "install", "-q", "-e", "/root/OpenClawPro", "litellm", "pytest"],
-            capture_output=True, text=True, timeout=300
-        )
-        if pip_proc.returncode != 0:
-            log(f"[{task_name}] pip install failed: {pip_proc.stderr[:500]}")
-
+        # Harbor Architecture: Agent runs on host, commands via docker exec
         try:
-            result = self._execute_nanobot_in_container(
+            result = self._execute_nanobot_on_host(
                 container_name, task_name, config, instruction, workspace_host,
                 max_turns, model_key, transcripts_dir, mount_point
             )
@@ -620,16 +618,47 @@ class SkillsBench(BaseBenchmark):
 
         return result
 
-    def _execute_nanobot_in_container(self, container_name: str, task_name: str,
+    def _execute_nanobot_on_host(self, container_name: str, task_name: str,
                                       config: dict, instruction: str, workspace_host: Path,
                                       max_turns: int, model_key: str,
                                       transcripts_dir: Path = None,
                                       mount_point: str = "/workspace") -> dict:
-        """在容器内执行 NanoBotAgent 多轮任务。"""
-        NanoBotAgent = import_nanobot_agent()
+        """Harbor Architecture: 在宿主机运行 NanoBotAgent，命令通过 docker exec 在容器内执行。
+
+        工作流程:
+        1. NanoBotAgent 在宿主机运行 (使用 Python 3.11)
+        2. 文件操作直接在工作空间 (挂载到容器)
+        3. 命令执行通过 DockerExecTool 代理到容器内 (docker exec)
+        4. pytest 通过 docker exec 在容器内运行
+        """
+        # Import HarborNanoBotAgent from OpenClawPro
+        # Use same path resolution logic as import_nanobot_agent
+        import sys
+        from pathlib import Path
+
+        openclawpro_path = None
+        candidates = [
+            os.getenv("OPENCLAWPRO_DIR"),
+            str(Path(__file__).parent.parent.parent / "OpenClawPro"),
+        ]
+        for path_str in candidates:
+            if not path_str:
+                continue
+            p = Path(path_str)
+            if (p / "harness" / "agent" / "nanobot.py").exists():
+                openclawpro_path = str(p)
+                break
+
+        if not openclawpro_path:
+            raise ImportError("OpenClawPro not found. Set OPENCLAWPRO_DIR env var.")
+
+        if openclawpro_path not in sys.path:
+            sys.path.insert(0, openclawpro_path)
+
+        from harness.agent.nanobot import HarborNanoBotAgent
 
         prompt = (
-            f"Complete this programming task in the workspace {mount_point}.\n\n"
+            f"Complete this programming task in the workspace {workspace_host}.\n\n"
             f"TASK INSTRUCTIONS:\n{instruction}\n\n"
             f"Use the tools to write files and execute code directly in the workspace. "
             f"All output files must be created at the paths specified in the instructions."
@@ -639,100 +668,31 @@ class SkillsBench(BaseBenchmark):
         all_transcripts = []
         test_output = ""
 
+        # Create HarborNanoBotAgent on host machine
+        # HarborNanoBotAgent uses DockerExecTool to run commands in container via docker exec
+        agent = HarborNanoBotAgent(
+            container_name=container_name,
+            mount_point=mount_point,
+            model=config["model"],
+            api_url=config["api_url"],
+            api_key=config["api_key"],
+            workspace=workspace_host,
+            timeout=300,
+            disable_safety_guard=True,
+        )
+
         for turn in range(max_turns):
-            exec_script = f"""
-import sys
-import json
-import time
-import traceback
-from pathlib import Path
-
-sys.path.insert(0, '/root/OpenClawPro')
-from harness.agent.nanobot import NanoBotAgent
-
-workspace = Path('{mount_point}')
-session_id = '{session_id}_t{turn}'
-
-agent = NanoBotAgent(
-    model='{config["model"]}',
-    api_url='{config["api_url"]}',
-    api_key='{config["api_key"]}',
-    workspace=workspace,
-    timeout=300,
-    disable_safety_guard=True,
-)
-
-prompt = '''{prompt.replace("'", "\\'")}'''
-
-try:
-    start_time = time.time()
-    result = agent.execute(prompt, session_id=session_id)
-    elapsed = time.time() - start_time
-
-    # Try to load transcript from session file
-    transcript_file = workspace / '.sessions' / f'{{session_id}}.json'
-    if transcript_file.exists():
-        transcript_data = json.loads(transcript_file.read_text())
-    else:
-        transcript_data = result.transcript if result.transcript else []
-
-    output = {{
-        'status': result.status,
-        'content': result.content,
-        'transcript': transcript_data,
-        'usage': result.usage or {{}},
-        'execution_time': elapsed,
-        'error': result.error,
-    }}
-except Exception as e:
-    output = {{
-        'status': 'error',
-        'content': '',
-        'transcript': [],
-        'usage': {{}},
-        'execution_time': 0,
-        'error': traceback.format_exc(),
-    }}
-
-(workspace / 'agent_result.json').write_text(json.dumps(output, ensure_ascii=False, indent=2))
-print('DONE')
-"""
-
-            # Copy script into container and execute
-            with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
-                f.write(exec_script)
-                script_path = f.name
-
             try:
-                subprocess.run(["docker", "cp", script_path, f"{container_name}:/tmp/exec_nanobot.py"],
-                              check=True, timeout=30)
-            finally:
-                Path(script_path).unlink(missing_ok=True)
-
-            exec_cmd = ["docker", "exec", container_name, "python3.11", "/tmp/exec_nanobot.py"]
-            exec_proc = subprocess.run(exec_cmd, capture_output=True, text=True, timeout=360)
-
-            if exec_proc.returncode != 0:
-                return {"task": task_name, "status": "error",
-                        "error": f"exec failed: {exec_proc.stderr[:500]}", "turns": turn + 1}
-
-            # Load result from container
-            result_file_host = workspace_host / "agent_result.json"
-            subprocess.run(["docker", "cp", f"{container_name}:{mount_point}/agent_result.json",
-                          str(result_file_host)], capture_output=True)
-
-            if not result_file_host.exists():
-                return {"task": task_name, "status": "error",
-                        "error": "no result file", "turns": turn + 1}
-
-            agent_result = json.loads(result_file_host.read_text(encoding="utf-8"))
+                result = agent.execute(prompt, session_id=f"{session_id}_t{turn}")
+            except Exception as e:
+                return {"task": task_name, "status": "error", "error": str(e)[:500], "turns": turn + 1}
 
             # Collect transcript
-            if agent_result.get("transcript"):
-                all_transcripts.extend(agent_result["transcript"])
+            if result.transcript:
+                all_transcripts.extend(result.transcript)
 
-            # Run pytest inside container
-            passed, test_output = self._run_pytest_docker(container_name, workspace_host, mount_point)
+            # Run pytest inside container via docker exec
+            passed, test_output = self._run_pytest_harbor(container_name, workspace_host, mount_point)
 
             if passed:
                 # Save transcript on success
@@ -755,27 +715,88 @@ print('DONE')
         return {"task": task_name, "status": "failed", "turns": max_turns,
                 "test_output": test_output[-1000:]}
 
-    def _run_pytest_docker(self, container_name: str, workspace_host: Path, mount_point: str = "/workspace") -> tuple:
-        """在 Docker 容器内运行 pytest 验证。"""
-        # Find task name from workspace path
+    def _run_pytest_harbor(self, container_name: str, workspace_host: Path, mount_point: str = "/workspace") -> tuple:
+        """Harbor Architecture: pytest 在容器内通过 docker exec 运行。
+
+        NanoBotAgent 在宿主机运行，但 pytest 必须在容器内执行以验证任务代码。
+        容器需要 python3 和 pytest - 由任务的基础镜像提供。
+        如果容器没有pytest，则通过pip安装。
+        """
         task_name = workspace_host.name
-        # Task tests are in the original benchmarks directory, not in the workspace copy
         task_tests_src = self._get_tasks_dir() / task_name / "tests"
         if not task_tests_src.exists():
             return False, "no tests/ directory"
 
-        # Copy test files to container's workspace (use mount_point, not hardcoded /workspace)
+        # Copy test files from workspace (where agent may have modified them) to container
+        workspace_tests = workspace_host / "tests"
         subprocess.run(["docker", "exec", container_name, "mkdir", "-p", f"{mount_point}/tests"],
                       capture_output=True, text=True)
-        for f in task_tests_src.glob("*"):
+        # If agent modified tests in workspace (has actual test files), use those; otherwise use original
+        has_test_files = workspace_tests.exists() and any(workspace_tests.glob("test_*.py"))
+        test_source = workspace_tests if has_test_files else task_tests_src
+        for f in test_source.glob("*"):
             if f.is_file() and f.name != "Dockerfile":
-                subprocess.run(["docker", "cp", str(f), f"{container_name}:{mount_point}/tests/"],
+                # Read test file and replace host paths with container paths
+                content = f.read_text(encoding="utf-8")
+                # Replace host workspace path with container mount point
+                content = content.replace(str(workspace_host), mount_point)
+                # Also handle common variations
+                content = content.replace("/tmp/skillsbench_workspace/", "/workspace/")
+                content = content.replace("/private/tmp/skillsbench_workspace/", "/workspace/")
+                # Write to temp file and copy
+                import tempfile
+                with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as tmp:
+                    tmp.write(content)
+                    tmp_path = tmp.name
+                subprocess.run(["docker", "cp", tmp_path, f"{container_name}:{mount_point}/tests/{f.name}"],
                               capture_output=True, text=True)
+                import os
+                os.unlink(tmp_path)
 
-        # Run pytest inside container
+        # Determine which python to use - try python3 first (base image python), then python3.11
+        for py_cmd in ["python3", "python3.11"]:
+            check = subprocess.run(
+                ["docker", "exec", container_name, "which", py_cmd],
+                capture_output=True, text=True, timeout=10
+            )
+            if check.returncode == 0:
+                actual_py = py_cmd
+                break
+        else:
+            actual_py = "python3"  # fallback
+
+        # Check if pytest is installed, if not install it
+        check_pytest = subprocess.run(
+            ["docker", "exec", container_name, actual_py, "-m", "pytest", "--version"],
+            capture_output=True, text=True, timeout=30
+        )
+        if check_pytest.returncode != 0:
+            # Install pytest
+            log(f"[{task_name}] Installing pytest in container...")
+            # Check if pip supports --break-system-packages (PEP 668)
+            check_pip = subprocess.run(
+                ["docker", "exec", container_name, actual_py, "-m", "pip", "install", "--help"],
+                capture_output=True, text=True, timeout=30
+            )
+            pip_supports_break_system = "--break-system-packages" in check_pip.stdout
+
+            if pip_supports_break_system:
+                install_cmd = ["docker", "exec", container_name, actual_py, "-m", "pip", "install", "-q", "--break-system-packages", "pytest"]
+            else:
+                # For older pip (e.g., Ubuntu 20.04), use --user or install without the flag
+                install_cmd = ["docker", "exec", container_name, actual_py, "-m", "pip", "install", "-q", "pytest"]
+
+            install_result = subprocess.run(install_cmd, capture_output=True, text=True, timeout=120)
+            if install_result.returncode != 0:
+                return False, f"Failed to install pytest: {install_result.stderr[-500:]}"
+
+        # Run pytest inside container via docker exec
+        # Set TEST_ROOT env var so tests can find files if modified by agent
         pytest_cmd = [
-            "docker", "exec", "-w", mount_point, container_name,
-            "python3", "-m", "pytest", f"{mount_point}/tests/test_outputs.py", "-v", "--tb=short"
+            "docker", "exec", "-w", mount_point,
+            "-e", f"TEST_ROOT={mount_point}",
+            container_name,
+            actual_py, "-m", "pytest", f"{mount_point}/tests/test_outputs.py", "-v", "--tb=short"
         ]
         try:
             proc = subprocess.run(pytest_cmd, capture_output=True, text=True, timeout=120)

@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 logger = logging.getLogger(__name__)
 
-DOCKER_IMAGE  = os.environ.get("DOCKER_IMAGE",   "wildclawbench-ubuntu:v0.4")
+DOCKER_IMAGE  = os.environ.get("DOCKER_IMAGE",   "wildclawbench-nanobot:v3")
 TMP_WORKSPACE = os.environ.get("TMP_WORKSPACE",  "/tmp_workspace")
 
 BRAVE_API_KEY = os.environ.get("BRAVE_API_KEY", "")

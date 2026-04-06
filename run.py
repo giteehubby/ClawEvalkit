@@ -58,6 +58,8 @@ def main():
     parser.add_argument("--output-dir", help="Output directory for results (default: ./outputs)")
     parser.add_argument("--transcripts-dir", help="Directory to save agent transcripts (default: {output_dir}/transcripts)")
     parser.add_argument("--max-turns", type=int, default=3, help="Max retry turns for SkillsBench (default: 3)")
+    parser.add_argument("--task", "-t", help="指定特定任务ID (如 01_Productivity_Flow_task_6_calendar_scheduling)")
+    parser.add_argument("--category", "-c", help="指定任务类别 (如 01_Productivity_Flow)")
     args = parser.parse_args()
 
     # 设置 transcripts_dir 默认值
@@ -104,6 +106,10 @@ def main():
         bench_kwargs["use_docker"] = True
     if args.parallel > 1:
         bench_kwargs["parallel"] = args.parallel
+    if args.task:
+        bench_kwargs["task_ids"] = [args.task]
+    if args.category:
+        bench_kwargs["category"] = args.category
     infer_all(bench_keys, model_keys, sample=args.sample,
               output_dir=args.output_dir, transcripts_dir=args.transcripts_dir, **bench_kwargs)
 

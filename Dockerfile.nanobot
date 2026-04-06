@@ -22,7 +22,9 @@ COPY OpenClawPro/ ./OpenClawPro/
 RUN python3 -m pip install --no-cache-dir \
     -i https://pypi.org/simple/ \
     --trusted-host pypi.org \
-    litellm loguru rich tiktoken pydantic-settings
+    litellm loguru rich tiktoken pydantic-settings \
+    ddgs readability numpy matplotlib pillow opencv-python \
+    openpyxl pdfplumber scipy
 
 # Add OpenClawPro to PYTHONPATH so 'harness' and 'nanobot' packages are importable
 ENV PYTHONPATH=/root/OpenClawPro:$PYTHONPATH

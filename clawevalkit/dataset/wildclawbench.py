@@ -101,7 +101,7 @@ def parse_task_md(task_file: Path, use_docker: bool = False) -> dict:
         "prompt": prompt,
         "workspace_path": workspace_path,
         "automated_checks": automated_checks,
-        "timeout_seconds": int(metadata.get("timeout_seconds", 120 if use_docker else 300)),
+        "timeout_seconds": int(metadata.get("timeout_seconds", 900 if use_docker else 300)),
         "file_path": str(task_file.resolve()),
         "category": task_file.parent.name,
     }
@@ -166,7 +166,7 @@ try:
         session_id=session_id,
         workspace=workspace,
         system_prompt=system_prompt,
-        max_iterations=50,
+        max_iterations=100,
         max_output_tokens=8192,
     )
     elapsed = time.time() - start_time
@@ -254,8 +254,8 @@ def _start_container(container_name: str, workspace_path: str, openclawpro_dir: 
         volume_mounts.extend(["-v", f"{skills_path}:/tmp_workspace/skills:rw"])
     if os.path.exists(workspace_inner):
         volume_mounts.extend(["-v", f"{workspace_inner}:/tmp_workspace/workspace:rw"])
-    # Ground truth mounted readonly at /tmp_workspace/workspace/gt/ for grading ONLY
-    volume_mounts.extend(["-v", f"{gt_dir}:/tmp_workspace/workspace/gt:ro"])
+    # Ground truth mounted readonly at /tmp_workspace/gt/ for grading ONLY
+    volume_mounts.extend(["-v", f"{gt_dir}:/tmp_workspace/gt:ro"])
 
     docker_run_cmd = [
         "docker", "run", "-d",
@@ -278,6 +278,14 @@ def _setup_container(container_name: str, workspace_path: str, skills: str, skil
         subprocess.run(["docker", "exec", container_name, "mkdir", "-p", "/tmp_workspace/tmp"],
                        capture_output=True)
         subprocess.run(["docker", "cp", f"{tmp_path}/.", f"{container_name}:/tmp_workspace/tmp/"],
+                       capture_output=True)
+
+    # Copy exec files to /tmp_workspace root (grading scripts expect files directly under /tmp_workspace/)
+    exec_path = os.path.join(workspace_path, "exec")
+    if os.path.exists(exec_path):
+        subprocess.run(["docker", "exec", container_name, "mkdir", "-p", "/tmp_workspace"],
+                       capture_output=True)
+        subprocess.run(["docker", "cp", f"{exec_path}/.", f"{container_name}:/tmp_workspace/"],
                        capture_output=True)
 
     # Setup skills
@@ -441,6 +449,7 @@ class WildClawBench(BaseBenchmark):
         sample: int = 0,
         transcripts_dir: Path = None,
         category: str = None,
+        task_ids: list = None,
         use_automated_checks: bool = True,
         use_docker: bool = None,
         parallel: int = 1,
@@ -455,6 +464,7 @@ class WildClawBench(BaseBenchmark):
             sample: 采样任务数 (0=全部)
             transcripts_dir: 保存 transcript 的目录
             category: 指定类别 (None=全部)
+            task_ids: 指定任务ID列表 (如 ["01_Productivity_Flow_task_6_calendar_scheduling"])
             use_automated_checks: 是否使用自动化 checks
             use_docker: 是否使用 Docker 容器运行 (默认 False, 使用 NanoBotAgent)
             parallel: 并行任务数 (Docker 模式下有效)
@@ -471,6 +481,7 @@ class WildClawBench(BaseBenchmark):
                 sample=sample,
                 transcripts_dir=transcripts_dir,
                 category=category,
+                task_ids=task_ids,
                 use_automated_checks=use_automated_checks,
                 parallel=parallel,
                 openclawpro_dir=openclawpro_dir,
@@ -503,6 +514,9 @@ class WildClawBench(BaseBenchmark):
             categories=[category] if category else TASK_CATEGORIES,
             use_docker=False,
         )
+        # Filter by task_ids if specified
+        if task_ids:
+            tasks = [t for t in tasks if t["task_id"] in task_ids]
         if sample and sample < len(tasks):
             random.seed(42)
             tasks = random.sample(tasks, sample)
@@ -511,7 +525,11 @@ class WildClawBench(BaseBenchmark):
         judge_model = os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
         judge_base = os.getenv("JUDGE_BASE_URL", "https://openrouter.ai/api/v1")
 
-        out_dir = self.results_dir / "wildclawbench" / "subset" / model_key
+        # Avoid double nesting if results_dir already contains wildclawbench/subset/model_key
+        if self.results_dir.name == model_key and self.results_dir.parent.name == "subset":
+            out_dir = self.results_dir
+        else:
+            out_dir = self.results_dir / "wildclawbench" / "subset" / model_key
         out_dir.mkdir(parents=True, exist_ok=True)
         results = []
 
@@ -556,7 +574,7 @@ class WildClawBench(BaseBenchmark):
                     session_id=f"eval_wild_{model_key}_{tid}",
                     workspace=workspace,
                     system_prompt=system_prompt,
-                    max_iterations=50,
+                    max_iterations=100,
                 )
 
                 if result and result.transcript:
@@ -648,6 +666,7 @@ class WildClawBench(BaseBenchmark):
         sample: int = 0,
         transcripts_dir: Path = None,
         category: str = None,
+        task_ids: list = None,
         use_automated_checks: bool = True,
         parallel: int = 1,
         openclawpro_dir: Path = None,
@@ -666,17 +685,24 @@ class WildClawBench(BaseBenchmark):
             raise FileNotFoundError(f"OpenClawPro directory not found: {openclawpro_dir}")
 
         # Docker image for NanoBotAgent mode (built from Dockerfile.nanobot)
-        docker_image = os.environ.get("DOCKER_IMAGE_NANOBOT", "wildclawbench-nanobot:latest")
+        docker_image = os.environ.get("DOCKER_IMAGE_NANOBOT", "wildclawbench-nanobot:v3")
 
         tasks = self._load_tasks(
             categories=[category] if category else TASK_CATEGORIES,
             use_docker=True,
         )
+        # Filter by task_ids if specified
+        if task_ids:
+            tasks = [t for t in tasks if t["task_id"] in task_ids]
         if sample and sample < len(tasks):
             random.seed(42)
             tasks = random.sample(tasks, sample)
 
-        out_dir = self.results_dir / "wildclawbench" / model_key
+        # Avoid double nesting if results_dir already contains wildclawbench/model_key
+        if self.results_dir.name == model_key and self.results_dir.parent.name == "wildclawbench":
+            out_dir = self.results_dir
+        else:
+            out_dir = self.results_dir / "wildclawbench" / model_key
         out_dir.mkdir(parents=True, exist_ok=True)
         results = []
 

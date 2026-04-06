@@ -94,6 +94,7 @@ def _call_judge_with_retry(
     messages: List[Dict],
     max_retries: int = 5,
     base_delay: float = 5.0,
+    timeout: float = 120.0,
 ) -> Optional[str]:
     """调用 Judge 模型，带指数退避重试（处理 429 rate limit）。"""
     for attempt in range(max_retries):
@@ -103,6 +104,7 @@ def _call_judge_with_retry(
                 messages=messages,
                 temperature=0.0,
                 max_tokens=768,
+                timeout=timeout,
             )
             return response.choices[0].message.content
         except Exception as e:
@@ -111,6 +113,13 @@ def _call_judge_with_retry(
                 delay = base_delay * (2 ** attempt)
                 logger.warning(f"Judge rate limited (attempt {attempt+1}/{max_retries}), waiting {delay:.0f}s ...")
                 time.sleep(delay)
+            elif "timeout" in err_str.lower() or "timed out" in err_str.lower():
+                logger.warning(f"Judge API timeout (attempt {attempt+1}/{max_retries}): {err_str}")
+                if attempt < max_retries - 1:
+                    delay = base_delay * (2 ** attempt)
+                    time.sleep(delay)
+                else:
+                    raise
             else:
                 raise
     raise Exception(f"Judge rate limit exceeded after {max_retries} retries")
