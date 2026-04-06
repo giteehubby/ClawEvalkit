@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AgentBench Evaluation Results - MiniMax M2.7</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #1a1a2e; color: #eee; padding: 20px; }
+        h1 { color: #4ecca3; }
+        .summary { background: #16213e; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .score-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin: 20px 0; }
+        .score-card { background: #0f3460; padding: 15px; border-radius: 8px; text-align: center; }
+        .score-value { font-size: 32px; font-weight: bold; color: #4ecca3; }
+        .score-label { font-size: 14px; color: #aaa; margin-top: 5px; }
+        .success-rate { background: #0f3460; padding: 15px; border-radius: 8px; text-align: center; grid-column: span 2; }
+        .success-value { font-size: 32px; font-weight: bold; color: #4ecca3; }
+        table { width: 100%; border-collapse: collapse; background: #16213e; border-radius: 10px; overflow: hidden; margin-top: 20px; }
+        th { background: #0f3460; padding: 12px; text-align: left; cursor: pointer; }
+        td { padding: 10px 12px; border-bottom: 1px solid #0f3460; }
+        tr:hover { background: #1a1a3e; }
+        .high { color: #4ecca3; font-weight: bold; }
+        .medium { color: #f9a825; }
+        .low { color: #e53935; }
+        .sort-icon { float: right; color: #888; }
+    </style>
+    <script>
+        function sortTable(n) {
+            var table = document.getElementById("resultsTable");
+            var rows = Array.from(table.rows).slice(1);
+            var asc = table.getAttribute("data-sort-col") != n || table.getAttribute("data-sort-asc") == "false";
+            rows.sort(function(a, b) {
+                var x = a.cells[n].innerText;
+                var y = b.cells[n].innerText;
+                var xNum = parseFloat(x);
+                var yNum = parseFloat(y);
+                if (!isNaN(xNum) && !isNaN(yNum)) {
+                    return asc ? xNum - yNum : yNum - xNum;
+                }
+                return asc ? x.localeCompare(y) : y.localeCompare(x);
+            });
+            rows.forEach(function(row) { table.appendChild(row); });
+            table.setAttribute("data-sort-col", n);
+            table.setAttribute("data-sort-asc", asc);
+        }
+    </script>
+</head>
+<body>
+    <h1>AgentBench Evaluation Results</h1>
+    <div class="summary">
+        <h2>MiniMax M2.7 Performance Summary</h2>
+        <div class="score-grid">
+            <div class="score-card">
+                <div class="score-value">65.2</div>
+                <div class="score-label">Overall Score</div>
+            </div>
+            <div class="success-rate">
+                <div class="success-value">40/40</div>
+                <div class="score-label">Tasks Completed (100%)</div>
+            </div>
+            <div class="score-card">
+                <div class="score-value">63.9</div>
+                <div class="score-label">L0 Average</div>
+            </div>
+            <div class="score-card">
+                <div class="score-value">75.8</div>
+                <div class="score-label">L1 Average</div>
+            </div>
+            <div class="score-card">
+                <div class="score-value">60.1</div>
+                <div class="score-label">L2 Average</div>
+            </div>
+            <div class="score-card">
+                <div class="score-value">60.3</div>
+                <div class="score-label">L3 Average</div>
+            </div>
+        </div>
+        <p style="color: #888; margin-top: 15px;">
+            <strong>L0</strong>: Automated Structural Checks | 
+            <strong>L1</strong>: Metrics Analysis | 
+            <strong>L2</strong>: Behavioral Analysis | 
+            <strong>L3</strong>: Output Quality
+        </p>
+    </div>
+    
+    <h2>Task Details (Click column headers to sort)</h2>
+    <table id="resultsTable" data-sort-col="-1" data-sort-asc="true">
+        <tr>
+            <th onclick="sortTable(0)">Task ID <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable(1)">Overall <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable(2)">L0 <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable(3)">L1 <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable(4)">L2 <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable(5)">L3 <span class="sort-icon">↕</span></th>
+            <th onclick="sortTable(6)">Status <span class="sort-icon">↕</span></th>
+        </tr>
+
+        <tr>
+            <td>pitch-deck-outline</td>
+            <td class="high">90.2</td>
+            <td>100.0</td>
+            <td>100.0</td>
+            <td>82.0</td>
+            <td>85.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>corrupted-input</td>
+            <td class="high">90.2</td>
+            <td>100.0</td>
+            <td>100.0</td>
+            <td>82.0</td>
+            <td>85.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>meeting-to-tasks</td>
+            <td class="high">89.2</td>
+            <td>100.0</td>
+            <td>100.0</td>
+            <td>82.0</td>
+            <td>82.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>summary-statistics</td>
+            <td class="high">87.3</td>
+            <td>100.0</td>
+            <td>100.0</td>
+            <td>80.0</td>
+            <td>78.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>extract-structured-data</td>
+            <td class="high">84.5</td>
+            <td>100.0</td>
+            <td>100.0</td>
+            <td>77.0</td>
+            <td>72.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>project-proposal</td>
+            <td class="high">83.2</td>
+            <td>100.0</td>
+            <td>80.0</td>
+            <td>78.0</td>
+            <td>82.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>codebase-archaeology</td>
+            <td class="high">82.8</td>
+            <td>100.0</td>
+            <td>70.0</td>
+            <td>82.0</td>
+            <td>85.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>summarize-doc</td>
+            <td class="high">81.8</td>
+            <td>100.0</td>
+            <td>100.0</td>
+            <td>72.0</td>
+            <td>68.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>compare-technologies</td>
+            <td class="high">81.0</td>
+            <td>85.0</td>
+            <td>80.0</td>
+            <td>78.0</td>
+            <td>82.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>impossible-request</td>
+            <td class="high">80.0</td>
+            <td>50.0</td>
+            <td>100.0</td>
+            <td>78.0</td>
+            <td>80.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>repo-refactor</td>
+            <td class="medium">78.7</td>
+            <td>88.2</td>
+            <td>85.0</td>
+            <td>72.0</td>
+            <td>75.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>project-scaffold</td>
+            <td class="medium">78.6</td>
+            <td>86.2</td>
+            <td>70.0</td>
+            <td>78.0</td>
+            <td>82.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>right-tool-choice</td>
+            <td class="medium">77.4</td>
+            <td>100.0</td>
+            <td>100.0</td>
+            <td>52.0</td>
+            <td>48.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>log-pattern-detection</td>
+            <td class="medium">77.0</td>
+            <td>86.7</td>
+            <td>70.0</td>
+            <td>74.0</td>
+            <td>80.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>data-spreadsheet</td>
+            <td class="medium">76.2</td>
+            <td>100.0</td>
+            <td>100.0</td>
+            <td>58.0</td>
+            <td>62.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>no-unnecessary-changes</td>
+            <td class="medium">75.6</td>
+            <td>50.0</td>
+            <td>85.0</td>
+            <td>78.0</td>
+            <td>74.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>data-pipeline</td>
+            <td class="medium">74.3</td>
+            <td>100.0</td>
+            <td>80.0</td>
+            <td>62.0</td>
+            <td>68.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>cross-reference</td>
+            <td class="medium">74.3</td>
+            <td>81.0</td>
+            <td>80.0</td>
+            <td>68.0</td>
+            <td>72.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>linked-project-scaffold</td>
+            <td class="medium">68.3</td>
+            <td>67.6</td>
+            <td>70.0</td>
+            <td>62.0</td>
+            <td>72.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>recall-distraction</td>
+            <td class="medium">67.8</td>
+            <td>50.0</td>
+            <td>60.0</td>
+            <td>72.0</td>
+            <td>78.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>context-retention</td>
+            <td class="medium">67.6</td>
+            <td>50.0</td>
+            <td>60.0</td>
+            <td>78.0</td>
+            <td>80.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>structured-form</td>
+            <td class="medium">66.0</td>
+            <td>100.0</td>
+            <td>85.0</td>
+            <td>52.0</td>
+            <td>48.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>interleaved-projects</td>
+            <td class="medium">65.8</td>
+            <td>50.0</td>
+            <td>60.0</td>
+            <td>72.0</td>
+            <td>75.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>memory-organization</td>
+            <td class="medium">65.7</td>
+            <td>50.0</td>
+            <td>60.0</td>
+            <td>72.0</td>
+            <td>78.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>skill-graph-creation</td>
+            <td class="medium">65.2</td>
+            <td>92.9</td>
+            <td>85.0</td>
+            <td>50.0</td>
+            <td>50.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>constraint-accumulation</td>
+            <td class="medium">64.5</td>
+            <td>50.0</td>
+            <td>60.0</td>
+            <td>72.0</td>
+            <td>75.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>cascading-failures</td>
+            <td class="medium">60.7</td>
+            <td>0.0</td>
+            <td>50.0</td>
+            <td>78.0</td>
+            <td>82.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>multi-source-synthesis</td>
+            <td class="medium">59.0</td>
+            <td>85.0</td>
+            <td>70.0</td>
+            <td>38.0</td>
+            <td>55.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>minimal-reads</td>
+            <td class="medium">58.6</td>
+            <td>50.0</td>
+            <td>85.0</td>
+            <td>42.0</td>
+            <td>35.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>partial-recovery</td>
+            <td class="medium">55.7</td>
+            <td>66.1</td>
+            <td>50.0</td>
+            <td>42.0</td>
+            <td>65.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>migration-script</td>
+            <td class="medium">54.0</td>
+            <td>68.2</td>
+            <td>70.0</td>
+            <td>42.0</td>
+            <td>45.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>misleading-error-message</td>
+            <td class="medium">52.5</td>
+            <td>0.0</td>
+            <td>50.0</td>
+            <td>62.0</td>
+            <td>70.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>large-codebase-navigation</td>
+            <td class="low">47.5</td>
+            <td>0.0</td>
+            <td>85.0</td>
+            <td>42.0</td>
+            <td>15.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>targeted-fix</td>
+            <td class="low">47.0</td>
+            <td>0.0</td>
+            <td>60.0</td>
+            <td>50.0</td>
+            <td>50.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>find-anomalies</td>
+            <td class="low">44.0</td>
+            <td>100.0</td>
+            <td>70.0</td>
+            <td>18.0</td>
+            <td>20.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>missing-dependency</td>
+            <td class="low">36.8</td>
+            <td>50.0</td>
+            <td>65.0</td>
+            <td>38.0</td>
+            <td>10.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>release-preparation</td>
+            <td class="low">30.3</td>
+            <td>0.0</td>
+            <td>50.0</td>
+            <td>32.0</td>
+            <td>28.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>log-analysis-report</td>
+            <td class="low">29.2</td>
+            <td>0.0</td>
+            <td>65.0</td>
+            <td>38.0</td>
+            <td>10.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>skill-graph-refactor</td>
+            <td class="low">26.2</td>
+            <td>0.0</td>
+            <td>70.0</td>
+            <td>18.0</td>
+            <td>12.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>multi-format-reconciliation</td>
+            <td class="low">13.0</td>
+            <td>0.0</td>
+            <td>50.0</td>
+            <td>2.0</td>
+            <td>0.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+    </table>
+    <p style="margin-top: 20px; color: #888;">Generated: 2026-04-06 | ClawEvalKit</p>
+</body>
+</html>
