@@ -5,9 +5,12 @@ Handles result caching (skip if already evaluated) and error reporting.
 """
 from pathlib import Path
 
-from .config import get_model_config, MODELS
+from .config import get_model_config, MODELS, load_env
 from .dataset import BENCHMARKS
 from .utils.log import log
+
+# Auto-load .env file on module import
+load_env()
 
 
 def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
@@ -43,6 +46,8 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
     elif bench_key == "wildclawbench":
         bench = bcls(use_docker=use_docker if use_docker is not None else False)
     elif bench_key == "agentbench":
+        bench = bcls(use_docker=use_docker if use_docker is not None else False)
+    elif bench_key == "pinchbench":
         bench = bcls(use_docker=use_docker if use_docker is not None else False)
     else:
         bench = bcls()

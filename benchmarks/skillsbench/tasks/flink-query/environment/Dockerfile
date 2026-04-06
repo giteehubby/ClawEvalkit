@@ -8,7 +8,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git curl ca-certificates build-essential vim unzip wget \
     openjdk-17-jdk-headless \
     maven \
+    python3 \
+    python3-pip \
  && rm -rf /var/lib/apt/lists/*
+
+# Ensure python3 is available for pytest
+RUN ln -sf /usr/bin/python3 /usr/bin/python
 
 # Java / Flink environment
 ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64

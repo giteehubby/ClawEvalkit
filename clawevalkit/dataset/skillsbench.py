@@ -51,7 +51,6 @@ SKIP_TASKS = {
 
 # 即使在 Docker 模式下也跳过的任务（环境有问题或需要 GPU 等）
 SKIP_TASKS_DOCKER = {
-    "jpg-ocr-stat",  # tesseract 相关问题
     # 需要 GPU 的任务可以在这里添加
 }
 
@@ -438,7 +437,7 @@ class SkillsBench(BaseBenchmark):
         self.save_result("skillsbench", model_key, summary)
         return summary
 
-    def _setup_container_paths(self, container_name: str, instruction: str, mount_point: str):
+    def _setup_container_paths(self, container_name: str, instruction: str, mount_point: str, task_tests_src: Path = None):
         """Detect instruction paths and create appropriate symlinks in container.
 
         Different tasks use different path patterns:
@@ -453,8 +452,18 @@ class SkillsBench(BaseBenchmark):
 
         We create symlinks for /root/input and /root/output based on the mount point.
         """
+        # Also check test files for path patterns
+        test_content = ""
+        if task_tests_src and task_tests_src.exists():
+            for f in task_tests_src.glob("*.py"):
+                try:
+                    test_content += f.read_text(encoding="utf-8")
+                except:
+                    pass
+        combined_content = instruction + test_content
+
         # Pattern: /root/input/ and /root/output/
-        if "/root/input/" in instruction or "/root/output/" in instruction:
+        if "/root/input/" in combined_content or "/root/output/" in combined_content:
             subprocess.run(["docker", "exec", container_name, "mkdir", "-p", f"{mount_point}/input", f"{mount_point}/output"],
                           capture_output=True, text=True)
             subprocess.run(["docker", "exec", container_name, "ln", "-sf", f"{mount_point}/input", "/root/input"],
@@ -464,17 +473,17 @@ class SkillsBench(BaseBenchmark):
 
         # Pattern: /app/ (but not /app/workspace which is the mount point itself)
         # Create symlink so /app maps to mount_point, and subdirectories work automatically
-        if "/app/" in instruction and "/app/workspace/" not in instruction:
+        if "/app/" in combined_content and "/app/workspace/" not in combined_content:
             # Remove original /app directory and replace with symlink to mount_point
             subprocess.run(["docker", "exec", container_name, "rm", "-rf", "/app"],
                           capture_output=True, text=True)
             subprocess.run(["docker", "exec", container_name, "ln", "-sf", mount_point, "/app"],
                           capture_output=True, text=True)
             # Ensure data and output directories exist inside mount_point
-            if "/app/data/" in instruction:
+            if "/app/data/" in combined_content:
                 subprocess.run(["docker", "exec", container_name, "mkdir", "-p", f"{mount_point}/data"],
                               capture_output=True, text=True)
-            if "/app/output/" in instruction:
+            if "/app/output/" in combined_content:
                 subprocess.run(["docker", "exec", container_name, "mkdir", "-p", f"{mount_point}/output"],
                               capture_output=True, text=True)
 
@@ -482,9 +491,9 @@ class SkillsBench(BaseBenchmark):
         # No symlink needed for this pattern
 
         # Pattern: pure /root/ paths (e.g., /root/scan_data.stl, /root/mass_report.json)
-        # If instruction uses /root/ but not /root/input/, /root/output/, or /root/workspace/
+        # If instruction or tests use /root/ but not /root/input/, /root/output/, or /root/workspace/
         # we need to symlink /root to mount_point so files written to /root/ appear in workspace
-        if "/root/" in instruction and "/root/input/" not in instruction and "/root/output/" not in instruction and "/root/workspace/" not in instruction:
+        if "/root/" in combined_content and "/root/input/" not in combined_content and "/root/output/" not in combined_content and "/root/workspace/" not in combined_content:
             # Remove original /root directory and replace with symlink to mount_point
             subprocess.run(["docker", "exec", container_name, "rm", "-rf", "/root"],
                           capture_output=True, text=True)
@@ -518,7 +527,7 @@ class SkillsBench(BaseBenchmark):
         build_cmd.append(str(task_dir / "environment"))
 
         try:
-            build_proc = subprocess.run(build_cmd, capture_output=True, text=True, timeout=600)
+            build_proc = subprocess.run(build_cmd, capture_output=True, text=True, timeout=1800)
             if build_proc.returncode != 0:
                 return {"task": task_name, "status": "skipped",
                         "error": f"docker build failed: {build_proc.stderr[:500]}"}
@@ -595,8 +604,17 @@ class SkillsBench(BaseBenchmark):
                 capture_output=True, text=True, timeout=60
             )
 
-        # Dynamically create symlinks based on instruction paths
-        self._setup_container_paths(container_name, instruction, mount_point)
+        # Create symlink for host workspace path so agent commands work in container
+        # Agent uses host paths (e.g., /tmp/skillsbench_workspace/task), but commands run in container
+        host_workspace = f"/tmp/skillsbench_workspace/{task_name}"
+        subprocess.run(["docker", "exec", container_name, "mkdir", "-p", "/tmp/skillsbench_workspace"],
+                      capture_output=True, text=True)
+        subprocess.run(["docker", "exec", container_name, "ln", "-sf", mount_point, host_workspace],
+                      capture_output=True, text=True)
+
+        # Dynamically create symlinks based on instruction and test paths
+        task_tests_src = self._get_tasks_dir() / task_name / "tests"
+        self._setup_container_paths(container_name, instruction, mount_point, task_tests_src)
 
         # Harbor Architecture: Agent runs on host, commands via docker exec
         try:

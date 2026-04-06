@@ -135,6 +135,9 @@ def parse_task_md(task_file: Path, use_docker: bool = False) -> dict:
 def _build_exec_script(model_key: str, task_id_ori: str, prompt: str, timeout_seconds: int,
                         config: dict, skills_summary: str) -> str:
     """Build NanoBotAgent execution script for running inside Docker container."""
+    # Use api_key directly from config (like skillsbench/agentbench)
+    api_key = config.get("api_key", "")
+
     return f"""
 import sys
 import json
@@ -150,7 +153,7 @@ session_id = 'eval_{model_key}_{task_id_ori}'
 agent = NanoBotAgent(
     model='{config["model"]}',
     api_url='{config["api_url"]}',
-    api_key='{config["api_key"]}',
+    api_key='{api_key}',
     workspace=workspace,
     timeout={timeout_seconds},
     disable_safety_guard=True,
@@ -505,6 +508,7 @@ class WildClawBench(BaseBenchmark):
         transcripts_dir: Path = None,
         category: str = None,
         use_automated_checks: bool = True,
+        task_ids: list = None,
     ) -> dict:
         """Native 模式: 使用 NanoBotAgent 在宿主机直接运行。"""
         NanoBotAgent = import_nanobot_agent()
@@ -553,6 +557,11 @@ class WildClawBench(BaseBenchmark):
             task_workspace = self._get_task_workspace(task)
             if task_workspace and task_workspace.exists():
                 try:
+                    # Copy exec files to tmp_workspace (agent expects files under /tmp_workspace/)
+                    exec_path = task_workspace / "exec"
+                    if exec_path.exists():
+                        shutil.copytree(exec_path, tmp_workspace_dir, dirs_exist_ok=True)
+                    # Also copy other directories if needed
                     shutil.copytree(task_workspace, workspace / "workspace", dirs_exist_ok=True)
                 except Exception as e:
                     logger.warning(f"Failed to copy task workspace: {e}")
@@ -749,8 +758,14 @@ class WildClawBench(BaseBenchmark):
                     "-e", f"https_proxy={proxy_https}",
                     "-e", f"HTTPS_PROXY={proxy_https}",
                     "-e", f"no_proxy={'' if not proxy_http else os.environ.get('NO_PROXY_INNER', '')}",
-                    "-e", f"OPENROUTER_API_KEY={openrouter_api_key}",
                 ]
+                # Pass API keys for compatibility
+                env_args.extend(["-e", f"OPENROUTER_API_KEY={openrouter_api_key}"])
+                minimax_api_key = os.getenv("MINIMAX_API_KEY", "")
+                if minimax_api_key:
+                    env_args.extend(["-e", f"MINIMAX_API_KEY={minimax_api_key}"])
+                    # Also set ANTHROPIC_API_KEY for litellm compatibility with MiniMax
+                    env_args.extend(["-e", f"ANTHROPIC_API_KEY={minimax_api_key}"])
                 for line in task.get("env", "").splitlines():
                     key = line.strip()
                     if key and not key.startswith("#"):

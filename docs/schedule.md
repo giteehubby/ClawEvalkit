@@ -286,3 +286,50 @@ docker rmi skillsbench-task-{task_name}
 - **镜像构建时间**: 每个任务都要 `docker build`，可用 `docker buildx` 缓存层优化
 - **磁盘空间**: 任务完成后自动删除镜像 `docker rmi`
 - **构建失败**: 任务标记为 `skipped`，不影响其他任务
+
+---
+
+## PinchBench Docker 模式
+
+- [x] **PinchBench Docker 模式 (`pinchbench.py`)**:
+  - 支持 23 个任务
+  - 新增 `_evaluate_docker()` 方法: 在容器内执行 NanoBotAgent
+  - 复用 WildClawBench 的 `wildclawbench-nanobot:v3` 镜像
+  - 支持并行执行 (`parallel` 参数)
+  - `evaluate()` 方法支持 `use_docker` 参数
+  - 支持内嵌 `grade()` 函数在容器中执行评分
+
+### 使用方式
+
+```bash
+cd /Volumes/F/Clauding/ClawEvalkit
+
+# Native 模式测试（默认）
+python run.py --bench pinchbench --model claude-sonnet --sample 1
+
+# Docker 模式测试
+python run.py --bench pinchbench --model claude-sonnet --sample 1 --docker
+
+# Docker 并行模式
+python run.py --bench pinchbench --model claude-sonnet --sample 5 --docker --parallel 2
+```
+
+### 测试脚本
+
+```bash
+cd /Volumes/F/Clauding/ClawEvalkit/benchmarks/pinchbench/scripts
+
+# 测试单个任务
+python test_docker.py --sample 1
+
+# 测试多个任务并行
+python test_docker.py --sample 3 --parallel 2
+```
+
+### 环境变量
+
+| 变量 | 说明 | 默认值 |
+|------|------|--------|
+| `PINCHBENCH_DOCKER_IMAGE` | Docker 镜像名 | `wildclawbench-nanobot:v3` |
+| `OPENCLAWPRO_DIR` | OpenClawPro 源码目录 | `ClawEvalkit/OpenClawPro` |
+| `OPENROUTER_API_KEY` | LLM API Key | - |
