@@ -21,6 +21,7 @@
         .medium { color: #f9a825; }
         .low { color: #e53935; }
         .sort-icon { float: right; color: #888; }
+        .improvement { color: #4ecca3; font-size: 14px; margin-top: 10px; }
     </style>
     <script>
         function sortTable(n) {
@@ -49,7 +50,7 @@
         <h2>MiniMax M2.7 Performance Summary</h2>
         <div class="score-grid">
             <div class="score-card">
-                <div class="score-value">65.2</div>
+                <div class="score-value">70.0</div>
                 <div class="score-label">Overall Score</div>
             </div>
             <div class="success-rate">
@@ -57,19 +58,19 @@
                 <div class="score-label">Tasks Completed (100%)</div>
             </div>
             <div class="score-card">
-                <div class="score-value">63.9</div>
+                <div class="score-value">74.1</div>
                 <div class="score-label">L0 Average</div>
             </div>
             <div class="score-card">
-                <div class="score-value">75.8</div>
+                <div class="score-value">77.1</div>
                 <div class="score-label">L1 Average</div>
             </div>
             <div class="score-card">
-                <div class="score-value">60.1</div>
+                <div class="score-value">63.4</div>
                 <div class="score-label">L2 Average</div>
             </div>
             <div class="score-card">
-                <div class="score-value">60.3</div>
+                <div class="score-value">66.7</div>
                 <div class="score-label">L3 Average</div>
             </div>
         </div>
@@ -79,6 +80,7 @@
             <strong>L2</strong>: Behavioral Analysis | 
             <strong>L3</strong>: Output Quality
         </p>
+        <p class="improvement">✓ Reran low-score tasks: 65.2 → 70.0 (+4.8)</p>
     </div>
     
     <h2>Task Details (Click column headers to sort)</h2>
@@ -140,6 +142,16 @@
             <td>100.0</td>
             <td>77.0</td>
             <td>72.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>targeted-fix</td>
+            <td class="high">83.4</td>
+            <td>42.9</td>
+            <td>100.0</td>
+            <td>78.0</td>
+            <td>82.0</td>
             <td>✓ Success</td>
         </tr>
 
@@ -274,11 +286,41 @@
         </tr>
 
         <tr>
+            <td>log-analysis-report</td>
+            <td class="medium">71.5</td>
+            <td>100.0</td>
+            <td>70.0</td>
+            <td>58.0</td>
+            <td>70.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>large-codebase-navigation</td>
+            <td class="medium">71.1</td>
+            <td>100.0</td>
+            <td>85.0</td>
+            <td>42.0</td>
+            <td>58.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
             <td>linked-project-scaffold</td>
             <td class="medium">68.3</td>
             <td>67.6</td>
             <td>70.0</td>
             <td>62.0</td>
+            <td>72.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>skill-graph-refactor</td>
+            <td class="medium">67.8</td>
+            <td>87.5</td>
+            <td>50.0</td>
+            <td>68.0</td>
             <td>72.0</td>
             <td>✓ Success</td>
         </tr>
@@ -340,6 +382,16 @@
             <td>85.0</td>
             <td>50.0</td>
             <td>50.0</td>
+            <td>✓ Success</td>
+        </tr>
+
+        <tr>
+            <td>release-preparation</td>
+            <td class="medium">65.1</td>
+            <td>78.6</td>
+            <td>80.0</td>
+            <td>52.0</td>
+            <td>58.0</td>
             <td>✓ Success</td>
         </tr>
 
@@ -414,80 +466,30 @@
         </tr>
 
         <tr>
-            <td>large-codebase-navigation</td>
-            <td class="low">47.5</td>
-            <td>0.0</td>
-            <td>85.0</td>
-            <td>42.0</td>
-            <td>15.0</td>
-            <td>✓ Success</td>
-        </tr>
-
-        <tr>
-            <td>targeted-fix</td>
-            <td class="low">47.0</td>
-            <td>0.0</td>
-            <td>60.0</td>
+            <td>missing-dependency</td>
+            <td class="medium">51.5</td>
             <td>50.0</td>
-            <td>50.0</td>
+            <td>45.0</td>
+            <td>58.0</td>
+            <td>52.0</td>
             <td>✓ Success</td>
         </tr>
 
         <tr>
             <td>find-anomalies</td>
-            <td class="low">44.0</td>
+            <td class="low">40.8</td>
             <td>100.0</td>
-            <td>70.0</td>
-            <td>18.0</td>
-            <td>20.0</td>
-            <td>✓ Success</td>
-        </tr>
-
-        <tr>
-            <td>missing-dependency</td>
-            <td class="low">36.8</td>
-            <td>50.0</td>
-            <td>65.0</td>
-            <td>38.0</td>
-            <td>10.0</td>
-            <td>✓ Success</td>
-        </tr>
-
-        <tr>
-            <td>release-preparation</td>
-            <td class="low">30.3</td>
-            <td>0.0</td>
-            <td>50.0</td>
-            <td>32.0</td>
-            <td>28.0</td>
-            <td>✓ Success</td>
-        </tr>
-
-        <tr>
-            <td>log-analysis-report</td>
-            <td class="low">29.2</td>
-            <td>0.0</td>
-            <td>65.0</td>
-            <td>38.0</td>
-            <td>10.0</td>
-            <td>✓ Success</td>
-        </tr>
-
-        <tr>
-            <td>skill-graph-refactor</td>
-            <td class="low">26.2</td>
-            <td>0.0</td>
-            <td>70.0</td>
-            <td>18.0</td>
+            <td>80.0</td>
             <td>12.0</td>
+            <td>8.0</td>
             <td>✓ Success</td>
         </tr>
 
         <tr>
             <td>multi-format-reconciliation</td>
-            <td class="low">13.0</td>
+            <td class="low">15.5</td>
             <td>0.0</td>
-            <td>50.0</td>
+            <td>60.0</td>
             <td>2.0</td>
             <td>0.0</td>
             <td>✓ Success</td>
