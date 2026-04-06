@@ -774,6 +774,21 @@ class AgentBench(BaseBenchmark):
                         dst.parent.mkdir(parents=True, exist_ok=True)
                         shutil.copy2(src, dst)
 
+                # Run setup.sh if exists (for tasks that need environment setup)
+                setup_script = task_dir / "setup.sh"
+                if setup_script.exists():
+                    logger.info("[%s] Running setup.sh for task %s", container_name, tid)
+                    setup_proc = subprocess.run(
+                        ["bash", str(setup_script), str(host_workspace)],
+                        capture_output=True,
+                        text=True,
+                        timeout=120
+                    )
+                    if setup_proc.returncode != 0:
+                        logger.warning("[%s] setup.sh failed: %s", container_name, setup_proc.stderr[:500])
+                    else:
+                        logger.info("[%s] setup.sh completed successfully", container_name)
+
                 # Build env args
                 proxy_http = os.environ.get('HTTP_PROXY_INNER', '')
                 proxy_https = os.environ.get('HTTPS_PROXY_INNER', '')
