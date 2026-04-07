@@ -194,12 +194,17 @@ def _copy_results_from_container(container_name: str, workspace_path: str, task_
 
 class ZClawBench(BaseBenchmark):
     DISPLAY_NAME = "ZClawBench"
-    TASK_COUNT = 18  # 默认子集任务数，实际根据use_docker动态调整
+    TASK_COUNT = 116  # 完整任务数（docker模式），非docker模式实际跑18个
     SCORE_RANGE = "0-1"
 
     def __init__(self, base_dir: Path = None, output_dir: Path = None, use_docker: bool = False):
         super().__init__(base_dir=base_dir, output_dir=output_dir)
         self._use_docker_default = use_docker
+
+    @property
+    def task_count(self) -> int:
+        """根据模式返回任务数"""
+        return 116 if self._use_docker_default else 18
 
     def evaluate(self, model_key: str, config: dict, sample: int = 0, **kwargs) -> dict:
         """运行 ZClawBench 评测: 加载 HF 数据 → NanoBotAgent 执行 → Judge 评分。
@@ -218,6 +223,7 @@ class ZClawBench(BaseBenchmark):
         parallel = kwargs.get("parallel", 1)
         openclawpro_dir = kwargs.get("openclawpro_dir")
         force = kwargs.get("force", False)
+        task_ids = kwargs.get("task_ids")  # 指定特定任务
 
         if use_docker:
             return self._evaluate_docker(
@@ -227,6 +233,7 @@ class ZClawBench(BaseBenchmark):
                 parallel=parallel,
                 openclawpro_dir=openclawpro_dir,
                 force=force,
+                task_ids=task_ids,
             )
         else:
             return self._evaluate_native(
@@ -302,6 +309,7 @@ class ZClawBench(BaseBenchmark):
         parallel: int = 1,
         openclawpro_dir: Path = None,
         force: bool = False,
+        task_ids: list = None,
     ) -> dict:
         """Docker mode: run NanoBotAgent inside Docker container with Judge scoring."""
         if openclawpro_dir is None:
@@ -321,7 +329,10 @@ class ZClawBench(BaseBenchmark):
         from clawevalkit.grading import run_judge_eval
 
         tasks = self._load_tasks(use_docker=True)  # Docker模式加载全部116个任务
-        if sample and sample < len(tasks):
+        # Filter by specific task_ids if provided
+        if task_ids:
+            tasks = [t for t in tasks if t["task_id"] in task_ids]
+        elif sample and sample < len(tasks):
             random.seed(42)
             tasks = random.sample(tasks, sample)
 

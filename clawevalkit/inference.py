@@ -51,6 +51,8 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
         bench = bcls(use_docker=use_docker if use_docker is not None else False)
     elif bench_key == "clawbench-official":
         bench = bcls(use_docker=use_docker if use_docker is not None else False)
+    elif bench_key == "zclawbench":
+        bench = bcls(use_docker=use_docker if use_docker is not None else False)
     else:
         bench = bcls()
     if output_dir:
@@ -106,7 +108,15 @@ def infer_all(bench_keys: list = None, model_keys: list = None,
     results = {}
     for bkey in bench_keys:
         log(f"\n{'=' * 60}")
-        log(f"BENCHMARK: {BENCHMARKS[bkey].DISPLAY_NAME} ({BENCHMARKS[bkey].TASK_COUNT} tasks)")
+        # Use instance task_count if available (for dynamic task counts like zclawbench)
+        bcls = BENCHMARKS[bkey]
+        use_docker = kwargs.get("use_docker", None)
+        if bkey == "zclawbench":
+            temp_bench = bcls(use_docker=use_docker if use_docker is not None else False)
+            task_count = temp_bench.task_count
+        else:
+            task_count = bcls.TASK_COUNT
+        log(f"BENCHMARK: {bcls.DISPLAY_NAME} ({task_count} tasks)")
         log(f"{'=' * 60}")
 
         for mkey in model_keys:

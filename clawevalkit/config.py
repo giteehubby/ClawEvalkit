@@ -93,6 +93,7 @@ def get_model_config(model_key: str) -> dict:
     if model_key not in MODELS:
         raise ValueError(f"Unknown model: {model_key}. Available: {list(MODELS.keys())}")
     cfg = dict(MODELS[model_key])
+    # Resolve api_key_env -> api_key
     cfg["api_key"] = os.getenv(cfg.pop("api_key_env", ""), "")
     return cfg
 
