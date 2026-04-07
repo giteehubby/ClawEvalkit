@@ -252,6 +252,7 @@ def _start_container(container_name: str, workspace_path: str, openclawpro_dir: 
 
     os.makedirs(exec_path, exist_ok=True)
     os.makedirs(tmp_path, exist_ok=True)
+    os.makedirs(results_path, exist_ok=True)
 
     volume_mounts = [
         "-v", f"{exec_path}:/tmp_workspace/exec:rw",
@@ -274,9 +275,72 @@ def _start_container(container_name: str, workspace_path: str, openclawpro_dir: 
         docker_image,
         "/bin/bash", "-c", "tail -f /dev/null",
     ]
-    r = subprocess.run(docker_run_cmd, capture_output=True, text=True)
-    if r.returncode != 0:
-        raise RuntimeError(f"Container startup failed:\n{r.stderr}")
+
+    # Retry logic for container startup
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            r = subprocess.run(docker_run_cmd, capture_output=True, text=True, timeout=60)
+            if r.returncode == 0:
+                logger.info("[%s] Container started successfully", container_name)
+                return
+            logger.warning("[%s] Container startup failed (attempt %d): %s",
+                          container_name, attempt + 1, r.stderr[:500])
+        except subprocess.TimeoutExpired:
+            logger.warning("[%s] Container startup timeout (attempt %d)", container_name, attempt + 1)
+
+        if attempt < max_retries - 1:
+            # Clean up failed container before retry
+            subprocess.run(["docker", "rm", "-f", container_name], capture_output=True)
+            time.sleep(2 ** attempt)
+
+    raise RuntimeError(f"Container startup failed after {max_retries} attempts")
+
+
+def _docker_exec_with_retry(container_name: str, cmd: list, timeout: int = 30, max_retries: int = 3) -> subprocess.CompletedProcess:
+    """Execute docker command with retry logic."""
+    for attempt in range(max_retries):
+        try:
+            result = subprocess.run(
+                ["docker", "exec", container_name] + cmd,
+                capture_output=True, text=True, timeout=timeout
+            )
+            if result.returncode == 0:
+                return result
+            logger.warning("[%s] docker exec failed (attempt %d): %s",
+                          container_name, attempt + 1, result.stderr[:200])
+        except subprocess.TimeoutExpired:
+            logger.warning("[%s] docker exec timeout (attempt %d)", container_name, attempt + 1)
+        except Exception as e:
+            logger.error("[%s] docker exec error (attempt %d): %s", container_name, attempt + 1, e)
+
+        if attempt < max_retries - 1:
+            time.sleep(2 ** attempt)
+
+    # Return last failed result
+    return subprocess.CompletedProcess(args=cmd, returncode=-1, stdout="", stderr="Max retries exceeded")
+
+
+def _docker_cp_with_retry(src: str, dst: str, timeout: int = 30, max_retries: int = 3) -> bool:
+    """Copy file to/from container with retry logic."""
+    for attempt in range(max_retries):
+        try:
+            result = subprocess.run(
+                ["docker", "cp", src, dst],
+                capture_output=True, timeout=timeout
+            )
+            if result.returncode == 0:
+                return True
+            logger.warning("docker cp failed (attempt %d): %s", attempt + 1, result.stderr.decode()[:200])
+        except subprocess.TimeoutExpired:
+            logger.warning("docker cp timeout (attempt %d)", attempt + 1)
+        except Exception as e:
+            logger.error("docker cp error (attempt %d): %s", attempt + 1, e)
+
+        if attempt < max_retries - 1:
+            time.sleep(2 ** attempt)
+
+    return False
 
 
 def _setup_container(container_name: str, workspace_path: str, skills: str, skills_path: str,
@@ -284,18 +348,14 @@ def _setup_container(container_name: str, workspace_path: str, skills: str, skil
     """Copy files and run warmup commands inside container."""
     # Copy tmp files
     if os.path.exists(tmp_path):
-        subprocess.run(["docker", "exec", container_name, "mkdir", "-p", "/tmp_workspace/tmp"],
-                       capture_output=True)
-        subprocess.run(["docker", "cp", f"{tmp_path}/.", f"{container_name}:/tmp_workspace/tmp/"],
-                       capture_output=True)
+        _docker_exec_with_retry(container_name, ["mkdir", "-p", "/tmp_workspace/tmp"])
+        _docker_cp_with_retry(f"{tmp_path}/.", f"{container_name}:/tmp_workspace/tmp/")
 
     # Copy exec files to /tmp_workspace root (grading scripts expect files directly under /tmp_workspace/)
     exec_path = os.path.join(workspace_path, "exec")
     if os.path.exists(exec_path):
-        subprocess.run(["docker", "exec", container_name, "mkdir", "-p", "/tmp_workspace"],
-                       capture_output=True)
-        subprocess.run(["docker", "cp", f"{exec_path}/.", f"{container_name}:/tmp_workspace/"],
-                       capture_output=True)
+        _docker_exec_with_retry(container_name, ["mkdir", "-p", "/tmp_workspace"])
+        _docker_cp_with_retry(f"{exec_path}/.", f"{container_name}:/tmp_workspace/")
 
     # Setup skills
     if skills and skills_path:
@@ -303,18 +363,13 @@ def _setup_container(container_name: str, workspace_path: str, skills: str, skil
             line = line.strip()
             if not line:
                 continue
-            subprocess.run(
-                ["docker", "exec", container_name, "mkdir", "-p", f"/tmp_workspace/skills/{line}"],
-                capture_output=True)
-            subprocess.run(
-                ["docker", "cp", f"{skills_path}/{line}", f"{container_name}:/tmp_workspace/skills"],
-                capture_output=True)
+            _docker_exec_with_retry(container_name, ["mkdir", "-p", f"/tmp_workspace/skills/{line}"])
+            _docker_cp_with_retry(f"{skills_path}/{line}", f"{container_name}:/tmp_workspace/skills")
 
     # Run warmup
     if warmup:
         for cmd in [l.strip() for l in warmup.splitlines() if l.strip() and not l.strip().startswith("#")]:
-            r = subprocess.run(["docker", "exec", container_name, "/bin/bash", "-c", cmd],
-                               capture_output=True, text=True)
+            r = _docker_exec_with_retry(container_name, ["/bin/bash", "-c", cmd], timeout=60)
             if r.returncode != 0:
                 logger.warning("[%s] Warmup command failed: %s", container_name, cmd)
 
@@ -345,40 +400,112 @@ def _run_agent_in_container(container_name: str, exec_script: str, timeout_secon
     with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
         f.write(exec_script)
         script_path = f.name
-    try:
-        subprocess.run(["docker", "cp", script_path, f"{container_name}:/tmp/exec_nanobot.py"], check=True)
-    finally:
-        Path(script_path).unlink(missing_ok=True)
 
+    # Copy script to container with retry
+    max_retries = 3
+    copy_success = False
+    for attempt in range(max_retries):
+        try:
+            cp_result = subprocess.run(
+                ["docker", "cp", script_path, f"{container_name}:/tmp/exec_nanobot.py"],
+                capture_output=True, timeout=30
+            )
+            if cp_result.returncode == 0:
+                copy_success = True
+                break
+            logger.warning("[%s] Failed to copy exec script (attempt %d): %s",
+                          container_name, attempt + 1, cp_result.stderr.decode()[:200])
+            if attempt < max_retries - 1:
+                time.sleep(2 ** attempt)
+        except subprocess.TimeoutExpired:
+            logger.warning("[%s] docker cp timeout (attempt %d)", container_name, attempt + 1)
+            if attempt < max_retries - 1:
+                time.sleep(2 ** attempt)
+        except Exception as e:
+            logger.error("[%s] Error copying exec script: %s", container_name, e)
+            Path(script_path).unlink(missing_ok=True)
+            raise
+
+    # Clean up temp file
+    Path(script_path).unlink(missing_ok=True)
+
+    if not copy_success:
+        raise RuntimeError(f"Failed to copy exec script to container after {max_retries} attempts")
+
+    # Execute agent
     start_time = time.perf_counter()
-    exec_proc = subprocess.run(
-        ["docker", "exec", container_name, "python3", "/tmp/exec_nanobot.py"],
-        capture_output=True, text=True, timeout=timeout_seconds + 60)
-    elapsed = time.perf_counter() - start_time
-    return exec_proc, elapsed
+    try:
+        exec_proc = subprocess.run(
+            ["docker", "exec", container_name, "python3", "/tmp/exec_nanobot.py"],
+            capture_output=True, text=True, timeout=timeout_seconds + 60)
+        elapsed = time.perf_counter() - start_time
+        logger.info("[%s] Agent execution completed in %.2fs, returncode=%d",
+                   container_name, elapsed, exec_proc.returncode)
+        if exec_proc.returncode != 0:
+            logger.error("[%s] Agent execution failed: stdout=%s, stderr=%s",
+                        container_name, exec_proc.stdout[:500], exec_proc.stderr[:500])
+        return exec_proc, elapsed
+    except subprocess.TimeoutExpired as e:
+        elapsed = time.perf_counter() - start_time
+        logger.error("[%s] Agent execution timeout after %.2fs", container_name, elapsed)
+        raise
 
 
 def _copy_results_from_container(container_name: str, workspace_path: str, task_output_dir: Path,
                                   model_key: str = "", task_id_ori: str = "") -> tuple[Path, Path]:
     """Copy agent result and transcript from container to host. Returns (result_file, transcript_file)."""
+    import time
+
     result_file_host = task_output_dir / "agent_result.json"
-    subprocess.run(["docker", "cp", f"{container_name}:/tmp_workspace/agent_result.json", str(result_file_host)])
-
     transcript_host = task_output_dir / "transcript.json"
-    # Use Python f-string instead of shell variables
     session_file = f"eval_{model_key}_{task_id_ori}.json"
-    subprocess.run(["docker", "cp",
-                    f"{container_name}:/tmp_workspace/.sessions/{session_file}",
-                    str(transcript_host)], capture_output=True)
 
-    # Copy results dir
-    results_on_host = Path(workspace_path) / "results"
-    if subprocess.run(["docker", "cp", f"{container_name}:/tmp_workspace/results", str(results_on_host.parent)],
-                      capture_output=True).returncode != 0:
-        for fname in ["transcript_en.txt", "transcript_zh.txt", "output.mp4"]:
-            src = f"{container_name}:/tmp_workspace/results/{fname}"
-            dst = results_on_host / fname
-            subprocess.run(["docker", "cp", src, str(dst)], capture_output=True)
+    # Retry logic for docker cp (OrbStack may be unstable)
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            # Copy agent_result.json
+            r1 = subprocess.run(
+                ["docker", "cp", f"{container_name}:/tmp_workspace/agent_result.json", str(result_file_host)],
+                capture_output=True, timeout=30
+            )
+            if r1.returncode != 0:
+                logger.warning("[%s] Failed to copy agent_result.json (attempt %d): %s",
+                               container_name, attempt + 1, r1.stderr.decode()[:200])
+
+            # Copy transcript from .sessions
+            r2 = subprocess.run(
+                ["docker", "cp", f"{container_name}:/tmp_workspace/.sessions/{session_file}", str(transcript_host)],
+                capture_output=True, timeout=30
+            )
+            if r2.returncode != 0:
+                logger.warning("[%s] Failed to copy transcript (attempt %d): %s",
+                               container_name, attempt + 1, r2.stderr.decode()[:200])
+
+            # Copy results dir
+            results_on_host = Path(workspace_path) / "results"
+            r3 = subprocess.run(
+                ["docker", "cp", f"{container_name}:/tmp_workspace/results", str(results_on_host.parent)],
+                capture_output=True, timeout=30
+            )
+            if r3.returncode != 0:
+                # Try individual files
+                for fname in ["transcript_en.txt", "transcript_zh.txt", "output.mp4", "predictions.json"]:
+                    src = f"{container_name}:/tmp_workspace/results/{fname}"
+                    dst = results_on_host / fname
+                    subprocess.run(["docker", "cp", src, str(dst)], capture_output=True, timeout=10)
+
+            # If we got here without exception, break the retry loop
+            break
+
+        except subprocess.TimeoutExpired:
+            logger.warning("[%s] docker cp timeout (attempt %d/%d)", container_name, attempt + 1, max_retries)
+            if attempt < max_retries - 1:
+                time.sleep(2 ** attempt)  # Exponential backoff
+        except Exception as e:
+            logger.error("[%s] Error copying results (attempt %d): %s", container_name, attempt + 1, e)
+            if attempt < max_retries - 1:
+                time.sleep(2 ** attempt)
 
     return result_file_host, transcript_host
 

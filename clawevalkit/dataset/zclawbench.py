@@ -6,45 +6,243 @@
 依赖:
   - 推理框架: OpenClawPro (提供 NanoBotAgent)
   - 评分逻辑: clawevalkit.grading (提供 run_judge_eval)
+
+Supports two execution modes:
+  - use_docker=True:  Run NanoBotAgent inside Docker container
+  - use_docker=False: Run NanoBotAgent directly on host
 """
 from __future__ import annotations
 
 import json
+import logging
 import os
+import random
+import re
 import shutil
+import subprocess
+import tempfile
+import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+from typing import Any
 
 from ..utils.nanobot import import_nanobot_agent
 from .base import BaseBenchmark
 
-RUNNABLE_IDS = [
+logger = logging.getLogger(__name__)
+
+DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE_NANOBOT", "wildclawbench-nanobot:v3")
+TMP_WORKSPACE = "/tmp/zclawbench_workspace"
+
+# 18个可无Docker运行的任务子集（非Docker模式使用）
+RUNNABLE_IDS_SUBSET = [
     "zcb_107", "zcb_108", "zcb_109", "zcb_110", "zcb_111",
     "zcb_112", "zcb_113", "zcb_114", "zcb_115", "zcb_116",
     "zcb_076", "zcb_078", "zcb_082", "zcb_083",
     "zcb_053", "zcb_055", "zcb_066", "zcb_088",
 ]
 
+# 全部116个任务（Docker模式使用）
+RUNNABLE_IDS_ALL = [f"zcb_{i:03d}" for i in range(1, 117)]
+
+# 默认使用子集（向后兼容）
+RUNNABLE_IDS = RUNNABLE_IDS_SUBSET
+
+
+# ============================================================================
+# Docker Execution Helpers
+# ============================================================================
+
+def _start_container(container_name: str, workspace_path: str, openclawpro_dir: Path,
+                     docker_image: str, env_args: list) -> None:
+    """Start Docker container with selective volume mounts."""
+    exec_path = os.path.join(workspace_path, "exec")
+    tmp_path = os.path.join(workspace_path, "tmp")
+    workspace_inner = os.path.join(workspace_path, "workspace")
+
+    os.makedirs(exec_path, exist_ok=True)
+    os.makedirs(tmp_path, exist_ok=True)
+
+    volume_mounts = [
+        "-v", f"{exec_path}:/tmp/zclawbench_workspace/exec:rw",
+        "-v", f"{tmp_path}:/tmp/zclawbench_workspace/tmp:rw",
+        "-v", f"{openclawpro_dir}:/root/OpenClawPro:rw",
+    ]
+    if os.path.exists(workspace_inner):
+        volume_mounts.extend(["-v", f"{workspace_inner}:/tmp/zclawbench_workspace/workspace:rw"])
+
+    docker_run_cmd = [
+        "docker", "run", "-d",
+        "--name", container_name,
+        *volume_mounts,
+        *env_args,
+        docker_image,
+        "/bin/bash", "-c", "tail -f /dev/null",
+    ]
+    r = subprocess.run(docker_run_cmd, capture_output=True, text=True)
+    if r.returncode != 0:
+        raise RuntimeError(f"Container startup failed:\n{r.stderr}")
+
+
+def _build_exec_script(model_key: str, task_id: str, user_message: str, config: dict) -> str:
+    """Build NanoBotAgent execution script for running inside Docker container."""
+    # Determine API key env var based on provider
+    provider = config.get("provider", "openrouter")
+    if provider == "minimax":
+        api_key_env = "MINIMAX_API_KEY"
+    elif provider == "openrouter":
+        api_key_env = "OPENROUTER_API_KEY"
+    else:
+        api_key_env = "OPENROUTER_API_KEY"
+
+    return f"""
+import sys
+import json
+import time
+import os
+from pathlib import Path
+
+sys.path.insert(0, '/root/OpenClawPro')
+from harness.agent.nanobot import NanoBotAgent
+
+workspace = Path('/tmp/zclawbench_workspace/workspace')
+session_id = 'eval_{model_key}_{task_id}'
+
+# Get API key from environment variable
+api_key = os.environ.get('{api_key_env}', '')
+
+agent = NanoBotAgent(
+    model='{config["model"]}',
+    api_url='{config["api_url"]}',
+    api_key=api_key,
+    workspace=workspace,
+    timeout=300,
+    disable_safety_guard=True,
+)
+
+system_prompt = \"\"\"You are an expert agent working in a restricted environment.
+Solve the task efficiently. Run all processes in the foreground without user input.
+Provide a complete, functional solution.\"\"\"
+
+try:
+    start_time = time.time()
+    result = agent.execute(
+        '''{user_message.replace("'", "\\'")}''',
+        session_id=session_id,
+        workspace=workspace,
+        system_prompt=system_prompt,
+        max_iterations=100,
+        max_output_tokens=8192,
+    )
+    elapsed = time.time() - start_time
+
+    transcript_file = workspace / '.sessions' / f'{{session_id}}.json'
+    transcript_data = json.loads(transcript_file.read_text()) if transcript_file.exists() else (result.transcript or [])
+
+    output = {{
+        'status': result.status,
+        'content': result.content,
+        'transcript': transcript_data,
+        'usage': result.usage or {{}},
+        'execution_time': elapsed,
+        'error': result.error,
+    }}
+except Exception as e:
+    output = {{
+        'status': 'error',
+        'content': '',
+        'transcript': [],
+        'usage': {{}},
+        'execution_time': 0,
+        'error': str(e),
+    }}
+
+(workspace / 'agent_result.json').write_text(json.dumps(output, ensure_ascii=False, indent=2))
+print('DONE')
+"""
+
+
+def _run_agent_in_container(container_name: str, exec_script: str, timeout_seconds: int) -> tuple[subprocess.CompletedProcess, float]:
+    """Execute NanoBotAgent inside container, return (process_result, elapsed_time)."""
+    with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
+        f.write(exec_script)
+        script_path = f.name
+    try:
+        subprocess.run(["docker", "cp", script_path, f"{container_name}:/tmp/exec_nanobot.py"], check=True)
+    finally:
+        Path(script_path).unlink(missing_ok=True)
+
+    start_time = time.perf_counter()
+    exec_proc = subprocess.run(
+        ["docker", "exec", container_name, "python3", "/tmp/exec_nanobot.py"],
+        capture_output=True, text=True, timeout=timeout_seconds + 60)
+    elapsed = time.perf_counter() - start_time
+    return exec_proc, elapsed
+
+
+def _copy_results_from_container(container_name: str, workspace_path: str, task_output_dir: Path) -> Path:
+    """Copy agent result from container to host. Returns result_file path."""
+    result_file_host = task_output_dir / "agent_result.json"
+    subprocess.run(["docker", "cp", f"{container_name}:/tmp/zclawbench_workspace/workspace/agent_result.json", str(result_file_host)],
+                   capture_output=True)
+    return result_file_host
+
+
+# ============================================================================
+# ZClawBench Benchmark
+# ============================================================================
 
 class ZClawBench(BaseBenchmark):
-    DISPLAY_NAME = "ZClawBench Subset"
-    TASK_COUNT = 18
+    DISPLAY_NAME = "ZClawBench"
+    TASK_COUNT = 18  # 默认子集任务数，实际根据use_docker动态调整
     SCORE_RANGE = "0-1"
+
+    def __init__(self, base_dir: Path = None, output_dir: Path = None, use_docker: bool = False):
+        super().__init__(base_dir=base_dir, output_dir=output_dir)
+        self._use_docker_default = use_docker
 
     def evaluate(self, model_key: str, config: dict, sample: int = 0, **kwargs) -> dict:
         """运行 ZClawBench 评测: 加载 HF 数据 → NanoBotAgent 执行 → Judge 评分。
 
+        Supports two execution modes:
+          - use_docker=True: Run NanoBotAgent inside Docker container (116 tasks)
+          - use_docker=False: Run NanoBotAgent directly on host (18 tasks)
+
         流程:
-        1. 从 HuggingFace 加载 ZClawBench 数据集，筛选 18 个可运行的任务
+        1. 从 HuggingFace 加载 ZClawBench 数据集
         2. 对每个任务，使用 NanoBotAgent（来自 OpenClawPro）执行 agent 推理
         3. 使用 Judge Model 对执行轨迹进行评分
         4. 汇总所有任务的评分，返回平均分
         """
+        use_docker = kwargs.get("use_docker", self._use_docker_default)
+        parallel = kwargs.get("parallel", 1)
+        openclawpro_dir = kwargs.get("openclawpro_dir")
+        force = kwargs.get("force", False)
+
+        if use_docker:
+            return self._evaluate_docker(
+                model_key=model_key,
+                config=config,
+                sample=sample,
+                parallel=parallel,
+                openclawpro_dir=openclawpro_dir,
+                force=force,
+            )
+        else:
+            return self._evaluate_native(
+                model_key=model_key,
+                config=config,
+                sample=sample,
+                force=force,
+            )
+
+    def _evaluate_native(self, model_key: str, config: dict, sample: int = 0, force: bool = False) -> dict:
+        """Native mode: run NanoBotAgent directly on host (18 tasks)."""
         NanoBotAgent = import_nanobot_agent()
         from clawevalkit.grading import run_judge_eval
 
-        tasks = self._load_tasks()
+        tasks = self._load_tasks(use_docker=False)
         if sample and sample < len(tasks):
-            import random
             random.seed(42)
             tasks = random.sample(tasks, sample)
 
@@ -59,7 +257,7 @@ class ZClawBench(BaseBenchmark):
         for i, task in enumerate(tasks):
             tid = task["task_id"]
             result_file = out_dir / f"{tid}.json"
-            if result_file.exists():
+            if not force and result_file.exists():
                 try:
                     ex = json.loads(result_file.read_text())
                     if ex.get("status") == "success":
@@ -96,6 +294,202 @@ class ZClawBench(BaseBenchmark):
         avg = round(sum(scores) / len(scores), 3) if scores else 0
         return {"score": avg, "passed": len(scores), "total": len(tasks), "details": results}
 
+    def _evaluate_docker(
+        self,
+        model_key: str,
+        config: dict,
+        sample: int = 0,
+        parallel: int = 1,
+        openclawpro_dir: Path = None,
+        force: bool = False,
+    ) -> dict:
+        """Docker mode: run NanoBotAgent inside Docker container with Judge scoring."""
+        if openclawpro_dir is None:
+            openclawpro_dir = Path(os.getenv("OPENCLAWPRO_DIR",
+                str(Path(__file__).parent.parent.parent / "OpenClawPro")))
+        if not openclawpro_dir.exists():
+            raise FileNotFoundError(f"OpenClawPro directory not found: {openclawpro_dir}")
+
+        # Check if OpenClawPro is empty (submodule not initialized)
+        if not any(openclawpro_dir.iterdir()):
+            raise FileNotFoundError(
+                f"OpenClawPro directory is empty. Please run:\n"
+                f"  git submodule update --init --recursive\n"
+                f"in the project root directory."
+            )
+
+        from clawevalkit.grading import run_judge_eval
+
+        tasks = self._load_tasks(use_docker=True)  # Docker模式加载全部116个任务
+        if sample and sample < len(tasks):
+            random.seed(42)
+            tasks = random.sample(tasks, sample)
+
+        out_dir = self.results_dir / "zclawbench" / "subset" / model_key
+        out_dir.mkdir(parents=True, exist_ok=True)
+
+        judge_key = os.getenv("JUDGE_API_KEY", os.getenv("OPENROUTER_API_KEY", ""))
+        judge_model = os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
+        judge_base = os.getenv("JUDGE_BASE_URL", "https://openrouter.ai/api/v1")
+
+        def run_single_task_docker(task: dict, model: str, force: bool = False) -> dict:
+            """Execute a single task inside Docker container with Judge scoring."""
+            tid = task["task_id"]
+            prompt = task["prompt"]
+            category = task["category"]
+
+            # Check cache
+            task_output_dir = out_dir / tid
+            task_output_dir.mkdir(parents=True, exist_ok=True)
+            result_file = task_output_dir / "result.json"
+            if not force and result_file.exists():
+                try:
+                    cached = json.loads(result_file.read_text())
+                    if cached.get("status") == "success" and "scores" in cached:
+                        logger.info("[%s] Found cached result, skipping", tid)
+                        return {**cached, "_from_cache": True}
+                except Exception:
+                    pass
+
+            # Generate container name
+            timestamp = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
+            short_model = re.sub(r"[^a-zA-Z0.\-_]", "_", model.rsplit("/", 1)[-1])
+            container_name = f"zclaw_{tid}_{short_model}_{timestamp}"
+
+            result = {
+                "task_id": tid,
+                "model_key": model_key,
+                "status": "error",
+                "scores": {},
+                "error": None
+            }
+
+            try:
+                # Prepare workspace on host
+                workspace_path = tempfile.mkdtemp(prefix=f"zclawbench_docker_{tid}_")
+                host_workspace = Path(workspace_path) / "workspace"
+                host_workspace.mkdir(parents=True, exist_ok=True)
+
+                # Build env args
+                proxy_http = os.environ.get('HTTP_PROXY_INNER', '')
+                proxy_https = os.environ.get('HTTPS_PROXY_INNER', '')
+                env_args = [
+                    "-e", f"http_proxy={proxy_http}",
+                    "-e", f"https_proxy={proxy_https}",
+                    "-e", f"HTTPS_PROXY={proxy_https}",
+                ]
+
+                # Pass correct API key based on provider
+                provider = config.get("provider", "openrouter")
+                if provider == "minimax":
+                    minimax_api_key = os.getenv("MINIMAX_API_KEY", "")
+                    env_args.extend(["-e", f"MINIMAX_API_KEY={minimax_api_key}"])
+                else:
+                    openrouter_api_key = os.getenv("OPENROUTER_API_KEY", "")
+                    env_args.extend(["-e", f"OPENROUTER_API_KEY={openrouter_api_key}"])
+
+                # Start container
+                _start_container(container_name, workspace_path, openclawpro_dir, DOCKER_IMAGE, env_args)
+                logger.info("[%s] Container started", container_name)
+
+                # Build and run agent
+                exec_script = _build_exec_script(model_key, tid, prompt, config)
+                exec_proc, elapsed_time = _run_agent_in_container(container_name, exec_script, 300)
+                logger.info("[%s] Agent finished in %.2fs, returncode=%d", container_name, elapsed_time, exec_proc.returncode)
+
+                # Log stdout/stderr for debugging
+                if exec_proc.stdout:
+                    logger.debug("[%s] Agent stdout: %s", container_name, exec_proc.stdout[:500])
+                if exec_proc.stderr:
+                    logger.debug("[%s] Agent stderr: %s", container_name, exec_proc.stderr[:500])
+
+                # Copy results back
+                result_file_host = _copy_results_from_container(container_name, workspace_path, task_output_dir)
+
+                # Load agent result
+                transcript = []
+                if result_file_host.exists():
+                    try:
+                        agent_result = json.loads(result_file_host.read_text())
+                        result["status"] = agent_result.get("status", "error")
+                        result["error"] = agent_result.get("error", "")
+                        result["usage"] = {**agent_result.get("usage", {}), "elapsed_time": round(elapsed_time, 2)}
+                        transcript = agent_result.get("transcript", [])
+                        logger.info("[%s] Agent result loaded: status=%s, transcript_len=%d",
+                                   container_name, result["status"], len(transcript))
+                    except Exception as e:
+                        logger.error("[%s] Failed to load agent result: %s", container_name, e)
+                        result["error"] = f"Failed to load agent result: {e}"
+                else:
+                    logger.warning("[%s] agent_result.json not found at %s", container_name, result_file_host)
+                    result["error"] = "agent_result.json not found"
+
+                # Run Judge scoring
+                if transcript and result["status"] == "success":
+                    try:
+                        normalized = [e["message"] if isinstance(e, dict) and "message" in e else e for e in transcript]
+                        score = run_judge_eval(
+                            trajectory=normalized,
+                            task_id=tid,
+                            category=category,
+                            task_prompt=prompt,
+                            judge_model=judge_model,
+                            api_key=judge_key,
+                            base_url=judge_base,
+                            model_name=config.get("name", model_key)
+                        )
+                        result["scores"] = {"overall_score": score.overall_score}
+                        logger.info("[%s] Judge score: %.3f", container_name, score.overall_score)
+                    except Exception as e:
+                        logger.error("[%s] Judge evaluation failed: %s", container_name, e)
+                        result["error"] = f"Judge evaluation failed: {e}"
+                else:
+                    result["scores"] = {"overall_score": 0.0}
+
+            except subprocess.TimeoutExpired:
+                result["error"] = "Timeout after 300 seconds"
+            except Exception as exc:
+                logger.error("[%s] Execution error: %s", container_name, exc)
+                result["error"] = str(exc)
+            finally:
+                subprocess.run(["docker", "rm", "-f", container_name], capture_output=True)
+                shutil.rmtree(workspace_path, ignore_errors=True)
+
+            # Save cache
+            try:
+                result_file.write_text(json.dumps(result, indent=2, ensure_ascii=False))
+                logger.info("[%s] Result saved to %s", container_name, result_file)
+            except Exception as e:
+                logger.error("[%s] Failed to save result: %s", container_name, e)
+
+            return result
+
+        # Execute tasks
+        results = []
+        if parallel <= 1:
+            for task in tasks:
+                results.append(run_single_task_docker(task, config["model"], force=force))
+        else:
+            with ThreadPoolExecutor(max_workers=parallel) as pool:
+                futures = {
+                    pool.submit(run_single_task_docker, task, config["model"], force): task["task_id"]
+                    for task in tasks
+                }
+                for future in as_completed(futures):
+                    tid = futures[future]
+                    try:
+                        results.append(future.result())
+                    except Exception as exc:
+                        logger.error("[%s] Thread exception: %s", tid, exc)
+                        results.append({"task_id": tid, "scores": {}, "error": str(exc)})
+
+        # Compute average
+        scores = [r["scores"]["overall_score"] for r in results
+                  if r.get("status") == "success" and r.get("scores")]
+        avg = round(sum(scores) / len(scores), 3) if scores else 0
+
+        return {"score": avg, "passed": len(scores), "total": len(tasks), "details": results}
+
     def collect(self, model_key: str) -> dict | None:
         result_dir = self._find_result_dir("zclawbench")
         if not result_dir:
@@ -113,16 +507,43 @@ class ZClawBench(BaseBenchmark):
                 pass
         if not scores:
             return None
-        return {"score": round(sum(scores) / len(scores), 3), "passed": len(scores), "total": self.TASK_COUNT}
+        # 动态检测任务数：如果结果数量 > 18，说明是docker模式跑的116个任务
+        total_tasks = 116 if len(scores) > 18 else 18
+        return {"score": round(sum(scores) / len(scores), 3), "passed": len(scores), "total": total_tasks}
 
-    def _load_tasks(self):
-        """从 HuggingFace 加载 ZClawBench 数据集，解析出 18 个可运行任务的 prompt。"""
-        from datasets import load_dataset
-        ds = load_dataset("zai-org/ZClawBench", split="train")
+    def _load_tasks(self, use_docker: bool = False):
+        """加载 ZClawBench 数据集，解析出可运行任务的 prompt。
+
+        优先从本地 benchmarks/zclawbench/zclawbench.jsonl 加载，
+        如不存在则从 HuggingFace 下载。
+
+        Args:
+            use_docker: 如果为 True，加载全部 116 个任务；否则加载 18 个任务子集
+        """
+        # 根据模式选择任务列表
+        runnable_ids = RUNNABLE_IDS_ALL if use_docker else RUNNABLE_IDS_SUBSET
+        task_count = 116 if use_docker else 18
+
+        local_data_path = self.base_dir / "benchmarks" / "zclawbench" / "zclawbench.jsonl"
+
+        if local_data_path.exists():
+            logger.info("Loading ZClawBench from local: %s (docker=%s, tasks=%d)", local_data_path, use_docker, task_count)
+            rows = []
+            with open(local_data_path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    line = line.strip()
+                    if line:
+                        rows.append(json.loads(line))
+        else:
+            logger.info("Loading ZClawBench from HuggingFace: zai-org/ZClawBench (docker=%s, tasks=%d)", use_docker, task_count)
+            from datasets import load_dataset
+            ds = load_dataset("zai-org/ZClawBench", split="train")
+            rows = list(ds)
+
         task_map = {}
-        for row in ds:
+        for row in rows:
             tid = row["task_id"]
-            if tid not in RUNNABLE_IDS or tid in task_map:
+            if tid not in runnable_ids or tid in task_map:
                 continue
             traj_str = row.get("trajectory", "[]")
             try:

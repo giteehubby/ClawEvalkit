@@ -301,10 +301,11 @@ class SkillsBench(BaseBenchmark):
         return {"task": task_name, "status": "failed", "turns": max_turns,
                 "test_output": test_output[-1000:]}
 
-    def _save_transcript(self, model_key: str, task_name: str, transcript: list):
+    def _save_transcript(self, model_key: str, task_name: str, transcript: list, turn: int = None):
         """保存 agent 轨迹到文件（统一结构）。
 
         保存到: outputs/skillsbench/transcripts/{model}/{task}/transcript.json
+        如果指定 turn，则额外保存到: outputs/skillsbench/transcripts/{model}/{task}/transcript_turn_{turn}.json
         """
         try:
             trans_path = self.results_dir / "skillsbench" / "transcripts" / model_key / task_name
@@ -315,11 +316,20 @@ class SkillsBench(BaseBenchmark):
                     normalized.append(e["message"])
                 else:
                     normalized.append(e)
+            # Save main transcript
             (trans_path / "transcript.json").write_text(
                 json.dumps(normalized, indent=2, ensure_ascii=False),
                 encoding="utf-8",
             )
-            log(f"[{task_name}] Saved transcript to {trans_path / 'transcript.json'}")
+            # Save turn-specific transcript for debugging
+            if turn is not None:
+                (trans_path / f"transcript_turn_{turn}.json").write_text(
+                    json.dumps(normalized, indent=2, ensure_ascii=False),
+                    encoding="utf-8",
+                )
+                log(f"[{task_name}] Saved transcript (turn {turn}) to {trans_path / f'transcript_turn_{turn}.json'}")
+            else:
+                log(f"[{task_name}] Saved transcript to {trans_path / 'transcript.json'}")
         except Exception:
             pass  # transcript 保存失败不影响主流程
 
@@ -389,6 +399,11 @@ class SkillsBench(BaseBenchmark):
         openrouter_api_key = os.getenv("OPENROUTER_API_KEY", "")
         proxy_http = os.environ.get('HTTP_PROXY_INNER', '')
         proxy_https = os.environ.get('HTTPS_PROXY_INNER', '')
+        # Convert localhost proxy to host.docker.internal for container access
+        if proxy_http and '127.0.0.1' in proxy_http:
+            proxy_http = proxy_http.replace('127.0.0.1', 'host.docker.internal')
+        if proxy_https and '127.0.0.1' in proxy_https:
+            proxy_https = proxy_https.replace('127.0.0.1', 'host.docker.internal')
 
         for i, task_name in enumerate(task_names):
             # Per-task deduplication: check for existing result before running
@@ -438,7 +453,7 @@ class SkillsBench(BaseBenchmark):
         self.save_result("skillsbench", model_key, summary)
         return summary
 
-    def _setup_container_paths(self, container_name: str, instruction: str, mount_point: str, task_tests_src: Path = None):
+    def _setup_container_paths(self, container_name: str, instruction: str, mount_point: str, task_tests_src: Path = None, task_name: str = None):
         """Detect instruction paths and create appropriate symlinks in container.
 
         Different tasks use different path patterns:
@@ -514,7 +529,8 @@ class SkillsBench(BaseBenchmark):
                           capture_output=True, text=True)
             subprocess.run(["docker", "exec", container_name, "ln", "-sf", mount_point, "/root"],
                           capture_output=True, text=True)
-            print(f"  [{task_name}] Created symlink /root -> {mount_point} for /root/ path pattern")
+            task_display = task_name or container_name
+            print(f"  [{task_display}] Created symlink /root -> {mount_point} for /root/ path pattern")
 
     def _run_single_task_docker(self, task_name: str, config: dict, tasks_dir: Path,
                                  max_turns: int, openclawpro_dir: Path,
@@ -555,10 +571,10 @@ class SkillsBench(BaseBenchmark):
             log(f"[{task_name}] 🔨 Building Docker image {task_image}...")
             build_cmd = ["docker", "build", "-t", task_image, "-f", str(env_dockerfile)]
             if proxy_http:
-                build_cmd.insert(1, "--build-arg")
-                build_cmd.insert(2, f"http_proxy={proxy_http}")
-                build_cmd.insert(1, "--build-arg")
-                build_cmd.insert(2, f"https_proxy={proxy_https}")
+                build_cmd.insert(2, "--build-arg")
+                build_cmd.insert(3, f"http_proxy={proxy_http}")
+                build_cmd.insert(2, "--build-arg")
+                build_cmd.insert(3, f"https_proxy={proxy_https}")
             build_cmd.append(str(task_dir / "environment"))
 
             try:
@@ -627,6 +643,15 @@ class SkillsBench(BaseBenchmark):
                     return {"task": task_name, "status": "error",
                             "error": f"container start failed: {run_proc.stderr[:500]}"}
                 log(f"[{task_name}] ✅ Container started")
+
+                # When using /root as mount point, backup original /root content for reuse
+                if mount_point == "/root":
+                    print(f"  [setup] Backing up original /root content...")
+                    subprocess.run(
+                        ["docker", "exec", container_name, "bash", "-c",
+                         "cp -r /root /root_data_backup 2>/dev/null || true"],
+                        capture_output=True, text=True, timeout=30
+                    )
             except subprocess.TimeoutExpired:
                 return {"task": task_name, "status": "error", "error": "container start timeout"}
             except Exception as e:
@@ -643,6 +668,32 @@ class SkillsBench(BaseBenchmark):
                 return {"task": task_name, "status": "error",
                         "error": f"failed to start existing container: {start_proc.stderr[:500]}"}
             print(f"  [reuse-container] Container started with fresh workspace mount")
+
+            # When reusing container with /root mount point, ensure /root directory exists
+            # and has the correct content (mount might be empty after workspace recreation)
+            if mount_point == "/root":
+                # Check if /root/data exists, if not copy from image
+                check_data = subprocess.run(
+                    ["docker", "exec", container_name, "ls", "/root/data"],
+                    capture_output=True, text=True, timeout=10
+                )
+                if check_data.returncode != 0:
+                    print(f"  [reuse-container] Restoring /root/data from image...")
+                    # Copy data from image's original /root/data (backed up at /root_data_backup)
+                    subprocess.run(
+                        ["docker", "exec", container_name, "bash", "-c",
+                         "if [ -d /root_data_backup ]; then cp -r /root_data_backup/* /root/ 2>/dev/null || true; fi"],
+                        capture_output=True, text=True, timeout=30
+                    )
+                    # Alternative: copy from environment directory if backup doesn't exist
+                    subprocess.run(
+                        ["docker", "cp", f"{task_dir / 'environment' / 'data'}", f"{container_name}:/root/data"],
+                        capture_output=True, text=True, timeout=30
+                    )
+                    subprocess.run(
+                        ["docker", "cp", f"{task_dir / 'environment' / 'skills'}", f"{container_name}:/root/skills"],
+                        capture_output=True, text=True, timeout=30
+                    )
 
         # For /app/ tasks: copy data and skills BEFORE creating symlinks
         # (Once /app -> /workspace symlink exists, /app/data and /app/skills would resolve to /workspace/*)
@@ -672,7 +723,7 @@ class SkillsBench(BaseBenchmark):
 
         # Dynamically create symlinks based on instruction and test paths
         task_tests_src = self._get_tasks_dir() / task_name / "tests"
-        self._setup_container_paths(container_name, instruction, mount_point, task_tests_src)
+        self._setup_container_paths(container_name, instruction, mount_point, task_tests_src, task_name)
 
         # Harbor Architecture: Agent runs on host, commands via docker exec
         try:
@@ -775,9 +826,14 @@ class SkillsBench(BaseBenchmark):
             if result.transcript:
                 all_transcripts.extend(result.transcript)
 
+            # Save transcript after each turn for debugging
+            if transcripts_dir and model_key and all_transcripts:
+                self._save_transcript(model_key, task_name, all_transcripts, turn=turn + 1)
+
             # Run pytest inside container via docker exec
             log(f"[{task_name}] 🧪 Running pytest...")
             passed, test_output = self._run_pytest_harbor(container_name, workspace_host, mount_point)
+            log(f"[{task_name}] 🧪 Pytest output: {test_output[:500]}...")
 
             if passed:
                 log(f"[{task_name}] ✅ Pytest passed!")
