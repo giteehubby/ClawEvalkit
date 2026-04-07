@@ -175,7 +175,13 @@ try:
     elapsed = time.time() - start_time
 
     transcript_file = workspace / '.sessions' / f'{{session_id}}.json'
-    transcript_data = json.loads(transcript_file.read_text()) if transcript_file.exists() else (result.transcript or [])
+    try:
+        if transcript_file.exists():
+            transcript_data = json.loads(transcript_file.read_text())
+        else:
+            transcript_data = result.transcript if result.transcript else []
+    except Exception:
+        transcript_data = result.transcript if result.transcript else []
 
     output = {{
         'status': result.status,
