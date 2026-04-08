@@ -14,6 +14,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 import random
 import re
@@ -28,6 +29,7 @@ from ..utils.docker_runner import DockerRunner
 from ..utils.nanobot import import_nanobot_agent
 from .base import BaseBenchmark
 
+logger = logging.getLogger(__name__)
 
 # All 6 task categories in WildClawBench
 TASK_CATEGORIES = [
@@ -141,8 +143,8 @@ agent = NanoBotAgent(
     timeout={timeout_seconds},
     disable_safety_guard=True,
 )
-system_prompt = \"\"\"You are an expert in a restricted, non-interactive environment. Solve the task efficiently before the timeout ({timeout_seconds}s). Run all processes in the foreground without user input or background services. Provide a complete, functional solution in a single pass with no placeholders.\"\"\""
-{skills_summary and f"system_prompt = system_prompt + '''\\n\\n{skills_summary}'''" or ""}
+system_prompt = \"\"\"You are an expert in a restricted, non-interactive environment. Solve the task efficiently before the timeout ({timeout_seconds}s). Run all processes in the foreground without user input or background services. Provide a complete, functional solution in a single pass with no placeholders.\"\"\"
+{skills_summary and f"system_prompt = system_prompt + '''\\\\n\\\\n{skills_summary}'''" or ""}
 try:
     start_time = time.time()
     result = agent.execute(
@@ -239,7 +241,7 @@ def _load_skills_summary(skills: str, skills_path: str) -> str:
         if skill_docs:
             return "You have access to the following skills. Use them when appropriate:\n" + "\n".join(skill_docs)
     except Exception as e:
-        log("[skills] Failed to load skills: %s", e)
+        logger.warning("[skills] Failed to load skills: %s", e)
     return ""
 
 
@@ -362,7 +364,7 @@ class WildClawBench(BaseBenchmark):
                     # Also copy other directories if needed
                     shutil.copytree(task_workspace, workspace / "workspace", dirs_exist_ok=True)
                 except Exception as e:
-                    log(f"Failed to copy task workspace: {e}")
+                    logger.warning(f"Failed to copy task workspace: {e}")
             r = {"task_id": tid, "model_key": model_key, "status": "error", "scores": {}}
             try:
                 # Build system prompt with skills if available
@@ -429,7 +431,7 @@ class WildClawBench(BaseBenchmark):
                     r["status"] = "success"
             except Exception as e:
                 r["error"] = str(e)[:500]
-                log(f"[{tid}] Evaluation error: {e}")
+                logger.error(f"[{tid}] Evaluation error: {e}")
             result_file.write_text(json.dumps(r, indent=2, ensure_ascii=False))
             shutil.rmtree(workspace, ignore_errors=True)
             results.append(r)
@@ -499,7 +501,7 @@ class WildClawBench(BaseBenchmark):
                 try:
                     cached = json.loads(dedup_file.read_text())
                     if cached.get("status") == "success" and cached.get("scores", {}).get("overall_score") is not None:
-                        log("[%s] Found cached result, skipping", task_id_ori)
+                        logger.info("[%s] Found cached result, skipping", task_id_ori)
                         return {**cached, "_from_cache": True}
                 except Exception:
                     pass
@@ -518,7 +520,7 @@ class WildClawBench(BaseBenchmark):
                         env_vars=env_vars,
                         extra_env=extra_env,
                     )
-                    log("[%s] Container started", runner.container_name)
+                    logger.info("[%s] Container started", runner.container_name)
                     # Setup workspace
                     runner.setup_workspace(
                         workspace_path=workspace_path,
@@ -532,7 +534,7 @@ class WildClawBench(BaseBenchmark):
                         model_key, task_id_ori, task["prompt"], timeout_seconds, config, skills_summary
                     )
                     agent_result, elapsed_time = runner.run_agent(exec_script, timeout_seconds)
-                    log("[%s] Agent finished in %.2fs", runner.container_name, elapsed_time)
+                    logger.info("[%s] Agent finished in %.2fs", runner.container_name, elapsed_time)
                     # Copy results
                     session_file = f"eval_{model_key}_{task_id_ori}.json"
                     result_file, transcript_file = runner.copy_results(
@@ -578,7 +580,7 @@ class WildClawBench(BaseBenchmark):
                         if "error" not in grading_result:
                             scores.update(grading_result)
                             score_source.append("automated")
-                            log("[%s] Automated grading complete", runner.container_name)
+                            logger.info("[%s] Automated grading complete", runner.container_name)
                     # LLM Judge
                     if trajectory:
                         try:
@@ -603,12 +605,12 @@ class WildClawBench(BaseBenchmark):
                                 })
                                 score_source.append("judge")
                         except Exception as exc:
-                            log("[%s] LLM judge failed: %s", runner.container_name, exc)
+                            logger.error("[%s] LLM judge failed: %s", runner.container_name, exc)
                     _compute_final_score(scores, score_source, result)
                 except subprocess.TimeoutExpired:
                     result["error"] = f"Timeout after {timeout_seconds} seconds"
                 except Exception as exc:
-                    log("[%s] Execution error: %s", runner.container_name, exc)
+                    logger.error("[%s] Execution error: %s", runner.container_name, exc)
                     result["error"] = str(exc)
                 # Save cache
                 if result.get("status") == "success" and result.get("scores", {}).get("overall_score") is not None:
@@ -629,7 +631,7 @@ class WildClawBench(BaseBenchmark):
                     try:
                         results.append(future.result())
                     except Exception as exc:
-                        log("[%s] Thread exception: %s", tid, exc)
+                        logger.error("[%s] Thread exception: %s", tid, exc)
                         results.append({"task_id": tid, "scores": {}, "error": str(exc)})
         # Compute average
         valid_scores = [
@@ -673,6 +675,36 @@ class WildClawBench(BaseBenchmark):
             if key and not key.startswith("#"):
                 extra_env.append(f"{key}={os.environ.get(key, '')}")
         return extra_env
+
+    def _compute_summary(self, model_key: str, all_task_ids: list, results: list) -> dict:
+        """Compute summary for wildclawbench."""
+        scores = [r["scores"]["overall_score"] for r in results if r.get("status") == "success" and r.get("scores")]
+        avg = round(sum(scores) / len(scores), 3) if scores else 0
+        passed = len(scores)
+        score = avg
+        total = len(all_task_ids)
+        scored = len(results)
+        return {
+            "model": model_key,
+            "score": score,
+            "passed": passed,
+            "failed": scored - passed,
+            "pending": total - scored,
+            "total": total,
+            "details": results
+        }
+
+    def _load_summary(self, bench_key: str, model_key: str) -> dict:
+        """Load saved summary file."""
+        result_f = self.results_dir / bench_key / f"{model_key}.json"
+        if result_f.exists():
+            try:
+                data = json.loads(result_f.read_text())
+                return {"score": data["score"], "passed": data.get("passed", 0), "total": data["total"]}
+            except Exception:
+                pass
+        return {"score": 0, "passed": 0, "total": 0}
+
     def collect(self, model_key: str) -> dict | None:
         """Collect results for a model from unified output directory.
         Output structure: wildclawbench/{model_key}/{task_id}/result.json
@@ -721,7 +753,7 @@ class WildClawBench(BaseBenchmark):
                         task_data = parse_task_md(md, use_docker=use_docker)
                         tasks.append(task_data)
                     except Exception as e:
-                        log(f"Failed to parse task {md}: {e}")
+                        logger.warning(f"Failed to parse task {md}: {e}")
             break
         return tasks
     def _get_task_workspace(self, task: dict) -> Path | None:

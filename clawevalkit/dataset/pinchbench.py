@@ -26,6 +26,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
+from ..utils.log import log
 from ..utils.nanobot import import_nanobot_agent
 from .base import BaseBenchmark
 
@@ -89,27 +90,45 @@ class PinchBench(BaseBenchmark):
         if not tasks:
             return {"score": 0, "total": 0, "error": "no tasks found"}
 
-        if sample and sample < len(tasks):
+        all_task_ids = [t["id"] for t in tasks]
+        force = kwargs.get("force", False)
+
+        # 先基于已有缓存生成初始汇总
+        self._build_and_save_summary(
+            "pinchbench", model_key, all_task_ids,
+            compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r)
+        )
+
+        task_list = tasks
+        if not force:
+            # Pre-filter cached tasks
+            uncached_tasks = []
+            for task in task_list:
+                tid = task["id"]
+                result_file = self.results_dir / "pinchbench" / model_key / tid / "result.json"
+                if not result_file.exists():
+                    uncached_tasks.append(task)
+                else:
+                    try:
+                        cached = json.loads(result_file.read_text())
+                        if cached.get("status") != "success":
+                            uncached_tasks.append(task)  # Incomplete
+                    except Exception:
+                        uncached_tasks.append(task)  # Corrupted
+            log(f"[pinchbench] {len(task_list) - len(uncached_tasks)} tasks cached, {len(uncached_tasks)} remaining")
+            task_list = uncached_tasks
+
+        if sample and sample < len(task_list):
             random.seed(42)
-            tasks = random.sample(tasks, sample)
+            task_list = random.sample(task_list, sample)
 
         out_dir = self.results_dir / "pinchbench" / model_key
         out_dir.mkdir(parents=True, exist_ok=True)
         results = []
 
-        for task in tasks:
+        for i, task in enumerate(task_list):
             tid = task["id"]
-            result_file = out_dir / f"{tid}.json"
-
-            # 跳过已完成的任务
-            if result_file.exists():
-                try:
-                    ex = json.loads(result_file.read_text())
-                    if ex.get("status") == "success":
-                        results.append(ex)
-                        continue
-                except Exception:
-                    pass
+            log(f"[pinchbench] Running task {i+1}/{len(task_list)}: {tid}")
 
             workspace = Path(f"/tmp/eval_pinch_{model_key}/{tid}")
             if workspace.exists():
@@ -137,24 +156,58 @@ class PinchBench(BaseBenchmark):
                     r["status"] = "success"
                     r["scores"] = scores
                     r["mean"] = round(mean_score, 4)
+                    log(f"[{tid}] Grade score: {mean_score:.4f}")
                 else:
                     # 无 grade 函数时，检查 agent 是否成功执行
                     r["status"] = "success" if result.status == "success" else "error"
                     r["mean"] = 1.0 if result.status == "success" else 0.0
+                    log(f"[{tid}] Agent status: {r['status']}")
 
             except Exception as e:
                 r["error"] = str(e)[:300]
+                log(f"[{tid}] Error: {r['error']}")
 
-            result_file.write_text(json.dumps(r, indent=2, ensure_ascii=False))
+            # Save per-task result
+            self._save_task_result("pinchbench", model_key, tid, r)
+            log(f"[{tid}] Saved result to outputs/pinchbench/{model_key}/{tid}/result.json")
             shutil.rmtree(workspace, ignore_errors=True)
             results.append(r)
 
-        # 汇总：所有任务的平均分 × 100
+            # Update summary after each task
+            self._build_and_save_summary(
+                "pinchbench", model_key, all_task_ids,
+                new_results=results,
+                compute_summary_fn=lambda res: self._compute_summary(model_key, all_task_ids, res)
+            )
+
+        return self._load_summary("pinchbench", model_key)
+
+    def _compute_summary(self, model_key: str, all_task_ids: list, results: list) -> dict:
+        """Compute summary for PinchBench."""
         means = [r["mean"] for r in results if r.get("status") == "success"]
         overall = round(sum(means) / len(means) * 100, 1) if means else 0
-        final = {"score": overall, "passed": len(means), "total": len(tasks), "details": results}
-        self.save_result("pinchbench", model_key, final, "result.json")
-        return final
+        total = len(all_task_ids)
+        scored = len(results)
+        return {
+            "model": model_key,
+            "score": overall,
+            "passed": len(means),
+            "scored": scored,
+            "pending": total - scored,
+            "total": total,
+            "details": results
+        }
+
+    def _load_summary(self, bench_key: str, model_key: str) -> dict:
+        """Load saved summary file."""
+        result_f = self.results_dir / bench_key / f"{model_key}.json"
+        if result_f.exists():
+            try:
+                data = json.loads(result_f.read_text())
+                return {"score": data["score"], "passed": data.get("passed", 0), "total": data["total"]}
+            except Exception:
+                pass
+        return {"score": 0, "passed": 0, "total": 0}
 
     def _save_transcript(self, model_key: str, task_id: str, transcript: list):
         """保存 agent 轨迹到文件。
@@ -185,9 +238,37 @@ class PinchBench(BaseBenchmark):
         if not tasks:
             return {"score": 0, "total": 0, "error": "no tasks found"}
 
-        if sample and sample < len(tasks):
+        all_task_ids = [t["id"] for t in tasks]
+        force = kwargs.get("force", False)
+
+        # 先基于已有缓存生成初始汇总
+        self._build_and_save_summary(
+            "pinchbench", model_key, all_task_ids,
+            compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r)
+        )
+
+        task_list = tasks
+        if not force:
+            # Pre-filter cached tasks
+            uncached_tasks = []
+            for task in task_list:
+                tid = task["id"]
+                result_file = self.results_dir / "pinchbench" / model_key / tid / "result.json"
+                if not result_file.exists():
+                    uncached_tasks.append(task)
+                else:
+                    try:
+                        cached = json.loads(result_file.read_text())
+                        if cached.get("status") != "success":
+                            uncached_tasks.append(task)  # Incomplete
+                    except Exception:
+                        uncached_tasks.append(task)  # Corrupted
+            log(f"[pinchbench] {len(task_list) - len(uncached_tasks)} tasks cached, {len(uncached_tasks)} remaining")
+            task_list = uncached_tasks
+
+        if sample and sample < len(task_list):
             random.seed(42)
-            tasks = random.sample(tasks, sample)
+            task_list = random.sample(task_list, sample)
 
         out_dir = self.results_dir / "pinchbench" / model_key
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -201,17 +282,6 @@ class PinchBench(BaseBenchmark):
         def run_single_task_docker(task: dict) -> dict:
             """Execute a single task inside Docker container."""
             tid = task["id"]
-            result_file = out_dir / f"{tid}.json"
-
-            # Check cache
-            if result_file.exists():
-                try:
-                    cached = json.loads(result_file.read_text())
-                    if cached.get("status") == "success":
-                        log("[%s] Found cached result, skipping", tid)
-                        return cached
-                except Exception:
-                    pass
 
             # Generate container name
             timestamp = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
@@ -259,7 +329,7 @@ class PinchBench(BaseBenchmark):
 
                 # Start container
                 self._start_container(container_name, workspace_path, openclawpro_dir, env_args)
-                log("[%s] Container started", container_name)
+                log(f"[{container_name}] Container started")
 
                 # Build and run agent
                 exec_script = self._build_exec_script(
@@ -268,7 +338,7 @@ class PinchBench(BaseBenchmark):
                     sessions=task.get("sessions", [])
                 )
                 exec_proc, elapsed_time = self._run_agent_in_container(container_name, exec_script, task.get("timeout", 120))
-                log("[%s] Agent finished in %.2fs, returncode=%d", container_name, elapsed_time, exec_proc.returncode)
+                log(f"[{container_name}] Agent finished in {elapsed_time:.2f}s, returncode={exec_proc.returncode}")
 
                 # Copy results back
                 try:
@@ -278,10 +348,9 @@ class PinchBench(BaseBenchmark):
                         result["status"] = agent_result.get("status", "error")
                         result["error"] = agent_result.get("error", "")
                         transcript = agent_result.get("transcript", [])
-                        log("[%s] Agent result loaded: status=%s, transcript_len=%d",
-                                   container_name, result["status"], len(transcript))
+                        log(f"[{container_name}] Agent result loaded: status={result['status']}, transcript_len={len(transcript)}")
                 except Exception as e:
-                    log("[%s] Failed to load agent result: %s", container_name, e)
+                    log(f"[{container_name}] Failed to load agent result: {e}")
 
                 # Run grading
                 if task.get("grade_code"):
@@ -289,13 +358,16 @@ class PinchBench(BaseBenchmark):
                     mean_score = sum(scores.values()) / len(scores) if scores else 0
                     result["scores"] = scores
                     result["mean"] = round(mean_score, 4)
+                    log(f"[{tid}] Grade score: {mean_score:.4f}")
                 else:
                     result["mean"] = 1.0 if result["status"] == "success" else 0.0
+                    log(f"[{tid}] Agent status: {result['status']}")
 
             except subprocess.TimeoutExpired:
                 result["error"] = f"Timeout after {task.get('timeout', 120)} seconds"
+                log(f"[{tid}] {result['error']}")
             except Exception as exc:
-                log("[%s] Execution error: %s", container_name if 'container_name' in dir() else tid, exc)
+                log(f"[{container_name if 'container_name' in dir() else tid}] Execution error: {exc}")
                 result["error"] = str(exc)
             finally:
                 # Cleanup
@@ -309,34 +381,45 @@ class PinchBench(BaseBenchmark):
 
             # Save result
             try:
-                result_file.write_text(json.dumps(result, indent=2, ensure_ascii=False))
+                self._save_task_result("pinchbench", model_key, tid, result)
+                log(f"[{tid}] Saved result to outputs/pinchbench/{model_key}/{tid}/result.json")
             except Exception as e:
-                log("[%s] Failed to save result: %s", tid, e)
+                log(f"[{tid}] Failed to save result: {e}")
 
             return result
 
         # Execute tasks
         results = []
         if parallel <= 1:
-            for task in tasks:
-                results.append(run_single_task_docker(task))
+            for i, task in enumerate(task_list):
+                log(f"[pinchbench] Running task {i+1}/{len(task_list)}: {task['id']}")
+                result = run_single_task_docker(task)
+                results.append(result)
+                # Update summary after each task
+                self._build_and_save_summary(
+                    "pinchbench", model_key, all_task_ids,
+                    new_results=results,
+                    compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r)
+                )
         else:
             with ThreadPoolExecutor(max_workers=parallel) as pool:
-                futures = {pool.submit(run_single_task_docker, task): task["id"] for task in tasks}
-                for future in futures:
+                futures = {pool.submit(run_single_task_docker, task): task["id"] for task in task_list}
+                for future in as_completed(futures):
                     tid = futures[future]
                     try:
-                        results.append(future.result())
+                        result = future.result()
+                        results.append(result)
+                        # Update summary after each task
+                        self._build_and_save_summary(
+                            "pinchbench", model_key, all_task_ids,
+                            new_results=results,
+                            compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r)
+                        )
                     except Exception as exc:
-                        log("[%s] Thread exception: %s", tid, exc)
+                        log(f"[{tid}] Thread exception: {exc}")
                         results.append({"task_id": tid, "status": "error", "error": str(exc)})
 
-        # 汇总：所有任务的平均分 × 100
-        means = [r["mean"] for r in results if r.get("status") == "success"]
-        overall = round(sum(means) / len(means) * 100, 1) if means else 0
-        final = {"score": overall, "passed": len(means), "total": len(tasks), "details": results}
-        self.save_result("pinchbench", model_key, final, "result.json")
-        return final
+        return self._load_summary("pinchbench", model_key)
 
     def _start_container(
         self,

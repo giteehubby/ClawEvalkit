@@ -182,7 +182,7 @@ class DockerRunner:
                 cmd_line = cmd_line.strip()
                 if cmd_line and not cmd_line.startswith("#"):
                     r = self.exec(["/bin/bash", "-c", cmd_line], timeout=60)
-                    if r.returncode != 0:
+                    if r is None or r.returncode != 0:
                         logger.warning("[%s] Warmup command failed: %s", self.container_name, cmd_line)
 
     def run_agent(self, exec_script: str, timeout_seconds: int) -> tuple[dict, float]:

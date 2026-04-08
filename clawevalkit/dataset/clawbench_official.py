@@ -582,6 +582,36 @@ print('DONE')
         )
         return result_file_host
 
+
+    def _compute_summary(self, model_key: str, all_task_ids: list, results: list) -> dict:
+        """Compute summary for clawbench_official."""
+        scores = [r["scores"]["overall_score"] for r in results if r.get("status") == "success" and r.get("scores")]
+        avg = round(sum(scores) / len(scores), 3) if scores else 0
+        passed = len(scores)
+        score = avg
+        total = len(all_task_ids)
+        scored = len(results)
+        return {
+            "model": model_key,
+            "score": score,
+            "passed": passed,
+            "failed": scored - passed,
+            "pending": total - scored,
+            "total": total,
+            "details": results
+        }
+
+    def _load_summary(self, bench_key: str, model_key: str) -> dict:
+        """Load saved summary file."""
+        result_f = self.results_dir / bench_key / f"{model_key}.json"
+        if result_f.exists():
+            try:
+                data = json.loads(result_f.read_text())
+                return {"score": data["score"], "passed": data.get("passed", 0), "total": data["total"]}
+            except Exception:
+                pass
+        return {"score": 0, "passed": 0, "total": 0}
+
     def collect(self, model_key: str) -> dict | None:
         result_dir = self._find_result_dir("clawbench-official")
         if not result_dir:

@@ -962,6 +962,39 @@ class AgentBench(BaseBenchmark):
             "details": results
         }
 
+
+    def _compute_summary(self, model_key: str, all_task_ids: list, results: list) -> dict:
+        """Compute summary for agentbench."""
+        # AgentBench has composite scoring (L0-L3)
+        l0_pass = sum(1 for r in results if r.get("scores", {}).get("L0") == 1)
+        l1_pass = sum(1 for r in results if r.get("scores", {}).get("L1") == 1)
+        l2_pass = sum(1 for r in results if r.get("scores", {}).get("L2") == 1)
+        l3_pass = sum(1 for r in results if r.get("scores", {}).get("L3") == 1)
+        passed = l0_pass
+        score = round((l0_pass * 0.25 + l1_pass * 0.25 + l2_pass * 0.25 + l3_pass * 0.25) / len(all_task_ids) * 100, 1) if all_task_ids else 0
+        total = len(all_task_ids)
+        scored = len(results)
+        return {
+            "model": model_key,
+            "score": score,
+            "passed": passed,
+            "failed": scored - passed,
+            "pending": total - scored,
+            "total": total,
+            "details": results
+        }
+
+    def _load_summary(self, bench_key: str, model_key: str) -> dict:
+        """Load saved summary file."""
+        result_f = self.results_dir / bench_key / f"{model_key}.json"
+        if result_f.exists():
+            try:
+                data = json.loads(result_f.read_text())
+                return {"score": data["score"], "passed": data.get("passed", 0), "total": data["total"]}
+            except Exception:
+                pass
+        return {"score": 0, "passed": 0, "total": 0}
+
     def collect(self, model_key: str) -> dict | None:
         """Collect results for a model."""
         result_dir = self._find_result_dir("agentbench")
