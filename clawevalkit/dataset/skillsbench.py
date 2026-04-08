@@ -24,7 +24,7 @@ from datetime import datetime
 from pathlib import Path
 
 from ..utils.nanobot import import_nanobot_agent
-from ..utils.log import log
+from ..utils.log import log, setup_logging
 from .base import BaseBenchmark
 
 # 需要 Docker 或特殊系统依赖的任务（不使用 Docker 时跳过）
@@ -181,6 +181,10 @@ class SkillsBench(BaseBenchmark):
         - 在容器内运行 NanoBotAgent
         - 挂载 OpenClawPro 实现代码热更新
         """
+        # 配置 logging 以显示 NanoBotAgent 内部日志（工具调用等）
+        verbose = kwargs.get("verbose", False)
+        setup_logging(verbose=verbose)
+
         use_docker = kwargs.get("use_docker", self.use_docker)
 
         # Docker 模式走专用路径
@@ -242,12 +246,16 @@ class SkillsBench(BaseBenchmark):
         passed = 0
 
         for i, task_name in enumerate(task_names):
+            log(f"[skillsbench] Running task {i+1}/{len(task_names)}: {task_name}")
             start = time.time()
             result = self._run_single_task(task_name, config, tasks_dir, workspace_base, max_turns,
                                            transcripts_dir=transcripts_dir, model_key=model_key)
             result["elapsed_s"] = round(time.time() - start, 2)
             if result.get("status") == "passed":
                 passed += 1
+                log(f"[{task_name}] ✅ Passed in {result['elapsed_s']}s")
+            else:
+                log(f"[{task_name}] ❌ Failed after {result.get('turns', 0)} turns")
             results.append(result)
             # 每个任务完成后更新汇总（基于所有任务）
             self._build_and_save_summary(model_key, all_task_names, new_results=results, max_turns=max_turns)

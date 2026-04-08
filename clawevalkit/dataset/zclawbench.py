@@ -27,6 +27,7 @@ from typing import Any
 
 from ..utils.log import log
 from ..utils.nanobot import import_nanobot_agent
+from ..config import get_judge_config
 from .base import BaseBenchmark
 
 DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE_NANOBOT", "wildclawbench-nanobot:v3")
@@ -278,9 +279,9 @@ class ZClawBench(BaseBenchmark):
             random.seed(42)
             task_list = random.sample(task_list, sample)
 
-        judge_key = os.getenv("JUDGE_API_KEY", os.getenv("OPENROUTER_API_KEY", ""))
-        judge_model = os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
-        judge_base = os.getenv("JUDGE_BASE_URL", "https://openrouter.ai/api/v1")
+        judge_key, judge_base, judge_model = get_judge_config(
+            os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
+        )
 
         out_dir = self.results_dir / "zclawbench" / model_key
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -422,9 +423,9 @@ class ZClawBench(BaseBenchmark):
         out_dir = self.results_dir / "zclawbench" / model_key
         out_dir.mkdir(parents=True, exist_ok=True)
 
-        judge_key = os.getenv("JUDGE_API_KEY", os.getenv("OPENROUTER_API_KEY", ""))
-        judge_model = os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
-        judge_base = os.getenv("JUDGE_BASE_URL", "https://openrouter.ai/api/v1")
+        judge_key, judge_base, judge_model = get_judge_config(
+            os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
+        )
 
         def run_single_task_docker(task: dict, model: str, force: bool = False) -> dict:
             """Execute a single task inside Docker container with Judge scoring."""

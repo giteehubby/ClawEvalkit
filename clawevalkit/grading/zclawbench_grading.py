@@ -95,18 +95,46 @@ def _call_judge_with_retry(
     max_retries: int = 5,
     base_delay: float = 5.0,
     timeout: float = 120.0,
+    client_type: str = "openai",
 ) -> Optional[str]:
-    """调用 Judge 模型，带指数退避重试（处理 429 rate limit）。"""
+    """调用 Judge 模型，带指数退避重试（处理 429 rate limit）。
+
+    Args:
+        client: OpenAI 或 Anthropic 客户端
+        judge_model: Judge 模型名称
+        messages: 消息列表
+        max_retries: 最大重试次数
+        base_delay: 基础延迟（秒）
+        timeout: 超时时间（秒）
+        client_type: "openai" 或 "anthropic"
+    """
     for attempt in range(max_retries):
         try:
-            response = client.chat.completions.create(
-                model=judge_model,
-                messages=messages,
-                temperature=0.0,
-                max_tokens=768,
-                timeout=timeout,
-            )
-            return response.choices[0].message.content
+            if client_type == "anthropic":
+                response = client.messages.create(
+                    model=judge_model,
+                    messages=messages,
+                    temperature=0.0,
+                    max_tokens=768,
+                    timeout=timeout,
+                )
+                # Handle both text and thinking blocks (MiniMax returns thinking by default)
+                for block in response.content:
+                    if block.type == "text":
+                        return block.text
+                # If no text block found, use thinking block content
+                if response.content and response.content[0].type == "thinking":
+                    return response.content[0].thinking
+                return None
+            else:
+                response = client.chat.completions.create(
+                    model=judge_model,
+                    messages=messages,
+                    temperature=0.0,
+                    max_tokens=768,
+                    timeout=timeout,
+                )
+                return response.choices[0].message.content
         except Exception as e:
             err_str = str(e)
             if "429" in err_str or "RateLimitExceeded" in err_str or "TPM" in err_str:
@@ -135,17 +163,45 @@ def run_judge_eval(
     base_url: str = "https://openrouter.ai/api/v1",
     model_name: str = "unknown",
 ) -> JudgeScore:
-    """用 Judge 模型评估单条轨迹"""
-    try:
-        import openai
-    except ImportError:
-        logger.error("openai not installed. Run: pip install openai")
-        return _error_score(task_id, model_name, "openai not installed")
+    """用 Judge 模型评估单条轨迹
 
-    if not api_key:
-        return _error_score(task_id, model_name, "JUDGE_API_KEY not found")
+    Args:
+        trajectory: Agent 轨迹
+        task_id: 任务 ID
+        category: 任务类别
+        task_prompt: 任务提示
+        judge_model: Judge 模型名（如 "anthropic/claude-sonnet-4-20250514" 或 "minimax/claude-3.5-sonnet")
+        api_key: API Key
+        base_url: API 基础 URL
+        model_name: 被评估的模型名
+    """
+    # 检测是否使用 Anthropic 兼容 API（MiniMax 或原生 Anthropic）
+    use_anthropic = judge_model.startswith("anthropic/") or "minimax" in base_url.lower()
 
-    client = openai.OpenAI(api_key=api_key, base_url=base_url)
+    if use_anthropic:
+        try:
+            import anthropic
+        except ImportError:
+            logger.error("anthropic not installed. Run: pip install anthropic")
+            return _error_score(task_id, model_name, "anthropic not installed")
+
+        if not api_key:
+            return _error_score(task_id, model_name, "API key not found")
+
+        client = anthropic.Anthropic(api_key=api_key, base_url=base_url)
+        client_type = "anthropic"
+    else:
+        try:
+            import openai
+        except ImportError:
+            logger.error("openai not installed. Run: pip install openai")
+            return _error_score(task_id, model_name, "openai not installed")
+
+        if not api_key:
+            return _error_score(task_id, model_name, "JUDGE_API_KEY not found")
+
+        client = openai.OpenAI(api_key=api_key, base_url=base_url)
+        client_type = "openai"
 
     trajectory_text = _trajectory_to_text(trajectory)
     prompt = JUDGE_PROMPT.format(
@@ -159,9 +215,9 @@ def run_judge_eval(
         result_text = _call_judge_with_retry(
             client, judge_model,
             messages=[
-                {"role": "system", "content": "You are an expert AI agent evaluator."},
-                {"role": "user", "content": prompt},
+                {"role": "user", "content": f"You are an expert AI agent evaluator.\n\n{prompt}"},
             ],
+            client_type=client_type,
         )
     except Exception as e:
         logger.error(f"Judge API call failed: {e}")
@@ -215,23 +271,39 @@ def run_judge_eval_offline(
         trajectory_text=trajectory_text,
     )
 
-    try:
-        import openai
-    except ImportError:
-        return _error_score(task_id, model_name, "openai not installed")
+    # 检测是否使用 Anthropic 兼容 API（MiniMax 或原生 Anthropic）
+    use_anthropic = judge_model.startswith("anthropic/") or "minimax" in base_url.lower()
 
-    if not api_key:
-        return _error_score(task_id, model_name, "JUDGE_API_KEY not found")
+    if use_anthropic:
+        try:
+            import anthropic
+        except ImportError:
+            return _error_score(task_id, model_name, "anthropic not installed")
 
-    client = openai.OpenAI(api_key=api_key, base_url=base_url)
+        if not api_key:
+            return _error_score(task_id, model_name, "API key not found")
+
+        client = anthropic.Anthropic(api_key=api_key, base_url=base_url)
+        client_type = "anthropic"
+    else:
+        try:
+            import openai
+        except ImportError:
+            return _error_score(task_id, model_name, "openai not installed")
+
+        if not api_key:
+            return _error_score(task_id, model_name, "JUDGE_API_KEY not found")
+
+        client = openai.OpenAI(api_key=api_key, base_url=base_url)
+        client_type = "openai"
 
     try:
         result_text = _call_judge_with_retry(
             client, judge_model,
             messages=[
-                {"role": "system", "content": "You are an expert AI agent evaluator."},
-                {"role": "user", "content": prompt},
+                {"role": "user", "content": f"You are an expert AI agent evaluator.\n\n{prompt}"},
             ],
+            client_type=client_type,
         )
     except Exception as e:
         logger.error(f"Judge API call failed: {e}")

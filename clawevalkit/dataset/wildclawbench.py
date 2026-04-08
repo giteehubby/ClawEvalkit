@@ -27,6 +27,7 @@ from pathlib import Path
 
 from ..utils.docker_runner import DockerRunner
 from ..utils.nanobot import import_nanobot_agent
+from ..config import get_judge_config
 from .base import BaseBenchmark
 
 logger = logging.getLogger(__name__)
@@ -185,29 +186,96 @@ except Exception as e:
 print('DONE')
 """
 def _build_grading_script(automated_checks: str, trajectory: list) -> str:
-    """Build grading script for running inside Docker container."""
-    import base64
-    checks_b64 = base64.b64encode(automated_checks.encode('utf-8')).decode('ascii')
-    transcript_json = json.dumps(trajectory)
+    """Build grading script matching original repo's grading.py pattern.
+
+    Key differences from old implementation:
+    - Direct execution (not exec(compile(...)))
+    - No base64 encoding
+    - transcript=[] (fixed empty, matching original benchmarks/wildclawbench/utils/grading.py)
+    - grade() called with workspace_path="/tmp_workspace"
+    """
     return f'''
-import json
-import os
-import sys
-import base64
-from pathlib import Path
-from ..utils.log import log
-os.environ["TMP_WORKSPACE"] = "/tmp_workspace"
-os.chdir("/tmp_workspace")
-sys.path.insert(0, "/root/OpenClawPro")
-automated_checks = base64.b64decode("{checks_b64}").decode("utf-8")
-transcript_data = {transcript_json}
-exec(compile(automated_checks, "<grading>", "exec"))
-try:
-    grading_result = grade(workspace_path="/tmp_workspace", transcript=transcript_data)
-    print(json.dumps(grading_result))
-except Exception as e:
-    print(json.dumps({{"error": str(e)}}))
+import json, sys
+{automated_checks}
+result = grade(transcript=[], workspace_path="/tmp_workspace")
+print(json.dumps(result))
 '''
+
+
+def _run_original_grading(
+    container_name: str,
+    automated_checks: str,
+    output_dir: Path,
+    timeout: int = 120,
+) -> dict:
+    """Run grading using original repo's logic (benchmarks/wildclawbench/utils/grading.py pattern).
+
+    This replicates the exact behavior of benchmarks/wildclawbench/utils/grading.py:
+    1. Write grading script to temp file
+    2. docker cp into container at /tmp/_grade_runner.py
+    3. docker exec python3 /tmp/_grade_runner.py
+    4. Parse JSON from stdout
+    5. Write score.json to output_dir (matching original)
+    """
+    # Build runner code (same as original grading.py)
+    runner_code = "\n".join([
+        "import json, sys",
+        automated_checks,
+        "",
+        'result = grade(transcript=[], workspace_path="/tmp_workspace")',
+        "print(json.dumps(result))",
+    ]) + "\n"
+
+    tmp_script = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".py", delete=False, encoding="utf-8"
+        ) as f:
+            f.write(runner_code)
+            tmp_script = f.name
+
+        # Copy script into container
+        r = subprocess.run(
+            ["docker", "cp", tmp_script, f"{container_name}:/tmp/_grade_runner.py"],
+            capture_output=True, text=True,
+        )
+        if r.returncode != 0:
+            return {"error": f"docker cp failed: {r.stderr}"}
+
+        # Execute grading inside container (same as original grading.py)
+        r = subprocess.run(
+            ["docker", "exec", container_name, "python3", "/tmp/_grade_runner.py"],
+            capture_output=True, text=True,
+            timeout=timeout,
+        )
+        if r.returncode != 0:
+            return {"error": f"grade script failed: {r.stderr}"}
+
+        # Parse JSON result (same reverse-line logic as original)
+        scores = None
+        stdout = r.stdout.strip()
+        for line in reversed(stdout.splitlines()):
+            line = line.strip()
+            if line.startswith("{"):
+                try:
+                    scores = json.loads(line)
+                    break
+                except json.JSONDecodeError:
+                    continue
+
+        if scores is None:
+            return {"error": f"json parse failed: no valid JSON in stdout: {stdout[:500]}"}
+
+        # Write score.json to output_dir (matching original grading.py)
+        score_path = output_dir / "score.json"
+        score_path.parent.mkdir(parents=True, exist_ok=True)
+        score_path.write_text(json.dumps(scores, indent=2, ensure_ascii=False), encoding="utf-8")
+
+        return scores
+
+    finally:
+        if tmp_script and Path(tmp_script).exists():
+            Path(tmp_script).unlink(missing_ok=True)
 
 
 # ============================================================================
@@ -329,9 +397,9 @@ class WildClawBench(BaseBenchmark):
         if sample and sample < len(tasks):
             random.seed(42)
             tasks = random.sample(tasks, sample)
-        judge_key = os.getenv("JUDGE_API_KEY", os.getenv("OPENROUTER_API_KEY", ""))
-        judge_model = os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
-        judge_base = os.getenv("JUDGE_BASE_URL", "https://openrouter.ai/api/v1")
+        judge_key, judge_base, judge_model = get_judge_config(
+            os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
+        )
         # Avoid double nesting if results_dir already contains wildclawbench/subset/model_key
         if self.results_dir.name == model_key and self.results_dir.parent.name == "subset":
             out_dir = self.results_dir
@@ -484,9 +552,9 @@ class WildClawBench(BaseBenchmark):
             out_dir = self.results_dir / "wildclawbench" / model_key
         out_dir.mkdir(parents=True, exist_ok=True)
         results = []
-        judge_key = os.getenv("JUDGE_API_KEY", os.getenv("OPENROUTER_API_KEY", ""))
-        judge_model = os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
-        judge_base = os.getenv("JUDGE_BASE_URL", "https://openrouter.ai/api/v1")
+        judge_key, judge_base, judge_model = get_judge_config(
+            os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
+        )
         openrouter_api_key = os.getenv("OPENROUTER_API_KEY", "")
         def run_single_task_docker_nanobot(task: dict, force: bool = False) -> dict:
             """Execute a single task inside Docker container using NanoBotAgent."""
@@ -506,6 +574,19 @@ class WildClawBench(BaseBenchmark):
                 except Exception:
                     pass
             result = {"task_id": task_id_ori, "scores": {}, "error": None}
+
+            # 打印任务和模型配置信息（API Key 脱敏）
+            api_key_masked = (config["api_key"][:4] + "****" + config["api_key"][-4:]) if config.get("api_key") and len(config["api_key"]) > 8 else "****"
+            logger.info("🚀 ==================== Task Starting ====================")
+            logger.info("  Task ID: %s", task_id_ori)
+            logger.info("  Model: %s", config.get("model", "unknown"))
+            logger.info("  Model Name: %s", config.get("name", "unknown"))
+            logger.info("  API URL: %s", config.get("api_url", "unknown"))
+            logger.info("  API Key: %s", api_key_masked)
+            logger.info("  Timeout: %ds", timeout_seconds)
+            logger.info("  Workspace: %s", workspace_path)
+            logger.info("=======================================================")
+
             with DockerRunner(docker_image, openclawpro_dir) as runner:
                 try:
                     # Build env vars
@@ -564,18 +645,15 @@ class WildClawBench(BaseBenchmark):
                         trans_dir = self.results_dir / "wildclawbench" / "transcripts" / model_key / task_id_ori
                         trans_dir.mkdir(parents=True, exist_ok=True)
                         (trans_dir / "transcript.json").write_text(json.dumps(trajectory, ensure_ascii=False))
-                    # Grading (automated checks)
+                    # Grading (automated checks) - using original repo's grading logic
                     scores = {}
                     score_source = []
                     if not result.get("error") and task.get("automated_checks"):
-                        grading_result = runner.run_grading(
-                            grading_script=_build_grading_script(task["automated_checks"], trajectory),
-                            env={
-                                "JUDGE_MODEL": judge_model,
-                                "JUDGE_API_KEY": judge_key,
-                                "JUDGE_BASE_URL": judge_base,
-                                "OPENROUTER_API_KEY": judge_key,
-                            }
+                        # Use _run_original_grading which matches benchmarks/wildclawbench/utils/grading.py
+                        grading_result = _run_original_grading(
+                            container_name=runner.container_name,
+                            automated_checks=task["automated_checks"],
+                            output_dir=task_output_dir,
                         )
                         if "error" not in grading_result:
                             scores.update(grading_result)
@@ -649,15 +727,38 @@ class WildClawBench(BaseBenchmark):
     def _build_docker_env_vars(self, task: dict, openrouter_api_key: str) -> dict:
         """Build environment variables for Docker container."""
         env_vars = {}
-        # Proxy settings
+        # Proxy settings - check inner proxy first, then auto-detect from macOS if needed
         proxy_http = os.environ.get('HTTP_PROXY_INNER', '')
         proxy_https = os.environ.get('HTTPS_PROXY_INNER', '')
+        if not proxy_http:
+            # Auto-detect proxy from macOS system preferences
+            import subprocess
+            try:
+                result = subprocess.run(
+                    ['networksetup', '-getwebproxy', 'Wi-Fi'],
+                    capture_output=True, text=True, timeout=5
+                )
+                if 'Yes' in result.stdout:
+                    # Parse server and port
+                    lines = result.stdout.split('\n')
+                    server, port = '', ''
+                    for line in lines:
+                        if 'Server:' in line:
+                            server = line.split(':', 1)[1].strip()
+                        if 'Port:' in line:
+                            port = line.split(':', 1)[1].strip()
+                    if server and port:
+                        proxy_http = f"http://{server}:{port}"
+                        proxy_https = proxy_http
+            except Exception:
+                pass
         if proxy_http:
             env_vars["http_proxy"] = proxy_http
             env_vars["https_proxy"] = proxy_https
             env_vars["HTTPS_PROXY"] = proxy_https
-            no_proxy = os.environ.get('NO_PROXY_INNER', '') if proxy_http else ''
-            env_vars["no_proxy"] = no_proxy
+            env_vars["HTTP_PROXY"] = proxy_http
+            no_proxy = os.environ.get('NO_PROXY_INNER', '')
+            env_vars["no_proxy"] = no_proxy or "localhost,127.0.0.1"
         # API key for agent
         env_vars["OPENROUTER_API_KEY"] = openrouter_api_key
         # MiniMax API key if available

@@ -28,10 +28,7 @@ class DockerRunner:
 
     def _generate_container_name(self, task_id: str, model: str) -> str:
         """生成唯一的容器名"""
-        timestamp = time.strftime("%Y%m%d_%H%M%S", time.gmtime())
-        short_task = re.sub(r"(\d+)_.*?(task_\d+)", r"\1_\2", task_id) or task_id
-        short_model = re.sub(r"[^a-zA-Z0-9.\-_]", "_", model.rsplit("/", 1)[-1])
-        return f"nano_{short_task}_{short_model}_{timestamp}"
+        return task_id
 
     def start(
         self,
@@ -92,6 +89,7 @@ class DockerRunner:
         cmd = [
             "docker", "run", "-d",
             "--name", self.container_name,
+            "--network=host",
             *mounts,
             *env_args,
             self.image,
@@ -104,7 +102,11 @@ class DockerRunner:
             try:
                 r = subprocess.run(cmd, capture_output=True, timeout=60)
                 if r.returncode == 0:
-                    logger.info("[%s] Container started successfully", self.container_name)
+                    logger.info("[%s] ✅ Container created successfully", self.container_name)
+                    logger.info("[%s]    - Image: %s", self.container_name, self.image)
+                    logger.info("[%s]    - Workspace: %s", self.container_name, workspace_path)
+                    logger.info("[%s]    - Model: %s", self.container_name, model)
+                    logger.info("[%s]    - OpenClawPro: %s", self.container_name, self.openclawpro_dir)
                     return self.container_name
                 logger.warning(
                     "[%s] Container startup failed (attempt %d): %s",
@@ -154,6 +156,7 @@ class DockerRunner:
             skills_path: 技能文件路径
             warmup: warmup 命令（换行分隔）
         """
+        logger.info("[%s] 📁 Setting up workspace...", self.container_name)
         tmp_path = os.path.join(workspace_path, "tmp")
         exec_path = os.path.join(workspace_path, "exec")
 
@@ -178,12 +181,14 @@ class DockerRunner:
 
         # Run warmup
         if warmup:
-            for cmd_line in warmup.splitlines():
-                cmd_line = cmd_line.strip()
-                if cmd_line and not cmd_line.startswith("#"):
-                    r = self.exec(["/bin/bash", "-c", cmd_line], timeout=60)
-                    if r is None or r.returncode != 0:
-                        logger.warning("[%s] Warmup command failed: %s", self.container_name, cmd_line)
+            warmup_cmds = [l.strip() for l in warmup.splitlines() if l.strip() and not l.strip().startswith("#")]
+            logger.info("[%s] 🔧 Running %d warmup commands...", self.container_name, len(warmup_cmds))
+            for cmd_line in warmup_cmds:
+                logger.debug("[%s]    Warmup: %s", self.container_name, cmd_line[:80])
+                r = self.exec(["/bin/bash", "-c", cmd_line], timeout=60)
+                if r is None or r.returncode != 0:
+                    logger.warning("[%s] Warmup command failed: %s", self.container_name, cmd_line)
+        logger.info("[%s] ✅ Workspace setup complete", self.container_name)
 
     def run_agent(self, exec_script: str, timeout_seconds: int) -> tuple[dict, float]:
         """运行 agent 并返回 (result, elapsed_time)
@@ -195,6 +200,7 @@ class DockerRunner:
         Returns:
             (agent_result_dict, elapsed_time)
         """
+        logger.info("[%s] 🤖 Running agent script...", self.container_name)
         with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
             f.write(exec_script)
             script_path = f.name
@@ -232,10 +238,18 @@ class DockerRunner:
                     capture_output=True, text=True, timeout=timeout_seconds + 60
                 )
                 elapsed = time.perf_counter() - start
+
                 logger.info(
                     "[%s] Agent execution completed in %.2fs, returncode=%d",
                     self.container_name, elapsed, exec_proc.returncode
                 )
+
+                # 🆔 打印容器内的输出
+                if exec_proc.stdout:
+                    for line in exec_proc.stdout.strip().split('\n'):
+                        if line:
+                            logger.info("[%s] [CONTAINER] %s", self.container_name, line)
+
                 if exec_proc.returncode != 0:
                     logger.error(
                         "[%s] Agent execution failed: stdout=%s, stderr=%s",
@@ -331,6 +345,9 @@ class DockerRunner:
         Returns:
             (result_file, transcript_file)
         """
+        # Ensure output directory exists
+        output_dir.mkdir(parents=True, exist_ok=True)
+
         result_file = output_dir / "agent_result.json"
         transcript_file = output_dir / "transcript.json"
 

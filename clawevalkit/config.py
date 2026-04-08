@@ -103,5 +103,38 @@ def list_models() -> list:
     return [(k, v["name"], v["provider"]) for k, v in MODELS.items()]
 
 
+def get_judge_config(judge_model: str = None) -> tuple[str, str, str]:
+    """Get judge API config: (api_key, base_url, actual_model_name).
+
+    Auto-detects MiniMax based on judge_model name:
+    - If judge_model contains "minimax", uses MiniMax API
+    - Otherwise uses OpenRouter defaults
+
+    Args:
+        judge_model: Judge model name (e.g., "minimax/claude-3.5-sonnet" or "anthropic/claude-sonnet-4.6")
+
+    Returns:
+        (api_key, base_url, actual_model_name)
+    """
+    if judge_model is None:
+        judge_model = os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
+
+    # Auto-detect provider based on model name
+    if "minimax" in judge_model.lower():
+        api_key = os.getenv("MINIMAX_API_KEY", os.getenv("JUDGE_API_KEY", ""))
+        base_url = "https://api.minimaxi.com/anthropic"
+        # Add anthropic/ prefix if not present
+        if not judge_model.startswith(("anthropic/", "minimax/")):
+            actual_model = f"anthropic/{judge_model}"
+        else:
+            actual_model = judge_model
+    else:
+        api_key = os.getenv("JUDGE_API_KEY", os.getenv("OPENROUTER_API_KEY", ""))
+        base_url = os.getenv("JUDGE_BASE_URL", "https://openrouter.ai/api/v1")
+        actual_model = judge_model
+
+    return api_key, base_url, actual_model
+
+
 # ─── Auto-load on import ───
 MODELS = load_configs()

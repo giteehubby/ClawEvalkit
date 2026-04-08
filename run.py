@@ -37,7 +37,7 @@ from clawevalkit.config import load_env, list_models, MODELS
 from clawevalkit.dataset import BENCHMARKS, list_benchmarks
 from clawevalkit.inference import infer_all
 from clawevalkit.summarizer import Summarizer
-from clawevalkit.utils.log import log
+from clawevalkit.utils.log import log, setup_logging
 
 
 def main():
@@ -61,6 +61,7 @@ def main():
     parser.add_argument("--task", "-t", help="指定特定任务ID (如 01_Productivity_Flow_task_6_calendar_scheduling)")
     parser.add_argument("--category", "-c", help="指定任务类别 (如 01_Productivity_Flow)")
     parser.add_argument("--reuse-container", action="store_true", help="Reuse existing containers (skip rebuild, preserves pip installs)")
+    parser.add_argument("--judge-model", help="Judge model for scoring (e.g., minimax/claude-3.5-sonnet, claude-sonnet-4.6)")
     args = parser.parse_args()
 
     # 设置 transcripts_dir 默认值
@@ -69,6 +70,14 @@ def main():
 
     # 加载环境变量
     load_env(args.env)
+
+    # 设置 judge model 环境变量（如果指定）
+    if args.judge_model:
+        import os
+        os.environ["JUDGE_MODEL"] = args.judge_model
+
+    # 设置日志级别
+    setup_logging(verbose=False)
 
     if args.list:
         print("\n  Available Benchmarks:")
