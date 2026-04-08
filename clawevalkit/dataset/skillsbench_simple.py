@@ -50,13 +50,39 @@ class SkillsBenchSimple(BaseBenchmark):
             return {"score": 0, "total": 0, "error": f"tasks dir not found: {tasks_dir}"}
 
         max_turns = kwargs.get("max_turns", 3)
+        force = kwargs.get("force", False)
         all_tasks = sorted([d.name for d in tasks_dir.iterdir() if d.is_dir()])
-        task_names = all_tasks  # No skipping in simple mode
+        all_task_names = all_tasks  # No skipping in simple mode, 用于汇总
 
         # Filter by task_ids if specified
         task_ids = kwargs.get("task_ids")
         if task_ids:
-            task_names = [t for t in task_names if t in task_ids]
+            all_task_names = [t for t in all_task_names if t in task_ids]
+
+        # 先基于已有缓存生成初始汇总（sample 前）
+        self._build_and_save_summary(
+            "skillsbench-simple", model_key, all_task_names,
+            compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_names, r, max_turns)
+        )
+
+        task_names = all_task_names  # 复制用于后续过滤
+
+        # Pre-filter cached tasks (unless force=True)
+        if not force:
+            uncached_tasks = []
+            for t in task_names:
+                result_file = self.results_dir / "skillsbench-simple" / model_key / t / "result.json"
+                if not result_file.exists():
+                    uncached_tasks.append(t)
+                else:
+                    try:
+                        cached = json.loads(result_file.read_text())
+                        if cached.get("status") not in ("passed", "failed"):
+                            uncached_tasks.append(t)  # Incomplete, re-run
+                    except Exception:
+                        uncached_tasks.append(t)  # Corrupted, re-run
+            log(f"[skillsbench-simple] {len(task_names) - len(uncached_tasks)} tasks cached, {len(uncached_tasks)} remaining")
+            task_names = uncached_tasks
 
         if sample and sample < len(task_names):
             import random
@@ -71,28 +97,58 @@ class SkillsBenchSimple(BaseBenchmark):
         proxy_https = os.environ.get('HTTPS_PROXY_INNER', '')
 
         for task_name in task_names:
+            start = time.time()
             result = self._run_single_task(
                 task_name, config, tasks_dir, max_turns,
                 openrouter_api_key, proxy_http, proxy_https,
                 transcripts_dir=transcripts_dir, model_key=model_key
             )
+            result["elapsed_s"] = round(time.time() - start, 2)
             if result.get("status") == "passed":
                 passed += 1
             results.append(result)
 
-            # Save result for this task
-            self.save_result("skillsbench-simple", model_key, result, filename=f"{task_name}.json")
+            # Save result for this task (unified structure)
+            self._save_task_result("skillsbench-simple", model_key, task_name, result)
+            log(f"[{task_name}] Saved result to outputs/skillsbench-simple/{model_key}/{task_name}/result.json")
 
-        total = len(task_names)
+            # Update summary after each task
+            self._build_and_save_summary(
+                "skillsbench-simple", model_key, all_task_names,
+                new_results=results,
+                compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_names, r, max_turns)
+            )
+
+        # Final summary
+        return self._load_summary("skillsbench-simple", model_key)
+
+    def _compute_summary(self, model_key: str, all_task_names: list, results: list, max_turns: int) -> dict:
+        """Compute summary for skillsbench-simple."""
+        passed = sum(1 for r in results if r.get("status") == "passed")
+        total = len(all_task_names)
+        scored = len(results)
         score = round(passed / total * 100, 1) if total else 0
-        summary = {
-            "model": model_key, "total": total, "passed": passed,
-            "failed": total - passed, "score": score,
-            "pass_rate": f"{passed}/{total}", "max_turns": max_turns,
-            "results": results,
+        return {
+            "model": model_key,
+            "total": total,
+            "passed": passed,
+            "failed": scored - passed,
+            "pending": total - scored,
+            "score": score,
+            "pass_rate": f"{passed}/{total}",
+            "max_turns": max_turns,
+            "results": results
         }
-        self.save_result("skillsbench-simple", model_key, summary)
-        return summary
+
+    def _load_summary(self, bench_key: str, model_key: str) -> dict:
+        """Load saved summary file."""
+        result_f = self.results_dir / bench_key / f"{model_key}.json"
+        if result_f.exists():
+            try:
+                return json.loads(result_f.read_text())
+            except Exception:
+                pass
+        return {"model": model_key, "total": 0, "passed": 0, "score": 0}
 
     def _run_single_task(self, task_name: str, config: dict, tasks_dir: Path,
                          max_turns: int, openrouter_api_key: str,
@@ -177,7 +233,7 @@ class SkillsBenchSimple(BaseBenchmark):
         log(f"[{task_name}] 🤖 Running agent (max {max_turns} turns)...")
         result = self._run_agent_simple(
             container_name, task_name, config, instruction,
-            max_turns, model_key, transcripts_dir
+            max_turns, model_key, transcripts_dir, tasks_dir
         )
 
         # Copy results back
@@ -187,10 +243,6 @@ class SkillsBenchSimple(BaseBenchmark):
             capture_output=True, text=True, timeout=30
         )
 
-        # Run pytest
-        log(f"[{task_name}] 🧪 Running pytest...")
-        passed, test_output = self._run_pytest_simple(container_name, task_dir)
-
         # Cleanup
         subprocess.run(["docker", "rm", "-f", container_name],
                       capture_output=True, text=True, timeout=30)
@@ -199,7 +251,7 @@ class SkillsBenchSimple(BaseBenchmark):
 
     def _run_agent_simple(self, container_name: str, task_name: str, config: dict,
                           instruction: str, max_turns: int, model_key: str,
-                          transcripts_dir: Path = None) -> dict:
+                          transcripts_dir: Path = None, tasks_dir: Path = None) -> dict:
         """Run agent in container using docker cp (no mounts)."""
         import sys
         from pathlib import Path
@@ -265,7 +317,7 @@ class SkillsBenchSimple(BaseBenchmark):
 
             # Run pytest
             log(f"[{task_name}] 🧪 Running pytest...")
-            passed, test_output = self._run_pytest_simple(container_name, Path(f"/tmp/skillsbench_simple/{task_name}"))
+            passed, test_output = self._run_pytest_simple(container_name, tasks_dir / task_name)
 
             if passed:
                 log(f"[{task_name}] ✅ Pytest passed!")
@@ -340,7 +392,7 @@ class SkillsBenchSimple(BaseBenchmark):
 
         # Install pytest and run
         subprocess.run(
-            ["docker", "exec", container_name, "pip", "install", "-q", "pytest"],
+            ["docker", "exec", container_name, "pip3", "install", "--break-system-packages", "-q", "pytest", "pytesseract", "pypdf", "PyMuPDF"],
             capture_output=True, text=True, timeout=120
         )
 

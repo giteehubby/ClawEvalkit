@@ -9,7 +9,6 @@ Supports two execution modes:
 from __future__ import annotations
 
 import json
-import logging
 import os
 import random
 import re
@@ -23,7 +22,6 @@ from typing import Any
 
 from .base import BaseBenchmark
 
-logger = logging.getLogger(__name__)
 
 DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE_NANOBOT", "wildclawbench-nanobot:v3")
 TMP_WORKSPACE = "/tmp/agentbench_workspace"
@@ -386,7 +384,7 @@ Respond in JSON format:
                 "reasoning": result.get("reasoning", "")
             }
     except Exception as e:
-        logger.warning(f"LLM judge evaluation failed: {e}")
+        log(f"LLM judge evaluation failed: {e}")
 
     # Fallback to neutral scores
     return {"l2_score": 50, "l3_score": 50, "error": "judge_failed"}
@@ -447,6 +445,7 @@ from pathlib import Path
 
 sys.path.insert(0, '/root/OpenClawPro')
 from harness.agent.nanobot import NanoBotAgent
+from ..utils.log import log
 
 workspace = Path('/tmp/agentbench_workspace/workspace')
 session_id = 'eval_{model_key}_{task_id}'
@@ -736,7 +735,7 @@ class AgentBench(BaseBenchmark):
                 try:
                     cached = json.loads(result_file.read_text())
                     if cached.get("status") == "success" and "scores" in cached:
-                        logger.info("[%s] Found cached result, skipping", tid)
+                        log("[%s] Found cached result, skipping", tid)
                         return {**cached, "_from_cache": True}
                 except Exception:
                     pass
@@ -777,7 +776,7 @@ class AgentBench(BaseBenchmark):
                 # Run setup.sh if exists (for tasks that need environment setup)
                 setup_script = task_dir / "setup.sh"
                 if setup_script.exists():
-                    logger.info("[%s] Running setup.sh for task %s", container_name, tid)
+                    log("[%s] Running setup.sh for task %s", container_name, tid)
                     setup_proc = subprocess.run(
                         ["bash", str(setup_script), str(host_workspace)],
                         capture_output=True,
@@ -785,9 +784,9 @@ class AgentBench(BaseBenchmark):
                         timeout=120
                     )
                     if setup_proc.returncode != 0:
-                        logger.warning("[%s] setup.sh failed: %s", container_name, setup_proc.stderr[:500])
+                        log("[%s] setup.sh failed: %s", container_name, setup_proc.stderr[:500])
                     else:
-                        logger.info("[%s] setup.sh completed successfully", container_name)
+                        log("[%s] setup.sh completed successfully", container_name)
 
                 # Build env args
                 proxy_http = os.environ.get('HTTP_PROXY_INNER', '')
@@ -808,7 +807,7 @@ class AgentBench(BaseBenchmark):
 
                 # Start container (mounts workspace/ to /tmp/agentbench_workspace/workspace/)
                 _start_container(container_name, workspace_path, openclawpro_dir, DOCKER_IMAGE, env_args)
-                logger.info("[%s] Container started", container_name)
+                log("[%s] Container started", container_name)
 
                 # No need to docker cp - files are already mounted via volume
 
@@ -816,13 +815,13 @@ class AgentBench(BaseBenchmark):
                 user_msg = cfg.get("user_message", "")
                 exec_script = _build_exec_script(model_key, tid, user_msg, config)
                 exec_proc, elapsed_time = _run_agent_in_container(container_name, exec_script, 300)
-                logger.info("[%s] Agent finished in %.2fs, returncode=%d", container_name, elapsed_time, exec_proc.returncode)
+                log("[%s] Agent finished in %.2fs, returncode=%d", container_name, elapsed_time, exec_proc.returncode)
 
                 # Log stdout/stderr for debugging
                 if exec_proc.stdout:
-                    logger.debug("[%s] Agent stdout: %s", container_name, exec_proc.stdout[:500])
+                    log("[%s] Agent stdout: %s", container_name, exec_proc.stdout[:500])
                 if exec_proc.stderr:
-                    logger.debug("[%s] Agent stderr: %s", container_name, exec_proc.stderr[:500])
+                    log("[%s] Agent stderr: %s", container_name, exec_proc.stderr[:500])
 
                 # Copy results back
                 result_file_host = _copy_results_from_container(container_name, workspace_path, task_output_dir)
@@ -838,13 +837,13 @@ class AgentBench(BaseBenchmark):
                         result["usage"] = {**agent_result.get("usage", {}), "elapsed_time": round(elapsed_time, 2)}
                         transcript = agent_result.get("transcript", [])
                         model_output = agent_result.get("content", "")
-                        logger.info("[%s] Agent result loaded: status=%s, transcript_len=%d",
+                        log("[%s] Agent result loaded: status=%s, transcript_len=%d",
                                    container_name, result["status"], len(transcript))
                     except Exception as e:
-                        logger.error("[%s] Failed to load agent result: %s", container_name, e)
+                        log("[%s] Failed to load agent result: %s", container_name, e)
                         result["error"] = f"Failed to load agent result: {e}"
                 else:
-                    logger.warning("[%s] agent_result.json not found at %s", container_name, result_file_host)
+                    log("[%s] agent_result.json not found at %s", container_name, result_file_host)
                     result["error"] = "agent_result.json not found"
 
                 # ==================== 4-Layer Scoring ====================
@@ -899,13 +898,13 @@ class AgentBench(BaseBenchmark):
                     "overall_score": round(composite, 1)
                 }
 
-                logger.info("[%s] Scores: L0=%.1f L1=%.1f L2=%.1f L3=%.1f | Overall=%.1f",
+                log("[%s] Scores: L0=%.1f L1=%.1f L2=%.1f L3=%.1f | Overall=%.1f",
                            container_name, l0_score, l1_score, l2_score, l3_score, composite)
 
             except subprocess.TimeoutExpired:
                 result["error"] = "Timeout after 300 seconds"
             except Exception as exc:
-                logger.error("[%s] Execution error: %s", container_name, exc)
+                log("[%s] Execution error: %s", container_name, exc)
                 result["error"] = str(exc)
             finally:
                 subprocess.run(["docker", "rm", "-f", container_name], capture_output=True)
@@ -914,9 +913,9 @@ class AgentBench(BaseBenchmark):
             # Save cache (always save, not just on success)
             try:
                 result_file.write_text(json.dumps(result, indent=2, ensure_ascii=False))
-                logger.info("[%s] Result saved to %s", container_name, result_file)
+                log("[%s] Result saved to %s", container_name, result_file)
             except Exception as e:
-                logger.error("[%s] Failed to save result: %s", container_name, e)
+                log("[%s] Failed to save result: %s", container_name, e)
 
             return result
 
@@ -936,7 +935,7 @@ class AgentBench(BaseBenchmark):
                     try:
                         results.append(future.result())
                     except Exception as exc:
-                        logger.error("[%s] Thread exception: %s", tid, exc)
+                        log("[%s] Thread exception: %s", tid, exc)
                         results.append({"task_id": tid, "scores": {}, "error": str(exc)})
 
         # Compute average

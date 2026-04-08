@@ -14,7 +14,6 @@ Supports two execution modes:
 from __future__ import annotations
 
 import json
-import logging
 import os
 import random
 import re
@@ -26,10 +25,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
+from ..utils.log import log
 from ..utils.nanobot import import_nanobot_agent
 from .base import BaseBenchmark
-
-logger = logging.getLogger(__name__)
 
 DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE_NANOBOT", "wildclawbench-nanobot:v3")
 TMP_WORKSPACE = "/tmp/zclawbench_workspace"
@@ -116,7 +114,7 @@ agent = NanoBotAgent(
     api_url='{config["api_url"]}',
     api_key=api_key,
     workspace=workspace,
-    timeout=300,
+    timeout=3600,
     disable_safety_guard=True,
 )
 
@@ -249,29 +247,48 @@ class ZClawBench(BaseBenchmark):
         from clawevalkit.grading import run_judge_eval
 
         tasks = self._load_tasks(use_docker=False)
-        if sample and sample < len(tasks):
+        all_task_ids = [t["task_id"] for t in tasks]
+
+        # 先基于已有缓存生成初始汇总（sample 前）
+        self._build_and_save_summary(
+            "zclawbench", model_key, all_task_ids,
+            compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r)
+        )
+
+        task_list = tasks
+        if not force:
+            # Pre-filter cached tasks
+            uncached_tasks = []
+            for task in task_list:
+                tid = task["task_id"]
+                result_file = self.results_dir / "zclawbench" / model_key / tid / "result.json"
+                if not result_file.exists():
+                    uncached_tasks.append(task)
+                else:
+                    try:
+                        cached = json.loads(result_file.read_text())
+                        if cached.get("status") != "success":
+                            uncached_tasks.append(task)  # Incomplete
+                    except Exception:
+                        uncached_tasks.append(task)  # Corrupted
+            log(f"[zclawbench] {len(task_list) - len(uncached_tasks)} tasks cached, {len(uncached_tasks)} remaining")
+            task_list = uncached_tasks
+
+        if sample and sample < len(task_list):
             random.seed(42)
-            tasks = random.sample(tasks, sample)
+            task_list = random.sample(task_list, sample)
 
         judge_key = os.getenv("JUDGE_API_KEY", os.getenv("OPENROUTER_API_KEY", ""))
         judge_model = os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
         judge_base = os.getenv("JUDGE_BASE_URL", "https://openrouter.ai/api/v1")
 
-        out_dir = self.results_dir / "zclawbench" / "subset" / model_key
+        out_dir = self.results_dir / "zclawbench" / model_key
         out_dir.mkdir(parents=True, exist_ok=True)
         results = []
 
-        for i, task in enumerate(tasks):
+        for i, task in enumerate(task_list):
             tid = task["task_id"]
-            result_file = out_dir / f"{tid}.json"
-            if not force and result_file.exists():
-                try:
-                    ex = json.loads(result_file.read_text())
-                    if ex.get("status") == "success":
-                        results.append(ex)
-                        continue
-                except Exception:
-                    pass
+            log(f"[zclawbench] Running task {i+1}/{len(task_list)}: {tid}")
 
             workspace = Path(f"/tmp/eval_zclaw_{model_key}/{tid}")
             if workspace.exists():
@@ -281,7 +298,7 @@ class ZClawBench(BaseBenchmark):
             r = {"task_id": tid, "model_key": model_key, "status": "error", "scores": {}}
             try:
                 agent = NanoBotAgent(model=config["model"], api_url=config["api_url"],
-                                     api_key=config["api_key"], workspace=workspace, timeout=300)
+                                     api_key=config["api_key"], workspace=workspace, timeout=3600)
                 result = agent.execute(task["prompt"], session_id=f"eval_{model_key}_{tid}", workspace=workspace)
                 if result.transcript:
                     normalized = [e["message"] if isinstance(e, dict) and "message" in e else e for e in result.transcript]
@@ -290,16 +307,53 @@ class ZClawBench(BaseBenchmark):
                                            api_key=judge_key, base_url=judge_base, model_name=config["name"])
                     r["status"] = "success"
                     r["scores"] = {"overall_score": score.overall_score}
+                    log(f"[{tid}] Judge score: {score.overall_score:.3f}")
             except Exception as e:
                 r["error"] = str(e)[:300]
+                log(f"[{tid}] Error: {r['error']}")
 
-            result_file.write_text(json.dumps(r, indent=2, ensure_ascii=False))
+            # Save per-task result
+            self._save_task_result("zclawbench", model_key, tid, r)
             shutil.rmtree(workspace, ignore_errors=True)
             results.append(r)
 
-        scores = [r["scores"]["overall_score"] for r in results if r.get("status") == "success"]
+            # Update summary after each task
+            self._build_and_save_summary(
+                "zclawbench", model_key, all_task_ids,
+                new_results=results,
+                compute_summary_fn=lambda res: self._compute_summary(model_key, all_task_ids, res)
+            )
+
+        return self._load_summary("zclawbench", model_key)
+
+    def _compute_summary(self, model_key: str, all_task_ids: list, results: list) -> dict:
+        """Compute summary for ZClawBench."""
+        scores = [r["scores"]["overall_score"] for r in results
+                  if r.get("status") == "success" and r.get("scores")]
         avg = round(sum(scores) / len(scores), 3) if scores else 0
-        return {"score": avg, "passed": len(scores), "total": len(tasks), "details": results}
+        total = len(all_task_ids)
+        scored = len(results)
+        return {
+            "model": model_key,
+            "score": avg,
+            "passed": len(scores),
+            "scored": scored,
+            "pending": total - scored,
+            "total": total,
+            "details": results
+        }
+
+    def _load_summary(self, bench_key: str, model_key: str) -> dict:
+        """Load saved summary file."""
+        result_f = self.results_dir / bench_key / f"{model_key}.json"
+        if result_f.exists():
+            try:
+                data = json.loads(result_f.read_text())
+                return {"score": data["score"], "passed": data.get("passed", data.get("scored", 0)),
+                        "total": data["total"]}
+            except Exception:
+                pass
+        return {"score": 0, "passed": 0, "total": 0}
 
     def _evaluate_docker(
         self,
@@ -329,14 +383,43 @@ class ZClawBench(BaseBenchmark):
         from clawevalkit.grading import run_judge_eval
 
         tasks = self._load_tasks(use_docker=True)  # Docker模式加载全部116个任务
+        all_task_ids = [t["task_id"] for t in tasks]
+
         # Filter by specific task_ids if provided
         if task_ids:
             tasks = [t for t in tasks if t["task_id"] in task_ids]
-        elif sample and sample < len(tasks):
-            random.seed(42)
-            tasks = random.sample(tasks, sample)
+            all_task_ids = [t["task_id"] for t in tasks]
 
-        out_dir = self.results_dir / "zclawbench" / "subset" / model_key
+        # 先基于已有缓存生成初始汇总（sample 前）
+        self._build_and_save_summary(
+            "zclawbench", model_key, all_task_ids,
+            compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r)
+        )
+
+        task_list = tasks
+        if not force:
+            # Pre-filter cached tasks
+            uncached_tasks = []
+            for task in task_list:
+                tid = task["task_id"]
+                result_file = self.results_dir / "zclawbench" / model_key / tid / "result.json"
+                if not result_file.exists():
+                    uncached_tasks.append(task)
+                else:
+                    try:
+                        cached = json.loads(result_file.read_text())
+                        if cached.get("status") != "success" or "scores" not in cached:
+                            uncached_tasks.append(task)  # Incomplete
+                    except Exception:
+                        uncached_tasks.append(task)  # Corrupted
+            log(f"[zclawbench] {len(task_list) - len(uncached_tasks)} tasks cached, {len(uncached_tasks)} remaining")
+            task_list = uncached_tasks
+
+        if sample and sample < len(task_list):
+            random.seed(42)
+            task_list = random.sample(task_list, sample)
+
+        out_dir = self.results_dir / "zclawbench" / model_key
         out_dir.mkdir(parents=True, exist_ok=True)
 
         judge_key = os.getenv("JUDGE_API_KEY", os.getenv("OPENROUTER_API_KEY", ""))
@@ -357,7 +440,7 @@ class ZClawBench(BaseBenchmark):
                 try:
                     cached = json.loads(result_file.read_text())
                     if cached.get("status") == "success" and "scores" in cached:
-                        logger.info("[%s] Found cached result, skipping", tid)
+                        log(f"[{tid}] Found cached result, skipping")
                         return {**cached, "_from_cache": True}
                 except Exception:
                     pass
@@ -382,37 +465,34 @@ class ZClawBench(BaseBenchmark):
                 host_workspace.mkdir(parents=True, exist_ok=True)
 
                 # Build env args
-                proxy_http = os.environ.get('HTTP_PROXY_INNER', '')
-                proxy_https = os.environ.get('HTTPS_PROXY_INNER', '')
-                env_args = [
-                    "-e", f"http_proxy={proxy_http}",
-                    "-e", f"https_proxy={proxy_https}",
-                    "-e", f"HTTPS_PROXY={proxy_https}",
-                ]
+                provider = config.get("provider", "openrouter")
+                env_args = []
 
                 # Pass correct API key based on provider
-                provider = config.get("provider", "openrouter")
                 if provider == "minimax":
                     minimax_api_key = os.getenv("MINIMAX_API_KEY", "")
                     env_args.extend(["-e", f"MINIMAX_API_KEY={minimax_api_key}"])
+                    # MiniMax API 不支持代理，清除代理设置
+                    env_args.extend(["-e", "http_proxy=", "-e", "https_proxy=", "-e", "HTTP_PROXY=", "-e", "HTTPS_PROXY="])
                 else:
+                    proxy_http = os.environ.get('HTTP_PROXY_INNER', '')
+                    proxy_https = os.environ.get('HTTPS_PROXY_INNER', '')
+                    env_args.extend([
+                        "-e", f"http_proxy={proxy_http}",
+                        "-e", f"https_proxy={proxy_https}",
+                        "-e", f"HTTPS_PROXY={proxy_https}",
+                    ])
                     openrouter_api_key = os.getenv("OPENROUTER_API_KEY", "")
                     env_args.extend(["-e", f"OPENROUTER_API_KEY={openrouter_api_key}"])
 
                 # Start container
                 _start_container(container_name, workspace_path, openclawpro_dir, DOCKER_IMAGE, env_args)
-                logger.info("[%s] Container started", container_name)
+                log(f"[{container_name}] Container started")
 
                 # Build and run agent
                 exec_script = _build_exec_script(model_key, tid, prompt, config)
-                exec_proc, elapsed_time = _run_agent_in_container(container_name, exec_script, 300)
-                logger.info("[%s] Agent finished in %.2fs, returncode=%d", container_name, elapsed_time, exec_proc.returncode)
-
-                # Log stdout/stderr for debugging
-                if exec_proc.stdout:
-                    logger.debug("[%s] Agent stdout: %s", container_name, exec_proc.stdout[:500])
-                if exec_proc.stderr:
-                    logger.debug("[%s] Agent stderr: %s", container_name, exec_proc.stderr[:500])
+                exec_proc, elapsed_time = _run_agent_in_container(container_name, exec_script, 3600)
+                log(f"[{container_name}] Agent finished in {elapsed_time:.2f}s, returncode={exec_proc.returncode}")
 
                 # Copy results back
                 result_file_host = _copy_results_from_container(container_name, workspace_path, task_output_dir)
@@ -426,13 +506,12 @@ class ZClawBench(BaseBenchmark):
                         result["error"] = agent_result.get("error", "")
                         result["usage"] = {**agent_result.get("usage", {}), "elapsed_time": round(elapsed_time, 2)}
                         transcript = agent_result.get("transcript", [])
-                        logger.info("[%s] Agent result loaded: status=%s, transcript_len=%d",
-                                   container_name, result["status"], len(transcript))
+                        log(f"[{container_name}] Agent result loaded: status={result['status']}, transcript_len={len(transcript)}")
                     except Exception as e:
-                        logger.error("[%s] Failed to load agent result: %s", container_name, e)
+                        log(f"[{container_name}] Failed to load agent result: {e}")
                         result["error"] = f"Failed to load agent result: {e}"
                 else:
-                    logger.warning("[%s] agent_result.json not found at %s", container_name, result_file_host)
+                    log(f"[{container_name}] agent_result.json not found at {result_file_host}")
                     result["error"] = "agent_result.json not found"
 
                 # Run Judge scoring
@@ -450,17 +529,17 @@ class ZClawBench(BaseBenchmark):
                             model_name=config.get("name", model_key)
                         )
                         result["scores"] = {"overall_score": score.overall_score}
-                        logger.info("[%s] Judge score: %.3f", container_name, score.overall_score)
+                        log(f"[{container_name}] Judge score: {score.overall_score:.3f}")
                     except Exception as e:
-                        logger.error("[%s] Judge evaluation failed: %s", container_name, e)
+                        log(f"[{container_name}] Judge evaluation failed: {e}")
                         result["error"] = f"Judge evaluation failed: {e}"
                 else:
                     result["scores"] = {"overall_score": 0.0}
 
             except subprocess.TimeoutExpired:
-                result["error"] = "Timeout after 300 seconds"
+                result["error"] = "Timeout after 3600 seconds"
             except Exception as exc:
-                logger.error("[%s] Execution error: %s", container_name, exc)
+                log(f"[{container_name}] Execution error: {exc}")
                 result["error"] = str(exc)
             finally:
                 subprocess.run(["docker", "rm", "-f", container_name], capture_output=True)
@@ -468,54 +547,76 @@ class ZClawBench(BaseBenchmark):
 
             # Save cache
             try:
-                result_file.write_text(json.dumps(result, indent=2, ensure_ascii=False))
-                logger.info("[%s] Result saved to %s", container_name, result_file)
+                self._save_task_result("zclawbench", model_key, tid, result)
+                log(f"[{tid}] Result saved to outputs/zclawbench/{model_key}/{tid}/result.json")
             except Exception as e:
-                logger.error("[%s] Failed to save result: %s", container_name, e)
+                log(f"[{tid}] Failed to save result: {e}")
 
             return result
 
         # Execute tasks
         results = []
         if parallel <= 1:
-            for task in tasks:
-                results.append(run_single_task_docker(task, config["model"], force=force))
+            for i, task in enumerate(task_list):
+                log(f"[zclawbench] Running task {i+1}/{len(task_list)}: {task['task_id']}")
+                result = run_single_task_docker(task, config["model"], force=force)
+                results.append(result)
+                # Update summary after each task
+                self._build_and_save_summary(
+                    "zclawbench", model_key, all_task_ids,
+                    new_results=results,
+                    compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r)
+                )
         else:
             with ThreadPoolExecutor(max_workers=parallel) as pool:
                 futures = {
                     pool.submit(run_single_task_docker, task, config["model"], force): task["task_id"]
-                    for task in tasks
+                    for task in task_list
                 }
                 for future in as_completed(futures):
                     tid = futures[future]
                     try:
-                        results.append(future.result())
+                        result = future.result()
+                        results.append(result)
+                        # Update summary after each task
+                        self._build_and_save_summary(
+                            "zclawbench", model_key, all_task_ids,
+                            new_results=results,
+                            compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r)
+                        )
                     except Exception as exc:
-                        logger.error("[%s] Thread exception: %s", tid, exc)
+                        log(f"[{tid}] Thread exception: {exc}")
                         results.append({"task_id": tid, "scores": {}, "error": str(exc)})
 
-        # Compute average
-        scores = [r["scores"]["overall_score"] for r in results
-                  if r.get("status") == "success" and r.get("scores")]
-        avg = round(sum(scores) / len(scores), 3) if scores else 0
-
-        return {"score": avg, "passed": len(scores), "total": len(tasks), "details": results}
+        return self._load_summary("zclawbench", model_key)
 
     def collect(self, model_key: str) -> dict | None:
         result_dir = self._find_result_dir("zclawbench")
         if not result_dir:
             return None
-        out_dir = result_dir / "subset" / model_key
+        # Try model-level summary file first (aligned with SkillsBench)
+        summary_file = result_dir / f"{model_key}.json"
+        if summary_file.exists():
+            try:
+                data = json.loads(summary_file.read_text())
+                return {"score": data["score"], "passed": data["passed"], "total": data["total"]}
+            except Exception:
+                pass
+        # Fallback: scan task-level results (unified structure: {model_key}/{task_id}/result.json)
+        out_dir = result_dir / model_key
         if not out_dir.exists():
             return None
         scores = []
-        for f in out_dir.glob("*.json"):
-            try:
-                r = json.loads(f.read_text())
-                if r.get("status") == "success":
-                    scores.append(r["scores"]["overall_score"])
-            except Exception:
-                pass
+        for task_dir in out_dir.iterdir():
+            if task_dir.is_dir():
+                result_file = task_dir / "result.json"
+                if result_file.exists():
+                    try:
+                        r = json.loads(result_file.read_text())
+                        if r.get("status") == "success":
+                            scores.append(r["scores"]["overall_score"])
+                    except Exception:
+                        pass
         if not scores:
             return None
         # 动态检测任务数：如果结果数量 > 18，说明是docker模式跑的116个任务
@@ -538,7 +639,7 @@ class ZClawBench(BaseBenchmark):
         local_data_path = self.base_dir / "benchmarks" / "zclawbench" / "zclawbench.jsonl"
 
         if local_data_path.exists():
-            logger.info("Loading ZClawBench from local: %s (docker=%s, tasks=%d)", local_data_path, use_docker, task_count)
+            log(f"Loading ZClawBench from local: {local_data_path} (docker={use_docker}, tasks={task_count})")
             rows = []
             with open(local_data_path, 'r', encoding='utf-8') as f:
                 for line in f:
@@ -546,7 +647,7 @@ class ZClawBench(BaseBenchmark):
                     if line:
                         rows.append(json.loads(line))
         else:
-            logger.info("Loading ZClawBench from HuggingFace: zai-org/ZClawBench (docker=%s, tasks=%d)", use_docker, task_count)
+            log(f"Loading ZClawBench from HuggingFace: zai-org/ZClawBench (docker={use_docker}, tasks={task_count})")
             from datasets import load_dataset
             ds = load_dataset("zai-org/ZClawBench", split="train")
             rows = list(ds)

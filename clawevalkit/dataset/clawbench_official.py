@@ -10,7 +10,6 @@
 from __future__ import annotations
 
 import json
-import logging
 import os
 import random
 import re
@@ -25,7 +24,6 @@ from typing import Any
 
 from .base import BaseBenchmark
 
-logger = logging.getLogger(__name__)
 
 # Docker 配置
 DOCKER_IMAGE = os.environ.get("CLAWBENCH_DOCKER_IMAGE", "wildclawbench-nanobot:v3")
@@ -166,7 +164,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                 try:
                     cached = json.loads(result_file.read_text())
                     if cached.get("status") == "success":
-                        logger.info("[%s] Found cached result, skipping", tid)
+                        log("[%s] Found cached result, skipping", tid)
                         return cached
                 except Exception:
                     pass
@@ -218,13 +216,13 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                 self._start_container(
                     container_name, workspace_path, bench_dir, openclawpro_dir, env_args
                 )
-                logger.info("[%s] Container started", container_name)
+                log("[%s] Container started", container_name)
 
                 # 构建并执行 agent 脚本
                 timeout = task.get("timeout", 300)
                 exec_script = self._build_exec_script(task, config, timeout)
                 exec_proc, elapsed_time = self._run_agent_in_container(container_name, exec_script, timeout)
-                logger.info("[%s] Agent finished in %.2fs, returncode=%d",
+                log("[%s] Agent finished in %.2fs, returncode=%d",
                            container_name, elapsed_time, exec_proc.returncode)
 
                 # 复制结果
@@ -236,19 +234,19 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                         result["passed"] = agent_result.get("passed", False)
                         result["score"] = agent_result.get("score", 0.0)
                         result["error"] = agent_result.get("error", "")
-                        logger.info("[%s] Agent result: passed=%s, score=%.4f",
+                        log("[%s] Agent result: passed=%s, score=%.4f",
                                    container_name, result["passed"], result["score"])
                     else:
                         result["error"] = "agent_result.json not found"
-                        logger.error("[%s] agent_result.json not found", container_name)
+                        log("[%s] agent_result.json not found", container_name)
                 except Exception as e:
                     result["error"] = f"Failed to load agent result: {e}"
-                    logger.error("[%s] Failed to load agent result: %s", container_name, e)
+                    log("[%s] Failed to load agent result: %s", container_name, e)
 
             except subprocess.TimeoutExpired:
                 result["error"] = f"Timeout after {task.get('timeout', 300)} seconds"
             except Exception as exc:
-                logger.error("[%s] Execution error: %s", container_name, exc)
+                log("[%s] Execution error: %s", container_name, exc)
                 result["error"] = str(exc)
             finally:
                 # 清理
@@ -260,7 +258,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
             try:
                 result_file.write_text(json.dumps(result, indent=2, ensure_ascii=False))
             except Exception as e:
-                logger.error("[%s] Failed to save result: %s", tid, e)
+                log("[%s] Failed to save result: %s", tid, e)
 
             return result
 
@@ -277,7 +275,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                     try:
                         results.append(future.result())
                     except Exception as exc:
-                        logger.error("[%s] Thread exception: %s", tid, exc)
+                        log("[%s] Thread exception: %s", tid, exc)
                         results.append({"task_id": tid, "status": "error", "error": str(exc)})
 
         # 汇总结果
@@ -324,7 +322,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                     tasks.append({"id": task_id, "timeout": timeout, "domain": raw.get("domain", "")})
                     task_dirs[task_id] = task_dir
                 except Exception as e:
-                    logger.warning("Failed to load task %s: %s", task_dir.name, e)
+                    log("Failed to load task %s: %s", task_dir.name, e)
                     continue
 
         return tasks, task_dirs
@@ -413,6 +411,7 @@ sys.path.insert(0, '/app/claw-bench-official/src')
 from harness.agent.nanobot import NanoBotAgent
 from claw_bench.core.task_loader import load_task
 from claw_bench.core.verifier import verify_task
+from ..utils.log import log
 
 # 容器内路径
 workspace = Path('{TMP_WORKSPACE}')

@@ -19,6 +19,7 @@ import subprocess
 import tempfile
 import time
 import uuid
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
 
@@ -145,6 +146,10 @@ class SkillsBench(BaseBenchmark):
     TASK_COUNT = 56
     SCORE_RANGE = "0-100%"
 
+    # Container work directory (fixed, no mount point needed)
+    # Uses docker cp instead of volume mounts for file transfer
+    CONTAINER_WORK_DIR = "/work"
+
     def __init__(self, use_docker: bool = True, reuse_container: bool = False, **kwargs):
         self.use_docker = use_docker
         self.reuse_container = reuse_container
@@ -162,7 +167,7 @@ class SkillsBench(BaseBenchmark):
         return local  # 返回本地路径（不存在时 evaluate 会报错）
 
     def evaluate(self, model_key: str, config: dict, sample: int = 0,
-                 transcripts_dir: Path = None, **kwargs) -> dict:
+                 transcripts_dir: Path = None, parallel: int = 1, **kwargs) -> dict:
         """运行 SkillsBench 多轮 agent 评测。
 
         整体流程:
@@ -180,13 +185,14 @@ class SkillsBench(BaseBenchmark):
 
         # Docker 模式走专用路径
         if use_docker:
-            return self._evaluate_docker(model_key, config, sample, transcripts_dir, **kwargs)
+            return self._evaluate_docker(model_key, config, sample, transcripts_dir, parallel=parallel, **kwargs)
 
         tasks_dir = self._get_tasks_dir()
         if not tasks_dir.exists():
             return {"score": 0, "total": 0, "error": f"tasks dir not found: {tasks_dir}"}
 
         max_turns = kwargs.get("max_turns", 3)
+        force = kwargs.get("force", False)
         all_tasks = sorted([d.name for d in tasks_dir.iterdir() if d.is_dir()])
         # 根据 use_docker 决定跳过哪些任务
         if self.use_docker:
@@ -195,14 +201,37 @@ class SkillsBench(BaseBenchmark):
         else:
             # 不使用 Docker：跳过 Docker 专用任务，但保留依赖容易解决的任务
             skip_set = SKIP_TASKS - EASY_SKIP_TASKS
-        task_names = [t for t in all_tasks if t not in skip_set]
+        all_task_names = [t for t in all_tasks if t not in skip_set]  # 所有有效任务，用于汇总
 
         # Support task_ids filter from --task argument
         task_ids = kwargs.get("task_ids")
         if task_ids:
-            task_names = [t for t in task_names if t in task_ids]
-            if not task_names:
+            all_task_names = [t for t in all_task_names if t in task_ids]
+            if not all_task_names:
                 return {"score": 0, "total": 0, "error": f"no tasks match task_ids: {task_ids}"}
+
+        # 先基于已有缓存生成初始汇总（sample 前，反映所有任务的进度）
+        self._build_and_save_summary(model_key, all_task_names, max_turns=max_turns)
+
+        task_names = all_task_names  # 复制用于后续过滤
+
+        # Pre-filter tasks that already have cached results (unless force=True)
+        if not force:
+            uncached_tasks = []
+            for t in task_names:
+                task_result_dir = self.results_dir / "skillsbench" / model_key / t
+                dedup_file = task_result_dir / "result.json"
+                if not dedup_file.exists():
+                    uncached_tasks.append(t)
+                else:
+                    try:
+                        cached = json.loads(dedup_file.read_text())
+                        if cached.get("status") not in ("passed", "failed"):
+                            uncached_tasks.append(t)  # Incomplete result, re-run
+                    except Exception:
+                        uncached_tasks.append(t)  # Corrupted result, re-run
+            log(f"[skillsbench] {len(task_names) - len(uncached_tasks)} tasks already cached, {len(uncached_tasks)} remaining")
+            task_names = uncached_tasks
 
         if sample and sample < len(task_names):
             random.seed(42)
@@ -220,17 +249,12 @@ class SkillsBench(BaseBenchmark):
             if result.get("status") == "passed":
                 passed += 1
             results.append(result)
+            # 每个任务完成后更新汇总（基于所有任务）
+            self._build_and_save_summary(model_key, all_task_names, new_results=results, max_turns=max_turns)
 
-        total = len(task_names)
-        score = round(passed / total * 100, 1) if total else 0
-        summary = {
-            "model": model_key, "total": total, "passed": passed,
-            "failed": total - passed, "score": score,
-            "pass_rate": f"{passed}/{total}", "max_turns": max_turns,
-            "skipped_docker": len(SKIP_TASKS), "results": results,
-        }
-        self.save_result("skillsbench", model_key, summary)
-        return summary
+        # 最终汇总也基于所有任务（会覆盖中间结果）
+        self._build_and_save_summary(model_key, all_task_names, new_results=results, max_turns=max_turns)
+        return self._load_summary(model_key)
 
     def _run_single_task(self, task_name: str, config: dict, tasks_dir: Path,
                          workspace_base: Path, max_turns: int = 3,
@@ -345,6 +369,52 @@ class SkillsBench(BaseBenchmark):
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(f, dst)
 
+    def _load_summary(self, model_key: str) -> dict:
+        """读取已保存的汇总文件。"""
+        result_f = self.results_dir / "skillsbench" / f"{model_key}.json"
+        if result_f.exists():
+            try:
+                return json.loads(result_f.read_text())
+            except Exception:
+                pass
+        return {"model": model_key, "total": 0, "passed": 0, "score": 0}
+
+    def _build_and_save_summary(self, model_key: str, task_names: list,
+                                new_results: list = None, max_turns: int = 3):
+        """从 per-task 缓存 + 新结果构建汇总并保存。
+
+        在运行开始时和每个任务完成后调用，确保中断后也能保留最新进度。
+        """
+        results = list(new_results) if new_results else []
+
+        # 收集已有缓存（排除 new_results 中已有的）
+        new_task_names = {r.get("task") for r in results}
+        for t in task_names:
+            if t in new_task_names:
+                continue
+            f = self.results_dir / "skillsbench" / model_key / t / "result.json"
+            if f.exists():
+                try:
+                    cached = json.loads(f.read_text())
+                    cached["_from_cache"] = True
+                    results.append(cached)
+                except Exception:
+                    pass
+
+        passed = sum(1 for r in results if r.get("status") == "passed")
+        total = len(task_names)
+        scored = len(results)
+        score = round(passed / total * 100, 1) if total else 0
+        summary = {
+            "model": model_key, "total": total, "passed": passed,
+            "failed": scored - passed, "pending": total - scored,
+            "score": score,
+            "pass_rate": f"{passed}/{total}", "max_turns": max_turns,
+            "skipped_docker": len(SKIP_TASKS_DOCKER), "results": results,
+        }
+        self.save_result("skillsbench", model_key, summary)
+        log(f"[skillsbench] 汇总已保存: {passed}/{total} passed, {total - scored} pending")
+
     def _remove_container(self, container_name: str):
         """清理 Docker 容器（如果存在）。"""
         try:
@@ -354,7 +424,7 @@ class SkillsBench(BaseBenchmark):
             pass
 
     def _evaluate_docker(self, model_key: str, config: dict, sample: int = 0,
-                         transcripts_dir: Path = None, **kwargs) -> dict:
+                         transcripts_dir: Path = None, parallel: int = 1, **kwargs) -> dict:
         """Per-task Docker 模式: 每个任务用自己的 Dockerfile 构建镜像，在容器内运行 NanoBotAgent。
 
         工作流:
@@ -378,16 +448,40 @@ class SkillsBench(BaseBenchmark):
             return {"score": 0, "total": 0, "error": f"tasks dir not found: {tasks_dir}"}
 
         max_turns = kwargs.get("max_turns", 3)
+        force = kwargs.get("force", False)
         all_tasks = sorted([d.name for d in tasks_dir.iterdir() if d.is_dir()])
         # Docker 模式下跳过 SKIP_TASKS_DOCKER，但不再跳过 SKIP_TASKS（Docker 可以处理）
-        task_names = [t for t in all_tasks if t not in SKIP_TASKS_DOCKER]
+        all_task_names = [t for t in all_tasks if t not in SKIP_TASKS_DOCKER]  # 所有有效任务，用于汇总
 
         # Support task_ids filter from --task argument
         task_ids = kwargs.get("task_ids")
         if task_ids:
-            task_names = [t for t in task_names if t in task_ids]
-            if not task_names:
+            all_task_names = [t for t in all_task_names if t in task_ids]
+            if not all_task_names:
                 return {"score": 0, "total": 0, "error": f"no tasks match task_ids: {task_ids}"}
+
+        # 先基于已有缓存生成初始汇总（sample 前，反映所有任务的进度）
+        self._build_and_save_summary(model_key, all_task_names, max_turns=max_turns)
+
+        task_names = all_task_names  # 复制用于后续过滤
+
+        # Pre-filter tasks that already have cached results (unless force=True)
+        if not force:
+            uncached_tasks = []
+            for t in task_names:
+                task_result_dir = self.results_dir / "skillsbench" / model_key / t
+                dedup_file = task_result_dir / "result.json"
+                if not dedup_file.exists():
+                    uncached_tasks.append(t)
+                else:
+                    try:
+                        cached = json.loads(dedup_file.read_text())
+                        if cached.get("status") not in ("passed", "failed"):
+                            uncached_tasks.append(t)  # Incomplete result, re-run
+                    except Exception:
+                        uncached_tasks.append(t)  # Corrupted result, re-run
+            log(f"[skillsbench] {len(task_names) - len(uncached_tasks)} tasks already cached, {len(uncached_tasks)} remaining")
+            task_names = uncached_tasks
 
         if sample and sample < len(task_names):
             random.seed(42)
@@ -397,35 +491,52 @@ class SkillsBench(BaseBenchmark):
         passed = 0
 
         openrouter_api_key = os.getenv("OPENROUTER_API_KEY", "")
-        proxy_http = os.environ.get('HTTP_PROXY_INNER', '')
-        proxy_https = os.environ.get('HTTPS_PROXY_INNER', '')
-        # Convert localhost proxy to host.docker.internal for container access
-        if proxy_http and '127.0.0.1' in proxy_http:
-            proxy_http = proxy_http.replace('127.0.0.1', 'host.docker.internal')
-        if proxy_https and '127.0.0.1' in proxy_https:
-            proxy_https = proxy_https.replace('127.0.0.1', 'host.docker.internal')
+        # Resolve proxy: prefer INNER vars, fallback to standard proxy vars
+        raw_proxy_http = (
+            os.environ.get('HTTP_PROXY_INNER', '')
+            or os.environ.get('HTTP_PROXY', '')
+            or os.environ.get('http_proxy', '')
+        )
+        raw_proxy_https = (
+            os.environ.get('HTTPS_PROXY_INNER', '')
+            or os.environ.get('HTTPS_PROXY', '')
+            or os.environ.get('https_proxy', '')
+        )
+        # Docker build runs on host → use original proxy (127.0.0.1 works)
+        build_proxy_http = raw_proxy_http
+        build_proxy_https = raw_proxy_https
+        # Docker run inside container → convert to host.docker.internal
+        run_proxy_http = raw_proxy_http
+        run_proxy_https = raw_proxy_https
+        for old in ('127.0.0.1', 'localhost'):
+            if run_proxy_http and old in run_proxy_http:
+                run_proxy_http = run_proxy_http.replace(old, 'host.docker.internal')
+            if run_proxy_https and old in run_proxy_https:
+                run_proxy_https = run_proxy_https.replace(old, 'host.docker.internal')
 
-        for i, task_name in enumerate(task_names):
-            # Per-task deduplication: check for existing result before running
-            task_result_dir = self.results_dir / "skillsbench" / model_key / task_name
-            dedup_file = task_result_dir / "result.json"
-            if dedup_file.exists():
-                try:
-                    cached = json.loads(dedup_file.read_text())
-                    if cached.get("status") in ("passed", "failed"):
-                        log(f"[{task_name}] Found cached result, skipping")
-                        cached["_from_cache"] = True
-                        results.append(cached)
-                        if cached.get("status") == "passed":
-                            passed += 1
-                        continue
-                except Exception:
-                    pass
+        def run_single_task(task_name: str) -> dict:
+            """运行单个任务: 缓存检查 → _run_single_task_docker → 保存结果。"""
+            # Per-task deduplication: check for existing result before running (skip if force=True)
+            if not force:
+                task_result_dir = self.results_dir / "skillsbench" / model_key / task_name
+                dedup_file = task_result_dir / "result.json"
+                if dedup_file.exists():
+                    try:
+                        cached = json.loads(dedup_file.read_text())
+                        if cached.get("status") in ("passed", "failed"):
+                            log(f"[{task_name}] Found cached result, skipping")
+                            cached["_from_cache"] = True
+                            return cached
+                    except Exception:
+                        pass
+            else:
+                log(f"[{task_name}] Force mode: ignoring cached result")
 
             start = time.time()
             result = self._run_single_task_docker(
                 task_name, config, tasks_dir, max_turns,
-                openclawpro_dir, openrouter_api_key, proxy_http, proxy_https,
+                openclawpro_dir, openrouter_api_key, run_proxy_http, run_proxy_https,
+                build_proxy_http=build_proxy_http, build_proxy_https=build_proxy_https,
                 transcripts_dir=transcripts_dir, model_key=model_key
             )
             result["elapsed_s"] = round(time.time() - start, 2)
@@ -438,105 +549,56 @@ class SkillsBench(BaseBenchmark):
             )
             log(f"[{task_name}] Saved result to {task_result_dir / 'result.json'}")
 
-            if result.get("status") == "passed":
-                passed += 1
-            results.append(result)
+            return result
 
-        total = len(task_names)
-        score = round(passed / total * 100, 1) if total else 0
-        summary = {
-            "model": model_key, "total": total, "passed": passed,
-            "failed": total - passed, "score": score,
-            "pass_rate": f"{passed}/{total}", "max_turns": max_turns,
-            "skipped_docker": len(SKIP_TASKS_DOCKER), "results": results,
-        }
-        self.save_result("skillsbench", model_key, summary)
-        return summary
+        if parallel > 1:
+            log(f"[skillsbench] Running {len(task_names)} tasks with parallel={parallel}")
+            with ThreadPoolExecutor(max_workers=parallel) as executor:
+                future_to_task = {
+                    executor.submit(run_single_task, t): t for t in task_names
+                }
+                for future in as_completed(future_to_task):
+                    task_name = future_to_task[future]
+                    try:
+                        result = future.result()
+                    except Exception as exc:
+                        log(f"[{task_name}] Thread error: {exc}")
+                        result = {"task": task_name, "status": "error", "error": str(exc)[:500]}
+                    if result.get("status") == "passed":
+                        passed += 1
+                    results.append(result)
+                    # 每个任务完成后更新汇总（基于所有任务）
+                    self._build_and_save_summary(model_key, all_task_names, new_results=results, max_turns=max_turns)
+        else:
+            for i, task_name in enumerate(task_names):
+                result = run_single_task(task_name)
+                if result.get("status") == "passed":
+                    passed += 1
+                results.append(result)
+                # 每个任务完成后更新汇总（基于所有任务）
+                self._build_and_save_summary(model_key, all_task_names, new_results=results, max_turns=max_turns)
 
-    def _setup_container_paths(self, container_name: str, instruction: str, mount_point: str, task_tests_src: Path = None, task_name: str = None):
-        """Detect instruction paths and create appropriate symlinks in container.
-
-        Different tasks use different path patterns:
-        - /root/input/ + /root/output/ (e.g., edit-pdf)
-        - /workspace/ (e.g., spring-boot-jakarta-migration)
-        - /app/workspace/ (e.g., flink-query, lean4-proof, jpg-ocr-stat)
-        - /root/workspace/ (e.g., parallel-tfidf-search)
-
-        The mount_point is determined by the task pattern:
-        - /app/workspace/ tasks: mount at /app/workspace
-        - All other tasks: mount at /workspace
-
-        We create symlinks for /root/input and /root/output based on the mount point.
-        """
-        # Also check test files for path patterns
-        test_content = ""
-        if task_tests_src and task_tests_src.exists():
-            for f in task_tests_src.glob("*.py"):
-                try:
-                    test_content += f.read_text(encoding="utf-8")
-                except:
-                    pass
-        combined_content = instruction + test_content
-
-        # Pattern: /root/input/ and /root/output/
-        if "/root/input/" in combined_content or "/root/output/" in combined_content:
-            subprocess.run(["docker", "exec", container_name, "mkdir", "-p", f"{mount_point}/input", f"{mount_point}/output"],
-                          capture_output=True, text=True)
-            subprocess.run(["docker", "exec", container_name, "ln", "-sf", f"{mount_point}/input", "/root/input"],
-                          capture_output=True, text=True)
-            subprocess.run(["docker", "exec", container_name, "ln", "-sf", f"{mount_point}/output", "/root/output"],
-                          capture_output=True, text=True)
-
-        # Pattern: /app/ (but not /app/workspace which is the mount point itself)
-        # Create symlink so /app maps to mount_point, and subdirectories work automatically
-        if "/app/" in combined_content and "/app/workspace/" not in combined_content:
-            # Remove original /app directory and replace with symlink to mount_point
-            subprocess.run(["docker", "exec", container_name, "rm", "-rf", "/app"],
-                          capture_output=True, text=True)
-            subprocess.run(["docker", "exec", container_name, "ln", "-sf", mount_point, "/app"],
-                          capture_output=True, text=True)
-            # Ensure data and output directories exist inside mount_point
-            if "/app/data/" in combined_content:
-                subprocess.run(["docker", "exec", container_name, "mkdir", "-p", f"{mount_point}/data"],
-                              capture_output=True, text=True)
-            if "/app/output/" in combined_content:
-                subprocess.run(["docker", "exec", container_name, "mkdir", "-p", f"{mount_point}/output"],
-                              capture_output=True, text=True)
-
-        # Pattern: /root/workspace/ - mount at /workspace already works since /workspace != /root/workspace
-        # No symlink needed for this pattern
-
-        # Pattern: pure /root/ paths (e.g., /root/scan_data.stl, /root/mass_report.json)
-        # If instruction or tests use /root/ but not /root/input/, /root/output/, or /root/workspace/
-        # AND mount_point is /workspace (not /root), we need to symlink /root to mount_point
-        # However, if mount_point is already /root, no symlink is needed
-        if mount_point != "/root" and "/root/" in combined_content and "/root/input/" not in combined_content and "/root/output/" not in combined_content and "/root/workspace/" not in combined_content:
-            # Create symlink /root -> mount_point
-            # But first we need to move any data from /root to mount_point
-            # and unmount /root/OpenClawPro to prevent deletion propagation
-            subprocess.run(["docker", "exec", container_name, "bash", "-c",
-                          f"mkdir -p {mount_point}/data {mount_point}/.claude/skills 2>/dev/null || true"],
-                          capture_output=True, text=True)
-            # Copy data from /root to mount_point (preserves Dockerfile COPIED data)
-            subprocess.run(["docker", "exec", container_name, "bash", "-c",
-                          "cp -r /root/data/* " + mount_point + "/data/ 2>/dev/null || true"],
-                          capture_output=True, text=True)
-            # Unmount /root/OpenClawPro before removing /root
-            subprocess.run(["docker", "exec", container_name, "umount", "/root/OpenClawPro"],
-                          capture_output=True, text=True)
-            # Now safe to replace /root with symlink
-            subprocess.run(["docker", "exec", container_name, "rm", "-rf", "/root"],
-                          capture_output=True, text=True)
-            subprocess.run(["docker", "exec", container_name, "ln", "-sf", mount_point, "/root"],
-                          capture_output=True, text=True)
-            task_display = task_name or container_name
-            print(f"  [{task_display}] Created symlink /root -> {mount_point} for /root/ path pattern")
+        # 最终汇总也基于所有任务（会覆盖中间结果）
+        self._build_and_save_summary(model_key, all_task_names, new_results=results, max_turns=max_turns)
+        return self._load_summary(model_key)
 
     def _run_single_task_docker(self, task_name: str, config: dict, tasks_dir: Path,
                                  max_turns: int, openclawpro_dir: Path,
                                  openrouter_api_key: str, proxy_http: str, proxy_https: str,
+                                 build_proxy_http: str = "", build_proxy_https: str = "",
                                  transcripts_dir: Path = None, model_key: str = None) -> dict:
-        """在 per-task Docker 容器内运行单个 SkillsBench 任务。"""
+        """在 per-task Docker 容器内运行单个 SkillsBench 任务 (使用 docker cp, 无需挂载点)。
+
+        简化流程:
+        1. 构建镜像
+        2. 创建宿主机工作空间
+        3. 复制环境文件到工作空间
+        4. 启动容器 (无挂载)
+        5. 通过 docker cp 复制文件到容器
+        6. 运行 agent (HarborNanoBotAgent)
+        7. 通过 docker cp 复制结果回宿主机
+        8. 清理容器
+        """
         task_dir = tasks_dir / task_name
         instruction = (task_dir / "instruction.md").read_text(encoding="utf-8")
         env_dockerfile = task_dir / "environment" / "Dockerfile"
@@ -546,35 +608,43 @@ class SkillsBench(BaseBenchmark):
 
         # Build per-task Docker image
         task_image = f"skillsbench-task-{task_name}:latest"
-        # Use stable container name for reuse mode, otherwise unique name
-        reuse_container = getattr(self, 'reuse_container', False)
-        if reuse_container:
-            container_name = f"skillsbench-task-{task_name}"
-        else:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            run_id = uuid.uuid4().hex[:6]
-            container_name = f"sb_{task_name}_{timestamp}_{run_id}"
+        container_name = f"sb-{task_name}"
 
-        # Check if container already exists (reuse mode)
+        # Check if container already exists AND is running (reuse mode)
         container_exists = False
-        if reuse_container:
+        if self.reuse_container:
             check_proc = subprocess.run(
                 ["docker", "ps", "-a", "--filter", f"name={container_name}", "--format", "{{.Names}}"],
                 capture_output=True, text=True
             )
-            if container_name in check_proc.stdout.strip():
-                container_exists = True
-                print(f"  [reuse-container] Reusing existing container: {container_name}")
+            if container_name in check_proc.stdout:
+                # Check if container is actually running
+                running_proc = subprocess.run(
+                    ["docker", "ps", "--filter", f"name={container_name}", "--filter", "status=running", "--format", "{{.Names}}"],
+                    capture_output=True, text=True
+                )
+                if container_name in running_proc.stdout:
+                    container_exists = True
+                    log(f"[{task_name}] ♻️  Reusing existing container")
+                else:
+                    # Container exists but stopped — restart it
+                    log(f"[{task_name}] ♻️  Restarting stopped container")
+                    subprocess.run(
+                        ["docker", "start", container_name],
+                        capture_output=True, text=True, timeout=60
+                    )
+                    container_exists = True
 
-        # Build image (only if container doesn't exist or not in reuse mode)
-        if not (reuse_container and container_exists):
-            log(f"[{task_name}] 🔨 Building Docker image {task_image}...")
+        # Build image if not in reuse mode or container doesn't exist
+        if not container_exists:
+            log(f"[{task_name}] 🔨 Building image...")
+            # Use build_proxy (host proxy) for docker build
+            bp_http = build_proxy_http or proxy_http
+            bp_https = build_proxy_https or proxy_https
             build_cmd = ["docker", "build", "-t", task_image, "-f", str(env_dockerfile)]
-            if proxy_http:
-                build_cmd.insert(2, "--build-arg")
-                build_cmd.insert(3, f"http_proxy={proxy_http}")
-                build_cmd.insert(2, "--build-arg")
-                build_cmd.insert(3, f"https_proxy={proxy_https}")
+            if bp_http:
+                build_cmd += ["--build-arg", f"http_proxy={bp_http}",
+                              "--build-arg", f"https_proxy={bp_https}"]
             build_cmd.append(str(task_dir / "environment"))
 
             try:
@@ -582,19 +652,18 @@ class SkillsBench(BaseBenchmark):
                 if build_proc.returncode != 0:
                     return {"task": task_name, "status": "skipped",
                             "error": f"docker build failed: {build_proc.stderr[:500]}"}
-                log(f"[{task_name}] ✅ Image built successfully")
             except subprocess.TimeoutExpired:
                 return {"task": task_name, "status": "skipped", "error": "docker build timeout"}
             except Exception as e:
                 return {"task": task_name, "status": "skipped", "error": str(e)}
 
-        # Create workspace directory for this task (always fresh)
+        # Create host workspace
         workspace_host = Path(f"/tmp/skillsbench_workspace/{task_name}")
         if workspace_host.exists():
             shutil.rmtree(workspace_host)
         workspace_host.mkdir(parents=True)
 
-        # Copy environment files (except Dockerfile) to workspace
+        # Copy environment files to workspace
         env_dir = task_dir / "environment"
         for f in env_dir.rglob("*"):
             if f.is_file() and f.name != "Dockerfile":
@@ -603,35 +672,28 @@ class SkillsBench(BaseBenchmark):
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(f, dst)
 
-        # Determine mount point based on instruction path pattern
-        # /app/workspace/ tasks need mount at /app/workspace
-        # /root/ tasks (without /root/input, /root/output, /root/workspace) need mount at /root
-        # All others at /workspace
-        if "/app/workspace/" in instruction:
-            mount_point = "/app/workspace"
-        elif "/root/" in instruction and "/root/input/" not in instruction and "/root/output/" not in instruction and "/root/workspace/" not in instruction:
-            mount_point = "/root"
-        else:
-            mount_point = "/workspace"
+        # Copy solution files to workspace (needed by pytest for ground_truth etc.)
+        solution_dir = task_dir / "solution"
+        if solution_dir.exists():
+            for f in solution_dir.rglob("*"):
+                if f.is_file():
+                    rel = f.relative_to(solution_dir.parent)
+                    dst = workspace_host / rel
+                    dst.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(f, dst)
 
-        # Start container (if not reusing)
-        if not (reuse_container and container_exists):
-            log(f"[{task_name}] 🐳 Starting container {container_name}...")
-            # Prepare env args
+        # Start container (no mounts!)
+        if not container_exists:
+            log(f"[{task_name}] 🐳 Starting container...")
             env_args = [
                 "-e", f"http_proxy={proxy_http}",
                 "-e", f"https_proxy={proxy_https}",
-                "-e", f"HTTP_PROXY={proxy_http}",
-                "-e", f"HTTPS_PROXY={proxy_https}",
                 "-e", f"OPENROUTER_API_KEY={openrouter_api_key}",
             ]
 
             docker_run_cmd = [
                 "docker", "run", "-d",
                 "--name", container_name,
-                "-v", f"{workspace_host}:{mount_point}:rw",
-                "-v", f"{openclawpro_dir}:/root/OpenClawPro:ro",  # Read-only to protect host files
-                "-w", "/",
                 *env_args,
                 task_image,
                 "/bin/bash", "-c", "tail -f /dev/null",
@@ -642,101 +704,41 @@ class SkillsBench(BaseBenchmark):
                 if run_proc.returncode != 0:
                     return {"task": task_name, "status": "error",
                             "error": f"container start failed: {run_proc.stderr[:500]}"}
-                log(f"[{task_name}] ✅ Container started")
-
-                # When using /root as mount point, backup original /root content for reuse
-                if mount_point == "/root":
-                    print(f"  [setup] Backing up original /root content...")
-                    subprocess.run(
-                        ["docker", "exec", container_name, "bash", "-c",
-                         "cp -r /root /root_data_backup 2>/dev/null || true"],
-                        capture_output=True, text=True, timeout=30
-                    )
             except subprocess.TimeoutExpired:
                 return {"task": task_name, "status": "error", "error": "container start timeout"}
             except Exception as e:
                 return {"task": task_name, "status": "error", "error": str(e)}
-        else:
-            # Reusing container: ensure it's running
-            # Note: workspace_host path is fixed (/tmp/skillsbench_workspace/{task_name}),
-            # so the existing volume mount still works after we recreate the directory
-            start_proc = subprocess.run(
-                ["docker", "start", container_name],
-                capture_output=True, text=True, timeout=30
-            )
-            if start_proc.returncode != 0:
-                return {"task": task_name, "status": "error",
-                        "error": f"failed to start existing container: {start_proc.stderr[:500]}"}
-            print(f"  [reuse-container] Container started with fresh workspace mount")
 
-            # When reusing container with /root mount point, ensure /root directory exists
-            # and has the correct content (mount might be empty after workspace recreation)
-            if mount_point == "/root":
-                # Check if /root/data exists, if not copy from image
-                check_data = subprocess.run(
-                    ["docker", "exec", container_name, "ls", "/root/data"],
-                    capture_output=True, text=True, timeout=10
-                )
-                if check_data.returncode != 0:
-                    print(f"  [reuse-container] Restoring /root/data from image...")
-                    # Copy data from image's original /root/data (backed up at /root_data_backup)
-                    subprocess.run(
-                        ["docker", "exec", container_name, "bash", "-c",
-                         "if [ -d /root_data_backup ]; then cp -r /root_data_backup/* /root/ 2>/dev/null || true; fi"],
-                        capture_output=True, text=True, timeout=30
-                    )
-                    # Alternative: copy from environment directory if backup doesn't exist
-                    subprocess.run(
-                        ["docker", "cp", f"{task_dir / 'environment' / 'data'}", f"{container_name}:/root/data"],
-                        capture_output=True, text=True, timeout=30
-                    )
-                    subprocess.run(
-                        ["docker", "cp", f"{task_dir / 'environment' / 'skills'}", f"{container_name}:/root/skills"],
-                        capture_output=True, text=True, timeout=30
-                    )
+        # Copy files to container via docker cp
+        log(f"[{task_name}] 📤 Copying files to container...")
+        subprocess.run(
+            ["docker", "cp", f"{workspace_host}/.", f"{container_name}:{self.CONTAINER_WORK_DIR}"],
+            capture_output=True, text=True, timeout=60
+        )
 
-        # For /app/ tasks: copy data and skills BEFORE creating symlinks
-        # (Once /app -> /workspace symlink exists, /app/data and /app/skills would resolve to /workspace/*)
-        if "/app/" in instruction and "/app/workspace/" not in instruction:
-            # Copy data from image's /app/data to /workspace/data before symlink is created
-            subprocess.run(["docker", "exec", container_name, "mkdir", "-p", "/workspace/data"],
-                          capture_output=True, text=True)
-            subprocess.run(
-                ["docker", "exec", container_name, "cp", "-r", "/app/data/.", "/workspace/data"],
-                capture_output=True, text=True, timeout=60
-            )
-            # Copy skills from image's /app/skills to /workspace/skills
-            subprocess.run(["docker", "exec", container_name, "mkdir", "-p", "/workspace/skills"],
-                          capture_output=True, text=True)
-            subprocess.run(
-                ["docker", "exec", container_name, "cp", "-r", "/app/skills/.", "/workspace/skills"],
-                capture_output=True, text=True, timeout=60
-            )
+        # Create output directory in container
+        subprocess.run(
+            ["docker", "exec", container_name, "mkdir", "-p", f"{self.CONTAINER_WORK_DIR}/output"],
+            capture_output=True, text=True
+        )
 
-        # Create symlink for host workspace path so agent commands work in container
-        # Agent uses host paths (e.g., /tmp/skillsbench_workspace/task), but commands run in container
-        host_workspace = f"/tmp/skillsbench_workspace/{task_name}"
-        subprocess.run(["docker", "exec", container_name, "mkdir", "-p", "/tmp/skillsbench_workspace"],
-                      capture_output=True, text=True)
-        subprocess.run(["docker", "exec", container_name, "ln", "-sf", mount_point, host_workspace],
-                      capture_output=True, text=True)
-
-        # Dynamically create symlinks based on instruction and test paths
-        task_tests_src = self._get_tasks_dir() / task_name / "tests"
-        self._setup_container_paths(container_name, instruction, mount_point, task_tests_src, task_name)
-
-        # Harbor Architecture: Agent runs on host, commands via docker exec
+        # Run agent
         try:
-            result = self._execute_nanobot_on_host(
+            result = self._run_agent_in_container(
                 container_name, task_name, config, instruction, workspace_host,
-                max_turns, model_key, transcripts_dir, mount_point
+                max_turns, model_key, transcripts_dir, tasks_dir
             )
         except Exception as e:
             result = {"task": task_name, "status": "error", "error": str(e)[:500]}
         finally:
-            # Clean up container (unless reuse_container is True)
-            keep_for_debug = getattr(self, 'reuse_container', False)
-            if not keep_for_debug:
+            # Copy results back
+            log(f"[{task_name}] 📥 Copying results back...")
+            subprocess.run(
+                ["docker", "cp", f"{container_name}:{self.CONTAINER_WORK_DIR}/output/", str(workspace_host)],
+                capture_output=True, text=True, timeout=30
+            )
+            # Cleanup container and image (skip if reuse_container=True)
+            if not self.reuse_container:
                 self._remove_container(container_name)
                 # Clean up image
                 try:
@@ -744,29 +746,25 @@ class SkillsBench(BaseBenchmark):
                                   capture_output=True, text=True, timeout=60)
                 except Exception:
                     pass
-            else:
-                print(f"  [keep-container] Container '{container_name}' preserved for debugging.")
 
         return result
 
-    def _execute_nanobot_on_host(self, container_name: str, task_name: str,
-                                      config: dict, instruction: str, workspace_host: Path,
-                                      max_turns: int, model_key: str,
-                                      transcripts_dir: Path = None,
-                                      mount_point: str = "/workspace") -> dict:
-        """Harbor Architecture: 在宿主机运行 NanoBotAgent，命令通过 docker exec 在容器内执行。
+    def _run_agent_in_container(self, container_name: str, task_name: str,
+                                 config: dict, instruction: str, workspace_host: Path,
+                                 max_turns: int, model_key: str,
+                                 transcripts_dir: Path = None,
+                                 tasks_dir: Path = None) -> dict:
+        """在容器内运行 NanoBotAgent (通过 docker cp 传输文件, 无需挂载点).
 
         工作流程:
-        1. NanoBotAgent 在宿主机运行 (使用 Python 3.11)
-        2. 文件操作直接在工作空间 (挂载到容器)
-        3. 命令执行通过 DockerExecTool 代理到容器内 (docker exec)
+        1. 使用 HarborNanoBotAgent 在宿主机运行
+        2. 文件通过 docker cp 复制到容器
+        3. 命令通过 DockerExecTool (docker exec) 在容器内执行
         4. pytest 通过 docker exec 在容器内运行
         """
-        # Import HarborNanoBotAgent from OpenClawPro
-        # Use same path resolution logic as import_nanobot_agent
         import sys
-        from pathlib import Path
 
+        # Import HarborNanoBotAgent from OpenClawPro
         openclawpro_path = None
         candidates = [
             os.getenv("OPENCLAWPRO_DIR"),
@@ -788,10 +786,13 @@ class SkillsBench(BaseBenchmark):
 
         from harness.agent.nanobot import HarborNanoBotAgent
 
-        # In Harbor architecture, agent sees container paths, not host paths
+        # Modify instruction to use container work dir path
+        modified_instruction = instruction.replace("/root/", f"{self.CONTAINER_WORK_DIR}/")
+        modified_instruction = modified_instruction.replace("/workspace/", f"{self.CONTAINER_WORK_DIR}/")
+
         prompt = (
-            f"Complete this programming task in the workspace {mount_point}.\n\n"
-            f"TASK INSTRUCTIONS:\n{instruction}\n\n"
+            f"Complete this programming task in the workspace {self.CONTAINER_WORK_DIR}.\n\n"
+            f"TASK INSTRUCTIONS:\n{modified_instruction}\n\n"
             f"Use the tools to write files and execute code directly in the workspace. "
             f"All output files must be created at the paths specified in the instructions."
         )
@@ -801,10 +802,9 @@ class SkillsBench(BaseBenchmark):
         test_output = ""
 
         # Create HarborNanoBotAgent on host machine
-        # HarborNanoBotAgent uses DockerExecTool to run commands in container via docker exec
         agent = HarborNanoBotAgent(
             container_name=container_name,
-            mount_point=mount_point,
+            mount_point=self.CONTAINER_WORK_DIR,
             model=config["model"],
             api_url=config["api_url"],
             api_key=config["api_key"],
@@ -832,12 +832,11 @@ class SkillsBench(BaseBenchmark):
 
             # Run pytest inside container via docker exec
             log(f"[{task_name}] 🧪 Running pytest...")
-            passed, test_output = self._run_pytest_harbor(container_name, workspace_host, mount_point)
+            passed, test_output = self._run_pytest_in_container(container_name, workspace_host, tasks_dir)
             log(f"[{task_name}] 🧪 Pytest output: {test_output[:500]}...")
 
             if passed:
                 log(f"[{task_name}] ✅ Pytest passed!")
-                # Save transcript on success
                 if transcripts_dir and model_key and all_transcripts:
                     self._save_transcript(model_key, task_name, all_transcripts)
                 return {"task": task_name, "status": "passed", "turns": turn + 1}
@@ -845,11 +844,10 @@ class SkillsBench(BaseBenchmark):
             # pytest failed → prepare feedback prompt for next turn
             log(f"[{task_name}] ❌ Pytest failed, preparing feedback...")
             if turn < max_turns - 1:
-                workspace_files = _list_workspace_files(workspace_host)
                 prompt = (
-                    f"The tests FAILED. Fix the code in the workspace {mount_point}.\n\n"
+                    f"The tests FAILED. Fix the code in the workspace {self.CONTAINER_WORK_DIR}.\n\n"
                     f"PYTEST OUTPUT:\n{test_output[-2000:]}\n\n"
-                    f"FILES IN WORKSPACE:\n{workspace_files}"
+                    f"Fix the code and ensure all output files are created at the correct paths."
                 )
 
         # Save failed transcript
@@ -858,96 +856,56 @@ class SkillsBench(BaseBenchmark):
         return {"task": task_name, "status": "failed", "turns": max_turns,
                 "test_output": test_output[-1000:]}
 
-    def _run_pytest_harbor(self, container_name: str, workspace_host: Path, mount_point: str = "/workspace") -> tuple:
-        """Harbor Architecture: pytest 在容器内通过 docker exec 运行。
+    def _run_pytest_in_container(self, container_name: str, workspace_host: Path, tasks_dir: Path = None) -> tuple:
+        """在容器内运行 pytest (通过 docker cp 传输文件, 无需挂载点).
 
         NanoBotAgent 在宿主机运行，但 pytest 必须在容器内执行以验证任务代码。
-        容器需要 python3 和 pytest - 由任务的基础镜像提供。
-        如果容器没有pytest，则通过pip安装。
         """
         task_name = workspace_host.name
-        task_tests_src = self._get_tasks_dir() / task_name / "tests"
+        if tasks_dir is None:
+            tasks_dir = self._get_tasks_dir()
+        task_tests_src = tasks_dir / task_name / "tests"
         if not task_tests_src.exists():
             return False, "no tests/ directory"
 
-        # Copy test files from workspace (where agent may have modified them) to container
-        workspace_tests = workspace_host / "tests"
-        subprocess.run(["docker", "exec", container_name, "mkdir", "-p", f"{mount_point}/tests"],
-                      capture_output=True, text=True)
-        # If agent modified tests in workspace (has actual test files), use those; otherwise use original
-        has_test_files = workspace_tests.exists() and any(workspace_tests.glob("test_*.py"))
-        test_source = workspace_tests if has_test_files else task_tests_src
-        for f in test_source.glob("*"):
+        # Copy test files to container
+        subprocess.run(
+            ["docker", "exec", container_name, "mkdir", "-p", f"{self.CONTAINER_WORK_DIR}/tests"],
+            capture_output=True, text=True
+        )
+
+        for f in task_tests_src.glob("*"):
             if f.is_file() and f.name != "Dockerfile":
-                # Read test file and replace host paths with container paths
+                # Read and modify paths
                 content = f.read_text(encoding="utf-8")
-                # Replace host workspace path with container mount point
-                content = content.replace(str(workspace_host), mount_point)
-                # Also handle common variations
-                content = content.replace("/tmp/skillsbench_workspace/", "/workspace/")
-                content = content.replace("/private/tmp/skillsbench_workspace/", "/workspace/")
-                # Write to temp file and copy
-                import tempfile
+                content = content.replace("/root/", f"{self.CONTAINER_WORK_DIR}/")
+                content = content.replace("/workspace/", f"{self.CONTAINER_WORK_DIR}/")
+
+                # Write to temp and copy
                 with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as tmp:
                     tmp.write(content)
                     tmp_path = tmp.name
-                subprocess.run(["docker", "cp", tmp_path, f"{container_name}:{mount_point}/tests/{f.name}"],
-                              capture_output=True, text=True)
-                import os
+
+                subprocess.run(
+                    ["docker", "cp", tmp_path, f"{container_name}:{self.CONTAINER_WORK_DIR}/tests/{f.name}"],
+                    capture_output=True, text=True
+                )
                 os.unlink(tmp_path)
 
-        # Determine which python to use - try python3 first (base image python), then python3.11
-        for py_cmd in ["python3", "python3.11"]:
-            check = subprocess.run(
-                ["docker", "exec", container_name, "which", py_cmd],
-                capture_output=True, text=True, timeout=10
-            )
-            if check.returncode == 0:
-                actual_py = py_cmd
-                break
-        else:
-            actual_py = "python3"  # fallback
-
-        # Check if pytest is installed, if not install it
-        check_pytest = subprocess.run(
-            ["docker", "exec", container_name, actual_py, "-m", "pytest", "--version"],
-            capture_output=True, text=True, timeout=30
+        # Install pytest and run
+        subprocess.run(
+            ["docker", "exec", container_name, "pip3", "install", "--break-system-packages", "-q",
+             "pytest", "pytesseract", "pypdf", "PyMuPDF"],
+            capture_output=True, text=True, timeout=120
         )
-        if check_pytest.returncode != 0:
-            # Install pytest
-            log(f"[{task_name}] Installing pytest in container...")
-            # Check if pip supports --break-system-packages (PEP 668)
-            check_pip = subprocess.run(
-                ["docker", "exec", container_name, actual_py, "-m", "pip", "install", "--help"],
-                capture_output=True, text=True, timeout=30
-            )
-            pip_supports_break_system = "--break-system-packages" in check_pip.stdout
 
-            if pip_supports_break_system:
-                install_cmd = ["docker", "exec", container_name, actual_py, "-m", "pip", "install", "-q", "--break-system-packages", "pytest"]
-            else:
-                # For older pip (e.g., Ubuntu 20.04), use --user or install without the flag
-                install_cmd = ["docker", "exec", container_name, actual_py, "-m", "pip", "install", "-q", "pytest"]
+        result = subprocess.run(
+            ["docker", "exec", "-w", self.CONTAINER_WORK_DIR, container_name,
+             "python3", "-m", "pytest", f"{self.CONTAINER_WORK_DIR}/tests", "-v", "--tb=short"],
+            capture_output=True, text=True, timeout=120
+        )
 
-            install_result = subprocess.run(install_cmd, capture_output=True, text=True, timeout=120)
-            if install_result.returncode != 0:
-                return False, f"Failed to install pytest: {install_result.stderr[-500:]}"
-
-        # Run pytest inside container via docker exec
-        # Set TEST_ROOT env var so tests can find files if modified by agent
-        pytest_cmd = [
-            "docker", "exec", "-w", mount_point,
-            "-e", f"TEST_ROOT={mount_point}",
-            container_name,
-            actual_py, "-m", "pytest", f"{mount_point}/tests/test_outputs.py", "-v", "--tb=short"
-        ]
-        try:
-            proc = subprocess.run(pytest_cmd, capture_output=True, text=True, timeout=120)
-            return proc.returncode == 0, proc.stdout[-1500:] + "\n" + proc.stderr[-500:]
-        except subprocess.TimeoutExpired:
-            return False, "pytest timeout"
-        except Exception as exc:
-            return False, f"pytest error: {exc}"
+        return result.returncode == 0, result.stdout[-1500:] + "\n" + result.stderr[-500:]
 
     def collect(self, model_key: str) -> dict | None:
         result_dir = self._find_result_dir("skillsbench")

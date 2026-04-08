@@ -61,8 +61,9 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
     config = get_model_config(model_key)
     force = kwargs.get("force", False)
 
-    # 检查缓存
-    if not force:
+    # Skip benchmark-level cache check when sample is specified
+    # (individual task caching is handled inside benchmark.evaluate)
+    if not force and not sample:
         cached = bench.collect(model_key)
         if cached and cached.get("score") is not None:
             log(f"  [{bench_key}×{model_key}] cached: score={cached['score']}")

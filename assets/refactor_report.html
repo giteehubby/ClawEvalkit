@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WildClawBench Docker 模式简化重构报告</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1b1e;
+            color: #e0e0e0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background: #2d2d2d;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .card h1,            color: #4ade9ff;
+            margin-bottom: 16px;
+        }
+        .card h2,            color: #6c75ff7;
+            margin-bottom: 12px;
+        }
+        .card h3,            color: #888;
+        margin-bottom: 0;
+        }
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .metric {
+            text-align: center;
+            padding: 20px;
+        }
+        .metric-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #4ade9ff;
+        }
+        .metric-label {
+            font-size: 14px;
+            color: #888;
+            margin-top: 8px;
+        }
+        .improvement {
+            color: #4ade9ff;
+        }
+        .reduction {
+            color: #ff6b6b;
+        }
+        code {
+            background: #2d2d2d;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+        }
+        .highlight {
+            background: #3d3d3d;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin: 12px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #3d3d3d;
+        }
+        th {
+            background: #3d3d3d;
+            font-weight: bold;
+        }
+        tr:hover {
+            background: #2d2d2d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>WildClawBench Docker 模式简化重构报告</h1>
+            <p style="color: #888; font-size: 14px;">保守重构方案 | 统一新结构</p>
+        </div>
+
+        <div class="card">
+            <h2>📊 核心指标变化</h2>
+            <div class="metric-grid">
+                <div class="metric">
+                    <div class="metric-value">767</div>
+                    <div class="metric-label">wildclawbench.py 行数</span>
+                </div>
+                <div class="metric">
+                    <div class="metric-value reduction">-34%</div>
+                    <div class="metric-label">代码减少比例</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">3</div>
+                    <div class="metric-label">新增文件数</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">453</div>
+                    <div class="metric-label">新增代码行数</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📁 新增文件</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>文件路径</th>
+                        <th>行数</th>
+                        <th>功能</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>clawevalkit/utils/retry.py</code></td>
+                        <td>55</td>
+                        <td>通用重试装饰器，td>
+                    </tr>
+                    <tr>
+                        <td><code>clawevalkit/utils/docker_runner.py</code></td>
+                        <td>398</td>
+                        <td>Docker 容器运行器类</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>🔧 修改详情</h2>
+            <div class="highlight">
+                <strong>删除的 Docker 辅助函数 (~335 行):</strong>
+            </div>
+            <pre><code>
+# 删除的函数:
+- _start_container (57 行)
+- _docker_exec_with_retry (25 行)
+- _docker_cp_with_retry (25 行)
+- _setup_container (40 行)
+- _load_skills_summary (20 行)
+- _run_agent_in_container (58 行)
+- _copy_results_from_container (58 行)
+- _compute_final_score (15 行)
+- _run_grading (47 行)
+
+# 删除的总行数: ~335 行
+            </code></pre>
+        </div>
+
+        <div class="card">
+            <h2>✨ 稡块化改进</h2>
+            <div class="highlight">
+                <strong>统一的 DockerRunner 类封装了所有 Docker 操作:</strong>
+            </div>
+            <pre><code style="color: #888;"># 使用示例
+with DockerRunner(image, openclawpro_dir) as runner:
+    # 启动容器
+    runner.start(workspace_path, task_id, model, env_vars=env_vars)
+
+    # 设置工作空间
+    runner.setup_workspace(workspace_path, skills, skills_path, warmup=warmup)
+
+    # 运行 agent
+    agent_result, elapsed = runner.run_agent(exec_script, timeout_seconds)
+
+    # 运行评分
+    grading_result = runner.run_grading(grading_script, env=env)
+
+    # 复制结果
+    result_file, transcript_file = runner.copy_results(workspace_path, output_dir, session_file)
+
+    # 自动清理（上下文管理器）
+            </code></pre>
+        </div>
+
+        <div class="card">
+            <h2>🔄 重试逻辑统一</h2>
+            <p>之前: 重试逻辑在 3+ 个函数中重复实现</p>
+            <p>现在: 使用 <code style="color: #4ade9ff;">@with_retry</code> 装饰器统一处理</p>
+            <pre><code style="color: #888;"># 使用示例
+@with_retry(max_retries=3, base_delay=1.0)
+def docker_exec_with_retry(container_name, cmd, timeout= 30):
+    # 自动重试， 指数退避
+            </code></pre>
+        </div>
+
+        <div class="card">
+            <h2>📈 代码统计</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>文件</th>
+                        <th>原始行数</th>
+                        <th>新行数</th>
+                        <th>变化</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>wildclawbench.py</td>
+                        <td>1166</td>
+                        <td>767</td>
+                        <td class="reduction">-34% (-399 行)</td>
+                    </tr>
+                    <tr>
+                        <td>retry.py</td>
+                        <td>0</td>
+                        <td>55</td>
+                        <td class="improvement">+55 行 (新增)</td>
+                    </tr>
+                    <tr>
+                        <td>docker_runner.py</td>
+                        <td>0</td>
+                        <td>398</td>
+                        <td class="improvement">+398 行 (新增)</td>
+                    </tr>
+                    <tr style="font-weight: bold; background: #3d3d3d;">
+                        <td>总计</td>
+                        <td>1166</td>
+                        <td>1220</td>
+                        <td>+54 行 (净增)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>✅ 验证命令</h2>
+            <pre><code style="color: #888;"># Native 模式
+python -m clawevalkit.benchmarks run wildclawbench --model-key test --sample 1
+
+# Docker 模式
+python -m clawevalkit.benchmarks run wildclawbench --model-key test --use-docker --sample 1
+
+# 收集结果
+python -m clawevalkit.benchmarks collect wildclawbench --model-key test
+            </code></pre>
+        </div>
+    </div>
+</body>
+</html>

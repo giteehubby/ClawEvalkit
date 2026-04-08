@@ -10,6 +10,7 @@ import subprocess
 from pathlib import Path
 
 from .base import BaseBenchmark
+from ..utils.log import log
 
 
 class SkillBench(BaseBenchmark):

@@ -61,3 +61,82 @@ class BaseBenchmark(ABC):
         if legacy.exists():
             return legacy
         return None
+
+    def _save_task_result(self, bench_key: str, model_key: str, task_id: str, result: dict) -> Path:
+        """保存单任务结果到 outputs/{bench_key}/{model_key}/{task_id}/result.json
+
+        Args:
+            bench_key: Benchmark identifier (e.g., "zclawbench")
+            model_key: Model identifier
+            task_id: Task identifier
+            result: Result dict to save
+
+        Returns:
+            Path to saved result file
+        """
+        out_dir = self.results_dir / bench_key / model_key / task_id
+        out_dir.mkdir(parents=True, exist_ok=True)
+        out_path = out_dir / "result.json"
+        out_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
+        return out_path
+
+    def _build_and_save_summary(
+        self,
+        bench_key: str,
+        model_key: str,
+        all_task_ids: list,
+        new_results: list = None,
+        compute_summary_fn=None
+    ) -> dict:
+        """构建并保存汇总结果（增量模式）。
+
+        扫描所有已有的 per-task result.json，与 new_results 合并，
+        调用 compute_summary_fn 计算汇总，保存到 outputs/{bench_key}/{model_key}.json
+
+        Args:
+            bench_key: Benchmark identifier
+            model_key: Model identifier
+            all_task_ids: List of all task IDs for this benchmark
+            new_results: List of newly computed results (not yet saved to disk)
+            compute_summary_fn: Function(results_list) -> summary_dict
+                               Called with merged results from cache + new_results
+
+        Returns:
+            Summary dict
+        """
+        results = list(new_results) if new_results else []
+
+        # 收集已有缓存（排除 new_results 中已有的）
+        new_task_ids = {r.get("task_id") or r.get("task") for r in results}
+        for task_id in all_task_ids:
+            if task_id in new_task_ids:
+                continue
+            result_file = self.results_dir / bench_key / model_key / task_id / "result.json"
+            if result_file.exists():
+                try:
+                    cached = json.loads(result_file.read_text())
+                    cached["_from_cache"] = True
+                    results.append(cached)
+                except Exception:
+                    pass
+
+        # Compute summary using benchmark-specific logic
+        if compute_summary_fn:
+            summary = compute_summary_fn(results)
+        else:
+            # Default summary
+            summary = {
+                "model": model_key,
+                "total": len(all_task_ids),
+                "scored": len(results),
+                "pending": len(all_task_ids) - len(results),
+                "results": results
+            }
+
+        # Save summary
+        self.save_result(bench_key, model_key, summary)
+
+        from ..utils.log import log
+        log(f"[{bench_key}] 汇总已保存: {summary.get('passed', summary.get('scored', 0))}/{len(all_task_ids)} 完成")
+
+        return summary

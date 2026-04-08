@@ -15,7 +15,6 @@
 from __future__ import annotations
 
 import json
-import logging
 import os
 import random
 import re
@@ -30,7 +29,6 @@ from typing import Any
 from ..utils.nanobot import import_nanobot_agent
 from .base import BaseBenchmark
 
-logger = logging.getLogger(__name__)
 
 OFFICIAL_SCORES = {
     "claude-sonnet": 86.9,
@@ -170,7 +168,7 @@ class PinchBench(BaseBenchmark):
                 json.dumps(transcript, indent=2, ensure_ascii=False),
                 encoding="utf-8",
             )
-            logger.info("[%s] Saved transcript to %s", task_id, trans_path / "transcript.json")
+            log("[%s] Saved transcript to %s", task_id, trans_path / "transcript.json")
         except Exception:
             pass  # transcript 保存失败不影响主流程
 
@@ -210,7 +208,7 @@ class PinchBench(BaseBenchmark):
                 try:
                     cached = json.loads(result_file.read_text())
                     if cached.get("status") == "success":
-                        logger.info("[%s] Found cached result, skipping", tid)
+                        log("[%s] Found cached result, skipping", tid)
                         return cached
                 except Exception:
                     pass
@@ -261,7 +259,7 @@ class PinchBench(BaseBenchmark):
 
                 # Start container
                 self._start_container(container_name, workspace_path, openclawpro_dir, env_args)
-                logger.info("[%s] Container started", container_name)
+                log("[%s] Container started", container_name)
 
                 # Build and run agent
                 exec_script = self._build_exec_script(
@@ -270,7 +268,7 @@ class PinchBench(BaseBenchmark):
                     sessions=task.get("sessions", [])
                 )
                 exec_proc, elapsed_time = self._run_agent_in_container(container_name, exec_script, task.get("timeout", 120))
-                logger.info("[%s] Agent finished in %.2fs, returncode=%d", container_name, elapsed_time, exec_proc.returncode)
+                log("[%s] Agent finished in %.2fs, returncode=%d", container_name, elapsed_time, exec_proc.returncode)
 
                 # Copy results back
                 try:
@@ -280,10 +278,10 @@ class PinchBench(BaseBenchmark):
                         result["status"] = agent_result.get("status", "error")
                         result["error"] = agent_result.get("error", "")
                         transcript = agent_result.get("transcript", [])
-                        logger.info("[%s] Agent result loaded: status=%s, transcript_len=%d",
+                        log("[%s] Agent result loaded: status=%s, transcript_len=%d",
                                    container_name, result["status"], len(transcript))
                 except Exception as e:
-                    logger.error("[%s] Failed to load agent result: %s", container_name, e)
+                    log("[%s] Failed to load agent result: %s", container_name, e)
 
                 # Run grading
                 if task.get("grade_code"):
@@ -297,7 +295,7 @@ class PinchBench(BaseBenchmark):
             except subprocess.TimeoutExpired:
                 result["error"] = f"Timeout after {task.get('timeout', 120)} seconds"
             except Exception as exc:
-                logger.error("[%s] Execution error: %s", container_name if 'container_name' in dir() else tid, exc)
+                log("[%s] Execution error: %s", container_name if 'container_name' in dir() else tid, exc)
                 result["error"] = str(exc)
             finally:
                 # Cleanup
@@ -313,7 +311,7 @@ class PinchBench(BaseBenchmark):
             try:
                 result_file.write_text(json.dumps(result, indent=2, ensure_ascii=False))
             except Exception as e:
-                logger.error("[%s] Failed to save result: %s", tid, e)
+                log("[%s] Failed to save result: %s", tid, e)
 
             return result
 
@@ -330,7 +328,7 @@ class PinchBench(BaseBenchmark):
                     try:
                         results.append(future.result())
                     except Exception as exc:
-                        logger.error("[%s] Thread exception: %s", tid, exc)
+                        log("[%s] Thread exception: %s", tid, exc)
                         results.append({"task_id": tid, "status": "error", "error": str(exc)})
 
         # 汇总：所有任务的平均分 × 100
@@ -587,6 +585,7 @@ print('DONE')
 import json
 import os
 import sys
+from ..utils.log import log
 
 TMP_WORKSPACE = "{TMP_WORKSPACE}"
 
@@ -627,7 +626,7 @@ print(json.dumps(scores))
             if result.returncode == 0:
                 return json.loads(result.stdout.strip().split('\n')[-1])
         except Exception as e:
-            logger.warning("Grading in container failed: %s", e)
+            log("Grading in container failed: %s", e)
         finally:
             Path(script_path).unlink(missing_ok=True)
             Path(transcript_path).unlink(missing_ok=True)
