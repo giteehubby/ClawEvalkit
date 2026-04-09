@@ -72,19 +72,35 @@ def _trajectory_to_text(trajectory: List[Dict], max_turns: int = 30) -> str:
 
 
 def _parse_judge_response(response_text: str) -> Optional[Dict[str, Any]]:
-    """从 Judge 模型响应中解析 JSON 评分"""
-    # 尝试提取 JSON
-    json_match = re.search(r"\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}", response_text, re.DOTALL)
-    if json_match:
-        try:
-            return json.loads(json_match.group())
-        except json.JSONDecodeError:
-            pass
+    """从 Judge 模型响应中解析 JSON 评分（通过括号匹配）"""
     # 尝试整段解析
     try:
         return json.loads(response_text)
     except json.JSONDecodeError:
         pass
+
+    # 通过括号匹配提取 JSON
+    start = response_text.find('{')
+    if start == -1:
+        return None
+
+    depth = 0
+    end = start
+    for i, c in enumerate(response_text[start:], start):
+        if c == '{':
+            depth += 1
+        elif c == '}':
+            depth -= 1
+            if depth == 0:
+                end = i + 1
+                break
+
+    if depth == 0 and end > start:
+        try:
+            return json.loads(response_text[start:end])
+        except json.JSONDecodeError:
+            pass
+
     return None
 
 

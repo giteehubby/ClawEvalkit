@@ -519,7 +519,6 @@ try:
         workspace=workspace,
         system_prompt=system_prompt,
         max_iterations=100,
-        max_output_tokens=8192,
     )
     elapsed = time.time() - start_time
 

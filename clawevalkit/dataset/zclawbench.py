@@ -131,7 +131,6 @@ try:
         workspace=workspace,
         system_prompt=system_prompt,
         max_iterations=100,
-        max_output_tokens=8192,
     )
     elapsed = time.time() - start_time
 
@@ -488,12 +487,12 @@ class ZClawBench(BaseBenchmark):
 
                 # Start container
                 _start_container(container_name, workspace_path, openclawpro_dir, DOCKER_IMAGE, env_args)
-                log(f"[{container_name}] Container started")
+                log(f"[{tid}] Container started")
 
                 # Build and run agent
                 exec_script = _build_exec_script(model_key, tid, prompt, config)
                 exec_proc, elapsed_time = _run_agent_in_container(container_name, exec_script, 3600)
-                log(f"[{container_name}] Agent finished in {elapsed_time:.2f}s, returncode={exec_proc.returncode}")
+                log(f"[{tid}] Agent finished in {elapsed_time:.2f}s, returncode={exec_proc.returncode}")
 
                 # Copy results back
                 result_file_host = _copy_results_from_container(container_name, workspace_path, task_output_dir)
@@ -507,12 +506,12 @@ class ZClawBench(BaseBenchmark):
                         result["error"] = agent_result.get("error", "")
                         result["usage"] = {**agent_result.get("usage", {}), "elapsed_time": round(elapsed_time, 2)}
                         transcript = agent_result.get("transcript", [])
-                        log(f"[{container_name}] Agent result loaded: status={result['status']}, transcript_len={len(transcript)}")
+                        log(f"[{tid}] Agent result loaded: status={result['status']}, transcript_len={len(transcript)}")
                     except Exception as e:
-                        log(f"[{container_name}] Failed to load agent result: {e}")
+                        log(f"[{tid}] Failed to load agent result: {e}")
                         result["error"] = f"Failed to load agent result: {e}"
                 else:
-                    log(f"[{container_name}] agent_result.json not found at {result_file_host}")
+                    log(f"[{tid}] agent_result.json not found at {result_file_host}")
                     result["error"] = "agent_result.json not found"
 
                 # Run Judge scoring
@@ -530,9 +529,9 @@ class ZClawBench(BaseBenchmark):
                             model_name=config.get("name", model_key)
                         )
                         result["scores"] = {"overall_score": score.overall_score}
-                        log(f"[{container_name}] Judge score: {score.overall_score:.3f}")
+                        log(f"[{tid}] Judge score: {score.overall_score:.3f}")
                     except Exception as e:
-                        log(f"[{container_name}] Judge evaluation failed: {e}")
+                        log(f"[{tid}] Judge evaluation failed: {e}")
                         result["error"] = f"Judge evaluation failed: {e}"
                 else:
                     result["scores"] = {"overall_score": 0.0}
@@ -540,7 +539,7 @@ class ZClawBench(BaseBenchmark):
             except subprocess.TimeoutExpired:
                 result["error"] = "Timeout after 3600 seconds"
             except Exception as exc:
-                log(f"[{container_name}] Execution error: {exc}")
+                log(f"[{tid}] Execution error: {exc}")
                 result["error"] = str(exc)
             finally:
                 subprocess.run(["docker", "rm", "-f", container_name], capture_output=True)
