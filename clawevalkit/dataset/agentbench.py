@@ -319,79 +319,6 @@ def _compute_layer1_score(expected_metrics: dict, transcript: list, elapsed_time
 
 
 # ============================================================================
-# Layer 2 & 3: Behavioral Analysis & Output Quality (LLM-based)
-# ============================================================================
-
-def _run_llm_judge_eval(task_prompt: str, transcript: list, model_output: str,
-                        judge_model: str, api_key: str, base_url: str) -> dict:
-    """Run LLM judge evaluation for L2 and L3 scores."""
-    try:
-        import openai
-
-        client = openai.OpenAI(api_key=api_key, base_url=base_url)
-
-        # Build evaluation prompt
-        eval_prompt = f"""You are an expert evaluator assessing an AI agent's performance on a task.
-
-Task Description:
-{task_prompt}
-
-Agent's Execution Transcript:
-{json.dumps(transcript, indent=2)[:3000]}
-
-Agent's Final Output:
-{model_output[:2000]}
-
-Please evaluate the agent on two dimensions (0-100 each):
-
-L2 - Behavioral Analysis:
-- Instruction Adherence (30%): Did it follow all instructions precisely?
-- Tool Appropriateness (25%): Did it use the right tools for the job?
-- Approach Quality (25%): Did it read inputs before producing output?
-- Error Recovery (20%): How well did it handle errors?
-
-L3 - Output Quality:
-- Completeness (25%): Were all requirements met?
-- Accuracy (25%): Was the content correct?
-- Formatting (25%): Was it well-structured?
-- Polish (25%): Would a user be satisfied?
-
-Respond in JSON format:
-{{
-  "l2_score": <0-100>,
-  "l3_score": <0-100>,
-  "l2_breakdown": {{"instruction_adherence": <0-30>, "tool_appropriateness": <0-25>, "approach_quality": <0-25>, "error_recovery": <0-20>}},
-  "l3_breakdown": {{"completeness": <0-25>, "accuracy": <0-25>, "formatting": <0-25>, "polish": <0-25>}},
-  "reasoning": "brief explanation"
-}}"""
-
-        response = client.chat.completions.create(
-            model=judge_model,
-            messages=[{"role": "user", "content": eval_prompt}],
-            temperature=0.2,
-            max_tokens=1000
-        )
-
-        content = response.choices[0].message.content
-        # Extract JSON from response
-        json_match = re.search(r'\{.*\}', content, re.DOTALL)
-        if json_match:
-            result = json.loads(json_match.group())
-            return {
-                "l2_score": result.get("l2_score", 50),
-                "l3_score": result.get("l3_score", 50),
-                "l2_breakdown": result.get("l2_breakdown", {}),
-                "l3_breakdown": result.get("l3_breakdown", {}),
-                "reasoning": result.get("reasoning", "")
-            }
-    except Exception as e:
-        log(f"LLM judge evaluation failed: {e}")
-
-    # Fallback to neutral scores
-    return {"l2_score": 50, "l3_score": 50, "error": "judge_failed"}
-
-
-# ============================================================================
 # Docker Execution Helpers
 # ============================================================================
 
@@ -857,26 +784,32 @@ class AgentBench(BaseBenchmark):
                 expected_metrics = cfg.get("expected_metrics", {})
                 l1_score = _compute_layer1_score(expected_metrics, transcript, elapsed_time)
 
-                # L2 & L3: LLM Judge Evaluation
+                # L2 & L3: LLM Judge Evaluation (reuse grading.run_judge_eval)
                 l2_score = 50  # Default neutral
                 l3_score = 50
 
                 if use_judge and transcript:
-                    judge_result = _run_llm_judge_eval(
+                    from ..grading import run_judge_eval as _run_judge
+                    judge_score_obj = _run_judge(
+                        trajectory=transcript,
+                        task_id=tid,
+                        category=task.get("category", ""),
                         task_prompt=user_msg,
-                        transcript=transcript,
-                        model_output=model_output,
                         judge_model=judge_model,
                         api_key=judge_api_key,
-                        base_url=judge_base
+                        base_url=judge_base,
+                        model_name=config.get("model", model_key),
                     )
-                    l2_score = judge_result.get("l2_score", 50)
-                    l3_score = judge_result.get("l3_score", 50)
-                    result["judge_breakdown"] = {
-                        "l2": judge_result.get("l2_breakdown", {}),
-                        "l3": judge_result.get("l3_breakdown", {}),
-                        "reasoning": judge_result.get("reasoning", "")
-                    }
+                    if judge_score_obj and judge_score_obj.overall_score > 0:
+                        # Map JudgeScore to L2/L3: task_completion+tool_usage → L2, reasoning+answer_quality → L3
+                        l2_score = (judge_score_obj.task_completion + judge_score_obj.tool_usage) / 2 * 100
+                        l3_score = (judge_score_obj.reasoning + judge_score_obj.answer_quality) / 2 * 100
+                        result["judge_breakdown"] = {
+                            "l2": {"task_completion": judge_score_obj.task_completion, "tool_usage": judge_score_obj.tool_usage},
+                            "l3": {"reasoning": judge_score_obj.reasoning, "answer_quality": judge_score_obj.answer_quality},
+                            "overall": judge_score_obj.overall_score,
+                            "reasoning": judge_score_obj.justification,
+                        }
 
                 # Get scoring weights from task config
                 scoring = cfg.get("scoring", {})

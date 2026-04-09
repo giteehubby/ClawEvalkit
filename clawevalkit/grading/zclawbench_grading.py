@@ -73,9 +73,20 @@ def _trajectory_to_text(trajectory: List[Dict], max_turns: int = 30) -> str:
 
 def _parse_judge_response(response_text: str) -> Optional[Dict[str, Any]]:
     """从 Judge 模型响应中解析 JSON 评分（通过括号匹配）"""
+    # 去掉 markdown code block 包裹 (```json ... ``` 或 ``` ... ```)
+    stripped = response_text.strip()
+    if stripped.startswith("```"):
+        # 去掉开头 ```json 或 ```
+        first_newline = stripped.find("\n")
+        if first_newline != -1:
+            stripped = stripped[first_newline + 1:]
+        # 去掉结尾 ```
+        if stripped.rstrip().endswith("```"):
+            stripped = stripped.rstrip()[:-3].rstrip()
+
     # 尝试整段解析
     try:
-        return json.loads(response_text)
+        return json.loads(stripped)
     except json.JSONDecodeError:
         pass
 
