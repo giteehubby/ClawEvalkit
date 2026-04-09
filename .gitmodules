@@ -1,0 +1,3 @@
+[submodule "OpenClawPro"]
+	path = OpenClawPro
+	url = https://github.com/linjh1118/OpenClawPro.git

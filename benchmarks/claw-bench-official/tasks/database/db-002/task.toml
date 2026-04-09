@@ -1,0 +1,10 @@
+id = "db-002"
+title = "Multi-Table JOIN with Aggregation"
+domain = "database"
+level = "L2"
+description = "Write a SQL query joining three tables to compute total spend per customer with aggregation and sorting"
+timeout = 180
+capabilities = ["file-read", "file-write"]
+skills_allowed = true
+tags = ["sql", "join", "aggregation", "group-by", "intermediate"]
+capability_types = ["reasoning", "tool-use"]

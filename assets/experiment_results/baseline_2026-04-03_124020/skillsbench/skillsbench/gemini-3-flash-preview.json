@@ -1,0 +1,76 @@
+{
+  "model": "gemini-3-flash-preview",
+  "total": 10,
+  "passed": 6,
+  "failed": 4,
+  "score": 60.0,
+  "pass_rate": "6/10",
+  "max_turns": 3,
+  "skipped_docker": 20,
+  "results": [
+    {
+      "task": "edit-pdf",
+      "status": "failed",
+      "turns": 3,
+      "test_output": "ests/test_outputs.py::test_form_student_name\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_redact_student_id\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_form_school_email\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_form_date_of_birth\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_form_phone_number\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_form_appeal_reason\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_signature_added\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_todays_date_added\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_labels_not_covered\n======================== 5 warnings, 9 errors in 0.14s =========================\n\nsys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute\n",
+      "elapsed_s": 59.55
+    },
+    {
+      "task": "azure-bgp-oscillation-route-leak",
+      "status": "passed",
+      "turns": 2,
+      "elapsed_s": 44.48
+    },
+    {
+      "task": "manufacturing-codebook-normalization",
+      "status": "failed",
+      "turns": 3,
+      "test_output": "rac >= 0.70, f\"Too many near-zero-evidence known predictions: frac(ov>=0.01)={frac:.2%} (need ≥ 70%)\"\nE   AssertionError: Too many near-zero-evidence known predictions: frac(ov>=0.01)=60.80% (need ≥ 70%)\nE   assert 0.6080070391553014 >= 0.7\n=========================== short test summary info ============================\nFAILED ../../../../tmp/skillsbench_workspace/manufacturing-codebook-normalization/tests/test_outputs.py::test_T03_coverage_and_no_fabrication\nFAILED ../../../../tmp/skillsbench_workspace/manufacturing-codebook-normalization/tests/test_outputs.py::test_T09_confidence_valid_and_well_separated\nFAILED ../../../../tmp/skillsbench_workspace/manufacturing-codebook-normalization/tests/test_outputs.py::test_T10_unknown_rate_stricter_global_and_per_product\nFAILED ../../../../tmp/skillsbench_workspace/manufacturing-codebook-normalization/tests/test_outputs.py::test_T11_semantic_alignment_should_hold\n========================= 4 failed, 12 passed in 0.52s =========================\n\n",
+      "elapsed_s": 224.07
+    },
+    {
+      "task": "jpg-ocr-stat",
+      "status": "failed",
+      "turns": 3,
+      "test_output": "oad_workbook\n    reader = ExcelReader(filename, read_only, keep_vba,\n/opt/homebrew/Caskroom/miniforge/base/lib/python3.12/site-packages/openpyxl/reader/excel.py:123: in __init__\n    self.archive = _validate_archive(fn)\n                   ^^^^^^^^^^^^^^^^^^^^^\n/opt/homebrew/Caskroom/miniforge/base/lib/python3.12/site-packages/openpyxl/reader/excel.py:95: in _validate_archive\n    archive = ZipFile(filename, 'r')\n              ^^^^^^^^^^^^^^^^^^^^^^\n/opt/homebrew/Caskroom/miniforge/base/lib/python3.12/zipfile/__init__.py:1352: in __init__\n    self.fp = io.open(file, filemode)\n              ^^^^^^^^^^^^^^^^^^^^^^^\nE   FileNotFoundError: [Errno 2] No such file or directory: '/tmp/skillsbench_workspace/jpg-ocr-stat/tests/stat_oracle.xlsx'\n=========================== short test summary info ============================\nFAILED ../../../../tmp/skillsbench_workspace/jpg-ocr-stat/tests/test_outputs.py::test_outputs\n============================== 1 failed in 0.11s ===============================\n\n",
+      "elapsed_s": 115.18
+    },
+    {
+      "task": "hvac-control",
+      "status": "passed",
+      "turns": 2,
+      "elapsed_s": 44.02
+    },
+    {
+      "task": "enterprise-information-search",
+      "status": "passed",
+      "turns": 3,
+      "elapsed_s": 74.19
+    },
+    {
+      "task": "pptx-reference-formatting",
+      "status": "passed",
+      "turns": 2,
+      "elapsed_s": 53.74
+    },
+    {
+      "task": "court-form-filling",
+      "status": "failed",
+      "turns": 3,
+      "test_output": "ling/tests/test_outputs.py::TestEmptyFields::test_field_empty[page1_trial_time3]\nERROR ../../../../tmp/skillsbench_workspace/court-form-filling/tests/test_outputs.py::TestEmptyFields::test_field_empty[page1_trial_dept3]\nERROR ../../../../tmp/skillsbench_workspace/court-form-filling/tests/test_outputs.py::TestEmptyFields::test_field_empty[page1_clerk_sign]\nERROR ../../../../tmp/skillsbench_workspace/court-form-filling/tests/test_outputs.py::TestEmptyFields::test_field_empty[page1_clerk_date]\nERROR ../../../../tmp/skillsbench_workspace/court-form-filling/tests/test_outputs.py::TestEmptyFields::test_field_empty[second_plaintiff]\nERROR ../../../../tmp/skillsbench_workspace/court-form-filling/tests/test_outputs.py::TestEmptyFields::test_field_empty[second_defendant]\nERROR ../../../../tmp/skillsbench_workspace/court-form-filling/tests/test_outputs.py::TestEmptyFields::test_field_empty[public_entity_claim_date]\n============================== 47 errors in 0.20s ==============================\n\n",
+      "elapsed_s": 75.28
+    },
+    {
+      "task": "parallel-tfidf-search",
+      "status": "passed",
+      "turns": 3,
+      "elapsed_s": 216.46
+    },
+    {
+      "task": "travel-planning",
+      "status": "passed",
+      "turns": 2,
+      "elapsed_s": 56.43
+    }
+  ]
+}

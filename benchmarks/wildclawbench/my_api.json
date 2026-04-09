@@ -1,0 +1,15 @@
+{
+  "providers": {
+    "my-openai-proxy": {
+      "baseUrl": "http://host.docker.internal:8000/v1",
+      "apiKey": "${MY_PROXY_API_KEY}",
+      "api": "openai-completions",
+      "models": [
+        {
+          "id": "my-model",
+          "name": "My Model"
+        }
+      ]
+    }
+  }
+}

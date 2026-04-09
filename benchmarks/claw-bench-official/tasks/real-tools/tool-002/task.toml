@@ -1,0 +1,10 @@
+id = "tool-002"
+title = "Dependency Conflict Resolution"
+domain = "real-tools"
+level = "L2"
+description = "Merge two Python requirements files, detect version conflicts, and produce a resolved dependency list"
+timeout = 180
+capabilities = ["file-read", "file-write"]
+skills_allowed = true
+tags = ["python", "dependencies", "conflict-resolution", "package-management"]
+capability_types = ["reasoning", "tool-use"]

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLM-4.7 Claw Benchmark Results</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e0e0e0; }
+
+/* Header */
+.header { background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 50%, #0f3460 100%); padding: 36px 40px; border-bottom: 1px solid #1e2a3a; }
+.header h1 { font-size: 26px; color: #fff; margin-bottom: 6px; letter-spacing: -0.5px; }
+.header p { color: #7a8fa6; font-size: 14px; }
+.header .badges { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.badge { font-size: 11px; padding: 3px 10px; border-radius: 12px; font-weight: 600; }
+.badge-glm { background: rgba(100,255,218,0.15); color: #64ffda; border: 1px solid rgba(100,255,218,0.3); }
+.badge-date { background: rgba(130,170,255,0.12); color: #82aaff; border: 1px solid rgba(130,170,255,0.25); }
+.badge-bench { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.25); }
+
+/* Tabs */
+.tabs { display: flex; gap: 0; border-bottom: 1px solid #1e2a3a; background: #0d1117; padding: 0 40px; }
+.tab { padding: 14px 22px; font-size: 14px; cursor: pointer; color: #6b7a8d; border-bottom: 2px solid transparent; transition: all 0.2s; font-weight: 500; }
+.tab:hover { color: #c0cfe0; }
+.tab.active { color: #64ffda; border-bottom-color: #64ffda; }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Container */
+.container { max-width: 1200px; margin: 0 auto; padding: 28px 24px; }
+
+/* Stat Cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-bottom: 28px; }
+.card { background: #141a24; border-radius: 10px; padding: 18px 20px; border: 1px solid #1e2a3a; }
+.card .label { font-size: 11px; color: #5a6a7d; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 8px; }
+.card .value { font-size: 30px; font-weight: 700; line-height: 1; }
+.card .sub { font-size: 12px; color: #5a6a7d; margin-top: 4px; }
+.green { color: #64ffda; }
+.blue { color: #82aaff; }
+.orange { color: #fbbf24; }
+.red { color: #f87171; }
+.purple { color: #c084fc; }
+.teal { color: #34d399; }
+
+/* Section */
+.section { background: #141a24; border-radius: 10px; padding: 22px 24px; margin-bottom: 20px; border: 1px solid #1e2a3a; }
+.section-title { font-size: 15px; font-weight: 600; color: #c0cfe0; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+.section-title .dot { width: 8px; height: 8px; border-radius: 50%; background: #64ffda; }
+
+/* Bar chart */
+.bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.bar-label { width: 160px; font-size: 12px; color: #7a8fa6; text-align: right; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-track { flex: 1; height: 20px; background: #1a2232; border-radius: 4px; }
+.bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+.bar-value { font-size: 12px; color: #c0cfe0; width: 48px; flex-shrink: 0; font-weight: 600; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { padding: 8px 12px; text-align: left; color: #5a6a7d; font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; border-bottom: 1px solid #1e2a3a; }
+td { padding: 9px 12px; border-bottom: 1px solid #151e2a; color: #c0cfe0; }
+tr:hover td { background: #1a2232; }
+.pass-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; background: rgba(100,255,218,0.12); color: #64ffda; }
+.fail-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; background: rgba(248,113,113,0.12); color: #f87171; }
+.score-cell { font-weight: 700; }
+
+/* TRIBE test grid */
+.test-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.test-card { background: #0f1622; border-radius: 8px; padding: 12px 14px; border: 1px solid #1e2a3a; display: flex; align-items: flex-start; gap: 10px; }
+.test-card.pass { border-left: 3px solid #64ffda; }
+.test-card.fail { border-left: 3px solid #f87171; }
+.test-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.test-name { font-size: 12px; font-weight: 600; color: #c0cfe0; margin-bottom: 2px; }
+.test-msg { font-size: 11px; color: #5a6a7d; line-height: 1.4; }
+
+/* Category badges */
+.cat-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; margin-bottom: 6px; }
+.cat-core { background: rgba(130,170,255,0.12); color: #82aaff; }
+.cat-tools { background: rgba(251,191,36,0.12); color: #fbbf24; }
+.cat-usecase { background: rgba(167,139,250,0.12); color: #a78bfa; }
+.cat-robust { background: rgba(52,211,153,0.12); color: #34d399; }
+.cat-stress { background: rgba(248,113,113,0.12); color: #f87171; }
+
+/* Two-col layout */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+
+.footer { text-align: center; padding: 24px; color: #3a4a5d; font-size: 12px; border-top: 1px solid #1a2232; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>GLM-4.7 · Claw Benchmark Results</h1>
+  <p>AwesomeSkill · 两个 Benchmark 的完整评测结果</p>
+  <div class="badges">
+    <span class="badge badge-glm">GLM-4.7 (ZhipuAI)</span>
+    <span class="badge badge-date">2026-03-21</span>
+    <span class="badge badge-bench">claw-bench/claw-bench</span>
+    <span class="badge badge-bench">TRIBE-INC/claw-bench</span>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('exp1')">exp1 · claw-bench (Task Eval)</div>
+  <div class="tab" onclick="switchTab('exp3')">exp3 · TRIBE-INC (Agent Eval)</div>
+  <div class="tab" onclick="switchTab('compare')">对比总览</div>
+</div>
+
+<!-- ═══════════════════ EXP1 TAB ═══════════════════ -->
+<div id="tab-exp1" class="tab-content active">
+<div class="container">
+
+  <div class="cards">
+    <div class="card"><div class="label">Model</div><div class="value green" style="font-size:20px">GLM-4.7</div><div class="sub">ZhipuAI ZAI</div></div>
+    <div class="card"><div class="label">Tasks Run</div><div class="value blue">20</div><div class="sub">L1 · 7 domains</div></div>
+    <div class="card"><div class="label">Pass Rate</div><div class="value orange">65%</div><div class="sub">13 / 20 passed</div></div>
+    <div class="card"><div class="label">Avg Score</div><div class="value teal">96.0</div><div class="sub">weighted score</div></div>
+    <div class="card"><div class="label">Total Tokens</div><div class="value purple">185k</div><div class="sub">in + out</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="section">
+      <div class="section-title"><span class="dot"></span>Pass Rate by Domain</div>
+      <div class="bar-row"><div class="bar-label">calendar</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#64ffda,#34d399)"></div></div><div class="bar-value green">5/5</div></div>
+      <div class="bar-row"><div class="bar-label">communication</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#64ffda,#34d399)"></div></div><div class="bar-value green">3/3</div></div>
+      <div class="bar-row"><div class="bar-label">document-editing</div><div class="bar-track"><div class="bar-fill" style="width:75%;background:linear-gradient(90deg,#82aaff,#60a5fa)"></div></div><div class="bar-value blue">3/4</div></div>
+      <div class="bar-row"><div class="bar-label">data-analysis</div><div class="bar-track"><div class="bar-fill" style="width:66.7%;background:linear-gradient(90deg,#fbbf24,#f59e0b)"></div></div><div class="bar-value orange">2/3</div></div>
+      <div class="bar-row"><div class="bar-label">code-assistance</div><div class="bar-track"><div class="bar-fill" style="width:0%;background:#f87171"></div></div><div class="bar-value red">0/3</div></div>
+      <div class="bar-row"><div class="bar-label">database</div><div class="bar-track"><div class="bar-fill" style="width:0%;background:#f87171"></div></div><div class="bar-value red">0/1</div></div>
+      <div class="bar-row"><div class="bar-label">debugging</div><div class="bar-track"><div class="bar-fill" style="width:0%;background:#f87171"></div></div><div class="bar-value red">0/1</div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="dot"></span>Score Distribution (failed tasks)</div>
+      <div class="bar-row"><div class="bar-label">code-002</div><div class="bar-track"><div class="bar-fill" style="width:90%;background:linear-gradient(90deg,#fbbf24,#f59e0b)"></div></div><div class="bar-value orange">0.900</div></div>
+      <div class="bar-row"><div class="bar-label">code-003</div><div class="bar-track"><div class="bar-fill" style="width:92.3%;background:linear-gradient(90deg,#fbbf24,#f59e0b)"></div></div><div class="bar-value orange">0.923</div></div>
+      <div class="bar-row"><div class="bar-label">code-004</div><div class="bar-track"><div class="bar-fill" style="width:91.7%;background:linear-gradient(90deg,#fbbf24,#f59e0b)"></div></div><div class="bar-value orange">0.917</div></div>
+      <div class="bar-row"><div class="bar-label">data-001</div><div class="bar-track"><div class="bar-fill" style="width:92.3%;background:linear-gradient(90deg,#fbbf24,#f59e0b)"></div></div><div class="bar-value orange">0.923</div></div>
+      <div class="bar-row"><div class="bar-label">db-001</div><div class="bar-track"><div class="bar-fill" style="width:89.5%;background:linear-gradient(90deg,#fbbf24,#f59e0b)"></div></div><div class="bar-value orange">0.895</div></div>
+      <div class="bar-row"><div class="bar-label">debug-001</div><div class="bar-track"><div class="bar-fill" style="width:83.3%;background:linear-gradient(90deg,#f87171,#ef4444)"></div></div><div class="bar-value red">0.833</div></div>
+      <div class="bar-row"><div class="bar-label">doc-001</div><div class="bar-track"><div class="bar-fill" style="width:80%;background:linear-gradient(90deg,#f87171,#ef4444)"></div></div><div class="bar-value red">0.800</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="dot"></span>Task-level Results (20 tasks · L1)</div>
+    <table>
+      <thead><tr><th>#</th><th>Task ID</th><th>Domain</th><th>Result</th><th>Score</th><th>Time (s)</th><th>Tokens In</th><th>Tokens Out</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>cal-001</td><td>calendar</td><td><span class="pass-tag">PASS</span></td><td class="score-cell green">1.000</td><td>8.9</td><td>2,832</td><td>546</td></tr>
+        <tr><td>2</td><td>cal-002</td><td>calendar</td><td><span class="pass-tag">PASS</span></td><td class="score-cell green">1.000</td><td>11.2</td><td>4,068</td><td>805</td></tr>
+        <tr><td>3</td><td>cal-003</td><td>calendar</td><td><span class="pass-tag">PASS</span></td><td class="score-cell green">1.000</td><td>12.2</td><td>4,906</td><td>996</td></tr>
+        <tr><td>4</td><td>cal-004</td><td>calendar</td><td><span class="pass-tag">PASS</span></td><td class="score-cell green">1.000</td><td>11.4</td><td>3,758</td><td>919</td></tr>
+        <tr><td>5</td><td>cal-005</td><td>calendar</td><td><span class="pass-tag">PASS</span></td><td class="score-cell green">1.000</td><td>10.7</td><td>3,825</td><td>846</td></tr>
+        <tr><td>6</td><td>code-002</td><td>code-assistance</td><td><span class="fail-tag">FAIL</span></td><td class="score-cell orange">0.900</td><td>9.9</td><td>3,498</td><td>823</td></tr>
+        <tr><td>7</td><td>code-003</td><td>code-assistance</td><td><span class="fail-tag">FAIL</span></td><td class="score-cell orange">0.923</td><td>15.5</td><td>6,335</td><td>1,426</td></tr>
+        <tr><td>8</td><td>code-004</td><td>code-assistance</td><td><span class="fail-tag">FAIL</span></td><td class="score-cell orange">0.917</td><td>12.8</td><td>5,002</td><td>1,109</td></tr>
+        <tr><td>9</td><td>comm-001</td><td>communication</td><td><span class="pass-tag">PASS</span></td><td class="score-cell green">1.000</td><td>20.8</td><td>15,358</td><td>1,897</td></tr>
+        <tr><td>10</td><td>comm-002</td><td>communication</td><td><span class="pass-tag">PASS</span></td><td class="score-cell green">1.000</td><td>12.7</td><td>6,729</td><td>1,403</td></tr>
+        <tr><td>11</td><td>comm-003</td><td>communication</td><td><span class="pass-tag">PASS</span></td><td class="score-cell green">1.000</td><td>10.0</td><td>4,557</td><td>1,138</td></tr>
+        <tr><td>12</td><td>data-001</td><td>data-analysis</td><td><span class="fail-tag">FAIL</span></td><td class="score-cell orange">0.923</td><td>10.7</td><td>3,574</td><td>968</td></tr>
+        <tr><td>13</td><td>data-002</td><td>data-analysis</td><td><span class="pass-tag">PASS</span></td><td class="score-cell green">1.000</td><td>13.8</td><td>3,663</td><td>1,177</td></tr>
+        <tr><td>14</td><td>data-003</td><td>data-analysis</td><td><span class="pass-tag">PASS</span></td><td class="score-cell green">1.000</td><td>14.6</td><td>4,238</td><td>747</td></tr>
+        <tr><td>15</td><td>db-001</td><td>database</td><td><span class="fail-tag">FAIL</span></td><td class="score-cell orange">0.895</td><td>28.8</td><td>13,247</td><td>1,994</td></tr>
+        <tr><td>16</td><td>debug-001</td><td>debugging</td><td><span class="fail-tag">FAIL</span></td><td class="score-cell red">0.833</td><td>30.3</td><td>21,195</td><td>2,054</td></tr>
+        <tr><td>17</td><td>doc-001</td><td>document-editing</td><td><span class="fail-tag">FAIL</span></td><td class="score-cell red">0.800</td><td>66.4</td><td>35,651</td><td>5,271</td></tr>
+        <tr><td>18</td><td>doc-002</td><td>document-editing</td><td><span class="pass-tag">PASS</span></td><td class="score-cell green">1.000</td><td>44.7</td><td>23,914</td><td>4,836</td></tr>
+        <tr><td>19</td><td>doc-003</td><td>document-editing</td><td><span class="pass-tag">PASS</span></td><td class="score-cell green">1.000</td><td>11.3</td><td>4,035</td><td>1,003</td></tr>
+        <tr><td>20</td><td>doc-012</td><td>document-editing</td><td><span class="pass-tag">PASS</span></td><td class="score-cell green">1.000</td><td>12.5</td><td>6,041</td><td>1,050</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════ EXP3 TAB ═══════════════════ -->
+<div id="tab-exp3" class="tab-content">
+<div class="container">
+
+  <div class="cards">
+    <div class="card"><div class="label">Model</div><div class="value green" style="font-size:20px">GLM-4.7</div><div class="sub">via OpenClaw</div></div>
+    <div class="card"><div class="label">Total Tests</div><div class="value blue">33</div><div class="sub">TRIBE-INC v1.3</div></div>
+    <div class="card"><div class="label">Pass Rate</div><div class="value green">100%</div><div class="sub">33 / 33 passed</div></div>
+    <div class="card"><div class="label">Critical Fails</div><div class="value teal">0</div><div class="sub">no blocking issues</div></div>
+    <div class="card"><div class="label">Runtime</div><div class="value purple">~12 min</div><div class="sub">full suite</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="section">
+      <div class="section-title"><span class="dot"></span>Pass Rate by Category</div>
+      <div class="bar-row"><div class="bar-label">Core Agent (0–12)</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#64ffda,#34d399)"></div></div><div class="bar-value green">13/13</div></div>
+      <div class="bar-row"><div class="bar-label">Extended Tools (13–20)</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#82aaff,#60a5fa)"></div></div><div class="bar-value blue">8/8</div></div>
+      <div class="bar-row"><div class="bar-label">Use Cases (22–28)</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#c084fc,#a855f7)"></div></div><div class="bar-value purple">7/7</div></div>
+      <div class="bar-row"><div class="bar-label">Robustness (29–31)</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#34d399,#10b981)"></div></div><div class="bar-value teal">3/3</div></div>
+      <div class="bar-row"><div class="bar-label">Stress (32–33)</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#fbbf24,#f59e0b)"></div></div><div class="bar-value orange">2/2</div></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="dot"></span>Notable Results</div>
+      <table>
+        <thead><tr><th>Test</th><th>Highlight</th></tr></thead>
+        <tbody>
+          <tr><td>Tool Use Response</td><td style="color:#64ffda">UUID extracted correctly</td></tr>
+          <tr><td>Multi-turn Context</td><td style="color:#64ffda">Secret code recalled</td></tr>
+          <tr><td>Memory Operations</td><td style="color:#64ffda">Stored & recalled fact</td></tr>
+          <tr><td>Long Context</td><td style="color:#64ffda">Hidden instruction found</td></tr>
+          <tr><td>Adversarial Input</td><td style="color:#64ffda">Resisted "2+2=5" trick</td></tr>
+          <tr><td>Code Generation</td><td style="color:#64ffda">Output = 55 verified</td></tr>
+          <tr><td>JSON Output</td><td style="color:#64ffda">Valid JSON with exact vals</td></tr>
+          <tr><td>Research Task</td><td style="color:#64ffda">HTTP 418 teapot explained</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="dot"></span>All 33 Tests</div>
+    <div class="test-grid">
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-core">Core</div><div class="test-name">TEST 0 · Clawdbot Verify</div><div class="test-msg">clawdbot verified: OpenClaw 2026.3.13</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-core">Core</div><div class="test-name">TEST 1 · Basic Chat</div><div class="test-msg">Math correct: 15+27=42</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-core">Core</div><div class="test-name">TEST 2 · Tool Use Response</div><div class="test-msg">Tool used AND response contains UUID</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-core">Core</div><div class="test-name">TEST 3 · Web Fetch JSON</div><div class="test-msg">Correctly fetched and parsed JSON (Sample Slide Show)</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-core">Core</div><div class="test-name">TEST 4 · Web Fetch HTML</div><div class="test-msg">Correctly understood example.com content</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-core">Core</div><div class="test-name">TEST 5 · Data Extraction</div><div class="test-msg">Extracted IP address: 49.140.188.242</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-core">Core</div><div class="test-name">TEST 6 · Multi-Step Reasoning</div><div class="test-msg">Correct calculation: 4×2 + 5×3 = 23</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-core">Core</div><div class="test-name">TEST 7 · Instruction Following</div><div class="test-msg">Exact instruction following</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-core">Core</div><div class="test-name">TEST 8 · No Tag Leakage</div><div class="test-msg">Correct answer, no leaked reasoning tags</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-core">Core</div><div class="test-name">TEST 9 · Error Handling</div><div class="test-msg">Graceful error handling</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-core">Core</div><div class="test-name">TEST 10 · Consecutive Tools</div><div class="test-msg">Handled consecutive tool calls with response</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-core">Core</div><div class="test-name">TEST 11 · Skill Installation</div><div class="test-msg">Skill installed and verified: lulu-monitor</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-core">Core</div><div class="test-name">TEST 12 · Muse Extension</div><div class="test-msg">Muse extension functional</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-tools">Tools</div><div class="test-name">TEST 13 · Shell Exec</div><div class="test-msg">exec tool working: returned command output</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-tools">Tools</div><div class="test-name">TEST 14 · Web Search</div><div class="test-msg">web_search tool recognized</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-tools">Tools</div><div class="test-name">TEST 15 · Browser Automation</div><div class="test-msg">browser tool verified: returned status details</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-tools">Tools</div><div class="test-name">TEST 16 · File Operations</div><div class="test-msg">File write/read working: value matched</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-tools">Tools</div><div class="test-name">TEST 17 · Sub-agent Comm</div><div class="test-msg">agents_list verified: main agent found</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-tools">Tools</div><div class="test-name">TEST 18 · Background Process</div><div class="test-msg">process tool verified: session info returned</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-tools">Tools</div><div class="test-name">TEST 19 · Image Analysis</div><div class="test-msg">image tool check completed (not configured)</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-tools">Tools</div><div class="test-name">TEST 20 · Session Status</div><div class="test-msg">session_status working: status reported</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-usecase">Use Case</div><div class="test-name">TEST 22 · Multi-turn Context</div><div class="test-msg">Context retained: secret code recalled correctly</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-usecase">Use Case</div><div class="test-name">TEST 23 · Research Task</div><div class="test-msg">HTTP 418 teapot explained with structure</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-usecase">Use Case</div><div class="test-name">TEST 24 · Code Generation</div><div class="test-msg">Code generation verified: correct output 55</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-usecase">Use Case</div><div class="test-name">TEST 25 · Memory Operations</div><div class="test-msg">Memory verified: fact stored and recalled</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-usecase">Use Case</div><div class="test-name">TEST 26 · Skill Workflow</div><div class="test-msg">Weather skill working: temperature returned</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-usecase">Use Case</div><div class="test-name">TEST 27 · Multi-tool Chain</div><div class="test-msg">Multi-tool chain completed</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-usecase">Use Case</div><div class="test-name">TEST 28 · Response Quality</div><div class="test-msg">Response quality excellent: structured, formatted, comprehensive</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-robust">Robust</div><div class="test-name">TEST 29 · Error Recovery</div><div class="test-msg">Error recovery excellent: explained error and suggested action</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-robust">Robust</div><div class="test-name">TEST 30 · Complex Instructions</div><div class="test-msg">Complex instructions: partial completion</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-robust">Robust</div><div class="test-name">TEST 31 · Adversarial Input</div><div class="test-msg">Adversarial handled: correct answer (4), resisted misdirection</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-stress">Stress</div><div class="test-name">TEST 32 · Long Context</div><div class="test-msg">Long context: found and followed hidden instruction</div></div></div>
+      <div class="test-card pass"><div class="test-icon">✅</div><div><div class="cat-badge cat-stress">Stress</div><div class="test-name">TEST 33 · JSON Output</div><div class="test-msg">JSON output: valid JSON with exact values</div></div></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════ COMPARE TAB ═══════════════════ -->
+<div id="tab-compare" class="tab-content">
+<div class="container">
+
+  <div class="cards">
+    <div class="card"><div class="label">Benchmarks</div><div class="value blue">2</div><div class="sub">claw-bench + TRIBE-INC</div></div>
+    <div class="card"><div class="label">exp1 Pass Rate</div><div class="value orange">65%</div><div class="sub">13/20 · Task Eval</div></div>
+    <div class="card"><div class="label">exp3 Pass Rate</div><div class="value green">100%</div><div class="sub">33/33 · Agent Eval</div></div>
+    <div class="card"><div class="label">Avg Score (exp1)</div><div class="value teal">96.0</div><div class="sub">weighted metric</div></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="dot"></span>Benchmark 对比</div>
+    <table>
+      <thead>
+        <tr><th>维度</th><th>exp1 · claw-bench</th><th>exp3 · TRIBE-INC</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>评测目标</td><td>文件生成型任务（JSON/CSV输出）</td><td>Agent能力（工具调用、推理、记忆）</td></tr>
+        <tr><td>评测框架</td><td>pytest verifier · 加权分数</td><td>bash 测试套件 · pass/fail</td></tr>
+        <tr><td>Model 接入</td><td>OpenAI-compat · ReAct loop</td><td>OpenClaw (ZAI provider)</td></tr>
+        <tr><td>通过率</td><td style="color:#fbbf24">65% (13/20)</td><td style="color:#64ffda">100% (33/33)</td></tr>
+        <tr><td>平均分</td><td style="color:#34d399">96.0 / 100</td><td style="color:#64ffda">100%</td></tr>
+        <tr><td>主要失败域</td><td>code-assistance / debugging / db</td><td>无（全部通过）</td></tr>
+        <tr><td>工具调用</td><td>ReAct shell commands</td><td>Native OpenClaw tools</td></tr>
+        <tr><td>测试数量</td><td>20 tasks (L1 subset)</td><td>33 tests (v1.3 full suite)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="dot"></span>GLM-4.7 综合表现</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div>
+        <div style="font-size:13px;color:#7a8fa6;margin-bottom:12px;">claw-bench (exp1) · 按 domain</div>
+        <div class="bar-row"><div class="bar-label">calendar</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#64ffda"></div></div><div class="bar-value green">100%</div></div>
+        <div class="bar-row"><div class="bar-label">communication</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#64ffda"></div></div><div class="bar-value green">100%</div></div>
+        <div class="bar-row"><div class="bar-label">document-editing</div><div class="bar-track"><div class="bar-fill" style="width:75%;background:#82aaff"></div></div><div class="bar-value blue">75%</div></div>
+        <div class="bar-row"><div class="bar-label">data-analysis</div><div class="bar-track"><div class="bar-fill" style="width:67%;background:#fbbf24"></div></div><div class="bar-value orange">67%</div></div>
+        <div class="bar-row"><div class="bar-label">code-assistance</div><div class="bar-track"><div class="bar-fill" style="width:2%;background:#f87171"></div></div><div class="bar-value red">0%</div></div>
+        <div class="bar-row"><div class="bar-label">database</div><div class="bar-track"><div class="bar-fill" style="width:2%;background:#f87171"></div></div><div class="bar-value red">0%</div></div>
+        <div class="bar-row"><div class="bar-label">debugging</div><div class="bar-track"><div class="bar-fill" style="width:2%;background:#f87171"></div></div><div class="bar-value red">0%</div></div>
+      </div>
+      <div>
+        <div style="font-size:13px;color:#7a8fa6;margin-bottom:12px;">TRIBE-INC (exp3) · 按 category</div>
+        <div class="bar-row"><div class="bar-label">Core Agent</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#64ffda"></div></div><div class="bar-value green">100%</div></div>
+        <div class="bar-row"><div class="bar-label">Extended Tools</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#64ffda"></div></div><div class="bar-value green">100%</div></div>
+        <div class="bar-row"><div class="bar-label">Use Cases</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#64ffda"></div></div><div class="bar-value green">100%</div></div>
+        <div class="bar-row"><div class="bar-label">Robustness</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#64ffda"></div></div><div class="bar-value green">100%</div></div>
+        <div class="bar-row"><div class="bar-label">Stress Tests</div><div class="bar-track"><div class="bar-fill" style="width:100%;background:#64ffda"></div></div><div class="bar-value green">100%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="dot"></span>关键洞察</div>
+    <table>
+      <thead><tr><th>发现</th><th>分析</th></tr></thead>
+      <tbody>
+        <tr><td style="color:#fbbf24">exp1 code-assistance 全部失败</td><td>代码相关任务 verifier 检查更严格（partial credit ~0.9）；GLM-4.7 代码输出格式与期望不完全对齐</td></tr>
+        <tr><td style="color:#fbbf24">exp1 debug/db 任务失败</td><td>这类任务需要多轮 shell 交互，单次 ReAct loop 不足以完成复杂调试场景</td></tr>
+        <tr><td style="color:#64ffda">exp3 全部通过</td><td>OpenClaw 工具生态与 GLM-4.7 配合良好；工具调用、记忆、多轮对话均表现优异</td></tr>
+        <tr><td style="color:#64ffda">两个 bench 评测维度互补</td><td>exp1 测输出精确度，exp3 测 Agent 综合能力；组合使用可全面评估模型质量</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</div>
+
+<div class="footer">AwesomeSkill &copy; 2026 · GLM-4.7 Claw Benchmark Report · Generated 2026-03-21</div>
+
+<script>
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    const tabs = ['exp1','exp3','compare'];
+    t.classList.toggle('active', tabs[i] === name);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => {
+    c.classList.toggle('active', c.id === 'tab-' + name);
+  });
+}
+</script>
+</body>
+</html>

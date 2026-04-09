@@ -1,0 +1,37 @@
+# OpenRouter — Claude / Gemini models
+# API docs: https://openrouter.ai/docs
+
+claude-sonnet:
+  name: Claude Sonnet 4.6
+  api_url: https://openrouter.ai/api/v1
+  api_key_env: OPENROUTER_API_KEY
+  model: anthropic/claude-sonnet-4.6
+  provider: openrouter
+
+claude-opus:
+  name: Claude Opus 4.6
+  api_url: https://openrouter.ai/api/v1
+  api_key_env: OPENROUTER_API_KEY
+  model: anthropic/claude-opus-4.6
+  provider: openrouter
+
+gemini-3.1-pro:
+  name: Gemini 3.1 Pro
+  api_url: https://openrouter.ai/api/v1
+  api_key_env: OPENROUTER_API_KEY
+  model: google/gemini-3.1-pro-preview
+  provider: openrouter
+
+gemini-2.5-flash:
+  name: Gemini 2.5 Flash
+  api_url: https://openrouter.ai/api/v1
+  api_key_env: OPENROUTER_API_KEY
+  model: google/gemini-2.5-flash
+  provider: openrouter
+
+gemini-3-flash-preview:
+  name: Gemini 3 Flash Preview
+  api_url: https://openrouter.ai/api/v1
+  api_key_env: OPENROUTER_API_KEY
+  model: google/gemini-3-flash-preview
+  provider: openrouter

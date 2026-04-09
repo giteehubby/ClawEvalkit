@@ -1,0 +1,47 @@
+{
+  "model": "gemini-3-flash-preview",
+  "total": 5,
+  "passed": 0,
+  "failed": 5,
+  "score": 0.0,
+  "pass_rate": "0/5",
+  "max_turns": 3,
+  "skipped_docker": 20,
+  "results": [
+    {
+      "task": "edit-pdf",
+      "status": "failed",
+      "turns": 3,
+      "test_output": "ests/test_outputs.py::test_form_student_name\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_redact_student_id\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_form_school_email\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_form_date_of_birth\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_form_phone_number\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_form_appeal_reason\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_signature_added\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_todays_date_added\nERROR ../../../../tmp/skillsbench_workspace/edit-pdf/tests/test_outputs.py::test_labels_not_covered\n======================== 5 warnings, 9 errors in 0.14s =========================\n\nsys:1: DeprecationWarning: builtin type swigvarlink has no __module__ attribute\n",
+      "elapsed_s": 504.28
+    },
+    {
+      "task": "azure-bgp-oscillation-route-leak",
+      "status": "failed",
+      "turns": 3,
+      "test_output": "origin validation on vhubvnet2 to verify prefix 10.2.1.0/24 originates from ASN 65007 (VNET4)-False-True]\nERROR ../../../../tmp/skillsbench_workspace/azure-bgp-oscillation-route-leak/tests/test_outputs.py::TestSolutionEvaluation::test_solution_classification[Configure route policy on vhubvnet1 to enforce no-export of provider routes to peer vhubvnet2 by bgp community-False-True]\nERROR ../../../../tmp/skillsbench_workspace/azure-bgp-oscillation-route-leak/tests/test_outputs.py::TestSolutionEvaluation::test_solution_classification[Configure user defined route override on vhubvnet1 defaultRouteTable to prefer specific next-hop-True-True]\nERROR ../../../../tmp/skillsbench_workspace/azure-bgp-oscillation-route-leak/tests/test_outputs.py::TestSolutionEvaluation::test_solution_classification[Enable Virtual WAN hub routing intent to enforce all hub-to-hub routes go through Virtual WAN (ASN 65001) only-True-True]\n============================== 22 errors in 0.04s ==============================\n\n",
+      "elapsed_s": 81.8
+    },
+    {
+      "task": "manufacturing-codebook-normalization",
+      "status": "failed",
+      "turns": 3,
+      "test_output": "FAILED ../../../../tmp/skillsbench_workspace/manufacturing-codebook-normalization/tests/test_outputs.py::test_T10_unknown_rate_stricter_global_and_per_product\nFAILED ../../../../tmp/skillsbench_workspace/manufacturing-codebook-normalization/tests/test_outputs.py::test_T11_semantic_alignment_should_hold\nFAILED ../../../../tmp/skillsbench_workspace/manufacturing-codebook-normalization/tests/test_outputs.py::test_T12_component_mentions_should_reduce_unknown\nFAILED ../../../../tmp/skillsbench_workspace/manufacturing-codebook-normalization/tests/test_outputs.py::test_T13_station_scope_should_mostly_match\nFAILED ../../../../tmp/skillsbench_workspace/manufacturing-codebook-normalization/tests/test_outputs.py::test_T14_rationale_should_reference_context_often\nFAILED ../../../../tmp/skillsbench_workspace/manufacturing-codebook-normalization/tests/test_outputs.py::test_T15_confidence_should_correlate_with_evidence\n============================== 16 failed in 0.15s ==============================\n\n",
+      "elapsed_s": 339.49
+    },
+    {
+      "task": "jpg-ocr-stat",
+      "status": "failed",
+      "turns": 3,
+      "test_output": "../../../../tmp/skillsbench_workspace/jpg-ocr-stat/tests/test_outputs.py::test_outputs FAILED [100%]\n\n=================================== FAILURES ===================================\n_________________________________ test_outputs _________________________________\n/tmp/skillsbench_workspace/jpg-ocr-stat/tests/test_outputs.py:169: in test_outputs\n    assert os.path.exists(OUTPUT_FILE), \"stat_ocr.xlsx not found at /app/workspace\"\nE   AssertionError: stat_ocr.xlsx not found at /app/workspace\nE   assert False\nE    +  where False = <function exists at 0x10550f6a0>('/app/workspace/stat_ocr.xlsx')\nE    +    where <function exists at 0x10550f6a0> = <module 'posixpath' (frozen)>.exists\nE    +      where <module 'posixpath' (frozen)> = os.path\n=========================== short test summary info ============================\nFAILED ../../../../tmp/skillsbench_workspace/jpg-ocr-stat/tests/test_outputs.py::test_outputs\n============================== 1 failed in 0.09s ===============================\n\n",
+      "elapsed_s": 122.0
+    },
+    {
+      "task": "hvac-control",
+      "status": "failed",
+      "turns": 3,
+      "test_output": "======================\n__________________ TestEstimatedParams.test_estimated_params ___________________\n/tmp/skillsbench_workspace/hvac-control/tests/test_outputs.py:131: in test_estimated_params\n    true_params = get_true_params()\n                  ^^^^^^^^^^^^^^^^^\n/tmp/skillsbench_workspace/hvac-control/tests/test_outputs.py:28: in get_true_params\n    return load_json(VERIFICATION_PARAMS)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n/tmp/skillsbench_workspace/hvac-control/tests/test_outputs.py:23: in load_json\n    with open(filepath, 'r') as f:\n         ^^^^^^^^^^^^^^^^^^^\nE   FileNotFoundError: [Errno 2] No such file or directory: '/tmp/skillsbench_workspace/hvac-control/tests/verification_params.json'\n=========================== short test summary info ============================\nFAILED ../../../../tmp/skillsbench_workspace/hvac-control/tests/test_outputs.py::TestEstimatedParams::test_estimated_params\n========================= 1 failed, 6 passed in 0.06s ==========================\n\n",
+      "elapsed_s": 63.0
+    }
+  ]
+}

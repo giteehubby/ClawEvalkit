@@ -1,0 +1,31 @@
+# SkillsBench Base Image with Python 3.11
+# Used as base for all tasks that need NanoBotAgent
+FROM python:3.10-slim
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install build dependencies for Python 3.11
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    wget \
+    libssl-dev \
+    zlib1g-dev \
+    libncurses5-dev \
+    libffi-dev \
+    libsqlite3-dev \
+    liblzma-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Build and install Python 3.11
+WORKDIR /tmp
+RUN wget -q https://www.python.org/ftp/python/3.11.9/Python-3.11.9.tgz && \
+    tar -xf Python-3.11.9.tgz && \
+    cd Python-3.11.9 && \
+    ./configure --prefix=/usr/local --enable-optimizations && \
+    make -j$(nproc) && \
+    make altinstall
+
+# Verify Python 3.11 is available
+RUN python3.11 --version
+
+WORKDIR /root

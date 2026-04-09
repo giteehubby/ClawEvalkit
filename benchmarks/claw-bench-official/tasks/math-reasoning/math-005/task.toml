@@ -1,0 +1,10 @@
+id = "math-005"
+title = "Algorithm Design: Longest Increasing Subsequence"
+domain = "math-reasoning"
+level = "L4"
+description = "Find the longest increasing subsequence of an integer array, provide the subsequence, and write a working algorithm implementation"
+timeout = 900
+capabilities = ["file-read", "file-write", "code-execution"]
+skills_allowed = true
+tags = ["algorithms", "dynamic-programming", "subsequence", "implementation", "expert"]
+capability_types = ["reasoning", "tool-use", "coding"]

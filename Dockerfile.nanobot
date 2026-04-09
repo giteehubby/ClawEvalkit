@@ -1,0 +1,35 @@
+# NanoBotAgent Docker image for WildClawBench
+# Built on wildclawbench-ubuntu:v1.2 with openclawpro (core deps only)
+# Volume mounts allow hot-reloading of OpenClawPro/ code during development
+
+FROM wildclawbench-ubuntu:v1.2
+
+WORKDIR /root
+
+# 清除代理环境变量（它们来自宿主机，但在容器内不工作）
+ENV http_proxy=
+ENV https_proxy=
+ENV HTTP_PROXY=
+ENV HTTPS_PROXY=
+ENV no_proxy=
+ENV NO_PROXY=
+
+# Copy OpenClawPro source (volume mount will override for development)
+COPY OpenClawPro/ ./OpenClawPro/
+
+# Install only the core runtime dependencies needed by NanoBotAgent
+# Use -i https://pypi.org/simple/ 直接从 PyPI 下载
+RUN python3 -m pip install --no-cache-dir \
+    -i https://pypi.org/simple/ \
+    --trusted-host pypi.org \
+    litellm loguru rich tiktoken pydantic-settings \
+    ddgs readability numpy matplotlib pillow opencv-python \
+    openpyxl pdfplumber scipy
+
+# Add OpenClawPro to PYTHONPATH so 'harness' and 'nanobot' packages are importable
+ENV PYTHONPATH=/root/OpenClawPro:$PYTHONPATH
+
+# Set working directory for tasks
+WORKDIR /workspace
+
+CMD ["/bin/bash"]

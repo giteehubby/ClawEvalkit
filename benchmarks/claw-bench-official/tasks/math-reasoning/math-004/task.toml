@@ -1,0 +1,10 @@
+id = "math-004"
+title = "Resource Allocation (Linear Programming)"
+domain = "math-reasoning"
+level = "L3"
+description = "Solve a linear programming problem to find optimal production quantities for three products subject to resource constraints"
+timeout = 600
+capabilities = ["file-read", "file-write"]
+skills_allowed = true
+tags = ["linear-programming", "optimization", "resource-allocation", "operations-research", "advanced"]
+capability_types = ["reasoning", "tool-use"]

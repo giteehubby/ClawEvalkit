@@ -1,0 +1,10 @@
+id = "math-002"
+title = "Knapsack Optimization"
+domain = "math-reasoning"
+level = "L2"
+description = "Solve a 0/1 knapsack problem: select items to maximize total value without exceeding weight capacity"
+timeout = 300
+capabilities = ["file-read", "file-write"]
+skills_allowed = true
+tags = ["optimization", "knapsack", "dynamic-programming", "algorithms", "intermediate"]
+capability_types = ["reasoning", "tool-use"]

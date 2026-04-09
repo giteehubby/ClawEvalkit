@@ -1,0 +1,10 @@
+id = "db-004"
+title = "Data Migration Script"
+domain = "database"
+level = "L3"
+description = "Write a SQL migration script to transform data from a flat schema to a normalized schema with separate addresses table"
+timeout = 240
+capabilities = ["file-read", "file-write"]
+skills_allowed = true
+tags = ["sql", "migration", "normalization", "data-transform", "advanced"]
+capability_types = ["reasoning", "tool-use"]
