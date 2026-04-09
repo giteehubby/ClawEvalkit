@@ -42,7 +42,7 @@ All benchmarks execute agents inside **Docker containers** for reproducibility a
 
 ```bash
 # 1. Clone the repository with submodules
-git clone --recurse-submodules https://github.com/linjh1118/ClawEvalkit.git
+git clone --recurse-submodules https://github.com/giteehubby/ClawEvalkit.git
 cd ClawEvalkit
 
 # 2. Install the package
