@@ -94,7 +94,7 @@ def parse_task_md(task_file: Path, use_docker: bool = False) -> dict:
         "prompt": prompt,
         "workspace_path": workspace_path,
         "automated_checks": automated_checks,
-        "timeout_seconds": int(metadata.get("timeout_seconds", 900 if use_docker else 300)),
+        "timeout_seconds": int(3600 if use_docker else 600),
         "file_path": str(task_file.resolve()),
         "category": task_file.parent.name,
     }
@@ -393,17 +393,21 @@ class WildClawBench(BaseBenchmark):
         # Filter by task_ids if specified
         if task_ids:
             tasks = [t for t in tasks if t["task_id"] in task_ids]
-        if sample and sample < len(tasks):
-            random.seed(42)
-            tasks = random.sample(tasks, sample)
-        judge_key, judge_base, judge_model = get_judge_config(
-            os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
-        )
-        # Avoid double nesting if results_dir already contains wildclawbench/subset/model_key
+        # Determine output dir before sampling so we can exclude cached tasks
         if self.results_dir.name == model_key and self.results_dir.parent.name == "subset":
             out_dir = self.results_dir
         else:
             out_dir = self.results_dir / "wildclawbench" / "subset" / model_key
+        if sample:
+            uncached = [t for t in tasks if not (out_dir / f"{t['task_id']}.json").exists()]
+            if sample < len(uncached):
+                random.seed(42)
+                tasks = random.sample(uncached, sample)
+            else:
+                tasks = uncached
+        judge_key, judge_base, judge_model = get_judge_config(
+            os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
+        )
         out_dir.mkdir(parents=True, exist_ok=True)
         results = []
         for task in tasks:
@@ -541,14 +545,19 @@ class WildClawBench(BaseBenchmark):
         # Filter by task_ids if specified
         if task_ids:
             tasks = [t for t in tasks if t["task_id"] in task_ids]
-        if sample and sample < len(tasks):
-            random.seed(42)
-            tasks = random.sample(tasks, sample)
-        # Avoid double nesting if results_dir already contains wildclawbench/model_key
+        # Determine output dir before sampling so we can exclude cached tasks
         if self.results_dir.name == model_key and self.results_dir.parent.name == "wildclawbench":
             out_dir = self.results_dir
         else:
             out_dir = self.results_dir / "wildclawbench" / model_key
+        if sample:
+            # Exclude tasks that already have cached results, then sample N new tasks
+            uncached = [t for t in tasks if not (out_dir / t["task_id"] / "result.json").exists()]
+            if sample < len(uncached):
+                random.seed(42)
+                tasks = random.sample(uncached, sample)
+            else:
+                tasks = uncached
         out_dir.mkdir(parents=True, exist_ok=True)
         results = []
         judge_key, judge_base, judge_model = get_judge_config(

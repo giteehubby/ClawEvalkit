@@ -47,6 +47,7 @@ useless/
 paper/
 assets/log/
 assets/output/
+add.md
 
 # Benchmark data (large files excluded)
 benchmarks/**/environment/*.zip
@@ -75,6 +76,9 @@ Thumbs.db
 *.pth
 *.ckpt
 *.safetensors
+
+# Paper (EMNLP 2027, keep private until published)
+results/papers/clawRecipe_emnlp_2027/
 
 # Temporary files
 *.tmp

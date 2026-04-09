@@ -11,7 +11,6 @@ from .pinchbench import PinchBench
 from .agentbench import AgentBench
 from .skillbench import SkillBench
 from .skillsbench import SkillsBench
-from .skillsbench_simple import SkillsBenchSimple
 from .tribe import TribeBench
 
 # benchmark_key → class 映射
@@ -23,7 +22,6 @@ BENCHMARKS = {
     "agentbench": AgentBench,
     "skillbench": SkillBench,
     "skillsbench": SkillsBench,
-    "skillsbench-simple": SkillsBenchSimple,
     "tribe": TribeBench,
 }
 

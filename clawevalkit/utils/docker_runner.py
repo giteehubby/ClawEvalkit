@@ -235,7 +235,7 @@ class DockerRunner:
             try:
                 exec_proc = subprocess.run(
                     ["docker", "exec", self.container_name, "python3", "/tmp/exec_nanobot.py"],
-                    capture_output=True, text=True, timeout=timeout_seconds + 60
+                    capture_output=True, text=True, timeout=timeout_seconds + 120
                 )
                 elapsed = time.perf_counter() - start
 
