@@ -21,6 +21,7 @@ from pathlib import Path
 from typing import Any
 
 from .base import BaseBenchmark
+from ..utils.log import log
 
 
 DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE_NANOBOT", "wildclawbench-nanobot:v3")
@@ -445,7 +446,6 @@ from pathlib import Path
 
 sys.path.insert(0, '/root/OpenClawPro')
 from harness.agent.nanobot import NanoBotAgent
-from ..utils.log import log
 
 workspace = Path('/tmp/agentbench_workspace/workspace')
 session_id = 'eval_{model_key}_{task_id}'
@@ -718,8 +718,11 @@ class AgentBench(BaseBenchmark):
         out_dir.mkdir(parents=True, exist_ok=True)
 
         openrouter_api_key = os.getenv("OPENROUTER_API_KEY", "")
-        judge_model = os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
-        judge_base = os.getenv("JUDGE_BASE_URL", "https://openrouter.ai/api/v1")
+        judge_model_env = os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
+
+        # Resolve judge API config based on model name
+        from ..config import get_judge_config
+        judge_api_key, judge_base, judge_model = get_judge_config(judge_model_env)
 
         def run_single_task_docker(task: dict, model: str, force: bool = False) -> dict:
             """Execute a single task inside Docker container with full scoring."""
@@ -734,7 +737,7 @@ class AgentBench(BaseBenchmark):
                 try:
                     cached = json.loads(result_file.read_text())
                     if cached.get("status") == "success" and "scores" in cached:
-                        log("[%s] Found cached result, skipping", tid)
+                        log(f"[{tid}] Found cached result, skipping")
                         return {**cached, "_from_cache": True}
                 except Exception:
                     pass
@@ -775,7 +778,7 @@ class AgentBench(BaseBenchmark):
                 # Run setup.sh if exists (for tasks that need environment setup)
                 setup_script = task_dir / "setup.sh"
                 if setup_script.exists():
-                    log("[%s] Running setup.sh for task %s", container_name, tid)
+                    log(f"[{container_name}] Running setup.sh for task {tid}")
                     setup_proc = subprocess.run(
                         ["bash", str(setup_script), str(host_workspace)],
                         capture_output=True,
@@ -783,9 +786,9 @@ class AgentBench(BaseBenchmark):
                         timeout=120
                     )
                     if setup_proc.returncode != 0:
-                        log("[%s] setup.sh failed: %s", container_name, setup_proc.stderr[:500])
+                        log(f"[{container_name}] setup.sh failed: {setup_proc.stderr[:500]}")
                     else:
-                        log("[%s] setup.sh completed successfully", container_name)
+                        log(f"[{container_name}] setup.sh completed successfully")
 
                 # Build env args
                 proxy_http = os.environ.get('HTTP_PROXY_INNER', '')
@@ -806,7 +809,7 @@ class AgentBench(BaseBenchmark):
 
                 # Start container (mounts workspace/ to /tmp/agentbench_workspace/workspace/)
                 _start_container(container_name, workspace_path, openclawpro_dir, DOCKER_IMAGE, env_args)
-                log("[%s] Container started", container_name)
+                log(f"[{container_name}] Container started")
 
                 # No need to docker cp - files are already mounted via volume
 
@@ -814,13 +817,13 @@ class AgentBench(BaseBenchmark):
                 user_msg = cfg.get("user_message", "")
                 exec_script = _build_exec_script(model_key, tid, user_msg, config)
                 exec_proc, elapsed_time = _run_agent_in_container(container_name, exec_script, 300)
-                log("[%s] Agent finished in %.2fs, returncode=%d", container_name, elapsed_time, exec_proc.returncode)
+                log(f"[{container_name}] Agent finished in {elapsed_time:.2f}s, returncode={exec_proc.returncode}")
 
                 # Log stdout/stderr for debugging
                 if exec_proc.stdout:
-                    log("[%s] Agent stdout: %s", container_name, exec_proc.stdout[:500])
+                    log(f"[{container_name}] Agent stdout: {exec_proc.stdout[:500]}")
                 if exec_proc.stderr:
-                    log("[%s] Agent stderr: %s", container_name, exec_proc.stderr[:500])
+                    log(f"[{container_name}] Agent stderr: {exec_proc.stderr[:500]}")
 
                 # Copy results back
                 result_file_host = _copy_results_from_container(container_name, workspace_path, task_output_dir)
@@ -836,13 +839,12 @@ class AgentBench(BaseBenchmark):
                         result["usage"] = {**agent_result.get("usage", {}), "elapsed_time": round(elapsed_time, 2)}
                         transcript = agent_result.get("transcript", [])
                         model_output = agent_result.get("content", "")
-                        log("[%s] Agent result loaded: status=%s, transcript_len=%d",
-                                   container_name, result["status"], len(transcript))
+                        log(f"[{container_name}] Agent result loaded: status={result['status']}, transcript_len={len(transcript)}")
                     except Exception as e:
-                        log("[%s] Failed to load agent result: %s", container_name, e)
+                        log(f"[{container_name}] Failed to load agent result: {e}")
                         result["error"] = f"Failed to load agent result: {e}"
                 else:
-                    log("[%s] agent_result.json not found at %s", container_name, result_file_host)
+                    log(f"[{container_name}] agent_result.json not found at {result_file_host}")
                     result["error"] = "agent_result.json not found"
 
                 # ==================== 4-Layer Scoring ====================
@@ -865,7 +867,7 @@ class AgentBench(BaseBenchmark):
                         transcript=transcript,
                         model_output=model_output,
                         judge_model=judge_model,
-                        api_key=openrouter_api_key,
+                        api_key=judge_api_key,
                         base_url=judge_base
                     )
                     l2_score = judge_result.get("l2_score", 50)
@@ -897,13 +899,12 @@ class AgentBench(BaseBenchmark):
                     "overall_score": round(composite, 1)
                 }
 
-                log("[%s] Scores: L0=%.1f L1=%.1f L2=%.1f L3=%.1f | Overall=%.1f",
-                           container_name, l0_score, l1_score, l2_score, l3_score, composite)
+                log(f"[{container_name}] Scores: L0={l0_score:.1f} L1={l1_score:.1f} L2={l2_score:.1f} L3={l3_score:.1f} | Overall={composite:.1f}")
 
             except subprocess.TimeoutExpired:
                 result["error"] = "Timeout after 300 seconds"
             except Exception as exc:
-                log("[%s] Execution error: %s", container_name, exc)
+                log(f"[{container_name}] Execution error: {exc}")
                 result["error"] = str(exc)
             finally:
                 subprocess.run(["docker", "rm", "-f", container_name], capture_output=True)
@@ -912,9 +913,9 @@ class AgentBench(BaseBenchmark):
             # Save cache (always save, not just on success)
             try:
                 result_file.write_text(json.dumps(result, indent=2, ensure_ascii=False))
-                log("[%s] Result saved to %s", container_name, result_file)
+                log(f"[{container_name}] Result saved to {result_file}")
             except Exception as e:
-                log("[%s] Failed to save result: %s", container_name, e)
+                log(f"[{container_name}] Failed to save result: {e}")
 
             return result
 
@@ -934,7 +935,7 @@ class AgentBench(BaseBenchmark):
                     try:
                         results.append(future.result())
                     except Exception as exc:
-                        log("[%s] Thread exception: %s", tid, exc)
+                        log(f"[{tid}] Thread exception: {exc}")
                         results.append({"task_id": tid, "scores": {}, "error": str(exc)})
 
         # Compute average
