@@ -182,10 +182,12 @@ def _check_link_consistency(container_name: str, files_pattern: str) -> float:
     return 0
 
 
-def _compute_layer0_score(container_name: str, expected_outputs: list[dict]) -> float:
+def _compute_layer0_score(container_name: str, expected_outputs: list[dict],
+                         expected_behavior: list[dict] = None, model_output: str = "") -> float:
     """Compute Layer 0 score (0-100) based on automated structural checks."""
-    if not expected_outputs:
-        return 50  # No expected outputs, neutral score
+    has_checks = expected_outputs or expected_behavior
+    if not has_checks:
+        return 50  # No checks, neutral score
 
     total_points = 0
     max_points = 0
@@ -262,6 +264,22 @@ def _compute_layer0_score(container_name: str, expected_outputs: list[dict]) -> 
         # If required output has no points, apply penalty
         if required and output_points == 0:
             total_points -= 10
+
+    # Process expected_behavior (response-contains checks)
+    if expected_behavior and model_output:
+        output_lower = model_output.lower()
+        for behavior in expected_behavior:
+            for validator in behavior.get("validators", []):
+                if validator.get("type") == "response-contains":
+                    values = validator.get("values", [])
+                    match_mode = validator.get("match", "any")
+                    max_points += 30
+                    if match_mode == "any":
+                        if any(v.lower() in output_lower for v in values):
+                            total_points += 30
+                    elif match_mode == "all":
+                        if all(v.lower() in output_lower for v in values):
+                            total_points += 30
 
     # Normalize to 0-100
     if max_points == 0:
@@ -778,7 +796,8 @@ class AgentBench(BaseBenchmark):
 
                 # L0: Automated Structural Checks
                 expected_outputs = cfg.get("expected_outputs", [])
-                l0_score = _compute_layer0_score(container_name, expected_outputs)
+                expected_behavior = cfg.get("expected_behavior", [])
+                l0_score = _compute_layer0_score(container_name, expected_outputs, expected_behavior, model_output)
 
                 # L1: Metrics Analysis
                 expected_metrics = cfg.get("expected_metrics", {})
