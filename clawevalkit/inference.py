@@ -53,6 +53,8 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
         bench = bcls(use_docker=use_docker if use_docker is not None else False)
     elif bench_key == "zclawbench":
         bench = bcls(use_docker=use_docker if use_docker is not None else False)
+    elif bench_key == "claweval":
+        bench = bcls()
     else:
         bench = bcls()
     if output_dir:

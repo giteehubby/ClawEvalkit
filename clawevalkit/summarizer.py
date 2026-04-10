@@ -12,6 +12,7 @@ SHORT_NAMES = {
     "zclawbench": "ZClaw", "wildclawbench": "WildClaw", "clawbench-official": "ClawOff",
     "pinchbench": "Pinch", "agentbench": "Agent", "skillbench": "Skill",
     "skillsbench": "Skills", "tribe": "Tribe",
+    "claweval": "ClawEval",
 }
 
 

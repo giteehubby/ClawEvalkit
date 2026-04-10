@@ -175,6 +175,13 @@ def _call_judge_with_retry(
                     time.sleep(delay)
                 else:
                     raise
+            elif any(kw in err_str for kw in ["520", "500", "internalserverError", "api_error"]):
+                delay = base_delay * (2 ** attempt)
+                logger.warning(f"Judge server error (attempt {attempt+1}/{max_retries}): {err_str[:200]}, retrying in {delay:.0f}s ...")
+                if attempt < max_retries - 1:
+                    time.sleep(delay)
+                else:
+                    raise
             else:
                 raise
     raise Exception(f"Judge rate limit exceeded after {max_retries} retries")

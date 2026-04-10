@@ -12,6 +12,7 @@ from .agentbench import AgentBench
 from .skillbench import SkillBench
 from .skillsbench import SkillsBench
 from .tribe import TribeBench
+from .claweval import ClawEval
 
 # benchmark_key → class 映射
 BENCHMARKS = {
@@ -23,6 +24,7 @@ BENCHMARKS = {
     "skillbench": SkillBench,
     "skillsbench": SkillsBench,
     "tribe": TribeBench,
+    "claweval": ClawEval,
 }
 
 

@@ -205,7 +205,7 @@ def _run_original_grading(
     container_name: str,
     automated_checks: str,
     output_dir: Path,
-    timeout: int = 120,
+    timeout: int = 600,
 ) -> dict:
     """Run grading using original repo's logic (benchmarks/wildclawbench/utils/grading.py pattern).
 
@@ -662,6 +662,7 @@ class WildClawBench(BaseBenchmark):
                             container_name=runner.container_name,
                             automated_checks=task["automated_checks"],
                             output_dir=task_output_dir,
+                            timeout=600,
                         )
                         if "error" not in grading_result:
                             scores.update(grading_result)
