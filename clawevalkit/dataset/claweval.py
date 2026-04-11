@@ -84,6 +84,30 @@ class ClawEval(BaseBenchmark):
             raise ImportError("Docker package required. Install with: pip install docker")
 
     # ------------------------------------------------------------------
+    # Transcript saving (consistent with other benches)
+    # ------------------------------------------------------------------
+
+    def _save_transcript(self, model_key: str, task_id: str, transcript: list):
+        """保存 agent 轨迹到文件（统一结构）。
+
+        保存到: outputs/claweval/transcripts/{model}/{task}/transcript.json
+        保存 _convert_transcript() 之前的原始格式（normalize 后）。
+        """
+        try:
+            trans_path = self.results_dir / "claweval" / "transcripts" / model_key / task_id
+            trans_path.mkdir(parents=True, exist_ok=True)
+            normalized = [
+                e["message"] if isinstance(e, dict) and "message" in e else e
+                for e in transcript
+            ]
+            (trans_path / "transcript.json").write_text(
+                json.dumps(normalized, indent=2, ensure_ascii=False),
+                encoding="utf-8",
+            )
+        except Exception:
+            pass  # transcript 保存失败不影响主流程
+
+    # ------------------------------------------------------------------
     # Transcript conversion: NanoBotAgent → claw-eval format
     # ------------------------------------------------------------------
 
@@ -328,18 +352,36 @@ class ClawEval(BaseBenchmark):
     def _make_judge(judge_model: str | None = None):
         """Create an LLMJudge instance if possible.
 
-        Uses JUDGE_API_KEY / JUDGE_BASE_URL if available,
-        otherwise falls back to OpenRouter defaults.
+        Credential search order:
+          1. JUDGE_API_KEY / JUDGE_BASE_URL (explicit judge config)
+          2. GLM_API_KEY / GLM_BASE_URL (fast, cheap, always available)
+          3. OPENROUTER_API_KEY / OPENROUTER_BASE_URL (fallback)
         """
         from claw_eval.graders.llm_judge import LLMJudge
 
-        # Try judge-specific credentials first, then OpenRouter
-        api_key = os.environ.get("JUDGE_API_KEY") or os.environ.get("OPENROUTER_API_KEY")
-        base_url = os.environ.get("JUDGE_BASE_URL", "https://openrouter.ai/api/v1")
+        # 1) Explicit judge config
+        api_key = os.environ.get("JUDGE_API_KEY")
+        base_url = os.environ.get("JUDGE_BASE_URL")
+        model_id = judge_model or os.environ.get("JUDGE_MODEL")
+
+        # 2) GLM (fast & cheap)
         if not api_key:
+            api_key = os.environ.get("GLM_API_KEY")
+            base_url = os.environ.get("GLM_BASE_URL")
+            if not model_id:
+                model_id = "glm-4-flash"
+
+        # 3) OpenRouter fallback
+        if not api_key:
+            api_key = os.environ.get("OPENROUTER_API_KEY")
+            base_url = os.environ.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
+            if not model_id:
+                model_id = "google/gemini-2.0-flash-001"
+
+        if not api_key:
+            log("[claweval] No judge API key found, skipping LLM judge")
             return None
 
-        model_id = judge_model or os.environ.get("JUDGE_MODEL", "google/gemini-2.0-flash-001")
         try:
             return LLMJudge(model_id=model_id, api_key=api_key, base_url=base_url)
         except Exception as exc:
@@ -436,6 +478,7 @@ class ClawEval(BaseBenchmark):
         *,
         port_offset: int = 0,
         max_turns: int | None = None,
+        transcripts_dir: str | None = None,
     ) -> dict:
         """Execute a single claw-eval task and return result dict."""
         from claw_eval.models.task import TaskDefinition
@@ -477,8 +520,8 @@ class ClawEval(BaseBenchmark):
         }
 
         try:
-            # Start services
-            with ServiceManager(task.services) as svc:
+            # Start services (cwd=CLAW_EVAL_ROOT so mock_services/ paths resolve)
+            with ServiceManager(task.services, cwd=self.CLAW_EVAL_ROOT) as svc:
                 # Start sandbox container
                 runner = SandboxRunner(sandbox_config)
                 run_id = f"{task.task_id}-{uuid.uuid4().hex[:6]}"
@@ -509,7 +552,7 @@ class ClawEval(BaseBenchmark):
                         start_time = time.monotonic()
                         agent_result = agent.execute(
                             task.prompt.text,
-                            max_iterations=task.environment.max_turns or 50,
+                            max_iterations=task.environment.max_turns or 100,
                         )
                         wall_time = time.monotonic() - start_time
 
@@ -537,6 +580,11 @@ class ClawEval(BaseBenchmark):
 
                 # Collect audit data from mock services
                 audit_data = self._collect_audit_data(task)
+
+                # Save raw transcript (before _convert_transcript, consistent with other benches)
+                raw_transcript = agent_result.transcript or []
+                if transcripts_dir and raw_transcript:
+                    self._save_transcript(model_key, task.task_id, raw_transcript)
 
                 # Convert transcript
                 messages, dispatches = self._convert_transcript(
@@ -641,6 +689,7 @@ class ClawEval(BaseBenchmark):
         parallel = kwargs.get("parallel", 1)
         max_turns = kwargs.get("max_turns")
         judge_model = kwargs.get("judge_model") or os.environ.get("JUDGE_MODEL")
+        transcripts_dir = kwargs.get("transcripts_dir")
 
         log(f"[claweval] Evaluating {total} tasks with model={model_key}, parallel={parallel}")
 
@@ -672,6 +721,7 @@ class ClawEval(BaseBenchmark):
                         td, model_key, config, judge_model,
                         port_offset=offset,
                         max_turns=max_turns,
+                        transcripts_dir=transcripts_dir,
                     )
 
                 with ThreadPoolExecutor(max_workers=parallel) as pool:
@@ -699,6 +749,7 @@ class ClawEval(BaseBenchmark):
                     task_result = self._run_single_task(
                         td, model_key, config, judge_model,
                         max_turns=max_turns,
+                        transcripts_dir=transcripts_dir,
                     )
                     all_results.append(task_result)
                     self._save_task_result("claweval", model_key, task_result.get("task_id", td.name), task_result)
