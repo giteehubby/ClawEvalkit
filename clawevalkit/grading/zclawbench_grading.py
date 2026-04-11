@@ -142,7 +142,7 @@ def _call_judge_with_retry(
                     model=judge_model,
                     messages=messages,
                     temperature=0.0,
-                    max_tokens=768,
+                    max_tokens=2048,
                     timeout=timeout,
                 )
                 # Handle both text and thinking blocks (MiniMax returns thinking by default)
@@ -158,7 +158,7 @@ def _call_judge_with_retry(
                     model=judge_model,
                     messages=messages,
                     temperature=0.0,
-                    max_tokens=768,
+                    max_tokens=2048,
                     timeout=timeout,
                 )
                 return response.choices[0].message.content
@@ -209,8 +209,12 @@ def run_judge_eval(
         base_url: API 基础 URL
         model_name: 被评估的模型名
     """
-    # 检测是否使用 Anthropic 兼容 API（MiniMax 或原生 Anthropic）
-    use_anthropic = judge_model.startswith("anthropic/") or "minimax" in base_url.lower()
+    # 检测是否使用 Anthropic 兼容 API（MiniMax, GLM 或原生 Anthropic）
+    # OpenRouter also serves anthropic/ models but via OpenAI SDK
+    is_openrouter = "openrouter" in base_url.lower()
+    use_anthropic = ("minimax" in base_url.lower() or
+                     "bigmodel" in base_url.lower() or
+                     (judge_model.startswith("anthropic/") and not is_openrouter))
 
     if use_anthropic:
         try:
@@ -305,8 +309,12 @@ def run_judge_eval_offline(
         trajectory_text=trajectory_text,
     )
 
-    # 检测是否使用 Anthropic 兼容 API（MiniMax 或原生 Anthropic）
-    use_anthropic = judge_model.startswith("anthropic/") or "minimax" in base_url.lower()
+    # 检测是否使用 Anthropic 兼容 API（MiniMax, GLM 或原生 Anthropic）
+    # OpenRouter also serves anthropic/ models but via OpenAI SDK
+    is_openrouter = "openrouter" in base_url.lower()
+    use_anthropic = ("minimax" in base_url.lower() or
+                     "bigmodel" in base_url.lower() or
+                     (judge_model.startswith("anthropic/") and not is_openrouter))
 
     if use_anthropic:
         try:

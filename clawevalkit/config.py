@@ -106,18 +106,19 @@ def list_models() -> list:
 def get_judge_config(judge_model: str = None) -> tuple[str, str, str]:
     """Get judge API config: (api_key, base_url, actual_model_name).
 
-    Auto-detects MiniMax based on judge_model name:
-    - If judge_model contains "minimax", uses MiniMax API
-    - Otherwise uses OpenRouter defaults
+    Auto-detects provider based on judge_model name:
+    - If judge_model contains "minimax", uses MiniMax API (Anthropic-compatible)
+    - If judge_model contains "glm", uses GLM API (OpenAI-compatible)
+    - Otherwise uses OpenRouter defaults (OpenAI-compatible)
 
     Args:
-        judge_model: Judge model name (e.g., "minimax/claude-3.5-sonnet" or "anthropic/claude-sonnet-4.6")
+        judge_model: Judge model name (e.g., "minimax/claude-3.5-sonnet", "glm-4.7")
 
     Returns:
         (api_key, base_url, actual_model_name)
     """
     if judge_model is None:
-        judge_model = os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
+        judge_model = os.getenv("JUDGE_MODEL", "glm-4.7")
 
     # Auto-detect provider based on model name
     if "minimax" in judge_model.lower():
@@ -128,6 +129,10 @@ def get_judge_config(judge_model: str = None) -> tuple[str, str, str]:
             actual_model = f"anthropic/{judge_model}"
         else:
             actual_model = judge_model
+    elif "glm" in judge_model.lower():
+        api_key = os.getenv("GLM_API_KEY", os.getenv("JUDGE_API_KEY", ""))
+        base_url = "https://open.bigmodel.cn/api/anthropic"
+        actual_model = judge_model
     else:
         api_key = os.getenv("JUDGE_API_KEY", os.getenv("OPENROUTER_API_KEY", ""))
         base_url = os.getenv("JUDGE_BASE_URL", "https://openrouter.ai/api/v1")

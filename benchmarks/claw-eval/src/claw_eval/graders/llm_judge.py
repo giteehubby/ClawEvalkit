@@ -67,6 +67,18 @@ class LLMJudge:
         self.client = OpenAI(api_key=api_key or "dummy", base_url=base_url)
         self.model_id = model_id
         self._call_log: list[dict] = []
+        # Wrap client.chat.completions.create to count all calls
+        _orig_create = self.client.chat.completions.create
+        _log = self._call_log
+        def _counting_create(*args, **kwargs):
+            result = _orig_create(*args, **kwargs)
+            _log.append({
+                "method": "client.chat.completions.create",
+                "model": kwargs.get("model", getattr(result, "model", "")),
+                "timestamp": _now(),
+            })
+            return result
+        self.client.chat.completions.create = _counting_create
 
     def evaluate(
         self,

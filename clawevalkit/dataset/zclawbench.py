@@ -279,7 +279,7 @@ class ZClawBench(BaseBenchmark):
             task_list = random.sample(task_list, sample)
 
         judge_key, judge_base, judge_model = get_judge_config(
-            os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
+            os.getenv("JUDGE_MODEL", "glm-4.7")
         )
 
         out_dir = self.results_dir / "zclawbench" / model_key
@@ -423,7 +423,7 @@ class ZClawBench(BaseBenchmark):
         out_dir.mkdir(parents=True, exist_ok=True)
 
         judge_key, judge_base, judge_model = get_judge_config(
-            os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
+            os.getenv("JUDGE_MODEL", "glm-4.7")
         )
 
         def run_single_task_docker(task: dict, model: str, force: bool = False) -> dict:

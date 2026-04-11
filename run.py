@@ -57,7 +57,7 @@ def main():
     parser.add_argument("--env", help="Path to .env file (default: auto-detect)")
     parser.add_argument("--output-dir", help="Output directory for results (default: ./outputs)")
     parser.add_argument("--transcripts-dir", help="Directory to save agent transcripts (default: {output_dir}/transcripts)")
-    parser.add_argument("--max-turns", type=int, default=3, help="Max retry turns for SkillsBench (default: 3)")
+    parser.add_argument("--max-turns", type=int, default=None, help="Max retry turns (default: task-specific)")
     parser.add_argument("--task", "-t", help="指定特定任务ID (如 01_Productivity_Flow_task_6_calendar_scheduling)")
     parser.add_argument("--category", "-c", help="指定任务类别 (如 01_Productivity_Flow)")
     parser.add_argument("--reuse-container", action="store_true", help="Reuse existing containers (skip rebuild, preserves pip installs)")

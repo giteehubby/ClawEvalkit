@@ -489,6 +489,7 @@ class ClawEval(BaseBenchmark):
         from claw_eval.graders.registry import get_grader
 
         NanoBotAgent = import_nanobot_agent()
+        from harness.agent.nanobot import HarborNanoBotAgent
         # Create a fresh judge per task (thread-safe)
         judge = self._make_judge(judge_model)
 
@@ -534,18 +535,22 @@ class ClawEval(BaseBenchmark):
                     # Build system prompt
                     system_prompt = self._build_agent_system_prompt(task, handle.sandbox_url)
 
-                    # Create temp workspace for NanoBotAgent
+                    # Create temp workspace for agent session storage
                     with tempfile.TemporaryDirectory(prefix=f"claweval_{task.task_id}_") as tmp_ws:
                         workspace = Path(tmp_ws)
 
-                        # Setup NanoBotAgent
-                        agent = NanoBotAgent(
+                        # Setup HarborNanoBotAgent (file ops via docker exec)
+                        container_name = handle.container.name
+                        agent = HarborNanoBotAgent(
+                            container_name=container_name,
+                            mount_point="/workspace",
                             model=config.get("model_id", config.get("model", model_key)),
                             api_url=config.get("api_url", config.get("base_url", "")),
                             api_key=config.get("api_key", ""),
                             workspace=workspace,
                             timeout=task_timeout,
                             system_prompt=system_prompt,
+                            disable_safety_guard=True,
                         )
 
                         # Execute agent (pass max_iterations from task config)
@@ -679,12 +684,6 @@ class ClawEval(BaseBenchmark):
                     pass
             task_dirs = filtered
 
-        # Sample tasks if requested
-        if sample and sample < len(task_dirs):
-            import random
-            random.seed(42)
-            task_dirs = random.sample(task_dirs, sample)
-
         total = len(task_dirs)
         parallel = kwargs.get("parallel", 1)
         max_turns = kwargs.get("max_turns")
@@ -693,12 +692,13 @@ class ClawEval(BaseBenchmark):
 
         log(f"[claweval] Evaluating {total} tasks with model={model_key}, parallel={parallel}")
 
-        # Load cached results
+        # Load cached results first, then sample from uncached tasks
         all_results = []
         new_task_dirs = []
+        force = kwargs.get("force")
         for td in task_dirs:
             cached_file = self.results_dir / "claweval" / model_key / td.name / "result.json"
-            if cached_file.exists() and not kwargs.get("force"):
+            if cached_file.exists() and not force:
                 try:
                     cached = json.loads(cached_file.read_text())
                     cached["_from_cache"] = True
@@ -707,6 +707,12 @@ class ClawEval(BaseBenchmark):
                 except Exception:
                     pass
             new_task_dirs.append(td)
+
+        # Sample from uncached (new) tasks: sample=n means run n NEW tasks
+        if sample and sample < len(new_task_dirs):
+            import random
+            random.seed(42)
+            new_task_dirs = random.sample(new_task_dirs, sample)
 
         # Execute new tasks
         if new_task_dirs:

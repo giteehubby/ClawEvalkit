@@ -379,6 +379,8 @@ def _build_exec_script(model_key: str, task_id: str, user_message: str, config: 
         api_key_env = "MINIMAX_API_KEY"
     elif provider == "openrouter":
         api_key_env = "OPENROUTER_API_KEY"
+    elif provider == "glm":
+        api_key_env = "GLM_API_KEY"
     else:
         api_key_env = "OPENROUTER_API_KEY"
 
@@ -663,7 +665,7 @@ class AgentBench(BaseBenchmark):
         out_dir.mkdir(parents=True, exist_ok=True)
 
         openrouter_api_key = os.getenv("OPENROUTER_API_KEY", "")
-        judge_model_env = os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
+        judge_model_env = os.getenv("JUDGE_MODEL", "glm-4.7")
 
         # Resolve judge API config based on model name
         from ..config import get_judge_config
@@ -749,6 +751,9 @@ class AgentBench(BaseBenchmark):
                 if provider == "minimax":
                     minimax_api_key = os.getenv("MINIMAX_API_KEY", "")
                     env_args.extend(["-e", f"MINIMAX_API_KEY={minimax_api_key}"])
+                elif provider == "glm":
+                    glm_api_key = os.getenv("GLM_API_KEY", "")
+                    env_args.extend(["-e", f"GLM_API_KEY={glm_api_key}"])
                 else:
                     env_args.extend(["-e", f"OPENROUTER_API_KEY={openrouter_api_key}"])
 
@@ -992,7 +997,7 @@ class AgentBench(BaseBenchmark):
                         except Exception:
                             pass
 
-            if scores:
+            if scores and len(scores) == self.TASK_COUNT:
                 return {"score": round(sum(scores) / len(scores), 1), "total": len(scores)}
 
         return None

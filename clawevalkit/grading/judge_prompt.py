@@ -21,7 +21,7 @@ Score each dimension from 0.0 to 1.0:
 4. **Final Answer Quality** (权重 20%): Is the final answer accurate, complete, and well-formatted?
 
 ## Output Format
-Return a JSON object with the following fields:
+IMPORTANT: Output ONLY a valid JSON object, no prose, no explanation before or after the JSON.
 {{
   "task_completion": 0.0-1.0,
   "tool_usage": 0.0-1.0,
@@ -58,7 +58,7 @@ Score each dimension from 0.0 to 1.0:
 4. **Final Answer Quality** (权重 20%): Is the final answer accurate and complete?
 
 ## Output Format
-Return a JSON object with the following fields:
+IMPORTANT: Output ONLY a valid JSON object, no prose, no explanation before or after the JSON.
 {{
   "task_completion": 0.0-1.0,
   "tool_usage": 0.0-1.0,

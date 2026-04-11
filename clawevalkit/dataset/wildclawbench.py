@@ -406,7 +406,7 @@ class WildClawBench(BaseBenchmark):
             else:
                 tasks = uncached
         judge_key, judge_base, judge_model = get_judge_config(
-            os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
+            os.getenv("JUDGE_MODEL", "glm-4.7")
         )
         out_dir.mkdir(parents=True, exist_ok=True)
         results = []
@@ -561,7 +561,7 @@ class WildClawBench(BaseBenchmark):
         out_dir.mkdir(parents=True, exist_ok=True)
         results = []
         judge_key, judge_base, judge_model = get_judge_config(
-            os.getenv("JUDGE_MODEL", "anthropic/claude-sonnet-4.6")
+            os.getenv("JUDGE_MODEL", "glm-4.7")
         )
         openrouter_api_key = os.getenv("OPENROUTER_API_KEY", "")
         def run_single_task_docker_nanobot(task: dict, force: bool = False) -> dict:
