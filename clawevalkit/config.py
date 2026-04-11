@@ -107,8 +107,8 @@ def get_judge_config(judge_model: str = None) -> tuple[str, str, str]:
     """Get judge API config: (api_key, base_url, actual_model_name).
 
     Auto-detects provider based on judge_model name:
-    - If judge_model contains "minimax", uses MiniMax API (Anthropic-compatible)
-    - If judge_model contains "glm", uses GLM API (OpenAI-compatible)
+    - If judge_model contains "minimax", uses MiniMax Anthropic-compatible API
+    - If judge_model contains "glm", uses GLM Anthropic-compatible API
     - Otherwise uses OpenRouter defaults (OpenAI-compatible)
 
     Args:
@@ -131,6 +131,7 @@ def get_judge_config(judge_model: str = None) -> tuple[str, str, str]:
             actual_model = judge_model
     elif "glm" in judge_model.lower():
         api_key = os.getenv("GLM_API_KEY", os.getenv("JUDGE_API_KEY", ""))
+        # Anthropic-compatible endpoint (LLMJudge auto-detects and uses Anthropic SDK)
         base_url = "https://open.bigmodel.cn/api/anthropic"
         actual_model = judge_model
     else:

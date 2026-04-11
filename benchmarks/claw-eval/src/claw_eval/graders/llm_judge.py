@@ -55,8 +55,18 @@ Respond with JSON only: {"score": <float>, "reasoning": "<brief explanation>"}
 """
 
 
+def _is_anthropic_endpoint(base_url: str) -> bool:
+    """Check if base_url points to an Anthropic-compatible API."""
+    return "/anthropic" in base_url or "anthropic.ai" in base_url
+
+
 class LLMJudge:
-    """Judge communication quality using an LLM via OpenAI-compatible API."""
+    """Judge communication quality using an LLM via OpenAI or Anthropic-compatible API.
+
+    Automatically detects whether to use the OpenAI SDK or Anthropic SDK based on
+    the base_url. URLs containing '/anthropic' use the Anthropic SDK; all others
+    use the OpenAI SDK.
+    """
 
     def __init__(
         self,
@@ -64,21 +74,164 @@ class LLMJudge:
         api_key: str | None = None,
         base_url: str = "https://openrouter.ai/api/v1",
     ) -> None:
-        self.client = OpenAI(api_key=api_key or "dummy", base_url=base_url)
         self.model_id = model_id
         self._call_log: list[dict] = []
-        # Wrap client.chat.completions.create to count all calls
-        _orig_create = self.client.chat.completions.create
-        _log = self._call_log
-        def _counting_create(*args, **kwargs):
-            result = _orig_create(*args, **kwargs)
-            _log.append({
-                "method": "client.chat.completions.create",
-                "model": kwargs.get("model", getattr(result, "model", "")),
-                "timestamp": _now(),
-            })
-            return result
-        self.client.chat.completions.create = _counting_create
+        self._use_anthropic = _is_anthropic_endpoint(base_url)
+
+        if self._use_anthropic:
+            import anthropic
+            self._anthropic_client = anthropic.Anthropic(api_key=api_key or "dummy", base_url=base_url)
+            # Wrap messages.create for call counting
+            _orig = self._anthropic_client.messages.create
+            _log = self._call_log
+            def _counting_create(*args, **kwargs):
+                result = _orig(*args, **kwargs)
+                _log.append({
+                    "method": "anthropic.messages.create",
+                    "model": kwargs.get("model", getattr(result, "model", "")),
+                    "timestamp": _now(),
+                })
+                return result
+            self._anthropic_client.messages.create = _counting_create
+        else:
+            self.client = OpenAI(api_key=api_key or "dummy", base_url=base_url)
+            _orig_create = self.client.chat.completions.create
+            _log = self._call_log
+            def _counting_create(*args, **kwargs):
+                result = _orig_create(*args, **kwargs)
+                _log.append({
+                    "method": "client.chat.completions.create",
+                    "model": kwargs.get("model", getattr(result, "model", "")),
+                    "timestamp": _now(),
+                })
+                return result
+            self.client.chat.completions.create = _counting_create
+
+    def _call_api(self, messages: list[dict], *, max_tokens: int = 8192) -> str:
+        """Call LLM API and return the text content. Works with both OpenAI and Anthropic."""
+        if self._use_anthropic:
+            # Separate system message from user/assistant messages
+            system_text = ""
+            api_messages = []
+            for msg in messages:
+                if msg["role"] == "system":
+                    system_text += msg["content"]
+                else:
+                    api_messages.append(msg)
+
+            resp = self._anthropic_client.messages.create(
+                model=self.model_id,
+                system=system_text or anthropic.NOT_GIVEN,
+                messages=api_messages,
+                max_tokens=max_tokens,
+                temperature=0.0,
+            )
+            # Extract text from content blocks
+            text_parts = []
+            for block in resp.content:
+                if hasattr(block, "text"):
+                    text_parts.append(block.text)
+            return "\n".join(text_parts) if text_parts else ""
+        else:
+            resp = self.client.chat.completions.create(
+                model=self.model_id,
+                messages=messages,
+                temperature=0.0,
+                max_tokens=max_tokens,
+            )
+            return resp.choices[0].message.content or ""
+
+    def _call_api_vision(self, system_prompt: str, content_parts: list[dict], *, max_tokens: int = 8192) -> str:
+        """Call LLM API with vision content. Works with both OpenAI and Anthropic."""
+        if self._use_anthropic:
+            # Convert OpenAI-style content_parts to Anthropic format
+            anthropic_content = []
+            for part in content_parts:
+                if part.get("type") == "text":
+                    anthropic_content.append({"type": "text", "text": part["text"]})
+                elif part.get("type") == "image_url":
+                    # Parse data:image/png;base64,... -> media_type + data
+                    url = part["image_url"]["url"]
+                    if url.startswith("data:"):
+                        header, b64_data = url.split(",", 1)
+                        # data:image/png;base64 -> image/png
+                        media_type = header.split(":")[1].split(";")[0]
+                        anthropic_content.append({
+                            "type": "image",
+                            "source": {"type": "base64", "media_type": media_type, "data": b64_data},
+                        })
+
+            resp = self._anthropic_client.messages.create(
+                model=self.model_id,
+                system=system_prompt,
+                messages=[{"role": "user", "content": anthropic_content}],
+                max_tokens=max_tokens,
+                temperature=0.0,
+            )
+            text_parts = []
+            for block in resp.content:
+                if hasattr(block, "text"):
+                    text_parts.append(block.text)
+            return "\n".join(text_parts) if text_parts else ""
+        else:
+            resp = self.client.chat.completions.create(
+                model=self.model_id,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": content_parts},
+                ],
+                temperature=0.0,
+                max_tokens=max_tokens,
+            )
+            return resp.choices[0].message.content or ""
+
+    @staticmethod
+    def _parse_json_response(raw: str) -> tuple[float, str]:
+        """Parse score and reasoning from raw LLM response. Raises on failure."""
+        raw = re.sub(r"^```(?:json)?\s*", "", raw.strip())
+        raw = re.sub(r"\s*```$", "", raw.strip())
+        m = re.search(r'\{[^{}]*\}', raw)
+        if m:
+            raw = m.group(0)
+        try:
+            parsed = json.loads(raw)
+            return parsed["score"], parsed["reasoning"]
+        except (json.JSONDecodeError, KeyError):
+            score_m = re.search(r'"score"\s*:\s*([0-9.]+)', raw)
+            reason_m = re.search(r'"reasoning"\s*:\s*"((?:[^"\\]|\\.)*)"', raw)
+            if score_m:
+                return float(score_m.group(1)), reason_m.group(1) if reason_m else ""
+            raise json.JSONDecodeError("No score found in raw", raw, 0)
+
+    def _retry_loop(self, call_fn, method_name: str, log_extra: dict) -> JudgeResult:
+        """Generic retry loop shared by all evaluate methods."""
+        max_retries = 15
+        last_exc: Exception | None = None
+        for attempt in range(max_retries + 1):
+            try:
+                raw = call_fn()
+                score, reasoning = self._parse_json_response(raw)
+                result = JudgeResult(
+                    score=max(0.0, min(1.0, float(score))),
+                    reasoning=str(reasoning),
+                )
+                self._call_log.append({
+                    "method": method_name,
+                    "score": result.score,
+                    "reasoning": result.reasoning,
+                    "timestamp": _now(),
+                    **log_extra,
+                })
+                return result
+            except Exception as exc:
+                last_exc = exc
+                status = getattr(exc, "status_code", None) or getattr(exc, "code", None)
+                delay = min(2 ** (attempt + 1), 8) + random.uniform(0, 1)
+                print(f"[judge-retry] ({status or type(exc).__name__}), "
+                      f"attempt {attempt + 1}/{max_retries}, waiting {delay:.1f}s ...")
+                time.sleep(delay)
+        print(f"[judge] All {max_retries} retries exhausted for {method_name}, returning fallback 0.0")
+        return JudgeResult(score=0.0, reasoning=f"Judge failed after {max_retries} retries: {last_exc}")
 
     def evaluate(
         self,
@@ -94,58 +247,15 @@ class LLMJudge:
             f"## Actions Taken\n{actions_summary}\n\n"
             f"## Rubric\n{rubric}"
         )
-        max_retries = 30
-        last_exc: Exception | None = None
-        for attempt in range(max_retries + 1):
-            try:
-                resp = self.client.chat.completions.create(
-                    model=self.model_id,
-                    messages=[
-                        {"role": "system", "content": _SYSTEM_PROMPT},
-                        {"role": "user", "content": user_msg},
-                    ],
-                    temperature=0.0,
-                    max_tokens=8192,
-                )
-                raw = resp.choices[0].message.content or "{}"
-                # Strip markdown code fences if present
-                raw = re.sub(r"^```(?:json)?\s*", "", raw.strip())
-                raw = re.sub(r"\s*```$", "", raw.strip())
-                m = re.search(r'\{[^{}]*\}', raw)
-                if m:
-                    raw = m.group(0)
-                try:
-                    parsed = json.loads(raw)
-                    score, reasoning = parsed["score"], parsed["reasoning"]
-                except (json.JSONDecodeError, KeyError):
-                    # Fallback: extract score and reasoning directly
-                    score_m = re.search(r'"score"\s*:\s*([0-9.]+)', raw)
-                    reason_m = re.search(r'"reasoning"\s*:\s*"((?:[^"\\]|\\.)*)"', raw)
-                    if score_m:
-                        score = float(score_m.group(1))
-                        reasoning = reason_m.group(1) if reason_m else ""
-                    else:
-                        raise json.JSONDecodeError("No score found in raw", raw, 0)
-
-                result = JudgeResult(
-                    score=max(0.0, min(1.0, float(score))),
-                    reasoning=str(reasoning),
-                )
-                self._call_log.append({
-                    "method": "evaluate",
-                    "rubric_preview": rubric[:300],
-                    "score": result.score,
-                    "reasoning": result.reasoning,
-                    "timestamp": _now(),
-                })
-                return result
-            except Exception as exc:
-                last_exc = exc
-                status = getattr(exc, "status_code", None) or getattr(exc, "code", None)
-                delay = min(2 ** (attempt + 1), 8) + random.uniform(0, 1)
-                print(f"[judge-retry] ({status or type(exc).__name__}), "
-                      f"attempt {attempt + 1}/{max_retries}, waiting {delay:.1f}s ...")
-                time.sleep(delay)
+        messages = [
+            {"role": "system", "content": _SYSTEM_PROMPT},
+            {"role": "user", "content": user_msg},
+        ]
+        return self._retry_loop(
+            lambda: self._call_api(messages),
+            "evaluate",
+            {"rubric_preview": rubric[:300]},
+        )
 
     def evaluate_actions(
         self,
@@ -153,67 +263,21 @@ class LLMJudge:
         artifacts: str,
         rubric: str,
     ) -> JudgeResult:
-        """Evaluate the quality of agent actions/artifacts from audit log.
-
-        Unlike ``evaluate`` which scores conversation quality, this method
-        scores the actual operations the agent performed, as recorded by
-        server-side audit logs.  The agent cannot manipulate this data.
-        """
+        """Evaluate the quality of agent actions/artifacts from audit log."""
         user_msg = (
             f"## Task Prompt\n{task_prompt}\n\n"
             f"## Agent Actions (from server audit log)\n{artifacts}\n\n"
             f"## Rubric\n{rubric}"
         )
-        max_retries = 30
-        last_exc: Exception | None = None
-        for attempt in range(max_retries + 1):
-            try:
-                resp = self.client.chat.completions.create(
-                    model=self.model_id,
-                    messages=[
-                        {"role": "system", "content": _ACTIONS_SYSTEM_PROMPT},
-                        {"role": "user", "content": user_msg},
-                    ],
-                    temperature=0.0,
-                    max_tokens=8192,
-                )
-                raw = resp.choices[0].message.content or "{}"
-                raw = re.sub(r"^```(?:json)?\s*", "", raw.strip())
-                raw = re.sub(r"\s*```$", "", raw.strip())
-                m = re.search(r'\{[^{}]*\}', raw)
-                if m:
-                    raw = m.group(0)
-                try:
-                    parsed = json.loads(raw)
-                    score, reasoning = parsed["score"], parsed["reasoning"]
-                except (json.JSONDecodeError, KeyError):
-                    score_m = re.search(r'"score"\s*:\s*([0-9.]+)', raw)
-                    reason_m = re.search(r'"reasoning"\s*:\s*"((?:[^"\\]|\\.)*)"', raw)
-                    if score_m:
-                        score = float(score_m.group(1))
-                        reasoning = reason_m.group(1) if reason_m else ""
-                    else:
-                        raise json.JSONDecodeError("No score found in raw", raw, 0)
-
-                result = JudgeResult(
-                    score=max(0.0, min(1.0, float(score))),
-                    reasoning=str(reasoning),
-                )
-                self._call_log.append({
-                    "method": "evaluate_actions",
-                    "rubric_preview": rubric[:300],
-                    "score": result.score,
-                    "reasoning": result.reasoning,
-                    "timestamp": _now(),
-                })
-                return result
-            except Exception as exc:
-                last_exc = exc
-                status = getattr(exc, "status_code", None) or getattr(exc, "code", None)
-                delay = min(2 ** (attempt + 1), 8) + random.uniform(0, 1)
-                print(f"[judge-retry] ({status or type(exc).__name__}), "
-                      f"attempt {attempt + 1}/{max_retries}, waiting {delay:.1f}s ...")
-                time.sleep(delay)
+        messages = [
+            {"role": "system", "content": _ACTIONS_SYSTEM_PROMPT},
+            {"role": "user", "content": user_msg},
+        ]
+        return self._retry_loop(
+            lambda: self._call_api(messages),
+            "evaluate_actions",
+            {"rubric_preview": rubric[:300]},
+        )
 
     def evaluate_visual(
         self,
@@ -222,14 +286,9 @@ class LLMJudge:
         candidate_images_b64: list[str],
         context: str = "",
     ) -> JudgeResult:
-        """Evaluate visual similarity between reference and candidate images.
-
-        Constructs a message with inline base64 images for a vision-capable
-        judge model and returns a JudgeResult (score + reasoning).
-        """
+        """Evaluate visual similarity between reference and candidate images."""
         content_parts: list[dict] = []
 
-        # Context / rubric text
         header = "## Visual Evaluation\n"
         if context:
             header += f"{context}\n\n"
@@ -248,7 +307,6 @@ class LLMJudge:
         header += 'Respond with JSON only: {"score": <float>, "reasoning": "<brief explanation>"}'
         content_parts.append({"type": "text", "text": header})
 
-        # Reference images
         if reference_images_b64:
             content_parts.append({"type": "text", "text": f"\n### Reference ({len(reference_images_b64)} images)"})
             for img_b64 in reference_images_b64:
@@ -257,7 +315,6 @@ class LLMJudge:
                     "image_url": {"url": f"data:image/png;base64,{img_b64}"},
                 })
 
-        # Candidate images
         if candidate_images_b64:
             content_parts.append({"type": "text", "text": f"\n### Candidate ({len(candidate_images_b64)} images)"})
             for img_b64 in candidate_images_b64:
@@ -266,59 +323,16 @@ class LLMJudge:
                     "image_url": {"url": f"data:image/png;base64,{img_b64}"},
                 })
 
-        max_retries = 30
-        last_exc: Exception | None = None
-        for attempt in range(max_retries + 1):
-            try:
-                resp = self.client.chat.completions.create(
-                    model=self.model_id,
-                    messages=[
-                        {"role": "system", "content": _VISUAL_SYSTEM_PROMPT},
-                        {"role": "user", "content": content_parts},
-                    ],
-                    temperature=0.0,
-                    max_tokens=8192,
-                )
-                raw = resp.choices[0].message.content or "{}"
-                raw = re.sub(r"^```(?:json)?\s*", "", raw.strip())
-                raw = re.sub(r"\s*```$", "", raw.strip())
-                m = re.search(r'\{[^{}]*\}', raw)
-                if m:
-                    raw = m.group(0)
-                try:
-                    parsed = json.loads(raw)
-                    score, reasoning = parsed["score"], parsed["reasoning"]
-                except (json.JSONDecodeError, KeyError):
-                    score_m = re.search(r'"score"\s*:\s*([0-9.]+)', raw)
-                    reason_m = re.search(r'"reasoning"\s*:\s*"((?:[^"\\]|\\.)*)"', raw)
-                    if score_m:
-                        score = float(score_m.group(1))
-                        reasoning = reason_m.group(1) if reason_m else ""
-                    else:
-                        raise json.JSONDecodeError("No score found in raw", raw, 0)
-                result = JudgeResult(
-                    score=max(0.0, min(1.0, float(score))),
-                    reasoning=str(reasoning),
-                )
-                self._call_log.append({
-                    "method": "evaluate_visual",
-                    "rubric_preview": rubric[:300],
-                    "n_ref_images": len(reference_images_b64),
-                    "n_cand_images": len(candidate_images_b64),
-                    "context_preview": context[:200],
-                    "score": result.score,
-                    "reasoning": result.reasoning,
-                    "timestamp": _now(),
-                })
-                print(f"[judge-visual] score={result.score:.2f} reasoning={result.reasoning[:200]}")
-                return result
-            except Exception as exc:
-                last_exc = exc
-                status = getattr(exc, "status_code", None) or getattr(exc, "code", None)
-                delay = min(2 ** (attempt + 1), 8) + random.uniform(0, 1)
-                print(f"[judge-visual-retry] ({status or type(exc).__name__}), "
-                      f"attempt {attempt + 1}/{max_retries}, waiting {delay:.1f}s ...")
-                time.sleep(delay)
+        return self._retry_loop(
+            lambda: self._call_api_vision(_VISUAL_SYSTEM_PROMPT, content_parts),
+            "evaluate_visual",
+            {
+                "rubric_preview": rubric[:300],
+                "n_ref_images": len(reference_images_b64),
+                "n_cand_images": len(candidate_images_b64),
+                "context_preview": context[:200],
+            },
+        )
 
     def get_call_log(self) -> list[dict]:
         return list(self._call_log)

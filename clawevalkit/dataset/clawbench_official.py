@@ -62,7 +62,7 @@ class ClawBenchOfficial(BaseBenchmark):
 
     def _evaluate_native(self, model_key: str, config: dict, sample: int = 0, **kwargs) -> dict:
         """Native mode: 通过 subprocess 调用 claw_bench 包进行评测。"""
-        bench_dir = self.base_dir / "benchmarks" / "claw-bench-official"
+        bench_dir = self.base_dir / "benchmarks" / "claw-bench"
         if not bench_dir.exists():
             return {"score": 0, "passed": 0, "total": 0, "error": f"bench dir not found: {bench_dir}"}
 
@@ -132,7 +132,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
         **kwargs
     ) -> dict:
         """Docker mode: 在容器内运行 NanoBotAgent 执行任务。"""
-        bench_dir = self.base_dir / "benchmarks" / "claw-bench-official"
+        bench_dir = self.base_dir / "benchmarks" / "claw-bench"
         if not bench_dir.exists():
             return {"score": 0, "passed": 0, "total": 0, "error": f"bench dir not found: {bench_dir}"}
 
@@ -140,6 +140,23 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
         tasks, task_dirs = self._load_tasks(bench_dir)
         if not tasks:
             return {"score": 0, "total": 0, "error": "no tasks found"}
+
+        # 按 task_ids 过滤
+        task_ids = kwargs.get("task_ids") or kwargs.get("task_id_list")
+        if task_ids:
+            task_id_set = set(task_ids)
+            tasks = [t for t in tasks if t["id"] in task_id_set]
+            if not tasks:
+                log("No tasks matched task_ids: %s", task_ids)
+                return {"score": 0, "passed": 0, "total": 0, "error": f"no tasks matched: {task_ids}"}
+
+        # 按 category 过滤
+        category = kwargs.get("category")
+        if category:
+            tasks = [t for t in tasks if category in t.get("domain", "")]
+            if not tasks:
+                log("No tasks matched category: %s", category)
+                return {"score": 0, "passed": 0, "total": 0, "error": f"no tasks matched category: {category}"}
 
         # 采样
         if sample and sample < len(tasks):
@@ -356,7 +373,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
         workspace_inner = os.path.join(workspace_path, "workspace")
 
         volume_mounts = [
-            "-v", f"{bench_dir}:/app/claw-bench-official:rw",
+            "-v", f"{bench_dir}:/app/claw-bench:rw",
             "-v", f"{workspace_inner}:{TMP_WORKSPACE}:rw",
         ]
 
@@ -406,16 +423,15 @@ import shutil
 from pathlib import Path
 
 sys.path.insert(0, '/root/OpenClawPro')
-sys.path.insert(0, '/app/claw-bench-official/src')
+sys.path.insert(0, '/app/claw-bench/src')
 
 from harness.agent.nanobot import NanoBotAgent
 from claw_bench.core.task_loader import load_task
 from claw_bench.core.verifier import verify_task
-from ..utils.log import log
 
 # 容器内路径
 workspace = Path('{TMP_WORKSPACE}')
-task_dir = Path('/app/claw-bench-official/tasks')
+task_dir = Path('/app/claw-bench/tasks')
 
 # 根据 task_id 找到任务目录
 # task_id 格式可能是 comm-008，目录结构是 tasks/communication/comm-008

@@ -350,33 +350,11 @@ class ClawEval(BaseBenchmark):
 
     @staticmethod
     def _make_judge(judge_model: str | None = None):
-        """Create an LLMJudge instance if possible.
-
-        Credential search order:
-          1. JUDGE_API_KEY / JUDGE_BASE_URL (explicit judge config)
-          2. GLM_API_KEY / GLM_BASE_URL (fast, cheap, always available)
-          3. OPENROUTER_API_KEY / OPENROUTER_BASE_URL (fallback)
-        """
+        """Create an LLMJudge instance using get_judge_config for correct API routing."""
         from claw_eval.graders.llm_judge import LLMJudge
+        from ..config import get_judge_config
 
-        # 1) Explicit judge config
-        api_key = os.environ.get("JUDGE_API_KEY")
-        base_url = os.environ.get("JUDGE_BASE_URL")
-        model_id = judge_model or os.environ.get("JUDGE_MODEL")
-
-        # 2) GLM (fast & cheap)
-        if not api_key:
-            api_key = os.environ.get("GLM_API_KEY")
-            base_url = os.environ.get("GLM_BASE_URL")
-            if not model_id:
-                model_id = "glm-4-flash"
-
-        # 3) OpenRouter fallback
-        if not api_key:
-            api_key = os.environ.get("OPENROUTER_API_KEY")
-            base_url = os.environ.get("OPENROUTER_BASE_URL", "https://openrouter.ai/api/v1")
-            if not model_id:
-                model_id = "google/gemini-2.0-flash-001"
+        api_key, base_url, model_id = get_judge_config(judge_model)
 
         if not api_key:
             log("[claweval] No judge API key found, skipping LLM judge")

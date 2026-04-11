@@ -599,6 +599,9 @@ class ZClawBench(BaseBenchmark):
         if summary_file.exists():
             try:
                 data = json.loads(summary_file.read_text())
+                # 未跑完时不返回缓存，让 inference 继续跑剩余任务
+                if data.get("passed", 0) < data.get("total", 0):
+                    return None
                 return {"score": data["score"], "passed": data["passed"], "total": data["total"]}
             except Exception:
                 pass
@@ -621,6 +624,9 @@ class ZClawBench(BaseBenchmark):
             return None
         # 动态检测任务数：如果结果数量 > 18，说明是docker模式跑的116个任务
         total_tasks = 116 if len(scores) > 18 else 18
+        # 未跑完时不返回缓存，让 inference 继续跑剩余任务（逐任务缓存会自动跳过已完成的）
+        if len(scores) < total_tasks:
+            return None
         return {"score": round(sum(scores) / len(scores), 3), "passed": len(scores), "total": total_tasks}
 
     def _load_tasks(self, use_docker: bool = False):
