@@ -1,0 +1,784 @@
+{
+  "cb_007": {
+    "responses": {
+      "OpenClaw documentation": {
+        "items": [
+          {
+            "title": "OpenClaw Docs",
+            "link": "https://docs.openclaw.example/getting-started",
+            "snippet": "Getting started with OpenClaw agents and skills."
+          },
+          {
+            "title": "OpenClaw GitHub",
+            "link": "https://github.com/openclaw/openclaw",
+            "snippet": "Source code and examples for OpenClaw."
+          }
+        ]
+      },
+      "*": {
+        "items": [
+          {
+            "title": "Mock Search Result",
+            "link": "https://search.example/result",
+            "snippet": "Default mock Google search result."
+          }
+        ]
+      }
+    }
+  },
+  "zcb_007": {
+    "responses": {
+      "OpenClaw documentation": {
+        "items": [
+          {
+            "title": "OpenClaw Docs",
+            "link": "https://docs.openclaw.example/getting-started",
+            "snippet": "Getting started with OpenClaw agents and skills."
+          },
+          {
+            "title": "OpenClaw GitHub",
+            "link": "https://github.com/openclaw/openclaw",
+            "snippet": "Source code and examples for OpenClaw."
+          }
+        ]
+      },
+      "*": {
+        "items": [
+          {
+            "title": "Mock Search Result",
+            "link": "https://search.example/result",
+            "snippet": "Default mock Google search result."
+          }
+        ]
+      }
+    }
+  },
+  "cb_008": {
+    "responses": {
+      "What is quantum computing?": {
+        "answer": "Quantum computing uses quantum-mechanical effects like superposition and entanglement to process information.",
+        "results": [
+          {
+            "title": "Quantum computing overview",
+            "url": "https://quantum.example/overview",
+            "score": 0.98,
+            "content": "Quantum computing is a form of computation that uses quantum bits."
+          }
+        ],
+        "images": [
+          "https://images.example/quantum.png"
+        ],
+        "response_time": 0.35,
+        "usage": {
+          "credits": 1
+        }
+      },
+      "*": {
+        "answer": "Default mock Tavily answer.",
+        "results": [
+          {
+            "title": "Mock Tavily Result",
+            "url": "https://tavily.example/result",
+            "score": 0.8,
+            "content": "Default Tavily result content."
+          }
+        ],
+        "images": [],
+        "response_time": 0.2,
+        "usage": {
+          "credits": 1
+        }
+      }
+    }
+  },
+  "zcb_008": {
+    "responses": {
+      "What is quantum computing?": {
+        "answer": "Quantum computing uses quantum-mechanical effects like superposition and entanglement to process information.",
+        "results": [
+          {
+            "title": "Quantum computing overview",
+            "url": "https://quantum.example/overview",
+            "score": 0.98,
+            "content": "Quantum computing is a form of computation that uses quantum bits."
+          }
+        ],
+        "images": [
+          "https://images.example/quantum.png"
+        ],
+        "response_time": 0.35,
+        "usage": {
+          "credits": 1
+        }
+      },
+      "*": {
+        "answer": "Default mock Tavily answer.",
+        "results": [
+          {
+            "title": "Mock Tavily Result",
+            "url": "https://tavily.example/result",
+            "score": 0.8,
+            "content": "Default Tavily result content."
+          }
+        ],
+        "images": [],
+        "response_time": 0.2,
+        "usage": {
+          "credits": 1
+        }
+      }
+    }
+  },
+  "cb_028": {
+    "responses": {
+      "BlueRidge Analytics": {
+        "searchTime": 0.19,
+        "items": [
+          {
+            "title": "BlueRidge Analytics | Retail operations analytics platform",
+            "link": "https://bluepeakanalytics.com",
+            "snippet": "BlueRidge Analytics provides retail and operations analytics software for ecommerce and omnichannel teams."
+          },
+          {
+            "title": "BlueRidge Analytics company profile",
+            "link": "https://www.linkedin.com/company/bluepeakanalytics/",
+            "snippet": "Company page for BlueRidge Analytics."
+          },
+          {
+            "title": "Blue Peak Analytix landing page",
+            "link": "https://bluepeakanalytix.com",
+            "snippet": "A different spelling and branding, not the same domain as BlueRidge Analytics."
+          }
+        ]
+      },
+      "bluepeakanalytics.com": {
+        "searchTime": 0.11,
+        "items": [
+          {
+            "title": "BlueRidge Analytics | Retail operations analytics platform",
+            "link": "https://bluepeakanalytics.com",
+            "snippet": "Official site for BlueRidge Analytics."
+          },
+          {
+            "title": "BlueRidge Analytics pricing and demo",
+            "link": "https://bluepeakanalytics.com/demo",
+            "snippet": "Book a product demo with BlueRidge Analytics."
+          }
+        ]
+      },
+      "bpanalytics-demo.co": {
+        "searchTime": 0.15,
+        "items": [
+          {
+            "title": "BP Analytics Demo microsite",
+            "link": "https://bpanalytics-demo.co",
+            "snippet": "Temporary campaign microsite. Does not present itself as the main BlueRidge Analytics corporate domain."
+          }
+        ]
+      },
+      "BlueRidge Analytics official site": {
+        "searchTime": 0.18,
+        "items": [
+          {
+            "title": "BlueRidge Analytics | Retail operations analytics platform",
+            "link": "https://bluepeakanalytics.com",
+            "snippet": "Official site for BlueRidge Analytics."
+          }
+        ]
+      },
+      "*": {
+        "searchTime": 0.16,
+        "items": [
+          {
+            "title": "BlueRidge Analytics | Retail operations analytics platform",
+            "link": "https://bluepeakanalytics.com",
+            "snippet": "Official site for BlueRidge Analytics."
+          },
+          {
+            "title": "BlueRidge Analytics company profile",
+            "link": "https://www.linkedin.com/company/bluepeakanalytics/",
+            "snippet": "Public company profile for BlueRidge Analytics."
+          }
+        ]
+      }
+    }
+  },
+  "zcb_028": {
+    "responses": {
+      "BlueRidge Analytics": {
+        "searchTime": 0.19,
+        "items": [
+          {
+            "title": "BlueRidge Analytics | Retail operations analytics platform",
+            "link": "https://bluepeakanalytics.com",
+            "snippet": "BlueRidge Analytics provides retail and operations analytics software for ecommerce and omnichannel teams."
+          },
+          {
+            "title": "BlueRidge Analytics company profile",
+            "link": "https://www.linkedin.com/company/bluepeakanalytics/",
+            "snippet": "Company page for BlueRidge Analytics."
+          },
+          {
+            "title": "Blue Peak Analytix landing page",
+            "link": "https://bluepeakanalytix.com",
+            "snippet": "A different spelling and branding, not the same domain as BlueRidge Analytics."
+          }
+        ]
+      },
+      "bluepeakanalytics.com": {
+        "searchTime": 0.11,
+        "items": [
+          {
+            "title": "BlueRidge Analytics | Retail operations analytics platform",
+            "link": "https://bluepeakanalytics.com",
+            "snippet": "Official site for BlueRidge Analytics."
+          },
+          {
+            "title": "BlueRidge Analytics pricing and demo",
+            "link": "https://bluepeakanalytics.com/demo",
+            "snippet": "Book a product demo with BlueRidge Analytics."
+          }
+        ]
+      },
+      "bpanalytics-demo.co": {
+        "searchTime": 0.15,
+        "items": [
+          {
+            "title": "BP Analytics Demo microsite",
+            "link": "https://bpanalytics-demo.co",
+            "snippet": "Temporary campaign microsite. Does not present itself as the main BlueRidge Analytics corporate domain."
+          }
+        ]
+      },
+      "BlueRidge Analytics official site": {
+        "searchTime": 0.18,
+        "items": [
+          {
+            "title": "BlueRidge Analytics | Retail operations analytics platform",
+            "link": "https://bluepeakanalytics.com",
+            "snippet": "Official site for BlueRidge Analytics."
+          }
+        ]
+      },
+      "*": {
+        "searchTime": 0.16,
+        "items": [
+          {
+            "title": "BlueRidge Analytics | Retail operations analytics platform",
+            "link": "https://bluepeakanalytics.com",
+            "snippet": "Official site for BlueRidge Analytics."
+          },
+          {
+            "title": "BlueRidge Analytics company profile",
+            "link": "https://www.linkedin.com/company/bluepeakanalytics/",
+            "snippet": "Public company profile for BlueRidge Analytics."
+          }
+        ]
+      }
+    }
+  },
+  "cb_030": {
+    "responses": {
+      "FurFresh 宠物冻干零食召回": {
+        "items": [
+          {
+            "title": "FDA Announces FurFresh Pet Freeze-Dried Treats Recall Due to Salmonella",
+            "link": "https://www.fda.gov/animal-veterinary/recalls/furfresh-pet-treats-recall",
+            "snippet": "The U.S. Food and Drug Administration is announcing that FurFresh brand is recalling its Chicken Breast Freeze-Dried Treats due to potential Salmonella contamination. Affected products include Lot numbers FF-2026-0310, FF-2026-0311, FF-2026-0312 with Best By dates through June 2026. Consumers who have purchased these products should not feed them to pets and should dispose of them immediately.",
+            "published": "2026-03-12T07:30:00Z"
+          },
+          {
+            "title": "FurFresh Pet Food Recall: Multiple Retailers Affected Nationwide",
+            "link": "https://www.petfoodindustry.com/furfresh-recall-coverage",
+            "snippet": "FurFresh brand's freeze-dried treats are being pulled from shelves at major retailers including PetSmart, Chewy and Amazon. The recall affects approximately 500,000 units sold between January and March 2026. Retailers are offering full refunds to customers who purchased affected products.",
+            "published": "2026-03-12T08:15:00Z"
+          },
+          {
+            "title": "Salmonella Outbreak Linked to FurFresh Freeze-Dried Chicken Treats",
+            "link": "https://www.veterinarynews.com/salmonella-furfresh-outbreak",
+            "snippet": "Veterinary officials have confirmed 12 cases of salmonella in pets linked to FurFresh chicken breast freeze-dried treats. Symptoms include lethargy, vomiting and diarrhea in affected animals. Pet owners should monitor their pets for signs of illness and contact veterinarians if symptoms appear.",
+            "published": "2026-03-12T09:00:00Z"
+          },
+          {
+            "title": "FurFresh Company Statement on Recall: Full Cooperation with FDA",
+            "link": "https://www.furfresh.com/official-recall-statement",
+            "snippet": "FurFresh Pet Foods issues official statement regarding voluntary recall of chicken breast freeze-dried treats. Company is working closely with FDA to investigate the source of contamination and has suspended production of affected product lines. Customer service hotline available at 1-800-FUR-FRESH.",
+            "published": "2026-03-12T10:30:00Z"
+          }
+        ]
+      },
+      "*": {
+        "items": [
+          {
+            "title": "Mock Search Result",
+            "link": "https://search.example/result",
+            "snippet": "Default mock Brave search result."
+          }
+        ]
+      }
+    }
+  },
+  "zcb_030": {
+    "responses": {
+      "FurFresh 宠物冻干零食召回": {
+        "items": [
+          {
+            "title": "FDA Announces FurFresh Pet Freeze-Dried Treats Recall Due to Salmonella",
+            "link": "https://www.fda.gov/animal-veterinary/recalls/furfresh-pet-treats-recall",
+            "snippet": "The U.S. Food and Drug Administration is announcing that FurFresh brand is recalling its Chicken Breast Freeze-Dried Treats due to potential Salmonella contamination. Affected products include Lot numbers FF-2026-0310, FF-2026-0311, FF-2026-0312 with Best By dates through June 2026. Consumers who have purchased these products should not feed them to pets and should dispose of them immediately.",
+            "published": "2026-03-12T07:30:00Z"
+          },
+          {
+            "title": "FurFresh Pet Food Recall: Multiple Retailers Affected Nationwide",
+            "link": "https://www.petfoodindustry.com/furfresh-recall-coverage",
+            "snippet": "FurFresh brand's freeze-dried treats are being pulled from shelves at major retailers including PetSmart, Chewy and Amazon. The recall affects approximately 500,000 units sold between January and March 2026. Retailers are offering full refunds to customers who purchased affected products.",
+            "published": "2026-03-12T08:15:00Z"
+          },
+          {
+            "title": "Salmonella Outbreak Linked to FurFresh Freeze-Dried Chicken Treats",
+            "link": "https://www.veterinarynews.com/salmonella-furfresh-outbreak",
+            "snippet": "Veterinary officials have confirmed 12 cases of salmonella in pets linked to FurFresh chicken breast freeze-dried treats. Symptoms include lethargy, vomiting and diarrhea in affected animals. Pet owners should monitor their pets for signs of illness and contact veterinarians if symptoms appear.",
+            "published": "2026-03-12T09:00:00Z"
+          },
+          {
+            "title": "FurFresh Company Statement on Recall: Full Cooperation with FDA",
+            "link": "https://www.furfresh.com/official-recall-statement",
+            "snippet": "FurFresh Pet Foods issues official statement regarding voluntary recall of chicken breast freeze-dried treats. Company is working closely with FDA to investigate the source of contamination and has suspended production of affected product lines. Customer service hotline available at 1-800-FUR-FRESH.",
+            "published": "2026-03-12T10:30:00Z"
+          }
+        ]
+      },
+      "*": {
+        "items": [
+          {
+            "title": "Mock Search Result",
+            "link": "https://search.example/result",
+            "snippet": "Default mock Brave search result."
+          }
+        ]
+      }
+    }
+  },
+  "cb_032": {
+    "responses": {
+      "What is quantum computing?": {
+        "answer": "Quantum computing uses quantum-mechanical effects like superposition and entanglement to process information.",
+        "results": [
+          {
+            "title": "Quantum computing overview",
+            "url": "https://quantum.example/overview",
+            "score": 0.98,
+            "content": "Quantum computing is a form of computation that uses quantum bits."
+          }
+        ],
+        "images": [
+          "https://images.example/quantum.png"
+        ],
+        "response_time": 0.35,
+        "usage": {
+          "credits": 1
+        }
+      },
+      "*": {
+        "answer": "Default mock Tavily answer.",
+        "results": [
+          {
+            "title": "Mock Tavily Result",
+            "url": "https://tavily.example/result",
+            "score": 0.8,
+            "content": "Default Tavily result content."
+          }
+        ],
+        "images": [],
+        "response_time": 0.2,
+        "usage": {
+          "credits": 1
+        }
+      }
+    }
+  },
+  "zcb_032": {
+    "responses": {
+      "What is quantum computing?": {
+        "answer": "Quantum computing uses quantum-mechanical effects like superposition and entanglement to process information.",
+        "results": [
+          {
+            "title": "Quantum computing overview",
+            "url": "https://quantum.example/overview",
+            "score": 0.98,
+            "content": "Quantum computing is a form of computation that uses quantum bits."
+          }
+        ],
+        "images": [
+          "https://images.example/quantum.png"
+        ],
+        "response_time": 0.35,
+        "usage": {
+          "credits": 1
+        }
+      },
+      "*": {
+        "answer": "Default mock Tavily answer.",
+        "results": [
+          {
+            "title": "Mock Tavily Result",
+            "url": "https://tavily.example/result",
+            "score": 0.8,
+            "content": "Default Tavily result content."
+          }
+        ],
+        "images": [],
+        "response_time": 0.2,
+        "usage": {
+          "credits": 1
+        }
+      }
+    }
+  },
+  "cb_027": {
+    "responses": {
+      "EASA AMC 20-29 composite damage tolerance fatigue update 2026": {
+        "answer": "近期序航材料把重点放在复合材料损伤容限评估闭环、检测周期论证和可接受损伤限值量化上。对 AMC 20-29 / CS-25 相关指导的公开解读里，核心变化是要求更清楚地证明 BVID 假设、疲劳/环境耦合后的损伤扩展速率，以及基于代表性载荷谱去论证重复检测间隔。",
+        "results": [
+          {
+            "title": "EASA composite damage tolerance guidance update stresses BVID substantiation",
+            "url": "https://easa-updates.example/amc20-29-bvid-update",
+            "score": 0.97,
+            "content": "行业解读指出，新版指导材料更强调对 barely visible impact damage (BVID) 初始缺陷假设的可追溯论证，要求申请人说明冲击能级、残余压缩强度验证方法，以及损伤从制造缺陷/运营冲击到可检出的演化路径。生效时间按 2026 年 2 月发布解读执行。"
+          },
+          {
+            "title": "Damage tolerance inspection interval logic tightened for composite primary structure",
+            "url": "https://easa-updates.example/composite-inspection-intervals",
+            "score": 0.94,
+            "content": "变更点之一是检测周期不再只给出固定经验值，需基于代表性载荷谱、疲劳-环境耦合试验和可检测性分析来推导 repeated inspection interval。公开评论还提到对潮湿/高温暴露后的损伤增长速率要单独给出论证。"
+          },
+          {
+            "title": "Acceptable damage limit must be quantified by laminate / joint category",
+            "url": "https://easa-updates.example/acceptable-damage-limit",
+            "score": 0.92,
+            "content": "针对可接受损伤限值，指导意见要求不要只写原则性描述，而要按铺层、连接区域、厚度级别或结构细节给出量化阈值，并说明对应的 NDI 能力边界。很多企业现有规范在这部分仍停留在“超过目视可见损伤即复检”的笼统表述。"
+          }
+        ],
+        "response_time": 0.33,
+        "usage": {
+          "credits": 2
+        }
+      },
+      "*": {
+        "answer": "EASA 近期关于复合材料损伤容限的公开解读主要集中在 BVID 假设可追溯、检测周期基于代表性载荷谱重算，以及可接受损伤限值需要量化表达。",
+        "results": [
+          {
+            "title": "EASA composite damage tolerance guidance update stresses BVID substantiation",
+            "url": "https://easa-updates.example/amc20-29-bvid-update",
+            "score": 0.97,
+            "content": "重点在 BVID 初始缺陷假设和残余强度验证。"
+          },
+          {
+            "title": "Damage tolerance inspection interval logic tightened for composite primary structure",
+            "url": "https://easa-updates.example/composite-inspection-intervals",
+            "score": 0.94,
+            "content": "检测周期需要结合载荷谱、环境耦合和可检测性分析。"
+          },
+          {
+            "title": "Acceptable damage limit must be quantified by laminate / joint category",
+            "url": "https://easa-updates.example/acceptable-damage-limit",
+            "score": 0.92,
+            "content": "可接受损伤限值需要按结构类别量化，不宜只写原则。"
+          }
+        ],
+        "response_time": 0.28,
+        "usage": {
+          "credits": 1
+        }
+      }
+    }
+  },
+  "zcb_027": {
+    "responses": {
+      "EASA AMC 20-29 composite damage tolerance fatigue update 2026": {
+        "answer": "近期序航材料把重点放在复合材料损伤容限评估闭环、检测周期论证和可接受损伤限值量化上。对 AMC 20-29 / CS-25 相关指导的公开解读里，核心变化是要求更清楚地证明 BVID 假设、疲劳/环境耦合后的损伤扩展速率，以及基于代表性载荷谱去论证重复检测间隔。",
+        "results": [
+          {
+            "title": "EASA composite damage tolerance guidance update stresses BVID substantiation",
+            "url": "https://easa-updates.example/amc20-29-bvid-update",
+            "score": 0.97,
+            "content": "行业解读指出，新版指导材料更强调对 barely visible impact damage (BVID) 初始缺陷假设的可追溯论证，要求申请人说明冲击能级、残余压缩强度验证方法，以及损伤从制造缺陷/运营冲击到可检出的演化路径。生效时间按 2026 年 2 月发布解读执行。"
+          },
+          {
+            "title": "Damage tolerance inspection interval logic tightened for composite primary structure",
+            "url": "https://easa-updates.example/composite-inspection-intervals",
+            "score": 0.94,
+            "content": "变更点之一是检测周期不再只给出固定经验值，需基于代表性载荷谱、疲劳-环境耦合试验和可检测性分析来推导 repeated inspection interval。公开评论还提到对潮湿/高温暴露后的损伤增长速率要单独给出论证。"
+          },
+          {
+            "title": "Acceptable damage limit must be quantified by laminate / joint category",
+            "url": "https://easa-updates.example/acceptable-damage-limit",
+            "score": 0.92,
+            "content": "针对可接受损伤限值，指导意见要求不要只写原则性描述，而要按铺层、连接区域、厚度级别或结构细节给出量化阈值，并说明对应的 NDI 能力边界。很多企业现有规范在这部分仍停留在“超过目视可见损伤即复检”的笼统表述。"
+          }
+        ],
+        "response_time": 0.33,
+        "usage": {
+          "credits": 2
+        }
+      },
+      "*": {
+        "answer": "EASA 近期关于复合材料损伤容限的公开解读主要集中在 BVID 假设可追溯、检测周期基于代表性载荷谱重算，以及可接受损伤限值需要量化表达。",
+        "results": [
+          {
+            "title": "EASA composite damage tolerance guidance update stresses BVID substantiation",
+            "url": "https://easa-updates.example/amc20-29-bvid-update",
+            "score": 0.97,
+            "content": "重点在 BVID 初始缺陷假设和残余强度验证。"
+          },
+          {
+            "title": "Damage tolerance inspection interval logic tightened for composite primary structure",
+            "url": "https://easa-updates.example/composite-inspection-intervals",
+            "score": 0.94,
+            "content": "检测周期需要结合载荷谱、环境耦合和可检测性分析。"
+          },
+          {
+            "title": "Acceptable damage limit must be quantified by laminate / joint category",
+            "url": "https://easa-updates.example/acceptable-damage-limit",
+            "score": 0.92,
+            "content": "可接受损伤限值需要按结构类别量化，不宜只写原则。"
+          }
+        ],
+        "response_time": 0.28,
+        "usage": {
+          "credits": 1
+        }
+      }
+    }
+  },
+  "script-mode-0016": {
+    "name": "script-mode-0016",
+    "responses": {
+      "Shopify Hydrogen DTC brand performance 2024": {
+        "searchTime": 0.14,
+        "items": [
+          {
+            "title": "DTC migration to Shopify Hydrogen: performance lessons from a replatform",
+            "link": "https://commerceperf.example/hydrogen-dtc-performance-2024",
+            "displayLink": "commerceperf.example",
+            "snippet": "Case study reports 22 percent improvement in mobile Lighthouse after moving hero and collection pages to Hydrogen, but notes preview and personalization complexity."
+          },
+          {
+            "title": "Shopify Hydrogen community roundup: where teams still struggle",
+            "link": "https://headlessforum.example/hydrogen-community-roundup",
+            "displayLink": "headlessforum.example",
+            "snippet": "Practitioners discuss CMS preview pain, analytics/A-B test integration work and caching discipline required for stable gains."
+          },
+          {
+            "title": "Hydrogen for fast-growing DTC brands: benefits and hidden costs",
+            "link": "https://agencystack.example/hydrogen-hidden-costs",
+            "displayLink": "agencystack.example",
+            "snippet": "Consultancy post says Hydrogen helps when teams need custom UX, but warns about storefront engineering overhead and content team enablement."
+          }
+        ]
+      },
+      "*": {
+        "items": []
+      }
+    }
+  },
+  "zcb_068": {
+    "name": "script-mode-0016",
+    "responses": {
+      "Shopify Hydrogen DTC brand performance 2024": {
+        "searchTime": 0.14,
+        "items": [
+          {
+            "title": "DTC migration to Shopify Hydrogen: performance lessons from a replatform",
+            "link": "https://commerceperf.example/hydrogen-dtc-performance-2024",
+            "displayLink": "commerceperf.example",
+            "snippet": "Case study reports 22 percent improvement in mobile Lighthouse after moving hero and collection pages to Hydrogen, but notes preview and personalization complexity."
+          },
+          {
+            "title": "Shopify Hydrogen community roundup: where teams still struggle",
+            "link": "https://headlessforum.example/hydrogen-community-roundup",
+            "displayLink": "headlessforum.example",
+            "snippet": "Practitioners discuss CMS preview pain, analytics/A-B test integration work and caching discipline required for stable gains."
+          },
+          {
+            "title": "Hydrogen for fast-growing DTC brands: benefits and hidden costs",
+            "link": "https://agencystack.example/hydrogen-hidden-costs",
+            "displayLink": "agencystack.example",
+            "snippet": "Consultancy post says Hydrogen helps when teams need custom UX, but warns about storefront engineering overhead and content team enablement."
+          }
+        ]
+      },
+      "*": {
+        "items": []
+      }
+    }
+  },
+  "cb_071": {
+    "responses": {
+      "TLS 1.2 1.3 compatibility default reverse proxy cloud CDN official": {
+        "searchTime": 0.18,
+        "items": [
+          {
+            "title": "Minimum TLS Version | Cloudflare SSL/TLS docs",
+            "link": "https://developers.cloudflare.com/ssl/edge-certificates/additional-options/minimum-tls/",
+            "snippet": "Cloudflare lets operators choose the minimum TLS version and documents compatibility implications when older clients are still present."
+          },
+          {
+            "title": "Security policies for your Application Load Balancer - AWS Elastic Load Balancing",
+            "link": "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/describe-ssl-policies.html",
+            "snippet": "AWS documents multiple security policies that continue to include both TLS 1.2 and TLS 1.3 options rather than assuming a universal 1.3-only default."
+          },
+          {
+            "title": "RFC 8996: Deprecating TLS 1.0 and TLS 1.1",
+            "link": "https://www.rfc-editor.org/rfc/rfc8996",
+            "snippet": "The RFC deprecates TLS 1.0 and 1.1, which implicitly leaves TLS 1.2 and 1.3 as the supported versions in broad deployment."
+          }
+        ]
+      },
+      "Cloudflare minimum TLS version TLS 1.2 1.3": {
+        "searchTime": 0.14,
+        "items": [
+          {
+            "title": "Minimum TLS Version | Cloudflare SSL/TLS docs",
+            "link": "https://developers.cloudflare.com/ssl/edge-certificates/additional-options/minimum-tls/",
+            "snippet": "Cloudflare documents configurable minimum TLS versions and notes that higher minimums can impact legacy client compatibility."
+          }
+        ]
+      },
+      "AWS load balancer TLS 1.2 1.3 security policy": {
+        "searchTime": 0.15,
+        "items": [
+          {
+            "title": "Security policies for your Application Load Balancer - AWS Elastic Load Balancing",
+            "link": "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/describe-ssl-policies.html",
+            "snippet": "AWS provides multiple security policies with different protocol mixes, including policies that retain TLS 1.2 support."
+          }
+        ]
+      },
+      "RFC 8996 TLS 1.2 widely used compatibility": {
+        "searchTime": 0.13,
+        "items": [
+          {
+            "title": "RFC 8996: Deprecating TLS 1.0 and TLS 1.1",
+            "link": "https://www.rfc-editor.org/rfc/rfc8996",
+            "snippet": "The IETF formally deprecates TLS 1.0 and 1.1 while leaving TLS 1.2 and TLS 1.3 as the current supported versions."
+          },
+          {
+            "title": "Transitioning away from old TLS - NIST guidance overview",
+            "link": "https://csrc.nist.gov/projects/tls-guidance",
+            "snippet": "NIST guidance focuses on removing obsolete TLS versions without assuming every deployment can immediately enforce the newest defaults."
+          }
+        ]
+      },
+      "*": {
+        "searchTime": 0.19,
+        "items": [
+          {
+            "title": "Minimum TLS Version | Cloudflare SSL/TLS docs",
+            "link": "https://developers.cloudflare.com/ssl/edge-certificates/additional-options/minimum-tls/",
+            "snippet": "Cloudflare documents configurable minimum TLS versions and notes compatibility implications."
+          },
+          {
+            "title": "Security policies for your Application Load Balancer - AWS Elastic Load Balancing",
+            "link": "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/describe-ssl-policies.html",
+            "snippet": "AWS provides multiple policies that retain TLS 1.2 support."
+          },
+          {
+            "title": "RFC 8996: Deprecating TLS 1.0 and TLS 1.1",
+            "link": "https://www.rfc-editor.org/rfc/rfc8996",
+            "snippet": "TLS 1.0 and 1.1 are deprecated; TLS 1.2 and 1.3 remain current."
+          },
+          {
+            "title": "Blog: why all servers should be TLS 1.3 only",
+            "link": "https://opinion.example/tls13-only-now",
+            "snippet": "Opinionated post, not an authoritative compatibility source."
+          }
+        ]
+      }
+    }
+  },
+  "zcb_071": {
+    "responses": {
+      "TLS 1.2 1.3 compatibility default reverse proxy cloud CDN official": {
+        "searchTime": 0.18,
+        "items": [
+          {
+            "title": "Minimum TLS Version | Cloudflare SSL/TLS docs",
+            "link": "https://developers.cloudflare.com/ssl/edge-certificates/additional-options/minimum-tls/",
+            "snippet": "Cloudflare lets operators choose the minimum TLS version and documents compatibility implications when older clients are still present."
+          },
+          {
+            "title": "Security policies for your Application Load Balancer - AWS Elastic Load Balancing",
+            "link": "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/describe-ssl-policies.html",
+            "snippet": "AWS documents multiple security policies that continue to include both TLS 1.2 and TLS 1.3 options rather than assuming a universal 1.3-only default."
+          },
+          {
+            "title": "RFC 8996: Deprecating TLS 1.0 and TLS 1.1",
+            "link": "https://www.rfc-editor.org/rfc/rfc8996",
+            "snippet": "The RFC deprecates TLS 1.0 and 1.1, which implicitly leaves TLS 1.2 and 1.3 as the supported versions in broad deployment."
+          }
+        ]
+      },
+      "Cloudflare minimum TLS version TLS 1.2 1.3": {
+        "searchTime": 0.14,
+        "items": [
+          {
+            "title": "Minimum TLS Version | Cloudflare SSL/TLS docs",
+            "link": "https://developers.cloudflare.com/ssl/edge-certificates/additional-options/minimum-tls/",
+            "snippet": "Cloudflare documents configurable minimum TLS versions and notes that higher minimums can impact legacy client compatibility."
+          }
+        ]
+      },
+      "AWS load balancer TLS 1.2 1.3 security policy": {
+        "searchTime": 0.15,
+        "items": [
+          {
+            "title": "Security policies for your Application Load Balancer - AWS Elastic Load Balancing",
+            "link": "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/describe-ssl-policies.html",
+            "snippet": "AWS provides multiple security policies with different protocol mixes, including policies that retain TLS 1.2 support."
+          }
+        ]
+      },
+      "RFC 8996 TLS 1.2 widely used compatibility": {
+        "searchTime": 0.13,
+        "items": [
+          {
+            "title": "RFC 8996: Deprecating TLS 1.0 and TLS 1.1",
+            "link": "https://www.rfc-editor.org/rfc/rfc8996",
+            "snippet": "The IETF formally deprecates TLS 1.0 and 1.1 while leaving TLS 1.2 and TLS 1.3 as the current supported versions."
+          },
+          {
+            "title": "Transitioning away from old TLS - NIST guidance overview",
+            "link": "https://csrc.nist.gov/projects/tls-guidance",
+            "snippet": "NIST guidance focuses on removing obsolete TLS versions without assuming every deployment can immediately enforce the newest defaults."
+          }
+        ]
+      },
+      "*": {
+        "searchTime": 0.19,
+        "items": [
+          {
+            "title": "Minimum TLS Version | Cloudflare SSL/TLS docs",
+            "link": "https://developers.cloudflare.com/ssl/edge-certificates/additional-options/minimum-tls/",
+            "snippet": "Cloudflare documents configurable minimum TLS versions and notes compatibility implications."
+          },
+          {
+            "title": "Security policies for your Application Load Balancer - AWS Elastic Load Balancing",
+            "link": "https://docs.aws.amazon.com/elasticloadbalancing/latest/application/describe-ssl-policies.html",
+            "snippet": "AWS provides multiple policies that retain TLS 1.2 support."
+          },
+          {
+            "title": "RFC 8996: Deprecating TLS 1.0 and TLS 1.1",
+            "link": "https://www.rfc-editor.org/rfc/rfc8996",
+            "snippet": "TLS 1.0 and 1.1 are deprecated; TLS 1.2 and 1.3 remain current."
+          },
+          {
+            "title": "Blog: why all servers should be TLS 1.3 only",
+            "link": "https://opinion.example/tls13-only-now",
+            "snippet": "Opinionated post, not an authoritative compatibility source."
+          }
+        ]
+      }
+    }
+  }
+}

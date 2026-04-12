@@ -1,0 +1,256 @@
+{
+  "script-mode-0014": {
+    "name": "script-mode-0014",
+    "user": {
+      "email": "[REDACTED_EMAIL]",
+      "displayName": "保盾科技运营",
+      "timeZone": "Asia/Shanghai"
+    },
+    "calendars": [
+      {
+        "id": "primary",
+        "summary": "Baodun Primary",
+        "description": "Primary work calendar",
+        "timeZone": "Asia/Shanghai",
+        "primary": true,
+        "events": [
+          {
+            "id": "evt-existing-0014",
+            "summary": "周会：渠道运营同步",
+            "description": "与本题无关的已有会议。",
+            "start": {
+              "dateTime": "2026-03-16T14:00:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "end": {
+              "dateTime": "2026-03-16T14:30:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "attendees": [
+              {
+                "email": "[REDACTED_EMAIL]"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "operations": {
+      "create_event": {
+        "responses": []
+      }
+    }
+  },
+  "zcb_026": {
+    "name": "script-mode-0014",
+    "user": {
+      "email": "[REDACTED_EMAIL]",
+      "displayName": "保盾科技运营",
+      "timeZone": "Asia/Shanghai"
+    },
+    "calendars": [
+      {
+        "id": "primary",
+        "summary": "Baodun Primary",
+        "description": "Primary work calendar",
+        "timeZone": "Asia/Shanghai",
+        "primary": true,
+        "events": [
+          {
+            "id": "evt-existing-0014",
+            "summary": "周会：渠道运营同步",
+            "description": "与本题无关的已有会议。",
+            "start": {
+              "dateTime": "2026-03-16T14:00:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "end": {
+              "dateTime": "2026-03-16T14:30:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "attendees": [
+              {
+                "email": "[REDACTED_EMAIL]"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "operations": {
+      "create_event": {
+        "responses": []
+      }
+    }
+  },
+  "cb_022": {
+    "name": "cb_022",
+    "user": {
+      "email": "[REDACTED_EMAIL]",
+      "displayName": "Northstar Ops",
+      "timeZone": "Asia/Shanghai"
+    },
+    "calendars": [
+      {
+        "id": "primary",
+        "summary": "Northstar Primary",
+        "description": "Primary work calendar",
+        "timeZone": "Asia/Shanghai",
+        "primary": true,
+        "events": [
+          {
+            "id": "evt-existing-022-1",
+            "summary": "Weekly operations sync",
+            "description": "Internal recurring sync.",
+            "start": {
+              "dateTime": "2026-03-17T10:00:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "end": {
+              "dateTime": "2026-03-17T10:30:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "attendees": [
+              {
+                "email": "[REDACTED_EMAIL]"
+              }
+            ]
+          },
+          {
+            "id": "evt-existing-022-2",
+            "summary": "Budget review with finance",
+            "description": "Blocks the later Thursday slot.",
+            "start": {
+              "dateTime": "2026-03-19T11:45:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "end": {
+              "dateTime": "2026-03-19T12:15:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "attendees": [
+              {
+                "email": "[REDACTED_EMAIL]"
+              }
+            ]
+          },
+          {
+            "id": "evt-existing-022-3",
+            "summary": "Team lunch",
+            "description": "Unrelated but close to the Thursday slot.",
+            "start": {
+              "dateTime": "2026-03-19T12:30:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "end": {
+              "dateTime": "2026-03-19T13:30:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "attendees": [
+              {
+                "email": "[REDACTED_EMAIL]"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "operations": {
+      "create_event": {
+        "responses": [
+          {
+            "event": {
+              "id": "evt-bluepeak-demo-001",
+              "hangoutLink": "https://meet.google.com/blue-peak-demo"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "zcb_028": {
+    "name": "cb_022",
+    "user": {
+      "email": "[REDACTED_EMAIL]",
+      "displayName": "Northstar Ops",
+      "timeZone": "Asia/Shanghai"
+    },
+    "calendars": [
+      {
+        "id": "primary",
+        "summary": "Northstar Primary",
+        "description": "Primary work calendar",
+        "timeZone": "Asia/Shanghai",
+        "primary": true,
+        "events": [
+          {
+            "id": "evt-existing-022-1",
+            "summary": "Weekly operations sync",
+            "description": "Internal recurring sync.",
+            "start": {
+              "dateTime": "2026-03-17T10:00:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "end": {
+              "dateTime": "2026-03-17T10:30:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "attendees": [
+              {
+                "email": "[REDACTED_EMAIL]"
+              }
+            ]
+          },
+          {
+            "id": "evt-existing-022-2",
+            "summary": "Budget review with finance",
+            "description": "Blocks the later Thursday slot.",
+            "start": {
+              "dateTime": "2026-03-19T11:45:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "end": {
+              "dateTime": "2026-03-19T12:15:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "attendees": [
+              {
+                "email": "[REDACTED_EMAIL]"
+              }
+            ]
+          },
+          {
+            "id": "evt-existing-022-3",
+            "summary": "Team lunch",
+            "description": "Unrelated but close to the Thursday slot.",
+            "start": {
+              "dateTime": "2026-03-19T12:30:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "end": {
+              "dateTime": "2026-03-19T13:30:00+08:00",
+              "timeZone": "Asia/Shanghai"
+            },
+            "attendees": [
+              {
+                "email": "[REDACTED_EMAIL]"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "operations": {
+      "create_event": {
+        "responses": [
+          {
+            "event": {
+              "id": "evt-bluepeak-demo-001",
+              "hangoutLink": "https://meet.google.com/blue-peak-demo"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

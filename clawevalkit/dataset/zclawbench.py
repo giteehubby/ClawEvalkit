@@ -29,6 +29,8 @@ from ..utils.log import log
 from ..utils.nanobot import import_nanobot_agent
 from ..config import get_judge_config
 from .base import BaseBenchmark
+from . import zclawbench_mock_inject
+from . import zclawbench_mock_data
 
 DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE_NANOBOT", "wildclawbench-nanobot:v3")
 TMP_WORKSPACE = "/tmp/zclawbench_workspace"
@@ -86,7 +88,6 @@ def _start_container(container_name: str, workspace_path: str, openclawpro_dir: 
 
 def _build_exec_script(model_key: str, task_id: str, user_message: str, config: dict) -> str:
     """Build NanoBotAgent execution script for running inside Docker container."""
-    # Determine API key env var based on provider
     provider = config.get("provider", "openrouter")
     if provider == "minimax":
         api_key_env = "MINIMAX_API_KEY"
@@ -95,82 +96,100 @@ def _build_exec_script(model_key: str, task_id: str, user_message: str, config: 
     else:
         api_key_env = "OPENROUTER_API_KEY"
 
-    return f"""
-import sys
-import json
-import time
-import os
-from pathlib import Path
-
-sys.path.insert(0, '/root/OpenClawPro')
-from harness.agent.nanobot import NanoBotAgent
-
-workspace = Path('/tmp/zclawbench_workspace/workspace')
-session_id = 'eval_{model_key}_{task_id}'
-
-# Get API key from environment variable
-api_key = os.environ.get('{api_key_env}', '')
-
-agent = NanoBotAgent(
-    model='{config["model"]}',
-    api_url='{config["api_url"]}',
-    api_key=api_key,
-    workspace=workspace,
-    timeout=3600,
-    disable_safety_guard=True,
-)
-
-system_prompt = \"\"\"You are an expert agent working in a restricted Docker environment.
-
-Available tools:
-- exec: Execute any shell command (bash, python3, curl, etc.)
-- read_file / write_file / edit_file / list_dir: File operations
-- web_search: Search the web (DuckDuckGo)
-- web_fetch: Fetch and read web pages
-
-IMPORTANT:
-- You do NOT have access to Gmail API, Google Calendar API, or other cloud services.
-- If a task requires email/calendar/search functionality, use the exec tool to simulate the workflow:
-  - Create mock data files with realistic content, then process them.
-  - Use web_search for real-time information gathering.
-- Solve the task efficiently. Run all processes in the foreground without user input.
-- Provide a complete, functional solution.\"\"\"
-
-try:
-    start_time = time.time()
-    result = agent.execute(
-        '''{user_message.replace("'", "\\'")}''',
-        session_id=session_id,
-        workspace=workspace,
-        system_prompt=system_prompt,
-        max_iterations=100,
+    # System prompt as a regular string (not f-string) to avoid quote escaping issues
+    # NOTE: NanoBotAgent accepts system_prompt in __init__ kwargs, not execute()
+    _sys_prompt = (
+        "You are an expert agent working in a restricted Docker environment.\n\n"
+        "Available tools:\n"
+        "- exec: Execute any shell command (bash, python3, curl, etc.)\n"
+        "- read_file / write_file / edit_file / list_dir: File operations\n"
+        "- web_search: Search the web (DuckDuckGo)\n"
+        "- web_fetch: Fetch and read web pages\n\n"
+        "You have access to these MOCK API services running locally:\n\n"
+        "1. GMAIL API (http://127.0.0.1:8924):\n"
+        '   List messages: python3 -c "import urllib.request,json; print(json.dumps(json.load(urllib.request.urlopen(\'http://127.0.0.1:8924/gmail/v1/users/me/messages?q=keyword\'))))"\n'
+        '   Get message:  python3 -c "import urllib.request,json; print(json.dumps(json.load(urllib.request.urlopen(\'http://127.0.0.1:8924/gmail/v1/users/me/messages/<msg_id>\'))))"\n'
+        "   Send email: POST to http://127.0.0.1:8924/gmail/v1/users/me/messages/send\n\n"
+        "2. GOOGLE CALENDAR API (http://127.0.0.1:8926):\n"
+        '   List events: python3 -c "import urllib.request,json; print(json.dumps(json.load(urllib.request.urlopen(\'http://127.0.0.1:8926/calendar/v3/calendars/primary/events\'))))"\n'
+        "   Create event: POST to http://127.0.0.1:8926/calendar/v3/calendars/primary/events\n\n"
+        "3. YOUTUBE TRANSCRIPT: python3 /tmp/scripts/fetch_transcript.py <video_url_or_id>\n\n"
+        "IMPORTANT:\n"
+        "- Use python3 + urllib.request to call Gmail/Calendar APIs (no auth needed)\n"
+        "- Read /home/user/skills/gmail/SKILL.md for Gmail details\n"
+        "- Read /home/user/skills/google-calendar-api/SKILL.md for Calendar details\n"
+        "- Solve the task efficiently. Run all processes in the foreground without user input.\n"
+        "- Provide a complete, functional solution."
     )
-    elapsed = time.time() - start_time
 
-    transcript_file = workspace / '.sessions' / f'{{session_id}}.json'
-    transcript_data = json.loads(transcript_file.read_text()) if transcript_file.exists() else (result.transcript or [])
-
-    output = {{
-        'status': result.status,
-        'content': result.content,
-        'transcript': transcript_data,
-        'usage': result.usage or {{}},
-        'execution_time': elapsed,
-        'error': result.error,
-    }}
-except Exception as e:
-    output = {{
-        'status': 'error',
-        'content': '',
-        'transcript': [],
-        'usage': {{}},
-        'execution_time': 0,
-        'error': str(e),
-    }}
-
-(workspace / 'agent_result.json').write_text(json.dumps(output, ensure_ascii=False, indent=2))
-print('DONE')
-"""
+    return (
+        "import sys\n"
+        "import json\n"
+        "import time\n"
+        "import os\n"
+        "from pathlib import Path\n\n"
+        "sys.path.insert(0, '/root/OpenClawPro')\n"
+        "from harness.agent.nanobot import NanoBotAgent\n\n"
+        "workspace = Path('/tmp/zclawbench_workspace/workspace')\n"
+        + f"session_id = 'eval_{model_key}_{task_id}'\n\n"
+        + f"api_key = os.environ.get('{api_key_env}', '')\n\n"
+        "# Mock service environment (matching original ZClawBench injection mechanism)\n"
+        "os.environ['GMAIL_MOCK_BASE_URL'] = 'http://127.0.0.1:8924'\n"
+        "os.environ['GMAIL_MOCK_PORT'] = '8924'\n"
+        "os.environ['GMAIL_MOCK_SCENARIO_FILE'] = '/app/mounts/gmail/scenario.json'\n"
+        "os.environ['GOOGLE_CALENDAR_MOCK_PORT'] = '8926'\n"
+        "os.environ['GOOGLE_CALENDAR_MOCK_SCENARIO_FILE'] = '/app/mounts/google-calendar-api/scenario.json'\n"
+        "os.environ['GOOGLE_SEARCH_MOCK_SCENARIO_FILE'] = '/app/mounts/google-search/scenario.json'\n"
+        "os.environ['YOUTUBE_TRANSCRIPT_SCENARIO_FILE'] = '/app/mounts/youtube-transcript/scenario.json'\n"
+        "os.environ['PATH'] = '/tmp/scripts:' + os.environ.get('PATH', '')\n\n"
+        "# Clear proxy so mock servers on localhost are reachable\n"
+        "os.environ.pop('http_proxy', None)\n"
+        "os.environ.pop('https_proxy', None)\n"
+        "os.environ.pop('HTTP_PROXY', None)\n"
+        "os.environ.pop('HTTPS_PROXY', None)\n"
+        "os.environ.pop('no_proxy', None)\n"
+        "os.environ.pop('NO_PROXY', None)\n\n"
+        "system_prompt = " + repr(_sys_prompt) + "\n\n"
+        "agent = NanoBotAgent(\n"
+        + f"    model='{config['model']}',\n"
+        + f"    api_url='{config['api_url']}',\n"
+        "    api_key=api_key,\n"
+        "    workspace=workspace,\n"
+        "    timeout=3600,\n"
+        "    disable_safety_guard=True,\n"
+        "    system_prompt=system_prompt,\n"
+        ")\n\n"
+        "try:\n"
+        "    start_time = time.time()\n"
+        "    result = agent.execute(\n"
+        + "        " + repr(user_message) + ",\n"
+        "        session_id=session_id,\n"
+        "        workspace=workspace,\n"
+        "        max_iterations=100,\n"
+        "    )\n"
+        "    elapsed = time.time() - start_time\n\n"
+        "    transcript_file = workspace / '.sessions' / f'{session_id}.json'\n"
+        "    transcript_data = json.loads(transcript_file.read_text()) if transcript_file.exists() else (result.transcript or [])\n\n"
+        "    output = {\n"
+        "        'status': result.status,\n"
+        "        'content': result.content,\n"
+        "        'transcript': transcript_data,\n"
+        "        'usage': result.usage or {},\n"
+        "        'execution_time': elapsed,\n"
+        "        'error': result.error,\n"
+        "    }\n"
+        "except Exception as e:\n"
+        "    output = {\n"
+        "        'status': 'error',\n"
+        "        'content': '',\n"
+        "        'transcript': [],\n"
+        "        'usage': {},\n"
+        "        'execution_time': 0,\n"
+        "        'error': str(e),\n"
+        "    }\n\n"
+        "(workspace / 'agent_result.json').write_text(json.dumps(output, ensure_ascii=False, indent=2))\n"
+        "print('DONE')\n"
+    )
 
 
 def _run_agent_in_container(container_name: str, exec_script: str, timeout_seconds: int) -> tuple[subprocess.CompletedProcess, float]:
@@ -492,6 +511,14 @@ class ZClawBench(BaseBenchmark):
                 # Start container
                 _start_container(container_name, workspace_path, openclawpro_dir, DOCKER_IMAGE, env_args)
                 log(f"[{tid}] Container started")
+
+                # Inject mock services and skill files
+                gmail_scenarios, calendar_scenarios, search_scenarios = zclawbench_mock_data.load_scenarios()
+                skill_files_dir = Path(__file__).parent.parent.parent / "assets" / "mock_data"
+                zclawbench_mock_inject.inject_mock_into_container(
+                    container_name, tid, gmail_scenarios, calendar_scenarios, search_scenarios, skill_files_dir
+                )
+                log(f"[{tid}] Mock services injected")
 
                 # Build and run agent
                 exec_script = _build_exec_script(model_key, tid, prompt, config)
