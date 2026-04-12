@@ -2,7 +2,7 @@
 
 <p align="center">
   <strong>Unified evaluation framework for agent benchmarks</strong><br>
-  One entry point, five benchmarks, any model.
+  One entry point, multiple benchmarks, any model.
 </p>
 
 ---
@@ -15,7 +15,7 @@ All benchmarks execute agents inside **Docker containers** for reproducibility a
 
 - **Single command**: `python3 run.py --bench <bench> --model <model>` to evaluate any model on any benchmark
 - **YAML-driven model configs**: Add new models by creating a single YAML file, no code changes needed
-- **Docker sandboxing**: All benchmarks run in Docker containers for reproducibility
+- **Docker sandboxing**: All benchmarks run in Docker containers for reproducibility and safety
 - **Incremental caching**: Per-task result files with automatic resume after interruption
 - **Parallel execution**: Run multiple tasks concurrently with `--parallel`
 - **LLM Judge scoring**: Automated trajectory evaluation with configurable judge models
@@ -26,9 +26,12 @@ All benchmarks execute agents inside **Docker containers** for reproducibility a
 |-----|-----------|------:|---------|-------------|
 | `skillsbench` | SkillsBench | 56 | 0-100% | Multi-turn code generation + pytest, per-task Docker environment |
 | `agentbench` | AgentBench-OpenClaw | 40 | 0-100 | L0 rule-based + L1 metric scoring |
-| `wildclawbench` | WildClawBench | 60 | 0-1 | 6 categories covering productivity, coding, social, search, creative, and safety |
+| `clawbench-official` | ClawBench | 250 | 0-100 | NanoBotAgent execution + Pytest verification across multiple domains |
+| `claweval` | ClawEval | 300 | 0-1 | Mock services + Docker sandbox + multi-dimension grader (completion, robustness, communication, safety) |
 | `zclawbench` | ZClawBench | 116 | 0-1 | LLM Judge scoring across 4 dimensions |
 | `pinchbench` | PinchBench | 23 | 0-100 | Rule-based file/content checks with embedded grading functions |
+| `tribe` | Claw-Bench-Tribe | 8 | 0-100 | Pure LLM scoring without tool use |
+| `skillbench` | SkillBench | 22 | 0-100% | Harness + pytest scoring |
 
 ## Installation
 
@@ -59,7 +62,7 @@ All benchmarks require Docker for sandboxed task execution. You need to build th
 
 ### Step 1: Build the NanoBotAgent image
 
-This is the shared image used by `agentbench`, `wildclawbench`, `zclawbench`, and `pinchbench`:
+This is the shared image used by `agentbench`, `clawbench-official`, `zclawbench`, and `pinchbench`:
 
 ```bash
 # Build the NanoBotAgent Docker image
@@ -68,7 +71,16 @@ docker build -f Dockerfile.nanobot -t wildclawbench-nanobot:latest .
 
 > **Note**: The NanoBotAgent image is based on `wildclawbench-ubuntu:v1.2`. If you don't have this base image, you can build it from the `OpenClawPro/` submodule or pull it from the project's container registry.
 
-### Step 2: (For SkillsBench) Build the base Python images
+### Step 2: (For ClawEval) Build the ClawEval agent image
+
+ClawEval uses its own Docker image for sandboxed task execution:
+
+```bash
+# Build from the claw-eval benchmark directory
+docker build -f benchmarks/claw-eval/Dockerfile.agent -t claw-eval-agent:latest benchmarks/claw-eval/
+```
+
+### Step 3: (For SkillsBench) Build the base Python images
 
 SkillsBench uses per-task Dockerfiles. Some tasks need pre-built Python 3.11 base images:
 
@@ -83,7 +95,7 @@ docker build -f Dockerfile.skillsbench-py311-ubuntu24 -t skillsbench-py311-ubunt
 
 ```bash
 # Check that the images are built
-docker images | grep -E "wildclawbench-nanobot|skillsbench"
+docker images | grep -E "wildclawbench-nanobot|skillsbench|claw-eval-agent"
 ```
 
 ## Quick Start
@@ -98,8 +110,11 @@ python3 run.py --bench skillsbench --model claude-sonnet --docker
 # Run AgentBench with parallel execution
 python3 run.py --bench agentbench --model claude-sonnet --docker --parallel 4
 
-# Run WildClawBench with a specific category
-python3 run.py --bench wildclawbench --model claude-sonnet --docker --category 01_Productivity_Flow
+# Run ClawBench (250 tasks, Docker mode)
+python3 run.py --bench clawbench-official --model claude-sonnet --docker
+
+# Run ClawEval (300 tasks, with mock services + Docker sandbox)
+python3 run.py --bench claweval --model claude-sonnet --docker
 
 # Run ZClawBench with LLM Judge scoring
 python3 run.py --bench zclawbench --model claude-sonnet --docker
@@ -108,13 +123,13 @@ python3 run.py --bench zclawbench --model claude-sonnet --docker
 python3 run.py --bench pinchbench --model claude-sonnet --docker
 
 # Run multiple benchmarks in one command
-python3 run.py --bench skillsbench,agentbench,wildclawbench --model claude-sonnet --docker
+python3 run.py --bench skillsbench,agentbench,clawbench-official --model claude-sonnet --docker
 
 # Sample 5 tasks for quick testing
-python3 run.py --bench wildclawbench --model claude-sonnet --docker --sample 5
+python3 run.py --bench clawbench-official --model claude-sonnet --docker --sample 5
 
 # Run a specific task
-python3 run.py --bench wildclawbench --model claude-sonnet --docker --task 01_Productivity_Flow_task_6
+python3 run.py --bench claweval --model claude-sonnet --docker --task task_id_here
 
 # View summary of existing results
 python3 run.py --summary
@@ -187,23 +202,28 @@ ClawEvalKit/
 │   │   ├── base.py                 # BaseBenchmark ABC
 │   │   ├── skillsbench.py          # 56 tasks, per-task Docker
 │   │   ├── agentbench.py           # 40 tasks, shared Docker image
-│   │   ├── wildclawbench.py        # 60 tasks, shared Docker image
+│   │   ├── clawbench_official.py   # 250 tasks, NanoBotAgent + Pytest
+│   │   ├── claweval.py             # 300 tasks, mock services + Docker sandbox + grader
 │   │   ├── zclawbench.py           # 116 tasks, LLM Judge scoring
-│   │   └── pinchbench.py           # 23 tasks, shared Docker image
+│   │   ├── pinchbench.py           # 23 tasks, shared Docker image
+│   │   ├── tribe.py                # 8 tasks, pure LLM
+│   │   └── skillbench.py           # 22 tasks, harness + pytest
 │   ├── api/                        # API model wrappers
 │   │   ├── openrouter.py           # OpenRouter (Claude, Gemini, etc.)
 │   │   └── ...
 │   ├── grading/                    # Scoring logic
 │   │   ├── judge_prompt.py         # LLM Judge prompts
-│   │   ├── zclawbench_grading.py   # 4-dimension Judge scoring
-│   │   └── wildclawbench_grading.py # Automated checks + Judge
+│   │   └── zclawbench_grading.py   # 4-dimension Judge scoring
 │   └── utils/
 │       ├── docker_runner.py        # Docker container lifecycle manager
+│       ├── nanobot.py              # NanoBotAgent import helper
 │       └── ...
 ├── benchmarks/                     # Benchmark data
 │   ├── skillsbench/
 │   ├── agentbench-openclaw/
-│   ├── wildclawbench/
+│   ├── claw-bench/                 # ClawBench Official tasks
+│   ├── claw-eval/                  # ClawEval tasks + mock services + graders
+│   ├── claw-bench-tribe/           # Tribe tasks
 │   ├── zclawbench/
 │   └── pinchbench/
 ├── OpenClawPro/                    # NanoBotAgent engine (submodule)
@@ -222,7 +242,15 @@ ClawEvalKit/
 
 ### WildClawBench (`wildclawbench`)
 
-60 tasks across 6 categories: Productivity Flow, Code Intelligence, Social Interaction, Search Retrieval, Creative Synthesis, and Safety Alignment. Scoring combines automated checks with LLM Judge evaluation.
+**[Deprecated]** WildClawBench has been removed from the toolkit. Use `clawbench-official` or `claweval` instead.
+
+### ClawBench (`clawbench-official`)
+
+250 tasks across multiple domains. Each task has its own `task.toml` config defining instructions, environment, and verification criteria. The agent executes inside Docker containers using NanoBotAgent, and results are verified via Pytest. Supports both native (subprocess) and Docker execution modes.
+
+### ClawEval (`claweval`)
+
+300 tasks evaluating agent capabilities through mock API services and Docker sandboxes. Each task defines tools (mock HTTP endpoints), fixtures, and graders. The workflow per task: start mock services → launch Docker sandbox → inject fixtures → run NanoBotAgent → collect audit data → grade using multi-dimension scorers (completion, robustness, communication, safety). Supports parallel execution with port-offset isolation.
 
 ### ZClawBench (`zclawbench`)
 
@@ -241,6 +269,7 @@ ClawEvalKit/
 | `JUDGE_MODEL` | Judge model name | `anthropic/claude-sonnet-4.6` |
 | `JUDGE_BASE_URL` | Judge API base URL | `https://openrouter.ai/api/v1` |
 | `DOCKER_IMAGE_NANOBOT` | NanoBotAgent Docker image | `wildclawbench-nanobot:latest` |
+| `CLAWBENCH_DOCKER_IMAGE` | ClawBench Docker image | `wildclawbench-nanobot:v3` |
 | `OPENCLAWPRO_DIR` | Path to OpenClawPro source | `ClawEvalkit/OpenClawPro` |
 
 ## Adding a New Benchmark

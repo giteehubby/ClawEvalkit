@@ -53,6 +53,8 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
         bench = bcls(use_docker=use_docker if use_docker is not None else False)
     elif bench_key == "zclawbench":
         bench = bcls(use_docker=use_docker if use_docker is not None else False)
+    elif bench_key == "tribe":
+        bench = bcls(use_docker=use_docker if use_docker is not None else False)
     elif bench_key == "claweval":
         bench = bcls()
     else:
@@ -67,7 +69,7 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
     # (individual task caching is handled inside benchmark.evaluate)
     if not force and not sample:
         cached = bench.collect(model_key)
-        if cached and cached.get("score") is not None:
+        if cached and cached.get("score") is not None and cached.get("pending", 1) == 0:
             log(f"  [{bench_key}×{model_key}] cached: score={cached['score']}")
             return cached
 

@@ -111,7 +111,9 @@ def main():
     log(f"Config: bench={bench_keys}, models={model_keys}, sample={args.sample or 'all'}")
 
     # 执行评测
-    bench_kwargs = {"force": args.force, "max_turns": args.max_turns}
+    bench_kwargs = {"force": args.force}
+    if args.max_turns is not None:
+        bench_kwargs["max_turns"] = args.max_turns
     if args.docker:
         bench_kwargs["use_docker"] = True
     if args.reuse_container:

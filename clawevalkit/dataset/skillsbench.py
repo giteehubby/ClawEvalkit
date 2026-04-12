@@ -925,6 +925,6 @@ class SkillsBench(BaseBenchmark):
         try:
             data = json.loads(result_f.read_text())
             return {"score": data["score"], "passed": data["passed"], "total": data["total"],
-                    "pass_rate": data["pass_rate"]}
+                    "pass_rate": data["pass_rate"], "pending": data.get("pending", 0)}
         except Exception:
             return None

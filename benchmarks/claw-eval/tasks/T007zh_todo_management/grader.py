@@ -79,7 +79,7 @@ agent在重复分析中还应注意到：
         actions: str, rubric: str,
     ) -> float:
         result = judge.evaluate(task_prompt, conversation, actions, rubric)
-        return result.score
+        return result.score if result else 0.0
 
     # ================================================================== #
     # Main grading
