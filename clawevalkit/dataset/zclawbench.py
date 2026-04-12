@@ -73,6 +73,7 @@ def _start_container(container_name: str, workspace_path: str, openclawpro_dir: 
     docker_run_cmd = [
         "docker", "run", "-d",
         "--name", container_name,
+        "--network", "host",
         *volume_mounts,
         *env_args,
         docker_image,
@@ -119,9 +120,21 @@ agent = NanoBotAgent(
     disable_safety_guard=True,
 )
 
-system_prompt = \"\"\"You are an expert agent working in a restricted environment.
-Solve the task efficiently. Run all processes in the foreground without user input.
-Provide a complete, functional solution.\"\"\"
+system_prompt = \"\"\"You are an expert agent working in a restricted Docker environment.
+
+Available tools:
+- exec: Execute any shell command (bash, python3, curl, etc.)
+- read_file / write_file / edit_file / list_dir: File operations
+- web_search: Search the web (DuckDuckGo)
+- web_fetch: Fetch and read web pages
+
+IMPORTANT:
+- You do NOT have access to Gmail API, Google Calendar API, or other cloud services.
+- If a task requires email/calendar/search functionality, use the exec tool to simulate the workflow:
+  - Create mock data files with realistic content, then process them.
+  - Use web_search for real-time information gathering.
+- Solve the task efficiently. Run all processes in the foreground without user input.
+- Provide a complete, functional solution.\"\"\"
 
 try:
     start_time = time.time()
@@ -472,16 +485,7 @@ class ZClawBench(BaseBenchmark):
                 if provider == "minimax":
                     minimax_api_key = os.getenv("MINIMAX_API_KEY", "")
                     env_args.extend(["-e", f"MINIMAX_API_KEY={minimax_api_key}"])
-                    # MiniMax API 不支持代理，清除代理设置
-                    env_args.extend(["-e", "http_proxy=", "-e", "https_proxy=", "-e", "HTTP_PROXY=", "-e", "HTTPS_PROXY="])
                 else:
-                    proxy_http = os.environ.get('HTTP_PROXY_INNER', '')
-                    proxy_https = os.environ.get('HTTPS_PROXY_INNER', '')
-                    env_args.extend([
-                        "-e", f"http_proxy={proxy_http}",
-                        "-e", f"https_proxy={proxy_https}",
-                        "-e", f"HTTPS_PROXY={proxy_https}",
-                    ])
                     openrouter_api_key = os.getenv("OPENROUTER_API_KEY", "")
                     env_args.extend(["-e", f"OPENROUTER_API_KEY={openrouter_api_key}"])
 

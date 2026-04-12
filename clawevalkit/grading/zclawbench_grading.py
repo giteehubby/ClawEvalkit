@@ -38,10 +38,31 @@ def get_ark_key() -> str:
     return os.environ.get("JUDGE_API_KEY", "")
 
 
-def _trajectory_to_text(trajectory: List[Dict], max_turns: int = 30) -> str:
-    """将轨迹转换为可读文本（限制长度）"""
+def _trajectory_to_text(trajectory: List[Dict], max_turns: int = 60) -> str:
+    """将轨迹转换为可读文本。
+
+    采样策略：当消息数 > max_turns 时，保留头部(任务描述)、尾部(最终结果)，
+    中间均匀采样，确保 judge 能看到完整执行过程和最终输出。
+    """
+    total = len(trajectory)
+    if total <= max_turns:
+        indices = list(range(total))
+    else:
+        # 保留前5轮(任务描述+初始工具)和后15轮(执行结果+最终输出)
+        head, tail = 5, 15
+        mid_count = max_turns - head - tail
+        mid_indices = list(range(head, total - tail))
+        # 均匀采样中间部分
+        if mid_count > 0 and mid_indices:
+            step = max(1, len(mid_indices) // mid_count)
+            sampled_mid = mid_indices[::step][:mid_count]
+        else:
+            sampled_mid = []
+        indices = list(range(head)) + sorted(sampled_mid) + list(range(total - tail, total))
+
     turns = []
-    for i, msg in enumerate(trajectory[:max_turns]):
+    for i in indices:
+        msg = trajectory[i]
         if not isinstance(msg, dict):
             continue
         role = msg.get("role", "?")
@@ -56,9 +77,9 @@ def _trajectory_to_text(trajectory: List[Dict], max_turns: int = 30) -> str:
                         parts.append(f"[TOOL: {c.get('name')} | INPUT: {json.dumps(c.get('input', {}), ensure_ascii=False)[:200]}]")
                     elif c.get("type") == "tool_result":
                         result = c.get("content", "")
-                        parts.append(f"[TOOL_RESULT: {str(result)[:200]}]")
+                        parts.append(f"[TOOL_RESULT: {str(result)[:300]}]")
                     elif c.get("type") == "thinking":
-                        parts.append(f"[THINKING: {str(c.get('thinking', ''))[:200]}]")
+                        pass  # 跳过 thinking block，减少噪音
                 elif isinstance(content, str):
                     parts.append(str(content))
             text = " ".join(parts)
@@ -66,7 +87,11 @@ def _trajectory_to_text(trajectory: List[Dict], max_turns: int = 30) -> str:
             text = content
         else:
             text = str(content)
-        turns.append(f"{role.upper()}: {text[:500]}")
+        turns.append(f"{role.upper()}: {text[:800]}")
+
+    # 如果有截断，添加提示
+    if len(indices) < total:
+        turns.append(f"[NOTE: Original trajectory has {total} messages, showing {len(indices)} key turns]")
 
     return "\n\n".join(turns)
 

@@ -23,6 +23,7 @@ from pathlib import Path
 from typing import Any
 
 from .base import BaseBenchmark
+from ..utils.log import log
 
 
 # Docker 配置
@@ -41,8 +42,10 @@ class ClawBenchOfficial(BaseBenchmark):
 
     def evaluate(self, model_key: str, config: dict, sample: int = 0, **kwargs) -> dict:
         """评测入口：根据 use_docker 选择执行模式。"""
-        use_docker = kwargs.get("use_docker", self._use_docker_default)
-        parallel = kwargs.get("parallel", 1)
+        use_docker = kwargs.pop("use_docker", self._use_docker_default)
+        parallel = kwargs.pop("parallel", 1)
+        kwargs.pop("force", None)
+        kwargs.pop("max_turns", None)
 
         if use_docker:
             return self._evaluate_docker(
@@ -141,13 +144,13 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
         if not tasks:
             return {"score": 0, "total": 0, "error": "no tasks found"}
 
-        # 按 task_ids 过滤
+        # 按 task_ids 过滤（同时匹配 id 和 dir_name）
         task_ids = kwargs.get("task_ids") or kwargs.get("task_id_list")
         if task_ids:
             task_id_set = set(task_ids)
-            tasks = [t for t in tasks if t["id"] in task_id_set]
+            tasks = [t for t in tasks if t["id"] in task_id_set or t.get("dir_name") in task_id_set]
             if not tasks:
-                log("No tasks matched task_ids: %s", task_ids)
+                log(f"No tasks matched task_ids: {task_ids}")
                 return {"score": 0, "passed": 0, "total": 0, "error": f"no tasks matched: {task_ids}"}
 
         # 按 category 过滤
@@ -155,7 +158,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
         if category:
             tasks = [t for t in tasks if category in t.get("domain", "")]
             if not tasks:
-                log("No tasks matched category: %s", category)
+                log(f"No tasks matched category: {category}")
                 return {"score": 0, "passed": 0, "total": 0, "error": f"no tasks matched category: {category}"}
 
         # 采样
@@ -181,7 +184,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                 try:
                     cached = json.loads(result_file.read_text())
                     if cached.get("status") == "success":
-                        log("[%s] Found cached result, skipping", tid)
+                        log(f"[{tid}] Found cached result, skipping")
                         return cached
                 except Exception:
                     pass
@@ -233,14 +236,13 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                 self._start_container(
                     container_name, workspace_path, bench_dir, openclawpro_dir, env_args
                 )
-                log("[%s] Container started", container_name)
+                log(f"[{container_name}] Container started")
 
                 # 构建并执行 agent 脚本
                 timeout = task.get("timeout", 300)
                 exec_script = self._build_exec_script(task, config, timeout)
                 exec_proc, elapsed_time = self._run_agent_in_container(container_name, exec_script, timeout)
-                log("[%s] Agent finished in %.2fs, returncode=%d",
-                           container_name, elapsed_time, exec_proc.returncode)
+                log(f"[{container_name}] Agent finished in {elapsed_time:.2f}s, returncode={exec_proc.returncode}")
 
                 # 复制结果
                 try:
@@ -251,19 +253,27 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                         result["passed"] = agent_result.get("passed", False)
                         result["score"] = agent_result.get("score", 0.0)
                         result["error"] = agent_result.get("error", "")
-                        log("[%s] Agent result: passed=%s, score=%.4f",
-                                   container_name, result["passed"], result["score"])
+                        result["details"] = agent_result.get("details", "")
+                        result["checks_total"] = agent_result.get("checks_total", 0)
+                        result["checks_passed"] = agent_result.get("checks_passed", 0)
+                        result["workspace_files"] = agent_result.get("workspace_files", [])
+                        result["execution_time"] = agent_result.get("execution_time", 0)
+                        # 保存 transcript
+                        transcript = agent_result.get("transcript", [])
+                        if transcript:
+                            self._save_transcript(model_key, tid, transcript)
+                        log(f"[{container_name}] Agent result: passed={result['passed']}, score={result['score']:.4f}")
                     else:
                         result["error"] = "agent_result.json not found"
-                        log("[%s] agent_result.json not found", container_name)
+                        log(f"[{container_name}] agent_result.json not found")
                 except Exception as e:
                     result["error"] = f"Failed to load agent result: {e}"
-                    log("[%s] Failed to load agent result: %s", container_name, e)
+                    log(f"[{container_name}] Failed to load agent result: {e}")
 
             except subprocess.TimeoutExpired:
                 result["error"] = f"Timeout after {task.get('timeout', 300)} seconds"
             except Exception as exc:
-                log("[%s] Execution error: %s", container_name, exc)
+                log(f"[{container_name}] Execution error: {exc}")
                 result["error"] = str(exc)
             finally:
                 # 清理
@@ -275,7 +285,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
             try:
                 result_file.write_text(json.dumps(result, indent=2, ensure_ascii=False))
             except Exception as e:
-                log("[%s] Failed to save result: %s", tid, e)
+                log(f"[{tid}] Failed to save result: {e}")
 
             return result
 
@@ -292,7 +302,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                     try:
                         results.append(future.result())
                     except Exception as exc:
-                        log("[%s] Thread exception: %s", tid, exc)
+                        log(f"[{tid}] Thread exception: {exc}")
                         results.append({"task_id": tid, "status": "error", "error": str(exc)})
 
         # 汇总结果
@@ -336,10 +346,18 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                         raw = {**raw.pop("task"), **raw}
                     task_id = raw.get("id", task_dir.name)
                     timeout = raw.get("timeout", 300)
-                    tasks.append({"id": task_id, "timeout": timeout, "domain": raw.get("domain", "")})
+                    dir_name = task_dir.name  # 如 comm-002-contact-list
+                    tasks.append({
+                        "id": task_id,
+                        "dir_name": dir_name,
+                        "timeout": timeout,
+                        "domain": raw.get("domain", "")
+                    })
                     task_dirs[task_id] = task_dir
+                    # 同时用目录名作为别名，方便按目录名查找
+                    task_dirs[dir_name] = task_dir
                 except Exception as e:
-                    log("Failed to load task %s: %s", task_dir.name, e)
+                    log(f"Failed to load task {task_dir.name}: {e}")
                     continue
 
         return tasks, task_dirs
@@ -360,6 +378,22 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
         instruction_path = task_dir / "instruction.md"
         if instruction_path.exists():
             workspace.joinpath("instruction.md").write_text(instruction_path.read_text())
+
+    def _save_transcript(self, model_key: str, task_id: str, transcript: list):
+        """保存 agent 轨迹到文件。
+
+        保存到: outputs/clawbench-official/transcripts/{model}/{task}/transcript.json
+        """
+        try:
+            trans_path = self.results_dir / "clawbench-official" / "transcripts" / model_key / task_id
+            trans_path.mkdir(parents=True, exist_ok=True)
+            (trans_path / "transcript.json").write_text(
+                json.dumps(transcript, indent=2, ensure_ascii=False),
+                encoding="utf-8",
+            )
+            log("[%s] Saved transcript to %s", task_id, trans_path / "transcript.json")
+        except Exception:
+            pass  # transcript 保存失败不影响主流程
 
     def _start_container(
         self,
@@ -394,6 +428,18 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
         if r.returncode != 0:
             raise RuntimeError(f"Container startup failed:\n{r.stderr}")
 
+        # 启动后立即安装缺失依赖（显式 unset 容器内 ENV 代理）
+        install_env = {k: v for k, v in os.environ.items()
+                       if k.lower() not in ('http_proxy', 'https_proxy')}
+        subprocess.run(
+            ["docker", "exec",
+             "-e", "http_proxy=",
+             "-e", "https_proxy=",
+             container_name,
+             "pip", "install", "-q", "tomli", "pytest-json-report"],
+            capture_output=True, text=True, env=install_env, timeout=120
+        )
+
     def _build_exec_script(self, task: dict, config: dict, timeout: int) -> str:
         """构建在容器内执行的 NanoBotAgent 脚本。"""
         # 根据 provider 选择 API key 环境变量
@@ -408,17 +454,20 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
         return f"""
 import sys
 import subprocess
+import os
 
-# 安装缺失的依赖
+# 确保依赖已安装（通常由 _start_container 预装）
 try:
     import tomli
 except ImportError:
-    subprocess.run(["pip", "install", "-q", "tomli"], check=True)
-    import tomli
+    pass
+try:
+    import pytest_json_report
+except ImportError:
+    pass
 
 import json
 import time
-import os
 import shutil
 from pathlib import Path
 
@@ -545,21 +594,51 @@ try:
         verify_result.checks_passed / max(verify_result.checks_total, 1)
     )
 
+    # 列出工作空间文件用于调试
+    workspace_files = [str(f.relative_to(workspace)) for f in workspace.iterdir() if f.is_file()]
+
+    # 提取 transcript
+    transcript = result.transcript if hasattr(result, 'transcript') and result.transcript else []
+    # 尝试从 .sessions 目录读取（NanoBotAgent 会自动保存）
+    if not transcript:
+        session_file = workspace / '.sessions' / f'clawbench_{task_id}.jsonl'
+        if session_file.exists():
+            try:
+                import json as _json
+                transcript = [_json.loads(line) for line in session_file.read_text().strip().splitlines() if line.strip()]
+            except Exception:
+                pass
+
+    # 安全序列化 transcript
+    safe_transcript = []
+    for entry in transcript:
+        try:
+            json.dumps(entry)
+            safe_transcript.append(entry)
+        except (TypeError, ValueError):
+            safe_transcript.append({{str(k): str(v) for k, v in entry.items()}} if isinstance(entry, dict) else str(entry))
+
     output = {{
         'status': result.status if hasattr(result, 'status') else 'success',
         'passed': passed,
         'score': score,
         'details': verify_result.details,
+        'checks_total': verify_result.checks_total,
+        'checks_passed': verify_result.checks_passed,
+        'workspace_files': workspace_files,
         'execution_time': elapsed,
         'error': result.error if hasattr(result, 'error') else '',
+        'transcript': safe_transcript,
     }}
 except Exception as e:
+    import traceback
     output = {{
         'status': 'error',
         'passed': False,
         'score': 0.0,
         'execution_time': 0,
         'error': str(e),
+        'traceback': traceback.format_exc(),
     }}
 
 (workspace / 'agent_result.json').write_text(json.dumps(output, ensure_ascii=False, indent=2))
@@ -586,6 +665,13 @@ print('DONE')
             capture_output=True, text=True, timeout=timeout + 60
         )
         elapsed = time.perf_counter() - start_time
+        # 输出容器内日志用于调试
+        if exec_proc.stdout:
+            for line in exec_proc.stdout.strip().splitlines()[-20:]:
+                log(f"  [container] {line}")
+        if exec_proc.stderr:
+            for line in exec_proc.stderr.strip().splitlines()[-10:]:
+                log(f"  [container-err] {line}")
         return exec_proc, elapsed
 
     def _copy_result_from_container(self, container_name: str, workspace_path: str) -> Path:
