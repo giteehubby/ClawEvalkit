@@ -77,13 +77,14 @@ tools:
     input_schema:
       type: object
       properties:
-        start_date:
+        date:
           type: string
-          description: "起始日期(YYYY-MM-DD)"
-        end_date:
-          type: string
-          description: "截止日期(YYYY-MM-DD)"
-      required: []
+          description: "查询日期(YYYY-MM-DD)"
+        days:
+          type: integer
+          description: "查询天数，从date开始往后查几天"
+          default: 7
+      required: [date]
 
   - name: calendar_get_event
     description: 获取事件详情

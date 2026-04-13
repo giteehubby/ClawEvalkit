@@ -255,6 +255,34 @@ ClawEvalKit/
 
 300 tasks evaluating agent capabilities through mock API services and Docker sandboxes. Each task defines tools (mock HTTP endpoints), fixtures, and graders. The workflow per task: start mock services → launch Docker sandbox → inject fixtures → run NanoBotAgent → collect audit data → grade using multi-dimension scorers (completion, robustness, communication, safety). Supports parallel execution with port-offset isolation.
 
+#### Data Setup
+
+```bash
+# 1. Clone claw-eval to benchmarks directory
+cd benchmarks
+git clone https://github.com/claw-eval/claw-eval.git
+
+# 2. Download fixtures (video files, etc.) from HuggingFace
+# Option A: Using huggingface-cli
+huggingface-cli download claw-eval/Claw-Eval --repo-type dataset --local data/claw-eval
+
+# Option B: Using wget (if huggingface-cli not installed)
+# Visit https://huggingface.co/datasets/claw-eval/Claw-Eval and download manually
+
+# 3. Extract fixtures to the correct location
+cd claw-eval
+tar -xzvf data/fixtures.tar.gz
+
+# 4. Move fixtures into tasks directory (if extracted outside)
+mv fixtures/* tasks/ 2>/dev/null || true
+
+# 5. Clean up duplicate task directories (if downloaded directly to claw-eval root)
+rm -rf M* T* C*
+
+# Verify: tasks/ should contain 300 task directories
+ls tasks/ | wc -l  # should show 300
+```
+
 ### ZClawBench (`zclawbench`)
 
 116 tasks evaluated by an LLM Judge across 4 weighted dimensions: Task Completion (35%), Tool Usage (25%), Reasoning (20%), and Answer Quality (20%). Supports both native (18 tasks) and Docker (116 tasks) modes.

@@ -62,6 +62,7 @@ def main():
     parser.add_argument("--category", "-c", help="指定任务类别 (如 01_Productivity_Flow)")
     parser.add_argument("--reuse-container", action="store_true", help="Reuse existing containers (skip rebuild, preserves pip installs)")
     parser.add_argument("--judge-model", help="Judge model for scoring (e.g., minimax/claude-3.5-sonnet, claude-sonnet-4.6)")
+    parser.add_argument("--include-multimodal", action="store_true", help="Include multimodal tasks (for ClawEval only, default: excluded)")
     args = parser.parse_args()
 
     # 设置 transcripts_dir 默认值
@@ -124,6 +125,8 @@ def main():
         bench_kwargs["task_ids"] = [args.task]
     if args.category:
         bench_kwargs["category"] = args.category
+    if not args.include_multimodal:
+        bench_kwargs["exclude_multimodal"] = True
     infer_all(bench_keys, model_keys, sample=args.sample,
               output_dir=args.output_dir, transcripts_dir=args.transcripts_dir, **bench_kwargs)
 

@@ -28,6 +28,7 @@ from pathlib import Path
 from typing import Any
 
 from ..utils.nanobot import import_nanobot_agent
+from ..utils.mock_service_tools import MockServiceTool
 from ..utils.log import log
 from .base import BaseBenchmark
 
@@ -396,40 +397,28 @@ class ClawEval(BaseBenchmark):
         """Build a system prompt that includes task tool descriptions and sandbox info.
 
         The agent has built-in tools (ExecTool, ReadFileTool, WriteFileTool, etc.)
-        from NanoBotAgent. We describe the task's mock service tools as HTTP endpoints
-        that the agent should call using shell commands (curl).
+        from NanoBotAgent. Task-specific mock service tools are registered as native
+        tools, so the LLM can call them directly by name.
         """
         parts = [
             "You are a helpful personal assistant.",
-            "You have access to shell commands via the exec tool.",
+            "You have access to built-in tools (read_file, write_file, list_dir, edit_file, exec, web_search, web_fetch).",
         ]
 
         # Tool descriptions
         if task.tools:
-            parts.append("\n## Available API Tools")
-            parts.append("Call these tools via curl. Each tool has a specific HTTP endpoint.")
+            parts.append("\n## Task-specific Tools")
+            parts.append("You can call these tools DIRECTLY by their name. Do NOT use curl or exec for them.")
             for tool in task.tools:
                 schema_str = json.dumps(tool.input_schema, ensure_ascii=False, indent=2)
                 parts.append(f"\n### {tool.name}")
                 parts.append(f"{tool.description}")
                 parts.append(f"Input schema:\n```json\n{schema_str}\n```")
 
-            # Tool endpoint mapping — critical for the agent to know where to send requests
-            if task.tool_endpoints:
-                parts.append("\n## Tool Endpoint URLs")
-                for ep in task.tool_endpoints:
-                    method = ep.method.upper()
-                    parts.append(f"- `{ep.tool_name}` → {method} {ep.url}")
-                parts.append("\nExample: To call a tool, use curl:")
-                parts.append('  curl -X POST <endpoint_url> -H "Content-Type: application/json" -d \'{"param": "value"}\'')
-
         # Sandbox info
         if sandbox_url:
             parts.append(f"\n## Sandbox Environment")
-            parts.append(f"You are running inside a sandbox. Use curl to interact with it:")
-            parts.append(f"- Write file: curl -X POST {sandbox_url}/write -H 'Content-Type: application/json' -d '{{\"path\": \"/workspace/<path>\", \"content\": \"<text>\"}}'")
-            parts.append(f"- Execute command: curl -X POST {sandbox_url}/exec -H 'Content-Type: application/json' -d '{{\"command\": \"<cmd>\"}}'")
-            parts.append(f"- Read file: curl -X POST {sandbox_url}/read -H 'Content-Type: application/json' -d '{{\"path\": \"/workspace/<path>\"}}'")
+            parts.append(f"You are running inside a sandbox. File operations happen inside the container.")
 
         # Fixtures hint
         fixtures = getattr(task.environment, "fixtures", [])
@@ -530,6 +519,21 @@ class ClawEval(BaseBenchmark):
                             system_prompt=system_prompt,
                             disable_safety_guard=True,
                         )
+
+                        # Register task-specific mock service tools as native tools
+                        if task.tools and task.tool_endpoints:
+                            endpoint_map = {ep.tool_name: ep for ep in task.tool_endpoints}
+                            for tool in task.tools:
+                                ep = endpoint_map.get(tool.name)
+                                if ep:
+                                    agent._tools.register(MockServiceTool(
+                                        name=tool.name,
+                                        description=tool.description,
+                                        parameters=tool.input_schema,
+                                        endpoint_url=ep.url,
+                                        method=ep.method,
+                                    ))
+                                    log(f"[claweval] Registered mock tool: {tool.name} -> {ep.method.upper()} {ep.url}")
 
                         # Execute agent (pass max_iterations from task config)
                         start_time = time.monotonic()
@@ -648,6 +652,7 @@ class ClawEval(BaseBenchmark):
         # Filter by task_ids or category
         task_ids = kwargs.get("task_ids")
         category = kwargs.get("category")
+        exclude_multimodal = kwargs.get("exclude_multimodal", False)
         if task_ids:
             task_dirs = [d for d in task_dirs if d.name in task_ids]
         if category:
@@ -657,6 +662,17 @@ class ClawEval(BaseBenchmark):
                 try:
                     task = TaskDefinition.from_yaml(d / "task.yaml")
                     if task.category == category:
+                        filtered.append(d)
+                except Exception:
+                    pass
+            task_dirs = filtered
+        if exclude_multimodal:
+            filtered = []
+            for d in task_dirs:
+                from claw_eval.models.task import TaskDefinition
+                try:
+                    task = TaskDefinition.from_yaml(d / "task.yaml")
+                    if "multimodal" not in (task.tags or []):
                         filtered.append(d)
                 except Exception:
                     pass
