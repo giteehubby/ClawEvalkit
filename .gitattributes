@@ -1,2 +1,18 @@
 *.sh text eol=lf
 work/nanopro/scripts/shims/* text eol=lf
+
+# Git LFS: track large binary/data files that should not be stored directly in git
+# After enabling LFS, run: git lfs migrate import --include="..." --everything
+# to migrate existing history (WARNING: rewrites history, all contributors must re-clone).
+*.csv filter=lfs diff=lfs merge=lfs -text
+*.parquet filter=lfs diff=lfs merge=lfs -text
+*.whl filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.avi filter=lfs diff=lfs merge=lfs -text
+*.mov filter=lfs diff=lfs merge=lfs -text
+*.pcap filter=lfs diff=lfs merge=lfs -text
+*.pptx filter=lfs diff=lfs merge=lfs -text
+benchmarks/**/*.json filter=lfs diff=lfs merge=lfs -text
+benchmarks/**/*.pdf filter=lfs diff=lfs merge=lfs -text
+benchmarks/**/*.png filter=lfs diff=lfs merge=lfs -text
+
