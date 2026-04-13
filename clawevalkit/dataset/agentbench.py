@@ -24,7 +24,7 @@ from .base import BaseBenchmark
 from ..utils.log import log
 
 
-DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE_NANOBOT", "wildclawbench-nanobot:v3")
+DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE_NANOBOT", "clawbase-nanobot:v1")
 TMP_WORKSPACE = "/tmp/agentbench_workspace"
 
 

@@ -55,6 +55,13 @@ docker/ssl-certs/
 # Build artifacts
 *.tar.gz
 
+# Large video/audio files (downloaded at runtime)
+*.mp4
+*.avi
+*.mov
+*.zip
+*.pdf
+
 # Claude / Cursor
 .claude/
 .cursor/

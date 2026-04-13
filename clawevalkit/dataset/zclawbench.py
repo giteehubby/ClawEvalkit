@@ -32,7 +32,7 @@ from .base import BaseBenchmark
 from . import zclawbench_mock_inject
 from . import zclawbench_mock_data
 
-DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE_NANOBOT", "wildclawbench-nanobot:v3")
+DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE_NANOBOT", "clawbase-nanobot:v1")
 TMP_WORKSPACE = "/tmp/zclawbench_workspace"
 
 # 18个可无Docker运行的任务子集（非Docker模式使用）

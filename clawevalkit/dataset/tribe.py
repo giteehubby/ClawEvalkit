@@ -27,7 +27,7 @@ from ..utils.log import log
 from ..utils.nanobot import import_nanobot_agent
 from .base import BaseBenchmark
 
-DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE_NANOBOT", "wildclawbench-nanobot:v3")
+DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE_NANOBOT", "clawbase-nanobot:v1")
 
 TESTS = [
     {"id": "basic_chat", "prompt": "What is 15 + 27? Reply with just the number, nothing else.",

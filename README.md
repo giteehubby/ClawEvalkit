@@ -62,14 +62,17 @@ All benchmarks require Docker for sandboxed task execution. You need to build th
 
 ### Step 1: Build the NanoBotAgent image
 
-This is the shared image used by `agentbench`, `clawbench-official`, `zclawbench`, and `pinchbench`:
+This is the shared image used by `agentbench`, `clawbench-official`, `zclawbench`, `pinchbench`, and `tribe`:
 
 ```bash
-# Build the NanoBotAgent Docker image
-docker build -f Dockerfile.nanobot -t wildclawbench-nanobot:latest .
+# Option 1: Build all images with the convenience script
+./docker/build.sh
+
+# Option 2: Build only the base NanoBotAgent image
+docker build -f docker/Dockerfile.base -t clawbase-nanobot:v1 .
 ```
 
-> **Note**: The NanoBotAgent image is based on `wildclawbench-ubuntu:v1.2`. If you don't have this base image, you can build it from the `OpenClawPro/` submodule or pull it from the project's container registry.
+> **Note**: The image is based on `ubuntu:24.04` and includes all NanoBotAgent dependencies. OpenClawPro is mounted at runtime via `-v /path/to/OpenClawPro:/root/OpenClawPro:rw`.
 
 ### Step 2: (For ClawEval) Build the ClawEval agent image
 
@@ -95,7 +98,7 @@ docker build -f Dockerfile.skillsbench-py311-ubuntu24 -t skillsbench-py311-ubunt
 
 ```bash
 # Check that the images are built
-docker images | grep -E "wildclawbench-nanobot|skillsbench|claw-eval-agent"
+docker images | grep -E "clawbase|skillsbench|claw-eval-agent"
 ```
 
 ## Quick Start
@@ -268,8 +271,8 @@ ClawEvalKit/
 | `JUDGE_API_KEY` | API key for LLM Judge | Falls back to `OPENROUTER_API_KEY` |
 | `JUDGE_MODEL` | Judge model name | `anthropic/claude-sonnet-4.6` |
 | `JUDGE_BASE_URL` | Judge API base URL | `https://openrouter.ai/api/v1` |
-| `DOCKER_IMAGE_NANOBOT` | NanoBotAgent Docker image | `wildclawbench-nanobot:latest` |
-| `CLAWBENCH_DOCKER_IMAGE` | ClawBench Docker image | `wildclawbench-nanobot:v3` |
+| `DOCKER_IMAGE_NANOBOT` | NanoBotAgent Docker image | `clawbase-nanobot:v1` |
+| `CLAWBENCH_DOCKER_IMAGE` | ClawBench Docker image | `clawbase-nanobot:v1` |
 | `OPENCLAWPRO_DIR` | Path to OpenClawPro source | `ClawEvalkit/OpenClawPro` |
 
 ## Adding a New Benchmark

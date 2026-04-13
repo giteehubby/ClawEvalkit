@@ -38,8 +38,8 @@ OFFICIAL_SCORES = {
     "gpt-4o": 64.7,
 }
 
-# Docker 配置 - 使用 wildclawbench-nanobot 镜像（包含 OpenClawPro 和 NanoBotAgent）
-DOCKER_IMAGE = os.environ.get("PINCHBENCH_DOCKER_IMAGE", "wildclawbench-nanobot:v3")
+# Docker 配置 - 使用 clawbase-nanobot 镜像（NanoBotAgent 运行时）
+DOCKER_IMAGE = os.environ.get("PINCHBENCH_DOCKER_IMAGE", "clawbase-nanobot:v1")
 TMP_WORKSPACE = "/tmp/pinchbench_workspace"
 
 

@@ -58,6 +58,15 @@ benchmarks/**/skill_matcher/indexes/embeddings.npy
 benchmarks/**/skills-research/skill_embeddings*.npy
 benchmarks/**/skills-research/skill_embeddings*.npz
 
+# ClawEval large files
+benchmarks/claw-eval/data/
+benchmarks/claw-eval/**/*.mp4
+benchmarks/claw-eval/**/*.webm
+benchmarks/claw-eval/**/*.pdf
+benchmarks/claw-eval/**/*.tar.gz
+benchmarks/claw-eval/**/fixtures/*.jpg
+benchmarks/claw-eval/**/fixtures/*.jpeg
+
 # Transcript files
 *.jsonl
 

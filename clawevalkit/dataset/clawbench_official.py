@@ -27,7 +27,7 @@ from ..utils.log import log
 
 
 # Docker 配置
-DOCKER_IMAGE = os.environ.get("CLAWBENCH_DOCKER_IMAGE", "wildclawbench-nanobot:v3")
+DOCKER_IMAGE = os.environ.get("CLAWBENCH_DOCKER_IMAGE", "clawbase-nanobot:v1")
 TMP_WORKSPACE = "/tmp/clawbench_workspace"
 
 
