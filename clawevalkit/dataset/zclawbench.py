@@ -29,6 +29,7 @@ from ..utils.log import log
 from ..utils.nanobot import import_nanobot_agent
 from ..config import get_judge_config
 from .base import BaseBenchmark
+from ._harness import build_harness_script_parts
 from . import zclawbench_mock_inject
 from . import zclawbench_mock_data
 
@@ -86,7 +87,8 @@ def _start_container(container_name: str, workspace_path: str, openclawpro_dir: 
         raise RuntimeError(f"Container startup failed:\n{r.stderr}")
 
 
-def _build_exec_script(model_key: str, task_id: str, user_message: str, config: dict) -> str:
+def _build_exec_script(model_key: str, task_id: str, user_message: str, config: dict,
+                       harness_config: dict = None) -> str:
     """Build NanoBotAgent execution script for running inside Docker container."""
     provider = config.get("provider", "openrouter")
     if provider == "minimax":
@@ -95,6 +97,10 @@ def _build_exec_script(model_key: str, task_id: str, user_message: str, config: 
         api_key_env = "OPENROUTER_API_KEY"
     else:
         api_key_env = "OPENROUTER_API_KEY"
+
+    # Build harness import lines and constructor kwargs
+    harness_imports, harness_kwargs_str = build_harness_script_parts(harness_config)
+    harness_imports += "\n"  # extra newline for concatenation style in this file
 
     # System prompt as a regular string (not f-string) to avoid quote escaping issues
     # NOTE: NanoBotAgent accepts system_prompt in __init__ kwargs, not execute()
@@ -129,7 +135,8 @@ def _build_exec_script(model_key: str, task_id: str, user_message: str, config: 
         "import os\n"
         "from pathlib import Path\n\n"
         "sys.path.insert(0, '/root/OpenClawPro')\n"
-        "from harness.agent.nanobot import NanoBotAgent\n\n"
+        "from harness.agent.nanobot import NanoBotAgent\n"
+        + harness_imports + "\n"
         "workspace = Path('/tmp/zclawbench_workspace/workspace')\n"
         + f"session_id = 'eval_{model_key}_{task_id}'\n\n"
         + f"api_key = os.environ.get('{api_key_env}', '')\n\n"
@@ -158,6 +165,7 @@ def _build_exec_script(model_key: str, task_id: str, user_message: str, config: 
         "    timeout=3600,\n"
         "    disable_safety_guard=True,\n"
         "    system_prompt=system_prompt,\n"
+        + harness_kwargs_str + "\n"
         ")\n\n"
         "try:\n"
         "    start_time = time.time()\n"
@@ -254,6 +262,7 @@ class ZClawBench(BaseBenchmark):
         openclawpro_dir = kwargs.get("openclawpro_dir")
         force = kwargs.get("force", False)
         task_ids = kwargs.get("task_ids")  # 指定特定任务
+        harness_config = kwargs.get("harness_config")
 
         if use_docker:
             return self._evaluate_docker(
@@ -264,6 +273,7 @@ class ZClawBench(BaseBenchmark):
                 openclawpro_dir=openclawpro_dir,
                 force=force,
                 task_ids=task_ids,
+                harness_config=harness_config,
             )
         else:
             return self._evaluate_native(
@@ -271,9 +281,11 @@ class ZClawBench(BaseBenchmark):
                 config=config,
                 sample=sample,
                 force=force,
+                harness_config=harness_config,
             )
 
-    def _evaluate_native(self, model_key: str, config: dict, sample: int = 0, force: bool = False) -> dict:
+    def _evaluate_native(self, model_key: str, config: dict, sample: int = 0, force: bool = False,
+                        harness_config: dict = None) -> dict:
         """Native mode: run NanoBotAgent directly on host (18 tasks)."""
         NanoBotAgent = import_nanobot_agent()
         from clawevalkit.grading import run_judge_eval
@@ -330,7 +342,8 @@ class ZClawBench(BaseBenchmark):
             r = {"task_id": tid, "model_key": model_key, "status": "error", "scores": {}}
             try:
                 agent = NanoBotAgent(model=config["model"], api_url=config["api_url"],
-                                     api_key=config["api_key"], workspace=workspace, timeout=3600)
+                                     api_key=config["api_key"], workspace=workspace, timeout=3600,
+                                     **(harness_config or {}))
                 result = agent.execute(task["prompt"], session_id=f"eval_{model_key}_{tid}", workspace=workspace)
                 if result.transcript:
                     normalized = [e["message"] if isinstance(e, dict) and "message" in e else e for e in result.transcript]
@@ -396,6 +409,7 @@ class ZClawBench(BaseBenchmark):
         openclawpro_dir: Path = None,
         force: bool = False,
         task_ids: list = None,
+        harness_config: dict = None,
     ) -> dict:
         """Docker mode: run NanoBotAgent inside Docker container with Judge scoring."""
         if openclawpro_dir is None:
@@ -521,7 +535,7 @@ class ZClawBench(BaseBenchmark):
                 log(f"[{tid}] Mock services injected")
 
                 # Build and run agent
-                exec_script = _build_exec_script(model_key, tid, prompt, config)
+                exec_script = _build_exec_script(model_key, tid, prompt, config, harness_config=harness_config)
                 exec_proc, elapsed_time = _run_agent_in_container(container_name, exec_script, 3600)
                 log(f"[{tid}] Agent finished in {elapsed_time:.2f}s, returncode={exec_proc.returncode}")
 

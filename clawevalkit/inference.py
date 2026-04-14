@@ -13,6 +13,27 @@ from .utils.log import log
 load_env()
 
 
+def get_harness_config(harness: str) -> dict:
+    """Convert harness recipe name to agent constructor kwargs dict.
+
+    Returns a dict like {"memory_config": MemoryConfig(enabled=True)} that
+    can be splatted into NanoBotAgent / HarborNanoBotAgent constructors.
+    """
+    if harness == "memory":
+        from OpenClawPro.harness.agent.memory import MemoryConfig
+        return {"memory_config": MemoryConfig(enabled=True)}
+    elif harness == "control":
+        from OpenClawPro.harness.agent.control import ControlConfig
+        return {"control_config": ControlConfig(enabled=True)}
+    elif harness == "collaboration":
+        from OpenClawPro.harness.agent.collaboration import CollabConfig
+        return {"collab_config": CollabConfig(enabled=True)}
+    elif harness == "procedure":
+        from OpenClawPro.harness.agent.procedure import ProceduralConfig
+        return {"procedural_config": ProceduralConfig(enabled=True)}
+    return {}
+
+
 def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
                    output_dir: Path = None, **kwargs) -> dict:
     """Run a single benchmark × model evaluation job.
@@ -80,6 +101,10 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
         evaluate_kwargs["task_ids"] = kwargs.pop("task_ids")
     if "category" in kwargs:
         evaluate_kwargs["category"] = kwargs.pop("category")
+    # 提取 harness 并转化为 agent config kwargs
+    harness = kwargs.pop("harness", None)
+    if harness:
+        evaluate_kwargs["harness_config"] = get_harness_config(harness)
     result = bench.evaluate(model_key, config, **evaluate_kwargs, **kwargs)
 
     score = result.get("score", 0)

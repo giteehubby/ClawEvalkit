@@ -29,6 +29,7 @@ from ..utils.docker_runner import DockerRunner
 from ..utils.nanobot import import_nanobot_agent
 from ..config import get_judge_config
 from .base import BaseBenchmark
+from ._harness import build_harness_script_parts
 
 logger = logging.getLogger(__name__)
 
@@ -123,10 +124,13 @@ def parse_task_md(task_file: Path, use_docker: bool = False) -> dict:
 # Docker Execution Script Builder
 # ============================================================================
 def _build_exec_script(
-    model_key: str, task_id_ori: str, prompt: str, timeout_seconds: int, config: dict, skills_summary: str
+    model_key: str, task_id_ori: str, prompt: str, timeout_seconds: int, config: dict, skills_summary: str,
+    harness_config: dict = None,
 ) -> str:
     """Build NanoBotAgent execution script for running inside Docker container."""
     api_key = config.get("api_key", "")
+    # Build harness import lines and constructor kwargs
+    harness_imports, harness_kwargs_str = build_harness_script_parts(harness_config)
     return f"""
 import sys
 import json
@@ -134,6 +138,7 @@ import time
 from pathlib import Path
 sys.path.insert(0, '/root/OpenClawPro')
 from harness.agent.nanobot import NanoBotAgent
+{harness_imports}
 workspace = Path('/tmp_workspace')
 session_id = 'eval_{model_key}_{task_id_ori}'
 agent = NanoBotAgent(
@@ -142,7 +147,7 @@ agent = NanoBotAgent(
     api_key='{api_key}',
     workspace=workspace,
     timeout={timeout_seconds},
-    disable_safety_guard=True,
+    disable_safety_guard=True,{harness_kwargs_str}
 )
 system_prompt = \"\"\"You are an expert in a restricted, non-interactive environment. Solve the task efficiently before the timeout ({timeout_seconds}s). Run all processes in the foreground without user input or background services. Provide a complete, functional solution in a single pass with no placeholders.\"\"\"
 {skills_summary and f"system_prompt = system_prompt + '''\\\\n\\\\n{skills_summary}'''" or ""}
@@ -350,6 +355,7 @@ class WildClawBench(BaseBenchmark):
         if use_docker is None:
             use_docker = self._use_docker_default
         force = kwargs.pop("force", False)
+        harness_config = kwargs.pop("harness_config", None)
         if use_docker:
             return self._evaluate_docker_nanobot(
                 model_key=model_key,
@@ -362,6 +368,7 @@ class WildClawBench(BaseBenchmark):
                 parallel=parallel,
                 openclawpro_dir=openclawpro_dir,
                 force=force,
+                harness_config=harness_config,
             )
         else:
             return self._evaluate_native(
@@ -372,6 +379,7 @@ class WildClawBench(BaseBenchmark):
                 category=category,
                 use_automated_checks=use_automated_checks,
                 task_ids=task_ids,
+                harness_config=harness_config,
             )
     def _evaluate_native(
         self,
@@ -382,6 +390,7 @@ class WildClawBench(BaseBenchmark):
         category: str = None,
         use_automated_checks: bool = True,
         task_ids: list = None,
+        harness_config: dict = None,
     ) -> dict:
         """Native mode: Use NanoBotAgent to run directly on host."""
         NanoBotAgent = import_nanobot_agent()
@@ -446,6 +455,7 @@ class WildClawBench(BaseBenchmark):
                     api_key=config["api_key"],
                     workspace=workspace,
                     timeout=task.get("timeout_seconds", 300),
+                    **(harness_config or {}),
                 )
                 result = agent.execute(
                     task["prompt"],
@@ -526,6 +536,7 @@ class WildClawBench(BaseBenchmark):
         parallel: int = 1,
         openclawpro_dir: Path = None,
         force: bool = False,
+        harness_config: dict = None,
     ) -> dict:
         """Docker NanoBotAgent mode: Run NanoBotAgent inside container with volume mount.
         Based on wildclawbench-ubuntu:v0.4 image, with volume mount for code hot updates.
@@ -620,7 +631,8 @@ class WildClawBench(BaseBenchmark):
                     # Build and run agent
                     skills_summary = _load_skills_summary(task.get("skills", ""), task.get("skills_path", ""))
                     exec_script = _build_exec_script(
-                        model_key, task_id_ori, task["prompt"], timeout_seconds, config, skills_summary
+                        model_key, task_id_ori, task["prompt"], timeout_seconds, config, skills_summary,
+                        harness_config=harness_config,
                     )
                     agent_result, elapsed_time = runner.run_agent(exec_script, timeout_seconds)
                     logger.info("[%s] Agent finished in %.2fs", runner.container_name, elapsed_time)

@@ -186,10 +186,12 @@ class SkillsBench(BaseBenchmark):
         setup_logging(verbose=verbose)
 
         use_docker = kwargs.get("use_docker", self.use_docker)
+        harness_config = kwargs.get("harness_config")
 
         # Docker 模式走专用路径
         if use_docker:
-            return self._evaluate_docker(model_key, config, sample, transcripts_dir, parallel=parallel, **kwargs)
+            return self._evaluate_docker(model_key, config, sample, transcripts_dir, parallel=parallel,
+                                          harness_config=harness_config, **kwargs)
 
         tasks_dir = self._get_tasks_dir()
         if not tasks_dir.exists():
@@ -249,7 +251,8 @@ class SkillsBench(BaseBenchmark):
             log(f"[skillsbench] Running task {i+1}/{len(task_names)}: {task_name}")
             start = time.time()
             result = self._run_single_task(task_name, config, tasks_dir, workspace_base, max_turns,
-                                           transcripts_dir=transcripts_dir, model_key=model_key)
+                                           transcripts_dir=transcripts_dir, model_key=model_key,
+                                           harness_config=harness_config)
             result["elapsed_s"] = round(time.time() - start, 2)
             if result.get("status") == "passed":
                 passed += 1
@@ -266,7 +269,8 @@ class SkillsBench(BaseBenchmark):
 
     def _run_single_task(self, task_name: str, config: dict, tasks_dir: Path,
                          workspace_base: Path, max_turns: int = 3,
-                         transcripts_dir: Path = None, model_key: str = None) -> dict:
+                         transcripts_dir: Path = None, model_key: str = None,
+                         harness_config: dict = None) -> dict:
         """运行单个 SkillsBench 任务 (NanoBotAgent 多轮模式)。
 
         流程: 读 instruction.md → 复制 environment 文件到 workspace →
@@ -290,7 +294,8 @@ class SkillsBench(BaseBenchmark):
         self._setup_workspace(task_dir, workspace)
 
         agent = NanoBotAgent(model=config["model"], api_url=config["api_url"],
-                             api_key=config["api_key"], workspace=workspace, timeout=300)
+                             api_key=config["api_key"], workspace=workspace, timeout=300,
+                             **(harness_config or {}))
 
         prompt = (
             f"Complete this programming task in the workspace {workspace}.\n\n"
@@ -432,7 +437,8 @@ class SkillsBench(BaseBenchmark):
             pass
 
     def _evaluate_docker(self, model_key: str, config: dict, sample: int = 0,
-                         transcripts_dir: Path = None, parallel: int = 1, **kwargs) -> dict:
+                         transcripts_dir: Path = None, parallel: int = 1,
+                         harness_config: dict = None, **kwargs) -> dict:
         """Per-task Docker 模式: 每个任务用自己的 Dockerfile 构建镜像，在容器内运行 NanoBotAgent。
 
         工作流:
@@ -734,7 +740,8 @@ class SkillsBench(BaseBenchmark):
         try:
             result = self._run_agent_in_container(
                 container_name, task_name, config, instruction, workspace_host,
-                max_turns, model_key, transcripts_dir, tasks_dir
+                max_turns, model_key, transcripts_dir, tasks_dir,
+                harness_config=harness_config,
             )
         except Exception as e:
             result = {"task": task_name, "status": "error", "error": str(e)[:500]}
@@ -761,7 +768,8 @@ class SkillsBench(BaseBenchmark):
                                  config: dict, instruction: str, workspace_host: Path,
                                  max_turns: int, model_key: str,
                                  transcripts_dir: Path = None,
-                                 tasks_dir: Path = None) -> dict:
+                                 tasks_dir: Path = None,
+                                 harness_config: dict = None) -> dict:
         """在容器内运行 NanoBotAgent (通过 docker cp 传输文件, 无需挂载点).
 
         工作流程:
@@ -819,6 +827,7 @@ class SkillsBench(BaseBenchmark):
             workspace=workspace_host,
             timeout=300,
             disable_safety_guard=True,
+            **(harness_config or {}),
         )
 
         log(f"[{task_name}] 🤖 Running agent (max {max_turns} turns)...")

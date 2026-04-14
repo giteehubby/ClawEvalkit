@@ -21,6 +21,7 @@ from pathlib import Path
 from typing import Any
 
 from .base import BaseBenchmark
+from ._harness import build_harness_script_parts
 from ..utils.log import log
 
 
@@ -371,7 +372,8 @@ def _start_container(container_name: str, workspace_path: str, openclawpro_dir: 
         raise RuntimeError(f"Container startup failed:\n{r.stderr}")
 
 
-def _build_exec_script(model_key: str, task_id: str, user_message: str, config: dict) -> str:
+def _build_exec_script(model_key: str, task_id: str, user_message: str, config: dict,
+                       harness_config: dict = None) -> str:
     """Build NanoBotAgent execution script for running inside Docker container."""
     # Determine API key env var based on provider
     provider = config.get("provider", "openrouter")
@@ -384,6 +386,9 @@ def _build_exec_script(model_key: str, task_id: str, user_message: str, config: 
     else:
         api_key_env = "OPENROUTER_API_KEY"
 
+    # Build harness import lines and constructor kwargs
+    harness_imports, harness_kwargs_str = build_harness_script_parts(harness_config)
+
     return f"""
 import sys
 import json
@@ -393,6 +398,7 @@ from pathlib import Path
 
 sys.path.insert(0, '/root/OpenClawPro')
 from harness.agent.nanobot import NanoBotAgent
+{harness_imports}
 
 workspace = Path('/tmp/agentbench_workspace/workspace')
 session_id = 'eval_{model_key}_{task_id}'
@@ -406,7 +412,7 @@ agent = NanoBotAgent(
     api_key=api_key,
     workspace=workspace,
     timeout=300,
-    disable_safety_guard=True,
+    disable_safety_guard=True,{harness_kwargs_str}
 )
 
 system_prompt = \"\"\"You are an expert agent working in a restricted environment.
@@ -515,8 +521,9 @@ class AgentBench(BaseBenchmark):
             use_docker = self._use_docker_default
         force = kwargs.pop("force", False)
 
-        # Extract task_ids from kwargs if present
+        # Extract task_ids and harness_config from kwargs if present
         task_ids = kwargs.pop("task_ids", None)
+        harness_config = kwargs.pop("harness_config", None)
 
         if use_docker:
             return self._evaluate_docker(
@@ -528,6 +535,7 @@ class AgentBench(BaseBenchmark):
                 force=force,
                 use_judge=use_judge,
                 task_ids=task_ids,
+                harness_config=harness_config,
             )
         else:
             return self._evaluate_native(
@@ -627,6 +635,7 @@ class AgentBench(BaseBenchmark):
         force: bool = False,
         use_judge: bool = True,
         task_ids: list = None,
+        harness_config: dict = None,
     ) -> dict:
         """Docker mode: run NanoBotAgent inside Docker container with full 4-layer scoring."""
         import yaml
@@ -765,7 +774,7 @@ class AgentBench(BaseBenchmark):
 
                 # Build and run agent
                 user_msg = cfg.get("user_message", "")
-                exec_script = _build_exec_script(model_key, tid, user_msg, config)
+                exec_script = _build_exec_script(model_key, tid, user_msg, config, harness_config=harness_config)
                 exec_proc, elapsed_time = _run_agent_in_container(container_name, exec_script, 300)
                 log(f"[{container_name}] Agent finished in {elapsed_time:.2f}s, returncode={exec_proc.returncode}")
 

@@ -23,6 +23,7 @@ from pathlib import Path
 from typing import Any
 
 from .base import BaseBenchmark
+from ._harness import build_harness_script_parts
 from ..utils.log import log
 
 
@@ -46,6 +47,7 @@ class ClawBenchOfficial(BaseBenchmark):
         parallel = kwargs.pop("parallel", 1)
         kwargs.pop("force", None)
         kwargs.pop("max_turns", None)
+        harness_config = kwargs.pop("harness_config", None)
 
         if use_docker:
             return self._evaluate_docker(
@@ -53,6 +55,7 @@ class ClawBenchOfficial(BaseBenchmark):
                 config=config,
                 sample=sample,
                 parallel=parallel,
+                harness_config=harness_config,
                 **kwargs
             )
         else:
@@ -132,6 +135,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
         config: dict,
         sample: int = 0,
         parallel: int = 1,
+        harness_config: dict = None,
         **kwargs
     ) -> dict:
         """Docker mode: 在容器内运行 NanoBotAgent 执行任务。"""
@@ -240,7 +244,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
 
                 # 构建并执行 agent 脚本
                 timeout = task.get("timeout", 300)
-                exec_script = self._build_exec_script(task, config, timeout)
+                exec_script = self._build_exec_script(task, config, timeout, harness_config=harness_config)
                 exec_proc, elapsed_time = self._run_agent_in_container(container_name, exec_script, timeout)
                 log(f"[{container_name}] Agent finished in {elapsed_time:.2f}s, returncode={exec_proc.returncode}")
 
@@ -440,7 +444,8 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
             capture_output=True, text=True, env=install_env, timeout=120
         )
 
-    def _build_exec_script(self, task: dict, config: dict, timeout: int) -> str:
+    def _build_exec_script(self, task: dict, config: dict, timeout: int,
+                           harness_config: dict = None) -> str:
         """构建在容器内执行的 NanoBotAgent 脚本。"""
         # 根据 provider 选择 API key 环境变量
         provider = config.get("provider", "openrouter")
@@ -450,6 +455,10 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
             api_key_env = "OPENROUTER_API_KEY"
 
         task_id = task["id"]
+
+        # Build harness import lines and constructor kwargs
+        harness_imports, harness_kwargs_str = build_harness_script_parts(harness_config)
+        harness_imports += "\n"  # extra newline for concatenation style
 
         return f"""
 import sys
@@ -475,7 +484,7 @@ sys.path.insert(0, '/root/OpenClawPro')
 sys.path.insert(0, '/app/claw-bench/src')
 
 from harness.agent.nanobot import NanoBotAgent
-from claw_bench.core.task_loader import load_task
+{harness_imports}from claw_bench.core.task_loader import load_task
 from claw_bench.core.verifier import verify_task
 
 # 容器内路径
@@ -569,7 +578,7 @@ agent = NanoBotAgent(
     api_key=api_key,
     workspace=workspace,
     timeout={timeout},
-    disable_safety_guard=True,
+    disable_safety_guard=True,{harness_kwargs_str}
 )
 
 system_prompt = \"\"\"You are an expert agent working in a restricted environment.

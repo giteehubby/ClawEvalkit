@@ -29,6 +29,7 @@ from typing import Any
 from ..utils.log import log
 from ..utils.nanobot import import_nanobot_agent
 from .base import BaseBenchmark
+from ._harness import build_harness_script_parts
 
 
 OFFICIAL_SCORES = {
@@ -66,6 +67,7 @@ class PinchBench(BaseBenchmark):
 
         use_docker = kwargs.get("use_docker", self._use_docker_default)
         parallel = kwargs.get("parallel", 1)
+        harness_config = kwargs.pop("harness_config", None)
 
         if use_docker:
             return self._evaluate_docker(
@@ -73,6 +75,7 @@ class PinchBench(BaseBenchmark):
                 config=config,
                 sample=sample,
                 parallel=parallel,
+                harness_config=harness_config,
                 **kwargs
             )
         else:
@@ -80,10 +83,12 @@ class PinchBench(BaseBenchmark):
                 model_key=model_key,
                 config=config,
                 sample=sample,
+                harness_config=harness_config,
                 **kwargs
             )
 
-    def _evaluate_native(self, model_key: str, config: dict, sample: int = 0, **kwargs) -> dict:
+    def _evaluate_native(self, model_key: str, config: dict, sample: int = 0,
+                         harness_config: dict = None, **kwargs) -> dict:
         """Native mode: run NanoBotAgent on host directly."""
         NanoBotAgent = import_nanobot_agent()
         tasks = self._load_tasks()
@@ -142,6 +147,7 @@ class PinchBench(BaseBenchmark):
                     model=config["model"], api_url=config["api_url"],
                     api_key=config["api_key"], workspace=workspace,
                     timeout=task.get("timeout", 120),
+                    **(harness_config or {}),
                 )
                 result = agent.execute(
                     task["prompt"],
@@ -231,6 +237,7 @@ class PinchBench(BaseBenchmark):
         config: dict,
         sample: int = 0,
         parallel: int = 1,
+        harness_config: dict = None,
         **kwargs
     ) -> dict:
         """Docker mode: run NanoBotAgent inside Docker container."""
@@ -335,7 +342,8 @@ class PinchBench(BaseBenchmark):
                 exec_script = self._build_exec_script(
                     model_key, tid, task["prompt"], config, task.get("timeout", 120),
                     multi_session=task.get("multi_session", False),
-                    sessions=task.get("sessions", [])
+                    sessions=task.get("sessions", []),
+                    harness_config=harness_config
                 )
                 exec_proc, elapsed_time = self._run_agent_in_container(container_name, exec_script, task.get("timeout", 120))
                 log(f"[{container_name}] Agent finished in {elapsed_time:.2f}s, returncode={exec_proc.returncode}")
@@ -460,7 +468,8 @@ class PinchBench(BaseBenchmark):
         config: dict,
         timeout: int,
         multi_session: bool = False,
-        sessions: list = None
+        sessions: list = None,
+        harness_config: dict = None,
     ) -> str:
         """Build NanoBotAgent execution script for running inside Docker container."""
         # Determine API key env var based on provider
@@ -469,6 +478,10 @@ class PinchBench(BaseBenchmark):
             api_key_env = "MINIMAX_API_KEY"
         else:
             api_key_env = "OPENROUTER_API_KEY"
+
+        # Build harness import lines and constructor kwargs
+        harness_imports, harness_kwargs_str = build_harness_script_parts(harness_config)
+        harness_imports += "\n"  # extra newline for concatenation style
 
         if multi_session and sessions:
             # Build sessions as properly escaped Python literal
@@ -484,8 +497,7 @@ from pathlib import Path
 
 sys.path.insert(0, '/root/OpenClawPro')
 from harness.agent.nanobot import NanoBotAgent
-
-workspace = Path('{TMP_WORKSPACE}')
+{harness_imports}workspace = Path('{TMP_WORKSPACE}')
 base_session_id = 'pinch_{model_key}_{task_id}'
 
 api_key = os.environ.get('{api_key_env}', '')
@@ -496,7 +508,7 @@ agent = NanoBotAgent(
     api_key=api_key,
     workspace=workspace,
     timeout={timeout},
-    disable_safety_guard=True,
+    disable_safety_guard=True,{harness_kwargs_str}
 )
 
 system_prompt = \"\"\"You are an expert agent working in a restricted environment.\nSolve the task efficiently. Run all processes in the foreground without user input.\nProvide a complete, functional solution.\"\"\"
@@ -569,8 +581,7 @@ from pathlib import Path
 
 sys.path.insert(0, '/root/OpenClawPro')
 from harness.agent.nanobot import NanoBotAgent
-
-workspace = Path('{TMP_WORKSPACE}')
+{harness_imports}workspace = Path('{TMP_WORKSPACE}')
 session_id = 'pinch_{model_key}_{task_id}'
 
 api_key = os.environ.get('{api_key_env}', '')
@@ -581,7 +592,7 @@ agent = NanoBotAgent(
     api_key=api_key,
     workspace=workspace,
     timeout={timeout},
-    disable_safety_guard=True,
+    disable_safety_guard=True,{harness_kwargs_str}
 )
 
 system_prompt = \"\"\"You are an expert agent working in a restricted environment.\nSolve the task efficiently. Run all processes in the foreground without user input.\nProvide a complete, functional solution.\"\"\"

@@ -63,11 +63,13 @@ def main():
     parser.add_argument("--reuse-container", action="store_true", help="Reuse existing containers (skip rebuild, preserves pip installs)")
     parser.add_argument("--judge-model", help="Judge model for scoring (e.g., minimax/claude-3.5-sonnet, claude-sonnet-4.6)")
     parser.add_argument("--include-multimodal", action="store_true", help="Include multimodal tasks (for ClawEval only, default: excluded)")
+    parser.add_argument("--harness", choices=["collaboration", "control", "memory", "procedure"],
+                        help="Enable a harness recipe for NanoBotAgent (collaboration/control/memory/procedure)")
     args = parser.parse_args()
 
-    # 设置 transcripts_dir 默认值
-    if not args.transcripts_dir:
-        args.transcripts_dir = str(Path(args.output_dir or "outputs") / "transcripts")
+    # Only set transcripts_dir if explicitly provided; otherwise let each bench
+    # derive it from output_dir (e.g. output_dir/claweval/transcripts for claweval)
+    transcripts_dir_provided = args.transcripts_dir is not None
 
     # 加载环境变量
     load_env(args.env)
@@ -127,8 +129,14 @@ def main():
         bench_kwargs["category"] = args.category
     if not args.include_multimodal:
         bench_kwargs["exclude_multimodal"] = True
+    if args.harness:
+        bench_kwargs["harness"] = args.harness
+        if not args.output_dir:
+            args.output_dir = f"outputs/harness/{args.harness}"
     infer_all(bench_keys, model_keys, sample=args.sample,
-              output_dir=args.output_dir, transcripts_dir=args.transcripts_dir, **bench_kwargs)
+              output_dir=args.output_dir,
+              transcripts_dir=args.transcripts_dir if transcripts_dir_provided else None,
+              **bench_kwargs)
 
     # 打印汇总
     log("\n")

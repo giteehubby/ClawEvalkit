@@ -53,9 +53,56 @@ class ClawEval(BaseBenchmark):
     CLAW_EVAL_ROOT = Path(__file__).resolve().parent.parent.parent / "benchmarks" / "claw-eval"
     TASKS_DIR = CLAW_EVAL_ROOT / "tasks"
 
+    # Mapping: service_name -> (env_var_name, fixture_filename)
+    # These correspond to the default paths hardcoded in mock_services/*/server.py
+    _SERVICE_FIXTURE_MAP: dict[str, tuple[str, str]] = {
+        "calendar": ("CALENDAR_FIXTURES", "events.json"),
+        "config": ("CONFIG_FIXTURES", "integrations.json"),
+        "contacts": ("CONTACTS_FIXTURES", "contacts.json"),
+        "crm": ("CRM_FIXTURES", "customers.json"),
+        "finance": ("FINANCE_FIXTURES", "transactions.json"),
+        "gmail": ("GMAIL_FIXTURES", "inbox.json"),
+        "helpdesk": ("HELPDESK_FIXTURES", "tickets.json"),
+        "inventory": ("INVENTORY_FIXTURES", "products.json"),
+        "kb": ("KB_FIXTURES", "articles.json"),
+        "notes": ("NOTES_FIXTURES", "meetings.json"),
+        "rss": ("RSS_FIXTURES", "articles.json"),
+        "scheduler": ("SCHEDULER_FIXTURES", "jobs.json"),
+        "todo": ("TODO_FIXTURES", "tasks.json"),
+        "web": ("WEB_SEARCH_FIXTURES", "search_results.json"),
+    }
+
     def __init__(self, **kwargs):
         super().__init__()
         self._docker_image = "claw-eval-agent:latest"
+
+    def _inject_fixture_envs(self, task, task_dir: Path) -> None:
+        """Auto-inject XXX_FIXTURES env vars so mock services load task-specific data."""
+        for svc in task.services:
+            svc_name = svc.name
+            if svc_name not in self._SERVICE_FIXTURE_MAP:
+                continue
+            env_var, filename = self._SERVICE_FIXTURE_MAP[svc_name]
+            if env_var in (svc.env or {}):
+                continue
+            # web service also needs WEB_FETCH_FIXTURES
+            if svc_name == "web":
+                fixture_dir = task_dir / "fixtures" / "web"
+                search_path = fixture_dir / "search_results.json"
+                fetch_path = fixture_dir / "pages.json"
+                if search_path.exists():
+                    svc.env = {**(svc.env or {}), "WEB_SEARCH_FIXTURES": f"tasks/{task_dir.name}/fixtures/web/search_results.json"}
+                    log(f"[claweval] Auto-injected WEB_SEARCH_FIXTURES for {task.task_id}")
+                if fetch_path.exists():
+                    svc.env = {**(svc.env or {}), "WEB_FETCH_FIXTURES": f"tasks/{task_dir.name}/fixtures/web/pages.json"}
+                    log(f"[claweval] Auto-injected WEB_FETCH_FIXTURES for {task.task_id}")
+                continue
+            # Standard services
+            fixture_path = task_dir / "fixtures" / svc_name / filename
+            if fixture_path.exists():
+                rel_path = f"tasks/{task_dir.name}/fixtures/{svc_name}/{filename}"
+                svc.env = {**(svc.env or {}), env_var: rel_path}
+                log(f"[claweval] Auto-injected {env_var}={rel_path} for {task.task_id}")
 
     # ------------------------------------------------------------------
     # Docker image management
@@ -88,14 +135,15 @@ class ClawEval(BaseBenchmark):
     # Transcript saving (consistent with other benches)
     # ------------------------------------------------------------------
 
-    def _save_transcript(self, model_key: str, task_id: str, transcript: list):
+    def _save_transcript(self, model_key: str, task_id: str, transcript: list, transcripts_dir: str | None = None):
         """保存 agent 轨迹到文件（统一结构）。
 
         保存到: outputs/claweval/transcripts/{model}/{task}/transcript.json
         保存 _convert_transcript() 之前的原始格式（normalize 后）。
         """
         try:
-            trans_path = self.results_dir / "claweval" / "transcripts" / model_key / task_id
+            base = Path(transcripts_dir) if transcripts_dir else self.output_dir / "claweval" / "transcripts"
+            trans_path = base / model_key / task_id
             trans_path.mkdir(parents=True, exist_ok=True)
             normalized = [
                 e["message"] if isinstance(e, dict) and "message" in e else e
@@ -105,8 +153,10 @@ class ClawEval(BaseBenchmark):
                 json.dumps(normalized, indent=2, ensure_ascii=False),
                 encoding="utf-8",
             )
-        except Exception:
-            pass  # transcript 保存失败不影响主流程
+            if not normalized:
+                log(f"[transcript] WARNING: {model_key}/{task_id} has empty transcript (agent may have failed)")
+        except Exception as exc:
+            log(f"[transcript] Failed to save transcript for {model_key}/{task_id}: {exc}")
 
     # ------------------------------------------------------------------
     # Transcript conversion: NanoBotAgent → claw-eval format
@@ -446,6 +496,7 @@ class ClawEval(BaseBenchmark):
         port_offset: int = 0,
         max_turns: int | None = None,
         transcripts_dir: str | None = None,
+        harness_config: dict = None,
     ) -> dict:
         """Execute a single claw-eval task and return result dict."""
         from claw_eval.models.task import TaskDefinition
@@ -487,6 +538,10 @@ class ClawEval(BaseBenchmark):
             "difficulty": task.difficulty,
         }
 
+        # Auto-inject fixture environment variables for mock services
+        # so they load the correct task-specific data instead of a hardcoded default.
+        self._inject_fixture_envs(task, task_dir)
+
         try:
             # Start services (cwd=CLAW_EVAL_ROOT so mock_services/ paths resolve)
             with ServiceManager(task.services, cwd=self.CLAW_EVAL_ROOT) as svc:
@@ -518,6 +573,7 @@ class ClawEval(BaseBenchmark):
                             timeout=task_timeout,
                             system_prompt=system_prompt,
                             disable_safety_guard=True,
+                            **(harness_config or {}),
                         )
 
                         # Register task-specific mock service tools as native tools
@@ -570,8 +626,8 @@ class ClawEval(BaseBenchmark):
 
                 # Save raw transcript (before _convert_transcript, consistent with other benches)
                 raw_transcript = agent_result.transcript or []
-                if transcripts_dir and raw_transcript:
-                    self._save_transcript(model_key, task.task_id, raw_transcript)
+                if transcripts_dir:
+                    self._save_transcript(model_key, task.task_id, raw_transcript, transcripts_dir=transcripts_dir)
 
                 # Convert transcript
                 messages, dispatches = self._convert_transcript(
@@ -682,7 +738,8 @@ class ClawEval(BaseBenchmark):
         parallel = kwargs.get("parallel", 1)
         max_turns = kwargs.get("max_turns")
         judge_model = kwargs.get("judge_model") or os.environ.get("JUDGE_MODEL")
-        transcripts_dir = kwargs.get("transcripts_dir")
+        transcripts_dir = kwargs.get("transcripts_dir") or str(self.output_dir / "claweval" / "transcripts")
+        harness_config = kwargs.get("harness_config")
 
         log(f"[claweval] Evaluating {total} tasks with model={model_key}, parallel={parallel}")
 
@@ -722,6 +779,7 @@ class ClawEval(BaseBenchmark):
                         port_offset=offset,
                         max_turns=max_turns,
                         transcripts_dir=transcripts_dir,
+                        harness_config=harness_config,
                     )
 
                 with ThreadPoolExecutor(max_workers=parallel) as pool:
@@ -750,6 +808,7 @@ class ClawEval(BaseBenchmark):
                         td, model_key, config, judge_model,
                         max_turns=max_turns,
                         transcripts_dir=transcripts_dir,
+                        harness_config=harness_config,
                     )
                     all_results.append(task_result)
                     self._save_task_result("claweval", model_key, task_result.get("task_id", td.name), task_result)

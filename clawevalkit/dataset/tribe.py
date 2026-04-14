@@ -26,6 +26,7 @@ from pathlib import Path
 from ..utils.log import log
 from ..utils.nanobot import import_nanobot_agent
 from .base import BaseBenchmark
+from ._harness import build_harness_script_parts
 
 DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE_NANOBOT", "clawbase-nanobot:v1")
 
@@ -75,7 +76,8 @@ def _check_json(response):
 # Docker Execution Helpers
 # ============================================================================
 
-def _build_tribe_exec_script(test_id: str, prompt: str, config: dict) -> str:
+def _build_tribe_exec_script(test_id: str, prompt: str, config: dict,
+                              harness_config: dict = None) -> str:
     """Build NanoBotAgent execution script for a single tribe test inside Docker."""
     provider = config.get("provider", "openrouter")
     if provider == "minimax":
@@ -85,6 +87,10 @@ def _build_tribe_exec_script(test_id: str, prompt: str, config: dict) -> str:
     else:
         api_key_env = "OPENROUTER_API_KEY"
 
+    # Build harness import lines and constructor kwargs
+    harness_imports, harness_kwargs_str = build_harness_script_parts(harness_config)
+    harness_imports += "\n"  # extra newline for concatenation style in this file
+
     return f"""
 import sys
 import json
@@ -93,8 +99,7 @@ from pathlib import Path
 
 sys.path.insert(0, '/root/OpenClawPro')
 from harness.agent.nanobot import NanoBotAgent
-
-workspace = Path('/tmp_tribe_workspace')
+{harness_imports}workspace = Path('/tmp_tribe_workspace')
 workspace.mkdir(parents=True, exist_ok=True)
 
 api_key = os.environ.get('{api_key_env}', '')
@@ -104,7 +109,7 @@ agent = NanoBotAgent(
     api_url='{config["api_url"]}',
     api_key=api_key,
     workspace=workspace,
-    timeout=60,
+    timeout=60,{harness_kwargs_str}
 )
 
 try:
@@ -178,6 +183,7 @@ class TribeBench(BaseBenchmark):
         use_docker = kwargs.get("use_docker", self._use_docker_default)
         parallel = kwargs.get("parallel", 1)
         force = kwargs.get("force", False)
+        harness_config = kwargs.get("harness_config")
 
         all_task_ids = [t["id"] for t in TESTS]
 
@@ -210,12 +216,13 @@ class TribeBench(BaseBenchmark):
             test_list = random.sample(test_list, sample)
 
         if use_docker:
-            return self._evaluate_docker(model_key, config, test_list, all_task_ids, parallel, force)
+            return self._evaluate_docker(model_key, config, test_list, all_task_ids, parallel, force, harness_config)
         else:
-            return self._evaluate_native(model_key, config, test_list, all_task_ids, parallel, force)
+            return self._evaluate_native(model_key, config, test_list, all_task_ids, parallel, force, harness_config)
 
     def _evaluate_native(self, model_key: str, config: dict, test_list: list,
-                         all_task_ids: list, parallel: int, force: bool) -> dict:
+                         all_task_ids: list, parallel: int, force: bool,
+                         harness_config: dict = None) -> dict:
         """Native mode: run NanoBotAgent directly on host."""
         NanoBotAgent = import_nanobot_agent()
 
@@ -234,6 +241,7 @@ class TribeBench(BaseBenchmark):
                 agent = NanoBotAgent(
                     model=config["model"], api_url=config["api_url"],
                     api_key=config["api_key"], workspace=workspace, timeout=60,
+                    **(harness_config or {}),
                 )
                 result = agent.execute(test["prompt"], session_id=f"tribe_{model_key}_{test['id']}")
                 response = result.content or ""
@@ -293,7 +301,8 @@ class TribeBench(BaseBenchmark):
         return self._load_summary("tribe", model_key)
 
     def _evaluate_docker(self, model_key: str, config: dict, test_list: list,
-                         all_task_ids: list, parallel: int, force: bool) -> dict:
+                         all_task_ids: list, parallel: int, force: bool,
+                         harness_config: dict = None) -> dict:
         """Docker mode: run NanoBotAgent inside Docker container."""
         openclawpro_dir = Path(os.getenv("OPENCLAWPRO_DIR",
             str(Path(__file__).parent.parent.parent / "OpenClawPro")))
@@ -375,7 +384,7 @@ class TribeBench(BaseBenchmark):
                 log(f"[{tid}] Docker container started: {container_name}")
 
                 # Build and run exec script
-                exec_script = _build_tribe_exec_script(tid, test["prompt"], config)
+                exec_script = _build_tribe_exec_script(tid, test["prompt"], config, harness_config=harness_config)
                 with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
                     f.write(exec_script)
                     script_path = f.name

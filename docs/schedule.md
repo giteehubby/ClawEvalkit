@@ -333,3 +333,68 @@ python test_docker.py --sample 3 --parallel 2
 | `PINCHBENCH_DOCKER_IMAGE` | Docker 镜像名 | `wildclawbench-nanobot:v3` |
 | `OPENCLAWPRO_DIR` | OpenClawPro 源码目录 | `ClawEvalkit/OpenClawPro` |
 | `OPENROUTER_API_KEY` | LLM API Key | - |
+
+---
+
+## `--harness` CLI 参数支持
+
+### 概述
+
+在 `run.py` CLI 层面添加了 `--harness` 参数，使 NanoBotAgent 在评测时可以启用对应的增强能力（recipe）。
+
+### 支持的 recipe
+
+| recipe | config 类 | 说明 |
+|--------|-----------|------|
+| `memory` | `MemoryConfig(enabled=True)` | 记忆增强 |
+| `control` | `ControlConfig(enabled=True)` | 流程控制增强 |
+| `collaboration` | `CollabConfig(enabled=True)` | 多智能体协作 |
+| `procedure` | `ProceduralConfig(enabled=True)` | 程序化增强（需 skill card） |
+
+### 修改的文件
+
+| 文件 | 修改内容 |
+|------|---------|
+| `run.py` | 添加 `--harness` CLI 参数；指定时默认 `output-dir=outputs/harness/{recipe}` |
+| `clawevalkit/inference.py` | 新增 `get_harness_config()` 辅助函数；提取 harness 并转为 agent config |
+| `clawevalkit/dataset/_harness.py` | 新增共享工具函数 `build_harness_script_parts()`，统一处理 harness → exec-script 的 import/kwargs 映射 |
+| `agentbench.py` | `_build_exec_script()` 使用 `build_harness_script_parts()` |
+| `wildclawbench.py` | 同上 |
+| `zclawbench.py` | 同上 |
+| `tribe.py` | 同上 |
+| `pinchbench.py` | 同上 |
+| `clawbench_official.py` | 同上 |
+| `skillsbench.py` | `_run_single_task()` 和 `_run_agent_in_container()` 支持 harness；native + docker 模式均支持 |
+| `claweval.py` | `_run_single_task()` 支持 harness |
+
+### Bug 修复
+
+- **`collab` vs `collaboration` 模块路径**: `get_harness_config("collaboration")` 返回 key 为 `collab_config`，但 `_build_exec_script()` 中 `replace('_config','')` 生成 `harness.agent.collab` 是错的（正确路径是 `harness.agent.collaboration`）。修复方式：在 `_harness.py` 中用 `HARNESS_MODULE_MAP` 显式映射 `collab_config → harness.agent.collaboration`，不再依赖字符串替换。
+
+### 使用方式
+
+```bash
+# 验证参数解析
+python run.py --list --harness collaboration
+
+# 带 harness 运行 agentbench (Docker 模式)
+python run.py --bench agentbench --harness collaboration --sample 10 --docker \
+  --output-dir outputs/harness/collaboration
+
+# 带 harness 运行 skillsbench (native 模式)
+python run.py --bench skillsbench --harness memory --sample 5
+```
+
+### 注意事项
+
+- **procedure** recipe 需要 skill card YAML/JSON 文件（`cards_dir`），目前仓库中无 skill card，加载 0 张卡片，recipe 可运行但无实际效果
+- **control** Config 没有 `to_dict()` / `from_dict()` 方法，但 Docker exec-script 直接构造 Python 代码字符串，不受影响
+- 所有 benchmark 的 `evaluate()` 均能接受未知的 kwargs（大多数已有 `**kwargs`），`harness_config` 从中 pop 出来使用
+
+### 测试验证 ✅
+
+| Harness | Benchmark | 模式 | 结果 |
+|---------|-----------|------|------|
+| `memory` | agentbench | Docker, 2 samples | ✅ 通过 |
+| `collaboration` | agentbench | Docker, 2 samples | ✅ 通过（修复 `collab` → `collaboration` 后通过）|
+| `control` | agentbench | Docker, 2 samples | ✅ 通过 |
