@@ -430,8 +430,10 @@ try:
     )
     elapsed = time.time() - start_time
 
+    transcript_data = result.transcript or []
     transcript_file = workspace / '.sessions' / f'{{session_id}}.json'
-    transcript_data = json.loads(transcript_file.read_text()) if transcript_file.exists() else (result.transcript or [])
+    if not transcript_data and transcript_file.exists():
+        transcript_data = json.loads(transcript_file.read_text())
 
     output = {{
         'status': result.status,

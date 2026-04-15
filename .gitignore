@@ -94,3 +94,4 @@ results/papers/clawRecipe_emnlp_2027/
 *.temp
 *.cache
 docs/schedule.md
+CLAUDE.md
