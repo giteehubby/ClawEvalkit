@@ -139,7 +139,7 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
 
     log(f"  [{bench_key}×{model_key}] evaluating...")
     # 传递task_ids和category参数
-    evaluate_kwargs = {"sample": sample}
+    evaluate_kwargs = {"sample": sample, "use_docker": use_docker}
     if "task_ids" in kwargs:
         evaluate_kwargs["task_ids"] = kwargs.pop("task_ids")
     if "category" in kwargs:

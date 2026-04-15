@@ -65,6 +65,73 @@ def _trajectory_to_text(trajectory: List[Dict], max_turns: int = 60) -> str:
         msg = trajectory[i]
         if not isinstance(msg, dict):
             continue
+
+        # Handle nested message format (collaboration/harness mode):
+        # {"type": "message", "message": {"role": "...", "content": [...]}}
+        if "message" in msg and isinstance(msg["message"], dict):
+            inner = msg["message"]
+            role = inner.get("role", "?")
+            content = inner.get("content", [])
+            if msg.get("type") == "tool_call":
+                tool_name = msg.get("name", "")
+                tool_args = msg.get("params", msg.get("input", ""))
+                parts = []
+                if content:
+                    if isinstance(content, list):
+                        for c in content:
+                            if isinstance(c, dict) and c.get("type") == "tool_result":
+                                result = c.get("content", "")
+                                parts.append(f"[TOOL_RESULT: {str(result)[:300]}]")
+                            elif isinstance(c, str):
+                                parts.append(c)
+                    else:
+                        parts.append(str(content))
+                text = " ".join(parts)
+                if tool_name:
+                    text = f"[TOOL: {tool_name} | INPUT: {json.dumps(tool_args, ensure_ascii=False)[:200]}]\n{text}"
+                turns.append(f"{role.upper()}: {text[:800]}")
+                continue
+            elif isinstance(content, list):
+                parts = []
+                for c in content:
+                    if isinstance(c, dict):
+                        if c.get("type") == "text":
+                            parts.append(c.get("text", ""))
+                        elif c.get("type") == "tool_use":
+                            parts.append(f"[TOOL: {c.get('name')} | INPUT: {json.dumps(c.get('input', {}), ensure_ascii=False)[:200]}]")
+                        elif c.get("type") == "tool_result":
+                            result = c.get("content", "")
+                            parts.append(f"[TOOL_RESULT: {str(result)[:300]}]")
+                        elif c.get("type") == "thinking":
+                            pass
+                    elif isinstance(c, str):
+                        parts.append(c)
+                text = " ".join(parts)
+            elif isinstance(content, str):
+                text = content
+            else:
+                text = str(content)
+            turns.append(f"{role.upper()}: {text[:800]}")
+            continue
+
+        # Handle collab_event / control_event entries
+        if msg.get("type") in ("collab_event", "control_event"):
+            event_role = msg.get("role", "?")
+            event_type = msg.get("event_type", msg.get("event", ""))
+            data = msg.get("data", {})
+            text_parts = [f"[{event_type.upper()}]"]
+            if event_type in ("plan_generated", "plan_revision", "executor_task", "verification_result", "plan_first"):
+                if isinstance(data, dict):
+                    desc = data.get("description", data.get("content", str(data)[:200]))
+                    if desc:
+                        text_parts.append(str(desc))
+                elif data:
+                    text_parts.append(str(data)[:200])
+            elif data:
+                text_parts.append(str(data)[:300])
+            turns.append(f"{event_role.upper()}: {' | '.join(text_parts)[:800]}")
+            continue
+
         role = msg.get("role", "?")
         content = msg.get("content", [])
         if isinstance(content, list):
@@ -212,6 +279,53 @@ def _call_judge_with_retry(
     raise Exception(f"Judge rate limit exceeded after {max_retries} retries")
 
 
+def _call_judge_litellm(
+    judge_model: str,
+    messages: List[Dict],
+    api_key: str,
+    api_base: str,
+    max_retries: int = 5,
+    base_delay: float = 5.0,
+) -> Optional[str]:
+    """调用 Judge 模型（通过 litellm，用于 bigmodel/GLM 等 Anthropic endpoint）。"""
+    import litellm
+    for attempt in range(max_retries):
+        try:
+            response = litellm.completion(
+                model=judge_model,
+                messages=messages,
+                api_key=api_key,
+                api_base=api_base,
+                temperature=0.0,
+                max_tokens=2048,
+                timeout=120.0,
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            err_str = str(e)
+            if "429" in err_str or "RateLimitExceeded" in err_str or "TPM" in err_str:
+                delay = base_delay * (2 ** attempt)
+                logger.warning(f"Judge rate limited (attempt {attempt+1}/{max_retries}), waiting {delay:.0f}s ...")
+                time.sleep(delay)
+            elif "timeout" in err_str.lower() or "timed out" in err_str.lower():
+                logger.warning(f"Judge API timeout (attempt {attempt+1}/{max_retries}): {err_str}")
+                if attempt < max_retries - 1:
+                    delay = base_delay * (2 ** attempt)
+                    time.sleep(delay)
+                else:
+                    raise
+            elif any(kw in err_str for kw in ["520", "500", "internalserverError", "api_error"]):
+                delay = base_delay * (2 ** attempt)
+                logger.warning(f"Judge server error (attempt {attempt+1}/{max_retries}): {err_str[:200]}, retrying in {delay:.0f}s ...")
+                if attempt < max_retries - 1:
+                    time.sleep(delay)
+                else:
+                    raise
+            else:
+                raise
+    raise Exception(f"Judge rate limit exceeded after {max_retries} retries")
+
+
 def run_judge_eval(
     trajectory: List[Dict],
     task_id: str,
@@ -237,34 +351,12 @@ def run_judge_eval(
     # 检测是否使用 Anthropic 兼容 API（MiniMax, GLM 或原生 Anthropic）
     # OpenRouter also serves anthropic/ models but via OpenAI SDK
     is_openrouter = "openrouter" in base_url.lower()
+    is_bigmodel = "bigmodel" in base_url.lower()
     use_anthropic = ("minimax" in base_url.lower() or
-                     "bigmodel" in base_url.lower() or
-                     (judge_model.startswith("anthropic/") and not is_openrouter))
+                     (judge_model.startswith("anthropic/") and not is_openrouter and not is_bigmodel))
 
-    if use_anthropic:
-        try:
-            import anthropic
-        except ImportError:
-            logger.error("anthropic not installed. Run: pip install anthropic")
-            return _error_score(task_id, model_name, "anthropic not installed")
-
-        if not api_key:
-            return _error_score(task_id, model_name, "API key not found")
-
-        client = anthropic.Anthropic(api_key=api_key, base_url=base_url)
-        client_type = "anthropic"
-    else:
-        try:
-            import openai
-        except ImportError:
-            logger.error("openai not installed. Run: pip install openai")
-            return _error_score(task_id, model_name, "openai not installed")
-
-        if not api_key:
-            return _error_score(task_id, model_name, "JUDGE_API_KEY not found")
-
-        client = openai.OpenAI(api_key=api_key, base_url=base_url)
-        client_type = "openai"
+    if not api_key:
+        return _error_score(task_id, model_name, "API key not found")
 
     trajectory_text = _trajectory_to_text(trajectory)
     prompt = JUDGE_PROMPT.format(
@@ -273,15 +365,30 @@ def run_judge_eval(
         task_prompt=task_prompt[:1000],
         trajectory_text=trajectory_text,
     )
+    messages = [
+        {"role": "user", "content": f"You are an expert AI agent evaluator.\n\n{prompt}"},
+    ]
 
     try:
-        result_text = _call_judge_with_retry(
-            client, judge_model,
-            messages=[
-                {"role": "user", "content": f"You are an expert AI agent evaluator.\n\n{prompt}"},
-            ],
-            client_type=client_type,
-        )
+        if is_bigmodel:
+            result_text = _call_judge_litellm(
+                judge_model=judge_model,
+                messages=messages,
+                api_key=api_key,
+                api_base=base_url,
+            )
+        elif use_anthropic:
+            import anthropic
+            client = anthropic.Anthropic(api_key=api_key, base_url=base_url)
+            result_text = _call_judge_with_retry(
+                client, judge_model, messages, client_type="anthropic"
+            )
+        else:
+            import openai
+            client = openai.OpenAI(api_key=api_key, base_url=base_url)
+            result_text = _call_judge_with_retry(
+                client, judge_model, messages, client_type="openai"
+            )
     except Exception as e:
         logger.error(f"Judge API call failed: {e}")
         return _error_score(task_id, model_name, str(e))
@@ -337,41 +444,37 @@ def run_judge_eval_offline(
     # 检测是否使用 Anthropic 兼容 API（MiniMax, GLM 或原生 Anthropic）
     # OpenRouter also serves anthropic/ models but via OpenAI SDK
     is_openrouter = "openrouter" in base_url.lower()
+    is_bigmodel = "bigmodel" in base_url.lower()
     use_anthropic = ("minimax" in base_url.lower() or
-                     "bigmodel" in base_url.lower() or
-                     (judge_model.startswith("anthropic/") and not is_openrouter))
+                     (judge_model.startswith("anthropic/") and not is_openrouter and not is_bigmodel))
 
-    if use_anthropic:
-        try:
-            import anthropic
-        except ImportError:
-            return _error_score(task_id, model_name, "anthropic not installed")
+    if not api_key:
+        return _error_score(task_id, model_name, "API key not found")
 
-        if not api_key:
-            return _error_score(task_id, model_name, "API key not found")
-
-        client = anthropic.Anthropic(api_key=api_key, base_url=base_url)
-        client_type = "anthropic"
-    else:
-        try:
-            import openai
-        except ImportError:
-            return _error_score(task_id, model_name, "openai not installed")
-
-        if not api_key:
-            return _error_score(task_id, model_name, "JUDGE_API_KEY not found")
-
-        client = openai.OpenAI(api_key=api_key, base_url=base_url)
-        client_type = "openai"
+    messages = [
+        {"role": "user", "content": f"You are an expert AI agent evaluator.\n\n{prompt}"},
+    ]
 
     try:
-        result_text = _call_judge_with_retry(
-            client, judge_model,
-            messages=[
-                {"role": "user", "content": f"You are an expert AI agent evaluator.\n\n{prompt}"},
-            ],
-            client_type=client_type,
-        )
+        if is_bigmodel:
+            result_text = _call_judge_litellm(
+                judge_model=judge_model,
+                messages=messages,
+                api_key=api_key,
+                api_base=base_url,
+            )
+        elif use_anthropic:
+            import anthropic
+            client = anthropic.Anthropic(api_key=api_key, base_url=base_url)
+            result_text = _call_judge_with_retry(
+                client, judge_model, messages, client_type="anthropic"
+            )
+        else:
+            import openai
+            client = openai.OpenAI(api_key=api_key, base_url=base_url)
+            result_text = _call_judge_with_retry(
+                client, judge_model, messages, client_type="openai"
+            )
     except Exception as e:
         logger.error(f"Judge API call failed: {e}")
         return _error_score(task_id, model_name, str(e))

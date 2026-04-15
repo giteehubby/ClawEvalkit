@@ -133,7 +133,11 @@ def get_judge_config(judge_model: str = None) -> tuple[str, str, str]:
         api_key = os.getenv("GLM_API_KEY", os.getenv("JUDGE_API_KEY", ""))
         # Anthropic-compatible endpoint (LLMJudge auto-detects and uses Anthropic SDK)
         base_url = "https://open.bigmodel.cn/api/anthropic"
-        actual_model = judge_model
+        # Anthropic-compatible APIs need "anthropic/" prefix for routing
+        if not judge_model.startswith("anthropic/"):
+            actual_model = f"anthropic/{judge_model}"
+        else:
+            actual_model = judge_model
     else:
         api_key = os.getenv("JUDGE_API_KEY", os.getenv("OPENROUTER_API_KEY", ""))
         base_url = os.getenv("JUDGE_BASE_URL", "https://openrouter.ai/api/v1")

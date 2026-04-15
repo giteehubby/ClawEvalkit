@@ -27,11 +27,15 @@ Usage:
   tribe             Claw-Bench-Tribe      8 tasks    Pure LLM (0~100)
 """
 import argparse
+import os
 import sys
 from pathlib import Path
 
 # 确保包可导入
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+openclawpro_dir = Path(os.environ.get("OPENCLAWPRO_DIR", str(Path(__file__).resolve().parent / "OpenClawPro")))
+if openclawpro_dir.exists():
+    sys.path.insert(0, str(openclawpro_dir))
 
 from clawevalkit.config import load_env, list_models, MODELS
 from clawevalkit.dataset import BENCHMARKS, list_benchmarks

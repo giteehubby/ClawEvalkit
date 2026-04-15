@@ -28,6 +28,7 @@ from typing import Any
 
 from ..utils.log import log
 from ..utils.nanobot import import_nanobot_agent
+from ..config import get_judge_config
 from .base import BaseBenchmark
 from ._harness import build_harness_script_parts
 
@@ -98,11 +99,14 @@ class PinchBench(BaseBenchmark):
         all_task_ids = [t["id"] for t in tasks]
         force = kwargs.get("force", False)
 
-        # 先基于已有缓存生成初始汇总
-        self._build_and_save_summary(
-            "pinchbench", model_key, all_task_ids,
-            compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r)
-        )
+        # Filter by specific task_ids if provided
+        task_ids = kwargs.get("task_ids")
+        if task_ids:
+            tasks = [t for t in tasks if t["id"] in task_ids]
+            if not tasks:
+                return {"score": 0, "total": 0, "error": f"no tasks matched task_ids: {task_ids}"}
+            all_task_ids = [t["id"] for t in tasks]
+            log(f"[pinchbench] Filtered to {len(tasks)} tasks by task_ids: {task_ids}")
 
         task_list = tasks
         if not force:
@@ -127,9 +131,19 @@ class PinchBench(BaseBenchmark):
             random.seed(42)
             task_list = random.sample(task_list, sample)
 
+        target_task_ids = [t["id"] for t in task_list] if (sample or force) else all_task_ids
+
+        # 先基于已有缓存生成初始汇总
+        self._build_and_save_summary(
+            "pinchbench", model_key, all_task_ids,
+            compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r, target_task_ids)
+        )
+
         out_dir = self.results_dir / "pinchbench" / model_key
         out_dir.mkdir(parents=True, exist_ok=True)
         results = []
+
+        judge_model = kwargs.get("judge_model") or os.getenv("JUDGE_MODEL")
 
         for i, task in enumerate(task_list):
             tid = task["id"]
@@ -141,6 +155,7 @@ class PinchBench(BaseBenchmark):
             workspace.mkdir(parents=True, exist_ok=True)
 
             r = {"task_id": tid, "model_key": model_key, "status": "error", "scores": {}, "mean": 0.0}
+            transcript = []
 
             try:
                 agent = NanoBotAgent(
@@ -154,18 +169,48 @@ class PinchBench(BaseBenchmark):
                     session_id=f"pinch_{model_key}_{tid}",
                 )
                 transcript = result.transcript if result.transcript else []
+                r["status"] = "success" if result.status == "success" else "error"
 
-                # 执行内嵌的 grade() 函数
-                if task.get("grade_code"):
-                    scores = self._run_grade(task["grade_code"], transcript, str(workspace))
-                    mean_score = sum(scores.values()) / len(scores) if scores else 0
-                    r["status"] = "success"
+                # ── Grading ──────────────────────────────────────────
+                grading_type = task.get("grading_type", "automated")
+                if grading_type == "automated":
+                    if task.get("grade_code"):
+                        scores = self._run_grade(task["grade_code"], transcript, str(workspace))
+                        mean_score = sum(scores.values()) / len(scores) if scores else 0
+                        r["scores"] = scores
+                        r["mean"] = round(mean_score, 4)
+                        log(f"[{tid}] Grade score: {mean_score:.4f}")
+                    else:
+                        r["mean"] = 1.0 if result.status == "success" else 0.0
+                        log(f"[{tid}] Agent status: {r['status']}")
+                elif grading_type == "llm_judge":
+                    scores = self._run_llm_judge(task, transcript, judge_model=judge_model)
+                    mean_score = scores.pop("_judge_total", 0.0) if scores else 0.0
                     r["scores"] = scores
                     r["mean"] = round(mean_score, 4)
-                    log(f"[{tid}] Grade score: {mean_score:.4f}")
+                    log(f"[{tid}] LLM Judge score: {mean_score:.4f}")
+                elif grading_type == "hybrid":
+                    auto_scores = {}
+                    auto_mean = 1.0 if result.status == "success" else 0.0
+                    if task.get("grade_code"):
+                        auto_scores = self._run_grade(task["grade_code"], transcript, str(workspace))
+                        auto_mean = sum(auto_scores.values()) / len(auto_scores) if auto_scores else auto_mean
+                    llm_scores = self._run_llm_judge(task, transcript, judge_model=judge_model)
+                    llm_mean = llm_scores.pop("_judge_total", 0.0) if llm_scores else 0.0
+                    weights = task.get("grading_weights", {"automated": 0.5, "llm_judge": 0.5})
+                    combined_mean = (
+                        auto_mean * float(weights.get("automated", 0.5)) +
+                        llm_mean * float(weights.get("llm_judge", 0.5))
+                    ) / (float(weights.get("automated", 0.5)) + float(weights.get("llm_judge", 0.5)) or 1.0)
+                    r["scores"] = {
+                        "auto_mean": round(auto_mean, 4),
+                        "llm_mean": round(llm_mean, 4),
+                        **{f"auto.{k}": v for k, v in auto_scores.items()},
+                        **{f"llm.{k}": v for k, v in llm_scores.items()},
+                    }
+                    r["mean"] = round(combined_mean, 4)
+                    log(f"[{tid}] Hybrid score: {combined_mean:.4f} (auto={auto_mean:.4f}, llm={llm_mean:.4f})")
                 else:
-                    # 无 grade 函数时，检查 agent 是否成功执行
-                    r["status"] = "success" if result.status == "success" else "error"
                     r["mean"] = 1.0 if result.status == "success" else 0.0
                     log(f"[{tid}] Agent status: {r['status']}")
 
@@ -176,6 +221,9 @@ class PinchBench(BaseBenchmark):
             # Save per-task result
             self._save_task_result("pinchbench", model_key, tid, r)
             log(f"[{tid}] Saved result to outputs/pinchbench/{model_key}/{tid}/result.json")
+            # Save transcript
+            if transcript:
+                self._save_transcript(model_key, tid, transcript)
             shutil.rmtree(workspace, ignore_errors=True)
             results.append(r)
 
@@ -183,17 +231,19 @@ class PinchBench(BaseBenchmark):
             self._build_and_save_summary(
                 "pinchbench", model_key, all_task_ids,
                 new_results=results,
-                compute_summary_fn=lambda res: self._compute_summary(model_key, all_task_ids, res)
+                compute_summary_fn=lambda res: self._compute_summary(model_key, all_task_ids, res, target_task_ids)
             )
 
         return self._load_summary("pinchbench", model_key)
 
-    def _compute_summary(self, model_key: str, all_task_ids: list, results: list) -> dict:
+    def _compute_summary(self, model_key: str, all_task_ids: list, results: list, target_task_ids: list = None) -> dict:
         """Compute summary for PinchBench."""
-        means = [r["mean"] for r in results if r.get("status") == "success"]
+        target_ids = set(target_task_ids) if target_task_ids else set(all_task_ids)
+        target_results = [r for r in results if r.get("task_id") in target_ids]
+        means = [r["mean"] for r in target_results if r.get("status") == "success"]
         overall = round(sum(means) / len(means) * 100, 1) if means else 0
-        total = len(all_task_ids)
-        scored = len(results)
+        total = len(target_ids)
+        scored = len(target_results)
         return {
             "model": model_key,
             "score": overall,
@@ -201,7 +251,7 @@ class PinchBench(BaseBenchmark):
             "scored": scored,
             "pending": total - scored,
             "total": total,
-            "details": results
+            "details": target_results
         }
 
     def _load_summary(self, bench_key: str, model_key: str) -> dict:
@@ -227,7 +277,7 @@ class PinchBench(BaseBenchmark):
                 json.dumps(transcript, indent=2, ensure_ascii=False),
                 encoding="utf-8",
             )
-            log("[%s] Saved transcript to %s", task_id, trans_path / "transcript.json")
+            log(f"[{task_id}] Saved transcript to {trans_path / 'transcript.json'}")
         except Exception:
             pass  # transcript 保存失败不影响主流程
 
@@ -248,11 +298,14 @@ class PinchBench(BaseBenchmark):
         all_task_ids = [t["id"] for t in tasks]
         force = kwargs.get("force", False)
 
-        # 先基于已有缓存生成初始汇总
-        self._build_and_save_summary(
-            "pinchbench", model_key, all_task_ids,
-            compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r)
-        )
+        # Filter by specific task_ids if provided
+        task_ids = kwargs.get("task_ids")
+        if task_ids:
+            tasks = [t for t in tasks if t["id"] in task_ids]
+            if not tasks:
+                return {"score": 0, "total": 0, "error": f"no tasks matched task_ids: {task_ids}"}
+            all_task_ids = [t["id"] for t in tasks]
+            log(f"[pinchbench] Filtered to {len(tasks)} tasks by task_ids: {task_ids}")
 
         task_list = tasks
         if not force:
@@ -277,9 +330,19 @@ class PinchBench(BaseBenchmark):
             random.seed(42)
             task_list = random.sample(task_list, sample)
 
+        target_task_ids = [t["id"] for t in task_list] if (sample or force) else all_task_ids
+
+        # 先基于已有缓存生成初始汇总
+        self._build_and_save_summary(
+            "pinchbench", model_key, all_task_ids,
+            compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r, target_task_ids)
+        )
+
         out_dir = self.results_dir / "pinchbench" / model_key
         out_dir.mkdir(parents=True, exist_ok=True)
         transcripts_dir = kwargs.get("transcripts_dir")
+
+        judge_model = kwargs.get("judge_model") or os.getenv("JUDGE_MODEL")
 
         openrouter_api_key = os.getenv("OPENROUTER_API_KEY", "")
         openclawpro_dir = kwargs.get("openclawpro_dir") or Path(
@@ -331,8 +394,14 @@ class PinchBench(BaseBenchmark):
                 if provider == "minimax":
                     minimax_api_key = os.getenv("MINIMAX_API_KEY", "")
                     env_args.extend(["-e", f"MINIMAX_API_KEY={minimax_api_key}"])
+                    env_args.extend(["-e", f"ANTHROPIC_API_KEY={minimax_api_key}"])
+                elif provider == "glm":
+                    glm_api_key = os.getenv("GLM_API_KEY", "")
+                    env_args.extend(["-e", f"GLM_API_KEY={glm_api_key}"])
+                    env_args.extend(["-e", f"ANTHROPIC_API_KEY={glm_api_key}"])
                 else:
                     env_args.extend(["-e", f"OPENROUTER_API_KEY={openrouter_api_key}"])
+                    env_args.extend(["-e", f"ANTHROPIC_API_KEY={openrouter_api_key}"])
 
                 # Start container
                 self._start_container(container_name, workspace_path, openclawpro_dir, env_args)
@@ -361,12 +430,44 @@ class PinchBench(BaseBenchmark):
                     log(f"[{container_name}] Failed to load agent result: {e}")
 
                 # Run grading
-                if task.get("grade_code"):
-                    scores = self._run_grade_in_container(container_name, task["grade_code"], transcript)
-                    mean_score = sum(scores.values()) / len(scores) if scores else 0
+                grading_type = task.get("grading_type", "automated")
+                if grading_type == "automated":
+                    if task.get("grade_code"):
+                        scores = self._run_grade_in_container(container_name, task["grade_code"], transcript)
+                        mean_score = sum(scores.values()) / len(scores) if scores else 0
+                        result["scores"] = scores
+                        result["mean"] = round(mean_score, 4)
+                        log(f"[{tid}] Grade score: {mean_score:.4f}")
+                    else:
+                        result["mean"] = 1.0 if result["status"] == "success" else 0.0
+                        log(f"[{tid}] Agent status: {result['status']}")
+                elif grading_type == "llm_judge":
+                    scores = self._run_llm_judge(task, transcript, judge_model=judge_model)
+                    mean_score = scores.pop("_judge_total", 0.0) if scores else 0.0
                     result["scores"] = scores
                     result["mean"] = round(mean_score, 4)
-                    log(f"[{tid}] Grade score: {mean_score:.4f}")
+                    log(f"[{tid}] LLM Judge score: {mean_score:.4f}")
+                elif grading_type == "hybrid":
+                    auto_scores = {}
+                    auto_mean = 1.0 if result["status"] == "success" else 0.0
+                    if task.get("grade_code"):
+                        auto_scores = self._run_grade_in_container(container_name, task["grade_code"], transcript)
+                        auto_mean = sum(auto_scores.values()) / len(auto_scores) if auto_scores else auto_mean
+                    llm_scores = self._run_llm_judge(task, transcript, judge_model=judge_model)
+                    llm_mean = llm_scores.pop("_judge_total", 0.0) if llm_scores else 0.0
+                    weights = task.get("grading_weights", {"automated": 0.5, "llm_judge": 0.5})
+                    combined_mean = (
+                        auto_mean * float(weights.get("automated", 0.5)) +
+                        llm_mean * float(weights.get("llm_judge", 0.5))
+                    ) / (float(weights.get("automated", 0.5)) + float(weights.get("llm_judge", 0.5)) or 1.0)
+                    result["scores"] = {
+                        "auto_mean": round(auto_mean, 4),
+                        "llm_mean": round(llm_mean, 4),
+                        **{f"auto.{k}": v for k, v in auto_scores.items()},
+                        **{f"llm.{k}": v for k, v in llm_scores.items()},
+                    }
+                    result["mean"] = round(combined_mean, 4)
+                    log(f"[{tid}] Hybrid score: {combined_mean:.4f} (auto={auto_mean:.4f}, llm={llm_mean:.4f})")
                 else:
                     result["mean"] = 1.0 if result["status"] == "success" else 0.0
                     log(f"[{tid}] Agent status: {result['status']}")
@@ -407,7 +508,7 @@ class PinchBench(BaseBenchmark):
                 self._build_and_save_summary(
                     "pinchbench", model_key, all_task_ids,
                     new_results=results,
-                    compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r)
+                    compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r, target_task_ids)
                 )
         else:
             with ThreadPoolExecutor(max_workers=parallel) as pool:
@@ -421,7 +522,7 @@ class PinchBench(BaseBenchmark):
                         self._build_and_save_summary(
                             "pinchbench", model_key, all_task_ids,
                             new_results=results,
-                            compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r)
+                            compute_summary_fn=lambda r: self._compute_summary(model_key, all_task_ids, r, target_task_ids)
                         )
                     except Exception as exc:
                         log(f"[{tid}] Thread exception: {exc}")
@@ -476,6 +577,8 @@ class PinchBench(BaseBenchmark):
         provider = config.get("provider", "openrouter")
         if provider == "minimax":
             api_key_env = "MINIMAX_API_KEY"
+        elif provider == "glm":
+            api_key_env = "GLM_API_KEY"
         else:
             api_key_env = "OPENROUTER_API_KEY"
 
@@ -579,6 +682,11 @@ import time
 import os
 from pathlib import Path
 
+# DEBUG: check workspace before agent starts
+_workspace = Path('{TMP_WORKSPACE}')
+print(f"[DEBUG] Workspace: {{_workspace}}, exists={{_workspace.exists()}}")
+print(f"[DEBUG] Contents: {{list(_workspace.iterdir()) if _workspace.exists() else 'N/A'}}")
+
 sys.path.insert(0, '/root/OpenClawPro')
 from harness.agent.nanobot import NanoBotAgent
 {harness_imports}workspace = Path('{TMP_WORKSPACE}')
@@ -677,7 +785,6 @@ print('DONE')
 import json
 import os
 import sys
-from ..utils.log import log
 
 TMP_WORKSPACE = "{TMP_WORKSPACE}"
 
@@ -730,11 +837,13 @@ print(json.dumps(scores))
         # PinchBench tasks may have workspace_files in frontmatter
         workspace_files = task.get("workspace_files", [])
         if not workspace_files:
+            log(f"[{task.get('id', '?')}] No workspace_files defined in task")
             return
 
         tasks_dir = self.base_dir / "benchmarks" / "pinchbench" / "tasks"
         assets_dir = self.base_dir / "benchmarks" / "pinchbench" / "assets"
 
+        log(f"[{task.get('id', '?')}] Preparing {len(workspace_files)} workspace file(s): {[f.get('path', f) if isinstance(f, dict) else str(f) for f in workspace_files]}")
         for file_spec in workspace_files:
             if isinstance(file_spec, dict):
                 if "content" in file_spec:
@@ -742,6 +851,7 @@ print(json.dumps(scores))
                     dest = host_workspace / file_spec["path"]
                     dest.parent.mkdir(parents=True, exist_ok=True)
                     dest.write_text(file_spec["content"])
+                    log(f"[{task.get('id', '?')}] Wrote workspace file: {file_spec['path']}")
                 elif "source" in file_spec:
                     # Copy from assets
                     source = assets_dir / file_spec["source"]
@@ -749,6 +859,13 @@ print(json.dumps(scores))
                     if source.exists():
                         dest.parent.mkdir(parents=True, exist_ok=True)
                         shutil.copy2(source, dest)
+                        log(f"[{task.get('id', '?')}] Copied workspace file: {source} -> {dest}")
+                    else:
+                        log(f"[{task.get('id', '?')}] WARNING: source file not found: {source}")
+                else:
+                    log(f"[{task.get('id', '?')}] WARNING: file_spec has no content or source: {file_spec}")
+            else:
+                log(f"[{task.get('id', '?')}] WARNING: file_spec is not a dict: {type(file_spec)}")
 
     # 旧目录名 → 新 model key 映射
     LEGACY_KEYS = {
@@ -776,17 +893,24 @@ print(json.dumps(scores))
         return None
 
     def _load_tasks(self) -> list:
-        """解析 tasks/*.md → [{"id", "prompt", "grade_code", "timeout", "workspace_files"}, ...]
+        """解析 tasks/*.md → [{"id", "prompt", "grade_code", "timeout", "workspace_files",
+                                     "grading_type", "grading_weights", "llm_judge_rubric",
+                                     "expected_behavior", "grading_criteria"}, ...]
 
         每个 task markdown 结构:
         - YAML frontmatter（--- ... ---）: id, timeout_seconds, workspace_files 等
         - ## Prompt 部分: 给 agent 的指令
         - ## Automated Checks 中的 ```python ... ```: grade() 函数代码
+        - ## LLM Judge Rubric: LLM 评分标准
         """
         import yaml
         tasks_dir = self.base_dir / "benchmarks" / "pinchbench" / "tasks"
         if not tasks_dir.exists():
             return []
+
+        def _extract_section(pattern: str, text: str) -> str:
+            m = re.search(pattern, text, re.DOTALL)
+            return m.group(1).strip() if m else ""
 
         tasks = []
         for md in sorted(tasks_dir.glob("*.md")):
@@ -820,11 +944,18 @@ print(json.dumps(scores))
             if checks_match:
                 grade_code = checks_match.group(1).strip()
 
+            # 提取其他 sections
+            expected_behavior = _extract_section(r"## Expected Behavior\s*\n(.*?)(?=\n## |\Z)", content)
+            grading_criteria = _extract_section(r"## Grading Criteria\s*\n(.*?)(?=\n## |\Z)", content)
+            llm_judge_rubric = _extract_section(r"## LLM Judge Rubric\s*\n(.*?)(?=\n## |\Z)", content)
+
             tid = frontmatter.get("id", md.stem)
             timeout = int(frontmatter.get("timeout_seconds", 120))
             workspace_files = frontmatter.get("workspace_files", [])
             multi_session = frontmatter.get("multi_session", False)
             sessions = frontmatter.get("sessions", [])
+            grading_type = frontmatter.get("grading_type", "automated")
+            grading_weights = frontmatter.get("grading_weights", {"automated": 0.5, "llm_judge": 0.5})
 
             tasks.append({
                 "id": tid,
@@ -834,6 +965,11 @@ print(json.dumps(scores))
                 "workspace_files": workspace_files,
                 "multi_session": multi_session,
                 "sessions": sessions,
+                "grading_type": grading_type,
+                "grading_weights": grading_weights,
+                "llm_judge_rubric": llm_judge_rubric,
+                "expected_behavior": expected_behavior,
+                "grading_criteria": grading_criteria,
             })
 
         return tasks
@@ -852,3 +988,211 @@ print(json.dumps(scores))
         except Exception:
             pass
         return {}
+
+    # ── LLM Judge helpers ───────────────────────────────────────────────
+
+    def _transcript_to_text(self, transcript: list) -> str:
+        """将 NanoBotAgent transcript 转换为 judge 可读的文本摘要。"""
+        parts = []
+        for event in transcript:
+            if not isinstance(event, dict):
+                continue
+            if event.get("type") != "message":
+                continue
+            msg = event.get("message", {})
+            role = msg.get("role")
+            content = msg.get("content", [])
+            if role == "assistant":
+                for item in content:
+                    if isinstance(item, dict) and item.get("type") == "toolCall":
+                        parts.append(f"Tool: {item.get('name')}({json.dumps(item.get('arguments', {}), ensure_ascii=False)})")
+                    elif isinstance(item, dict) and item.get("type") == "text":
+                        parts.append(f"Assistant: {item.get('text', '')[:400]}")
+            elif role == "toolResult":
+                if content:
+                    parts.append(f"Result: {str(content[0])[:300]}")
+            elif role == "user":
+                if content:
+                    parts.append(f"User: {str(content[0])[:200]}")
+        return "\n".join(parts)
+
+    def _build_judge_prompt(self, task: dict, transcript_text: str) -> str:
+        """构建 PinchBench LLM Judge prompt。"""
+        rubric = task.get("llm_judge_rubric") or task.get("grading_criteria", "")
+        expected = task.get("expected_behavior", "")
+        return (
+            "You are a grading function. Your ONLY job is to output a single JSON object.\n\n"
+            "CRITICAL RULES:\n"
+            "- Do NOT use any tools (no Read, Write, exec, or any other tool calls)\n"
+            "- Do NOT create files or run commands\n"
+            "- Do NOT write any prose, explanation, or commentary outside the JSON\n"
+            "- Respond with ONLY a JSON object — nothing else\n\n"
+            "Be a strict evaluator. Reserve 1.0 for genuinely excellent performance. "
+            "An average acceptable completion should score around 0.6-0.7. "
+            "Deduct points for unnecessary steps, verbose output, and inefficient tool usage.\n\n"
+            "## Task\n"
+            f"{task['prompt']}\n\n"
+            "## Expected Behavior\n"
+            f"{expected}\n\n"
+            "## Agent Transcript (summarized)\n"
+            f"{transcript_text}\n\n"
+            "## Grading Rubric\n"
+            f"{rubric}\n\n"
+            "Score each criterion from 0.0 to 1.0.\n\n"
+            "Respond with ONLY this JSON structure (no markdown, no code fences, no extra text):\n"
+            '{"scores": {"criterion_name": 0.0}, "total": 0.0, "notes": "brief justification"}'
+        )
+
+    def _parse_judge_response(self, text: str) -> dict:
+        """从 judge 响应中提取 JSON 评分。"""
+        stripped = text.strip()
+        if stripped.startswith("```"):
+            first_newline = stripped.find("\n")
+            if first_newline != -1:
+                stripped = stripped[first_newline + 1:]
+            if stripped.rstrip().endswith("```"):
+                stripped = stripped.rstrip()[:-3].rstrip()
+        try:
+            return json.loads(stripped)
+        except json.JSONDecodeError:
+            pass
+
+        # 括号匹配提取 JSON
+        start = text.find('{')
+        if start == -1:
+            return {}
+        depth = 0
+        end = start
+        for i, c in enumerate(text[start:], start):
+            if c == '{':
+                depth += 1
+            elif c == '}':
+                depth -= 1
+                if depth == 0:
+                    end = i + 1
+                    break
+        if depth == 0 and end > start:
+            try:
+                parsed = json.loads(text[start:end])
+                if isinstance(parsed, dict):
+                    return parsed
+            except json.JSONDecodeError:
+                pass
+        return {}
+
+    def _normalize_judge_response(self, parsed: dict) -> dict:
+        """归一化 judge 响应为 {scores, total, notes}。"""
+        result = {"scores": {}, "total": None, "notes": ""}
+        if "scores" in parsed and isinstance(parsed["scores"], dict):
+            for k, v in parsed["scores"].items():
+                if isinstance(v, dict) and "score" in v:
+                    result["scores"][k] = float(v["score"])
+                elif isinstance(v, (int, float)):
+                    result["scores"][k] = float(v)
+        elif "criteria_scores" in parsed and isinstance(parsed["criteria_scores"], dict):
+            for k, v in parsed["criteria_scores"].items():
+                if isinstance(v, dict) and "score" in v:
+                    result["scores"][k] = float(v["score"])
+                elif isinstance(v, (int, float)):
+                    result["scores"][k] = float(v)
+
+        if "total" in parsed and parsed["total"] is not None:
+            result["total"] = float(parsed["total"])
+        elif "score" in parsed and isinstance(parsed["score"], (int, float)):
+            result["total"] = float(parsed["score"])
+        elif "overall_score" in parsed and isinstance(parsed["overall_score"], (int, float)):
+            result["total"] = float(parsed["overall_score"])
+        elif result["scores"]:
+            vals = [v for v in result["scores"].values() if isinstance(v, (int, float))]
+            if vals:
+                result["total"] = sum(vals) / len(vals)
+
+        if "notes" in parsed:
+            result["notes"] = str(parsed["notes"])
+        elif "justification" in parsed:
+            result["notes"] = str(parsed["justification"])
+        elif "reasoning" in parsed:
+            result["notes"] = str(parsed["reasoning"])
+        return result
+
+    def _call_judge_api(self, prompt: str, judge_model: str = None) -> dict:
+        """调用 Judge Model API，返回归一化后的评分字典。"""
+        api_key, base_url, actual_model = get_judge_config(judge_model)
+        if not api_key:
+            log("[judge] API key not found")
+            return {}
+
+        messages = [{"role": "user", "content": prompt}]
+        response_text = ""
+
+        try:
+            is_bigmodel = "bigmodel" in base_url.lower()
+            is_openrouter = "openrouter" in base_url.lower()
+            use_anthropic = (
+                "minimax" in base_url.lower()
+                or (actual_model.startswith("anthropic/") and not is_openrouter and not is_bigmodel)
+            )
+
+            if is_bigmodel:
+                import litellm
+                resp = litellm.completion(
+                    model=actual_model,
+                    messages=messages,
+                    api_key=api_key,
+                    api_base=base_url,
+                    temperature=0.0,
+                    max_tokens=2048,
+                    timeout=120,
+                )
+                response_text = resp.choices[0].message.content
+            elif use_anthropic:
+                import anthropic
+                client = anthropic.Anthropic(api_key=api_key, base_url=base_url)
+                resp = client.messages.create(
+                    model=actual_model,
+                    messages=messages,
+                    temperature=0.0,
+                    max_tokens=2048,
+                    timeout=120,
+                )
+                for block in resp.content:
+                    if block.type == "text":
+                        response_text = block.text
+                        break
+                if not response_text and resp.content and resp.content[0].type == "thinking":
+                    response_text = resp.content[0].thinking
+            else:
+                import openai
+                client = openai.OpenAI(api_key=api_key, base_url=base_url)
+                resp = client.chat.completions.create(
+                    model=actual_model,
+                    messages=messages,
+                    temperature=0.0,
+                    max_tokens=2048,
+                    timeout=120,
+                )
+                response_text = resp.choices[0].message.content
+        except Exception as e:
+            log(f"[judge] API call failed: {e}")
+            return {}
+
+        parsed = self._parse_judge_response(response_text or "")
+        normalized = self._normalize_judge_response(parsed)
+        if normalized.get("total") is None:
+            log(f"[judge] Failed to parse response: {response_text[:200]}")
+        return normalized
+
+    def _run_llm_judge(self, task: dict, transcript: list, judge_model: str = None) -> dict:
+        """运行 LLM Judge，返回评分字典。"""
+        if not task.get("llm_judge_rubric") and not task.get("grading_criteria"):
+            return {}
+        transcript_text = self._transcript_to_text(transcript)
+        prompt = self._build_judge_prompt(task, transcript_text)
+        result = self._call_judge_api(prompt, judge_model=judge_model)
+        scores = result.get("scores", {})
+        total = result.get("total")
+        if total is not None:
+            scores["_judge_total"] = total
+        if result.get("notes"):
+            scores["_judge_notes"] = result["notes"]
+        return scores

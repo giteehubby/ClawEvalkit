@@ -26,7 +26,7 @@ from ..utils.log import log
 
 
 DOCKER_IMAGE = os.environ.get("DOCKER_IMAGE_NANOBOT", "clawbase-nanobot:v1")
-TMP_WORKSPACE = "/tmp/agentbench_workspace"
+TMP_WORKSPACE = "/tmp"
 
 
 # ============================================================================
@@ -36,7 +36,7 @@ TMP_WORKSPACE = "/tmp/agentbench_workspace"
 def _check_file_exists(container_name: str, pattern: str) -> bool:
     """Check if file exists in container workspace."""
     check_proc = subprocess.run(
-        ["docker", "exec", container_name, "test", "-f", f"/tmp/agentbench_workspace/workspace/{pattern}"],
+        ["docker", "exec", container_name, "test", "-f", f"/tmp/workspace/{pattern}"],
         capture_output=True)
     return check_proc.returncode == 0
 
@@ -46,7 +46,7 @@ def _check_directory_structure(container_name: str, expected: list[str]) -> tupl
     passed = 0
     for path in expected:
         check_proc = subprocess.run(
-            ["docker", "exec", container_name, "test", "-e", f"/tmp/agentbench_workspace/workspace/{path}"],
+            ["docker", "exec", container_name, "test", "-e", f"/tmp/workspace/{path}"],
             capture_output=True)
         if check_proc.returncode == 0:
             passed += 1
@@ -61,7 +61,7 @@ def _check_content_contains(container_name: str, pattern: str, sections: list[st
 
     try:
         subprocess.run(
-            ["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/workspace/{pattern}", temp_path],
+            ["docker", "cp", f"{container_name}:/tmp/workspace/{pattern}", temp_path],
             capture_output=True)
 
         if not os.path.exists(temp_path) or os.path.getsize(temp_path) == 0:
@@ -81,7 +81,7 @@ def _check_word_count_range(container_name: str, pattern: str, min_words: int, m
 
     try:
         subprocess.run(
-            ["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/workspace/{pattern}", temp_path],
+            ["docker", "cp", f"{container_name}:/tmp/workspace/{pattern}", temp_path],
             capture_output=True)
 
         if not os.path.exists(temp_path):
@@ -103,7 +103,7 @@ def _check_word_count_range(container_name: str, pattern: str, min_words: int, m
 def _check_git_log_contains(container_name: str, expected: list[str]) -> tuple[int, int]:
     """Check git log for expected strings."""
     result = subprocess.run(
-        ["docker", "exec", container_name, "git", "-C", "/tmp/agentbench_workspace/workspace", "log", "--oneline"],
+        ["docker", "exec", container_name, "git", "-C", "/tmp/workspace", "log", "--oneline"],
         capture_output=True, text=True)
 
     if result.returncode != 0:
@@ -117,7 +117,7 @@ def _check_git_log_contains(container_name: str, expected: list[str]) -> tuple[i
 def _check_command_output_contains(container_name: str, command: str, expected: list[str]) -> tuple[int, int]:
     """Run command and check output contains all expected strings."""
     result = subprocess.run(
-        ["docker", "exec", container_name, "/bin/bash", "-c", f"cd /tmp/agentbench_workspace/workspace && {command}"],
+        ["docker", "exec", container_name, "/bin/bash", "-c", f"cd /tmp/workspace && {command}"],
         capture_output=True, text=True)
 
     output = result.stdout + result.stderr
@@ -130,7 +130,7 @@ def _check_link_consistency(container_name: str, files_pattern: str) -> float:
     # Get list of files
     result = subprocess.run(
         ["docker", "exec", container_name, "/bin/bash", "-c",
-         f"cd /tmp/agentbench_workspace/workspace && find . -path './{files_pattern}' -type f 2>/dev/null"],
+         f"cd /tmp/workspace && find . -path './{files_pattern}' -type f 2>/dev/null"],
         capture_output=True, text=True)
 
     if result.returncode != 0 or not result.stdout.strip():
@@ -148,7 +148,7 @@ def _check_link_consistency(container_name: str, files_pattern: str) -> float:
             tmp_path = tmp.name
         try:
             subprocess.run(
-                ["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/workspace/{f}", tmp_path],
+                ["docker", "cp", f"{container_name}:/tmp/workspace/{f}", tmp_path],
                 capture_output=True)
             content = Path(tmp_path).read_text()
 
@@ -346,18 +346,15 @@ def _start_container(container_name: str, workspace_path: str, openclawpro_dir: 
     """Start Docker container with selective volume mounts."""
     exec_path = os.path.join(workspace_path, "exec")
     tmp_path = os.path.join(workspace_path, "tmp")
-    workspace_inner = os.path.join(workspace_path, "workspace")
 
     os.makedirs(exec_path, exist_ok=True)
     os.makedirs(tmp_path, exist_ok=True)
 
     volume_mounts = [
-        "-v", f"{exec_path}:/tmp/agentbench_workspace/exec:rw",
-        "-v", f"{tmp_path}:/tmp/agentbench_workspace/tmp:rw",
-        "-v", f"{openclawpro_dir}:/root/OpenClawPro:rw",
+        "-v", f"{exec_path}:/tmp/exec:rw",
+        "-v", f"{tmp_path}:/tmp/tmp:rw",
+        "-v", f"{openclawpro_dir}:/root/OpenClawPro:ro",
     ]
-    if os.path.exists(workspace_inner):
-        volume_mounts.extend(["-v", f"{workspace_inner}:/tmp/agentbench_workspace/workspace:rw"])
 
     docker_run_cmd = [
         "docker", "run", "-d",
@@ -400,11 +397,17 @@ sys.path.insert(0, '/root/OpenClawPro')
 from harness.agent.nanobot import NanoBotAgent
 {harness_imports}
 
-workspace = Path('/tmp/agentbench_workspace/workspace')
+workspace = Path('/tmp/workspace')
 session_id = 'eval_{model_key}_{task_id}'
 
 # Get API key from environment variable
 api_key = os.environ.get('{api_key_env}', '')
+
+system_prompt = \"\"\"You are an expert agent working in a restricted environment.
+Solve the task efficiently. Run all processes in the foreground without user input.
+IMPORTANT: Your working directory is `/tmp/workspace`. Use RELATIVE paths (e.g. `.`, `logs/`) for files. Never use absolute paths like `/root/...` unless explicitly told.
+Skills are located at: /tmp/workspace/skills/
+Provide a complete, functional solution.\"\"\"
 
 agent = NanoBotAgent(
     model='{config["model"]}',
@@ -412,12 +415,9 @@ agent = NanoBotAgent(
     api_key=api_key,
     workspace=workspace,
     timeout=300,
+    system_prompt=system_prompt,
     disable_safety_guard=True,{harness_kwargs_str}
 )
-
-system_prompt = \"\"\"You are an expert agent working in a restricted environment.
-Solve the task efficiently. Run all processes in the foreground without user input.
-Provide a complete, functional solution.\"\"\"
 
 try:
     start_time = time.time()
@@ -425,7 +425,6 @@ try:
         '''{user_message.replace("'", "\\'")}''',
         session_id=session_id,
         workspace=workspace,
-        system_prompt=system_prompt,
         max_iterations=100,
     )
     elapsed = time.time() - start_time
@@ -479,7 +478,7 @@ def _run_agent_in_container(container_name: str, exec_script: str, timeout_secon
 def _copy_results_from_container(container_name: str, workspace_path: str, task_output_dir: Path) -> Path:
     """Copy agent result from container to host. Returns result_file path."""
     result_file_host = task_output_dir / "agent_result.json"
-    subprocess.run(["docker", "cp", f"{container_name}:/tmp/agentbench_workspace/workspace/agent_result.json", str(result_file_host)],
+    subprocess.run(["docker", "cp", f"{container_name}:/tmp/workspace/agent_result.json", str(result_file_host)],
                    capture_output=True)
     return result_file_host
 
@@ -768,11 +767,17 @@ class AgentBench(BaseBenchmark):
                 else:
                     env_args.extend(["-e", f"OPENROUTER_API_KEY={openrouter_api_key}"])
 
-                # Start container (mounts workspace/ to /tmp/agentbench_workspace/workspace/)
+                # Start container (OpenClawPro readonly, exec/tmp mounted)
                 _start_container(container_name, workspace_path, openclawpro_dir, DOCKER_IMAGE, env_args)
                 log(f"[{container_name}] Container started")
 
-                # No need to docker cp - files are already mounted via volume
+                # Copy workspace to container (instead of volume mount)
+                host_workspace = Path(workspace_path) / "workspace"
+                subprocess.run(
+                    ["docker", "cp", f"{host_workspace}/.", f"{container_name}:/tmp/workspace/"],
+                    check=True
+                )
+                log(f"[{container_name}] Workspace copied to /tmp/workspace/")
 
                 # Build and run agent
                 user_msg = cfg.get("user_message", "")
