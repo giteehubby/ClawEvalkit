@@ -18,6 +18,10 @@ def get_harness_config(harness: str) -> dict:
 
     Returns a dict like {"memory_config": MemoryConfig(enabled=True)} that
     can be splatted into NanoBotAgent / HarborNanoBotAgent constructors.
+
+    For "procedure" (T4), both T4a and T4b are enabled by default:
+      - T4a: Program Support Cards via dense retrieval (BERT bi-encoder)
+      - T4b: Skill Activation Prompts (injected at start + re-trigger on unexpected)
     """
     if harness == "memory":
         from OpenClawPro.harness.agent.memory import MemoryConfig
@@ -29,8 +33,47 @@ def get_harness_config(harness: str) -> dict:
         from OpenClawPro.harness.agent.collaboration import CollabConfig
         return {"collab_config": CollabConfig(enabled=True)}
     elif harness == "procedure":
-        from OpenClawPro.harness.agent.procedure import ProceduralConfig
-        return {"procedural_config": ProceduralConfig(enabled=True)}
+        from OpenClawPro.harness.agent.procedure import (
+            ProceduralConfig,
+            ProgramSupportConfig,
+            RetrievalConfig,
+            SkillActivationConfig,
+        )
+        import os
+        # Default cards directory: OpenClawPro/harness/agent/procedure/cards
+        repo_root = Path(__file__).parent.parent
+        default_cards_dir = str(repo_root / "OpenClawPro" / "harness" / "agent" / "procedure" / "cards")
+
+        program_support = ProgramSupportConfig(
+            enabled=True,
+            cards_dir=os.environ.get("T4A_CARDS_DIR", default_cards_dir),
+            retrieval=RetrievalConfig(
+                embedding_model=os.environ.get("T4A_EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2"),
+                device=os.environ.get("T4A_DEVICE", "cpu"),
+                top_k=int(os.environ.get("T4A_TOP_K", "3")),
+                batch_size=16,
+                cache_embeddings=True,
+            ),
+            use_keyword_fallback=True,
+        )
+
+        skill_activation = SkillActivationConfig(
+            enabled=True,
+            inject_at_start=True,
+            retrigger_on_unexpected=True,
+            unexpected_threshold=1,
+            include_inventory=True,
+            include_selection=True,
+            include_verification=True,
+        )
+
+        return {
+            "procedural_config": ProceduralConfig(
+                enabled=True,
+                program_support=program_support,
+                skill_activation=skill_activation,
+            )
+        }
     return {}
 
 

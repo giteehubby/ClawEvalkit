@@ -439,6 +439,228 @@ class ClawEval(BaseBenchmark):
         return scores, judge_calls
 
     # ------------------------------------------------------------------
+    # User-agent multi-turn loop
+    # ------------------------------------------------------------------
+
+    def _run_user_agent_loop(
+        self,
+        agent,
+        task_prompt: str,
+        system_prompt: str,
+        max_rounds: int,
+        model_config: dict,
+        persona: str,
+    ):
+        """Run a multi-turn loop with simulated user responses via litellm.
+
+        Replaces the single-turn agent.execute() for tasks with user_agent.enabled.
+        Each round: agent makes tool calls (via _run_loop), then (if the agent gave
+        a final answer without tool calls) litellm generates a simulated user reply,
+        which is fed back as the next user message.  Loop ends on [DONE] or max_rounds.
+        """
+        import asyncio
+        import litellm
+
+        _UA_SYSTEM_PROMPT = """\
+你是一个模拟用户。你的任务是根据以下人设与AI助手进行对话。
+
+## 你的人设
+{persona}
+
+## 规则
+1. 始终保持人设角色，用自然口语回复，不要暴露你是AI
+2. 根据助手的提问如实回答（基于你的人设信息）
+3. 如果助手问了你人设中没有的信息，说"不太清楚具体数字"或类似自然回复
+4. 如果助手已经给出了完整的计算结果和建议，且你没有更多问题，输出 [DONE]
+5. 如果你对回答满意或助手已充分回答了你的问题，输出 [DONE]
+6. 回复要简短自然，像真实用户一样（1-3句话）
+"""
+
+        def _format_transcript(msgs: list) -> str:
+            lines = []
+            for m in msgs:
+                role = m.get("role", "user")
+                if role == "system":
+                    continue
+                content = m.get("content", "")
+                if isinstance(content, list):
+                    text = "\n".join(str(c) for c in content)
+                else:
+                    text = str(content)
+                if role == "user":
+                    lines.append(f"[用户]: {text}")
+                elif role == "assistant":
+                    lines.append(f"[助手]: {text}")
+            return "\n".join(lines)
+
+        def _generate_user_reply(persona_str: str, conversation_msgs: list) -> str | None:
+            """Generate a simulated user reply via litellm (Anthropic-compatible endpoint)."""
+            litellm.drop_params = True
+            litellm.suppress_debug_info = True
+            system = _UA_SYSTEM_PROMPT.format(persona=persona_str)
+            transcript_text = _format_transcript(conversation_msgs)
+            user_msg = (
+                f"以下是到目前为止的对话：\n\n{transcript_text}\n\n"
+                "请根据你的人设回复助手的最新消息。如果你满意了就输出 [DONE]。"
+            )
+            try:
+                # Use same model prefix logic as NanoBotAgent._call_llm:
+                # Anthropic-compatible APIs need "anthropic/" prefix for litellm routing
+                model_name = model_config.get("model_id", model_config.get("model", ""))
+                api_url = model_config.get("api_url", model_config.get("base_url", ""))
+                if "anthropic" in api_url.lower() and not model_name.startswith("anthropic/"):
+                    model_name = f"anthropic/{model_name}"
+
+                resp = litellm.completion(
+                    model=model_name,
+                    messages=[
+                        {"role": "system", "content": system},
+                        {"role": "user", "content": user_msg},
+                    ],
+                    api_key=model_config.get("api_key", ""),
+                    base_url=api_url,
+                    temperature=0.7,
+                    max_tokens=16384,
+                )
+                text = (resp["choices"][0]["message"]["content"] or "").strip()
+                if "[DONE]" in text:
+                    return None
+                return text if text else None
+            except Exception as exc:
+                log(f"[claweval] UserAgent litellm error: {exc}")
+                return None
+
+        # Build initial messages list
+        messages: list = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": task_prompt})
+
+        # Reset agent transcript for our custom loop
+        agent._transcript = []
+        # Reset control module state so each _run_loop call starts clean
+        if agent._control_config.enabled:
+            agent._replan_trigger.reset()
+            agent._failure_reflection.clear()
+            agent._retry_policy.reset()
+            agent._preflight_check.clear_history()
+            agent._plan_first.clear()
+
+        status = "success"
+        last_content = ""
+
+        def _build_transcript(msgs: list) -> list:
+            """Build full transcript dict from messages list."""
+            result = []
+            for m in msgs:
+                role = m.get("role", "user")
+                content = m.get("content", "")
+                tool_call_id = m.get("tool_call_id", "")
+
+                if role == "system":
+                    continue
+                elif role == "user":
+                    content_list = [content] if isinstance(content, str) else (content or [])
+                    result.append({
+                        "type": "message",
+                        "message": {"role": "user", "content": content_list},
+                    })
+                elif role == "assistant":
+                    tool_calls = m.get("tool_calls") or []
+                    content_list = content if isinstance(content, list) else ([content] if content else [])
+                    if tool_calls:
+                        for tc in tool_calls:
+                            fname = tc.get("function", {}).get("name", "")
+                            targs = tc.get("function", {}).get("arguments", {})
+                            if isinstance(targs, str):
+                                try:
+                                    targs = json.loads(targs)
+                                except Exception:
+                                    pass
+                            result.append({
+                                "type": "message",
+                                "message": {
+                                    "role": "assistant",
+                                    "content": [{"type": "toolCall", "name": fname, "params": targs}],
+                                },
+                            })
+                    else:
+                        result.append({
+                            "type": "message",
+                            "message": {
+                                "role": "assistant",
+                                "content": [{"type": "text", "text": "\n".join(str(c) for c in content_list)}],
+                            },
+                        })
+                elif role == "tool":
+                    result.append({
+                        "type": "message",
+                        "message": {"role": "tool", "tool_call_id": tool_call_id, "content": content},
+                    })
+            return result
+
+        for round_idx in range(max_rounds):
+            log(f"[claweval] User-agent round {round_idx + 1}/{max_rounds}")
+
+            # Run agent loop for this round (max 100 iters = all tool calls in this turn)
+            try:
+                last_content = asyncio.run(
+                    agent._run_loop(messages, max_iterations=100, max_output_tokens=16384)
+                )
+            except Exception as exc:
+                log(f"[claweval] _run_loop error: {exc}")
+                status = "error"
+                break
+
+            # Check if agent is waiting for user input (no tool calls in last assistant msg)
+            last_assistant = None
+            for m in reversed(messages):
+                if m.get("role") == "assistant":
+                    last_assistant = m
+                    break
+
+            has_tool_calls = (
+                last_assistant is not None
+                and bool(last_assistant.get("tool_calls"))
+            )
+
+            if has_tool_calls:
+                # Agent made tool calls — inject empty user msg and continue to next round
+                messages.append({"role": "user", "content": "请继续。"})
+                continue
+
+            # No tool calls — agent gave a final answer. Generate simulated user reply.
+            user_reply = _generate_user_reply(persona, messages)
+
+            if user_reply is None:
+                # [DONE] — user is satisfied
+                log(f"[claweval] UserAgent returned [DONE], ending loop")
+                break
+
+            # Inject user reply and continue
+            messages.append({"role": "user", "content": user_reply})
+            log(f"[claweval] User reply ({len(user_reply)} chars): {user_reply[:80]}...")
+
+        # Build final transcript from complete messages list
+        transcript = _build_transcript(messages)
+
+        if status == "success" and last_content == "Max iterations reached":
+            status = "max_iterations_exceeded"
+
+        class _LoopResult:
+            def __init__(self, status, transcript, content, usage):
+                self.status = status
+                self.transcript = transcript
+                self.content = content
+                self.usage = usage
+        return _LoopResult(
+            status=status,
+            transcript=transcript,
+            content=last_content,
+            usage={},
+        )
+
+    # ------------------------------------------------------------------
     # Build system prompt for NanoBotAgent
     # ------------------------------------------------------------------
 
@@ -454,6 +676,13 @@ class ClawEval(BaseBenchmark):
             "You are a helpful personal assistant.",
             "You have access to built-in tools (read_file, write_file, list_dir, edit_file, exec, web_search, web_fetch).",
         ]
+
+        # Inject user_agent persona so the agent knows who it is talking to
+        ua = getattr(task, "user_agent", None)
+        if ua and ua.enabled and ua.persona:
+            parts.append(f"\n## User Context")
+            parts.append("You are communicating with the following user. Adapt your responses to their background and communication style:")
+            parts.append(ua.persona.strip())
 
         # Tool descriptions
         if task.tools:
@@ -479,6 +708,10 @@ class ClawEval(BaseBenchmark):
             parts.append("The following files are available in the sandbox /workspace/:")
             for f in files_list:
                 parts.append(f"  - /workspace/{f}")
+
+        # Append user_agent system_prompt_suffix if present
+        if ua and ua.enabled and ua.system_prompt_suffix:
+            parts.append("\n" + ua.system_prompt_suffix.strip())
 
         return "\n".join(parts)
 
@@ -591,12 +824,25 @@ class ClawEval(BaseBenchmark):
                                     ))
                                     log(f"[claweval] Registered mock tool: {tool.name} -> {ep.method.upper()} {ep.url}")
 
-                        # Execute agent (pass max_iterations from task config)
+                        # Execute agent — use multi-turn user-agent loop if enabled
                         start_time = time.monotonic()
-                        agent_result = agent.execute(
-                            task.prompt.text,
-                            max_iterations=task.environment.max_turns or 100,
-                        )
+                        ua = getattr(task, "user_agent", None)
+                        if ua and ua.enabled:
+                            ua_max_rounds = ua.max_rounds or 8
+                            log(f"[claweval] User-agent mode: {ua_max_rounds} rounds, persona={ua.persona[:60] if ua.persona else 'N/A'}...")
+                            agent_result = self._run_user_agent_loop(
+                                agent,
+                                task.prompt.text,
+                                system_prompt,
+                                max_rounds=ua_max_rounds,
+                                model_config=config,
+                                persona=ua.persona or "",
+                            )
+                        else:
+                            agent_result = agent.execute(
+                                task.prompt.text,
+                                max_iterations=task.environment.max_turns or 100,
+                            )
                         wall_time = time.monotonic() - start_time
 
                     # Inject grader-only files AFTER agent loop

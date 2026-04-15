@@ -294,6 +294,7 @@ def web_search(req: SearchRequest) -> dict[str, Any]:
         serp_result = search_serp(query=req.query, num=num, timeout=20)
 
         results = []
+        serp_status = serp_result.get("status", 200)
         for item in serp_result.get("output", []):
             results.append({
                 "url": item.get("link", ""),
@@ -304,7 +305,9 @@ def web_search(req: SearchRequest) -> dict[str, Any]:
             })
 
         resp = {"results": results, "total": len(results), "query": req.query}
-        _cache_set(cache_k, resp)
+        # Only cache successful responses
+        if serp_status == 200:
+            _cache_set(cache_k, resp)
 
         # Inject after caching (so cache has clean data)
         resp = _inject_search_results(resp)

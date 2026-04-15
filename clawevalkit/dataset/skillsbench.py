@@ -186,7 +186,7 @@ class SkillsBench(BaseBenchmark):
         setup_logging(verbose=verbose)
 
         use_docker = kwargs.get("use_docker", self.use_docker)
-        harness_config = kwargs.get("harness_config")
+        harness_config = kwargs.pop("harness_config", None)
 
         # Docker 模式走专用路径
         if use_docker:
@@ -551,7 +551,8 @@ class SkillsBench(BaseBenchmark):
                 task_name, config, tasks_dir, max_turns,
                 openclawpro_dir, openrouter_api_key, run_proxy_http, run_proxy_https,
                 build_proxy_http=build_proxy_http, build_proxy_https=build_proxy_https,
-                transcripts_dir=transcripts_dir, model_key=model_key
+                transcripts_dir=transcripts_dir, model_key=model_key,
+                harness_config=harness_config,
             )
             result["elapsed_s"] = round(time.time() - start, 2)
 
@@ -600,7 +601,8 @@ class SkillsBench(BaseBenchmark):
                                  max_turns: int, openclawpro_dir: Path,
                                  openrouter_api_key: str, proxy_http: str, proxy_https: str,
                                  build_proxy_http: str = "", build_proxy_https: str = "",
-                                 transcripts_dir: Path = None, model_key: str = None) -> dict:
+                                 transcripts_dir: Path = None, model_key: str = None,
+                                 harness_config: dict = None) -> dict:
         """在 per-task Docker 容器内运行单个 SkillsBench 任务 (使用 docker cp, 无需挂载点)。
 
         简化流程:
