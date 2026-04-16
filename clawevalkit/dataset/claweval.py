@@ -138,11 +138,13 @@ class ClawEval(BaseBenchmark):
     def _save_transcript(self, model_key: str, task_id: str, transcript: list, transcripts_dir: str | None = None):
         """保存 agent 轨迹到文件（统一结构）。
 
-        保存到: outputs/claweval/transcripts/{model}/{task}/transcript.json
+        保存到: outputs/{bench}/transcripts/{model}/{task}/transcript.json
+        固定使用内部路径结构，忽略 transcripts_dir 参数（与其他 bench 保持一致）。
         保存 _convert_transcript() 之前的原始格式（normalize 后）。
         """
         try:
-            base = Path(transcripts_dir) if transcripts_dir else self.output_dir / "claweval" / "transcripts"
+            # Always use internal path structure (consistent with pinchbench, skillsbench, etc.)
+            base = self.output_dir / "claweval" / "transcripts"
             trans_path = base / model_key / task_id
             trans_path.mkdir(parents=True, exist_ok=True)
             normalized = [
@@ -549,56 +551,6 @@ class ClawEval(BaseBenchmark):
         status = "success"
         last_content = ""
 
-        def _build_transcript(msgs: list) -> list:
-            """Build full transcript dict from messages list."""
-            result = []
-            for m in msgs:
-                role = m.get("role", "user")
-                content = m.get("content", "")
-                tool_call_id = m.get("tool_call_id", "")
-
-                if role == "system":
-                    continue
-                elif role == "user":
-                    content_list = [content] if isinstance(content, str) else (content or [])
-                    result.append({
-                        "type": "message",
-                        "message": {"role": "user", "content": content_list},
-                    })
-                elif role == "assistant":
-                    tool_calls = m.get("tool_calls") or []
-                    content_list = content if isinstance(content, list) else ([content] if content else [])
-                    if tool_calls:
-                        for tc in tool_calls:
-                            fname = tc.get("function", {}).get("name", "")
-                            targs = tc.get("function", {}).get("arguments", {})
-                            if isinstance(targs, str):
-                                try:
-                                    targs = json.loads(targs)
-                                except Exception:
-                                    pass
-                            result.append({
-                                "type": "message",
-                                "message": {
-                                    "role": "assistant",
-                                    "content": [{"type": "toolCall", "name": fname, "params": targs}],
-                                },
-                            })
-                    else:
-                        result.append({
-                            "type": "message",
-                            "message": {
-                                "role": "assistant",
-                                "content": [{"type": "text", "text": "\n".join(str(c) for c in content_list)}],
-                            },
-                        })
-                elif role == "tool":
-                    result.append({
-                        "type": "message",
-                        "message": {"role": "tool", "tool_call_id": tool_call_id, "content": content},
-                    })
-            return result
-
         for round_idx in range(max_rounds):
             log(f"[claweval] User-agent round {round_idx + 1}/{max_rounds}")
 
@@ -641,8 +593,14 @@ class ClawEval(BaseBenchmark):
             messages.append({"role": "user", "content": user_reply})
             log(f"[claweval] User reply ({len(user_reply)} chars): {user_reply[:80]}...")
 
-        # Build final transcript from complete messages list
-        transcript = _build_transcript(messages)
+        # Use NanoBotAgent's internal transcript (which includes collab_event entries)
+        # instead of building a custom format from messages
+        raw_transcript = list(agent._transcript)
+        # Normalize: extract "message" key if present (same as _save_transcript)
+        transcript = [
+            e["message"] if isinstance(e, dict) and "message" in e else e
+            for e in raw_transcript
+        ]
 
         if status == "success" and last_content == "Max iterations reached":
             status = "max_iterations_exceeded"

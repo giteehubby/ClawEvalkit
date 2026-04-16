@@ -90,13 +90,18 @@ def _start_container(container_name: str, workspace_path: str, openclawpro_dir: 
 def _build_exec_script(model_key: str, task_id: str, user_message: str, config: dict,
                        harness_config: dict = None) -> str:
     """Build NanoBotAgent execution script for running inside Docker container."""
-    provider = config.get("provider", "openrouter")
-    if provider == "minimax":
-        api_key_env = "MINIMAX_API_KEY"
-    elif provider == "openrouter":
-        api_key_env = "OPENROUTER_API_KEY"
-    else:
-        api_key_env = "OPENROUTER_API_KEY"
+    # Use api_key_env from config if available, fallback to provider-based mapping
+    api_key_env = config.get("api_key_env")
+    if api_key_env is None:
+        provider = config.get("provider", "openrouter")
+        if provider == "minimax":
+            api_key_env = "MINIMAX_API_KEY"
+        elif provider == "openrouter":
+            api_key_env = "OPENROUTER_API_KEY"
+        elif provider == "glm":
+            api_key_env = "GLM_API_KEY"
+        else:
+            api_key_env = "OPENROUTER_API_KEY"
 
     # Build harness import lines and constructor kwargs
     harness_imports, harness_kwargs_str = build_harness_script_parts(harness_config)
@@ -177,7 +182,11 @@ def _build_exec_script(model_key: str, task_id: str, user_message: str, config: 
         "    )\n"
         "    elapsed = time.time() - start_time\n\n"
         "    transcript_file = workspace / '.sessions' / f'{session_id}.json'\n"
-        "    transcript_data = json.loads(transcript_file.read_text()) if transcript_file.exists() else (result.transcript or [])\n\n"
+        "    # Prefer result.transcript which includes events (collab_event entries, collab_summary, etc.)\n"
+        "    # Session file only has messages, not events - avoid losing collaboration events\n"
+        "    transcript_data = result.transcript if result.transcript else (\n"
+        "        json.loads(transcript_file.read_text()) if transcript_file.exists() else []\n"
+        "    )\n\n"
         "    output = {\n"
         "        'status': result.status,\n"
         "        'content': result.content,\n"
@@ -510,17 +519,21 @@ class ZClawBench(BaseBenchmark):
                 host_workspace = Path(workspace_path) / "workspace"
                 host_workspace.mkdir(parents=True, exist_ok=True)
 
-                # Build env args
-                provider = config.get("provider", "openrouter")
+                # Build env args - use api_key_env from config to pass correct API key
+                api_key_env = config.get("api_key_env")
+                if api_key_env is None:
+                    provider = config.get("provider", "openrouter")
+                    if provider == "minimax":
+                        api_key_env = "MINIMAX_API_KEY"
+                    elif provider == "openrouter":
+                        api_key_env = "OPENROUTER_API_KEY"
+                    elif provider == "glm":
+                        api_key_env = "GLM_API_KEY"
+                    else:
+                        api_key_env = "OPENROUTER_API_KEY"
                 env_args = []
-
-                # Pass correct API key based on provider
-                if provider == "minimax":
-                    minimax_api_key = os.getenv("MINIMAX_API_KEY", "")
-                    env_args.extend(["-e", f"MINIMAX_API_KEY={minimax_api_key}"])
-                else:
-                    openrouter_api_key = os.getenv("OPENROUTER_API_KEY", "")
-                    env_args.extend(["-e", f"OPENROUTER_API_KEY={openrouter_api_key}"])
+                api_key_val = os.getenv(api_key_env, "")
+                env_args.extend(["-e", f"{api_key_env}={api_key_val}"])
 
                 # Start container
                 _start_container(container_name, workspace_path, openclawpro_dir, DOCKER_IMAGE, env_args)

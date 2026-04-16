@@ -128,7 +128,8 @@ def main():
     if args.parallel > 1:
         bench_kwargs["parallel"] = args.parallel
     if args.task:
-        bench_kwargs["task_ids"] = [args.task]
+        task_list = [t.strip() for t in args.task.split(",")]
+        bench_kwargs["task_ids"] = task_list
     if args.category:
         bench_kwargs["category"] = args.category
     if not args.include_multimodal:
@@ -137,9 +138,11 @@ def main():
         bench_kwargs["harness"] = args.harness
         if not args.output_dir:
             args.output_dir = f"outputs/harness/{args.harness}"
+    # 默认 transcripts_dir = output_dir / "transcripts"
+    default_transcripts_dir = f"{args.output_dir}/transcripts" if args.output_dir else None
     infer_all(bench_keys, model_keys, sample=args.sample,
               output_dir=args.output_dir,
-              transcripts_dir=args.transcripts_dir if transcripts_dir_provided else None,
+              transcripts_dir=args.transcripts_dir if transcripts_dir_provided else default_transcripts_dir,
               **bench_kwargs)
 
     # 打印汇总

@@ -911,11 +911,11 @@ class SkillsBench(BaseBenchmark):
                 )
                 os.unlink(tmp_path)
 
-        # Install pytest and run
+        # Install pytest and run (use --ignore-installed to avoid re-downloading if already present)
         subprocess.run(
             ["docker", "exec", container_name, "pip3", "install", "--break-system-packages", "-q",
-             "pytest", "pytesseract", "pypdf", "PyMuPDF"],
-            capture_output=True, text=True, timeout=120
+             "--ignore-installed", "pytest", "pytesseract", "pypdf", "PyMuPDF"],
+            capture_output=True, text=True, timeout=300
         )
 
         result = subprocess.run(

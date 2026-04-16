@@ -89,14 +89,14 @@ sample_n = min({sample_n}, len(tasks))
 indices = random.sample(range(len(tasks)), sample_n) if sample_n < len(tasks) else list(range(len(tasks)))
 
 adapter = OpenClawAdapter()
-adapter.setup({{'model': '{config["model"]}', 'timeout': 300}})
+adapter.setup({{'model': '{config["model"]}', 'timeout': 3600}})
 
 results = []
 for i, idx in enumerate(indices):
     task = tasks[idx]
     td = dirs[task.id]
     try:
-        r = run_single_task(task, td, adapter, timeout=300)
+        r = run_single_task(task, td, adapter, timeout=3600)
         print(f'  [{{i+1}}/{{sample_n}}] {{task.id}}: {{"PASS" if r.passed else "FAIL"}} score={{r.score:.2f}}', flush=True)
         results.append({{'id': task.id, 'passed': r.passed, 'score': r.score}})
     except Exception as e:
@@ -233,6 +233,10 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                 if provider == "minimax":
                     minimax_api_key = os.getenv("MINIMAX_API_KEY", "")
                     env_args.extend(["-e", f"MINIMAX_API_KEY={minimax_api_key}"])
+                elif provider == "glm":
+                    # GLM 使用 Anthropic 兼容端点，需要 ANTHROPIC_API_KEY
+                    glm_api_key = os.getenv("GLM_API_KEY", "")
+                    env_args.extend(["-e", f"ANTHROPIC_API_KEY={glm_api_key}"])
                 else:
                     env_args.extend(["-e", f"OPENROUTER_API_KEY={openrouter_api_key}"])
 
@@ -243,7 +247,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                 log(f"[{container_name}] Container started")
 
                 # 构建并执行 agent 脚本
-                timeout = task.get("timeout", 300)
+                timeout = task.get("timeout", 3600)  # 1 hour timeout
                 exec_script = self._build_exec_script(task, config, timeout, harness_config=harness_config)
                 exec_proc, elapsed_time = self._run_agent_in_container(container_name, exec_script, timeout)
                 log(f"[{container_name}] Agent finished in {elapsed_time:.2f}s, returncode={exec_proc.returncode}")
@@ -349,7 +353,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                     if "task" in raw:
                         raw = {**raw.pop("task"), **raw}
                     task_id = raw.get("id", task_dir.name)
-                    timeout = raw.get("timeout", 300)
+                    timeout = raw.get("timeout", 3600)  # 1 hour timeout
                     dir_name = task_dir.name  # 如 comm-002-contact-list
                     tasks.append({
                         "id": task_id,
@@ -465,15 +469,24 @@ import sys
 import subprocess
 import os
 
-# 确保依赖已安装（通常由 _start_container 预装）
+# 确保依赖已安装（通常由 _start_container 预装，但可能因网络问题失败）
 try:
     import tomli
 except ImportError:
-    pass
+    subprocess.run(["pip", "install", "-q", "tomli"], capture_output=True)
+try:
+    import tomli
+except ImportError:
+    pass  # 已尽力安装
+
 try:
     import pytest_json_report
 except ImportError:
-    pass
+    subprocess.run(["pip", "install", "-q", "pytest-json-report"], capture_output=True)
+try:
+    import pytest_json_report
+except ImportError:
+    pass  # 已尽力安装
 
 import json
 import time

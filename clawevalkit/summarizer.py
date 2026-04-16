@@ -56,41 +56,15 @@ class Summarizer:
         return table, sorted(all_models)
 
     def summary(self):
-        """打印终端汇总表格。"""
+        """打印终端汇总表格（已禁用，仅保留日志输出）。"""
         table, all_models = self.collect_all()
 
         if not table:
             print("No results found. Run evaluation first.")
             return
 
-        bench_keys = [k for k in BENCHMARKS if k in table]
-        col_width = 10
-        name_width = 22
-        total_width = name_width + col_width * len(bench_keys)
-
-        header = f"{'Model':>{name_width}s}" + "".join(
-            f"{SHORT_NAMES.get(b, b):>{col_width}s}" for b in bench_keys
-        )
-
-        print(f"\n{'=' * total_width}")
-        print("  CLAWEVALKIT EVALUATION SUMMARY")
-        print(f"{'=' * total_width}")
-        print(header)
-        print("-" * total_width)
-
-        for model in all_models:
-            name = MODELS.get(model, {}).get("name", model)
-            row = f"{name:>{name_width}s}"
-            for bkey in bench_keys:
-                score = table.get(bkey, {}).get(model)
-                if score is not None:
-                    fmt = f"{score:>{col_width}.3f}" if BENCHMARKS[bkey].SCORE_RANGE == "0-1" else f"{score:>{col_width}.1f}"
-                    row += fmt
-                else:
-                    row += f"{'—':>{col_width}s}"
-            print(row)
-
-        print(f"{'=' * total_width}\n")
+        # 汇总表格已禁用，如需启用请参考 to_markdown() 方法
+        pass
 
     def to_markdown(self) -> str:
         """生成 Markdown 格式的汇总表格。"""
