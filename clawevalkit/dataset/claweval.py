@@ -136,16 +136,18 @@ class ClawEval(BaseBenchmark):
     # ------------------------------------------------------------------
 
     def _save_transcript(self, model_key: str, task_id: str, transcript: list, transcripts_dir: str | None = None):
-        """保存 agent 轨迹到文件（统一结构）。
+        """Save agent transcript to file (unified structure).
 
-        保存到: outputs/{bench}/transcripts/{model}/{task}/transcript.json
-        固定使用内部路径结构，忽略 transcripts_dir 参数（与其他 bench 保持一致）。
-        保存 _convert_transcript() 之前的原始格式（normalize 后）。
+        Saves to: transcripts_dir/{model}/{task}/transcript.json
+        Uses transcripts_dir if provided, otherwise falls back to internal structure.
+        Saves raw format before _convert_transcript (after normalize).
         """
         try:
-            # Always use internal path structure (consistent with pinchbench, skillsbench, etc.)
-            base = self.output_dir / "claweval" / "transcripts"
-            trans_path = base / model_key / task_id
+            # Use transcripts_dir if provided, otherwise use internal structure
+            if transcripts_dir:
+                trans_path = Path(transcripts_dir) / model_key / task_id
+            else:
+                trans_path = self.output_dir / "claweval" / "transcripts" / model_key / task_id
             trans_path.mkdir(parents=True, exist_ok=True)
             normalized = [
                 e["message"] if isinstance(e, dict) and "message" in e else e
@@ -195,11 +197,17 @@ class ClawEval(BaseBenchmark):
         for entry in transcript:
             entry_type = entry.get("type", "")
 
-            if entry_type != "message":
+            # Handle both original format (type: "message" with nested message)
+            # and normalized format (direct role/content without type wrapper)
+            if entry_type == "message":
+                msg_data = entry.get("message", {})
+            elif entry.get("role") in ("user", "assistant", "tool"):
+                # Normalized format: entry has role directly without type wrapper
+                msg_data = entry
+            else:
                 # Skip control_event, collab_event, procedural_event, memory_event, etc.
                 continue
 
-            msg_data = entry.get("message", {})
             role = msg_data.get("role", "user")
             content_raw = msg_data.get("content", "")
 

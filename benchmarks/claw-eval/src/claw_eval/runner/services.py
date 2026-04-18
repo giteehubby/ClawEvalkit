@@ -102,13 +102,15 @@ class ServiceManager:
         # so that forked workers (ProcessPoolExecutor) use the same venv.
         if cmd and cmd[0] in ("python", "python3"):
             cmd[0] = sys.executable
-        # Build env: strip proxy vars to avoid routing mock traffic through proxies.
+        # Build env: strip proxy vars to avoid routing mock traffic through proxies,
+        # EXCEPT for web_real which needs proxy to access external SERP API.
         base_env = dict(os.environ)
-        for proxy_key in (
-            "http_proxy", "https_proxy", "all_proxy",
-            "HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY",
-        ):
-            base_env.pop(proxy_key, None)
+        if svc.name != "web_real":
+            for proxy_key in (
+                "http_proxy", "https_proxy", "all_proxy",
+                "HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY",
+            ):
+                base_env.pop(proxy_key, None)
         env = {**base_env, **(svc.env or {})}
         proc = subprocess.Popen(
             cmd,

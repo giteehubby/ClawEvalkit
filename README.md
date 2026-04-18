@@ -243,9 +243,6 @@ ClawEvalKit/
 
 40 tasks covering file operations, system administration, and information retrieval. Uses L0 (file existence) and L1 (metric-based) scoring. Tasks run inside the shared NanoBotAgent Docker container with volume-mounted workspaces.
 
-### WildClawBench (`wildclawbench`)
-
-**[Deprecated]** WildClawBench has been removed from the toolkit. Use `clawbench-official` or `claweval` instead.
 
 ### ClawBench (`clawbench-official`)
 

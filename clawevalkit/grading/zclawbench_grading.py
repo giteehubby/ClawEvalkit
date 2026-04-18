@@ -371,11 +371,11 @@ def run_judge_eval(
 
     try:
         if is_bigmodel:
-            result_text = _call_judge_litellm(
-                judge_model=judge_model,
-                messages=messages,
-                api_key=api_key,
-                api_base=base_url,
+            # bigmodel endpoint is Anthropic-compatible, use Anthropic SDK directly
+            import anthropic
+            client = anthropic.Anthropic(api_key=api_key, base_url=base_url)
+            result_text = _call_judge_with_retry(
+                client, judge_model, messages, client_type="anthropic"
             )
         elif use_anthropic:
             import anthropic
@@ -457,11 +457,11 @@ def run_judge_eval_offline(
 
     try:
         if is_bigmodel:
-            result_text = _call_judge_litellm(
-                judge_model=judge_model,
-                messages=messages,
-                api_key=api_key,
-                api_base=base_url,
+            # bigmodel endpoint is Anthropic-compatible, use Anthropic SDK directly
+            import anthropic
+            client = anthropic.Anthropic(api_key=api_key, base_url=base_url)
+            result_text = _call_judge_with_retry(
+                client, judge_model, messages, client_type="anthropic"
             )
         elif use_anthropic:
             import anthropic
