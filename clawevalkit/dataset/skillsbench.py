@@ -94,7 +94,7 @@ def _run_pytest(workspace: Path, task_dir: Path) -> tuple:
             dst = tests_workspace / f.name
             # 对 test_outputs.py 进行路径替换（仅文本文件）
             if f.suffix in [".py", ".md", ".sh", ".txt", ".json"]:
-                test_content = f.read_text(encoding="utf-8")
+                test_content = f.read_text(encoding="utf-8", errors="replace")
                 if f.name == "test_outputs.py":
                     # 替换字符串中的路径
                     test_content = test_content.replace("/root/", f"{workspace}/")
@@ -119,7 +119,7 @@ def _run_pytest(workspace: Path, task_dir: Path) -> tuple:
     try:
         proc = subprocess.run(
             ["python3", "-m", "pytest", str(tests_workspace / "test_outputs.py"), "-v", "--tb=short"],
-            cwd=workspace, capture_output=True, text=True, timeout=120, env=env,
+            cwd=workspace, capture_output=True, text=True, timeout=120, env=env, errors="replace",
         )
         return proc.returncode == 0, proc.stdout[-1500:] + "\n" + proc.stderr[-500:]
     except subprocess.TimeoutExpired:
@@ -283,7 +283,7 @@ class SkillsBench(BaseBenchmark):
         NanoBotAgent = import_nanobot_agent()
 
         task_dir = tasks_dir / task_name
-        instruction = (task_dir / "instruction.md").read_text(encoding="utf-8")
+        instruction = (task_dir / "instruction.md").read_text(encoding="utf-8", errors="replace")
 
         workspace = workspace_base / task_name
         if workspace.exists():
@@ -432,7 +432,7 @@ class SkillsBench(BaseBenchmark):
         """清理 Docker 容器（如果存在）。"""
         try:
             subprocess.run(["docker", "rm", "-f", container_name],
-                          capture_output=True, text=True, timeout=30)
+                          capture_output=True, text=True, timeout=30, errors="replace")
         except Exception:
             pass
 
@@ -616,7 +616,7 @@ class SkillsBench(BaseBenchmark):
         8. 清理容器
         """
         task_dir = tasks_dir / task_name
-        instruction = (task_dir / "instruction.md").read_text(encoding="utf-8")
+        instruction = (task_dir / "instruction.md").read_text(encoding="utf-8", errors="replace")
         env_dockerfile = task_dir / "environment" / "Dockerfile"
 
         if not env_dockerfile.exists():
@@ -631,13 +631,13 @@ class SkillsBench(BaseBenchmark):
         if self.reuse_container:
             check_proc = subprocess.run(
                 ["docker", "ps", "-a", "--filter", f"name={container_name}", "--format", "{{.Names}}"],
-                capture_output=True, text=True
+                capture_output=True, text=True, errors="replace"
             )
             if container_name in check_proc.stdout:
                 # Check if container is actually running
                 running_proc = subprocess.run(
                     ["docker", "ps", "--filter", f"name={container_name}", "--filter", "status=running", "--format", "{{.Names}}"],
-                    capture_output=True, text=True
+                    capture_output=True, text=True, errors="replace"
                 )
                 if container_name in running_proc.stdout:
                     container_exists = True
@@ -647,7 +647,7 @@ class SkillsBench(BaseBenchmark):
                     log(f"[{task_name}] ♻️  Restarting stopped container")
                     subprocess.run(
                         ["docker", "start", container_name],
-                        capture_output=True, text=True, timeout=60
+                        capture_output=True, text=True, timeout=60, errors="replace"
                     )
                     container_exists = True
 
@@ -657,21 +657,29 @@ class SkillsBench(BaseBenchmark):
             # Use build_proxy (host proxy) for docker build
             bp_http = build_proxy_http or proxy_http
             bp_https = build_proxy_https or proxy_https
-            build_cmd = ["docker", "build", "-t", task_image, "-f", str(env_dockerfile)]
+            build_cmd = ["docker", "build", "-t", task_image, "-f", str(env_dockerfile), "--network=host"]
             if bp_http:
                 build_cmd += ["--build-arg", f"http_proxy={bp_http}",
                               "--build-arg", f"https_proxy={bp_https}"]
             build_cmd.append(str(task_dir / "environment"))
 
-            try:
-                build_proc = subprocess.run(build_cmd, capture_output=True, text=True, timeout=1800)
-                if build_proc.returncode != 0:
+            # Retry up to 2 times on transient failures
+            for attempt in range(3):
+                try:
+                    build_proc = subprocess.run(build_cmd, capture_output=True, text=True, timeout=1800, errors="replace")
+                    if build_proc.returncode == 0:
+                        break
+                    if attempt < 2:
+                        log(f"[{task_name}] Docker build failed, retrying (attempt {attempt + 2}/3)...")
+                        continue
                     return {"task": task_name, "status": "skipped",
-                            "error": f"docker build failed: {build_proc.stderr[:500]}"}
-            except subprocess.TimeoutExpired:
-                return {"task": task_name, "status": "skipped", "error": "docker build timeout"}
-            except Exception as e:
-                return {"task": task_name, "status": "skipped", "error": str(e)}
+                            "error": f"docker build failed after 3 attempts: {build_proc.stderr[:500]}"}
+                except subprocess.TimeoutExpired:
+                    return {"task": task_name, "status": "skipped", "error": "docker build timeout"}
+                except Exception as e:
+                    if attempt < 2:
+                        continue
+                    return {"task": task_name, "status": "skipped", "error": str(e)}
 
         # Create host workspace
         workspace_host = Path(f"/tmp/skillsbench_workspace/{task_name}")
@@ -716,7 +724,7 @@ class SkillsBench(BaseBenchmark):
             ]
 
             try:
-                run_proc = subprocess.run(docker_run_cmd, capture_output=True, text=True, timeout=60)
+                run_proc = subprocess.run(docker_run_cmd, capture_output=True, text=True, timeout=60, errors="replace")
                 if run_proc.returncode != 0:
                     return {"task": task_name, "status": "error",
                             "error": f"container start failed: {run_proc.stderr[:500]}"}
@@ -729,13 +737,13 @@ class SkillsBench(BaseBenchmark):
         log(f"[{task_name}] 📤 Copying files to container...")
         subprocess.run(
             ["docker", "cp", f"{workspace_host}/.", f"{container_name}:{self.CONTAINER_WORK_DIR}"],
-            capture_output=True, text=True, timeout=60
+            capture_output=True, text=True, timeout=60, errors="replace"
         )
 
         # Create output directory in container
         subprocess.run(
             ["docker", "exec", container_name, "mkdir", "-p", f"{self.CONTAINER_WORK_DIR}/output"],
-            capture_output=True, text=True
+            capture_output=True, text=True, errors="replace"
         )
 
         # Run agent
@@ -752,7 +760,7 @@ class SkillsBench(BaseBenchmark):
             log(f"[{task_name}] 📥 Copying results back...")
             subprocess.run(
                 ["docker", "cp", f"{container_name}:{self.CONTAINER_WORK_DIR}/output/", str(workspace_host)],
-                capture_output=True, text=True, timeout=30
+                capture_output=True, text=True, timeout=30, errors="replace"
             )
             # Cleanup container and image (skip if reuse_container=True)
             if not self.reuse_container:
@@ -760,7 +768,7 @@ class SkillsBench(BaseBenchmark):
                 # Clean up image
                 try:
                     subprocess.run(["docker", "rmi", "-f", task_image],
-                                  capture_output=True, text=True, timeout=60)
+                                  capture_output=True, text=True, timeout=60, errors="replace")
                 except Exception:
                     pass
 
@@ -890,13 +898,13 @@ class SkillsBench(BaseBenchmark):
         # Copy test files to container
         subprocess.run(
             ["docker", "exec", container_name, "mkdir", "-p", f"{self.CONTAINER_WORK_DIR}/tests"],
-            capture_output=True, text=True
+            capture_output=True, text=True, errors="replace"
         )
 
         for f in task_tests_src.glob("*"):
             if f.is_file() and f.name != "Dockerfile":
-                # Read and modify paths
-                content = f.read_text(encoding="utf-8")
+                # Read and modify paths (use errors="replace" for non-UTF-8 files)
+                content = f.read_text(encoding="utf-8", errors="replace")
                 content = content.replace("/root/", f"{self.CONTAINER_WORK_DIR}/")
                 content = content.replace("/workspace/", f"{self.CONTAINER_WORK_DIR}/")
 
@@ -907,21 +915,27 @@ class SkillsBench(BaseBenchmark):
 
                 subprocess.run(
                     ["docker", "cp", tmp_path, f"{container_name}:{self.CONTAINER_WORK_DIR}/tests/{f.name}"],
-                    capture_output=True, text=True
+                    capture_output=True, text=True, errors="replace"
                 )
                 os.unlink(tmp_path)
 
-        # Install pytest and run (use --ignore-installed to avoid re-downloading if already present)
-        subprocess.run(
-            ["docker", "exec", container_name, "pip3", "install", "--break-system-packages", "-q",
-             "--ignore-installed", "pytest", "pytesseract", "pypdf", "PyMuPDF"],
-            capture_output=True, text=True, timeout=300
+        # Check if pytest is already installed before trying to install
+        check = subprocess.run(
+            ["docker", "exec", container_name, "python3", "-m", "pytest", "--version"],
+            capture_output=True, text=True, timeout=10, errors="replace"
         )
+        if check.returncode != 0:
+            # Install pytest and run
+            subprocess.run(
+                ["docker", "exec", container_name, "pip3", "install", "--break-system-packages", "-q",
+                 "--ignore-installed", "pytest", "pytesseract", "pypdf", "PyMuPDF"],
+                capture_output=True, text=True, timeout=600, errors="replace"
+            )
 
         result = subprocess.run(
             ["docker", "exec", "-w", self.CONTAINER_WORK_DIR, container_name,
              "python3", "-m", "pytest", f"{self.CONTAINER_WORK_DIR}/tests", "-v", "--tb=short"],
-            capture_output=True, text=True, timeout=120
+            capture_output=True, text=True, timeout=120, errors="replace"
         )
 
         return result.returncode == 0, result.stdout[-1500:] + "\n" + result.stderr[-500:]

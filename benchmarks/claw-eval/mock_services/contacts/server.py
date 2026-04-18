@@ -66,7 +66,10 @@ class SendMessageRequest(BaseModel):
 def search_contacts(req: SearchRequest) -> dict[str, Any]:
     results = []
     for c in _contacts:
-        name_match = req.query in c["name"]
+        name_match = any(
+            req.query.lower() in str(c.get(field, "")).lower()
+            for field in ("name", "title", "department", "specialization", "notes")
+        )
         dept_match = req.department is None or req.department in c["department"]
         if name_match and dept_match:
             results.append(copy.deepcopy(c))

@@ -557,8 +557,11 @@ class AgentBench(BaseBenchmark):
 
         tasks = self._load_tasks(tasks_dir)
         if sample and sample < len(tasks):
+            # Filter out tasks that already have cached results
+            uncached_tasks = [t for t in tasks if not (self.results_dir / "agentbench" / model_key / t["task_id"] / "result.json").exists()]
+            sample_from = uncached_tasks if uncached_tasks else tasks
             random.seed(42)
-            tasks = random.sample(tasks, sample)
+            tasks = random.sample(sample_from, min(sample, len(sample_from)))
 
         out_dir = self.results_dir / "agentbench" / model_key
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -668,8 +671,11 @@ class AgentBench(BaseBenchmark):
                 return {"score": 0, "total": 0, "error": f"No tasks found matching task_ids: {task_ids}"}
 
         if sample and sample < len(tasks):
+            # Filter out tasks that already have cached results
+            uncached_tasks = [t for t in tasks if not (self.results_dir / "agentbench" / model_key / t["task_id"] / "result.json").exists()]
+            sample_from = uncached_tasks if uncached_tasks else tasks
             random.seed(42)
-            tasks = random.sample(tasks, sample)
+            tasks = random.sample(sample_from, min(sample, len(sample_from)))
 
         out_dir = self.results_dir / "agentbench" / model_key
         out_dir.mkdir(parents=True, exist_ok=True)

@@ -138,8 +138,11 @@ def main():
         bench_kwargs["harness"] = args.harness
         if not args.output_dir:
             args.output_dir = f"outputs/harness/{args.harness}"
-    # 默认 transcripts_dir = output_dir / "transcripts"
-    default_transcripts_dir = f"{args.output_dir}/transcripts" if args.output_dir else None
+    # 默认 transcripts_dir = output_dir / "claweval" / "transcripts" (for claweval bench)
+    if args.output_dir and not transcripts_dir_provided:
+        default_transcripts_dir = f"{args.output_dir}/claweval/transcripts"
+    else:
+        default_transcripts_dir = None
     infer_all(bench_keys, model_keys, sample=args.sample,
               output_dir=args.output_dir,
               transcripts_dir=args.transcripts_dir if transcripts_dir_provided else default_transcripts_dir,

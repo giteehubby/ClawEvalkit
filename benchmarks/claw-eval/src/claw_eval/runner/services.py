@@ -32,8 +32,8 @@ class ServiceManager:
     def __init__(self, services: list[ServiceDef], cwd: Path | None = None) -> None:
         self._services = services
         self._cwd = cwd or Path.cwd()
-        # Only processes we spawned ourselves — external ones are left alone.
-        self._spawned: list[tuple[ServiceDef, subprocess.Popen]] = []  # type: ignore[type-arg]
+        # Track all services we manage (both spawned and reused) so we shut them down on exit.
+        self._managed: list[tuple[ServiceDef, subprocess.Popen | None]] = []  # type: ignore[type-arg]
 
     # ------------------------------------------------------------------
     # Context manager
@@ -43,8 +43,9 @@ class ServiceManager:
         try:
             for svc in self._services:
                 if self._is_healthy(svc):
-                    print(f"  service '{svc.name}' already running on port {svc.port}")
-                    continue
+                    print(f"  service '{svc.name}' already running on port {svc.port}, killing it first")
+                    self._kill_by_port(svc.port)
+                    time.sleep(0.5)  # give OS time to release the port
                 self._spawn(svc)
         except Exception:
             # _spawn failed mid-way — kill already-spawned services to avoid port leaks
@@ -53,7 +54,7 @@ class ServiceManager:
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> None:  # noqa: ANN001
-        for svc, proc in reversed(self._spawned):
+        for svc, proc in reversed(self._managed):
             proc.terminate()
             try:
                 proc.wait(timeout=5)
@@ -61,7 +62,7 @@ class ServiceManager:
                 proc.kill()
                 proc.wait()
             print(f"  service '{svc.name}' stopped")
-        self._spawned.clear()
+        self._managed.clear()
 
     # ------------------------------------------------------------------
     # Public helpers
@@ -127,7 +128,7 @@ class ServiceManager:
                     f"Service '{svc.name}' exited immediately (rc={proc.returncode}): {stderr[:500]}"
                 )
             if self._is_healthy(svc):
-                self._spawned.append((svc, proc))
+                self._managed.append((svc, proc))
                 print(f"  service '{svc.name}' started on port {svc.port}")
                 return
             time.sleep(0.3)
@@ -142,3 +143,21 @@ class ServiceManager:
         raise ServiceStartError(
             f"Service '{svc.name}' did not become ready within {svc.ready_timeout}s"
         )
+
+    def _kill_by_port(self, port: int) -> None:
+        """Kill any process listening on the given port."""
+        try:
+            result = subprocess.run(
+                ["lsof", "-t", "-i", f":{port}"],
+                capture_output=True, text=True
+            )
+            if result.stdout.strip():
+                pids = result.stdout.strip().split("\n")
+                for pid in pids:
+                    try:
+                        subprocess.run(["kill", pid], check=True)
+                        print(f"  killed PID {pid} on port {port}")
+                    except subprocess.CalledProcessError:
+                        pass
+        except Exception as e:
+            print(f"  [WARN] failed to kill process on port {port}: {e}")
