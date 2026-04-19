@@ -56,15 +56,21 @@ def browser_page():
     print(f"✓ index.html size: {file_size} bytes")
 
     # Start a simple HTTP server to serve files (fixes file:// CORS issue)
-    PORT = 8765
-    Handler = http.server.SimpleHTTPRequestHandler
+    # Use SO_REUSEADDR to avoid "Address already in use" errors from TIME_WAIT
+    import random
+    for PORT in [8765, 8766, 8767, 8768, 8769]:
+        try:
+            Handler = http.server.SimpleHTTPRequestHandler
+            # Change to output directory
+            import os as os_module
+            original_dir = os_module.getcwd()
+            os_module.chdir(OUTPUT_DIR)
 
-    # Change to output directory
-    import os as os_module
-    original_dir = os_module.getcwd()
-    os_module.chdir(OUTPUT_DIR)
-
-    httpd = socketserver.TCPServer(("", PORT), Handler)
+            socketserver.TCPServer.allow_reuse_address = True
+            httpd = socketserver.TCPServer(("", PORT), Handler)
+            break
+        except OSError:
+            continue
 
     # Run server in background thread
     server_thread = threading.Thread(target=httpd.serve_forever, daemon=True)

@@ -895,9 +895,9 @@ class SkillsBench(BaseBenchmark):
         if not task_tests_src.exists():
             return False, "no tests/ directory"
 
-        # Copy test files to container
+        # Copy test files to container /tests/ (absolute path for test compatibility)
         subprocess.run(
-            ["docker", "exec", container_name, "mkdir", "-p", f"{self.CONTAINER_WORK_DIR}/tests"],
+            ["docker", "exec", container_name, "mkdir", "-p", "/tests"],
             capture_output=True, text=True, errors="replace"
         )
 
@@ -913,8 +913,10 @@ class SkillsBench(BaseBenchmark):
                     tmp.write(content)
                     tmp_path = tmp.name
 
-                subprocess.run(
-                    ["docker", "cp", tmp_path, f"{container_name}:{self.CONTAINER_WORK_DIR}/tests/{f.name}"],
+                # Copy to /tests/ (absolute path) for backward compatibility with tests
+                # that use absolute path like open("/tests/ground_truth.json")
+                cp_result = subprocess.run(
+                    ["docker", "cp", tmp_path, f"{container_name}:/tests/{f.name}"],
                     capture_output=True, text=True, errors="replace"
                 )
                 os.unlink(tmp_path)

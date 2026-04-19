@@ -552,10 +552,11 @@ class PinchBench(BaseBenchmark):
             "docker", "run", "-d",
             "--network", "host",
             "--name", container_name,
+            "--entrypoint", "/bin/bash",
             *volume_mounts,
             *env_args,
             DOCKER_IMAGE,
-            "/bin/bash", "-c", "tail -f /dev/null",
+            "-c", "pip install numpy litellm -q && tail -f /dev/null",
         ]
         r = subprocess.run(docker_run_cmd, capture_output=True, text=True)
         if r.returncode != 0:
