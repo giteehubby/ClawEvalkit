@@ -27,8 +27,50 @@ def get_harness_config(harness: str) -> dict:
         from OpenClawPro.harness.agent.memory import MemoryConfig
         return {"memory_config": MemoryConfig(enabled=True)}
     elif harness == "control":
-        from OpenClawPro.harness.agent.control import ControlConfig
-        return {"control_config": ControlConfig(enabled=True)}
+        from OpenClawPro.harness.agent.control import (
+            ControlConfig,
+            PlanFirstConfig,
+            ReplanConfig,
+            RetryConfig,
+            ReflectionConfig,
+        )
+        # T2: Single-agent control recipe (针对 A/B/D 类失败)
+        # - PlanFirst: 任务开始时生成执行计划
+        # - Replan: 每 N 步检测重规划信号（每 5 步）
+        # - Reflection: 失败后生成诊断
+        # - Retry: 工具调用失败重试
+        return {
+            "control_config": ControlConfig(
+                enabled=True,
+                plan_first=PlanFirstConfig(
+                    enabled=True,
+                    trigger="always",
+                    max_plan_length=500,
+                ),
+                replan=ReplanConfig(
+                    enabled=True,
+                    signal_threshold=5,
+                    signals=["error", "repeated_action"],
+                    max_replans=2,
+                    min_iterations_between_replans=2,
+                ),
+                retry=RetryConfig(
+                    enabled=True,
+                    max_retries=2,
+                    backoff="exponential",
+                    base_delay=1.0,
+                    retryable_errors=["rate_limit", "timeout", "transient"],
+                    fatal_errors=["invalid_params", "auth_failed", "permission_denied"],
+                ),
+                reflection=ReflectionConfig(
+                    enabled=True,
+                    trigger="on_failure",
+                    consecutive_failure_threshold=2,
+                    max_reflection_length=300,
+                ),
+                preflight_enabled=False,  # T2(b) 前置检查，可选开启
+            )
+        }
     elif harness == "collaboration":
         from OpenClawPro.harness.agent.collaboration import CollabConfig
         return {"collab_config": CollabConfig(enabled=True)}

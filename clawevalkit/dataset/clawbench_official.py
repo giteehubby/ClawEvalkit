@@ -426,11 +426,12 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
         docker_run_cmd = [
             "docker", "run", "-d",
             "--network", "host",
+            "--entrypoint", "/bin/bash",
             "--name", container_name,
             *volume_mounts,
             *env_args,
             DOCKER_IMAGE,
-            "/bin/bash", "-c", "tail -f /dev/null",
+            "-c", "tail -f /dev/null",
         ]
         r = subprocess.run(docker_run_cmd, capture_output=True, text=True)
         if r.returncode != 0:
@@ -497,7 +498,8 @@ sys.path.insert(0, '/root/OpenClawPro')
 sys.path.insert(0, '/app/claw-bench/src')
 
 from harness.agent.nanobot import NanoBotAgent
-{harness_imports}from claw_bench.core.task_loader import load_task
+{harness_imports}
+from claw_bench.core.task_loader import load_task
 from claw_bench.core.verifier import verify_task
 
 # 容器内路径

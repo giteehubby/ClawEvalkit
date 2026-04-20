@@ -77,10 +77,11 @@ def _start_container(container_name: str, workspace_path: str, openclawpro_dir: 
         "docker", "run", "-d",
         "--name", container_name,
         "--network", "host",
+        "--entrypoint", "/bin/bash",
         *volume_mounts,
         *env_args,
         docker_image,
-        "/bin/bash", "-c", "tail -f /dev/null",
+        "-c", "tail -f /dev/null",
     ]
     r = subprocess.run(docker_run_cmd, capture_output=True, text=True)
     if r.returncode != 0:

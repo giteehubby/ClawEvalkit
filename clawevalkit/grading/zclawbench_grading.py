@@ -66,20 +66,25 @@ def _trajectory_to_text(trajectory: List[Dict], max_turns: int = 60) -> str:
         if not isinstance(msg, dict):
             continue
 
+        # Skip memory_event - internal harness info, not for Judge
+        if msg.get("type") == "memory_event":
+            continue
+
         # Handle nested message format (collaboration/harness mode):
         # {"type": "message", "message": {"role": "...", "content": [...]}}
         if "message" in msg and isinstance(msg["message"], dict):
             inner = msg["message"]
             role = inner.get("role", "?")
             content = inner.get("content", [])
-            if msg.get("type") == "tool_call":
+            # Handle tool_call (nanobot output uses camelCase: toolCall/toolUse)
+            if msg.get("type") in ("tool_call", "toolCall"):
                 tool_name = msg.get("name", "")
                 tool_args = msg.get("params", msg.get("input", ""))
                 parts = []
                 if content:
                     if isinstance(content, list):
                         for c in content:
-                            if isinstance(c, dict) and c.get("type") == "tool_result":
+                            if isinstance(c, dict) and c.get("type") in ("tool_result", "toolResult"):
                                 result = c.get("content", "")
                                 parts.append(f"[TOOL_RESULT: {str(result)[:300]}]")
                             elif isinstance(c, str):
@@ -97,9 +102,10 @@ def _trajectory_to_text(trajectory: List[Dict], max_turns: int = 60) -> str:
                     if isinstance(c, dict):
                         if c.get("type") == "text":
                             parts.append(c.get("text", ""))
-                        elif c.get("type") == "tool_use":
-                            parts.append(f"[TOOL: {c.get('name')} | INPUT: {json.dumps(c.get('input', {}), ensure_ascii=False)[:200]}]")
-                        elif c.get("type") == "tool_result":
+                        elif c.get("type") in ("tool_use", "toolUse", "toolCall"):
+                            tool_args = c.get('params', c.get('input', {}))
+                            parts.append(f"[TOOL: {c.get('name')} | INPUT: {json.dumps(tool_args, ensure_ascii=False)[:200]}]")
+                        elif c.get("type") in ("tool_result", "toolResult"):
                             result = c.get("content", "")
                             parts.append(f"[TOOL_RESULT: {str(result)[:300]}]")
                         elif c.get("type") == "thinking":

@@ -3,7 +3,7 @@ id: task_20_eli5_pdf_summary
 name: ELI5 PDF Summarization
 category: comprehension
 grading_type: llm_judge
-timeout_seconds: 300
+timeout_seconds: 1200
 workspace_files:
   - source: GPT4.pdf
     dest: GPT4.pdf

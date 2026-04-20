@@ -16,15 +16,12 @@ Usage:
   python3 run.py --list                             # 列出所有 bench 和模型
   python3 run.py --bench skillsbench --docker --max-turns 5  # 指定迭代次数
 
-8 Benchmarks:
+6 Benchmarks:
   zclawbench        ZClawBench Subset     18 tasks   NanoBotAgent + Judge (0~1)
-  wildclawbench     WildClawBench         10 tasks   NanoBotAgent + Judge (0~1)
   clawbench-official ClawBench Official   250 tasks  ReAct + Pytest (0~100)
   pinchbench        PinchBench            23 tasks   Rule-based (0~100)
   agentbench        AgentBench-OpenClaw   40 tasks   L0+L1 (0~100)
-  skillbench        SkillBench            22 tasks   Harness + Pytest (%)
-  skillsbench       SkillsBench           56+ tasks  LLM + Pytest (%)
-  tribe             Claw-Bench-Tribe      8 tasks    Pure LLM (0~100)
+  skillsbench       SkillsBench           88 tasks  LLM + Pytest (%)
 """
 import argparse
 import os

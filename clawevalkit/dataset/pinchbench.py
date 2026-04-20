@@ -42,7 +42,7 @@ OFFICIAL_SCORES = {
 
 # Docker 配置 - 使用 clawbase-nanobot 镜像（NanoBotAgent 运行时）
 DOCKER_IMAGE = os.environ.get("PINCHBENCH_DOCKER_IMAGE", "clawbase-nanobot:v1")
-TMP_WORKSPACE = "/tmp/pinchbench_workspace"
+TMP_WORKSPACE = "/tmp/workspace"
 
 
 class PinchBench(BaseBenchmark):
@@ -414,8 +414,37 @@ class PinchBench(BaseBenchmark):
                     sessions=task.get("sessions", []),
                     harness_config=harness_config
                 )
-                exec_proc, elapsed_time = self._run_agent_in_container(container_name, exec_script, task.get("timeout", 120))
+
+                # Progress callback for incremental transcript saving
+                def progress_callback(transcript):
+                    if transcript:
+                        # Save incremental transcript
+                        self._save_transcript(model_key, tid, transcript)
+                        # Print latest events
+                        recent = transcript[-3:] if len(transcript) > 3 else transcript
+                        for entry in recent:
+                            if entry.get("type") == "message":
+                                msg = entry.get("message", {})
+                                role = msg.get("role", "?")
+                                content = msg.get("content", "")
+                                if isinstance(content, list):
+                                    content = str(content)[:100]
+                                log(f"[{tid}] [{role}] {content[:150]}...")
+                            elif entry.get("type") == "tool_call":
+                                log(f"[{tid}] [tool] {entry.get('name', 'unknown')}({str(entry.get('params', {}))[:80]}...)")
+                            elif entry.get("type") == "tool_result":
+                                log(f"[{tid}] [tool_result] {str(entry.get('result', ''))[:100]}...")
+                            elif entry.get("type") == "memory_event":
+                                log(f"[{tid}] [memory] {entry.get('event', '')}")
+
+                exec_proc, elapsed_time = self._run_agent_in_container(
+                    container_name, exec_script, task.get("timeout", 120),
+                    progress_callback=progress_callback
+                )
                 log(f"[{container_name}] Agent finished in {elapsed_time:.2f}s, returncode={exec_proc.returncode}")
+                if exec_proc.stdout:
+                    for line in exec_proc.stdout.splitlines()[:10]:
+                        log(f"[{container_name}] {line}")
 
                 # Copy results back
                 try:
@@ -708,6 +737,8 @@ system_prompt = \"\"\"You are an expert agent working in a restricted environmen
 
 try:
     start_time = time.time()
+    print(f"[PROGRESS] Task started at {{start_time}}")
+
     result = agent.execute(
         '''{prompt.replace("'", "\\'")}''',
         session_id=session_id,
@@ -716,10 +747,12 @@ try:
         max_iterations=100,
     )
     elapsed = time.time() - start_time
+    print(f"[PROGRESS] Task finished at {{elapsed:.1f}}s, status={{result.status}}")
 
     # Use result.transcript directly - it contains the properly formatted transcript
     # with "type" and "message" structure that grading functions expect
     transcript_data = result.transcript or []
+    print(f"[PROGRESS] Transcript entries: {{len(transcript_data)}}")
 
     output = {{
         'status': result.status,
@@ -730,6 +763,9 @@ try:
         'error': result.error,
     }}
 except Exception as e:
+    import traceback
+    print(f"[ERROR] Exception: {{type(e).__name__}}: {{e}}")
+    traceback.print_exc()
     output = {{
         'status': 'error',
         'content': '',
@@ -739,12 +775,20 @@ except Exception as e:
         'error': str(e),
     }}
 
+# Always save result, even on error
 (workspace / 'agent_result.json').write_text(json.dumps(output, ensure_ascii=False, indent=2))
 print('DONE')
 """
 
-    def _run_agent_in_container(self, container_name: str, exec_script: str, timeout: int) -> tuple:
-        """Execute NanoBotAgent inside container, return (process_result, elapsed_time)."""
+    def _run_agent_in_container(self, container_name: str, exec_script: str, timeout: int, progress_callback=None) -> tuple:
+        """Execute NanoBotAgent inside container, return (process_result, elapsed_time).
+
+        Args:
+            container_name: Name of the Docker container
+            exec_script: Python script to execute
+            timeout: Timeout in seconds
+            progress_callback: Optional callback function(task_id, transcript) called periodically (currently unused for blocking exec)
+        """
         with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
             f.write(exec_script)
             script_path = f.name
@@ -1135,17 +1179,20 @@ print(json.dumps(scores))
             )
 
             if is_bigmodel:
-                import litellm
-                resp = litellm.completion(
+                # BigModel.cn supports Anthropic-compatible API - use Anthropic SDK directly
+                import anthropic
+                client = anthropic.Anthropic(api_key=api_key, base_url=base_url)
+                resp = client.messages.create(
                     model=actual_model,
                     messages=messages,
-                    api_key=api_key,
-                    api_base=base_url,
                     temperature=0.0,
                     max_tokens=2048,
                     timeout=120,
                 )
-                response_text = resp.choices[0].message.content
+                for block in resp.content:
+                    if block.type == "text":
+                        response_text = block.text
+                        break
             elif use_anthropic:
                 import anthropic
                 client = anthropic.Anthropic(api_key=api_key, base_url=base_url)

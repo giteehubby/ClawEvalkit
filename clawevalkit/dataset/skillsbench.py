@@ -718,9 +718,10 @@ class SkillsBench(BaseBenchmark):
             docker_run_cmd = [
                 "docker", "run", "-d",
                 "--name", container_name,
+                "--entrypoint", "/bin/bash",
                 *env_args,
                 task_image,
-                "/bin/bash", "-c", "tail -f /dev/null",
+                "-c", "tail -f /dev/null",
             ]
 
             try:

@@ -359,10 +359,12 @@ def _start_container(container_name: str, workspace_path: str, openclawpro_dir: 
     docker_run_cmd = [
         "docker", "run", "-d",
         "--name", container_name,
+        "--network", "host",
+        "--entrypoint", "/bin/bash",
         *volume_mounts,
         *env_args,
         docker_image,
-        "/bin/bash", "-c", "tail -f /dev/null",
+        "-c", "tail -f /dev/null",
     ]
     r = subprocess.run(docker_run_cmd, capture_output=True, text=True)
     if r.returncode != 0:
@@ -414,7 +416,7 @@ agent = NanoBotAgent(
     api_url='{config["api_url"]}',
     api_key=api_key,
     workspace=workspace,
-    timeout=300,
+    timeout=1200,
     system_prompt=system_prompt,
     disable_safety_guard=True,{harness_kwargs_str}
 )
@@ -788,7 +790,7 @@ class AgentBench(BaseBenchmark):
                 # Build and run agent
                 user_msg = cfg.get("user_message", "")
                 exec_script = _build_exec_script(model_key, tid, user_msg, config, harness_config=harness_config)
-                exec_proc, elapsed_time = _run_agent_in_container(container_name, exec_script, 300)
+                exec_proc, elapsed_time = _run_agent_in_container(container_name, exec_script, 1200)
                 log(f"[{container_name}] Agent finished in {elapsed_time:.2f}s, returncode={exec_proc.returncode}")
 
                 # Log stdout/stderr for debugging

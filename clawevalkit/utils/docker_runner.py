@@ -90,10 +90,11 @@ class DockerRunner:
             "docker", "run", "-d",
             "--name", self.container_name,
             "--network=host",
+            "--entrypoint", "/bin/bash",
             *mounts,
             *env_args,
             self.image,
-            "/bin/bash", "-c", "tail -f /dev/null",
+            "-c", "tail -f /dev/null",
         ]
 
         # Retry logic for container startup
