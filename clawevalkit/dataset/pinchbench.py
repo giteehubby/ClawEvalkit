@@ -575,7 +575,7 @@ class PinchBench(BaseBenchmark):
 
         # Mount OpenClawPro if available
         if openclawpro_dir and openclawpro_dir.exists():
-            volume_mounts.extend(["-v", f"{openclawpro_dir}:/root/OpenClawPro:rw"])
+            volume_mounts.extend(["-v", "/root/OpenClawPro"])
 
         docker_run_cmd = [
             "docker", "run", "-d",

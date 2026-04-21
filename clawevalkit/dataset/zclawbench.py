@@ -68,7 +68,7 @@ def _start_container(container_name: str, workspace_path: str, openclawpro_dir: 
     volume_mounts = [
         "-v", f"{exec_path}:/tmp/zclawbench_workspace/exec:rw",
         "-v", f"{tmp_path}:/tmp/zclawbench_workspace/tmp:rw",
-        "-v", f"{openclawpro_dir}:/root/OpenClawPro:rw",
+        "-v", "/root/OpenClawPro",
     ]
     if os.path.exists(workspace_inner):
         volume_mounts.extend(["-v", f"{workspace_inner}:/tmp/zclawbench_workspace/workspace:rw"])

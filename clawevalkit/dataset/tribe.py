@@ -140,7 +140,7 @@ def _start_container(container_name: str, openclawpro_dir: Path, docker_image: s
 
     volume_mounts = [
         "-v", f"{host_workspace}:/tmp_tribe_workspace:rw",
-        "-v", f"{openclawpro_dir}:/root/OpenClawPro:rw",
+        "-v", "/root/OpenClawPro",
     ]
 
     docker_run_cmd = [
