@@ -372,7 +372,7 @@ def _start_container(container_name: str, workspace_path: str, openclawpro_dir: 
 
 
 def _build_exec_script(model_key: str, task_id: str, user_message: str, config: dict,
-                       harness_config: dict = None) -> str:
+                       harness_config: dict = None, turns: list = None) -> str:
     """Build NanoBotAgent execution script for running inside Docker container."""
     # Determine API key env var based on provider
     provider = config.get("provider", "openrouter")
@@ -388,75 +388,119 @@ def _build_exec_script(model_key: str, task_id: str, user_message: str, config: 
     # Build harness import lines and constructor kwargs
     harness_imports, harness_kwargs_str = build_harness_script_parts(harness_config)
 
-    return f"""
-import sys
-import json
-import time
-import os
-from pathlib import Path
+    # Determine if multi-turn
+    is_multi_turn = turns and len(turns) > 0
+    if is_multi_turn:
+        # Convert turns to JSON for execute_multi (extract just the messages)
+        prompts = [t.get("message", "") for t in turns]
+        turns_json = json.dumps(prompts, ensure_ascii=False)
+        exec_code = (
+            "results = agent.execute_multi(\n"
+            "    " + turns_json + ",\n"
+            "    session_id=session_id,\n"
+            "    workspace=workspace,\n"
+            ")\n"
+            "elapsed = time.time() - start_time\n"
+            "# Aggregate results from all turns\n"
+            "statuses = [r.status for r in results]\n"
+            "contents = [r.content or '' for r in results]\n"
+            "all_transcripts = []\n"
+            "all_usage = {}\n"
+            "for r in results:\n"
+            "    all_transcripts.extend(r.transcript or [])\n"
+            "    if r.usage:\n"
+            "        for k, v in r.usage.items():\n"
+            "            all_usage[k] = all_usage.get(k, 0) + v\n"
+            "final_status = statuses[-1] if statuses else 'error'\n"
+            "final_content = contents[-1] if contents else ''\n"
+            "output = {\n"
+            "    'status': final_status,\n"
+            "    'content': final_content,\n"
+            "    'transcript': all_transcripts,\n"
+            "    'usage': all_usage,\n"
+            "    'execution_time': elapsed,\n"
+            "    'error': results[-1].error if results else 'No results',\n"
+            "    'turn_count': len(results),\n"
+            "}"
+        )
+    else:
+        escaped_msg = user_message.replace("'", "\\'")
+        exec_code = (
+            "result = agent.execute(\n"
+            "    '''" + escaped_msg + "''',\n"
+            "    session_id=session_id,\n"
+            "    workspace=workspace,\n"
+            "    max_iterations=100,\n"
+            ")\n"
+            "elapsed = time.time() - start_time\n"
+            "transcript_data = result.transcript or []\n"
+            "transcript_file = workspace / '.sessions' / f'{session_id}.json'\n"
+            "if not transcript_data and transcript_file.exists():\n"
+            "    transcript_data = json.loads(transcript_file.read_text())\n"
+            "output = {\n"
+            "    'status': result.status,\n"
+            "    'content': result.content,\n"
+            "    'transcript': transcript_data,\n"
+            "    'usage': result.usage or {},\n"
+            "    'execution_time': elapsed,\n"
+            "    'error': result.error,\n"
+            "}"
+        )
 
-sys.path.insert(0, '/root/OpenClawPro')
-from harness.agent.nanobot import NanoBotAgent
-{harness_imports}
+    # Build the full script using string concatenation
+    # Indent exec_code for try block
+    exec_code_indented = "\n".join("    " + line for line in exec_code.split("\n"))
 
-workspace = Path('/tmp/workspace')
-session_id = 'eval_{model_key}_{task_id}'
-
-# Get API key from environment variable
-api_key = os.environ.get('{api_key_env}', '')
-
-system_prompt = \"\"\"You are an expert agent working in a restricted environment.
-Solve the task efficiently. Run all processes in the foreground without user input.
-IMPORTANT: Your working directory is `/tmp/workspace`. Use RELATIVE paths (e.g. `.`, `logs/`) for files. Never use absolute paths like `/root/...` unless explicitly told.
-Skills are located at: /tmp/workspace/skills/
-Provide a complete, functional solution.\"\"\"
-
-agent = NanoBotAgent(
-    model='{config["model"]}',
-    api_url='{config["api_url"]}',
-    api_key=api_key,
-    workspace=workspace,
-    timeout=1200,
-    system_prompt=system_prompt,
-    disable_safety_guard=True,{harness_kwargs_str}
-)
-
-try:
-    start_time = time.time()
-    result = agent.execute(
-        '''{user_message.replace("'", "\\'")}''',
-        session_id=session_id,
-        workspace=workspace,
-        max_iterations=100,
+    script = (
+        "import sys\n"
+        "import json\n"
+        "import time\n"
+        "import os\n"
+        "from pathlib import Path\n"
+        "\n"
+        "sys.path.insert(0, '/root/OpenClawPro')\n"
+        "from harness.agent.nanobot import NanoBotAgent\n"
+        + harness_imports + "\n"
+        "\n"
+        "workspace = Path('/tmp/workspace')\n"
+        "session_id = 'eval_" + model_key + "_" + task_id + "'\n"
+        "\n"
+        "# Get API key from environment variable\n"
+        "api_key = os.environ.get('" + api_key_env + "', '')\n"
+        "\n"
+        "system_prompt = \"\"\"You are an expert agent working in a restricted environment.\n"
+        "Solve the task efficiently. Run all processes in the foreground without user input.\n"
+        "IMPORTANT: Your working directory is `/tmp/workspace`. Use RELATIVE paths (e.g. `.`, `logs/`) for files. Never use absolute paths like `/root/...` unless explicitly told.\n"
+        "Skills are located at: /tmp/workspace/skills/\n"
+        "Provide a complete, functional solution.\"\"\"\n"
+        "\n"
+        "agent = NanoBotAgent(\n"
+        "    model='" + config["model"] + "',\n"
+        "    api_url='" + config["api_url"] + "',\n"
+        "    api_key=api_key,\n"
+        "    workspace=workspace,\n"
+        "    timeout=1200,\n"
+        "    system_prompt=system_prompt,\n"
+        "    disable_safety_guard=True," + harness_kwargs_str + "\n"
+        ")\n"
+        "\n"
+        "try:\n"
+        "    start_time = time.time()\n"
+        + exec_code_indented + "\n"
+        "except Exception as e:\n"
+        "    output = {\n"
+        "        'status': 'error',\n"
+        "        'content': '',\n"
+        "        'transcript': [],\n"
+        "        'usage': {},\n"
+        "        'execution_time': 0,\n"
+        "        'error': str(e),\n"
+        "    }\n"
+        "\n"
+        "(workspace / 'agent_result.json').write_text(json.dumps(output, ensure_ascii=False, indent=2))\n"
+        "print('DONE')\n"
     )
-    elapsed = time.time() - start_time
-
-    transcript_data = result.transcript or []
-    transcript_file = workspace / '.sessions' / f'{{session_id}}.json'
-    if not transcript_data and transcript_file.exists():
-        transcript_data = json.loads(transcript_file.read_text())
-
-    output = {{
-        'status': result.status,
-        'content': result.content,
-        'transcript': transcript_data,
-        'usage': result.usage or {{}},
-        'execution_time': elapsed,
-        'error': result.error,
-    }}
-except Exception as e:
-    output = {{
-        'status': 'error',
-        'content': '',
-        'transcript': [],
-        'usage': {{}},
-        'execution_time': 0,
-        'error': str(e),
-    }}
-
-(workspace / 'agent_result.json').write_text(json.dumps(output, ensure_ascii=False, indent=2))
-print('DONE')
-"""
+    return script
 
 
 def _run_agent_in_container(container_name: str, exec_script: str, timeout_seconds: int) -> tuple[subprocess.CompletedProcess, float]:
@@ -471,7 +515,7 @@ def _run_agent_in_container(container_name: str, exec_script: str, timeout_secon
 
     start_time = time.perf_counter()
     exec_proc = subprocess.run(
-        ["docker", "exec", container_name, "python3", "/tmp/exec_nanobot.py"],
+        ["docker", "exec", "-w", "/tmp/workspace", container_name, "python3", "/tmp/exec_nanobot.py"],
         capture_output=True, text=True, timeout=timeout_seconds + 60)
     elapsed = time.perf_counter() - start_time
     return exec_proc, elapsed
@@ -785,11 +829,20 @@ class AgentBench(BaseBenchmark):
                     ["docker", "cp", f"{host_workspace}/.", f"{container_name}:/tmp/workspace/"],
                     check=True
                 )
-                log(f"[{container_name}] Workspace copied to /tmp/workspace/")
+                # Verify workspace was copied (not empty)
+                check_result = subprocess.run(
+                    ["docker", "exec", container_name, "ls", "-la", "/tmp/workspace/"],
+                    capture_output=True, text=True
+                )
+                if not check_result.stdout.strip() or "total 0" in check_result.stdout:
+                    log(f"[{container_name}] WARNING: /tmp/workspace appears empty! Files: {check_result.stdout}")
+                else:
+                    log(f"[{container_name}] Workspace copied to /tmp/workspace/:\n{check_result.stdout[:500]}")
 
                 # Build and run agent
                 user_msg = cfg.get("user_message", "")
-                exec_script = _build_exec_script(model_key, tid, user_msg, config, harness_config=harness_config)
+                turns = cfg.get("turns", None)
+                exec_script = _build_exec_script(model_key, tid, user_msg, config, harness_config=harness_config, turns=turns)
                 exec_proc, elapsed_time = _run_agent_in_container(container_name, exec_script, 1200)
                 log(f"[{container_name}] Agent finished in {elapsed_time:.2f}s, returncode={exec_proc.returncode}")
 
