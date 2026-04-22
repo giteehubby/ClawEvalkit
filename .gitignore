@@ -28,7 +28,9 @@ conda-envs/
 *~
 
 # ClawEvalKit outputs (regenerated at runtime)
-outputs/
+/outputs/
+error_analysis/outputs/
+!error_analysis/outputs/failure_categories_by_group.json
 
 # Environment files
 .env
@@ -98,6 +100,5 @@ docs/
 *.cache
 docs/schedule.md
 CLAUDE.md
-error_analysis/outputs/
 error_analysis/outputs 2/
 error_analysis/*.zip
