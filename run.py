@@ -16,12 +16,28 @@ Usage:
   python3 run.py --list                             # 列出所有 bench 和模型
   python3 run.py --bench skillsbench --docker --max-turns 5  # 指定迭代次数
 
-6 Benchmarks:
-  zclawbench        ZClawBench Subset     18 tasks   NanoBotAgent + Judge (0~1)
-  clawbench-official ClawBench Official   250 tasks  ReAct + Pytest (0~100)
-  pinchbench        PinchBench            23 tasks   Rule-based (0~100)
-  agentbench        AgentBench-OpenClaw   40 tasks   L0+L1 (0~100)
-  skillsbench       SkillsBench           88 tasks  LLM + Pytest (%)
+  # 从文件加载任务列表 (同一 bench 的 task 会批量执行)
+  python3 run.py --task task_list.csv
+  python3 run.py --task task_list.txt --model claude-opus
+
+任务列表文件格式:
+  # CSV 格式 (推荐)
+  bench_id,task_id
+  zclawbench,01_Productivity_Flow_task_6_calendar_scheduling
+  tribe,tribe_task_001
+
+  # 纯文本格式
+  zclawbench:01_Productivity_Flow_task_6_calendar_scheduling
+  tribe:tribe_task_001
+
+Benchmarks:
+  zclawbench        ZClawBench Subset     116 tasks  NanoBotAgent + Judge (0~1)
+  clawbench-official ClawBench Official    250 tasks  ReAct + Pytest (0~100)
+  pinchbench        PinchBench             23 tasks   Rule-based (0~100)
+  agentbench        AgentBench             40 tasks   L0+L1 (0~100)
+  skillsbench       SkillsBench            56 tasks   LLM + Pytest (%)
+  tribe             TribeBench             8 tasks    ReAct + Judge (0~100)
+  claweval          ClawEval               300 tasks  LLM + Judge (0~100)
 """
 import argparse
 import os
@@ -39,6 +55,80 @@ from clawevalkit.dataset import BENCHMARKS, list_benchmarks
 from clawevalkit.inference import infer_all
 from clawevalkit.summarizer import Summarizer
 from clawevalkit.utils.log import log, setup_logging
+
+
+def load_task_list_from_file(file_path: str) -> dict:
+    """从文件加载任务列表，返回 {bench_key: [task_ids]} 字典。
+
+    支持两种格式:
+    1. CSV格式 (推荐): bench_id,task_id
+    2. 纯文本格式: bench_id:task_id
+
+    同一 bench 的 task 会聚合在一起，便于批量执行。
+    """
+    path = Path(file_path)
+    if not path.exists():
+        raise FileNotFoundError(f"Task list file not found: {file_path}")
+
+    tasks_by_bench = {}
+    content = path.read_text(encoding="utf-8").strip()
+
+    if content.startswith("bench_id,") or content.startswith("bench_id,task_id"):
+        # CSV 格式
+        import csv
+        import io
+        reader = csv.reader(io.StringIO(content))
+        header = next(reader)
+        # 找到 bench_id 和 task_id 列
+        bench_col = None
+        task_col = None
+        for i, col in enumerate(header):
+            col_lower = col.lower().strip()
+            if col_lower == "bench_id" or col_lower == "bench":
+                bench_col = i
+            elif col_lower == "task_id" or col_lower == "task":
+                task_col = i
+            elif col_lower == "id" and bench_col is None:
+                bench_col = i
+
+        if bench_col is None or task_col is None:
+            raise ValueError(f"CSV header must contain 'bench_id' and 'task_id' columns. Got: {header}")
+
+        for row in reader:
+            if len(row) <= max(bench_col, task_col):
+                continue
+            bench_key = row[bench_col].strip()
+            task_id = row[task_col].strip()
+            if not bench_key or not task_id:
+                continue
+            if bench_key.startswith("#"):
+                continue
+            if bench_key not in tasks_by_bench:
+                tasks_by_bench[bench_key] = []
+            tasks_by_bench[bench_key].append(task_id)
+    else:
+        # 纯文本格式: bench_id:task_id 或 bench_id task_id
+        for line in content.split("\n"):
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            # 支持 bench_id:task_id 或 bench_id task_id 格式
+            if ":" in line:
+                parts = line.split(":", 1)
+            elif " " in line:
+                parts = line.split(None, 1)
+            else:
+                continue
+            if len(parts) != 2:
+                continue
+            bench_key, task_id = parts[0].strip(), parts[1].strip()
+            if not bench_key or not task_id:
+                continue
+            if bench_key not in tasks_by_bench:
+                tasks_by_bench[bench_key] = []
+            tasks_by_bench[bench_key].append(task_id)
+
+    return tasks_by_bench
 
 
 def main():
@@ -59,7 +149,7 @@ def main():
     parser.add_argument("--output-dir", help="Output directory for results (default: ./outputs)")
     parser.add_argument("--transcripts-dir", help="Directory to save agent transcripts (default: {output_dir}/transcripts)")
     parser.add_argument("--max-turns", type=int, default=None, help="Max retry turns (default: task-specific)")
-    parser.add_argument("--task", "-t", help="指定特定任务ID (如 01_Productivity_Flow_task_6_calendar_scheduling)")
+    parser.add_argument("--task", "-t", help="指定特定任务ID，或指定任务列表文件路径 (自动识别)")
     parser.add_argument("--category", "-c", help="指定任务类别 (如 01_Productivity_Flow)")
     parser.add_argument("--reuse-container", action="store_true", help="Reuse existing containers (skip rebuild, preserves pip installs)")
     parser.add_argument("--judge-model", help="Judge model for scoring (e.g., minimax/claude-3.5-sonnet, claude-sonnet-4.6)")
@@ -112,6 +202,26 @@ def main():
             print(f"Unknown model: {mk}. Use --list to see available models.")
             sys.exit(1)
 
+    # 检查 --task 是否为文件路径
+    tasks_by_bench = None
+    if args.task:
+        task_path = Path(args.task)
+        if task_path.exists() and task_path.is_file():
+            log(f"从文件加载任务列表: {args.task}")
+            tasks_by_bench = load_task_list_from_file(args.task)
+            # 验证所有 bench_key 都有效
+            for bk in tasks_by_bench:
+                if bk not in BENCHMARKS:
+                    print(f"Unknown benchmark in task file: {bk}. Use --list to see available benchmarks.")
+                    sys.exit(1)
+            # 打印加载的任务概览
+            for bk, tids in tasks_by_bench.items():
+                log(f"  {bk}: {len(tids)} tasks")
+            bench_keys = list(tasks_by_bench.keys())
+        else:
+            # 文件不存在，回退到逗号分隔的直接指定模式
+            bench_kwargs["task_ids"] = [t.strip() for t in args.task.split(",")]
+
     log(f"Config: bench={bench_keys}, models={model_keys}, sample={args.sample or 'all'}")
 
     # 执行评测
@@ -124,9 +234,6 @@ def main():
         bench_kwargs["reuse_container"] = True
     if args.parallel > 1:
         bench_kwargs["parallel"] = args.parallel
-    if args.task:
-        task_list = [t.strip() for t in args.task.split(",")]
-        bench_kwargs["task_ids"] = task_list
     if args.category:
         bench_kwargs["category"] = args.category
     if not args.include_multimodal:
@@ -140,10 +247,33 @@ def main():
         default_transcripts_dir = f"{args.output_dir}/claweval/transcripts"
     else:
         default_transcripts_dir = None
-    infer_all(bench_keys, model_keys, sample=args.sample,
-              output_dir=args.output_dir,
-              transcripts_dir=args.transcripts_dir if transcripts_dir_provided else default_transcripts_dir,
-              **bench_kwargs)
+
+    # 如果从文件加载任务，需要按 bench 分批执行
+    if tasks_by_bench:
+        results = {}
+        for bk in bench_keys:
+            task_ids = tasks_by_bench.get(bk, [])
+            if not task_ids:
+                continue
+            log(f"\n{'=' * 60}")
+            log(f"BENCHMARK: {bk} ({len(task_ids)} tasks from file)")
+            log(f"{'=' * 60}")
+            for mk in model_keys:
+                bk_kwargs = dict(bench_kwargs)
+                bk_kwargs["task_ids"] = task_ids
+                from clawevalkit.inference import infer_data_job
+                result = infer_data_job(bk, mk, sample=0,
+                                        output_dir=args.output_dir,
+                                        transcripts_dir=args.transcripts_dir if transcripts_dir_provided else default_transcripts_dir,
+                                        **bk_kwargs)
+                results[(bk, mk)] = result
+                log(f"  [{bk}×{mk}] done: score={result.get('score', 0)}, scored={result.get('scored', 0)}/{result.get('total', 0)}")
+    else:
+        # 原有逻辑：直接调用 infer_all
+        infer_all(bench_keys, model_keys, sample=args.sample,
+                  output_dir=args.output_dir,
+                  transcripts_dir=args.transcripts_dir if transcripts_dir_provided else default_transcripts_dir,
+                  **bench_kwargs)
 
     # 打印汇总
     log("\n")
