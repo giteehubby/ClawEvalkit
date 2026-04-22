@@ -91,6 +91,9 @@ Thumbs.db
 # Paper (EMNLP 2027, keep private until published)
 results/papers/clawRecipe_emnlp_2027/
 
+# Paper factory (private, not for public repo)
+paper_factory/
+
 # docs
 docs/
 
