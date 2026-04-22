@@ -419,9 +419,9 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
             "-v", f"{workspace_inner}:{TMP_WORKSPACE}:rw",
         ]
 
-        # 挂载 OpenClawPro
+        # 挂载 OpenClawPro (只读，避免容器修改宿主机)
         if openclawpro_dir and openclawpro_dir.exists():
-            volume_mounts.extend(["-v", "/root/OpenClawPro"])
+            volume_mounts.extend(["-v", f"{openclawpro_dir}:/root/OpenClawPro:ro"])
 
         docker_run_cmd = [
             "docker", "run", "-d",

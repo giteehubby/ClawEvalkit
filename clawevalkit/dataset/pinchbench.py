@@ -66,8 +66,8 @@ class PinchBench(BaseBenchmark):
         if model_key in OFFICIAL_SCORES:
             return {"score": OFFICIAL_SCORES[model_key], "passed": 0, "total": 23, "source": "official"}
 
-        use_docker = kwargs.get("use_docker", self._use_docker_default)
-        parallel = kwargs.get("parallel", 1)
+        use_docker = kwargs.pop("use_docker", self._use_docker_default)
+        parallel = kwargs.pop("parallel", 1)
         harness_config = kwargs.pop("harness_config", None)
 
         if use_docker:
@@ -575,7 +575,7 @@ class PinchBench(BaseBenchmark):
 
         # Mount OpenClawPro if available
         if openclawpro_dir and openclawpro_dir.exists():
-            volume_mounts.extend(["-v", "/root/OpenClawPro"])
+            volume_mounts.extend(["-v", f"{openclawpro_dir}:/root/OpenClawPro:ro"])
 
         docker_run_cmd = [
             "docker", "run", "-d",

@@ -68,7 +68,7 @@ class DockerRunner:
             "-v", f"{exec_path}:{self.WORK_DIR}/exec:rw",
             "-v", f"{tmp_path}:{self.WORK_DIR}/tmp:rw",
             "-v", f"{results_path}:{self.WORK_DIR}/results:rw",
-            "-v", "/root/OpenClawPro",
+            "-v", f"{self.openclawpro_dir}:/root/OpenClawPro:ro",
         ]
         if os.path.exists(skills_path):
             mounts.extend(["-v", f"{skills_path}:{self.WORK_DIR}/skills:rw"])

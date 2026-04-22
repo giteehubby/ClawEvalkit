@@ -89,9 +89,15 @@ Thumbs.db
 # Paper (EMNLP 2027, keep private until published)
 results/papers/clawRecipe_emnlp_2027/
 
+# docs
+docs/
+
 # Temporary files
 *.tmp
 *.temp
 *.cache
 docs/schedule.md
 CLAUDE.md
+error_analysis/outputs/
+error_analysis/outputs 2/
+error_analysis/*.zip
