@@ -1,0 +1,1201 @@
+{
+  "total_records": 300,
+  "by_category": {
+    "E": [
+      {
+        "bench": "agentbench",
+        "task_id": "extract-structured-data"
+      },
+      {
+        "bench": "agentbench",
+        "task_id": "missing-dependency"
+      },
+      {
+        "bench": "agentbench",
+        "task_id": "context-retention"
+      },
+      {
+        "bench": "agentbench",
+        "task_id": "summary-statistics"
+      },
+      {
+        "bench": "agentbench",
+        "task_id": "no-unnecessary-changes"
+      },
+      {
+        "bench": "agentbench",
+        "task_id": "project-proposal"
+      },
+      {
+        "bench": "agentbench",
+        "task_id": "corrupted-input"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mem-002"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "edu-002-item-analysis"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "web-004"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mm-015"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "eml-007"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "data-005"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "comm-008"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mem-009"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "doc-009"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mag-001"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "med-003-drug-interaction"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "wfl-002"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "doc-005"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "doc-013"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mm-009"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "doc-010"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "cont-003-readability-audit"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "cont-001-sentiment-analysis"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mem-011"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "xdom-008"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mag-003"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "ds-002-ab-testing"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sys-005"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "acad-003-statistical-analysis"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mem-001"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "web-007"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "law-003-compliance-check"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "doc-001"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C15en_structural_seismic_design"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C24zh_fire_safety_code"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C25zh_construction_cost"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C35zh_income_tax_calculation"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T056zh_phone_model_comparison"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T057_deepseek_logo_identification"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T068zh_llama_w8a8_cuda_bug"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T070zh_js_async_generator_trace"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T081_officeqa_cagr_trust_fund"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T084_officeqa_geometric_mean_silver"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T100_reverse_decoder"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T121zh_industry_briefing"
+      }
+    ],
+    "C": [
+      {
+        "bench": "agentbench",
+        "task_id": "constraint-accumulation"
+      },
+      {
+        "bench": "agentbench",
+        "task_id": "repo-refactor"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "cs-001-api-rate-limiter"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T030_cross_service_meeting"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T032_escalation_budget_triage"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T061_finance_mu_gm_beat"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T131zh_order_profit_analysis"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T132_order_profit_analysis"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T148_system_health_check"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T150_project_progress_report"
+      }
+    ],
+    "D": [
+      {
+        "bench": "agentbench",
+        "task_id": "data-spreadsheet"
+      },
+      {
+        "bench": "agentbench",
+        "task_id": "log-pattern-detection"
+      },
+      {
+        "bench": "agentbench",
+        "task_id": "find-anomalies"
+      },
+      {
+        "bench": "agentbench",
+        "task_id": "skill-graph-refactor"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "data-003"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "wfl-013"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sys-006"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "xdom-010"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "eml-011"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mm-012"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "wfl-014"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "web-014"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "comm-010"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "comm-006"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sys-015"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "eml-013"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "xdom-009"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mm-007"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "eml-015"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sec-015"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "web-011"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "web-010"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "web-006"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "eml-014"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "code-001"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C07zh_financial_valuation"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T160_vip_ticket_escalation"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C05zh_personal_finance_2"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T011zh_expense_report"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T026_ambiguous_contact_email"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T064_finance_nflx_cash_req"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T071_video_mme_coauthor_papers"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T103_schema_migration"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T110_complaint_investigation"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T161zh_automation_failure_recovery"
+      }
+    ],
+    "A": [
+      {
+        "bench": "agentbench",
+        "task_id": "release-preparation"
+      },
+      {
+        "bench": "agentbench",
+        "task_id": "log-analysis-report"
+      },
+      {
+        "bench": "agentbench",
+        "task_id": "impossible-request"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "eml-017"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "plan-003"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "code-014"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "cont-004-media-bias"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "code-002"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "cal-005"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "law-002-lease-analysis"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "wfl-012"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "cs-005-api-design"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "db-004"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "tool-002"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "code-015"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sys-010"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "edu-004-curriculum-mapping"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "web-008"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "cont-005-translation-qa"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "web-015"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "bio-003-gene-expression"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mem-013"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "fin-008"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "ds-004-time-series"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "plan-005"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "tool-004"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mem-008"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "acct-005-financial-statements"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "comm-009"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "eml-010"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "cs-003-log-analyzer"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "file-013"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "xdom-011"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "math-001"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "bio-001-sequence-analysis"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "db-002"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mem-007"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "eml-009"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "db-001"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "fin-006"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mag-002"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "bio-005-variant-annotation"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sec-009"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mm-006"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "med-005-trial-eligibility"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "xdom-013"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "xdom-005"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "doc-007"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sec-012"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "tool-001"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "cs-002-db-migration"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "plan-001"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sys-009"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sci-005-optimization"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sci-002-monte-carlo"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "xdom-014"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "math-004"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "math-005"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sys-008"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "edu-001"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sec-014"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "ds-003-feature-engineering"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C29zh_pediatric_medication"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C32zh_saas_metrics"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C01zh_mortgage_prepay"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C02zh_personal_finance"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C04zh_image_processing"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C03en_real_estate_finance"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C06zh_clinical_pharmacy"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C08zh_personal_finance_3"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C09zh_ai_video_creation"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C12zh_ecommerce_operations"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C14zh_cross_border_compliance"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C17en_devops_sop_design"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C19en_ab_testing_sample_size"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C18en_statistical_analysis_spss"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C23zh_academic_writing"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C26zh_public_health"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C28zh_distributed_systems"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C34zh_product_design"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C36zh_insurance_planning"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C37zh_income_tax_practice"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C38zh_inventory_management"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T001zh_email_triage"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T003zh_calendar_scheduling"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T004_calendar_scheduling"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T005zh_email_reply_draft"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T002_email_triage"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T006_email_reply_draft"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T012_expense_report"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T013zh_meeting_notes"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T014_meeting_notes"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T022_newsletter_curation"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T027zh_api_config_audit"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T028_api_config_audit"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T029zh_cross_service_meeting"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T031zh_escalation_budget_triage"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T053_finance_us_steel_merger"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T058zh_painting_identification"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T079_officeqa_zipf_exponent"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T078_officeqa_max_yield_spread"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T082_officeqa_qoq_esf_change"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T085_officeqa_army_expenditures"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T096_pinbench_business_metrics_summary"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T106_job_failure_triage"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T114_meeting_preparation"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T118_customer_followup"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T122_industry_briefing"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T139zh_customer_relationship_warning"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T140_customer_relationship_warning"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T147zh_system_health_check"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T154_market_research_report"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T157zh_month_end_reconciliation"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T159zh_vip_ticket_escalation"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T162_automation_failure_recovery"
+      }
+    ],
+    "B": [
+      {
+        "bench": "agentbench",
+        "task_id": "large-codebase-navigation"
+      },
+      {
+        "bench": "agentbench",
+        "task_id": "compare-technologies"
+      },
+      {
+        "bench": "agentbench",
+        "task_id": "memory-organization"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T036_vendor_procurement"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C20zh_mental_health_social_work"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T010_contact_lookup"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T021zh_newsletter_curation"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T067zh_synopsys_china_revenue"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T080_officeqa_bond_yield_change"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T083_officeqa_mad_excise_tax"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T105zh_job_failure_triage"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T113zh_meeting_preparation"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T117zh_customer_followup"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T123zh_todo_calendar_conflict"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T124_todo_calendar_conflict"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T130_business_trip_planning"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T155zh_onsite_support_dispatch"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T156_onsite_support_dispatch"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T164_quarterly_customer_review"
+      }
+    ],
+    "F": [
+      {
+        "bench": "agentbench",
+        "task_id": "right-tool-choice"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sys-011"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "tool-003"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "web-013"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "db-005"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sec-001"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mem-015"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "cont-002-topic-modeling"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "web-012"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "wfl-008"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "code-003"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "xdom-006"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "data-009"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sec-007"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "wfl-015"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "doc-004"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "code-008"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mem-005"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "comm-012"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mm-004"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "code-012"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "code-004"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "doc-008"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "code-005"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "code-013"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "mem-004"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "comm-013"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "code-009"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "xdom-004"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "math-002"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "code-006"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "code-010"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sci-004-signal-processing"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sys-014"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "code-011"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "code-007"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "math-003"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "file-011"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sec-004"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sys-013"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "data-001"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "wfl-011"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "cs-004-ci-pipeline"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "xdom-002"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "eml-002"
+      },
+      {
+        "bench": "clawbench",
+        "task_id": "sys-012"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C30zh_data_troubleshooting"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C13zh_psychology_statistics"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C16en_hr_workforce_planning"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C22zh_experimental_psychology"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "C27zh_data_automation"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T009zh_contact_lookup"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T015zh_kb_search"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T016_kb_search"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T019zh_inventory_check"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T024_crm_data_export"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T042_scheduled_task_management"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T041zh_scheduled_task_management"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T072_restaurant_menu_contact"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T086_pinbench_calendar_event_creation"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T089_pinbench_config_workflow_notes"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T101_wal_recovery"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T109zh_complaint_investigation"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T129zh_business_trip_planning"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T133zh_competitive_intelligence"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T142_sla_compliance_audit"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T141zh_sla_compliance_audit"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T145zh_task_backtracking"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T146_task_backtracking"
+      },
+      {
+        "bench": "claweval",
+        "task_id": "T158_month_end_reconciliation"
+      }
+    ]
+  }
+}
