@@ -1,0 +1,85 @@
+\section{Unified Evaluation Harness}
+\label{sec:harness}
+
+Our first contribution is a reproducible evaluation harness for comparing agent conditions on equal footing. The harness is designed around three principles: \textbf{pinned versions} (every benchmark is locked to a specific git commit or release), \textbf{unified logging} (every run produces a manifest with model metadata, config, and cost accounting), and \textbf{within-benchmark paired comparison} (all conditions are evaluated on the same task instances, enabling paired statistical analysis).
+
+% ------------------------------------------------------------
+%  3.1  Benchmark Suite
+% ------------------------------------------------------------
+
+\subsection{Benchmark Suite}
+\label{sec:harness:benchmarks}
+
+We evaluate on two benchmarks that span diverse agent task profiles:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=1pt, parsep=0pt]
+
+  \item \textbf{AgentBench-OpenClaw} (AB-OC): A general multi-step tool-use benchmark with 40 tasks across 7 domains (file creation, research, data analysis, multi-step, memory, error handling, tool efficiency). Tasks average 6--10 steps with multiple tool calls. We use the pinned OpenClaw skill release with the standard task split.
+
+  \item \textbf{PinchBench} (PB): A benchmark of messy real-world productivity tasks including calendar management, email triage, market research, code generation, and cross-session memory. Tasks involve moderate tool use (2--5 calls) but heavy state management requirements. We use the pinned \texttt{v0.9} release with all 23 tasks.
+
+\end{itemize}
+
+Table~\ref{tab:benchmark-suite} in \S\ref{sec:exp:setup} reports the full suite metadata. All benchmarks provide deterministic gold answers or structured grading scripts; we use strict equality for factual tasks and LLM-as-judge (GPT-4o) for synthesis tasks, following established protocols~\citep{zheng2023judging}.
+
+% ------------------------------------------------------------
+%  3.2  Agent Conditions
+% ------------------------------------------------------------
+
+\subsection{Agent Conditions}
+\label{sec:harness:conditions}
+
+We compare the following conditions, all evaluated on the nanobot OpenClaw agent runtime with doubao-seed-1.8 as the base model:
+
+\begin{enumerate}[leftmargin=2em, label=(\alph*), itemsep=0pt, parsep=0pt]
+
+  \item \textbf{Base}: The unmodified OpenClaw agent with greedy decoding, temperature 0.0, and max 40 steps.
+
+  \item \textbf{+Memory}: Base agent augmented with a task-local episodic memory buffer that records intermediate facts, file paths, and verified conclusions. Memory is written after each tool call and read before each new tool invocation. \emph{[Planned; not yet experimentally evaluated]}
+
+  \item \textbf{+Control}: Base agent with plan-first prompting (explicitly generate a step plan before acting), bounded replanning (replan every 5 steps), and failure-triggered reflection (if a tool returns an error, generate an explicit diagnosis before retrying). \emph{[Planned; not yet experimentally evaluated]}
+
+  \item \textbf{+Collab}: Base agent with a minimal two-role structure: an \emph{executor} that calls tools and a \emph{verifier} that checks intermediate conclusions against the task goal. Roles communicate via a shared message buffer and the verifier can request a rollback to a previous checkpoint. \emph{[Planned; not yet experimentally evaluated]}
+
+  \item \textbf{+ProcSupport}: Base agent with on-demand access to structured procedural support cards for each benchmark domain. Cards contain step-by-step domain procedures (e.g., ``how to conduct a PubMed search for clinical trials'') and are retrieved via semantic similarity at task start. \emph{[Planned; not yet experimentally evaluated]}
+
+  \item \textbf{+BestTrainFree}: The best combination of training-free recipes as determined on preliminary analysis (memory + control). \emph{[Planned; not yet experimentally evaluated]}
+
+  \item \textbf{SFT-100}, \textbf{SFT-300}, \textbf{SFT-1000}: LoRA-SFT variants trained on 100, 300, and 1,000 corrected trajectories respectively, sampled from failures of the Base condition. Training uses LoRA rank 16, learning rate $2\times10^{-4}$, batch size 8, 2 epochs. \emph{[Planned; not yet experimentally evaluated]}
+
+\end{enumerate}
+
+% ------------------------------------------------------------
+%  3.3  Cost Accounting and Metrics
+% ------------------------------------------------------------
+
+\subsection{Cost Accounting and Metrics}
+\label{sec:harness:metrics}
+
+Every run records: total prompt tokens, completion tokens, tool calls, steps, wall-clock time, and estimated API cost (USD). Our primary metric is \textbf{within-benchmark paired delta}:
+
+\begin{align}
+  \Delta_b(c) = \frac{1}{|\mathcal{T}_b|}\sum_{t\in\mathcal{T}_b}\bigl[\mathrm{score}_c(t) - \mathrm{score}_{\mathrm{Base}}(t)\bigr],
+  \label{eq:paired-delta}
+\end{align}
+
+where $\mathcal{T}_b$ is the task set for benchmark $b$, and $\mathrm{score} \in \{0, 1\}$ is binary correctness. We report mean and 95\% bootstrap confidence intervals over 1,000 resamples.
+
+We also track \textbf{negative interference rate} (NIR): the fraction of tasks where a repair condition scores strictly below Base:
+
+\begin{align}
+  \mathrm{NIR}(c) = \frac{1}{|\mathcal{T}_b|}\sum_{t\in\mathcal{T}_b} \mathbf{1}\bigl[\mathrm{score}_c(t) < \mathrm{score}_{\mathrm{Base}}(t)\bigr].
+  \label{eq:nir}
+\end{align}
+
+And \textbf{category repair rate} (CRR) for each failure category $k \in \{A, B, C, D, E\}$:
+
+\begin{align}
+  \mathrm{CRR}_k(c) = P\bigl(\mathrm{score}_c(t) = 1 \mid \mathrm{score}_{\mathrm{Base}}(t) = 0, \\
+  \qquad\qquad\qquad\;\; \mathrm{cat}(t) = k\bigr).
+  \label{eq:crr}
+\end{align}
+
+\begin{definit}[Failure Category]\label{def:failure-category}
+For each task run where $\mathrm{score}_{\mathrm{Base}}(t) = 0$, the \emph{dominant failure category} $\mathrm{cat}(t) \in \{A, B, C, D, E\}$ is the single category that best explains why the agent failed, as determined by structured annotation (\S\ref{sec:taxonomy:annotation}).
+\end{definit}

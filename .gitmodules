@@ -1,6 +1,3 @@
 [submodule "OpenClawPro"]
 	path = OpenClawPro
 	url = https://github.com/linjh1118/OpenClawPro.git
-[submodule "paper_factory"]
-	path = paper_factory
-	url = git@ssh.github.com:giteehubby/paper_factory.git

@@ -1,0 +1,36 @@
+\section{Conclusion}
+\label{sec:conclusion}
+We presented a preliminary unified study of diagnosing and repairing failures in OpenClaw-like agents. Our contributions span three layers:
+
+\begin{enumerate}[leftmargin=2em, itemsep=1pt]
+
+  \item \textbf{Evaluation harness.} We built a reproducible evaluation protocol that pins benchmark versions, task splits, and evaluation protocols, enabling rigorous paired comparisons across repair strategies. We evaluate two benchmarks (PinchBench: 23 tasks; AgentBench-OpenClaw: 40 tasks) using the nanobot OpenClaw agent runtime.
+
+  \item \textbf{Failure taxonomy.} We defined a five-class failure taxonomy (A: task understanding, B: tool grounding, C: memory/state, D: verification, E: skill utilization) informed by failure case analysis. Our initial analysis identifies structural failure patterns: E-type failures (ineffective skill utilization) account for 13--17\% of PinchBench tasks; the memory domain on AgentBench-OC consistently scores 50.0 across all model checkpoints, indicating a structural C-type failure.
+
+  \item \textbf{Repair study (ongoing).} We design four training-free recipes and a small-data SFT protocol based on the observed failure patterns. Experimental evaluation of these repair strategies is planned as the next phase.
+
+\end{enumerate}
+
+Our central preliminary finding is that agent failures are not uniformly random but cluster into interpretable structural categories. E-type failures (skill utilization deficiency) require targeted interventions such as skill-activation prompting (T4b) or procedural knowledge injection (T4a); A-type and B-type failures show potential for prompting-based repair. Future work will complete the systematic repair evaluation to determine which failure categories respond to which repair strategy at what cost.
+
+\section{Limitations}
+\label{sec:limitations}
+
+Our study has several limitations:
+
+\begin{enumerate}[leftmargin=2em, itemsep=1pt]
+
+  \item \textbf{Preliminary evaluation.} The systematic repair study (T1--T5 recipes, SFT conditions) has not yet been conducted. Conclusions about repair effectiveness are based on failure case analysis and design rationale, not empirical results.
+
+  \item \textbf{Single base model.} All experiments use the doubao-seed-1.8 model. The failure taxonomy and repair effectiveness may vary for different base models. Validation on additional base models is needed.
+
+  \item \textbf{Two benchmarks.} Our benchmark suite contains two benchmarks. The category distribution and repair rates may differ on other agent benchmarks. Future work should extend evaluation.
+
+  \item \textbf{Informal annotation.} Failure categorization is based on case analysis by the authors, not formal annotation with inter-annotator agreement. A full annotated failure corpus is planned.
+
+  \item \textbf{Evaluation variance.} On PinchBench, we observe substantial variance across runs (0.058 to 0.847 overall score on the same endpoint), likely due to API variability. This limits the sensitivity of score comparisons below 5 pp.
+
+  \item \textbf{SFT data pipeline not yet built.} Trajectory correction, quality verification, and training pipelines are designed but not yet executed. SFT results are predictions based on the observed failure patterns, not empirical measurements.
+
+\end{enumerate}
