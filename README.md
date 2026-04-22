@@ -248,6 +248,11 @@ ClawEvalKit/
 
 250 tasks across multiple domains. Each task has its own `task.toml` config defining instructions, environment, and verification criteria. The agent executes inside Docker containers using NanoBotAgent, and results are verified via Pytest. Supports both native (subprocess) and Docker execution modes.
 
+> **Known Issue**: The `debugging/` tasks (debug-001 ~ debug-005) have broken `environment/setup.sh` scripts that reference missing `environment/data/` source files. These tasks will fail with "File not found" errors. Until the upstream claw-bench repository is fixed, delete the entire `benchmarks/claw-bench/tasks/debugging/` directory to avoid these failures:
+> ```bash
+> rm -rf benchmarks/claw-bench/tasks/debugging/
+> ```
+
 ### ClawEval (`claweval`)
 
 300 tasks evaluating agent capabilities through mock API services and Docker sandboxes. Each task defines tools (mock HTTP endpoints), fixtures, and graders. The workflow per task: start mock services → launch Docker sandbox → inject fixtures → run NanoBotAgent → collect audit data → grade using multi-dimension scorers (completion, robustness, communication, safety). Supports parallel execution with port-offset isolation.
