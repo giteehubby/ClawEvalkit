@@ -220,12 +220,16 @@ def main():
             bench_keys = list(tasks_by_bench.keys())
         else:
             # 文件不存在，回退到逗号分隔的直接指定模式
-            bench_kwargs["task_ids"] = [t.strip() for t in args.task.split(",")]
+            task_ids_override = [t.strip() for t in args.task.split(",")]
+    else:
+        task_ids_override = None
 
     log(f"Config: bench={bench_keys}, models={model_keys}, sample={args.sample or 'all'}")
 
     # 执行评测
     bench_kwargs = {"force": args.force}
+    if task_ids_override:
+        bench_kwargs["task_ids"] = task_ids_override
     if args.max_turns is not None:
         bench_kwargs["max_turns"] = args.max_turns
     if args.docker:

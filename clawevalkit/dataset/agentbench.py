@@ -41,6 +41,21 @@ def _check_file_exists(container_name: str, pattern: str) -> bool:
     return check_proc.returncode == 0
 
 
+def _find_matching_file(container_name: str, regex: str) -> str | None:
+    """Find a file in container workspace matching a regex pattern. Returns filename or None."""
+    import re
+    proc = subprocess.run(
+        ["docker", "exec", container_name, "find", "/tmp/workspace", "-maxdepth", "1", "-type", "f", "-name", "*.md"],
+        capture_output=True, text=True)
+    if proc.returncode != 0:
+        return None
+    for line in proc.stdout.strip().split("\n"):
+        fname = line.strip().rsplit("/", 1)[-1]
+        if fname and re.match(regex, fname):
+            return fname
+    return None
+
+
 def _check_directory_structure(container_name: str, expected: list[str]) -> tuple[int, int]:
     """Check if all expected paths exist. Returns (passed, total)."""
     passed = 0
@@ -201,6 +216,8 @@ def _compute_layer0_score(container_name: str, expected_outputs: list[dict],
         # Base points for this output
         output_max = 30 if required else 20
         output_points = 0
+        # Resolve actual filename: if pattern is a regex, find matching file
+        resolved_pattern = pattern if _check_file_exists(container_name, pattern) else None
 
         for validator in validators:
             vtype = validator.get("type", "")
@@ -211,11 +228,21 @@ def _compute_layer0_score(container_name: str, expected_outputs: list[dict],
                     total_points += 30
                     output_points += 30
 
+            elif vtype == "filename-matches":
+                regex = validator.get("pattern", "")
+                max_points += 20
+                matched = _find_matching_file(container_name, regex)
+                if matched:
+                    total_points += 20
+                    output_points += 20
+                    resolved_pattern = matched
+
             elif vtype == "content-contains":
                 sections = validator.get("sections", [])
                 max_points += 40
-                if sections and _check_file_exists(container_name, pattern):
-                    passed, total = _check_content_contains(container_name, pattern, sections)
+                check_file = resolved_pattern or pattern
+                if sections and _check_file_exists(container_name, check_file):
+                    passed, total = _check_content_contains(container_name, check_file, sections)
                     points = (passed / total) * 40 if total > 0 else 0
                     total_points += points
                     output_points += points
@@ -299,14 +326,38 @@ def _compute_layer1_score(expected_metrics: dict, transcript: list, elapsed_time
     if not expected_metrics:
         return 50  # No metrics expected, neutral score
 
+    # Normalize nested transcript format (type=message, message={role, content})
+    # to flat format (role, tool_calls, content) expected by scoring logic
+    flat_transcript = []
+    for entry in transcript:
+        if not isinstance(entry, dict):
+            continue
+        if entry.get("type") == "message":
+            msg = entry.get("message", {})
+            flat = {"role": msg.get("role", ""), "content": msg.get("content", "")}
+            # Extract tool calls from nested content list
+            content = msg.get("content", [])
+            if isinstance(content, list):
+                tc_list = [c for c in content if isinstance(c, dict) and c.get("type") == "toolCall"]
+                if tc_list:
+                    flat["tool_calls"] = tc_list
+                # Flatten content to string for error detection
+                flat["content"] = "\n".join(
+                    c.get("text", "") if isinstance(c, dict) else str(c) for c in content
+                )
+            flat_transcript.append(flat)
+        else:
+            flat_transcript.append(entry)
+
     # Count tool calls from transcript
-    tool_calls = sum(1 for entry in transcript if isinstance(entry, dict) and entry.get("role") == "assistant" and entry.get("tool_calls"))
+    tool_calls = sum(1 for entry in flat_transcript
+                     if entry.get("role") == "assistant" and entry.get("tool_calls"))
 
     # Estimate planning ratio (simplified: based on first tool call timing)
     planning_ratio = 0.25  # Default estimate
 
     # Count errors from transcript
-    errors = sum(1 for entry in transcript if isinstance(entry, dict) and "error" in str(entry.get("content", "")).lower())
+    errors = sum(1 for entry in flat_transcript if "error" in str(entry.get("content", "")).lower())
 
     score = 0
 
@@ -879,6 +930,20 @@ class AgentBench(BaseBenchmark):
                 # L0: Automated Structural Checks
                 expected_outputs = cfg.get("expected_outputs", [])
                 expected_behavior = cfg.get("expected_behavior", [])
+                # Fallback: extract validators from turns if top-level keys are absent
+                if not expected_outputs and not expected_behavior:
+                    turns = cfg.get("turns", [])
+                    for turn in turns:
+                        validators = turn.get("validators", [])
+                        if not validators:
+                            continue
+                        if turn.get("expect") == "file-output":
+                            expected_outputs.append({
+                                "pattern": validators[0].get("pattern", "*.md"),
+                                "validators": validators,
+                            })
+                        elif turn.get("expect") == "response":
+                            expected_behavior.append({"validators": validators})
                 l0_score = _compute_layer0_score(container_name, expected_outputs, expected_behavior, model_output)
 
                 # L1: Metrics Analysis

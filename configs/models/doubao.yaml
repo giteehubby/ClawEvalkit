@@ -1,0 +1,7 @@
+# Doubao Seed 2.0 Code (Volcengine Ark API)
+doubao-seed-2.0-code:
+  name: Doubao Seed 2.0 Code
+  api_url: https://ark.cn-beijing.volces.com/api/coding
+  api_key_env: DOUBAO_API_KEY
+  model: doubao-seed-2.0-code
+  provider: ark
