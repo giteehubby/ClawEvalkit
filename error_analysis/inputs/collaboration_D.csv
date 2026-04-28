@@ -1,7 +1,0 @@
-bench_id,task_id
-claweval,T160_vip_ticket_escalation
-claweval,C05zh_personal_finance_2
-claweval,T011zh_expense_report
-claweval,T026_ambiguous_contact_email
-claweval,T103_schema_migration
-claweval,T110_complaint_investigation
