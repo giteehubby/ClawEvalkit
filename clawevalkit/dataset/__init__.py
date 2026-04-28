@@ -19,6 +19,7 @@ BENCHMARKS = {
     "zclawbench": ZClawBench,
     "wildclawbench": WildClawBench,
     "clawbench-official": ClawBenchOfficial,
+    "clawbench": ClawBenchOfficial,  # alias
     "pinchbench": PinchBench,
     "agentbench": AgentBench,
     "skillbench": SkillBench,

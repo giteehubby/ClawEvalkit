@@ -1,0 +1,16 @@
+[13:07:27] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=all
+[13:07:27] 
+============================================================
+[13:07:27] BENCHMARK: ClawBench Official (250 tasks)
+[13:07:27] ============================================================
+[13:07:27]   [clawbench-official×glm-4.7] evaluating...
+[13:07:35] [clawbench_bio-003-gene-expression_glm-4.7_20260426_050728] Container started
+[13:08:15]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/bioinformatics/bio-003-gene-expression/environment/setup.sh
+[13:08:15]   [container] [setup] setup.sh 成功
+[13:08:15]   [container] [setup] 工作空间文件: ['instruction.md', 'expression_matrix.csv']
+[13:08:15]   [container] DONE
+[13:08:15] [clawbench_bio-003-gene-expression_glm-4.7_20260426_050728] Agent finished in 40.40s, returncode=0
+[13:08:15] [clawbench_bio-003-gene-expression_glm-4.7_20260426_050728] Agent result: passed=False, score=0.7500
+[13:08:15]   [clawbench-official×glm-4.7] done: score=75.0, scored=0/1
+[13:08:15] 
+

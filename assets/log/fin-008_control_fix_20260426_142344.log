@@ -1,0 +1,17 @@
+[14:23:46] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=all
+[14:23:46] 
+============================================================
+[14:23:46] BENCHMARK: ClawBench Official (250 tasks)
+[14:23:46] ============================================================
+[14:23:46]   [clawbench-official×glm-4.7] evaluating...
+[14:23:54] [clawbench_fin-008_glm-4.7_20260426_062347] Container started
+[14:23:54] [fin-008] Control harness detected, timeout adjusted: 300 → 480
+[14:24:29]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/financial-analysis/fin-008-calculate-wacc-from-financial-statements/environment/setup.sh
+[14:24:29]   [container] [setup] setup.sh 成功
+[14:24:29]   [container] [setup] 工作空间文件: ['balance_sheet.csv', 'income_statement.csv', 'instruction.md']
+[14:24:29]   [container] DONE
+[14:24:29] [clawbench_fin-008_glm-4.7_20260426_062347] Agent finished in 35.74s, returncode=0
+[14:24:29] [clawbench_fin-008_glm-4.7_20260426_062347] Agent result: passed=False, score=0.0000
+[14:24:30]   [clawbench-official×glm-4.7] done: score=0.0, scored=0/1
+[14:24:30] 
+

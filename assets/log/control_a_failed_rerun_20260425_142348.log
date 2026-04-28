@@ -1,0 +1,87 @@
+[14:23:49] 从文件加载任务列表: error_analysis/inputs/control_a_failed.csv
+[14:23:49]   agentbench: 2 tasks
+[14:23:49]   clawbench: 6 tasks
+[14:23:49] Config: bench=['agentbench', 'clawbench'], models=['glm-4.7'], sample=all
+[14:23:49] 
+============================================================
+[14:23:49] BENCHMARK: agentbench (2 tasks from file)
+[14:23:49] ============================================================
+[14:23:49]   [agentbench×glm-4.7] evaluating...
+[14:23:50] [agent_release-preparation_glm-4.7_20260425_062350] Running setup.sh for task release-preparation
+[14:23:51] [agent_release-preparation_glm-4.7_20260425_062350] setup.sh completed successfully
+[14:23:51] [agent_impossible-request_glm-4.7_20260425_062350] Container started
+[14:23:52] [agent_impossible-request_glm-4.7_20260425_062350] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  0 Apr 25 06:23 .
+drwxrwxrwt 1 root root    32 Apr 25 06:23 ..
+
+[14:23:52] [agent_release-preparation_glm-4.7_20260425_062350] Container started
+[14:23:52] [agent_release-preparation_glm-4.7_20260425_062350] Workspace copied to /tmp/workspace/:
+total 16
+drwxr-xr-x 1  501 dialout 120 Apr 25 06:23 .
+drwxrwxrwt 1 root root     32 Apr 25 06:23 ..
+drwxr-xr-x 1  501 dialout 128 Apr 25 06:23 .git
+-rw-r--r-- 1  501 dialout 553 Apr 25 06:23 CHANGELOG.md
+-rw-r--r-- 1  501 dialout 180 Apr 25 06:23 README.md
+-rw-r--r-- 1  501 dialout 306 Apr 25 06:23 package.json
+-rw-r--r-- 1  501 dialout 990 Apr 25 06:23 release-checklist.md
+drwxr-xr-x 1  501 dialout 108 Apr 25 06:23 src
+
+[14:25:57] [agent_impossible-request_glm-4.7_20260425_062350] Agent finished in 125.69s, returncode=0
+[14:25:57] [agent_impossible-request_glm-4.7_20260425_062350] Agent stdout: DONE
+
+[14:25:57] [agent_impossible-request_glm-4.7_20260425_062350] Agent result loaded: status=success, transcript_len=24
+[14:26:22] [agent_impossible-request_glm-4.7_20260425_062350] Scores: L0=100.0 L1=65.0 L2=50.0 L3=40.0 | Overall=57.8
+[14:26:23] [agent_impossible-request_glm-4.7_20260425_062350] Result saved to outputs/harness/control/agentbench/glm-4.7/impossible-request/result.json
+[14:27:07] [agent_release-preparation_glm-4.7_20260425_062350] Agent finished in 194.89s, returncode=0
+[14:27:07] [agent_release-preparation_glm-4.7_20260425_062350] Agent stdout: DONE
+
+[14:27:07] [agent_release-preparation_glm-4.7_20260425_062350] Agent result loaded: status=success, transcript_len=120
+[14:27:09] [agent_release-preparation_glm-4.7_20260425_062350] Scores: L0=78.6 L1=65.0 L2=100.0 L3=100.0 | Overall=88.0
+[14:27:10] [agent_release-preparation_glm-4.7_20260425_062350] Result saved to outputs/harness/control/agentbench/glm-4.7/release-preparation/result.json
+[14:27:10]   [agentbench×glm-4.7] done: score=72.9, scored=2/2
+[14:27:10]   [agentbench×glm-4.7] done: score=72.9, scored=0/2
+[14:27:10] 
+============================================================
+[14:27:10] BENCHMARK: clawbench (6 tasks from file)
+[14:27:10] ============================================================
+[14:27:10]   [clawbench×glm-4.7] evaluating...
+[14:27:12] [clawbench_law-002-lease-analysis_glm-4.7_20260425_062710] Container started
+[14:27:12] [clawbench_cont-004-media-bias_glm-4.7_20260425_062710] Container started
+[14:30:58]   [container] DONE
+[14:30:58]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/lease_agreement.txt
+[14:30:58]   [container-err] LLM reflection failed: 'NanoBotAgent' object is not callable
+[14:30:58] [clawbench_law-002-lease-analysis_glm-4.7_20260425_062710] Agent finished in 225.56s, returncode=0
+[14:30:58] [clawbench_law-002-lease-analysis_glm-4.7_20260425_062710] Agent result: passed=False, score=0.7500
+[14:31:00] [clawbench_cs-005-api-design_glm-4.7_20260425_063058] Container started
+[14:32:22]   [container] DONE
+[14:32:22] [clawbench_cont-004-media-bias_glm-4.7_20260425_062710] Agent finished in 309.76s, returncode=0
+[14:32:22] [clawbench_cont-004-media-bias_glm-4.7_20260425_062710] Agent result: passed=False, score=0.5000
+[14:32:24] [clawbench_db-004_glm-4.7_20260425_063222] Container started
+[14:35:02]   [container] DONE
+[14:35:02]   [container-err] Retry exhausted for <tool_call>exec: Error: Unknown tool: <tool_call>exec
+[14:35:02]   [container-err] LLM reflection failed: 'NanoBotAgent' object is not callable
+[14:35:02] [clawbench_cs-005-api-design_glm-4.7_20260425_063058] Agent finished in 242.12s, returncode=0
+[14:35:02] [clawbench_cs-005-api-design_glm-4.7_20260425_063058] Agent result: passed=False, score=0.8000
+[14:35:04] [clawbench_tool-002_glm-4.7_20260425_063502] Container started
+[14:36:06]   [container] DONE
+[14:36:06]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/old_schema.sql
+[14:36:06]   [container-err] LLM reflection failed: 'NanoBotAgent' object is not callable
+[14:36:06]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/new_schema.sql
+[14:36:06]   [container-err] LLM reflection failed: 'NanoBotAgent' object is not callable
+[14:36:06] [clawbench_db-004_glm-4.7_20260425_063222] Agent finished in 221.88s, returncode=0
+[14:36:06] [clawbench_db-004_glm-4.7_20260425_063222] Agent result: passed=False, score=0.6500
+[14:36:08] [clawbench_wfl-012_glm-4.7_20260425_063607] Container started
+[14:36:37]   [container] DONE
+[14:36:37] [clawbench_wfl-012_glm-4.7_20260425_063607] Agent finished in 28.65s, returncode=0
+[14:36:37] [clawbench_wfl-012_glm-4.7_20260425_063607] Agent result: passed=False, score=0.5333
+[14:37:57]   [container] DONE
+[14:37:57]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/requirements_a.txt
+[14:37:57]   [container-err] LLM reflection failed: 'NanoBotAgent' object is not callable
+[14:37:57]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/requirements_b.txt
+[14:37:57]   [container-err] LLM reflection failed: 'NanoBotAgent' object is not callable
+[14:37:57] [clawbench_tool-002_glm-4.7_20260425_063502] Agent finished in 172.87s, returncode=0
+[14:37:57] [clawbench_tool-002_glm-4.7_20260425_063502] Agent result: passed=False, score=0.5882
+[14:37:57]   [clawbench×glm-4.7] done: score=63.7, scored=0/6
+[14:37:57]   [clawbench×glm-4.7] done: score=63.7, scored=0/6
+[14:37:57] 
+

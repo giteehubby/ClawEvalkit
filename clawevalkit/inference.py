@@ -13,7 +13,21 @@ from .utils.log import log
 load_env()
 
 
-def get_harness_config(harness: str) -> dict:
+# Benchmark key → cards subdirectory mapping
+BENCH_CARDS_MAP = {
+    "pinchbench":         "pinchbench",
+    "skillbench":         "skillbench",
+    "skillsbench":        "skillsbench",
+    "wildclawbench":      "wildclawbench",
+    "clawbench-official": "clawbench",
+    "agentbench":         "agentbench-openclaw",
+    "claw-bench-tribe":   "claw-bench-tribe",
+    "zclawbench":         "zclawbench",
+    "claweval":           "claw-eval",
+}
+
+
+def get_harness_config(harness: str, bench_key: str = None) -> dict:
     """Convert harness recipe name to agent constructor kwargs dict.
 
     Returns a dict like {"memory_config": MemoryConfig(enabled=True)} that
@@ -22,6 +36,10 @@ def get_harness_config(harness: str) -> dict:
     For "procedure" (T4), both T4a and T4b are enabled by default:
       - T4a: Program Support Cards via dense retrieval (BERT bi-encoder)
       - T4b: Skill Activation Prompts (injected at start + re-trigger on unexpected)
+
+    Args:
+        harness: Harness recipe name (memory/control/collaboration/procedure)
+        bench_key: Benchmark key for T4 card filtering (e.g. "pinchbench")
     """
     if harness == "memory":
         from OpenClawPro.harness.agent.memory import MemoryConfig
@@ -33,12 +51,14 @@ def get_harness_config(harness: str) -> dict:
             ReplanConfig,
             RetryConfig,
             ReflectionConfig,
+            VerifyConfig,
         )
         # T2: Single-agent control recipe (针对 A/B/D 类失败)
         # - PlanFirst: 任务开始时生成执行计划
         # - Replan: 每 N 步检测重规划信号（每 5 步）
         # - Reflection: 失败后生成诊断
         # - Retry: 工具调用失败重试
+        # - SelfVerify: 任务完成后自检输出
         return {
             "control_config": ControlConfig(
                 enabled=True,
@@ -69,11 +89,18 @@ def get_harness_config(harness: str) -> dict:
                     max_reflection_length=300,
                 ),
                 preflight_enabled=False,  # T2(b) 前置检查，可选开启
+                verify=VerifyConfig(
+                    enabled=False,  # 禁用 SelfVerify 模块
+                    max_rounds=1,
+                ),
             )
         }
     elif harness == "collaboration":
         from OpenClawPro.harness.agent.collaboration import CollabConfig
-        return {"collab_config": CollabConfig(enabled=True)}
+        return {"collab_config": CollabConfig(enabled=True, mode="executor_verifier")}
+    elif harness == "collab_cmd":
+        from OpenClawPro.harness.agent.collaboration import CollabConfig
+        return {"collab_config": CollabConfig(enabled=True, mode="commander_executor")}
     elif harness == "procedure":
         from OpenClawPro.harness.agent.procedure import (
             ProceduralConfig,
@@ -82,13 +109,25 @@ def get_harness_config(harness: str) -> dict:
             SkillActivationConfig,
         )
         import os
-        # Default cards directory: OpenClawPro/harness/agent/procedure/cards
         repo_root = Path(__file__).parent.parent
-        default_cards_dir = str(repo_root / "OpenClawPro" / "harness" / "agent" / "procedure" / "cards")
+        host_cards_root = str(repo_root / "OpenClawPro" / "harness" / "agent" / "procedure" / "cards")
+        docker_cards_root = "/root/OpenClawPro/harness/agent/procedure/cards"
+
+        # Docker exec benchmarks use container path; host benchmarks use host path
+        docker_benches = {"agentbench", "clawbench-official", "pinchbench", "skillsbench",
+                          "claw-bench-tribe", "zclawbench"}
+        base = docker_cards_root if bench_key in docker_benches else host_cards_root
+
+        # Resolve cards_dir: use bench_key subdirectory if available
+        if bench_key:
+            cards_subdir = BENCH_CARDS_MAP.get(bench_key, "")
+            cards_dir = os.path.join(base, cards_subdir) if cards_subdir else base
+        else:
+            cards_dir = os.environ.get("T4A_CARDS_DIR", base)
 
         program_support = ProgramSupportConfig(
             enabled=True,
-            cards_dir=os.environ.get("T4A_CARDS_DIR", default_cards_dir),
+            cards_dir=cards_dir,
             retrieval=RetrievalConfig(
                 embedding_model=os.environ.get("T4A_EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2"),
                 device=os.environ.get("T4A_DEVICE", "cpu"),
@@ -115,6 +154,61 @@ def get_harness_config(harness: str) -> dict:
                 program_support=program_support,
                 skill_activation=skill_activation,
             )
+        }
+    elif harness == "combo":
+        # T5: T2 + T3 组合配方 (Control + Collaboration)
+        # - Control (T2): PlanFirst + Replan + Retry + Reflection，修复 A/B/D 类失败
+        # - Collaboration (T3): Executor + Verifier 双角色，修复 D/E 类失败
+        # 二者正交，组合后预期对 A/B/D 类有叠加增益
+        from OpenClawPro.harness.agent.control import (
+            ControlConfig,
+            PlanFirstConfig,
+            ReplanConfig,
+            RetryConfig,
+            ReflectionConfig,
+            VerifyConfig,
+        )
+        from OpenClawPro.harness.agent.collaboration import CollabConfig
+
+        control_cfg = ControlConfig(
+            enabled=True,
+            plan_first=PlanFirstConfig(
+                enabled=True,
+                trigger="always",
+                max_plan_length=500,
+            ),
+            replan=ReplanConfig(
+                enabled=True,
+                signal_threshold=5,
+                signals=["error", "repeated_action"],
+                max_replans=2,
+                min_iterations_between_replans=2,
+            ),
+            retry=RetryConfig(
+                enabled=True,
+                max_retries=2,
+                backoff="exponential",
+                base_delay=1.0,
+                retryable_errors=["rate_limit", "timeout", "transient"],
+                fatal_errors=["invalid_params", "auth_failed", "permission_denied"],
+            ),
+            reflection=ReflectionConfig(
+                enabled=True,
+                trigger="on_failure",
+                consecutive_failure_threshold=2,
+                max_reflection_length=300,
+            ),
+            preflight_enabled=False,
+            verify=VerifyConfig(
+                enabled=False,  # SelfVerify 禁用，由 Collab 的 VerifierRole 处理
+                max_rounds=1,
+            ),
+        )
+        collab_cfg = CollabConfig(enabled=True, mode="executor_verifier")
+
+        return {
+            "control_config": control_cfg,
+            "collab_config": collab_cfg,
         }
     return {}
 
@@ -193,7 +287,7 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
     # 提取 harness 并转化为 agent config kwargs
     harness = kwargs.pop("harness", None)
     if harness:
-        evaluate_kwargs["harness_config"] = get_harness_config(harness)
+        evaluate_kwargs["harness_config"] = get_harness_config(harness, bench_key)
     result = bench.evaluate(model_key, config, **evaluate_kwargs, **kwargs)
 
     score = result.get("score", 0)

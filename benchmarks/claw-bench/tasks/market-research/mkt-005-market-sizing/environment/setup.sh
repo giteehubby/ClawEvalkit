@@ -6,7 +6,7 @@ export WORKSPACE
 mkdir -p "$WORKSPACE"
 
 # Generate market_data.csv with 25 segments
-python3 - <<EOF
+python3 - <<'EOF'
 import os; WORKSPACE = os.environ.get('WORKSPACE', os.getcwd())
 import csv
 import random
@@ -25,7 +25,7 @@ with open(f"{WORKSPACE}/market_data.csv", "w", newline='') as f:
 EOF
 
 # Generate company_data.json
-python3 - <<EOF
+python3 - <<'EOF'
 import os; WORKSPACE = os.environ.get('WORKSPACE', os.getcwd())
 import json
 

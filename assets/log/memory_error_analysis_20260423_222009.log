@@ -1,0 +1,3 @@
+ERROR conda.cli.main_run:execute(142): `conda run python run.py --task error_analysis/inputs/memory.csv --harness memory --docker --force --model glm-4.7 --judge-model glm-4.7 --output-dir outputs/harness/memory` failed. (See above for error)
+[22:20:10] 从文件加载任务列表: error_analysis/inputs/memory.csv
+Unknown benchmark in task file: clawbench. Use --list to see available benchmarks.

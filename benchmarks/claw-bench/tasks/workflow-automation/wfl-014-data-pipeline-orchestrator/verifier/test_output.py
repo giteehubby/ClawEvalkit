@@ -7,11 +7,6 @@ import pytest
 
 
 @pytest.fixture
-def workspace(request):
-    return request.config.getoption("--workspace")
-
-
-@pytest.fixture
 def output_data(workspace):
     path = Path(workspace) / "output.csv"
     assert path.exists(), "output.csv not found in workspace"

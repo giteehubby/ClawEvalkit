@@ -7,11 +7,6 @@ import pytest
 
 
 @pytest.fixture
-def workspace(request):
-    return request.config.getoption("--workspace")
-
-
-@pytest.fixture
 def data(workspace):
     path = Path(workspace) / "products.json"
     assert path.exists(), "products.json not found in workspace"

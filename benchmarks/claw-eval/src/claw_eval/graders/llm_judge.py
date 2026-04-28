@@ -7,6 +7,7 @@ import random
 import re
 import time
 
+import anthropic
 from openai import OpenAI
 from pydantic import BaseModel
 
@@ -79,7 +80,6 @@ class LLMJudge:
         self._use_anthropic = _is_anthropic_endpoint(base_url)
 
         if self._use_anthropic:
-            import anthropic
             self._anthropic_client = anthropic.Anthropic(api_key=api_key or "dummy", base_url=base_url)
             # Wrap messages.create for call counting
             _orig = self._anthropic_client.messages.create

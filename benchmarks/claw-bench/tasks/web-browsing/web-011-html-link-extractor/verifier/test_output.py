@@ -7,11 +7,6 @@ import pytest
 
 
 @pytest.fixture
-def workspace(request):
-    return request.config.getoption("--workspace")
-
-
-@pytest.fixture
 def links(workspace):
     path = Path(workspace) / "links.json"
     assert path.exists(), "links.json not found in workspace"

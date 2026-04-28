@@ -1,0 +1,19 @@
+[23:03:54] 从文件加载任务列表: error_analysis/inputs/cs001_only.csv
+[23:03:54]   clawbench-official: 1 tasks
+[23:03:54] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=all
+[23:03:54] 
+============================================================
+[23:03:54] BENCHMARK: clawbench-official (1 tasks from file)
+[23:03:54] ============================================================
+[23:03:54]   [clawbench-official×glm-4.7] evaluating...
+[23:04:18] [clawbench_cs-001-api-rate-limiter_glm-4.7_20260423_150356] Container started
+[23:05:39]   [container] DONE
+[23:05:39]   [container-err] '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[23:05:39]   [container-err] Retrying in 1s [Retry 1/5].
+[23:05:39]   [container-err] [execute] Exception caught: RuntimeError: Cannot send a request, as the client has been closed.
+[23:05:39] [clawbench_cs-001-api-rate-limiter_glm-4.7_20260423_150356] Agent finished in 80.69s, returncode=0
+[23:05:39] [clawbench_cs-001-api-rate-limiter_glm-4.7_20260423_150356] Agent result: passed=False, score=0.4000
+[23:05:40]   [clawbench-official×glm-4.7] done: score=0, scored=0/1
+[23:05:40]   [clawbench-official×glm-4.7] done: score=0, scored=0/1
+[23:05:40] 
+

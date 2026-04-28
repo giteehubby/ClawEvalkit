@@ -45,7 +45,7 @@ class ClawBenchOfficial(BaseBenchmark):
         """评测入口：根据 use_docker 选择执行模式。"""
         use_docker = kwargs.pop("use_docker", self._use_docker_default)
         parallel = kwargs.pop("parallel", 1)
-        kwargs.pop("force", None)
+        force = kwargs.pop("force", False)
         kwargs.pop("max_turns", None)
         harness_config = kwargs.pop("harness_config", None)
 
@@ -55,6 +55,7 @@ class ClawBenchOfficial(BaseBenchmark):
                 config=config,
                 sample=sample,
                 parallel=parallel,
+                force=force,
                 harness_config=harness_config,
                 **kwargs
             )
@@ -135,6 +136,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
         config: dict,
         sample: int = 0,
         parallel: int = 1,
+        force: bool = False,
         harness_config: dict = None,
         **kwargs
     ) -> dict:
@@ -184,7 +186,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
             result_file = out_dir / f"{tid}.json"
 
             # 检查缓存
-            if result_file.exists():
+            if not force and result_file.exists():
                 try:
                     cached = json.loads(result_file.read_text())
                     if cached.get("status") == "success":
@@ -226,6 +228,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                     "-e", f"https_proxy={proxy_https}",
                     "-e", f"HTTP_PROXY={proxy_http}",
                     "-e", f"HTTPS_PROXY={proxy_https}",
+                    "-e", "HF_HUB_OFFLINE=1",
                 ]
 
                 # 根据 provider 传递正确的 API key
@@ -248,6 +251,10 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
 
                 # 构建并执行 agent 脚本
                 timeout = task.get("timeout", 3600)  # 1 hour timeout
+                # harness 模式有额外开销（多轮协作/验证/重试等），统一增加超时 buffer
+                if harness_config:
+                    timeout += 180
+                    log(f"[{tid}] Harness detected, timeout adjusted: {task.get('timeout', 3600)} → {timeout}")
                 exec_script = self._build_exec_script(task, config, timeout, harness_config=harness_config)
                 exec_proc, elapsed_time = self._run_agent_in_container(container_name, exec_script, timeout)
                 log(f"[{container_name}] Agent finished in {elapsed_time:.2f}s, returncode={exec_proc.returncode}")
@@ -279,7 +286,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                     log(f"[{container_name}] Failed to load agent result: {e}")
 
             except subprocess.TimeoutExpired:
-                result["error"] = f"Timeout after {task.get('timeout', 300)} seconds"
+                result["error"] = f"Timeout after {timeout} seconds"
             except Exception as exc:
                 log(f"[{container_name}] Execution error: {exc}")
                 result["error"] = str(exc)
@@ -423,6 +430,12 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
         if openclawpro_dir and openclawpro_dir.exists():
             volume_mounts.extend(["-v", f"{openclawpro_dir}:/root/OpenClawPro:ro"])
 
+        # 挂载 HuggingFace 缓存（避免容器内重复下载 embedding 模型）
+        project_root = Path(__file__).resolve().parent.parent.parent
+        hf_cache = project_root / ".cache" / "huggingface"
+        hf_cache.mkdir(parents=True, exist_ok=True)
+        volume_mounts.extend(["-v", f"{hf_cache}:/root/.cache/huggingface"])
+
         docker_run_cmd = [
             "docker", "run", "-d",
             "--network", "host",
@@ -456,6 +469,8 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
         provider = config.get("provider", "openrouter")
         if provider == "minimax":
             api_key_env = "MINIMAX_API_KEY"
+        elif provider == "glm":
+            api_key_env = "ANTHROPIC_API_KEY"
         else:
             api_key_env = "OPENROUTER_API_KEY"
 
@@ -562,9 +577,27 @@ if data_dir.exists():
 # 运行环境设置脚本
 setup_sh = task_subdir / 'environment' / 'setup.sh'
 if setup_sh.exists():
-    import subprocess
-    subprocess.run(['bash', str(setup_sh), str(workspace.resolve())],
-                   cwd=str(task_subdir), capture_output=True, timeout=30)
+    print(f'[setup] 运行 setup.sh: {{setup_sh}}')
+    r = subprocess.run(['bash', str(setup_sh), str(workspace.resolve())],
+                       cwd=str(task_subdir), capture_output=True, text=True, timeout=30)
+    if r.returncode != 0:
+        print(f'[setup] setup.sh 失败 (rc={{r.returncode}})')
+        if r.stdout: print(f'[setup] stdout: {{r.stdout}}')
+        if r.stderr: print(f'[setup] stderr: {{r.stderr}}')
+        # 重试一次，用 bash -x 获取详细 trace
+        print('[setup] 重试 (bash -x) ...')
+        r2 = subprocess.run(['bash', '-x', str(setup_sh), str(workspace.resolve())],
+                            cwd=str(task_subdir), capture_output=True, text=True, timeout=30)
+        if r2.returncode != 0:
+            print(f'[setup] 重试也失败 (rc={{r2.returncode}})')
+            if r2.stderr: print(f'[setup] stderr: {{r2.stderr}}')
+        else:
+            print('[setup] 重试成功')
+    else:
+        print('[setup] setup.sh 成功')
+
+# 诊断：列出工作空间文件
+print(f'[setup] 工作空间文件: {{[f.name for f in workspace.iterdir() if f.is_file()]}}')
 
 # 读取指令
 instruction_path = task_subdir / 'instruction.md'

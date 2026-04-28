@@ -6,7 +6,7 @@ export WORKSPACE
 mkdir -p "$WORKSPACE"
 
 # Generate patients.csv with 30 patients
-python3 - <<EOF
+python3 - <<'EOF'
 import os; WORKSPACE = os.environ.get('WORKSPACE', os.getcwd())
 import csv
 import json
@@ -39,7 +39,7 @@ with open(f'{WORKSPACE}/patients.csv', 'w', newline='') as f:
 EOF
 
 # Generate trial_criteria.json
-python3 - <<EOF
+python3 - <<'EOF'
 import os; WORKSPACE = os.environ.get('WORKSPACE', os.getcwd())
 import json
 

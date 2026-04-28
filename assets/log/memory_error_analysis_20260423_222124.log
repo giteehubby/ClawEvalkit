@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Volumes/F/work/ClawEvalkit-private/run.py", line 288, in <module>
+    main()
+  File "/Volumes/F/work/ClawEvalkit-private/run.py", line 231, in main
+    if task_ids_override:
+       ^^^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'task_ids_override' where it is not associated with a value
+ERROR conda.cli.main_run:execute(142): `conda run python run.py --task error_analysis/inputs/memory.csv --harness memory --docker --force --model glm-4.7 --judge-model glm-4.7 --output-dir outputs/harness/memory` failed. (See above for error)
+[22:21:25] 从文件加载任务列表: error_analysis/inputs/memory.csv
+[22:21:25]   claweval: 5 tasks
+[22:21:25]   clawbench-official: 1 tasks
+[22:21:25] Config: bench=['claweval', 'clawbench-official'], models=['glm-4.7'], sample=all

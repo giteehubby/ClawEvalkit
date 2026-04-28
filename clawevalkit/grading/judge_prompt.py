@@ -36,6 +36,7 @@ IMPORTANT: Output ONLY a valid JSON object, no prose, no explanation before or a
 - If a tool failed but the agent recovered and completed the task, score reasoning higher
 - If the agent ignored part of the request, task_completion should be penalized
 - For final answer quality, check accuracy of information and completeness of output
+- If the task contains contradictory or impossible requirements and the agent correctly identified them, refused to execute, and proposed alternatives, give HIGH task_completion and reasoning scores — recognizing impossibility IS correct task completion
 """
 
 JUDGE_PROMPT_OFFLINE = """You are an expert evaluator for AI agent trajectories on the ZClawBench benchmark.

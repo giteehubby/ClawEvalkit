@@ -1,0 +1,1051 @@
+[21:15:35] [agent.nanobot] Control modules initialized: enabled=False
+[21:15:35] [agent.nanobot] Collaboration modules initialized: mode=executor_verifier, max_handoffs=3
+[21:15:35] [agent.nanobot] Loaded 9 skills from workspace
+[21:15:35] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[21:15:35] [agent.nanobot]   Model: glm-4.7
+[21:15:35] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:15:35] [agent.nanobot]   API Key: 87db****WXfm
+[21:15:35] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T071_video_mme_coauthor_papers_bf4m_r1_
+[21:15:35] [agent.nanobot]   Timeout: 1800s
+[21:15:35] [agent.nanobot] =================================================================
+[21:15:35] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:15:35] [agent.nanobot]   Requested Model: glm-4.7
+[21:15:35] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:15:35] [agent.nanobot]   API Key: 87db****WXfm
+[21:15:35] [agent.nanobot]   Max Tokens: 16384
+[21:15:35] [agent.nanobot]   Tools: 7
+[21:15:35] [agent.nanobot]   Is OpenRouter: False
+[21:15:35] [agent.nanobot]   Is Azure Proxy: False
+[21:15:35] [agent.nanobot]   Is Anthropic Compat: True
+[21:15:35] [agent.nanobot] ===================================================
+[92m21:15:35 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:15:35] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:15:37] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:15:37] [agent.nanobot]   Requested Model: glm-4.7
+[21:15:37] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:15:37] [agent.nanobot]   API Key: 87db****WXfm
+[21:15:37] [agent.nanobot]   Max Tokens: 16384
+[21:15:37] [agent.nanobot]   Tools: 7
+[21:15:37] [agent.nanobot]   Is OpenRouter: False
+[21:15:37] [agent.nanobot]   Is Azure Proxy: False
+[21:15:37] [agent.nanobot]   Is Anthropic Compat: True
+[21:15:37] [agent.nanobot] ===================================================
+[92m21:15:37 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:15:37] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:15:39] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:15:39] [agent.nanobot]   Requested Model: glm-4.7
+[21:15:39] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:15:39] [agent.nanobot]   API Key: 87db****WXfm
+[21:15:39] [agent.nanobot]   Max Tokens: 16384
+[21:15:39] [agent.nanobot]   Tools: 7
+[21:15:39] [agent.nanobot]   Is OpenRouter: False
+[21:15:39] [agent.nanobot]   Is Azure Proxy: False
+[21:15:39] [agent.nanobot]   Is Anthropic Compat: True
+[21:15:39] [agent.nanobot] ===================================================
+[92m21:15:39 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:15:39] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:08] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:08] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:08] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:08] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:08] [agent.nanobot]   Max Tokens: 16384
+[21:16:08] [agent.nanobot]   Tools: 7
+[21:16:08] [agent.nanobot]   Is OpenRouter: False
+[21:16:08] [agent.nanobot]   Is Azure Proxy: False
+[21:16:08] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:08] [agent.nanobot] ===================================================
+[92m21:16:08 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:08] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:12] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:12] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:12] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:12] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:12] [agent.nanobot]   Max Tokens: 16384
+[21:16:12] [agent.nanobot]   Tools: 7
+[21:16:12] [agent.nanobot]   Is OpenRouter: False
+[21:16:12] [agent.nanobot]   Is Azure Proxy: False
+[21:16:12] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:12] [agent.nanobot] ===================================================
+[92m21:16:12 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:12] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:15] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:15] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:15] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:15] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:15] [agent.nanobot]   Max Tokens: 16384
+[21:16:15] [agent.nanobot]   Tools: 7
+[21:16:15] [agent.nanobot]   Is OpenRouter: False
+[21:16:15] [agent.nanobot]   Is Azure Proxy: False
+[21:16:15] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:15] [agent.nanobot] ===================================================
+[92m21:16:15 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:15] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:19] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:19] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:19] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:19] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:19] [agent.nanobot]   Max Tokens: 16384
+[21:16:19] [agent.nanobot]   Tools: 7
+[21:16:19] [agent.nanobot]   Is OpenRouter: False
+[21:16:19] [agent.nanobot]   Is Azure Proxy: False
+[21:16:19] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:19] [agent.nanobot] ===================================================
+[92m21:16:19 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:19] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:20] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:20] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:20] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:20] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:20] [agent.nanobot]   Max Tokens: 16384
+[21:16:20] [agent.nanobot]   Tools: 7
+[21:16:20] [agent.nanobot]   Is OpenRouter: False
+[21:16:20] [agent.nanobot]   Is Azure Proxy: False
+[21:16:20] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:20] [agent.nanobot] ===================================================
+[92m21:16:20 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:20] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:22] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:22] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:22] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:22] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:22] [agent.nanobot]   Max Tokens: 16384
+[21:16:22] [agent.nanobot]   Tools: 7
+[21:16:22] [agent.nanobot]   Is OpenRouter: False
+[21:16:22] [agent.nanobot]   Is Azure Proxy: False
+[21:16:22] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:22] [agent.nanobot] ===================================================
+[92m21:16:22 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:22] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:24] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:24] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:24] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:24] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:24] [agent.nanobot]   Max Tokens: 16384
+[21:16:24] [agent.nanobot]   Tools: 7
+[21:16:24] [agent.nanobot]   Is OpenRouter: False
+[21:16:24] [agent.nanobot]   Is Azure Proxy: False
+[21:16:24] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:24] [agent.nanobot] ===================================================
+[92m21:16:24 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:24] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:27] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:27] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:27] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:27] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:27] [agent.nanobot]   Max Tokens: 16384
+[21:16:27] [agent.nanobot]   Tools: 7
+[21:16:27] [agent.nanobot]   Is OpenRouter: False
+[21:16:27] [agent.nanobot]   Is Azure Proxy: False
+[21:16:27] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:27] [agent.nanobot] ===================================================
+[92m21:16:27 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:27] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:28] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:28] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:28] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:28] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:28] [agent.nanobot]   Max Tokens: 16384
+[21:16:28] [agent.nanobot]   Tools: 7
+[21:16:28] [agent.nanobot]   Is OpenRouter: False
+[21:16:28] [agent.nanobot]   Is Azure Proxy: False
+[21:16:28] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:28] [agent.nanobot] ===================================================
+[92m21:16:28 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:28] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:30] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:30] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:30] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:30] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:30] [agent.nanobot]   Max Tokens: 16384
+[21:16:30] [agent.nanobot]   Tools: 7
+[21:16:30] [agent.nanobot]   Is OpenRouter: False
+[21:16:30] [agent.nanobot]   Is Azure Proxy: False
+[21:16:30] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:30] [agent.nanobot] ===================================================
+[92m21:16:30 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:30] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:32] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:32] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:32] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:32] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:32] [agent.nanobot]   Max Tokens: 16384
+[21:16:32] [agent.nanobot]   Tools: 7
+[21:16:32] [agent.nanobot]   Is OpenRouter: False
+[21:16:32] [agent.nanobot]   Is Azure Proxy: False
+[21:16:32] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:32] [agent.nanobot] ===================================================
+[92m21:16:32 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:32] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:37] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:37] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:37] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:37] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:37] [agent.nanobot]   Max Tokens: 16384
+[21:16:37] [agent.nanobot]   Tools: 7
+[21:16:37] [agent.nanobot]   Is OpenRouter: False
+[21:16:37] [agent.nanobot]   Is Azure Proxy: False
+[21:16:37] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:37] [agent.nanobot] ===================================================
+[92m21:16:37 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:37] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:44] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:44] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:44] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:44] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:44] [agent.nanobot]   Max Tokens: 16384
+[21:16:44] [agent.nanobot]   Tools: 7
+[21:16:44] [agent.nanobot]   Is OpenRouter: False
+[21:16:44] [agent.nanobot]   Is Azure Proxy: False
+[21:16:44] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:44] [agent.nanobot] ===================================================
+[92m21:16:44 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:44] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:49] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:49] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:49] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:49] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:49] [agent.nanobot]   Max Tokens: 16384
+[21:16:49] [agent.nanobot]   Tools: 7
+[21:16:49] [agent.nanobot]   Is OpenRouter: False
+[21:16:49] [agent.nanobot]   Is Azure Proxy: False
+[21:16:49] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:49] [agent.nanobot] ===================================================
+[92m21:16:49 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:49] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:51] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:51] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:51] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:51] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:51] [agent.nanobot]   Max Tokens: 16384
+[21:16:51] [agent.nanobot]   Tools: 7
+[21:16:51] [agent.nanobot]   Is OpenRouter: False
+[21:16:51] [agent.nanobot]   Is Azure Proxy: False
+[21:16:51] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:51] [agent.nanobot] ===================================================
+[92m21:16:51 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:51] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:59] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:16:59] [agent.nanobot]   Requested Model: glm-4.7
+[21:16:59] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:16:59] [agent.nanobot]   API Key: 87db****WXfm
+[21:16:59] [agent.nanobot]   Max Tokens: 16384
+[21:16:59] [agent.nanobot]   Tools: 7
+[21:16:59] [agent.nanobot]   Is OpenRouter: False
+[21:16:59] [agent.nanobot]   Is Azure Proxy: False
+[21:16:59] [agent.nanobot]   Is Anthropic Compat: True
+[21:16:59] [agent.nanobot] ===================================================
+[92m21:16:59 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:16:59] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:17:43] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:17:43] [agent.nanobot]   Requested Model: glm-4.7
+[21:17:43] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:17:43] [agent.nanobot]   API Key: 87db****WXfm
+[21:17:43] [agent.nanobot]   Max Tokens: 16384
+[21:17:43] [agent.nanobot]   Tools: 7
+[21:17:43] [agent.nanobot]   Is OpenRouter: False
+[21:17:43] [agent.nanobot]   Is Azure Proxy: False
+[21:17:43] [agent.nanobot]   Is Anthropic Compat: True
+[21:17:43] [agent.nanobot] ===================================================
+[92m21:17:43 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:17:43] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:17:46] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:17:46] [agent.nanobot]   Requested Model: glm-4.7
+[21:17:46] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:17:46] [agent.nanobot]   API Key: 87db****WXfm
+[21:17:46] [agent.nanobot]   Max Tokens: 16384
+[21:17:46] [agent.nanobot]   Tools: 7
+[21:17:46] [agent.nanobot]   Is OpenRouter: False
+[21:17:46] [agent.nanobot]   Is Azure Proxy: False
+[21:17:46] [agent.nanobot]   Is Anthropic Compat: True
+[21:17:46] [agent.nanobot] ===================================================
+[92m21:17:46 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:17:46] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:17:52] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:17:52] [agent.nanobot]   Requested Model: glm-4.7
+[21:17:52] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:17:52] [agent.nanobot]   API Key: 87db****WXfm
+[21:17:52] [agent.nanobot]   Max Tokens: 16384
+[21:17:52] [agent.nanobot]   Tools: 7
+[21:17:52] [agent.nanobot]   Is OpenRouter: False
+[21:17:52] [agent.nanobot]   Is Azure Proxy: False
+[21:17:52] [agent.nanobot]   Is Anthropic Compat: True
+[21:17:52] [agent.nanobot] ===================================================
+[92m21:17:52 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:17:52] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:17:55] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:17:55] [agent.nanobot]   Requested Model: glm-4.7
+[21:17:55] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:17:55] [agent.nanobot]   API Key: 87db****WXfm
+[21:17:55] [agent.nanobot]   Max Tokens: 16384
+[21:17:55] [agent.nanobot]   Tools: 7
+[21:17:55] [agent.nanobot]   Is OpenRouter: False
+[21:17:55] [agent.nanobot]   Is Azure Proxy: False
+[21:17:55] [agent.nanobot]   Is Anthropic Compat: True
+[21:17:55] [agent.nanobot] ===================================================
+[92m21:17:55 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:17:55] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:17:59] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:17:59] [agent.nanobot]   Requested Model: glm-4.7
+[21:17:59] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:17:59] [agent.nanobot]   API Key: 87db****WXfm
+[21:17:59] [agent.nanobot]   Max Tokens: 16384
+[21:17:59] [agent.nanobot]   Tools: 7
+[21:17:59] [agent.nanobot]   Is OpenRouter: False
+[21:17:59] [agent.nanobot]   Is Azure Proxy: False
+[21:17:59] [agent.nanobot]   Is Anthropic Compat: True
+[21:17:59] [agent.nanobot] ===================================================
+[92m21:17:59 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:17:59] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:18:24] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:18:24] [agent.nanobot]   Requested Model: glm-4.7
+[21:18:24] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:18:24] [agent.nanobot]   API Key: 87db****WXfm
+[21:18:24] [agent.nanobot]   Max Tokens: 16384
+[21:18:24] [agent.nanobot]   Tools: 7
+[21:18:24] [agent.nanobot]   Is OpenRouter: False
+[21:18:24] [agent.nanobot]   Is Azure Proxy: False
+[21:18:24] [agent.nanobot]   Is Anthropic Compat: True
+[21:18:24] [agent.nanobot] ===================================================
+[92m21:18:24 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:18:24] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:18:27] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:18:27] [agent.nanobot]   Requested Model: glm-4.7
+[21:18:27] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:18:27] [agent.nanobot]   API Key: 87db****WXfm
+[21:18:27] [agent.nanobot]   Max Tokens: 16384
+[21:18:27] [agent.nanobot]   Tools: 7
+[21:18:27] [agent.nanobot]   Is OpenRouter: False
+[21:18:27] [agent.nanobot]   Is Azure Proxy: False
+[21:18:27] [agent.nanobot]   Is Anthropic Compat: True
+[21:18:27] [agent.nanobot] ===================================================
+[92m21:18:27 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:18:27] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:18:33] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:18:33] [agent.nanobot]   Requested Model: glm-4.7
+[21:18:33] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:18:33] [agent.nanobot]   API Key: 87db****WXfm
+[21:18:33] [agent.nanobot]   Max Tokens: 16384
+[21:18:33] [agent.nanobot]   Tools: 7
+[21:18:33] [agent.nanobot]   Is OpenRouter: False
+[21:18:33] [agent.nanobot]   Is Azure Proxy: False
+[21:18:33] [agent.nanobot]   Is Anthropic Compat: True
+[21:18:33] [agent.nanobot] ===================================================
+[92m21:18:33 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:18:33] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:18:34] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:18:34] [agent.nanobot]   Requested Model: glm-4.7
+[21:18:34] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:18:34] [agent.nanobot]   API Key: 87db****WXfm
+[21:18:34] [agent.nanobot]   Max Tokens: 16384
+[21:18:34] [agent.nanobot]   Tools: 7
+[21:18:34] [agent.nanobot]   Is OpenRouter: False
+[21:18:34] [agent.nanobot]   Is Azure Proxy: False
+[21:18:34] [agent.nanobot]   Is Anthropic Compat: True
+[21:18:34] [agent.nanobot] ===================================================
+[92m21:18:34 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:18:34] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:20:25] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:20:25] [agent.nanobot]   Requested Model: glm-4.7
+[21:20:25] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:20:25] [agent.nanobot]   API Key: 87db****WXfm
+[21:20:25] [agent.nanobot]   Max Tokens: 16384
+[21:20:25] [agent.nanobot]   Tools: 7
+[21:20:25] [agent.nanobot]   Is OpenRouter: False
+[21:20:25] [agent.nanobot]   Is Azure Proxy: False
+[21:20:25] [agent.nanobot]   Is Anthropic Compat: True
+[21:20:25] [agent.nanobot] ===================================================
+[92m21:20:25 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:20:25] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:20:43] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:20:43] [agent.nanobot]   Requested Model: glm-4.7
+[21:20:43] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:20:43] [agent.nanobot]   API Key: 87db****WXfm
+[21:20:43] [agent.nanobot]   Max Tokens: 16384
+[21:20:43] [agent.nanobot]   Tools: 7
+[21:20:43] [agent.nanobot]   Is OpenRouter: False
+[21:20:43] [agent.nanobot]   Is Azure Proxy: False
+[21:20:43] [agent.nanobot]   Is Anthropic Compat: True
+[21:20:43] [agent.nanobot] ===================================================
+[92m21:20:43 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:20:43] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:21:44] [agent.nanobot] [Collab] Verifier started (handoff 1/3)
+[21:21:44] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:21:44] [agent.nanobot]   Requested Model: glm-4.7
+[21:21:44] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:21:44] [agent.nanobot]   API Key: 87db****WXfm
+[21:21:44] [agent.nanobot]   Max Tokens: 4096
+[21:21:44] [agent.nanobot]   Tools: 7
+[21:21:44] [agent.nanobot]   Is OpenRouter: False
+[21:21:44] [agent.nanobot]   Is Azure Proxy: False
+[21:21:44] [agent.nanobot]   Is Anthropic Compat: True
+[21:21:44] [agent.nanobot] ===================================================
+[92m21:21:44 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:21:44] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:21:49] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:21:49] [agent.nanobot]   Requested Model: glm-4.7
+[21:21:49] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:21:49] [agent.nanobot]   API Key: 87db****WXfm
+[21:21:49] [agent.nanobot]   Max Tokens: 4096
+[21:21:49] [agent.nanobot]   Tools: 7
+[21:21:49] [agent.nanobot]   Is OpenRouter: False
+[21:21:49] [agent.nanobot]   Is Azure Proxy: False
+[21:21:49] [agent.nanobot]   Is Anthropic Compat: True
+[21:21:49] [agent.nanobot] ===================================================
+[92m21:21:49 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:21:49] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:22:16] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:22:16] [agent.nanobot]   Requested Model: glm-4.7
+[21:22:16] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:22:16] [agent.nanobot]   API Key: 87db****WXfm
+[21:22:16] [agent.nanobot]   Max Tokens: 4096
+[21:22:16] [agent.nanobot]   Tools: 7
+[21:22:16] [agent.nanobot]   Is OpenRouter: False
+[21:22:16] [agent.nanobot]   Is Azure Proxy: False
+[21:22:16] [agent.nanobot]   Is Anthropic Compat: True
+[21:22:16] [agent.nanobot] ===================================================
+[92m21:22:16 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:22:16] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:22:40] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:22:40] [agent.nanobot]   Requested Model: glm-4.7
+[21:22:40] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:22:40] [agent.nanobot]   API Key: 87db****WXfm
+[21:22:40] [agent.nanobot]   Max Tokens: 4096
+[21:22:40] [agent.nanobot]   Tools: 7
+[21:22:40] [agent.nanobot]   Is OpenRouter: False
+[21:22:40] [agent.nanobot]   Is Azure Proxy: False
+[21:22:40] [agent.nanobot]   Is Anthropic Compat: True
+[21:22:40] [agent.nanobot] ===================================================
+[92m21:22:40 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:22:40] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:23:09] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:23:09] [agent.nanobot]   Requested Model: glm-4.7
+[21:23:09] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:23:09] [agent.nanobot]   API Key: 87db****WXfm
+[21:23:09] [agent.nanobot]   Max Tokens: 4096
+[21:23:09] [agent.nanobot]   Tools: 7
+[21:23:09] [agent.nanobot]   Is OpenRouter: False
+[21:23:09] [agent.nanobot]   Is Azure Proxy: False
+[21:23:09] [agent.nanobot]   Is Anthropic Compat: True
+[21:23:09] [agent.nanobot] ===================================================
+[92m21:23:09 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:23:09] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:23:20] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:23:20] [agent.nanobot]   Requested Model: glm-4.7
+[21:23:20] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:23:20] [agent.nanobot]   API Key: 87db****WXfm
+[21:23:20] [agent.nanobot]   Max Tokens: 4096
+[21:23:20] [agent.nanobot]   Tools: 7
+[21:23:20] [agent.nanobot]   Is OpenRouter: False
+[21:23:20] [agent.nanobot]   Is Azure Proxy: False
+[21:23:20] [agent.nanobot]   Is Anthropic Compat: True
+[21:23:20] [agent.nanobot] ===================================================
+[92m21:23:20 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:23:20] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:23:38] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:23:38] [agent.nanobot]   Requested Model: glm-4.7
+[21:23:38] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:23:38] [agent.nanobot]   API Key: 87db****WXfm
+[21:23:38] [agent.nanobot]   Max Tokens: 4096
+[21:23:38] [agent.nanobot]   Tools: 7
+[21:23:38] [agent.nanobot]   Is OpenRouter: False
+[21:23:38] [agent.nanobot]   Is Azure Proxy: False
+[21:23:38] [agent.nanobot]   Is Anthropic Compat: True
+[21:23:38] [agent.nanobot] ===================================================
+[92m21:23:38 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:23:38] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:23:52] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:23:52] [agent.nanobot]   Requested Model: glm-4.7
+[21:23:52] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:23:52] [agent.nanobot]   API Key: 87db****WXfm
+[21:23:52] [agent.nanobot]   Max Tokens: 4096
+[21:23:52] [agent.nanobot]   Tools: 7
+[21:23:52] [agent.nanobot]   Is OpenRouter: False
+[21:23:52] [agent.nanobot]   Is Azure Proxy: False
+[21:23:52] [agent.nanobot]   Is Anthropic Compat: True
+[21:23:52] [agent.nanobot] ===================================================
+[92m21:23:52 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:23:52] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:25:53] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:25:53] [agent.nanobot]   Requested Model: glm-4.7
+[21:25:53] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:25:53] [agent.nanobot]   API Key: 87db****WXfm
+[21:25:53] [agent.nanobot]   Max Tokens: 4096
+[21:25:53] [agent.nanobot]   Tools: 7
+[21:25:53] [agent.nanobot]   Is OpenRouter: False
+[21:25:53] [agent.nanobot]   Is Azure Proxy: False
+[21:25:53] [agent.nanobot]   Is Anthropic Compat: True
+[21:25:53] [agent.nanobot] ===================================================
+[92m21:25:53 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:25:53] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:26:37] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:26:37] [agent.nanobot]   Requested Model: glm-4.7
+[21:26:37] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:26:37] [agent.nanobot]   API Key: 87db****WXfm
+[21:26:37] [agent.nanobot]   Max Tokens: 4096
+[21:26:37] [agent.nanobot]   Tools: 7
+[21:26:37] [agent.nanobot]   Is OpenRouter: False
+[21:26:37] [agent.nanobot]   Is Azure Proxy: False
+[21:26:37] [agent.nanobot]   Is Anthropic Compat: True
+[21:26:37] [agent.nanobot] ===================================================
+[92m21:26:37 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:26:37] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:27:13] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:27:13] [agent.nanobot]   Requested Model: glm-4.7
+[21:27:13] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:27:13] [agent.nanobot]   API Key: 87db****WXfm
+[21:27:13] [agent.nanobot]   Max Tokens: 1024
+[21:27:13] [agent.nanobot]   Tools: 0
+[21:27:13] [agent.nanobot]   Is OpenRouter: False
+[21:27:13] [agent.nanobot]   Is Azure Proxy: False
+[21:27:13] [agent.nanobot]   Is Anthropic Compat: True
+[21:27:13] [agent.nanobot] ===================================================
+[92m21:27:13 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:27:13] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:27:13] [agent.collab.roles] [VerifierRole] max_turns reached, forced verdict=FAIL
+[21:27:13] [agent.collab.roles] [VerifierRole] verdict=FAIL, tool_calls=10, feedback_len=65
+[21:27:13] [agent.nanobot] [Collab] Verifier FAIL round 1, feedback injected
+[21:27:13] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:27:13] [agent.nanobot]   Requested Model: glm-4.7
+[21:27:13] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:27:13] [agent.nanobot]   API Key: 87db****WXfm
+[21:27:13] [agent.nanobot]   Max Tokens: 16384
+[21:27:13] [agent.nanobot]   Tools: 7
+[21:27:13] [agent.nanobot]   Is OpenRouter: False
+[21:27:13] [agent.nanobot]   Is Azure Proxy: False
+[21:27:13] [agent.nanobot]   Is Anthropic Compat: True
+[21:27:13] [agent.nanobot] ===================================================
+[92m21:27:13 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:27:13] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:28:14] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:28:14] [agent.nanobot]   Requested Model: glm-4.7
+[21:28:14] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:28:14] [agent.nanobot]   API Key: 87db****WXfm
+[21:28:14] [agent.nanobot]   Max Tokens: 16384
+[21:28:14] [agent.nanobot]   Tools: 7
+[21:28:14] [agent.nanobot]   Is OpenRouter: False
+[21:28:14] [agent.nanobot]   Is Azure Proxy: False
+[21:28:14] [agent.nanobot]   Is Anthropic Compat: True
+[21:28:14] [agent.nanobot] ===================================================
+[92m21:28:14 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:28:14] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:28:30] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:28:30] [agent.nanobot]   Requested Model: glm-4.7
+[21:28:30] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:28:30] [agent.nanobot]   API Key: 87db****WXfm
+[21:28:30] [agent.nanobot]   Max Tokens: 16384
+[21:28:30] [agent.nanobot]   Tools: 7
+[21:28:30] [agent.nanobot]   Is OpenRouter: False
+[21:28:30] [agent.nanobot]   Is Azure Proxy: False
+[21:28:30] [agent.nanobot]   Is Anthropic Compat: True
+[21:28:30] [agent.nanobot] ===================================================
+[92m21:28:30 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:28:30] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:29:00] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:29:00] [agent.nanobot]   Requested Model: glm-4.7
+[21:29:00] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:29:00] [agent.nanobot]   API Key: 87db****WXfm
+[21:29:00] [agent.nanobot]   Max Tokens: 16384
+[21:29:00] [agent.nanobot]   Tools: 7
+[21:29:00] [agent.nanobot]   Is OpenRouter: False
+[21:29:00] [agent.nanobot]   Is Azure Proxy: False
+[21:29:00] [agent.nanobot]   Is Anthropic Compat: True
+[21:29:00] [agent.nanobot] ===================================================
+[92m21:29:00 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:29:00] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:29:06] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:29:06] [agent.nanobot]   Requested Model: glm-4.7
+[21:29:06] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:29:06] [agent.nanobot]   API Key: 87db****WXfm
+[21:29:06] [agent.nanobot]   Max Tokens: 16384
+[21:29:06] [agent.nanobot]   Tools: 7
+[21:29:06] [agent.nanobot]   Is OpenRouter: False
+[21:29:06] [agent.nanobot]   Is Azure Proxy: False
+[21:29:06] [agent.nanobot]   Is Anthropic Compat: True
+[21:29:06] [agent.nanobot] ===================================================
+[92m21:29:06 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:29:06] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:29:10] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:29:10] [agent.nanobot]   Requested Model: glm-4.7
+[21:29:10] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:29:10] [agent.nanobot]   API Key: 87db****WXfm
+[21:29:10] [agent.nanobot]   Max Tokens: 16384
+[21:29:10] [agent.nanobot]   Tools: 7
+[21:29:10] [agent.nanobot]   Is OpenRouter: False
+[21:29:10] [agent.nanobot]   Is Azure Proxy: False
+[21:29:10] [agent.nanobot]   Is Anthropic Compat: True
+[21:29:10] [agent.nanobot] ===================================================
+[92m21:29:10 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:29:10] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:29:15] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:29:15] [agent.nanobot]   Requested Model: glm-4.7
+[21:29:15] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:29:15] [agent.nanobot]   API Key: 87db****WXfm
+[21:29:15] [agent.nanobot]   Max Tokens: 16384
+[21:29:15] [agent.nanobot]   Tools: 7
+[21:29:15] [agent.nanobot]   Is OpenRouter: False
+[21:29:15] [agent.nanobot]   Is Azure Proxy: False
+[21:29:15] [agent.nanobot]   Is Anthropic Compat: True
+[21:29:15] [agent.nanobot] ===================================================
+[92m21:29:15 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:29:15] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:29:19] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:29:19] [agent.nanobot]   Requested Model: glm-4.7
+[21:29:19] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:29:19] [agent.nanobot]   API Key: 87db****WXfm
+[21:29:19] [agent.nanobot]   Max Tokens: 16384
+[21:29:19] [agent.nanobot]   Tools: 7
+[21:29:19] [agent.nanobot]   Is OpenRouter: False
+[21:29:19] [agent.nanobot]   Is Azure Proxy: False
+[21:29:19] [agent.nanobot]   Is Anthropic Compat: True
+[21:29:19] [agent.nanobot] ===================================================
+[92m21:29:19 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:29:19] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:29:36] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:29:36] [agent.nanobot]   Requested Model: glm-4.7
+[21:29:36] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:29:36] [agent.nanobot]   API Key: 87db****WXfm
+[21:29:36] [agent.nanobot]   Max Tokens: 16384
+[21:29:36] [agent.nanobot]   Tools: 7
+[21:29:36] [agent.nanobot]   Is OpenRouter: False
+[21:29:36] [agent.nanobot]   Is Azure Proxy: False
+[21:29:36] [agent.nanobot]   Is Anthropic Compat: True
+[21:29:36] [agent.nanobot] ===================================================
+[92m21:29:36 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:29:36] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:29:43] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:29:43] [agent.nanobot]   Requested Model: glm-4.7
+[21:29:43] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:29:43] [agent.nanobot]   API Key: 87db****WXfm
+[21:29:43] [agent.nanobot]   Max Tokens: 16384
+[21:29:43] [agent.nanobot]   Tools: 7
+[21:29:43] [agent.nanobot]   Is OpenRouter: False
+[21:29:43] [agent.nanobot]   Is Azure Proxy: False
+[21:29:43] [agent.nanobot]   Is Anthropic Compat: True
+[21:29:43] [agent.nanobot] ===================================================
+[92m21:29:43 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:29:43] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:30:39] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:30:39] [agent.nanobot]   Requested Model: glm-4.7
+[21:30:39] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:30:39] [agent.nanobot]   API Key: 87db****WXfm
+[21:30:39] [agent.nanobot]   Max Tokens: 16384
+[21:30:39] [agent.nanobot]   Tools: 7
+[21:30:39] [agent.nanobot]   Is OpenRouter: False
+[21:30:39] [agent.nanobot]   Is Azure Proxy: False
+[21:30:39] [agent.nanobot]   Is Anthropic Compat: True
+[21:30:39] [agent.nanobot] ===================================================
+[92m21:30:39 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:30:39] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:32:05] [agent.nanobot] [Collab] Verifier started (handoff 2/3)
+[21:32:05] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:32:05] [agent.nanobot]   Requested Model: glm-4.7
+[21:32:05] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:32:05] [agent.nanobot]   API Key: 87db****WXfm
+[21:32:05] [agent.nanobot]   Max Tokens: 4096
+[21:32:05] [agent.nanobot]   Tools: 7
+[21:32:05] [agent.nanobot]   Is OpenRouter: False
+[21:32:05] [agent.nanobot]   Is Azure Proxy: False
+[21:32:05] [agent.nanobot]   Is Anthropic Compat: True
+[21:32:05] [agent.nanobot] ===================================================
+[92m21:32:05 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:32:05] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:32:15] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:32:15] [agent.nanobot]   Requested Model: glm-4.7
+[21:32:15] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:32:15] [agent.nanobot]   API Key: 87db****WXfm
+[21:32:15] [agent.nanobot]   Max Tokens: 4096
+[21:32:15] [agent.nanobot]   Tools: 7
+[21:32:15] [agent.nanobot]   Is OpenRouter: False
+[21:32:15] [agent.nanobot]   Is Azure Proxy: False
+[21:32:15] [agent.nanobot]   Is Anthropic Compat: True
+[21:32:15] [agent.nanobot] ===================================================
+[92m21:32:15 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:32:15] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:32:23] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:32:23] [agent.nanobot]   Requested Model: glm-4.7
+[21:32:23] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:32:23] [agent.nanobot]   API Key: 87db****WXfm
+[21:32:23] [agent.nanobot]   Max Tokens: 4096
+[21:32:23] [agent.nanobot]   Tools: 7
+[21:32:23] [agent.nanobot]   Is OpenRouter: False
+[21:32:23] [agent.nanobot]   Is Azure Proxy: False
+[21:32:23] [agent.nanobot]   Is Anthropic Compat: True
+[21:32:23] [agent.nanobot] ===================================================
+[92m21:32:23 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:32:23] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:34:37] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:34:37] [agent.nanobot]   Requested Model: glm-4.7
+[21:34:37] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:34:37] [agent.nanobot]   API Key: 87db****WXfm
+[21:34:37] [agent.nanobot]   Max Tokens: 4096
+[21:34:37] [agent.nanobot]   Tools: 7
+[21:34:37] [agent.nanobot]   Is OpenRouter: False
+[21:34:37] [agent.nanobot]   Is Azure Proxy: False
+[21:34:37] [agent.nanobot]   Is Anthropic Compat: True
+[21:34:37] [agent.nanobot] ===================================================
+[92m21:34:37 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:34:37] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:35:00] [agent.collab.roles] [VerifierRole] verdict=FAIL, tool_calls=10, feedback_len=1909
+[21:35:00] [agent.nanobot] [Collab] Verifier FAIL round 2, feedback injected
+[21:35:00] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:35:00] [agent.nanobot]   Requested Model: glm-4.7
+[21:35:00] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:35:00] [agent.nanobot]   API Key: 87db****WXfm
+[21:35:00] [agent.nanobot]   Max Tokens: 16384
+[21:35:00] [agent.nanobot]   Tools: 7
+[21:35:00] [agent.nanobot]   Is OpenRouter: False
+[21:35:00] [agent.nanobot]   Is Azure Proxy: False
+[21:35:00] [agent.nanobot]   Is Anthropic Compat: True
+[21:35:00] [agent.nanobot] ===================================================
+[92m21:35:00 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:35:00] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:35:24] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:35:24] [agent.nanobot]   Requested Model: glm-4.7
+[21:35:24] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:35:24] [agent.nanobot]   API Key: 87db****WXfm
+[21:35:24] [agent.nanobot]   Max Tokens: 16384
+[21:35:24] [agent.nanobot]   Tools: 7
+[21:35:24] [agent.nanobot]   Is OpenRouter: False
+[21:35:24] [agent.nanobot]   Is Azure Proxy: False
+[21:35:24] [agent.nanobot]   Is Anthropic Compat: True
+[21:35:24] [agent.nanobot] ===================================================
+[92m21:35:24 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:35:24] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:36:10] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:36:10] [agent.nanobot]   Requested Model: glm-4.7
+[21:36:10] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:36:10] [agent.nanobot]   API Key: 87db****WXfm
+[21:36:10] [agent.nanobot]   Max Tokens: 16384
+[21:36:10] [agent.nanobot]   Tools: 7
+[21:36:10] [agent.nanobot]   Is OpenRouter: False
+[21:36:10] [agent.nanobot]   Is Azure Proxy: False
+[21:36:10] [agent.nanobot]   Is Anthropic Compat: True
+[21:36:10] [agent.nanobot] ===================================================
+[92m21:36:10 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:36:10] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:39:04] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:39:04] [agent.nanobot]   Requested Model: glm-4.7
+[21:39:04] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:39:04] [agent.nanobot]   API Key: 87db****WXfm
+[21:39:04] [agent.nanobot]   Max Tokens: 16384
+[21:39:04] [agent.nanobot]   Tools: 7
+[21:39:04] [agent.nanobot]   Is OpenRouter: False
+[21:39:04] [agent.nanobot]   Is Azure Proxy: False
+[21:39:04] [agent.nanobot]   Is Anthropic Compat: True
+[21:39:04] [agent.nanobot] ===================================================
+[92m21:39:04 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:39:04] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:39:12] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:39:12] [agent.nanobot]   Requested Model: glm-4.7
+[21:39:12] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:39:12] [agent.nanobot]   API Key: 87db****WXfm
+[21:39:12] [agent.nanobot]   Max Tokens: 16384
+[21:39:12] [agent.nanobot]   Tools: 7
+[21:39:12] [agent.nanobot]   Is OpenRouter: False
+[21:39:12] [agent.nanobot]   Is Azure Proxy: False
+[21:39:12] [agent.nanobot]   Is Anthropic Compat: True
+[21:39:12] [agent.nanobot] ===================================================
+[92m21:39:12 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:39:12] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:39:47] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:39:47] [agent.nanobot]   Requested Model: glm-4.7
+[21:39:47] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:39:47] [agent.nanobot]   API Key: 87db****WXfm
+[21:39:47] [agent.nanobot]   Max Tokens: 16384
+[21:39:47] [agent.nanobot]   Tools: 7
+[21:39:47] [agent.nanobot]   Is OpenRouter: False
+[21:39:47] [agent.nanobot]   Is Azure Proxy: False
+[21:39:47] [agent.nanobot]   Is Anthropic Compat: True
+[21:39:47] [agent.nanobot] ===================================================
+[92m21:39:47 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:39:47] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:40:03] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:40:03] [agent.nanobot]   Requested Model: glm-4.7
+[21:40:03] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:40:03] [agent.nanobot]   API Key: 87db****WXfm
+[21:40:03] [agent.nanobot]   Max Tokens: 16384
+[21:40:03] [agent.nanobot]   Tools: 7
+[21:40:03] [agent.nanobot]   Is OpenRouter: False
+[21:40:03] [agent.nanobot]   Is Azure Proxy: False
+[21:40:03] [agent.nanobot]   Is Anthropic Compat: True
+[21:40:03] [agent.nanobot] ===================================================
+[92m21:40:03 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:40:03] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:40:04] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:40:04] [agent.nanobot]   Requested Model: glm-4.7
+[21:40:04] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:40:04] [agent.nanobot]   API Key: 87db****WXfm
+[21:40:04] [agent.nanobot]   Max Tokens: 16384
+[21:40:04] [agent.nanobot]   Tools: 7
+[21:40:04] [agent.nanobot]   Is OpenRouter: False
+[21:40:04] [agent.nanobot]   Is Azure Proxy: False
+[21:40:04] [agent.nanobot]   Is Anthropic Compat: True
+[21:40:04] [agent.nanobot] ===================================================
+[92m21:40:04 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:40:04] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:41:13] [agent.nanobot] [Collab] Verifier started (handoff 3/3)
+[21:41:13] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:41:13] [agent.nanobot]   Requested Model: glm-4.7
+[21:41:13] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:41:13] [agent.nanobot]   API Key: 87db****WXfm
+[21:41:13] [agent.nanobot]   Max Tokens: 4096
+[21:41:13] [agent.nanobot]   Tools: 7
+[21:41:13] [agent.nanobot]   Is OpenRouter: False
+[21:41:13] [agent.nanobot]   Is Azure Proxy: False
+[21:41:13] [agent.nanobot]   Is Anthropic Compat: True
+[21:41:13] [agent.nanobot] ===================================================
+[92m21:41:13 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:41:13] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:41:14] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:41:14] [agent.nanobot]   Requested Model: glm-4.7
+[21:41:14] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:41:14] [agent.nanobot]   API Key: 87db****WXfm
+[21:41:14] [agent.nanobot]   Max Tokens: 4096
+[21:41:14] [agent.nanobot]   Tools: 7
+[21:41:14] [agent.nanobot]   Is OpenRouter: False
+[21:41:14] [agent.nanobot]   Is Azure Proxy: False
+[21:41:14] [agent.nanobot]   Is Anthropic Compat: True
+[21:41:14] [agent.nanobot] ===================================================
+[92m21:41:14 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:41:14] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:41:45] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:41:45] [agent.nanobot]   Requested Model: glm-4.7
+[21:41:45] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:41:45] [agent.nanobot]   API Key: 87db****WXfm
+[21:41:45] [agent.nanobot]   Max Tokens: 4096
+[21:41:45] [agent.nanobot]   Tools: 7
+[21:41:45] [agent.nanobot]   Is OpenRouter: False
+[21:41:45] [agent.nanobot]   Is Azure Proxy: False
+[21:41:45] [agent.nanobot]   Is Anthropic Compat: True
+[21:41:45] [agent.nanobot] ===================================================
+[92m21:41:45 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:41:45] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:41:46] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:41:46] [agent.nanobot]   Requested Model: glm-4.7
+[21:41:46] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:41:46] [agent.nanobot]   API Key: 87db****WXfm
+[21:41:46] [agent.nanobot]   Max Tokens: 4096
+[21:41:46] [agent.nanobot]   Tools: 7
+[21:41:46] [agent.nanobot]   Is OpenRouter: False
+[21:41:46] [agent.nanobot]   Is Azure Proxy: False
+[21:41:46] [agent.nanobot]   Is Anthropic Compat: True
+[21:41:46] [agent.nanobot] ===================================================
+[92m21:41:46 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:41:46] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:41:47] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:41:47] [agent.nanobot]   Requested Model: glm-4.7
+[21:41:47] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:41:47] [agent.nanobot]   API Key: 87db****WXfm
+[21:41:47] [agent.nanobot]   Max Tokens: 4096
+[21:41:47] [agent.nanobot]   Tools: 7
+[21:41:47] [agent.nanobot]   Is OpenRouter: False
+[21:41:47] [agent.nanobot]   Is Azure Proxy: False
+[21:41:47] [agent.nanobot]   Is Anthropic Compat: True
+[21:41:47] [agent.nanobot] ===================================================
+[92m21:41:47 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:41:47] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:41:50] [agent.collab.roles] [VerifierRole] verdict=FAIL, tool_calls=4, feedback_len=882
+[21:41:50] [agent.nanobot] [Collab] Verifier FAIL round 3, feedback injected
+[21:41:50] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:41:50] [agent.nanobot]   Requested Model: glm-4.7
+[21:41:50] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:41:50] [agent.nanobot]   API Key: 87db****WXfm
+[21:41:50] [agent.nanobot]   Max Tokens: 16384
+[21:41:50] [agent.nanobot]   Tools: 7
+[21:41:50] [agent.nanobot]   Is OpenRouter: False
+[21:41:50] [agent.nanobot]   Is Azure Proxy: False
+[21:41:50] [agent.nanobot]   Is Anthropic Compat: True
+[21:41:50] [agent.nanobot] ===================================================
+[92m21:41:50 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:41:50] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:43:10] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:43:10] [agent.nanobot]   Requested Model: glm-4.7
+[21:43:10] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:43:10] [agent.nanobot]   API Key: 87db****WXfm
+[21:43:10] [agent.nanobot]   Max Tokens: 16384
+[21:43:10] [agent.nanobot]   Tools: 7
+[21:43:10] [agent.nanobot]   Is OpenRouter: False
+[21:43:10] [agent.nanobot]   Is Azure Proxy: False
+[21:43:10] [agent.nanobot]   Is Anthropic Compat: True
+[21:43:10] [agent.nanobot] ===================================================
+[92m21:43:10 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:43:10] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:43:11] [agent.nanobot] 📞 ==================== LLM Call ====================
+[21:43:11] [agent.nanobot]   Requested Model: glm-4.7
+[21:43:11] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[21:43:11] [agent.nanobot]   API Key: 87db****WXfm
+[21:43:11] [agent.nanobot]   Max Tokens: 16384
+[21:43:11] [agent.nanobot]   Tools: 7
+[21:43:11] [agent.nanobot]   Is OpenRouter: False
+[21:43:11] [agent.nanobot]   Is Azure Proxy: False
+[21:43:11] [agent.nanobot]   Is Anthropic Compat: True
+[21:43:11] [agent.nanobot] ===================================================
+[92m21:43:11 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:43:11] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[21:15:32] Config: bench=['claweval'], models=['glm-4.7'], sample=all
+[21:15:32] 
+============================================================
+[21:15:32] BENCHMARK: ClawEval (300 tasks)
+[21:15:32] ============================================================
+[21:15:32]   [claweval×glm-4.7] evaluating...
+[21:15:34] [claweval] Docker image 'claw-eval-agent:latest' found
+[21:15:34] [claweval] Evaluating 1 tasks with model=glm-4.7, parallel=1
+  service 'web_real' started on port 9114
+[sandbox] Container claw-agent-T071_video_mme_coauthor_papers-04e32e started at http://localhost:32856
+[21:15:35] [claweval] Registered mock tool: web_search -> POST http://localhost:9114/web/search
+[21:15:35] [claweval] Registered mock tool: web_fetch -> POST http://localhost:9114/web/fetch
+[_run_loop] Empty response at iteration 48, retrying once
+[_run_loop] Retry got tool_calls at iteration 48
+[_run_loop] Empty response at iteration 50, retrying once
+[_run_loop] Retry still empty at iteration 50, returning
+[sandbox] Container claw-agent-T071_video_mme_coauthor_papers-04e32e removed
+  service 'web_real' stopped
+[21:45:20] [claweval] 1/1 new tasks done (total: 1/1)
+[21:45:20] [claweval] 汇总已保存: 1/1 完成
+[21:45:20]   [claweval×glm-4.7] done: score=0.776, scored=1/1
+[21:45:20] 
+

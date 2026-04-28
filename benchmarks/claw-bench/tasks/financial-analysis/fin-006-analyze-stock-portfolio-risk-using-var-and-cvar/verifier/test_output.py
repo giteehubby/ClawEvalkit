@@ -5,7 +5,10 @@ import pandas as pd
 from pathlib import Path
 
 @pytest.fixture
-def workspace_path():
+def workspace_path(request):
+    ws = request.config.getoption("--workspace")
+    if ws is not None:
+        return Path(ws)
     return Path("workspace")
 
 def test_output_file_exists(workspace_path):

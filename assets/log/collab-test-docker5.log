@@ -1,0 +1,16 @@
+[14:55:03] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=all
+[14:55:03] 
+============================================================
+[14:55:03] BENCHMARK: ClawBench Official (250 tasks)
+[14:55:03] ============================================================
+[14:55:03]   [clawbench-official×glm-4.7] evaluating...
+[14:55:11] [clawbench_data-003_glm-4.7_20260426_065505] Container started
+[14:56:18]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-003/environment/setup.sh
+[14:56:18]   [container] [setup] setup.sh 成功
+[14:56:18]   [container] [setup] 工作空间文件: ['instruction.md', 'sales.csv']
+[14:56:18]   [container] DONE
+[14:56:18] [clawbench_data-003_glm-4.7_20260426_065505] Agent finished in 66.80s, returncode=0
+[14:56:18] [clawbench_data-003_glm-4.7_20260426_065505] Agent result: passed=False, score=0.8333
+[14:56:18]   [clawbench-official×glm-4.7] done: score=83.3, scored=0/1
+[14:56:18] 
+

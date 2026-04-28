@@ -120,13 +120,10 @@ class EmailTriageGrader(AbstractGrader):
         max_retries = 30
         for attempt in range(max_retries + 1):
             try:
-                resp = judge.client.chat.completions.create(
-                    model=judge.model_id,
-                    messages=[{"role": "user", "content": prompt}],
-                    temperature=0.0,
+                raw = judge._call_api(
+                    [{"role": "user", "content": prompt}],
                     max_tokens=8192,
-                )
-                raw = resp.choices[0].message.content or "{}"
+                ) or "{}"
                 raw = re.sub(r"^```(?:json)?\s*", "", raw.strip())
                 raw = re.sub(r"\s*```$", "", raw.strip())
                 m = re.search(r'\{[^{}]*\}', raw)

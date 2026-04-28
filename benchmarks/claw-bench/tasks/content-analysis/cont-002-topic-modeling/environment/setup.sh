@@ -4,7 +4,7 @@ WORKSPACE="${1:-workspace}"
 
 mkdir -p "$WORKSPACE/corpus"
 
-python3 - <<EOF
+python3 - <<'EOF'
 import random
 import os
 random.seed(42)

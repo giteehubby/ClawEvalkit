@@ -7,11 +7,6 @@ import pytest
 
 
 @pytest.fixture
-def workspace(request):
-    return request.config.getoption("--workspace")
-
-
-@pytest.fixture
 def schedule(workspace):
     path = Path(workspace) / "schedule.json"
     assert path.exists(), "schedule.json not found in workspace"

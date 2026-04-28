@@ -1,0 +1,17 @@
+[19:39:57] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=all
+[19:39:57] 
+============================================================
+[19:39:57] BENCHMARK: ClawBench Official (250 tasks)
+[19:39:57] ============================================================
+[19:39:57]   [clawbench-official×glm-4.7] evaluating...
+[19:40:01] [clawbench_cs-005-api-design_glm-4.7_20260426_113959] Container started
+[19:40:01] [cs-005-api-design] Control harness detected, timeout adjusted: 3600 → 3780
+[19:42:09]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cs-engineering/cs-005-api-design/environment/setup.sh
+[19:42:09]   [container] [setup] setup.sh 成功
+[19:42:09]   [container] [setup] 工作空间文件: ['instruction.md', 'api_requirements.txt']
+[19:42:09]   [container] DONE
+[19:42:09] [clawbench_cs-005-api-design_glm-4.7_20260426_113959] Agent finished in 127.81s, returncode=0
+[19:42:09] [clawbench_cs-005-api-design_glm-4.7_20260426_113959] Agent result: passed=False, score=0.8000
+[19:42:09]   [clawbench-official×glm-4.7] done: score=80.0, scored=0/1
+[19:42:09] 
+

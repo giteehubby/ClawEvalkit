@@ -1,0 +1,518 @@
+[22:23:51] [agent.nanobot] Control modules initialized: enabled=False
+[22:23:51] [agent.nanobot] Loaded 9 skills from workspace
+[22:23:51] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[22:23:51] [agent.nanobot]   Model: glm-4.7
+[22:23:51] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:23:51] [agent.nanobot]   API Key: 87db****WXfm
+[22:23:51] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T061_finance_mu_gm_beat__u777bca
+[22:23:51] [agent.nanobot]   Timeout: 1800s
+[22:23:51] [agent.nanobot] =================================================================
+[22:23:51] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:23:51] [agent.nanobot]   Requested Model: glm-4.7
+[22:23:51] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:23:51] [agent.nanobot]   API Key: 87db****WXfm
+[22:23:51] [agent.nanobot]   Max Tokens: 16384
+[22:23:51] [agent.nanobot]   Tools: 7
+[22:23:51] [agent.nanobot]   Is OpenRouter: False
+[22:23:51] [agent.nanobot]   Is Azure Proxy: False
+[22:23:51] [agent.nanobot]   Is Anthropic Compat: True
+[22:23:51] [agent.nanobot] ===================================================
+[92m22:23:51 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:23:51] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:23:58] [datasets] JAX version 0.9.2 available.
+[22:23:58] [memory.store] [EpisodicMemoryStore] Loading embedding model: all-MiniLM-L6-v2
+[22:23:58] [sentence_transformers.SentenceTransformer] Use pytorch device_name: mps
+[22:23:58] [sentence_transformers.SentenceTransformer] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: a753c481-d4c6-4d25-bb9d-d202bab3a7b1)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:24:03] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: a753c481-d4c6-4d25-bb9d-d202bab3a7b1)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 1s [Retry 1/5].
+[22:24:03] [huggingface_hub.utils._http] Retrying in 1s [Retry 1/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 4e5b40c6-4f1e-482a-9619-a40ae7602a7d)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:24:09] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 4e5b40c6-4f1e-482a-9619-a40ae7602a7d)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 2s [Retry 2/5].
+[22:24:09] [huggingface_hub.utils._http] Retrying in 2s [Retry 2/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 7c674d19-0b05-4305-b7e3-2d1d788978ad)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:24:16] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 7c674d19-0b05-4305-b7e3-2d1d788978ad)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 4s [Retry 3/5].
+[22:24:16] [huggingface_hub.utils._http] Retrying in 4s [Retry 3/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: ca390c15-f0da-49a9-be6e-8ef00e688703)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:24:25] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: ca390c15-f0da-49a9-be6e-8ef00e688703)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 8s [Retry 4/5].
+[22:24:25] [huggingface_hub.utils._http] Retrying in 8s [Retry 4/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 20819640-c5d6-4542-a0e0-6dbde7f34982)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:24:38] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 20819640-c5d6-4542-a0e0-6dbde7f34982)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 8s [Retry 5/5].
+[22:24:38] [huggingface_hub.utils._http] Retrying in 8s [Retry 5/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: b7d2ded3-d02c-405d-a5b7-32a987e771d0)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:24:52] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: b7d2ded3-d02c-405d-a5b7-32a987e771d0)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:24:52] [sentence_transformers.SentenceTransformer] No sentence-transformers model found with name sentence-transformers/all-MiniLM-L6-v2. Creating a new one with mean pooling.
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 80085ff0-2c00-40b8-bdae-b2c668e65ba8)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:24:57] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 80085ff0-2c00-40b8-bdae-b2c668e65ba8)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 1s [Retry 1/5].
+[22:24:57] [huggingface_hub.utils._http] Retrying in 1s [Retry 1/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: b70c9e96-dbbf-49c7-b968-e3a07553733a)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:25:03] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: b70c9e96-dbbf-49c7-b968-e3a07553733a)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 2s [Retry 2/5].
+[22:25:03] [huggingface_hub.utils._http] Retrying in 2s [Retry 2/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 3deaa9d4-a92b-4846-92d6-55a0c96b1bae)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:25:10] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 3deaa9d4-a92b-4846-92d6-55a0c96b1bae)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 4s [Retry 3/5].
+[22:25:10] [huggingface_hub.utils._http] Retrying in 4s [Retry 3/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 4cd3a7b2-85d0-4329-84fa-41b9a4a10f5a)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:25:19] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 4cd3a7b2-85d0-4329-84fa-41b9a4a10f5a)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 8s [Retry 4/5].
+[22:25:19] [huggingface_hub.utils._http] Retrying in 8s [Retry 4/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 50ab7ea1-9b00-4997-a3dc-c0c9a2c479d1)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:25:32] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 50ab7ea1-9b00-4997-a3dc-c0c9a2c479d1)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 8s [Retry 5/5].
+[22:25:32] [huggingface_hub.utils._http] Retrying in 8s [Retry 5/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: ba3651b8-6042-4038-bc9e-661c819c8c3e)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:25:45] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: ba3651b8-6042-4038-bc9e-661c819c8c3e)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:25:45] [agent.nanobot] [execute] Exception caught: SSLError: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: ba3651b8-6042-4038-bc9e-661c819c8c3e)')
+[22:25:50] [agent.nanobot] Control modules initialized: enabled=False
+[22:25:50] [agent.nanobot] Loaded 9 skills from workspace
+[22:25:50] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[22:25:50] [agent.nanobot]   Model: glm-4.7
+[22:25:50] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:25:50] [agent.nanobot]   API Key: 87db****WXfm
+[22:25:50] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T131zh_order_profit_analysis_n63d414p
+[22:25:50] [agent.nanobot]   Timeout: 600s
+[22:25:50] [agent.nanobot] =================================================================
+[22:25:50] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:25:50] [agent.nanobot]   Requested Model: glm-4.7
+[22:25:50] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:25:50] [agent.nanobot]   API Key: 87db****WXfm
+[22:25:50] [agent.nanobot]   Max Tokens: 16384
+[22:25:50] [agent.nanobot]   Tools: 11
+[22:25:50] [agent.nanobot]   Is OpenRouter: False
+[22:25:50] [agent.nanobot]   Is Azure Proxy: False
+[22:25:50] [agent.nanobot]   Is Anthropic Compat: True
+[22:25:50] [agent.nanobot] ===================================================
+[92m22:25:50 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:25:50] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:25:55] [memory.store] [EpisodicMemoryStore] Loading embedding model: all-MiniLM-L6-v2
+[22:25:55] [sentence_transformers.SentenceTransformer] Use pytorch device_name: mps
+[22:25:55] [sentence_transformers.SentenceTransformer] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 6f9a8b96-54ed-4a33-9a3c-e0fac6251934)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:26:00] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 6f9a8b96-54ed-4a33-9a3c-e0fac6251934)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 1s [Retry 1/5].
+[22:26:00] [huggingface_hub.utils._http] Retrying in 1s [Retry 1/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 57634f0e-8b12-4273-afaa-b4c43f379e22)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:26:06] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 57634f0e-8b12-4273-afaa-b4c43f379e22)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 2s [Retry 2/5].
+[22:26:06] [huggingface_hub.utils._http] Retrying in 2s [Retry 2/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: e5642444-690c-48bc-9b83-40e6c9cf5740)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:26:13] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: e5642444-690c-48bc-9b83-40e6c9cf5740)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 4s [Retry 3/5].
+[22:26:13] [huggingface_hub.utils._http] Retrying in 4s [Retry 3/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 98a21144-20be-42b8-a4af-62c53387eeef)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:26:22] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 98a21144-20be-42b8-a4af-62c53387eeef)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 8s [Retry 4/5].
+[22:26:22] [huggingface_hub.utils._http] Retrying in 8s [Retry 4/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: d032bcc8-f031-45c0-a3c0-f330087b77c1)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:26:35] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: d032bcc8-f031-45c0-a3c0-f330087b77c1)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 8s [Retry 5/5].
+[22:26:35] [huggingface_hub.utils._http] Retrying in 8s [Retry 5/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 7842bf15-3c68-4ec7-b834-e5fb253ba2f6)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:26:49] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 7842bf15-3c68-4ec7-b834-e5fb253ba2f6)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:26:49] [sentence_transformers.SentenceTransformer] No sentence-transformers model found with name sentence-transformers/all-MiniLM-L6-v2. Creating a new one with mean pooling.
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 24dc1764-6eb1-413f-a704-e605687f2371)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:26:54] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 24dc1764-6eb1-413f-a704-e605687f2371)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 1s [Retry 1/5].
+[22:26:54] [huggingface_hub.utils._http] Retrying in 1s [Retry 1/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 567f09f0-64ce-4b6c-9fc5-2cc6f05241b3)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:27:00] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 567f09f0-64ce-4b6c-9fc5-2cc6f05241b3)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 2s [Retry 2/5].
+[22:27:00] [huggingface_hub.utils._http] Retrying in 2s [Retry 2/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 06c2673f-cd95-4a1b-bf3b-77c754a6ac8d)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:27:07] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 06c2673f-cd95-4a1b-bf3b-77c754a6ac8d)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 4s [Retry 3/5].
+[22:27:07] [huggingface_hub.utils._http] Retrying in 4s [Retry 3/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 3c85e613-b58f-4ff1-904b-cf6ec1b63978)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:27:16] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 3c85e613-b58f-4ff1-904b-cf6ec1b63978)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 8s [Retry 4/5].
+[22:27:16] [huggingface_hub.utils._http] Retrying in 8s [Retry 4/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 7cdf45e3-5361-48a9-88e2-72da7756ab88)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:27:29] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 7cdf45e3-5361-48a9-88e2-72da7756ab88)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 8s [Retry 5/5].
+[22:27:29] [huggingface_hub.utils._http] Retrying in 8s [Retry 5/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 892fa182-8a49-410e-91b2-6db10fff8d72)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:27:42] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 892fa182-8a49-410e-91b2-6db10fff8d72)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:27:42] [agent.nanobot] [execute] Exception caught: SSLError: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 892fa182-8a49-410e-91b2-6db10fff8d72)')
+[22:27:54] [agent.nanobot] Control modules initialized: enabled=False
+[22:27:54] [agent.nanobot] Loaded 9 skills from workspace
+[22:27:54] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[22:27:54] [agent.nanobot]   Model: glm-4.7
+[22:27:54] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:27:54] [agent.nanobot]   API Key: 87db****WXfm
+[22:27:54] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T132_order_profit_analysis_zgw4ek9h
+[22:27:54] [agent.nanobot]   Timeout: 600s
+[22:27:54] [agent.nanobot] =================================================================
+[22:27:54] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:27:54] [agent.nanobot]   Requested Model: glm-4.7
+[22:27:54] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:27:54] [agent.nanobot]   API Key: 87db****WXfm
+[22:27:54] [agent.nanobot]   Max Tokens: 16384
+[22:27:54] [agent.nanobot]   Tools: 11
+[22:27:54] [agent.nanobot]   Is OpenRouter: False
+[22:27:54] [agent.nanobot]   Is Azure Proxy: False
+[22:27:54] [agent.nanobot]   Is Anthropic Compat: True
+[22:27:54] [agent.nanobot] ===================================================
+[92m22:27:54 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:27:54] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:27:58] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-16' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x10dece4b0 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x10dece4b0 maxsize=50000 tasks=1> is bound to a different event loop
+[22:27:58] [memory.store] [EpisodicMemoryStore] Loading embedding model: all-MiniLM-L6-v2
+[22:27:58] [sentence_transformers.SentenceTransformer] Use pytorch device_name: mps
+[22:27:58] [sentence_transformers.SentenceTransformer] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 52ed1a53-c463-4559-8890-1b2541a1ed60)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:28:03] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 52ed1a53-c463-4559-8890-1b2541a1ed60)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 1s [Retry 1/5].
+[22:28:03] [huggingface_hub.utils._http] Retrying in 1s [Retry 1/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 4a35ba61-ec4f-4e43-9858-4ccb9e85859a)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:28:09] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 4a35ba61-ec4f-4e43-9858-4ccb9e85859a)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 2s [Retry 2/5].
+[22:28:09] [huggingface_hub.utils._http] Retrying in 2s [Retry 2/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 78603938-d8f9-42df-a7cb-1840d2174d9f)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:28:16] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 78603938-d8f9-42df-a7cb-1840d2174d9f)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 4s [Retry 3/5].
+[22:28:16] [huggingface_hub.utils._http] Retrying in 4s [Retry 3/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 1954e4ae-ea1d-4213-afd2-5fbe27188a3a)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:28:25] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 1954e4ae-ea1d-4213-afd2-5fbe27188a3a)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 8s [Retry 4/5].
+[22:28:25] [huggingface_hub.utils._http] Retrying in 8s [Retry 4/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 9653bc7f-e4de-465c-8a17-6dc02f785ffe)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:28:38] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 9653bc7f-e4de-465c-8a17-6dc02f785ffe)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 8s [Retry 5/5].
+[22:28:38] [huggingface_hub.utils._http] Retrying in 8s [Retry 5/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: f05523ab-3270-47ab-be8a-6b2aff067362)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:28:51] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: f05523ab-3270-47ab-be8a-6b2aff067362)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:28:51] [sentence_transformers.SentenceTransformer] No sentence-transformers model found with name sentence-transformers/all-MiniLM-L6-v2. Creating a new one with mean pooling.
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 69633bac-2bd6-4b07-a36d-0cd7d62d4beb)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:28:57] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 69633bac-2bd6-4b07-a36d-0cd7d62d4beb)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 1s [Retry 1/5].
+[22:28:57] [huggingface_hub.utils._http] Retrying in 1s [Retry 1/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 057f0fd3-56e0-4ee0-8f5a-dac2dde8daa1)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:29:03] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 057f0fd3-56e0-4ee0-8f5a-dac2dde8daa1)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 2s [Retry 2/5].
+[22:29:03] [huggingface_hub.utils._http] Retrying in 2s [Retry 2/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: b9af39fa-b61b-4a24-8467-ed8863eb3bd7)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:29:10] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: b9af39fa-b61b-4a24-8467-ed8863eb3bd7)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 4s [Retry 3/5].
+[22:29:10] [huggingface_hub.utils._http] Retrying in 4s [Retry 3/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 329f40b2-7451-4b53-b70a-6380f7cb94e1)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:29:19] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 329f40b2-7451-4b53-b70a-6380f7cb94e1)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 8s [Retry 4/5].
+[22:29:19] [huggingface_hub.utils._http] Retrying in 8s [Retry 4/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: d0735c41-1b65-477e-991f-8b36fca942e1)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:29:32] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: d0735c41-1b65-477e-991f-8b36fca942e1)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 8s [Retry 5/5].
+[22:29:32] [huggingface_hub.utils._http] Retrying in 8s [Retry 5/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: b10812da-1275-4dcd-affb-ae42b7cade6f)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:29:45] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: b10812da-1275-4dcd-affb-ae42b7cade6f)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:29:45] [agent.nanobot] [execute] Exception caught: SSLError: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: b10812da-1275-4dcd-affb-ae42b7cade6f)')
+[22:29:54] [agent.nanobot] Control modules initialized: enabled=False
+[22:29:54] [agent.nanobot] Loaded 9 skills from workspace
+[22:29:54] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[22:29:54] [agent.nanobot]   Model: glm-4.7
+[22:29:54] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:29:54] [agent.nanobot]   API Key: 87db****WXfm
+[22:29:54] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T148_system_health_check_9eigtz7_
+[22:29:54] [agent.nanobot]   Timeout: 600s
+[22:29:54] [agent.nanobot] =================================================================
+[22:29:54] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:29:54] [agent.nanobot]   Requested Model: glm-4.7
+[22:29:54] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:29:54] [agent.nanobot]   API Key: 87db****WXfm
+[22:29:54] [agent.nanobot]   Max Tokens: 16384
+[22:29:54] [agent.nanobot]   Tools: 15
+[22:29:54] [agent.nanobot]   Is OpenRouter: False
+[22:29:54] [agent.nanobot]   Is Azure Proxy: False
+[22:29:54] [agent.nanobot]   Is Anthropic Compat: True
+[22:29:54] [agent.nanobot] ===================================================
+[92m22:29:54 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:29:54] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:29:56] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-27' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x10dece4b0 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x10dece4b0 maxsize=50000 tasks=1> is bound to a different event loop
+[22:29:56] [memory.store] [EpisodicMemoryStore] Loading embedding model: all-MiniLM-L6-v2
+[22:29:56] [sentence_transformers.SentenceTransformer] Use pytorch device_name: mps
+[22:29:56] [sentence_transformers.SentenceTransformer] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 62bd3b4a-d8d5-42a7-b99d-3077ec301f17)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:30:01] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 62bd3b4a-d8d5-42a7-b99d-3077ec301f17)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 1s [Retry 1/5].
+[22:30:01] [huggingface_hub.utils._http] Retrying in 1s [Retry 1/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 1961d7af-766b-4fc4-a79d-6c2c22fff5ac)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:30:08] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 1961d7af-766b-4fc4-a79d-6c2c22fff5ac)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 2s [Retry 2/5].
+[22:30:08] [huggingface_hub.utils._http] Retrying in 2s [Retry 2/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 14f22f1b-f1f2-423e-9a13-b307d7689f55)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:30:15] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 14f22f1b-f1f2-423e-9a13-b307d7689f55)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 4s [Retry 3/5].
+[22:30:15] [huggingface_hub.utils._http] Retrying in 4s [Retry 3/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 2e78713f-003d-4802-b1c6-b3da6362ddac)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:30:24] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 2e78713f-003d-4802-b1c6-b3da6362ddac)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 8s [Retry 4/5].
+[22:30:24] [huggingface_hub.utils._http] Retrying in 8s [Retry 4/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 5e5f6b6e-7a1e-4248-ba46-589a852ab5b2)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:30:37] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 5e5f6b6e-7a1e-4248-ba46-589a852ab5b2)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 8s [Retry 5/5].
+[22:30:37] [huggingface_hub.utils._http] Retrying in 8s [Retry 5/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: a3c1568b-bf86-4f1c-bd99-fe9ba47e0c07)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:30:50] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: a3c1568b-bf86-4f1c-bd99-fe9ba47e0c07)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:30:50] [sentence_transformers.SentenceTransformer] No sentence-transformers model found with name sentence-transformers/all-MiniLM-L6-v2. Creating a new one with mean pooling.
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 99dd649a-86a1-4b8e-a2e3-db3195595a13)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:30:55] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 99dd649a-86a1-4b8e-a2e3-db3195595a13)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 1s [Retry 1/5].
+[22:30:55] [huggingface_hub.utils._http] Retrying in 1s [Retry 1/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 51ec0520-a306-49b5-a2e0-50e6ea1d1163)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:31:01] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 51ec0520-a306-49b5-a2e0-50e6ea1d1163)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 2s [Retry 2/5].
+[22:31:01] [huggingface_hub.utils._http] Retrying in 2s [Retry 2/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: ce803461-b459-4e3a-b23c-7f13c172fb41)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:31:08] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: ce803461-b459-4e3a-b23c-7f13c172fb41)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 4s [Retry 3/5].
+[22:31:08] [huggingface_hub.utils._http] Retrying in 4s [Retry 3/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 6ebf179a-559a-4e8c-8c6c-e53b93e3e45b)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:31:17] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 6ebf179a-559a-4e8c-8c6c-e53b93e3e45b)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 8s [Retry 4/5].
+[22:31:17] [huggingface_hub.utils._http] Retrying in 8s [Retry 4/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 284cddc6-e934-4ce9-8d0c-4472bb9b8515)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:31:31] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 284cddc6-e934-4ce9-8d0c-4472bb9b8515)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 8s [Retry 5/5].
+[22:31:31] [huggingface_hub.utils._http] Retrying in 8s [Retry 5/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: a4bbb811-8551-4b78-9319-6b812b6ff533)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:31:44] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: a4bbb811-8551-4b78-9319-6b812b6ff533)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:31:44] [agent.nanobot] [execute] Exception caught: SSLError: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: a4bbb811-8551-4b78-9319-6b812b6ff533)')
+[22:32:07] [agent.nanobot] Control modules initialized: enabled=False
+[22:32:07] [agent.nanobot] Loaded 9 skills from workspace
+[22:32:07] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[22:32:07] [agent.nanobot]   Model: glm-4.7
+[22:32:07] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:32:07] [agent.nanobot]   API Key: 87db****WXfm
+[22:32:07] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T150_project_progress_report_7jgjfkct
+[22:32:07] [agent.nanobot]   Timeout: 600s
+[22:32:07] [agent.nanobot] =================================================================
+[22:32:07] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:32:07] [agent.nanobot]   Requested Model: glm-4.7
+[22:32:07] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:32:07] [agent.nanobot]   API Key: 87db****WXfm
+[22:32:07] [agent.nanobot]   Max Tokens: 16384
+[22:32:07] [agent.nanobot]   Tools: 13
+[22:32:07] [agent.nanobot]   Is OpenRouter: False
+[22:32:07] [agent.nanobot]   Is Azure Proxy: False
+[22:32:07] [agent.nanobot]   Is Anthropic Compat: True
+[22:32:07] [agent.nanobot] ===================================================
+[92m22:32:07 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:32:07] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:32:09] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-38' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x10dece4b0 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x10dece4b0 maxsize=50000 tasks=1> is bound to a different event loop
+[22:32:09] [memory.store] [EpisodicMemoryStore] Loading embedding model: all-MiniLM-L6-v2
+[22:32:09] [sentence_transformers.SentenceTransformer] Use pytorch device_name: mps
+[22:32:09] [sentence_transformers.SentenceTransformer] Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 0b99f65d-153d-4a9f-8e1b-6eaad5371780)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:32:14] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 0b99f65d-153d-4a9f-8e1b-6eaad5371780)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 1s [Retry 1/5].
+[22:32:14] [huggingface_hub.utils._http] Retrying in 1s [Retry 1/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: d8f028ce-1708-47d6-bafa-344a14954256)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:32:20] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: d8f028ce-1708-47d6-bafa-344a14954256)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 2s [Retry 2/5].
+[22:32:20] [huggingface_hub.utils._http] Retrying in 2s [Retry 2/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 20fe2d55-3b4d-4c28-a551-70f0e13902cb)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:32:27] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 20fe2d55-3b4d-4c28-a551-70f0e13902cb)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 4s [Retry 3/5].
+[22:32:27] [huggingface_hub.utils._http] Retrying in 4s [Retry 3/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: b61e3b91-0dda-449f-a456-f16975c2ab72)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:32:36] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: b61e3b91-0dda-449f-a456-f16975c2ab72)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 8s [Retry 4/5].
+[22:32:36] [huggingface_hub.utils._http] Retrying in 8s [Retry 4/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 2678c720-c82d-495e-8484-86011e787815)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:32:50] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 2678c720-c82d-495e-8484-86011e787815)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+Retrying in 8s [Retry 5/5].
+[22:32:50] [huggingface_hub.utils._http] Retrying in 8s [Retry 5/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 46af58fb-76bc-464d-baa3-8a2db82d98d0)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:33:03] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 46af58fb-76bc-464d-baa3-8a2db82d98d0)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:33:03] [sentence_transformers.SentenceTransformer] No sentence-transformers model found with name sentence-transformers/all-MiniLM-L6-v2. Creating a new one with mean pooling.
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 9faf31ce-85df-423c-90d8-a3e98c6722d4)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:33:08] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 9faf31ce-85df-423c-90d8-a3e98c6722d4)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 1s [Retry 1/5].
+[22:33:08] [huggingface_hub.utils._http] Retrying in 1s [Retry 1/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: acaa81d7-cace-4f9c-a5d7-5d3d779d7fcd)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:33:14] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: acaa81d7-cace-4f9c-a5d7-5d3d779d7fcd)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 2s [Retry 2/5].
+[22:33:14] [huggingface_hub.utils._http] Retrying in 2s [Retry 2/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: d724e886-302c-4e89-b34b-fbad0120a6b6)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:33:21] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: d724e886-302c-4e89-b34b-fbad0120a6b6)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 4s [Retry 3/5].
+[22:33:21] [huggingface_hub.utils._http] Retrying in 4s [Retry 3/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 87594be0-9d95-4bfb-8214-3e56819681bc)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:33:30] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 87594be0-9d95-4bfb-8214-3e56819681bc)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 8s [Retry 4/5].
+[22:33:30] [huggingface_hub.utils._http] Retrying in 8s [Retry 4/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: b9acdeb1-4e36-4657-bac8-950a193b0802)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:33:43] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: b9acdeb1-4e36-4657-bac8-950a193b0802)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+Retrying in 8s [Retry 5/5].
+[22:33:43] [huggingface_hub.utils._http] Retrying in 8s [Retry 5/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 378016e4-e61f-4a44-a921-7f98379f828e)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:33:56] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 378016e4-e61f-4a44-a921-7f98379f828e)')' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:33:56] [agent.nanobot] [execute] Exception caught: SSLError: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 378016e4-e61f-4a44-a921-7f98379f828e)')
+[22:23:47] 从文件加载任务列表: error_analysis/inputs/memory.csv
+[22:23:47]   claweval: 5 tasks
+[22:23:47]   clawbench-official: 1 tasks
+[22:23:47] Config: bench=['claweval', 'clawbench-official'], models=['glm-4.7'], sample=all
+[22:23:47] 
+============================================================
+[22:23:47] BENCHMARK: claweval (5 tasks from file)
+[22:23:47] ============================================================
+[22:23:47]   [claweval×glm-4.7] evaluating...
+[22:23:49] [claweval] Docker image 'claw-eval-agent:latest' found
+[22:23:49] [claweval] Evaluating 5 tasks with model=glm-4.7, parallel=1
+  service 'web_real' started on port 9114
+[sandbox] Container claw-agent-T061_finance_mu_gm_beat-c4587c started at http://localhost:33078
+[22:23:51] [claweval] Registered mock tool: web_search -> POST http://localhost:9114/web/search
+[22:23:51] [claweval] Registered mock tool: web_fetch -> POST http://localhost:9114/web/fetch
+[sandbox] Container claw-agent-T061_finance_mu_gm_beat-c4587c removed
+  service 'web_real' stopped
+[22:25:47] [claweval] 1/5 new tasks done (total: 1/5)
+  service 'finance' started on port 9104
+  service 'inventory' started on port 9108
+  service 'crm' started on port 9110
+[sandbox] Container claw-agent-T131zh_order_profit_analysis-ea936d started at http://localhost:33079
+[22:25:50] [claweval] Registered mock tool: crm_list_customers -> POST http://localhost:9110/crm/customers
+[22:25:50] [claweval] Registered mock tool: crm_get_customer -> POST http://localhost:9110/crm/customers/get
+[22:25:50] [claweval] Registered mock tool: inventory_list_items -> POST http://localhost:9108/inventory/products
+[22:25:50] [claweval] Registered mock tool: inventory_get_item -> POST http://localhost:9108/inventory/products/get
+[22:25:50] [claweval] Registered mock tool: finance_list_transactions -> POST http://localhost:9104/finance/transactions
+[22:25:50] [claweval] Registered mock tool: finance_get_transaction -> POST http://localhost:9104/finance/transactions/get
+[sandbox] Container claw-agent-T131zh_order_profit_analysis-ea936d removed
+[grader] profit: 0.00
+[grader] payment: 0.00
+[grader] report: 0.00
+  service 'crm' stopped
+  service 'inventory' stopped
+  service 'finance' stopped
+[22:27:51] [claweval] 2/5 new tasks done (total: 2/5)
+  service 'finance' started on port 9104
+  service 'inventory' started on port 9108
+  service 'crm' started on port 9110
+[sandbox] Container claw-agent-T132_order_profit_analysis-20f9f5 started at http://localhost:33080
+[22:27:54] [claweval] Registered mock tool: crm_list_customers -> POST http://localhost:9110/crm/customers
+[22:27:54] [claweval] Registered mock tool: crm_get_customer -> POST http://localhost:9110/crm/customers/get
+[22:27:54] [claweval] Registered mock tool: inventory_list_items -> POST http://localhost:9108/inventory/products
+[22:27:54] [claweval] Registered mock tool: inventory_get_item -> POST http://localhost:9108/inventory/products/get
+[22:27:54] [claweval] Registered mock tool: finance_list_transactions -> POST http://localhost:9104/finance/transactions
+[22:27:54] [claweval] Registered mock tool: finance_get_transaction -> POST http://localhost:9104/finance/transactions/get
+[sandbox] Container claw-agent-T132_order_profit_analysis-20f9f5 removed
+[grader] profit: 0.00
+[grader] payment: 0.00
+[grader] report: 0.00
+  service 'crm' stopped
+  service 'inventory' stopped
+  service 'finance' stopped
+[22:29:51] [claweval] 3/5 new tasks done (total: 3/5)
+  service 'helpdesk' started on port 9107
+  service 'kb' started on port 9106
+  service 'config' started on port 9111
+  service 'scheduler' started on port 9112
+[sandbox] Container claw-agent-T148_system_health_check-48d7db started at http://localhost:33081
+[22:29:54] [claweval] Registered mock tool: helpdesk_list_tickets -> POST http://localhost:9107/helpdesk/tickets
+[22:29:54] [claweval] Registered mock tool: helpdesk_get_ticket -> POST http://localhost:9107/helpdesk/tickets/get
+[22:29:54] [claweval] Registered mock tool: helpdesk_update_ticket -> POST http://localhost:9107/helpdesk/tickets/update
+[22:29:54] [claweval] Registered mock tool: helpdesk_close_ticket -> POST http://localhost:9107/helpdesk/tickets/close
+[22:29:54] [claweval] Registered mock tool: scheduler_list_jobs -> POST http://localhost:9112/scheduler/jobs
+[22:29:54] [claweval] Registered mock tool: scheduler_get_job -> POST http://localhost:9112/scheduler/jobs/get
+[22:29:54] [claweval] Registered mock tool: config_list_integrations -> POST http://localhost:9111/config/integrations
+[22:29:54] [claweval] Registered mock tool: config_get_integration -> POST http://localhost:9111/config/integrations/get
+[22:29:54] [claweval] Registered mock tool: kb_search -> POST http://localhost:9106/kb/search
+[22:29:54] [claweval] Registered mock tool: kb_get_article -> POST http://localhost:9106/kb/articles/get
+[sandbox] Container claw-agent-T148_system_health_check-48d7db removed
+[grader] health_assessment: 0.00
+[grader] correlation_depth: 0.00
+[grader] action_plan: 0.00
+  service 'scheduler' stopped
+  service 'config' stopped
+  service 'kb' stopped
+  service 'helpdesk' stopped
+[22:32:04] [claweval] 4/5 new tasks done (total: 4/5)
+  service 'calendar' started on port 9101
+  service 'notes' started on port 9105
+  service 'todo' started on port 9102
+  service 'contacts' started on port 9103
+[sandbox] Container claw-agent-T150_project_progress_report-d06cb2 started at http://localhost:33082
+[22:32:07] [claweval] Registered mock tool: calendar_list_events -> POST http://localhost:9101/calendar/events
+[22:32:07] [claweval] Registered mock tool: calendar_get_event -> POST http://localhost:9101/calendar/events/get
+[22:32:07] [claweval] Registered mock tool: notes_list -> POST http://localhost:9105/notes/list
+[22:32:07] [claweval] Registered mock tool: notes_get -> POST http://localhost:9105/notes/get
+[22:32:07] [claweval] Registered mock tool: todo_list_tasks -> POST http://localhost:9102/todo/tasks
+[22:32:07] [claweval] Registered mock tool: todo_get_task -> POST http://localhost:9102/todo/tasks/get
+[22:32:07] [claweval] Registered mock tool: contacts_search -> POST http://localhost:9103/contacts/search
+[22:32:07] [claweval] Registered mock tool: contacts_get -> POST http://localhost:9103/contacts/get
+[sandbox] Container claw-agent-T150_project_progress_report-d06cb2 removed
+[grader] progress_accuracy: 0.00
+[grader] risk_identification: 0.00
+[grader] report_completeness: 0.00
+  service 'contacts' stopped
+  service 'todo' stopped
+  service 'notes' stopped
+  service 'calendar' stopped
+[22:34:04] [claweval] 5/5 new tasks done (total: 5/5)
+[22:34:04] [claweval] 汇总已保存: 0/5 完成
+[22:34:04]   [claweval×glm-4.7] done: score=0.2, scored=5/5
+[22:34:04]   [claweval×glm-4.7] done: score=0.2, scored=5/5
+[22:34:04] 
+============================================================
+[22:34:04] BENCHMARK: clawbench-official (1 tasks from file)
+[22:34:04] ============================================================
+[22:34:04]   [clawbench-official×glm-4.7] evaluating...
+[22:34:27] [clawbench_cs-001-api-rate-limiter_glm-4.7_20260423_143404] Container started
+[22:35:21]   [container] DONE
+[22:35:21]   [container-err] '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[22:35:21]   [container-err] Retrying in 1s [Retry 1/5].
+[22:35:21]   [container-err] '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[22:35:21]   [container-err] Retrying in 1s [Retry 1/5].
+[22:35:21]   [container-err] [execute] Exception caught: RuntimeError: Cannot send a request, as the client has been closed.
+[22:35:21] [clawbench_cs-001-api-rate-limiter_glm-4.7_20260423_143404] Agent finished in 53.44s, returncode=0
+[22:35:21] [clawbench_cs-001-api-rate-limiter_glm-4.7_20260423_143404] Agent result: passed=False, score=0.4000
+[22:35:21]   [clawbench-official×glm-4.7] done: score=0, scored=0/1
+[22:35:21]   [clawbench-official×glm-4.7] done: score=0, scored=0/1
+[22:35:21] 
+

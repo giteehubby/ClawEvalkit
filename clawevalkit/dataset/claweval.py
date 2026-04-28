@@ -555,6 +555,15 @@ class ClawEval(BaseBenchmark):
             agent._retry_policy.reset()
             agent._preflight_check.clear_history()
             agent._plan_first.clear()
+        # Reset collaboration module state so each task starts clean
+        if agent._collab_config.enabled:
+            agent._collab_handoffs = 0
+            if agent._handoff_manager:
+                agent._handoff_manager.reset()
+            if agent._verifier_role:
+                agent._verifier_role.reset()
+                agent._verifier_role._total_tool_calls = 0
+                agent._verifier_role._verification_rounds = []
 
         status = "success"
         last_content = ""
@@ -649,6 +658,9 @@ class ClawEval(BaseBenchmark):
             parts.append(f"\n## User Context")
             parts.append("You are communicating with the following user. Adapt your responses to their background and communication style:")
             parts.append(ua.persona.strip())
+        else:
+            parts.append("\n## Interaction Mode")
+            parts.append("Note: No user simulation is configured for this task. Please complete the task directly without asking for user confirmation. If the task requires submitting data or calling tools, do so directly without requesting additional approval.")
 
         # Tool descriptions
         if task.tools:
@@ -838,6 +850,9 @@ class ClawEval(BaseBenchmark):
 
                 # Save raw transcript (before _convert_transcript, consistent with other benches)
                 raw_transcript = agent_result.transcript or []
+                # Prepend system prompt so transcript captures full agent context
+                if system_prompt:
+                    raw_transcript = [{"role": "system", "content": system_prompt}] + raw_transcript
                 if transcripts_dir:
                     self._save_transcript(model_key, task.task_id, raw_transcript, transcripts_dir=transcripts_dir)
 

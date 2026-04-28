@@ -281,7 +281,8 @@ def _compute_layer0_score(container_name: str, expected_outputs: list[dict],
                 output_points += points
 
             elif vtype == "git-log-contains":
-                expected = validator.get("expected", [])
+                # 兼容两种字段名：YAML 中用 contains，也支持 expected
+                expected = validator.get("expected", []) or validator.get("contains", [])
                 max_points += 30
                 if expected:
                     passed, total = _check_git_log_contains(container_name, expected)
@@ -293,12 +294,16 @@ def _compute_layer0_score(container_name: str, expected_outputs: list[dict],
         if required and output_points == 0:
             total_points -= 10
 
-    # Process expected_behavior (response-contains checks)
-    if expected_behavior and model_output:
-        output_lower = model_output.lower()
+    # Process expected_behavior
+    if expected_behavior:
+        output_lower = (model_output or "").lower()
         for behavior in expected_behavior:
             for validator in behavior.get("validators", []):
-                if validator.get("type") == "response-contains":
+                vtype = validator.get("type", "")
+
+                if vtype == "response-contains":
+                    if not model_output:
+                        continue
                     values = validator.get("values", [])
                     match_mode = validator.get("match", "any")
                     max_points += 30
@@ -308,6 +313,17 @@ def _compute_layer0_score(container_name: str, expected_outputs: list[dict],
                     elif match_mode == "all":
                         if all(v.lower() in output_lower for v in values):
                             total_points += 30
+
+                elif vtype == "command-output-contains":
+                    # 在容器内执行命令并检查输出（不依赖 model_output）
+                    command = validator.get("command", "")
+                    contains = validator.get("contains", [])
+                    max_points += 30
+                    if command and contains:
+                        passed, total = _check_command_output_contains(
+                            container_name, command, contains)
+                        points = (passed / total) * 30 if total > 0 else 0
+                        total_points += points
 
     # Normalize to 0-100
     if max_points == 0:
@@ -328,13 +344,20 @@ def _compute_layer1_score(expected_metrics: dict, transcript: list, elapsed_time
 
     # Normalize nested transcript format (type=message, message={role, content})
     # to flat format (role, tool_calls, content) expected by scoring logic
+    # 同时检测 verify 阶段边界，只统计主任务阶段的 tool calls
     flat_transcript = []
+    verify_started = False
     for entry in transcript:
         if not isinstance(entry, dict):
             continue
+        # 检测 verify 阶段开始
+        if entry.get("type") == "control_event" and entry.get("event") == "verify_triggered":
+            verify_started = True
         if entry.get("type") == "message":
             msg = entry.get("message", {})
             flat = {"role": msg.get("role", ""), "content": msg.get("content", "")}
+            if not verify_started:
+                flat["pre_verify"] = True
             # Extract tool calls from nested content list
             content = msg.get("content", [])
             if isinstance(content, list):
@@ -349,15 +372,23 @@ def _compute_layer1_score(expected_metrics: dict, transcript: list, elapsed_time
         else:
             flat_transcript.append(entry)
 
-    # Count tool calls from transcript
+    # 只计算 verify 前的 tool calls（主任务阶段）
     tool_calls = sum(1 for entry in flat_transcript
-                     if entry.get("role") == "assistant" and entry.get("tool_calls"))
+                     if entry.get("role") == "assistant" and entry.get("tool_calls")
+                     and entry.get("pre_verify", False))
 
     # Estimate planning ratio (simplified: based on first tool call timing)
     planning_ratio = 0.25  # Default estimate
 
-    # Count errors from transcript
-    errors = sum(1 for entry in flat_transcript if "error" in str(entry.get("content", "")).lower())
+    # 只统计 tool 响应中的真实错误（排除 system/user 消息和控制事件）
+    errors = 0
+    for entry in flat_transcript:
+        if entry.get("role") != "tool":
+            continue
+        content_str = str(entry.get("content", "")).lower()
+        # 检测真实的错误信号（排除 grep 无匹配等正常退出码）
+        if "error:" in content_str or "traceback" in content_str:
+            errors += 1
 
     score = 0
 

@@ -154,8 +154,8 @@ def main():
     parser.add_argument("--reuse-container", action="store_true", help="Reuse existing containers (skip rebuild, preserves pip installs)")
     parser.add_argument("--judge-model", help="Judge model for scoring (e.g., minimax/claude-3.5-sonnet, claude-sonnet-4.6)")
     parser.add_argument("--include-multimodal", action="store_true", help="Include multimodal tasks (for ClawEval only, default: excluded)")
-    parser.add_argument("--harness", choices=["collaboration", "control", "memory", "procedure"],
-                        help="Enable a harness recipe for NanoBotAgent (collaboration/control/memory/procedure)")
+    parser.add_argument("--harness", choices=["collaboration", "control", "memory", "procedure", "combo"],
+                        help="Enable a harness recipe for NanoBotAgent (collaboration/control/memory/procedure/combo)")
     args = parser.parse_args()
 
     # Only set transcripts_dir if explicitly provided; otherwise let each bench
@@ -218,6 +218,7 @@ def main():
             for bk, tids in tasks_by_bench.items():
                 log(f"  {bk}: {len(tids)} tasks")
             bench_keys = list(tasks_by_bench.keys())
+            task_ids_override = None
         else:
             # 文件不存在，回退到逗号分隔的直接指定模式
             task_ids_override = [t.strip() for t in args.task.split(",")]

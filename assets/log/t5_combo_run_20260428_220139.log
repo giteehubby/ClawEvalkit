@@ -1,0 +1,430 @@
+[22:01:39] 从文件加载任务列表: t5_combo_tasks.csv
+[22:01:39]   clawbench: 25 tasks
+[22:01:39]   claweval: 30 tasks
+[22:01:39]   agentbench: 3 tasks
+[22:01:39] Config: bench=['clawbench', 'claweval', 'agentbench'], models=['glm-4.7'], sample=all
+[22:01:39] 
+============================================================
+[22:01:39] BENCHMARK: clawbench (25 tasks from file)
+[22:01:39] ============================================================
+[22:01:39]   [clawbench×glm-4.7] evaluating...
+[22:01:43] [clawbench_acct-005-financial-statements_glm-4.7_20260428_140140] Container started
+[22:01:43] [acct-005-financial-statements] Harness detected, timeout adjusted: 3600 → 3780
+[22:01:43] [clawbench_bio-003-gene-expression_glm-4.7_20260428_140140] Container started
+[22:01:43] [bio-003-gene-expression] Harness detected, timeout adjusted: 3600 → 3780
+[22:04:45]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/accounting/acct-005-financial-statements/environment/setup.sh
+[22:04:45]   [container] [setup] setup.sh 成功
+[22:04:45]   [container] [setup] 工作空间文件: ['trial_balance.csv', 'instruction.md']
+[22:04:45]   [container] DONE
+[22:04:45] [clawbench_acct-005-financial-statements_glm-4.7_20260428_140140] Agent finished in 181.67s, returncode=0
+[22:04:45] [clawbench_acct-005-financial-statements_glm-4.7_20260428_140140] Agent result: passed=False, score=0.5000
+[22:04:47] [clawbench_bio-005-variant-annotation_glm-4.7_20260428_140445] Container started
+[22:04:47] [bio-005-variant-annotation] Harness detected, timeout adjusted: 3600 → 3780
+[22:04:57]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/bioinformatics/bio-003-gene-expression/environment/setup.sh
+[22:04:57]   [container] [setup] setup.sh 成功
+[22:04:57]   [container] [setup] 工作空间文件: ['instruction.md', 'expression_matrix.csv']
+[22:04:57]   [container] DONE
+[22:04:57]   [container-err] [_call_llm] Server error (attempt 1/4), retrying in 5s: litellm.RateLimitError: AnthropicException - {"error":{"code":"1302","message":"您的账户已达到速率限制，请您控制请求频率"},"request_id":"20260428220450001d7b8c7dad4635"}
+[22:04:57]   [container-err] [_run_loop] _call_llm exception: Exception: LLM call failed: litellm.RateLimitError: AnthropicException - {"error":{"code":"1302","message":"您的账户已达到速率限制，请您控制请求频率"},"request_id":"2026042822045567c67577231049e2"}
+[22:04:57]   [container-err] [execute] Exception caught: Exception: LLM call failed: litellm.RateLimitError: AnthropicException - {"error":{"code":"1302","message":"您的账户已达到速率限制，请您控制请求频率"},"request_id":"2026042822045567c67577231049e2"}
+[22:04:57] [clawbench_bio-003-gene-expression_glm-4.7_20260428_140140] Agent finished in 193.91s, returncode=0
+[22:04:57] [clawbench_bio-003-gene-expression_glm-4.7_20260428_140140] Agent result: passed=False, score=0.5000
+[22:04:59] [clawbench_med-005-trial-eligibility_glm-4.7_20260428_140457] Container started
+[22:04:59] [med-005-trial-eligibility] Harness detected, timeout adjusted: 3600 → 3780
+[22:06:43]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/clinical-data/med-005-trial-eligibility/environment/setup.sh
+[22:06:43]   [container] [setup] setup.sh 成功
+[22:06:43]   [container] [setup] 工作空间文件: ['trial_criteria.json', 'instruction.md', 'patients.csv']
+[22:06:43]   [container] DONE
+[22:06:43] [clawbench_med-005-trial-eligibility_glm-4.7_20260428_140457] Agent finished in 103.75s, returncode=0
+[22:06:43] [clawbench_med-005-trial-eligibility_glm-4.7_20260428_140457] Agent result: passed=False, score=0.6667
+[22:06:45] [clawbench_cont-004-media-bias_glm-4.7_20260428_140643] Container started
+[22:06:45] [cont-004-media-bias] Harness detected, timeout adjusted: 3600 → 3780
+[22:06:48]   [container-err] Traceback (most recent call last):
+[22:06:48]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:06:48]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:06:48]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:06:48]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:06:48]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:06:48]   [container-err]     from .nanobot import NanoBotAgent
+[22:06:48]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:06:48]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:06:48]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:06:48] [clawbench_cont-004-media-bias_glm-4.7_20260428_140643] Agent finished in 2.92s, returncode=1
+[22:06:48] [clawbench_cont-004-media-bias_glm-4.7_20260428_140643] agent_result.json not found
+[22:06:50] [clawbench_xdom-014_glm-4.7_20260428_140648] Container started
+[22:06:50] [xdom-014] Harness detected, timeout adjusted: 600 → 780
+[22:06:53]   [container-err] Traceback (most recent call last):
+[22:06:53]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:06:53]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:06:53]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:06:53]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:06:53]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:06:53]   [container-err]     from .nanobot import NanoBotAgent
+[22:06:53]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:06:53]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:06:53]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:06:53] [clawbench_xdom-014_glm-4.7_20260428_140648] Agent finished in 3.02s, returncode=1
+[22:06:53] [clawbench_xdom-014_glm-4.7_20260428_140648] agent_result.json not found
+[22:06:55] [clawbench_cs-003-log-analyzer_glm-4.7_20260428_140654] Container started
+[22:06:55] [cs-003-log-analyzer] Harness detected, timeout adjusted: 3600 → 3780
+[22:06:58]   [container-err] Traceback (most recent call last):
+[22:06:58]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:06:58]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:06:58]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:06:58]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:06:58]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:06:58]   [container-err]     from .nanobot import NanoBotAgent
+[22:06:58]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:06:58]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:06:58]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:06:58] [clawbench_cs-003-log-analyzer_glm-4.7_20260428_140654] Agent finished in 2.98s, returncode=1
+[22:06:58] [clawbench_cs-003-log-analyzer_glm-4.7_20260428_140654] agent_result.json not found
+[22:07:00] [clawbench_cs-005-api-design_glm-4.7_20260428_140659] Container started
+[22:07:00] [cs-005-api-design] Harness detected, timeout adjusted: 3600 → 3780
+[22:07:03]   [container-err] Traceback (most recent call last):
+[22:07:03]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:07:03]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:07:03]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:07:03]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:07:03]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:07:03]   [container-err]     from .nanobot import NanoBotAgent
+[22:07:03]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:07:03]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:07:03]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:07:03] [clawbench_cs-005-api-design_glm-4.7_20260428_140659] Agent finished in 2.94s, returncode=1
+[22:07:03] [clawbench_cs-005-api-design_glm-4.7_20260428_140659] agent_result.json not found
+[22:07:06] [clawbench_data-003_glm-4.7_20260428_140704] Container started
+[22:07:06] [data-003] Harness detected, timeout adjusted: 120 → 300
+[22:07:09]   [container-err] Traceback (most recent call last):
+[22:07:09]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:07:09]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:07:09]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:07:09]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:07:09]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:07:09]   [container-err]     from .nanobot import NanoBotAgent
+[22:07:09]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:07:09]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:07:09]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:07:09] [clawbench_data-003_glm-4.7_20260428_140704] Agent finished in 2.94s, returncode=1
+[22:07:09] [clawbench_data-003_glm-4.7_20260428_140704] agent_result.json not found
+[22:07:11] [clawbench_ds-003-feature-engineering_glm-4.7_20260428_140709] Container started
+[22:07:11] [ds-003-feature-engineering] Harness detected, timeout adjusted: 3600 → 3780
+[22:07:14]   [container-err] Traceback (most recent call last):
+[22:07:14]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:07:14]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:07:14]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:07:14]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:07:14]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:07:14]   [container-err]     from .nanobot import NanoBotAgent
+[22:07:14]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:07:14]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:07:14]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:07:14] [clawbench_ds-003-feature-engineering_glm-4.7_20260428_140709] Agent finished in 2.94s, returncode=1
+[22:07:14] [clawbench_ds-003-feature-engineering_glm-4.7_20260428_140709] agent_result.json not found
+[22:07:16] [clawbench_ds-004-time-series_glm-4.7_20260428_140714] Container started
+[22:07:16] [ds-004-time-series] Harness detected, timeout adjusted: 3600 → 3780
+[22:07:18]   [container]         length = random.randint(5000, 20000)
+[22:07:18]   [container]         end = start + length
+[22:07:18]   [container]         func = random.choice(functions)
+[22:07:18]   [container]         regions.append([gene, chrom, start, end, func])
+[22:07:18]   [container]         # Next gene region start with some gap
+[22:07:18]   [container]         start = end + random.randint(1000, 5000)
+[22:07:18]   [container] 
+[22:07:18]   [container] with open(f"{os.environ.get(\"WORKSPACE\", os.getcwd())}/gene_regions.csv", "w", newline="") as f:
+[22:07:18]   [container]     writer = csv.writer(f)
+[22:07:18]   [container]     writer.writerow(["gene", "chrom", "start", "end", "function"])
+[22:07:18]   [container]     for row in regions:
+[22:07:18]   [container]         writer.writerow(row)
+[22:07:18]   [container] '
+[22:07:18]   [container]   File "<string>", line 21
+[22:07:18]   [container]     with open(f"{os.environ.get(\"WORKSPACE\", os.getcwd())}/gene_regions.csv", "w", newline="") as f:
+[22:07:18]   [container]                                  ^
+[22:07:18]   [container] SyntaxError: unexpected character after line continuation character
+[22:07:18]   [container] 
+[22:07:18]   [container] [setup] 工作空间文件: ['instruction.md']
+[22:07:18]   [container] DONE
+[22:07:18] [clawbench_bio-005-variant-annotation_glm-4.7_20260428_140445] Agent finished in 151.19s, returncode=0
+[22:07:18] [clawbench_bio-005-variant-annotation_glm-4.7_20260428_140445] Agent result: passed=False, score=0.6667
+[22:07:19]   [container-err] Traceback (most recent call last):
+[22:07:19]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:07:19]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:07:19]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:07:19]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:07:19]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:07:19]   [container-err]     from .nanobot import NanoBotAgent
+[22:07:19]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:07:19]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:07:19]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:07:19] [clawbench_ds-004-time-series_glm-4.7_20260428_140714] Agent finished in 3.34s, returncode=1
+[22:07:19] [clawbench_ds-004-time-series_glm-4.7_20260428_140714] agent_result.json not found
+[22:07:22] [clawbench_db-001_glm-4.7_20260428_140719] Container started
+[22:07:22] [db-001] Harness detected, timeout adjusted: 120 → 300
+[22:07:22] [clawbench_db-002_glm-4.7_20260428_140720] Container started
+[22:07:22] [db-002] Harness detected, timeout adjusted: 180 → 360
+[22:07:25]   [container-err] Traceback (most recent call last):
+[22:07:25]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:07:25]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:07:25]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:07:25]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:07:25]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:07:25]   [container-err]     from .nanobot import NanoBotAgent
+[22:07:25]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:07:25]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:07:25]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:07:25] [clawbench_db-001_glm-4.7_20260428_140719] Agent finished in 3.11s, returncode=1
+[22:07:25] [clawbench_db-001_glm-4.7_20260428_140719] agent_result.json not found
+[22:07:25]   [container-err] Traceback (most recent call last):
+[22:07:25]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:07:25]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:07:25]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:07:25]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:07:25]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:07:25]   [container-err]     from .nanobot import NanoBotAgent
+[22:07:25]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:07:25]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:07:25]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:07:25] [clawbench_db-002_glm-4.7_20260428_140720] Agent finished in 3.05s, returncode=1
+[22:07:25] [clawbench_db-002_glm-4.7_20260428_140720] agent_result.json not found
+[22:07:30] [clawbench_db-004_glm-4.7_20260428_140727] Container started
+[22:07:30] [db-004] Harness detected, timeout adjusted: 240 → 420
+[22:07:30] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260428_140727] Container started
+[22:07:30] [edu-004-curriculum-mapping] Harness detected, timeout adjusted: 3600 → 3780
+[22:07:33]   [container-err] Traceback (most recent call last):
+[22:07:33]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:07:33]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:07:33]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:07:33]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:07:33]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:07:33]   [container-err]     from .nanobot import NanoBotAgent
+[22:07:33]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:07:33]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:07:33]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:07:33] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260428_140727] Agent finished in 3.54s, returncode=1
+[22:07:33] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260428_140727] agent_result.json not found
+[22:07:33]   [container-err] Traceback (most recent call last):
+[22:07:33]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:07:33]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:07:33]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:07:33]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:07:33]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:07:33]   [container-err]     from .nanobot import NanoBotAgent
+[22:07:33]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:07:33]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:07:33]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:07:33] [clawbench_db-004_glm-4.7_20260428_140727] Agent finished in 3.64s, returncode=1
+[22:07:33] [clawbench_db-004_glm-4.7_20260428_140727] agent_result.json not found
+[22:07:37] [clawbench_fin-006_glm-4.7_20260428_140734] Container started
+[22:07:37] [fin-006] Harness detected, timeout adjusted: 300 → 480
+[22:07:37] [clawbench_mm-006_glm-4.7_20260428_140735] Container started
+[22:07:37] [mm-006] Harness detected, timeout adjusted: 300 → 480
+[22:07:41]   [container-err] Traceback (most recent call last):
+[22:07:41]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:07:41]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:07:41]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:07:41]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:07:41]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:07:41]   [container-err]     from .nanobot import NanoBotAgent
+[22:07:41]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:07:41]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:07:41]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:07:41] [clawbench_fin-006_glm-4.7_20260428_140734] Agent finished in 3.64s, returncode=1
+[22:07:41] [clawbench_fin-006_glm-4.7_20260428_140734] agent_result.json not found
+[22:07:41]   [container-err] Traceback (most recent call last):
+[22:07:41]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:07:41]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:07:41]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:07:41]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:07:41]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:07:41]   [container-err]     from .nanobot import NanoBotAgent
+[22:07:41]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:07:41]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:07:41]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:07:41] [clawbench_mm-006_glm-4.7_20260428_140735] Agent finished in 3.64s, returncode=1
+[22:07:41] [clawbench_mm-006_glm-4.7_20260428_140735] agent_result.json not found
+[22:07:44] [clawbench_sci-002-monte-carlo_glm-4.7_20260428_140741] Container started
+[22:07:44] [sci-002-monte-carlo] Harness detected, timeout adjusted: 3600 → 3780
+[22:07:44] [clawbench_sci-005-optimization_glm-4.7_20260428_140742] Container started
+[22:07:44] [sci-005-optimization] Harness detected, timeout adjusted: 3600 → 3780
+[22:07:48]   [container-err] Traceback (most recent call last):
+[22:07:48]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:07:48]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:07:48]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:07:48]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:07:48]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:07:48]   [container-err]     from .nanobot import NanoBotAgent
+[22:07:48]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:07:48]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:07:48]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:07:48] [clawbench_sci-002-monte-carlo_glm-4.7_20260428_140741] Agent finished in 3.29s, returncode=1
+[22:07:48]   [container-err] Traceback (most recent call last):
+[22:07:48]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:07:48]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:07:48]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:07:48]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:07:48]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:07:48]   [container-err]     from .nanobot import NanoBotAgent
+[22:07:48]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:07:48]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:07:48]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:07:48] [clawbench_sci-005-optimization_glm-4.7_20260428_140742] Agent finished in 3.27s, returncode=1
+[22:07:48] [clawbench_sci-005-optimization_glm-4.7_20260428_140742] agent_result.json not found
+[22:07:48] [clawbench_sci-002-monte-carlo_glm-4.7_20260428_140741] agent_result.json not found
+[22:07:52] [clawbench_web-015_glm-4.7_20260428_140749] Container started
+[22:07:52] [web-015] Harness detected, timeout adjusted: 120 → 300
+[22:07:52] [clawbench_web-011_glm-4.7_20260428_140749] Container started
+[22:07:52] [web-011] Harness detected, timeout adjusted: 120 → 300
+[22:07:55]   [container-err] Traceback (most recent call last):
+[22:07:55]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:07:55]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:07:55]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:07:55]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:07:55]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:07:55]   [container-err]     from .nanobot import NanoBotAgent
+[22:07:55]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:07:55]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:07:55]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:07:55] [clawbench_web-011_glm-4.7_20260428_140749] Agent finished in 3.01s, returncode=1
+[22:07:55] [clawbench_web-011_glm-4.7_20260428_140749] agent_result.json not found
+[22:07:55]   [container-err] Traceback (most recent call last):
+[22:07:55]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:07:55]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:07:55]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:07:55]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:07:55]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:07:55]   [container-err]     from .nanobot import NanoBotAgent
+[22:07:55]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:07:55]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:07:55]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:07:55] [clawbench_web-015_glm-4.7_20260428_140749] Agent finished in 3.22s, returncode=1
+[22:07:55] [clawbench_web-015_glm-4.7_20260428_140749] agent_result.json not found
+[22:07:58] [clawbench_wfl-012_glm-4.7_20260428_140756] Container started
+[22:07:58] [wfl-012] Harness detected, timeout adjusted: 120 → 300
+[22:08:01]   [container-err] Traceback (most recent call last):
+[22:08:01]   [container-err]   File "/tmp/exec_nanobot.py", line 33, in <module>
+[22:08:01]   [container-err]     from harness.agent.nanobot import NanoBotAgent
+[22:08:01]   [container-err]   File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+[22:08:01]   [container-err]     from .agent import NanoBotAgent, BaseAgent, AgentResult
+[22:08:01]   [container-err]   File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+[22:08:01]   [container-err]     from .nanobot import NanoBotAgent
+[22:08:01]   [container-err]   File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+[22:08:01]   [container-err]     from .collaboration import CollabConfig, HandoffManager, PlannerRole, ExecutorRole, VerifierRole, CommanderRole, get_collab_summary
+[22:08:01]   [container-err] ImportError: cannot import name 'CommanderRole' from 'harness.agent.collaboration' (/root/OpenClawPro/harness/agent/collaboration/__init__.py)
+[22:08:01] [clawbench_wfl-012_glm-4.7_20260428_140756] Agent finished in 3.00s, returncode=1
+[22:08:01] [clawbench_wfl-012_glm-4.7_20260428_140756] agent_result.json not found
+[22:08:02]   [clawbench×glm-4.7] done: score=61.1, scored=0/22
+[22:08:02]   [clawbench×glm-4.7] done: score=61.1, scored=0/22
+[22:08:02] 
+============================================================
+[22:08:02] BENCHMARK: claweval (30 tasks from file)
+[22:08:02] ============================================================
+[22:08:02]   [claweval×glm-4.7] evaluating...
+[22:08:02] [claweval] Docker image 'claw-eval-agent:latest' found
+[22:08:02] [claweval] Evaluating 30 tasks with model=glm-4.7, parallel=2
+[22:08:02] [claweval] 1/30 new tasks done (total: 1/30)
+[22:08:02] [claweval] 2/30 new tasks done (total: 2/30)
+[22:08:02] [claweval] 3/30 new tasks done (total: 3/30)
+[22:08:02] [claweval] 4/30 new tasks done (total: 4/30)
+[22:08:02] [claweval] 5/30 new tasks done (total: 5/30)
+[22:08:02] [claweval] 6/30 new tasks done (total: 6/30)
+[22:08:02] [claweval] 7/30 new tasks done (total: 7/30)
+[22:08:02] [claweval] 8/30 new tasks done (total: 8/30)
+[22:08:02] [claweval] 9/30 new tasks done (total: 9/30)
+[22:08:02] [claweval] 10/30 new tasks done (total: 10/30)
+[22:08:02] [claweval] 11/30 new tasks done (total: 11/30)
+[22:08:02] [claweval] 12/30 new tasks done (total: 12/30)
+[22:08:02] [claweval] 13/30 new tasks done (total: 13/30)
+[22:08:02] [claweval] 14/30 new tasks done (total: 14/30)
+[22:08:02] [claweval] 15/30 new tasks done (total: 15/30)
+[22:08:02] [claweval] 16/30 new tasks done (total: 16/30)
+[22:08:02] [claweval] 17/30 new tasks done (total: 17/30)
+[22:08:02] [claweval] 18/30 new tasks done (total: 18/30)
+[22:08:02] [claweval] 19/30 new tasks done (total: 19/30)
+[22:08:02] [claweval] 20/30 new tasks done (total: 20/30)
+[22:08:02] [claweval] 21/30 new tasks done (total: 21/30)
+[22:08:02] [claweval] 22/30 new tasks done (total: 22/30)
+[22:08:02] [claweval] 23/30 new tasks done (total: 23/30)
+[22:08:02] [claweval] 24/30 new tasks done (total: 24/30)
+[22:08:02] [claweval] 25/30 new tasks done (total: 25/30)
+[22:08:02] [claweval] 26/30 new tasks done (total: 26/30)
+[22:08:02] [claweval] 27/30 new tasks done (total: 27/30)
+[22:08:02] [claweval] 28/30 new tasks done (total: 28/30)
+[22:08:02] [claweval] 29/30 new tasks done (total: 29/30)
+[22:08:02] [claweval] 30/30 new tasks done (total: 30/30)
+[22:08:02] [claweval] 汇总已保存: 0/30 完成
+[22:08:02]   [claweval×glm-4.7] done: score=0.0, scored=0/30
+[22:08:02]   [claweval×glm-4.7] done: score=0.0, scored=0/30
+[22:08:02] 
+============================================================
+[22:08:02] BENCHMARK: agentbench (3 tasks from file)
+[22:08:02] ============================================================
+[22:08:02]   [agentbench×glm-4.7] evaluating...
+[22:08:03] [agent_compare-technologies_glm-4.7_20260428_140802] Container started
+[22:08:04] [agent_compare-technologies_glm-4.7_20260428_140802] Workspace copied to /tmp/workspace/:
+total 12
+drwxr-xr-x 1  501 dialout   40 Apr 28 14:08 .
+drwxrwxrwt 1 root root      32 Apr 28 14:08 ..
+-rw-r--r-- 1  501 dialout 3587 Apr 23 08:10 tech-a.txt
+-rw-r--r-- 1  501 dialout 4487 Apr 23 08:10 tech-b.txt
+
+[22:08:04] [agent_memory-organization_glm-4.7_20260428_140802] Container started
+[22:08:04] [agent_memory-organization_glm-4.7_20260428_140802] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  0 Apr 28 14:08 .
+drwxrwxrwt 1 root root    32 Apr 28 14:08 ..
+
+[22:08:06] [agent_compare-technologies_glm-4.7_20260428_140802] Agent finished in 2.77s, returncode=1
+[22:08:06] [agent_compare-technologies_glm-4.7_20260428_140802] Agent stderr: Traceback (most recent call last):
+  File "/tmp/exec_nanobot.py", line 8, in <module>
+    from harness.agent.nanobot import NanoBotAgent
+  File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+    from .agent import NanoBotAgent, BaseAgent, AgentResult
+  File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+    from .nanobot import NanoBotAgent
+  File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+    from .collaboration import CollabConfig, Hand
+[22:08:06] [agent_compare-technologies_glm-4.7_20260428_140802] agent_result.json not found at outputs/harness/combo/agentbench/glm-4.7/compare-technologies/agent_result.json
+[22:08:06] [agent_compare-technologies_glm-4.7_20260428_140802] Scores: L0=0.0 L1=60.0 L2=50.0 L3=50.0 | Overall=45.0
+[22:08:06] [agent_memory-organization_glm-4.7_20260428_140802] Agent finished in 2.80s, returncode=1
+[22:08:06] [agent_memory-organization_glm-4.7_20260428_140802] Agent stderr: Traceback (most recent call last):
+  File "/tmp/exec_nanobot.py", line 8, in <module>
+    from harness.agent.nanobot import NanoBotAgent
+  File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+    from .agent import NanoBotAgent, BaseAgent, AgentResult
+  File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+    from .nanobot import NanoBotAgent
+  File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+    from .collaboration import CollabConfig, Hand
+[22:08:06] [agent_memory-organization_glm-4.7_20260428_140802] agent_result.json not found at outputs/harness/combo/agentbench/glm-4.7/memory-organization/agent_result.json
+[22:08:06] [agent_memory-organization_glm-4.7_20260428_140802] Scores: L0=50.0 L1=60.0 L2=50.0 L3=50.0 | Overall=51.5
+[22:08:07] [agent_compare-technologies_glm-4.7_20260428_140802] Result saved to outputs/harness/combo/agentbench/glm-4.7/compare-technologies/result.json
+[22:08:07] [agent_large-codebase-navigation_glm-4.7_20260428_140807] Running setup.sh for task large-codebase-navigation
+[22:08:07] [agent_large-codebase-navigation_glm-4.7_20260428_140807] setup.sh completed successfully
+[22:08:08] [agent_memory-organization_glm-4.7_20260428_140802] Result saved to outputs/harness/combo/agentbench/glm-4.7/memory-organization/result.json
+[22:08:09] [agent_large-codebase-navigation_glm-4.7_20260428_140807] Container started
+[22:08:09] [agent_large-codebase-navigation_glm-4.7_20260428_140807] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   62 Apr 28 14:08 .
+drwxrwxrwt 1 root root      32 Apr 28 14:08 ..
+drwxr-xr-x 1  501 dialout  128 Apr 28 14:08 .git
+-rw-r--r-- 1  501 dialout 1195 Apr 28 14:08 README.md
+drwxr-xr-x 1  501 dialout   62 Apr 28 14:08 config
+drwxr-xr-x 1  501 dialout   28 Apr 28 14:08 docs
+drwxr-xr-x 1  501 dialout   70 Apr 28 14:08 src
+drwxr-xr-x 1  501 dialout  138 Apr 28 14:08 tests
+
+[22:08:12] [agent_large-codebase-navigation_glm-4.7_20260428_140807] Agent finished in 2.59s, returncode=1
+[22:08:12] [agent_large-codebase-navigation_glm-4.7_20260428_140807] Agent stderr: Traceback (most recent call last):
+  File "/tmp/exec_nanobot.py", line 8, in <module>
+    from harness.agent.nanobot import NanoBotAgent
+  File "/root/OpenClawPro/harness/__init__.py", line 8, in <module>
+    from .agent import NanoBotAgent, BaseAgent, AgentResult
+  File "/root/OpenClawPro/harness/agent/__init__.py", line 3, in <module>
+    from .nanobot import NanoBotAgent
+  File "/root/OpenClawPro/harness/agent/nanobot.py", line 30, in <module>
+    from .collaboration import CollabConfig, Hand
+[22:08:12] [agent_large-codebase-navigation_glm-4.7_20260428_140807] agent_result.json not found at outputs/harness/combo/agentbench/glm-4.7/large-codebase-navigation/agent_result.json
+[22:08:12] [agent_large-codebase-navigation_glm-4.7_20260428_140807] Scores: L0=0.0 L1=60.0 L2=50.0 L3=50.0 | Overall=46.5
+[22:08:12] [agent_large-codebase-navigation_glm-4.7_20260428_140807] Result saved to outputs/harness/combo/agentbench/glm-4.7/large-codebase-navigation/result.json
+[22:08:12]   [agentbench×glm-4.7] done: score=0, scored=0/3
+[22:08:12]   [agentbench×glm-4.7] done: score=0, scored=0/3
+[22:08:12] 
+

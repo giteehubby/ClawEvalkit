@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Generate LLM prompts for error classification on claweval glm-4.7 baseline failures.
-Threshold: passed = False (score < 0.8 = failure)
+Threshold: passed = False AND score < 0.9 = failure
 Output: error_analysis/outputs/claweval_glm_prompts.json
 """
 
@@ -24,7 +24,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = PROJECT_ROOT / "error_analysis" / "outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
-FAILURE_THRESHOLD = 0.8  # score < 0.8 means failure
+FAILURE_THRESHOLD = 0.9  # score < 0.9 means failure
 MODEL_DIR = "glm-4.7"
 
 
@@ -75,7 +75,7 @@ def load_claweval_tasks():
 
 
 def collect_failures():
-    """Collect all claweval glm-4.7 failures (passed = False or score < 0.8)."""
+    """Collect all claweval glm-4.7 failures (passed = False AND score < 0.9)."""
     failures = []
     result_file = PROJECT_ROOT / "outputs" / "claweval" / f"{MODEL_DIR}.json"
 
@@ -95,7 +95,7 @@ def collect_failures():
         passed = task_result.get("passed", False)
         score = task_result.get("score", 0)
 
-        if not passed or score < FAILURE_THRESHOLD:
+        if not passed and score < FAILURE_THRESHOLD:
             failures.append({
                 "bench": "claweval",
                 "task_id": task_id,
@@ -187,7 +187,7 @@ The failure does not fit the above categories clearly, or is caused by external 
 - **Category**: {category}
 - **Difficulty**: {difficulty}
 - **Execution Status**: {f['status']}
-- **Score**: {f['score']} (failure threshold: < 0.8)
+- **Score**: {f['score']} (failure threshold: < 0.9)
 
 ## Score Breakdown
 

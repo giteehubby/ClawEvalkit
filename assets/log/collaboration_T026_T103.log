@@ -1,0 +1,936 @@
+[22:11:34] [agent.nanobot] Control modules initialized: enabled=False
+[22:11:34] [agent.nanobot] Collaboration modules initialized: mode=executor_verifier, max_handoffs=3
+[22:11:34] [agent.nanobot] Loaded 9 skills from workspace
+[22:11:34] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[22:11:34] [agent.nanobot]   Model: glm-4.7
+[22:11:34] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:11:34] [agent.nanobot]   API Key: 87db****WXfm
+[22:11:34] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T026_ambiguous_contact_email_ifzeb1kt
+[22:11:34] [agent.nanobot]   Timeout: 300s
+[22:11:34] [agent.nanobot] =================================================================
+[22:11:34] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:11:34] [agent.nanobot]   Requested Model: glm-4.7
+[22:11:34] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:11:34] [agent.nanobot]   API Key: 87db****WXfm
+[22:11:34] [agent.nanobot]   Max Tokens: 16384
+[22:11:34] [agent.nanobot]   Tools: 11
+[22:11:34] [agent.nanobot]   Is OpenRouter: False
+[22:11:34] [agent.nanobot]   Is Azure Proxy: False
+[22:11:34] [agent.nanobot]   Is Anthropic Compat: True
+[22:11:34] [agent.nanobot] ===================================================
+[92m22:11:34 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:34] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:35] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:11:35] [agent.nanobot]   Requested Model: glm-4.7
+[22:11:35] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:11:35] [agent.nanobot]   API Key: 87db****WXfm
+[22:11:35] [agent.nanobot]   Max Tokens: 16384
+[22:11:35] [agent.nanobot]   Tools: 11
+[22:11:35] [agent.nanobot]   Is OpenRouter: False
+[22:11:35] [agent.nanobot]   Is Azure Proxy: False
+[22:11:35] [agent.nanobot]   Is Anthropic Compat: True
+[22:11:35] [agent.nanobot] ===================================================
+[92m22:11:35 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:35] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:36] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:11:36] [agent.nanobot]   Requested Model: glm-4.7
+[22:11:36] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:11:36] [agent.nanobot]   API Key: 87db****WXfm
+[22:11:36] [agent.nanobot]   Max Tokens: 16384
+[22:11:36] [agent.nanobot]   Tools: 11
+[22:11:36] [agent.nanobot]   Is OpenRouter: False
+[22:11:36] [agent.nanobot]   Is Azure Proxy: False
+[22:11:36] [agent.nanobot]   Is Anthropic Compat: True
+[22:11:36] [agent.nanobot] ===================================================
+[92m22:11:36 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:36] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:38] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:11:38] [agent.nanobot]   Requested Model: glm-4.7
+[22:11:38] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:11:38] [agent.nanobot]   API Key: 87db****WXfm
+[22:11:38] [agent.nanobot]   Max Tokens: 16384
+[22:11:38] [agent.nanobot]   Tools: 11
+[22:11:38] [agent.nanobot]   Is OpenRouter: False
+[22:11:38] [agent.nanobot]   Is Azure Proxy: False
+[22:11:38] [agent.nanobot]   Is Anthropic Compat: True
+[22:11:38] [agent.nanobot] ===================================================
+[92m22:11:38 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:38] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:41] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:11:41] [agent.nanobot]   Requested Model: glm-4.7
+[22:11:41] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:11:41] [agent.nanobot]   API Key: 87db****WXfm
+[22:11:41] [agent.nanobot]   Max Tokens: 16384
+[22:11:41] [agent.nanobot]   Tools: 11
+[22:11:41] [agent.nanobot]   Is OpenRouter: False
+[22:11:41] [agent.nanobot]   Is Azure Proxy: False
+[22:11:41] [agent.nanobot]   Is Anthropic Compat: True
+[22:11:41] [agent.nanobot] ===================================================
+[92m22:11:41 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:41] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:50] [agent.nanobot] [Collab] Verifier started (handoff 1/3)
+[22:11:50] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:11:50] [agent.nanobot]   Requested Model: glm-4.7
+[22:11:50] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:11:50] [agent.nanobot]   API Key: 87db****WXfm
+[22:11:50] [agent.nanobot]   Max Tokens: 4096
+[22:11:50] [agent.nanobot]   Tools: 11
+[22:11:50] [agent.nanobot]   Is OpenRouter: False
+[22:11:50] [agent.nanobot]   Is Azure Proxy: False
+[22:11:50] [agent.nanobot]   Is Anthropic Compat: True
+[22:11:50] [agent.nanobot] ===================================================
+[92m22:11:50 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:50] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:52] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:11:52] [agent.nanobot]   Requested Model: glm-4.7
+[22:11:52] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:11:52] [agent.nanobot]   API Key: 87db****WXfm
+[22:11:52] [agent.nanobot]   Max Tokens: 4096
+[22:11:52] [agent.nanobot]   Tools: 11
+[22:11:52] [agent.nanobot]   Is OpenRouter: False
+[22:11:52] [agent.nanobot]   Is Azure Proxy: False
+[22:11:52] [agent.nanobot]   Is Anthropic Compat: True
+[22:11:52] [agent.nanobot] ===================================================
+[92m22:11:52 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:52] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:52] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:11:52] [agent.nanobot]   Requested Model: glm-4.7
+[22:11:52] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:11:52] [agent.nanobot]   API Key: 87db****WXfm
+[22:11:52] [agent.nanobot]   Max Tokens: 4096
+[22:11:52] [agent.nanobot]   Tools: 11
+[22:11:52] [agent.nanobot]   Is OpenRouter: False
+[22:11:52] [agent.nanobot]   Is Azure Proxy: False
+[22:11:52] [agent.nanobot]   Is Anthropic Compat: True
+[22:11:52] [agent.nanobot] ===================================================
+[92m22:11:52 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:52] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:56] [agent.collab.roles] [VerifierRole] verdict=PASS, tool_calls=3, feedback_len=1158
+[22:11:56] [agent.nanobot] [Collab] Verifier PASS (used 3 tool calls)
+[22:11:59] [agent.nanobot] Control modules initialized: enabled=False
+[22:11:59] [agent.nanobot] Collaboration modules initialized: mode=executor_verifier, max_handoffs=3
+[22:11:59] [agent.nanobot] Loaded 9 skills from workspace
+[22:11:59] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[22:11:59] [agent.nanobot]   Model: glm-4.7
+[22:11:59] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:11:59] [agent.nanobot]   API Key: 87db****WXfm
+[22:11:59] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T103_schema_migration_wltd8ecg
+[22:11:59] [agent.nanobot]   Timeout: 600s
+[22:11:59] [agent.nanobot] =================================================================
+[22:11:59] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:11:59] [agent.nanobot]   Requested Model: glm-4.7
+[22:11:59] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:11:59] [agent.nanobot]   API Key: 87db****WXfm
+[22:11:59] [agent.nanobot]   Max Tokens: 16384
+[22:11:59] [agent.nanobot]   Tools: 5
+[22:11:59] [agent.nanobot]   Is OpenRouter: False
+[22:11:59] [agent.nanobot]   Is Azure Proxy: False
+[22:11:59] [agent.nanobot]   Is Anthropic Compat: True
+[22:11:59] [agent.nanobot] ===================================================
+[92m22:11:59 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:11:59] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:12:01] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:12:01] [agent.nanobot]   Requested Model: glm-4.7
+[22:12:01] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:12:01] [agent.nanobot]   API Key: 87db****WXfm
+[22:12:01] [agent.nanobot]   Max Tokens: 16384
+[22:12:01] [agent.nanobot]   Tools: 5
+[22:12:01] [agent.nanobot]   Is OpenRouter: False
+[22:12:01] [agent.nanobot]   Is Azure Proxy: False
+[22:12:01] [agent.nanobot]   Is Anthropic Compat: True
+[22:12:01] [agent.nanobot] ===================================================
+[92m22:12:01 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:12:01] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:12:09] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-63' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:12:09] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:12:09] [agent.nanobot]   Requested Model: glm-4.7
+[22:12:09] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:12:09] [agent.nanobot]   API Key: 87db****WXfm
+[22:12:09] [agent.nanobot]   Max Tokens: 16384
+[22:12:09] [agent.nanobot]   Tools: 5
+[22:12:09] [agent.nanobot]   Is OpenRouter: False
+[22:12:09] [agent.nanobot]   Is Azure Proxy: False
+[22:12:09] [agent.nanobot]   Is Anthropic Compat: True
+[22:12:09] [agent.nanobot] ===================================================
+[92m22:12:09 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:12:09] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:12:35] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-85' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:12:35] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:12:35] [agent.nanobot]   Requested Model: glm-4.7
+[22:12:35] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:12:35] [agent.nanobot]   API Key: 87db****WXfm
+[22:12:35] [agent.nanobot]   Max Tokens: 16384
+[22:12:35] [agent.nanobot]   Tools: 5
+[22:12:35] [agent.nanobot]   Is OpenRouter: False
+[22:12:35] [agent.nanobot]   Is Azure Proxy: False
+[22:12:35] [agent.nanobot]   Is Anthropic Compat: True
+[22:12:35] [agent.nanobot] ===================================================
+[92m22:12:35 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:12:35] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:13:57] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-115' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:13:58] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:13:58] [agent.nanobot]   Requested Model: glm-4.7
+[22:13:58] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:13:58] [agent.nanobot]   API Key: 87db****WXfm
+[22:13:58] [agent.nanobot]   Max Tokens: 16384
+[22:13:58] [agent.nanobot]   Tools: 5
+[22:13:58] [agent.nanobot]   Is OpenRouter: False
+[22:13:58] [agent.nanobot]   Is Azure Proxy: False
+[22:13:58] [agent.nanobot]   Is Anthropic Compat: True
+[22:13:58] [agent.nanobot] ===================================================
+[92m22:13:58 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:13:58] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:00] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-125' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:14:00] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:14:00] [agent.nanobot]   Requested Model: glm-4.7
+[22:14:00] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:14:00] [agent.nanobot]   API Key: 87db****WXfm
+[22:14:00] [agent.nanobot]   Max Tokens: 16384
+[22:14:00] [agent.nanobot]   Tools: 5
+[22:14:00] [agent.nanobot]   Is OpenRouter: False
+[22:14:00] [agent.nanobot]   Is Azure Proxy: False
+[22:14:00] [agent.nanobot]   Is Anthropic Compat: True
+[22:14:00] [agent.nanobot] ===================================================
+[92m22:14:00 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:00] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:02] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-139' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:14:02] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:14:02] [agent.nanobot]   Requested Model: glm-4.7
+[22:14:02] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:14:02] [agent.nanobot]   API Key: 87db****WXfm
+[22:14:02] [agent.nanobot]   Max Tokens: 16384
+[22:14:02] [agent.nanobot]   Tools: 5
+[22:14:02] [agent.nanobot]   Is OpenRouter: False
+[22:14:02] [agent.nanobot]   Is Azure Proxy: False
+[22:14:02] [agent.nanobot]   Is Anthropic Compat: True
+[22:14:02] [agent.nanobot] ===================================================
+[92m22:14:02 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:02] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:03] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-149' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:14:03] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:14:03] [agent.nanobot]   Requested Model: glm-4.7
+[22:14:03] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:14:03] [agent.nanobot]   API Key: 87db****WXfm
+[22:14:03] [agent.nanobot]   Max Tokens: 16384
+[22:14:03] [agent.nanobot]   Tools: 5
+[22:14:03] [agent.nanobot]   Is OpenRouter: False
+[22:14:03] [agent.nanobot]   Is Azure Proxy: False
+[22:14:03] [agent.nanobot]   Is Anthropic Compat: True
+[22:14:03] [agent.nanobot] ===================================================
+[92m22:14:03 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:03] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:04] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-163' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:14:04] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:14:04] [agent.nanobot]   Requested Model: glm-4.7
+[22:14:04] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:14:04] [agent.nanobot]   API Key: 87db****WXfm
+[22:14:04] [agent.nanobot]   Max Tokens: 16384
+[22:14:04] [agent.nanobot]   Tools: 5
+[22:14:04] [agent.nanobot]   Is OpenRouter: False
+[22:14:04] [agent.nanobot]   Is Azure Proxy: False
+[22:14:04] [agent.nanobot]   Is Anthropic Compat: True
+[22:14:04] [agent.nanobot] ===================================================
+[92m22:14:04 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:04] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:09] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-173' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:14:09] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:14:09] [agent.nanobot]   Requested Model: glm-4.7
+[22:14:09] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:14:09] [agent.nanobot]   API Key: 87db****WXfm
+[22:14:09] [agent.nanobot]   Max Tokens: 16384
+[22:14:09] [agent.nanobot]   Tools: 5
+[22:14:09] [agent.nanobot]   Is OpenRouter: False
+[22:14:09] [agent.nanobot]   Is Azure Proxy: False
+[22:14:09] [agent.nanobot]   Is Anthropic Compat: True
+[22:14:09] [agent.nanobot] ===================================================
+[92m22:14:09 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:09] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:10] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-187' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:14:10] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:14:10] [agent.nanobot]   Requested Model: glm-4.7
+[22:14:10] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:14:10] [agent.nanobot]   API Key: 87db****WXfm
+[22:14:10] [agent.nanobot]   Max Tokens: 16384
+[22:14:10] [agent.nanobot]   Tools: 5
+[22:14:10] [agent.nanobot]   Is OpenRouter: False
+[22:14:10] [agent.nanobot]   Is Azure Proxy: False
+[22:14:10] [agent.nanobot]   Is Anthropic Compat: True
+[22:14:10] [agent.nanobot] ===================================================
+[92m22:14:10 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:10] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:15] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-197' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:14:15] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:14:15] [agent.nanobot]   Requested Model: glm-4.7
+[22:14:15] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:14:15] [agent.nanobot]   API Key: 87db****WXfm
+[22:14:15] [agent.nanobot]   Max Tokens: 16384
+[22:14:15] [agent.nanobot]   Tools: 5
+[22:14:15] [agent.nanobot]   Is OpenRouter: False
+[22:14:15] [agent.nanobot]   Is Azure Proxy: False
+[22:14:15] [agent.nanobot]   Is Anthropic Compat: True
+[22:14:15] [agent.nanobot] ===================================================
+[92m22:14:15 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:15] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:16] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-207' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:14:17] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:14:17] [agent.nanobot]   Requested Model: glm-4.7
+[22:14:17] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:14:17] [agent.nanobot]   API Key: 87db****WXfm
+[22:14:17] [agent.nanobot]   Max Tokens: 16384
+[22:14:17] [agent.nanobot]   Tools: 5
+[22:14:17] [agent.nanobot]   Is OpenRouter: False
+[22:14:17] [agent.nanobot]   Is Azure Proxy: False
+[22:14:17] [agent.nanobot]   Is Anthropic Compat: True
+[22:14:17] [agent.nanobot] ===================================================
+[92m22:14:17 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:17] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:18] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-217' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:14:18] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:14:18] [agent.nanobot]   Requested Model: glm-4.7
+[22:14:18] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:14:18] [agent.nanobot]   API Key: 87db****WXfm
+[22:14:18] [agent.nanobot]   Max Tokens: 16384
+[22:14:18] [agent.nanobot]   Tools: 5
+[22:14:18] [agent.nanobot]   Is OpenRouter: False
+[22:14:18] [agent.nanobot]   Is Azure Proxy: False
+[22:14:18] [agent.nanobot]   Is Anthropic Compat: True
+[22:14:18] [agent.nanobot] ===================================================
+[92m22:14:18 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:18] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:22] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-227' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:14:22] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:14:22] [agent.nanobot]   Requested Model: glm-4.7
+[22:14:22] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:14:22] [agent.nanobot]   API Key: 87db****WXfm
+[22:14:22] [agent.nanobot]   Max Tokens: 16384
+[22:14:22] [agent.nanobot]   Tools: 5
+[22:14:22] [agent.nanobot]   Is OpenRouter: False
+[22:14:22] [agent.nanobot]   Is Azure Proxy: False
+[22:14:22] [agent.nanobot]   Is Anthropic Compat: True
+[22:14:22] [agent.nanobot] ===================================================
+[92m22:14:22 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:14:22] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:16:43] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-237' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:16:44] [agent.nanobot] [Collab] Executor has done 15 consecutive tool calls, forcing summary to trigger verifier
+[22:16:44] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:16:44] [agent.nanobot]   Requested Model: glm-4.7
+[22:16:44] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:16:44] [agent.nanobot]   API Key: 87db****WXfm
+[22:16:44] [agent.nanobot]   Max Tokens: 16384
+[22:16:44] [agent.nanobot]   Tools: 5
+[22:16:44] [agent.nanobot]   Is OpenRouter: False
+[22:16:44] [agent.nanobot]   Is Azure Proxy: False
+[22:16:44] [agent.nanobot]   Is Anthropic Compat: True
+[22:16:44] [agent.nanobot] ===================================================
+[92m22:16:44 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:16:44] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:16:47] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-251' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:16:47] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:16:47] [agent.nanobot]   Requested Model: glm-4.7
+[22:16:47] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:16:47] [agent.nanobot]   API Key: 87db****WXfm
+[22:16:47] [agent.nanobot]   Max Tokens: 16384
+[22:16:47] [agent.nanobot]   Tools: 5
+[22:16:47] [agent.nanobot]   Is OpenRouter: False
+[22:16:47] [agent.nanobot]   Is Azure Proxy: False
+[22:16:47] [agent.nanobot]   Is Anthropic Compat: True
+[22:16:47] [agent.nanobot] ===================================================
+[92m22:16:47 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:16:47] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:16:48] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-265' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:16:48] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:16:48] [agent.nanobot]   Requested Model: glm-4.7
+[22:16:48] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:16:48] [agent.nanobot]   API Key: 87db****WXfm
+[22:16:48] [agent.nanobot]   Max Tokens: 16384
+[22:16:48] [agent.nanobot]   Tools: 5
+[22:16:48] [agent.nanobot]   Is OpenRouter: False
+[22:16:48] [agent.nanobot]   Is Azure Proxy: False
+[22:16:48] [agent.nanobot]   Is Anthropic Compat: True
+[22:16:48] [agent.nanobot] ===================================================
+[92m22:16:48 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:16:48] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:16:50] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-275' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:16:50] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:16:50] [agent.nanobot]   Requested Model: glm-4.7
+[22:16:50] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:16:50] [agent.nanobot]   API Key: 87db****WXfm
+[22:16:50] [agent.nanobot]   Max Tokens: 16384
+[22:16:50] [agent.nanobot]   Tools: 5
+[22:16:50] [agent.nanobot]   Is OpenRouter: False
+[22:16:50] [agent.nanobot]   Is Azure Proxy: False
+[22:16:50] [agent.nanobot]   Is Anthropic Compat: True
+[22:16:50] [agent.nanobot] ===================================================
+[92m22:16:50 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:16:50] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:18:20] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-289' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:18:20] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:18:20] [agent.nanobot]   Requested Model: glm-4.7
+[22:18:20] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:18:20] [agent.nanobot]   API Key: 87db****WXfm
+[22:18:20] [agent.nanobot]   Max Tokens: 16384
+[22:18:20] [agent.nanobot]   Tools: 5
+[22:18:20] [agent.nanobot]   Is OpenRouter: False
+[22:18:20] [agent.nanobot]   Is Azure Proxy: False
+[22:18:20] [agent.nanobot]   Is Anthropic Compat: True
+[22:18:20] [agent.nanobot] ===================================================
+[92m22:18:20 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:18:20] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:18:21] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-299' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:18:21] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:18:21] [agent.nanobot]   Requested Model: glm-4.7
+[22:18:21] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:18:21] [agent.nanobot]   API Key: 87db****WXfm
+[22:18:21] [agent.nanobot]   Max Tokens: 16384
+[22:18:21] [agent.nanobot]   Tools: 5
+[22:18:21] [agent.nanobot]   Is OpenRouter: False
+[22:18:21] [agent.nanobot]   Is Azure Proxy: False
+[22:18:21] [agent.nanobot]   Is Anthropic Compat: True
+[22:18:21] [agent.nanobot] ===================================================
+[92m22:18:21 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:18:21] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:18:24] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-313' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:18:24] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:18:24] [agent.nanobot]   Requested Model: glm-4.7
+[22:18:24] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:18:24] [agent.nanobot]   API Key: 87db****WXfm
+[22:18:24] [agent.nanobot]   Max Tokens: 16384
+[22:18:24] [agent.nanobot]   Tools: 5
+[22:18:24] [agent.nanobot]   Is OpenRouter: False
+[22:18:24] [agent.nanobot]   Is Azure Proxy: False
+[22:18:24] [agent.nanobot]   Is Anthropic Compat: True
+[22:18:24] [agent.nanobot] ===================================================
+[92m22:18:24 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:18:24] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:18:50] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-323' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:18:50] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:18:50] [agent.nanobot]   Requested Model: glm-4.7
+[22:18:50] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:18:50] [agent.nanobot]   API Key: 87db****WXfm
+[22:18:50] [agent.nanobot]   Max Tokens: 16384
+[22:18:50] [agent.nanobot]   Tools: 5
+[22:18:50] [agent.nanobot]   Is OpenRouter: False
+[22:18:50] [agent.nanobot]   Is Azure Proxy: False
+[22:18:50] [agent.nanobot]   Is Anthropic Compat: True
+[22:18:50] [agent.nanobot] ===================================================
+[92m22:18:50 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:18:50] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:18:51] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-337' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:18:51] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:18:51] [agent.nanobot]   Requested Model: glm-4.7
+[22:18:51] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:18:51] [agent.nanobot]   API Key: 87db****WXfm
+[22:18:51] [agent.nanobot]   Max Tokens: 16384
+[22:18:51] [agent.nanobot]   Tools: 5
+[22:18:51] [agent.nanobot]   Is OpenRouter: False
+[22:18:51] [agent.nanobot]   Is Azure Proxy: False
+[22:18:51] [agent.nanobot]   Is Anthropic Compat: True
+[22:18:51] [agent.nanobot] ===================================================
+[92m22:18:51 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:18:51] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:18:53] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-351' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:18:53] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:18:53] [agent.nanobot]   Requested Model: glm-4.7
+[22:18:53] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:18:53] [agent.nanobot]   API Key: 87db****WXfm
+[22:18:53] [agent.nanobot]   Max Tokens: 16384
+[22:18:53] [agent.nanobot]   Tools: 5
+[22:18:53] [agent.nanobot]   Is OpenRouter: False
+[22:18:53] [agent.nanobot]   Is Azure Proxy: False
+[22:18:53] [agent.nanobot]   Is Anthropic Compat: True
+[22:18:53] [agent.nanobot] ===================================================
+[92m22:18:53 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:18:53] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:18:55] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-361' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:18:55] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:18:55] [agent.nanobot]   Requested Model: glm-4.7
+[22:18:55] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:18:55] [agent.nanobot]   API Key: 87db****WXfm
+[22:18:55] [agent.nanobot]   Max Tokens: 16384
+[22:18:55] [agent.nanobot]   Tools: 5
+[22:18:55] [agent.nanobot]   Is OpenRouter: False
+[22:18:55] [agent.nanobot]   Is Azure Proxy: False
+[22:18:55] [agent.nanobot]   Is Anthropic Compat: True
+[22:18:55] [agent.nanobot] ===================================================
+[92m22:18:55 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:18:55] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:19:02] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-371' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:19:02] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:19:02] [agent.nanobot]   Requested Model: glm-4.7
+[22:19:02] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:19:02] [agent.nanobot]   API Key: 87db****WXfm
+[22:19:02] [agent.nanobot]   Max Tokens: 16384
+[22:19:02] [agent.nanobot]   Tools: 5
+[22:19:02] [agent.nanobot]   Is OpenRouter: False
+[22:19:02] [agent.nanobot]   Is Azure Proxy: False
+[22:19:02] [agent.nanobot]   Is Anthropic Compat: True
+[22:19:02] [agent.nanobot] ===================================================
+[92m22:19:02 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:19:02] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:19:05] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-381' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:19:05] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:19:05] [agent.nanobot]   Requested Model: glm-4.7
+[22:19:05] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:19:05] [agent.nanobot]   API Key: 87db****WXfm
+[22:19:05] [agent.nanobot]   Max Tokens: 16384
+[22:19:05] [agent.nanobot]   Tools: 5
+[22:19:05] [agent.nanobot]   Is OpenRouter: False
+[22:19:05] [agent.nanobot]   Is Azure Proxy: False
+[22:19:05] [agent.nanobot]   Is Anthropic Compat: True
+[22:19:05] [agent.nanobot] ===================================================
+[92m22:19:05 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:19:05] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:19:21] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-391' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:19:21] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:19:21] [agent.nanobot]   Requested Model: glm-4.7
+[22:19:21] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:19:21] [agent.nanobot]   API Key: 87db****WXfm
+[22:19:21] [agent.nanobot]   Max Tokens: 16384
+[22:19:21] [agent.nanobot]   Tools: 5
+[22:19:21] [agent.nanobot]   Is OpenRouter: False
+[22:19:21] [agent.nanobot]   Is Azure Proxy: False
+[22:19:21] [agent.nanobot]   Is Anthropic Compat: True
+[22:19:21] [agent.nanobot] ===================================================
+[92m22:19:21 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:19:21] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:20:37] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-401' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:20:37] [agent.nanobot] 📞 ==================== LLM Call ====================
+[22:20:37] [agent.nanobot]   Requested Model: glm-4.7
+[22:20:37] [agent.nanobot]   API URL: https://open.bigmodel.cn/api/anthropic
+[22:20:37] [agent.nanobot]   API Key: 87db****WXfm
+[22:20:37] [agent.nanobot]   Max Tokens: 16384
+[22:20:37] [agent.nanobot]   Tools: 5
+[22:20:37] [agent.nanobot]   Is OpenRouter: False
+[22:20:37] [agent.nanobot]   Is Azure Proxy: False
+[22:20:37] [agent.nanobot]   Is Anthropic Compat: True
+[22:20:37] [agent.nanobot] ===================================================
+[92m22:20:37 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:20:37] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[22:20:40] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-415' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x1101ecf50 maxsize=50000 tasks=1> is bound to a different event loop
+[22:20:40] [agent.nanobot] [Collab] Executor has done 15 consecutive tool calls, forcing summary to trigger verifier
+[22:11:30] Config: bench=['claweval'], models=['glm-4.7'], sample=all
+[22:11:30] 
+============================================================
+[22:11:30] BENCHMARK: ClawEval (300 tasks)
+[22:11:30] ============================================================
+[22:11:30]   [claweval×glm-4.7] evaluating...
+[22:11:31] [claweval] Docker image 'claw-eval-agent:latest' found
+[22:11:31] [claweval] Evaluating 2 tasks with model=glm-4.7, parallel=1
+  service 'contacts' started on port 9103
+  service 'gmail' started on port 9100
+[sandbox] Container claw-agent-T026_ambiguous_contact_email-bb1d1c started at http://localhost:32926
+[sandbox] inject: 2/2 files into container
+[22:11:34] [claweval] Registered mock tool: gmail_list_messages -> POST http://localhost:9100/gmail/messages
+[22:11:34] [claweval] Registered mock tool: gmail_get_message -> POST http://localhost:9100/gmail/messages/get
+[22:11:34] [claweval] Registered mock tool: contacts_search -> POST http://localhost:9103/contacts/search
+[22:11:34] [claweval] Registered mock tool: contacts_get -> POST http://localhost:9103/contacts/get
+[22:11:34] [claweval] Registered mock tool: gmail_send_message -> POST http://localhost:9100/gmail/send
+[22:11:34] [claweval] Registered mock tool: gmail_save_draft -> POST http://localhost:9100/gmail/drafts/save
+[sandbox] Container claw-agent-T026_ambiguous_contact_email-bb1d1c removed
+  service 'gmail' stopped
+  service 'contacts' stopped
+[22:11:57] [claweval] 1/2 new tasks done (total: 1/2)
+[sandbox] Container claw-agent-T103_schema_migration-5a8ccb started at http://localhost:32927
+[sandbox] inject: 3/3 files into container
+[sandbox] grader-inject: 1/1 files into container
+[sandbox] Container claw-agent-T103_schema_migration-5a8ccb removed
+[22:20:41] [claweval] 2/2 new tasks done (total: 2/2)
+[22:20:41] [claweval] 汇总已保存: 0/2 完成
+[22:20:41]   [claweval×glm-4.7] done: score=0.16, scored=2/2
+[22:20:41] 
+

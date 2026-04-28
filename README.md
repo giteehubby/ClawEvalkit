@@ -20,6 +20,21 @@ All benchmarks execute agents inside **Docker containers** for reproducibility a
 - **Parallel execution**: Run multiple tasks concurrently with `--parallel`
 - **LLM Judge scoring**: Automated trajectory evaluation with configurable judge models
 
+## Baseline Results (glm-4.7)
+
+The following table shows glm-4.7 evaluation results on each benchmark.
+
+| Benchmark | Tasks | Passed | Mean Score |
+|-----------|------:|-------:|-----------:|
+| AgentBench-OC | 39 | / | 73.4 |
+| ClawBench | 319 | 161 | 88.1% |
+| ClawEval | 248 | 199 | 67.3% |
+| PinchBench | 23 | 23 | 94.4% |
+
+> **Note**: AgentBench-OC, ClawBench, and ClawEval contain tasks where the agent fails to produce a correct answer (e.g., ClawBench: 158/319 failed). These failures are classified into five error categories (A–E) to guide targeted repair strategies. See [`paper_factory/`](paper_factory/) for detailed analysis and harness repair results.
+
+---
+
 ## Supported Benchmarks
 
 | Key | Benchmark | Tasks | Scoring | Description |

@@ -1,0 +1,49 @@
+[18:42:26] 从文件加载任务列表: error_analysis/inputs/control_a_failed.csv
+[18:42:26]   clawbench: 10 tasks
+[18:42:26] Config: bench=['clawbench'], models=['glm-4.7'], sample=all
+[18:42:26] 
+============================================================
+[18:42:26] BENCHMARK: clawbench (10 tasks from file)
+[18:42:26] ============================================================
+[18:42:26]   [clawbench×glm-4.7] evaluating...
+[18:42:30] [clawbench_bio-003-gene-expression_glm-4.7_20260425_104228] Container started
+[18:42:30] [clawbench_cont-004-media-bias_glm-4.7_20260425_104228] Container started
+[18:44:39]   [container] DONE
+[18:44:39] [clawbench_cont-004-media-bias_glm-4.7_20260425_104228] Agent finished in 129.19s, returncode=0
+[18:44:39] [clawbench_cont-004-media-bias_glm-4.7_20260425_104228] Agent result: passed=False, score=0.5000
+[18:44:41] [clawbench_law-002-lease-analysis_glm-4.7_20260425_104440] Container started
+[18:45:57]   [container] DONE
+[18:45:57] [clawbench_bio-003-gene-expression_glm-4.7_20260425_104228] Agent finished in 207.08s, returncode=0
+[18:45:57] [clawbench_bio-003-gene-expression_glm-4.7_20260425_104228] Agent result: passed=False, score=0.5000
+[18:45:59] [clawbench_cs-005-api-design_glm-4.7_20260425_104557] Container started
+[18:49:42]   [container] DONE
+[18:49:42] [clawbench_cs-005-api-design_glm-4.7_20260425_104557] Agent finished in 222.59s, returncode=0
+[18:49:42] [clawbench_cs-005-api-design_glm-4.7_20260425_104557] Agent result: passed=False, score=0.8000
+[18:49:44] [clawbench_db-004_glm-4.7_20260425_104942] Container started
+[18:50:37]   [container] [_run_loop] Empty response at iteration 8, retrying once
+[18:50:37]   [container] [_run_loop] Retry got tool_calls at iteration 8
+[18:50:37]   [container] DONE
+[18:50:37] [clawbench_db-004_glm-4.7_20260425_104942] Agent finished in 53.30s, returncode=0
+[18:50:37] [clawbench_db-004_glm-4.7_20260425_104942] Agent result: passed=False, score=0.1000
+[18:50:40] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260425_105038] Container started
+[18:53:00]   [container] DONE
+[18:53:00] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260425_105038] Agent finished in 140.65s, returncode=0
+[18:53:00] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260425_105038] Agent result: passed=False, score=0.5000
+[18:53:02] [clawbench_fin-008_glm-4.7_20260425_105301] Container started
+[18:53:06]   [container] DONE
+[18:53:06]   [container-err] Retry exhausted for <tool_call>exec: Error: Unknown tool: <tool_call>exec
+[18:53:06] [clawbench_law-002-lease-analysis_glm-4.7_20260425_104440] Agent finished in 504.78s, returncode=0
+[18:53:06] [clawbench_law-002-lease-analysis_glm-4.7_20260425_104440] Agent result: passed=False, score=0.7500
+[18:53:09] [clawbench_tool-002_glm-4.7_20260425_105307] Container started
+[18:55:41]   [container] DONE
+[18:55:41] [clawbench_fin-008_glm-4.7_20260425_105301] Agent finished in 158.09s, returncode=0
+[18:55:41] [clawbench_fin-008_glm-4.7_20260425_105301] Agent result: passed=False, score=0.0000
+[18:55:43] [clawbench_web-015_glm-4.7_20260425_105541] Container started
+[18:56:48]   [container] DONE
+[18:56:48] [clawbench_web-015_glm-4.7_20260425_105541] Agent finished in 65.51s, returncode=0
+[18:56:48] [clawbench_web-015_glm-4.7_20260425_105541] Agent result: passed=False, score=0.6957
+[18:56:50] [clawbench_wfl-012_glm-4.7_20260425_105649] Container started
+[18:59:51]   [clawbench×glm-4.7] done: score=48.1, scored=0/10
+[18:59:51]   [clawbench×glm-4.7] done: score=48.1, scored=0/10
+[18:59:51] 
+

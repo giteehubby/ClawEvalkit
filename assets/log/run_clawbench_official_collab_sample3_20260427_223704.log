@@ -1,0 +1,12 @@
+[22:37:05] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=3
+[22:37:05] 
+============================================================
+[22:37:05] BENCHMARK: ClawBench Official (250 tasks)
+[22:37:05] ============================================================
+[22:37:05]   [clawbench-official×glm-4.7] evaluating...
+[22:37:07] [comm-008] Found cached result, skipping
+[22:37:07] [bio-003-gene-expression] Found cached result, skipping
+[22:37:07] [doc-012] Found cached result, skipping
+[22:37:07]   [clawbench-official×glm-4.7] done: score=83.3, scored=2/3
+[22:37:07] 
+

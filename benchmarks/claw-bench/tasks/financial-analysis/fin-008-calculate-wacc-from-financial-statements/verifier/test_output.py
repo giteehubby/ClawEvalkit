@@ -1,10 +1,12 @@
 import json
 import pytest
-import pandas as pd
 from pathlib import Path
 
 @pytest.fixture
-def workspace_path():
+def workspace_path(request):
+    ws = request.config.getoption("--workspace")
+    if ws is not None:
+        return Path(ws)
     return Path(__file__).parent.parent
 
 @pytest.mark.weight(3)

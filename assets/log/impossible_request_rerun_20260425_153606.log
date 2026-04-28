@@ -1,0 +1,20 @@
+[15:36:07] Config: bench=['agentbench'], models=['glm-4.7'], sample=all
+[15:36:07] 
+============================================================
+[15:36:07] BENCHMARK: AgentBench (40 tasks)
+[15:36:07] ============================================================
+[15:36:07]   [agentbench×glm-4.7] evaluating...
+[15:36:10] [agent_impossible-request_glm-4.7_20260425_073609] Container started
+[15:36:10] [agent_impossible-request_glm-4.7_20260425_073609] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  0 Apr 25 07:36 .
+drwxrwxrwt 1 root root    32 Apr 25 07:36 ..
+
+[15:46:18] [agent_impossible-request_glm-4.7_20260425_073609] Agent finished in 608.11s, returncode=0
+[15:46:18] [agent_impossible-request_glm-4.7_20260425_073609] Agent stdout: DONE
+
+[15:46:18] [agent_impossible-request_glm-4.7_20260425_073609] Agent result loaded: status=success, transcript_len=120
+[15:46:45] [agent_impossible-request_glm-4.7_20260425_073609] Scores: L0=0.0 L1=30.0 L2=40.0 L3=10.0 | Overall=21.0
+[15:46:46] [agent_impossible-request_glm-4.7_20260425_073609] Result saved to outputs/harness/control/agentbench/glm-4.7/impossible-request/result.json
+[15:46:46]   [agentbench×glm-4.7] done: score=21.0, scored=1/1
+[15:46:46] 
+

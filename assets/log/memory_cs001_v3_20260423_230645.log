@@ -1,0 +1,25 @@
+[23:06:46] 从文件加载任务列表: error_analysis/inputs/cs001_only.csv
+[23:06:46]   clawbench-official: 1 tasks
+[23:06:46] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=all
+[23:06:46] 
+============================================================
+[23:06:46] BENCHMARK: clawbench-official (1 tasks from file)
+[23:06:46] ============================================================
+[23:06:46]   [clawbench-official×glm-4.7] evaluating...
+[23:07:10] [clawbench_cs-001-api-rate-limiter_glm-4.7_20260423_150648] Container started
+[23:10:45]   [container] DONE
+[23:10:45]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[23:10:45]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3884.45it/s]
+[23:10:45]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[23:10:45]   [container-err] Key                     | Status     |  | 
+[23:10:45]   [container-err] ------------------------+------------+--+-
+[23:10:45]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[23:10:45]   [container-err] 
+[23:10:45]   [container-err] Notes:
+[23:10:45]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[23:10:45] [clawbench_cs-001-api-rate-limiter_glm-4.7_20260423_150648] Agent finished in 214.16s, returncode=0
+[23:10:45] [clawbench_cs-001-api-rate-limiter_glm-4.7_20260423_150648] Agent result: passed=True, score=1.0000
+[23:10:45]   [clawbench-official×glm-4.7] done: score=100.0, scored=1/1
+[23:10:45]   [clawbench-official×glm-4.7] done: score=100.0, scored=0/1
+[23:10:45] 
+

@@ -1,0 +1,23 @@
+[17:18:13] Config: bench=['agentbench'], models=['glm-4.7'], sample=all
+[17:18:13] 
+============================================================
+[17:18:13] BENCHMARK: AgentBench (40 tasks)
+[17:18:13] ============================================================
+[17:18:13]   [agentbench×glm-4.7] evaluating...
+[17:18:15] [agent_log-analysis-report_glm-4.7_20260424_091814] Container started
+[17:18:15] [agent_log-analysis-report_glm-4.7_20260424_091814] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  0 Apr 24 09:18 .
+drwxrwxrwt 1 root root    32 Apr 24 09:18 ..
+
+[17:20:30] [agent_log-analysis-report_glm-4.7_20260424_091814] Agent finished in 134.64s, returncode=0
+[17:20:30] [agent_log-analysis-report_glm-4.7_20260424_091814] Agent stdout: DONE
+
+[17:20:30] [agent_log-analysis-report_glm-4.7_20260424_091814] Agent stderr: Retry exhausted for read_file: Error: File not found: server.log
+LLM reflection failed: 'NanoBotAgent' object is not callable
+
+[17:20:30] [agent_log-analysis-report_glm-4.7_20260424_091814] Agent result loaded: status=success, transcript_len=306
+[17:20:32] [agent_log-analysis-report_glm-4.7_20260424_091814] Scores: L0=0.0 L1=45.0 L2=50.0 L3=50.0 | Overall=41.2
+[17:20:33] [agent_log-analysis-report_glm-4.7_20260424_091814] Result saved to outputs/harness/control/agentbench/glm-4.7/log-analysis-report/result.json
+[17:20:33]   [agentbench×glm-4.7] done: score=41.2, scored=1/1
+[17:20:33] 
+

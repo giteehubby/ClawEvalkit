@@ -1,0 +1,17 @@
+[14:37:48] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=all
+[14:37:48] 
+============================================================
+[14:37:48] BENCHMARK: ClawBench Official (250 tasks)
+[14:37:48] ============================================================
+[14:37:48]   [clawbench-official×glm-4.7] evaluating...
+[14:37:56] [clawbench_data-003_glm-4.7_20260426_063750] Container started
+[14:38:14]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-003/environment/setup.sh
+[14:38:14]   [container] [setup] setup.sh 成功
+[14:38:14]   [container] [setup] 工作空间文件: ['instruction.md', 'sales.csv']
+[14:38:14]   [container] DONE
+[14:38:14]   [container-err] [execute] Exception caught: NameError: name 'CollabEvent' is not defined
+[14:38:14] [clawbench_data-003_glm-4.7_20260426_063750] Agent finished in 18.14s, returncode=0
+[14:38:14] [clawbench_data-003_glm-4.7_20260426_063750] Agent result: passed=False, score=0.8333
+[14:38:15]   [clawbench-official×glm-4.7] done: score=0, scored=0/1
+[14:38:15] 
+

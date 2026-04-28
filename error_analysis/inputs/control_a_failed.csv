@@ -1,0 +1,8 @@
+bench_id,task_id
+clawbench,wfl-012
+clawbench,cs-005-api-design
+clawbench,db-004
+clawbench,tool-002
+clawbench,edu-004-curriculum-mapping
+clawbench,web-015
+clawbench,bio-003-gene-expression

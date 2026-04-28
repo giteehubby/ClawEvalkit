@@ -1,0 +1,13 @@
+[13:55:46] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=all
+[13:55:46] 
+============================================================
+[13:55:46] BENCHMARK: ClawBench Official (250 tasks)
+[13:55:46] ============================================================
+[13:55:46]   [clawbench-official×glm-4.7] evaluating...
+[13:55:49] [clawbench_cont-004-media-bias_glm-4.7_20260424_055548] Container started
+[13:59:48]   [container] DONE
+[13:59:48] [clawbench_cont-004-media-bias_glm-4.7_20260424_055548] Agent finished in 238.95s, returncode=0
+[13:59:48] [clawbench_cont-004-media-bias_glm-4.7_20260424_055548] Agent result: passed=False, score=0.5000
+[13:59:49]   [clawbench-official×glm-4.7] done: score=50.0, scored=0/1
+[13:59:49] 
+

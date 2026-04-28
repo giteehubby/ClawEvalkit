@@ -1,0 +1,10 @@
+[20:39:42] Config: bench=['clawbench'], models=['glm-4.7'], sample=all
+[20:39:42] 
+============================================================
+[20:39:42] BENCHMARK: ClawBench Official (250 tasks)
+[20:39:42] ============================================================
+[20:39:42]   [clawbench×glm-4.7] evaluating...
+[20:39:46] [clawbench_wfl-013_glm-4.7_20260426_123943] Container started
+[20:42:46]   [clawbench×glm-4.7] done: score=0, scored=0/1
+[20:42:46] 
+

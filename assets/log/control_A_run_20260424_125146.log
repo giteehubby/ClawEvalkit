@@ -1,0 +1,3 @@
+ERROR conda.cli.main_run:execute(142): `conda run python run.py --task error_analysis/inputs/control_A.csv --harness control --docker --model glm-4.7 --judge-model glm-4.7 --output-dir outputs/harness/control --force` failed. (See above for error)
+[12:51:47] 从文件加载任务列表: error_analysis/inputs/control_A.csv
+Unknown benchmark in task file: clawbench. Use --list to see available benchmarks.

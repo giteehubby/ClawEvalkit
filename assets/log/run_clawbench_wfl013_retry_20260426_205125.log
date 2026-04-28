@@ -1,0 +1,17 @@
+[20:51:26] Config: bench=['clawbench'], models=['glm-4.7'], sample=all
+[20:51:26] 
+============================================================
+[20:51:26] BENCHMARK: ClawBench Official (250 tasks)
+[20:51:26] ============================================================
+[20:51:26]   [clawbench×glm-4.7] evaluating...
+[20:51:29] [clawbench_wfl-013_glm-4.7_20260426_125127] Container started
+[20:51:29] [wfl-013] Harness detected, timeout adjusted: 120 → 300
+[20:54:41]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-013-task-scheduler/environment/setup.sh
+[20:54:41]   [container] [setup] setup.sh 成功
+[20:54:41]   [container] [setup] 工作空间文件: ['instruction.md', 'tasks.json']
+[20:54:41]   [container] DONE
+[20:54:41] [clawbench_wfl-013_glm-4.7_20260426_125127] Agent finished in 191.92s, returncode=0
+[20:54:41] [clawbench_wfl-013_glm-4.7_20260426_125127] Agent result: passed=True, score=1.0000
+[20:54:41]   [clawbench×glm-4.7] done: score=100.0, scored=1/1
+[20:54:41] 
+

@@ -4,7 +4,7 @@ WORKSPACE="${1:-workspace}"
 
 mkdir -p "$WORKSPACE/documents"
 
-python3 - <<EOF
+python3 - <<'EOF'
 import random
 random.seed(42)
 import os

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Generate LLM prompts for error classification on agentbench glm-4.7 baseline failures.
-Threshold: overall_score < 80 = failure
+Threshold: overall_score < 90 = failure
 Output: error_analysis/outputs/agentbench_glm_prompts.json
 """
 
@@ -15,7 +15,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = PROJECT_ROOT / "error_analysis" / "outputs"
 OUTPUT_DIR.mkdir(exist_ok=True)
 
-FAILURE_THRESHOLD = 80  # overall_score < 80 means failure
+FAILURE_THRESHOLD = 90  # overall_score < 90 means failure
 MODEL_DIR = "glm-4.7"
 
 
@@ -53,7 +53,7 @@ def load_agentbench_tasks():
 
 
 def collect_failures():
-    """Collect all agentbench glm-4.7 failures (score < 80)."""
+    """Collect all agentbench glm-4.7 failures (score < 90)."""
     failures = []
     result_dir = PROJECT_ROOT / "outputs" / "agentbench" / MODEL_DIR
 
@@ -162,7 +162,7 @@ The failure does not fit the above categories clearly, or is caused by external 
 - **Task ID**: {tid}
 - **Description**: {description or 'N/A'}
 - **Execution Status**: {f['status']}
-- **Overall Score**: {f['score']} / 100 (threshold for failure: < 80)
+- **Overall Score**: {f['score']} / 100 (threshold for failure: < 90)
 
 ## Score Breakdown
 

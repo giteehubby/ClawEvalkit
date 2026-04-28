@@ -14,4 +14,5 @@ RUN pip install --no-cache-dir \
     --trusted-host pypi.org \
     tomli \
     pytest \
-    pytest-json-report
+    pytest-json-report \
+    textblob

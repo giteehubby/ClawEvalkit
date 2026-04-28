@@ -1,0 +1,37 @@
+[19:09:03] 从文件加载任务列表: error_analysis/inputs/control_a_failed.csv
+[19:09:03]   clawbench: 10 tasks
+[19:09:03] Config: bench=['clawbench'], models=['glm-4.7'], sample=all
+[19:09:03] 
+============================================================
+[19:09:03] BENCHMARK: clawbench (10 tasks from file)
+[19:09:03] ============================================================
+[19:09:03]   [clawbench×glm-4.7] evaluating...
+[19:09:07] [clawbench_cont-004-media-bias_glm-4.7_20260425_110904] Container started
+[19:09:07] [clawbench_bio-003-gene-expression_glm-4.7_20260425_110904] Container started
+[19:12:07]   [container] DONE
+[19:12:07] [clawbench_bio-003-gene-expression_glm-4.7_20260425_110904] Agent finished in 180.51s, returncode=0
+[19:12:07] [clawbench_bio-003-gene-expression_glm-4.7_20260425_110904] Agent result: passed=False, score=0.7500
+[19:12:10] [clawbench_law-002-lease-analysis_glm-4.7_20260425_111208] Container started
+[19:12:22]   [container] DONE
+[19:12:22] [clawbench_cont-004-media-bias_glm-4.7_20260425_110904] Agent finished in 195.40s, returncode=0
+[19:12:22] [clawbench_cont-004-media-bias_glm-4.7_20260425_110904] Agent result: passed=False, score=0.5000
+[19:12:24] [clawbench_cs-005-api-design_glm-4.7_20260425_111222] Container started
+[19:20:01]   [container] DONE
+[19:20:01] [clawbench_cs-005-api-design_glm-4.7_20260425_111222] Agent finished in 456.84s, returncode=0
+[19:20:01] [clawbench_cs-005-api-design_glm-4.7_20260425_111222] Agent result: passed=False, score=0.8000
+[19:20:03] [clawbench_db-004_glm-4.7_20260425_112002] Container started
+[19:24:55]   [container] DONE
+[19:24:55] [clawbench_law-002-lease-analysis_glm-4.7_20260425_111208] Agent finished in 765.41s, returncode=0
+[19:24:55] [clawbench_law-002-lease-analysis_glm-4.7_20260425_111208] Agent result: passed=False, score=0.0000
+[19:24:57] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260425_112456] Container started
+[19:25:06] [clawbench_fin-008_glm-4.7_20260425_112504] Container started
+[19:25:55]   [container] DONE
+[19:25:55] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260425_112456] Agent finished in 57.78s, returncode=0
+[19:25:55] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260425_112456] Agent result: passed=False, score=0.7500
+[19:25:57] [clawbench_tool-002_glm-4.7_20260425_112556] Container started
+[19:30:00] [clawbench_web-015_glm-4.7_20260425_112958] Container started
+[19:31:08] [clawbench_wfl-012_glm-4.7_20260425_113106] Container started
+[19:34:09]   [clawbench×glm-4.7] done: score=56.0, scored=0/10
+[19:34:09]   [clawbench×glm-4.7] done: score=56.0, scored=0/10
+[19:34:09] 
+

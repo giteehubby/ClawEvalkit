@@ -1,0 +1,118 @@
+[13:29:59] [datasets] JAX version 0.9.2 available.
+[13:29:57] Config: bench=['zclawbench', 'wildclawbench', 'clawbench-official', 'clawbench', 'pinchbench', 'agentbench', 'skillbench', 'skillsbench', 'tribe', 'claweval'], models=['glm-4.7'], sample=all
+[13:29:57] 
+============================================================
+[13:29:57] BENCHMARK: ZClawBench (116 tasks)
+[13:29:57] ============================================================
+[13:29:57]   [zclawbench×glm-4.7] evaluating...
+[13:29:58] Loading ZClawBench from HuggingFace: zai-org/ZClawBench (docker=True, tasks=116)
+[13:30:15] [zclawbench] 汇总已保存: 0/0 完成
+[13:30:15]   [zclawbench×glm-4.7] done: score=0, scored=0/0
+[13:30:15] 
+============================================================
+[13:30:15] BENCHMARK: WildClawBench (60 tasks)
+[13:30:15] ============================================================
+[13:30:15]   [wildclawbench×glm-4.7] evaluating...
+[13:30:15]   [wildclawbench×glm-4.7] done: score=0, scored=0/0
+[13:30:15] 
+============================================================
+[13:30:15] BENCHMARK: ClawBench Official (250 tasks)
+[13:30:15] ============================================================
+[13:30:15]   [clawbench-official×glm-4.7] evaluating...
+[13:30:15] No tasks matched task_ids: ['clawbench:cont-004-media-bias']
+[13:30:15]   [clawbench-official×glm-4.7] done: score=0, scored=0/0
+[13:30:15]   [clawbench-official×glm-4.7] error: no tasks matched: ['clawbench:cont-004-media-bias']
+[13:30:15] 
+============================================================
+[13:30:15] BENCHMARK: ClawBench Official (250 tasks)
+[13:30:15] ============================================================
+[13:30:15]   [clawbench×glm-4.7] evaluating...
+[13:30:15] No tasks matched task_ids: ['clawbench:cont-004-media-bias']
+[13:30:15]   [clawbench×glm-4.7] done: score=0, scored=0/0
+[13:30:15]   [clawbench×glm-4.7] error: no tasks matched: ['clawbench:cont-004-media-bias']
+[13:30:15] 
+============================================================
+[13:30:15] BENCHMARK: PinchBench (23 tasks)
+[13:30:15] ============================================================
+[13:30:15]   [pinchbench×glm-4.7] evaluating...
+[13:30:15]   [pinchbench×glm-4.7] done: score=0, scored=0/0
+[13:30:15]   [pinchbench×glm-4.7] error: no tasks matched task_ids: ['clawbench:cont-004-media-bias']
+[13:30:15] 
+============================================================
+[13:30:15] BENCHMARK: AgentBench (40 tasks)
+[13:30:15] ============================================================
+[13:30:15]   [agentbench×glm-4.7] evaluating...
+[13:30:15]   [agentbench×glm-4.7] done: score=0, scored=0/0
+[13:30:15]   [agentbench×glm-4.7] error: No tasks found matching task_ids: ['clawbench:cont-004-media-bias']
+[13:30:15] 
+============================================================
+[13:30:15] BENCHMARK: SkillBench (22 tasks)
+[13:30:15] ============================================================
+[13:30:15]   [skillbench×glm-4.7] evaluating...
+[13:30:15]   [skillbench×glm-4.7] done: score=0, scored=0/0
+[13:30:15]   [skillbench×glm-4.7] error: skillbench dir not found
+[13:30:15] 
+============================================================
+[13:30:15] BENCHMARK: SkillsBench (56 tasks)
+[13:30:15] ============================================================
+[13:30:15]   [skillsbench×glm-4.7] evaluating...
+[13:30:15]   [skillsbench×glm-4.7] done: score=0, scored=0/0
+[13:30:15]   [skillsbench×glm-4.7] error: no tasks match task_ids: ['clawbench:cont-004-media-bias']
+[13:30:15] 
+============================================================
+[13:30:15] BENCHMARK: Claw-Bench-Tribe (8 tasks)
+[13:30:15] ============================================================
+[13:30:15]   [tribe×glm-4.7] evaluating...
+[13:30:15] [tribe] 汇总已保存: 0/8 完成
+[13:30:15] [tribe/docker] Running test 1/8: basic_chat
+[13:30:16] [basic_chat] Docker container started: tribe_basic_chat_glm-4.7_1777008615
+[13:30:16] [basic_chat] Agent finished in 0.06s, returncode=1
+[13:30:17] [basic_chat] ✗ Failed
+[13:30:17] [tribe] 汇总已保存: 0/8 完成
+[13:30:17] [tribe/docker] Running test 2/8: reasoning_math
+[13:30:18] [reasoning_math] Docker container started: tribe_reasoning_math_glm-4.7_1777008617
+[13:30:18] [reasoning_math] Agent finished in 0.04s, returncode=1
+[13:30:19] [reasoning_math] ✗ Failed
+[13:30:19] [tribe] 汇总已保存: 0/8 完成
+[13:30:19] [tribe/docker] Running test 3/8: instruction_following
+[13:30:20] [instruction_following] Docker container started: tribe_instruction_following_glm-4.7_1777008619
+[13:30:20] [instruction_following] Agent finished in 0.05s, returncode=1
+[13:30:20] [instruction_following] ✗ Failed
+[13:30:20] [tribe] 汇总已保存: 0/8 完成
+[13:30:20] [tribe/docker] Running test 4/8: reasoning_tags
+[13:30:21] [reasoning_tags] Docker container started: tribe_reasoning_tags_glm-4.7_1777008620
+[13:30:21] [reasoning_tags] Agent finished in 0.04s, returncode=1
+[13:30:21] [reasoning_tags] ✗ Failed
+[13:30:21] [tribe] 汇总已保存: 0/8 完成
+[13:30:21] [tribe/docker] Running test 5/8: response_quality
+[13:30:22] [response_quality] Docker container started: tribe_response_quality_glm-4.7_1777008621
+[13:30:22] [response_quality] Agent finished in 0.06s, returncode=1
+[13:30:23] [response_quality] ✗ Failed
+[13:30:23] [tribe] 汇总已保存: 0/8 完成
+[13:30:23] [tribe/docker] Running test 6/8: complex_instructions
+[13:30:23] [complex_instructions] Docker container started: tribe_complex_instructions_glm-4.7_1777008623
+[13:30:23] [complex_instructions] Agent finished in 0.04s, returncode=1
+[13:30:24] [complex_instructions] ✗ Failed
+[13:30:24] [tribe] 汇总已保存: 0/8 完成
+[13:30:24] [tribe/docker] Running test 7/8: json_output
+[13:30:25] [json_output] Docker container started: tribe_json_output_glm-4.7_1777008624
+[13:30:25] [json_output] Agent finished in 0.07s, returncode=1
+[13:30:25] [json_output] ✗ Failed
+[13:30:25] [tribe] 汇总已保存: 0/8 完成
+[13:30:25] [tribe/docker] Running test 8/8: adversarial_input
+[13:30:26] [adversarial_input] Docker container started: tribe_adversarial_input_glm-4.7_1777008625
+[13:30:26] [adversarial_input] Agent finished in 0.06s, returncode=1
+[13:30:26] [adversarial_input] ✗ Failed
+[13:30:26] [tribe] 汇总已保存: 0/8 完成
+[13:30:26]   [tribe×glm-4.7] done: score=0.0, scored=0/8
+[13:30:26] 
+============================================================
+[13:30:26] BENCHMARK: ClawEval (300 tasks)
+[13:30:26] ============================================================
+[13:30:26]   [claweval×glm-4.7] evaluating...
+[13:30:26] [claweval] Docker image 'claw-eval-agent:latest' found
+[13:30:26] [claweval] Evaluating 0 tasks with model=glm-4.7, parallel=1
+[13:30:26] [claweval] 汇总已保存: 0/0 完成
+[13:30:26]   [claweval×glm-4.7] done: score=0.0, scored=0/0
+[13:30:26] 
+

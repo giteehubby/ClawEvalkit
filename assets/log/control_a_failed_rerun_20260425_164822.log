@@ -1,0 +1,51 @@
+[16:48:23] 从文件加载任务列表: error_analysis/inputs/control_a_failed.csv
+[16:48:23]   clawbench: 10 tasks
+[16:48:23] Config: bench=['clawbench'], models=['glm-4.7'], sample=all
+[16:48:23] 
+============================================================
+[16:48:23] BENCHMARK: clawbench (10 tasks from file)
+[16:48:23] ============================================================
+[16:48:23]   [clawbench×glm-4.7] evaluating...
+[16:48:27] [clawbench_bio-003-gene-expression_glm-4.7_20260425_084825] Container started
+[16:48:27] [clawbench_cont-004-media-bias_glm-4.7_20260425_084825] Container started
+[16:52:46]   [container] DONE
+[16:52:46] [clawbench_bio-003-gene-expression_glm-4.7_20260425_084825] Agent finished in 258.42s, returncode=0
+[16:52:46] [clawbench_bio-003-gene-expression_glm-4.7_20260425_084825] Agent result: passed=False, score=0.7500
+[16:52:48] [clawbench_law-002-lease-analysis_glm-4.7_20260425_085246] Container started
+[16:56:49]   [container] DONE
+[16:56:49] [clawbench_cont-004-media-bias_glm-4.7_20260425_084825] Agent finished in 502.07s, returncode=0
+[16:56:50] [clawbench_cont-004-media-bias_glm-4.7_20260425_084825] Agent result: passed=False, score=0.5000
+[16:56:52] [clawbench_cs-005-api-design_glm-4.7_20260425_085650] Container started
+[16:56:56]   [container] DONE
+[16:56:56]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/lease_agreement.txt
+[16:56:56]   [container-err] LLM reflection failed: 'NanoBotAgent' object is not callable
+[16:56:56] [clawbench_law-002-lease-analysis_glm-4.7_20260425_085246] Agent finished in 247.89s, returncode=0
+[16:56:56] [clawbench_law-002-lease-analysis_glm-4.7_20260425_085246] Agent result: passed=False, score=0.7500
+[16:56:58] [clawbench_db-004_glm-4.7_20260425_085657] Container started
+[16:59:29]   [container] DONE
+[16:59:29] [clawbench_cs-005-api-design_glm-4.7_20260425_085650] Agent finished in 156.92s, returncode=0
+[16:59:29] [clawbench_cs-005-api-design_glm-4.7_20260425_085650] Agent result: passed=False, score=0.8000
+[16:59:31] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260425_085929] Container started
+[17:02:01] [clawbench_fin-008_glm-4.7_20260425_090159] Container started
+[17:04:59]   [container] [_run_loop] Empty response at iteration 18, retrying once
+[17:04:59]   [container] [_run_loop] Retry got tool_calls at iteration 18
+[17:04:59]   [container] DONE
+[17:04:59] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260425_085929] Agent finished in 328.04s, returncode=0
+[17:04:59] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260425_085929] Agent result: passed=True, score=1.0000
+[17:05:01] [clawbench_tool-002_glm-4.7_20260425_090500] Container started
+[17:07:55]   [container] DONE
+[17:07:55]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/requirements_a.txt
+[17:07:55]   [container-err] LLM reflection failed: 'NanoBotAgent' object is not callable
+[17:07:55]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/requirements_b.txt
+[17:07:55]   [container-err] LLM reflection failed: 'NanoBotAgent' object is not callable
+[17:07:55] [clawbench_tool-002_glm-4.7_20260425_090500] Agent finished in 173.47s, returncode=0
+[17:07:55] [clawbench_tool-002_glm-4.7_20260425_090500] Agent result: passed=False, score=0.6471
+[17:07:57] [clawbench_web-015_glm-4.7_20260425_090755] Container started
+[17:08:03] [clawbench_wfl-012_glm-4.7_20260425_090801] Container started
+[17:09:36]   [container] DONE
+[17:09:36] [clawbench_wfl-012_glm-4.7_20260425_090801] Agent finished in 92.83s, returncode=0
+[17:09:36] [clawbench_wfl-012_glm-4.7_20260425_090801] Agent result: passed=False, score=0.1333
+[17:10:58]   [clawbench×glm-4.7] done: score=65.4, scored=1/10
+[17:10:58]   [clawbench×glm-4.7] done: score=65.4, scored=0/10
+[17:10:58] 
+

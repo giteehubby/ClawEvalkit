@@ -1,0 +1,25 @@
+[21:03:34] Config: bench=['clawbench'], models=['glm-4.7'], sample=all
+[21:03:34] 
+============================================================
+[21:03:34] BENCHMARK: ClawBench Official (250 tasks)
+[21:03:34] ============================================================
+[21:03:34]   [clawbench×glm-4.7] evaluating...
+[21:03:37] [clawbench_web-014_glm-4.7_20260426_130335] Container started
+[21:03:37] [web-014] Harness detected, timeout adjusted: 120 → 300
+[21:09:08]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/web-browsing/web-014-web-scraping-parser/environment/setup.sh
+[21:09:08]   [container] [setup] setup.sh 成功
+[21:09:08]   [container] [setup] 工作空间文件: ['products.html', 'instruction.md']
+[21:09:08]   [container] DONE
+[21:09:08] [clawbench_web-014_glm-4.7_20260426_130335] Agent finished in 331.15s, returncode=0
+[21:09:08] [clawbench_web-014_glm-4.7_20260426_130335] Agent result: passed=True, score=1.0000
+[21:09:11] [clawbench_wfl-014_glm-4.7_20260426_130909] Container started
+[21:09:11] [wfl-014] Harness detected, timeout adjusted: 120 → 300
+[21:12:40]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-014-data-pipeline-orchestrator/environment/setup.sh
+[21:12:40]   [container] [setup] setup.sh 成功
+[21:12:40]   [container] [setup] 工作空间文件: ['instruction.md', 'transforms.json']
+[21:12:40]   [container] DONE
+[21:12:40] [clawbench_wfl-014_glm-4.7_20260426_130909] Agent finished in 208.97s, returncode=0
+[21:12:40] [clawbench_wfl-014_glm-4.7_20260426_130909] Agent result: passed=True, score=1.0000
+[21:12:40]   [clawbench×glm-4.7] done: score=100.0, scored=2/2
+[21:12:40] 
+

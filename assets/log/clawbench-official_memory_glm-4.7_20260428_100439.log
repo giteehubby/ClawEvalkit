@@ -1,0 +1,199 @@
+[10:04:40] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=all
+[10:04:40] 
+============================================================
+[10:04:40] BENCHMARK: ClawBench Official (250 tasks)
+[10:04:40] ============================================================
+[10:04:40]   [clawbench-official×glm-4.7] evaluating...
+[10:04:41] [acad-001-citation-network] Found cached result, skipping
+[10:04:41] [acad-002-literature-review] Found cached result, skipping
+[10:04:41] [acad-003-statistical-analysis] Found cached result, skipping
+[10:04:41] [acad-004-plagiarism-check] Found cached result, skipping
+[10:04:41] [acad-005-metadata-extraction] Found cached result, skipping
+[10:04:41] [acct-001-journal-entries] Found cached result, skipping
+[10:04:41] [acct-002-trial-balance] Found cached result, skipping
+[10:04:41] [acct-003-depreciation] Found cached result, skipping
+[10:04:41] [acct-004-bank-reconciliation] Found cached result, skipping
+[10:04:41] [acct-005-financial-statements] Found cached result, skipping
+[10:04:41] [bio-001-sequence-analysis] Found cached result, skipping
+[10:04:41] [bio-002-protein-alignment] Found cached result, skipping
+[10:04:41] [bio-003-gene-expression] Found cached result, skipping
+[10:04:41] [bio-004-phylogenetic] Found cached result, skipping
+[10:04:41] [bio-005-variant-annotation] Found cached result, skipping
+[10:04:41] [cal-001] Found cached result, skipping
+[10:04:41] [cal-002] Found cached result, skipping
+[10:04:48] [clawbench_cal-003_glm-4.7_20260428_020441] Container started
+[10:04:48] [cal-003] Harness detected, timeout adjusted: 120 → 300
+[10:05:50]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-003-list-today-schedule/environment/setup.sh
+[10:05:50]   [container] [setup] setup.sh 成功
+[10:05:50]   [container] [setup] 工作空间文件: ['.gitkeep', 'instruction.md', 'calendar.json']
+[10:05:50]   [container] DONE
+[10:05:50]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[10:05:50]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4238.50it/s]
+[10:05:50]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[10:05:50]   [container-err] Key                     | Status     |  | 
+[10:05:50]   [container-err] ------------------------+------------+--+-
+[10:05:50]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[10:05:50]   [container-err] 
+[10:05:50]   [container-err] Notes:
+[10:05:50]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[10:05:50] [clawbench_cal-003_glm-4.7_20260428_020441] Agent finished in 62.30s, returncode=0
+[10:05:50] [clawbench_cal-003_glm-4.7_20260428_020441] Agent result: passed=True, score=1.0000
+[10:05:50] [cal-004] Found cached result, skipping
+[10:05:57] [clawbench_cal-005_glm-4.7_20260428_020550] Container started
+[10:05:57] [cal-005] Harness detected, timeout adjusted: 120 → 300
+[10:06:25]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-005-change-meeting-time/environment/setup.sh
+[10:06:25]   [container] [setup] setup.sh 成功
+[10:06:25]   [container] [setup] 工作空间文件: ['.gitkeep', 'instruction.md', 'calendar.json']
+[10:06:25]   [container] DONE
+[10:06:25]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[10:06:25]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 44029.08it/s]
+[10:06:25]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[10:06:25]   [container-err] Key                     | Status     |  | 
+[10:06:25]   [container-err] ------------------------+------------+--+-
+[10:06:25]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[10:06:25]   [container-err] 
+[10:06:25]   [container-err] Notes:
+[10:06:25]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[10:06:25] [clawbench_cal-005_glm-4.7_20260428_020550] Agent finished in 28.47s, returncode=0
+[10:06:25] [clawbench_cal-005_glm-4.7_20260428_020550] Agent result: passed=True, score=1.0000
+[10:06:26] [cal-006] Found cached result, skipping
+[10:06:26] [cal-007] Found cached result, skipping
+[10:06:26] [cal-008] Found cached result, skipping
+[10:06:26] [cal-009] Found cached result, skipping
+[10:06:32] [clawbench_cal-010_glm-4.7_20260428_020626] Container started
+[10:06:32] [cal-010] Harness detected, timeout adjusted: 180 → 360
+[10:07:42]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-010-meeting-duration-stats/environment/setup.sh
+[10:07:42]   [container] [setup] setup.sh 成功
+[10:07:42]   [container] [setup] 工作空间文件: ['.gitkeep', 'instruction.md', 'calendar.json']
+[10:07:42]   [container] DONE
+[10:07:42]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[10:07:42]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 5536.86it/s]
+[10:07:42]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[10:07:42]   [container-err] Key                     | Status     |  | 
+[10:07:42]   [container-err] ------------------------+------------+--+-
+[10:07:42]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[10:07:42]   [container-err] 
+[10:07:42]   [container-err] Notes:
+[10:07:42]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[10:07:42] [clawbench_cal-010_glm-4.7_20260428_020626] Agent finished in 69.46s, returncode=0
+[10:07:42] [clawbench_cal-010_glm-4.7_20260428_020626] Agent result: passed=True, score=1.0000
+[10:07:49] [clawbench_cal-011_glm-4.7_20260428_020742] Container started
+[10:07:49] [cal-011] Harness detected, timeout adjusted: 240 → 420
+[10:10:01]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-011-conflict-detection/environment/setup.sh
+[10:10:01]   [container] [setup] setup.sh 成功
+[10:10:01]   [container] [setup] 工作空间文件: ['.gitkeep', 'instruction.md', 'calendar.json']
+[10:10:01]   [container] DONE
+[10:10:01]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[10:10:01]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4773.94it/s]
+[10:10:01]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[10:10:01]   [container-err] Key                     | Status     |  | 
+[10:10:01]   [container-err] ------------------------+------------+--+-
+[10:10:01]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[10:10:01]   [container-err] 
+[10:10:01]   [container-err] Notes:
+[10:10:01]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[10:10:01] [clawbench_cal-011_glm-4.7_20260428_020742] Agent finished in 132.81s, returncode=0
+[10:10:02] [clawbench_cal-011_glm-4.7_20260428_020742] Agent result: passed=True, score=1.0000
+[10:10:02] [cal-012] Found cached result, skipping
+[10:10:02] [cal-013] Found cached result, skipping
+[10:10:02] [cal-014] Found cached result, skipping
+[10:10:02] [cal-015] Found cached result, skipping
+[10:10:02] [med-001-patient-deidentify] Found cached result, skipping
+[10:10:02] [med-002-lab-abnormality] Found cached result, skipping
+[10:10:02] [med-003-drug-interaction] Found cached result, skipping
+[10:10:02] [med-004-icd-coding] Found cached result, skipping
+[10:10:02] [med-005-trial-eligibility] Found cached result, skipping
+[10:10:02] [code-001] Found cached result, skipping
+[10:10:09] [clawbench_code-002_glm-4.7_20260428_021002] Container started
+[10:10:09] [code-002] Harness detected, timeout adjusted: 120 → 300
+[10:10:52]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-002-implement-palindrome/environment/setup.sh
+[10:10:52]   [container] [setup] setup.sh 成功
+[10:10:52]   [container] [setup] 工作空间文件: ['instruction.md']
+[10:10:52]   [container] DONE
+[10:10:52]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[10:10:52]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 47863.21it/s]
+[10:10:52]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[10:10:52]   [container-err] Key                     | Status     |  | 
+[10:10:52]   [container-err] ------------------------+------------+--+-
+[10:10:52]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[10:10:52]   [container-err] 
+[10:10:52]   [container-err] Notes:
+[10:10:52]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[10:10:52] [clawbench_code-002_glm-4.7_20260428_021002] Agent finished in 43.38s, returncode=0
+[10:10:52] [clawbench_code-002_glm-4.7_20260428_021002] Agent result: passed=False, score=0.9000
+[10:10:59] [clawbench_code-003_glm-4.7_20260428_021053] Container started
+[10:10:59] [code-003] Harness detected, timeout adjusted: 120 → 300
+[10:12:15]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-003-add-type-annotations/environment/setup.sh
+[10:12:15]   [container] [setup] setup.sh 成功
+[10:12:15]   [container] [setup] 工作空间文件: ['instruction.md', 'utils.py']
+[10:12:15]   [container] DONE
+[10:12:15]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[10:12:15]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3687.41it/s]
+[10:12:15]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[10:12:15]   [container-err] Key                     | Status     |  | 
+[10:12:15]   [container-err] ------------------------+------------+--+-
+[10:12:15]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[10:12:15]   [container-err] 
+[10:12:15]   [container-err] Notes:
+[10:12:15]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[10:12:15] [clawbench_code-003_glm-4.7_20260428_021053] Agent finished in 75.80s, returncode=0
+[10:12:15] [clawbench_code-003_glm-4.7_20260428_021053] Agent result: passed=False, score=0.9231
+[10:12:15] [code-004] Found cached result, skipping
+[10:12:15] [code-005] Found cached result, skipping
+[10:12:15] [code-006] Found cached result, skipping
+[10:12:15] [code-007] Found cached result, skipping
+[10:12:15] [code-008] Found cached result, skipping
+[10:12:15] [code-009] Found cached result, skipping
+[10:12:22] [clawbench_code-010_glm-4.7_20260428_021215] Container started
+[10:12:22] [code-010] Harness detected, timeout adjusted: 180 → 360
+[10:13:01]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-010-rest-api-client/environment/setup.sh
+[10:13:01]   [container] [setup] setup.sh 成功
+[10:13:01]   [container] [setup] 工作空间文件: ['instruction.md']
+[10:13:01]   [container] DONE
+[10:13:01]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[10:13:01]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3948.57it/s]
+[10:13:01]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[10:13:01]   [container-err] Key                     | Status     |  | 
+[10:13:01]   [container-err] ------------------------+------------+--+-
+[10:13:01]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[10:13:01]   [container-err] 
+[10:13:01]   [container-err] Notes:
+[10:13:01]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[10:13:01] [clawbench_code-010_glm-4.7_20260428_021215] Agent finished in 39.25s, returncode=0
+[10:13:01] [clawbench_code-010_glm-4.7_20260428_021215] Agent result: passed=False, score=0.9412
+[10:13:08] [clawbench_code-011_glm-4.7_20260428_021302] Container started
+[10:13:08] [code-011] Harness detected, timeout adjusted: 180 → 360
+[10:14:11]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-011-data-validation/environment/setup.sh
+[10:14:11]   [container] [setup] setup.sh 成功
+[10:14:11]   [container] [setup] 工作空间文件: ['instruction.md']
+[10:14:11]   [container] DONE
+[10:14:11]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[10:14:11]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3819.85it/s]
+[10:14:11]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[10:14:11]   [container-err] Key                     | Status     |  | 
+[10:14:11]   [container-err] ------------------------+------------+--+-
+[10:14:11]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[10:14:11]   [container-err] 
+[10:14:11]   [container-err] Notes:
+[10:14:11]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[10:14:11] [clawbench_code-011_glm-4.7_20260428_021302] Agent finished in 62.61s, returncode=0
+[10:14:11] [clawbench_code-011_glm-4.7_20260428_021302] Agent result: passed=False, score=0.9667
+[10:14:18] [clawbench_code-012_glm-4.7_20260428_021411] Container started
+[10:14:18] [code-012] Harness detected, timeout adjusted: 180 → 360
+[10:18:48]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-012-design-patterns/environment/setup.sh
+[10:18:48]   [container] [setup] setup.sh 成功
+[10:18:48]   [container] [setup] 工作空间文件: ['instruction.md']
+[10:18:48]   [container] DONE
+[10:18:48]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[10:18:48]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3625.95it/s]
+[10:18:48]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[10:18:48]   [container-err] Key                     | Status     |  | 
+[10:18:48]   [container-err] ------------------------+------------+--+-
+[10:18:48]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[10:18:48]   [container-err] 
+[10:18:48]   [container-err] Notes:
+[10:18:48]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[10:18:48] [clawbench_code-012_glm-4.7_20260428_021411] Agent finished in 269.69s, returncode=0
+[10:18:48] [clawbench_code-012_glm-4.7_20260428_021411] Agent result: passed=False, score=0.9412
+[10:18:54] [clawbench_code-013_glm-4.7_20260428_021848] Container started
+[10:18:54] [code-013] Harness detected, timeout adjusted: 180 → 360

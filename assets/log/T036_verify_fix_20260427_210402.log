@@ -1,0 +1,30 @@
+[21:04:03] 从文件加载任务列表: /tmp/T036_single.csv
+[21:04:03]   claweval: 1 tasks
+[21:04:03] Config: bench=['claweval'], models=['glm-4.7'], sample=all
+[21:04:03] 
+============================================================
+[21:04:03] BENCHMARK: claweval (1 tasks from file)
+[21:04:03] ============================================================
+[21:04:03]   [claweval×glm-4.7] evaluating...
+[21:04:05] [claweval] Docker image 'claw-eval-agent:latest' found
+[21:04:05] [claweval] Evaluating 1 tasks with model=glm-4.7, parallel=1
+  service 'finance' started on port 9104
+  service 'kb' started on port 9106
+  service 'inventory' started on port 9108
+  service 'rss' started on port 9109
+  service 'crm' started on port 9110
+[sandbox] Container claw-agent-T036_vendor_procurement-87950e started at http://localhost:32923
+[sandbox] inject: 5/5 files into container
+[sandbox] Container claw-agent-T036_vendor_procurement-87950e removed
+  service 'crm' stopped
+  service 'rss' stopped
+  service 'inventory' stopped
+  service 'kb' stopped
+  service 'finance' stopped
+[21:04:09] [claweval] Task T036_vendor_procurement failed: 'HarborNanoBotAgent' object has no attribute '_tools'
+[21:04:09] [claweval] 1/1 new tasks done (total: 1/1)
+[21:04:09] [claweval] 汇总已保存: 0/1 完成
+[21:04:09]   [claweval×glm-4.7] done: score=0.0, scored=0/1
+[21:04:09]   [claweval×glm-4.7] done: score=0.0, scored=0/1
+[21:04:09] 
+

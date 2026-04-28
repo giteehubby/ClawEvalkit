@@ -1,0 +1,1293 @@
+[10:40:22] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=all
+[10:40:22] 
+============================================================
+[10:40:22] BENCHMARK: ClawBench Official (250 tasks)
+[10:40:22] ============================================================
+[10:40:22]   [clawbench-official×glm-4.7] evaluating...
+[10:40:23] [acad-001-citation-network] Found cached result, skipping
+[10:40:23] [acad-002-literature-review] Found cached result, skipping
+[10:40:23] [acad-003-statistical-analysis] Found cached result, skipping
+[10:40:23] [acad-004-plagiarism-check] Found cached result, skipping
+[10:40:23] [acad-005-metadata-extraction] Found cached result, skipping
+[10:40:23] [acct-001-journal-entries] Found cached result, skipping
+[10:40:23] [acct-002-trial-balance] Found cached result, skipping
+[10:40:23] [acct-003-depreciation] Found cached result, skipping
+[10:40:23] [acct-004-bank-reconciliation] Found cached result, skipping
+[10:40:23] [acct-005-financial-statements] Found cached result, skipping
+[10:40:23] [bio-001-sequence-analysis] Found cached result, skipping
+[10:40:23] [bio-002-protein-alignment] Found cached result, skipping
+[10:40:23] [bio-003-gene-expression] Found cached result, skipping
+[10:40:23] [bio-004-phylogenetic] Found cached result, skipping
+[10:40:23] [bio-005-variant-annotation] Found cached result, skipping
+[10:40:23] [cal-001] Found cached result, skipping
+[10:40:23] [cal-002] Found cached result, skipping
+[10:40:23] [cal-003] Found cached result, skipping
+[10:40:23] [cal-004] Found cached result, skipping
+[10:40:23] [cal-005] Found cached result, skipping
+[10:40:23] [cal-006] Found cached result, skipping
+[10:40:23] [cal-007] Found cached result, skipping
+[10:40:23] [cal-008] Found cached result, skipping
+[10:40:23] [cal-009] Found cached result, skipping
+[10:40:23] [cal-010] Found cached result, skipping
+[10:40:23] [cal-011] Found cached result, skipping
+[10:40:23] [cal-012] Found cached result, skipping
+[10:40:23] [cal-013] Found cached result, skipping
+[10:40:23] [cal-014] Found cached result, skipping
+[10:40:23] [cal-015] Found cached result, skipping
+[10:40:23] [med-001-patient-deidentify] Found cached result, skipping
+[10:40:23] [med-002-lab-abnormality] Found cached result, skipping
+[10:40:23] [med-003-drug-interaction] Found cached result, skipping
+[10:40:23] [med-004-icd-coding] Found cached result, skipping
+[10:40:23] [med-005-trial-eligibility] Found cached result, skipping
+[10:40:23] [code-001] Found cached result, skipping
+[10:40:23] [code-002] Found cached result, skipping
+[10:40:23] [code-003] Found cached result, skipping
+[10:40:23] [code-004] Found cached result, skipping
+[10:40:23] [code-005] Found cached result, skipping
+[10:40:23] [code-006] Found cached result, skipping
+[10:40:23] [code-007] Found cached result, skipping
+[10:40:23] [code-008] Found cached result, skipping
+[10:40:23] [code-009] Found cached result, skipping
+[10:40:23] [code-010] Found cached result, skipping
+[10:40:23] [code-011] Found cached result, skipping
+[10:40:23] [code-012] Found cached result, skipping
+[10:40:23] [clawbench_code-013_glm-4.7_20260428_024023] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:23] [code-014] Found cached result, skipping
+[10:40:23] [code-015] Found cached result, skipping
+[10:40:23] [clawbench_comm-001_glm-4.7_20260428_024023] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:23] [comm-002] Found cached result, skipping
+[10:40:23] [comm-003] Found cached result, skipping
+[10:40:23] [comm-004] Found cached result, skipping
+[10:40:23] [comm-005] Found cached result, skipping
+[10:40:23] [clawbench_comm-006_glm-4.7_20260428_024023] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:23] [comm-007] Found cached result, skipping
+[10:40:23] [comm-008] Found cached result, skipping
+[10:40:23] [comm-009] Found cached result, skipping
+[10:40:23] [clawbench_comm-010_glm-4.7_20260428_024023] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:23] [clawbench_comm-011_glm-4.7_20260428_024023] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_comm-012_glm-4.7_20260428_024023] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_comm-013_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_comm-014_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_comm-015_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [cont-001-sentiment-analysis] Found cached result, skipping
+[10:40:24] [cont-002-topic-modeling] Found cached result, skipping
+[10:40:24] [clawbench_cont-003-readability-audit_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_cont-004-media-bias_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [cont-005-translation-qa] Found cached result, skipping
+[10:40:24] [law-001-nda-clause-extract] Found cached result, skipping
+[10:40:24] [law-002-lease-analysis] Found cached result, skipping
+[10:40:24] [clawbench_law-003-compliance-check_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_law-004-ip-license-review_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_law-005-merger-due-diligence_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-001_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-002_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-003_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-004_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-005_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-006_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-007_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-008_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-009_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-010_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-011_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-012_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-013_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-014_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-015_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-016_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_xdom-017_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [cs-001-api-rate-limiter] Found cached result, skipping
+[10:40:24] [clawbench_cs-002-db-migration_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_cs-003-log-analyzer_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_cs-004-ci-pipeline_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_cs-005-api-design_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-001_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-002_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-003_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-004_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-005_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-006_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-007_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-008_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-009_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-010_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-011_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-012_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-013_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-014_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-015_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-016_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_data-017_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [ds-001-customer-segmentation] Found cached result, skipping
+[10:40:24] [clawbench_ds-002-ab-testing_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_ds-003-feature-engineering_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_ds-004-time-series_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_ds-005-anomaly-detection_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:24] [clawbench_db-001_glm-4.7_20260428_024024] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_db-002_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_db-003_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_db-004_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_db-005_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_debug-001_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [debug-002] Found cached result, skipping
+[10:40:25] [clawbench_debug-003_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_debug-004_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_debug-005_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-001_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-002_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-003_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-004_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-005_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-006_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-007_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-008_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-009_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-010_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-011_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-012_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-013_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-014_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-015_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-016_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-017_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_doc-018_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_edu-001-rubric-grading_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_edu-002-item-analysis_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_edu-003-learning-path_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_edu-005-assessment-generation_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-001_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-002_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-003_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-004_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-005_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-006_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-007_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-008_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-009_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-010_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-011_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-012_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-013_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-014_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-015_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-016_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-017_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_eml-018_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_file-001_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:25] [clawbench_file-002_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_file-003_glm-4.7_20260428_024025] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_file-004_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_file-005_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_file-006_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_file-007_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_file-008_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_file-009_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_file-010_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_file-011_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_file-012_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_file-013_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_file-014_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_file-015_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_fin-001-portfolio-beta_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_fin-002-dcf-valuation_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_fin-003-risk-metrics_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_fin-004-earnings-report_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_fin-005-forex-arbitrage_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_fin-006_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_fin-008_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mkt-001-survey-analysis_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mkt-002-competitor-matrix_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mkt-003-pricing-analysis_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mkt-004-trend-extraction_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mkt-005-market-sizing_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mem-001_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mem-002_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mem-003_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mem-004_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mem-005_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mem-006_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mem-007_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mem-008_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mem-009_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mem-010_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mem-011_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mem-012_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mem-013_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mem-014_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mem-015_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mag-001_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mag-002_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mag-003_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mag-004_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mm-001_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mm-002_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mm-003_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mm-004_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mm-005_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mm-006_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:26] [clawbench_mm-007_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_mm-008_glm-4.7_20260428_024026] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_mm-009_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_mm-010_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_mm-011_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_mm-012_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_mm-013_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_mm-014_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_mm-015_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_plan-001_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_plan-002_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_plan-003_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_plan-004_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_plan-005_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_reg-001-gdpr-audit_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_reg-002-sox-controls_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_reg-003-aml-screening_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_reg-004-hipaa-assessment_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_reg-005-environmental-report_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sci-001-ode-solver_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sci-002-monte-carlo_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sci-003-matrix-decomposition_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sci-004-signal-processing_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sci-005-optimization_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sec-001_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sec-002_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sec-003_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sec-004_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sec-005_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sec-006_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sec-007_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sec-008_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sec-009_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sec-010_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sec-011_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sec-012_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sec-013_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sec-014_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sec-015_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sys-001_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sys-002_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sys-003_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sys-004_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sys-005_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sys-006_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sys-007_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sys-008_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sys-009_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sys-010_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sys-011_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sys-012_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sys-013_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:27] [clawbench_sys-014_glm-4.7_20260428_024027] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_sys-015_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_web-001_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_web-002_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_web-003_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_web-004_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_web-005_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_web-006_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_web-007_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_web-008_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_web-009_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_web-010_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_web-011_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_web-012_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_web-013_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_web-014_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_web-015_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-001_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-002_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-003_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-004_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-005_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-006_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-007_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-008_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-009_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-010_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-011_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-012_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-013_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-014_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-015_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-016_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28] [clawbench_wfl-017_glm-4.7_20260428_024028] Execution error: Container startup failed:
+docker: Cannot connect to the Docker daemon at unix:///Users/lijiawei/.orbstack/run/docker.sock. Is the docker daemon running?
+
+Run 'docker run --help' for more information
+
+[10:40:28]   [clawbench-official×glm-4.7] done: score=91.8, scored=38/308
+[10:40:28] 
+

@@ -85,7 +85,7 @@ def collect_failures():
         passed = data.get("passed", False)
         score = data.get("score", 0)
 
-        if not passed:  # Failure: passed = False
+        if not passed and score < 0.9:  # Failure: passed=False AND score<0.9
             failures.append({
                 "bench": "clawbench",
                 "task_id": task_id,

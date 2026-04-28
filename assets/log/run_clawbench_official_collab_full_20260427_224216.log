@@ -1,0 +1,2493 @@
+[22:42:17] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=all
+[22:42:17] 
+============================================================
+[22:42:17] BENCHMARK: ClawBench Official (250 tasks)
+[22:42:17] ============================================================
+[22:42:17]   [clawbench-official×glm-4.7] evaluating...
+[22:42:25] [clawbench_acad-001-citation-network_glm-4.7_20260427_144218] Container started
+[22:42:25] [acad-001-citation-network] Harness detected, timeout adjusted: 3600 → 3780
+[22:44:06]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/academic-research/acad-001-citation-network/environment/setup.sh
+[22:44:06]   [container] [setup] setup.sh 成功
+[22:44:06]   [container] [setup] 工作空间文件: ['references.bib', 'instruction.md']
+[22:44:06]   [container] DONE
+[22:44:06] [clawbench_acad-001-citation-network_glm-4.7_20260427_144218] Agent finished in 101.30s, returncode=0
+[22:44:06] [clawbench_acad-001-citation-network_glm-4.7_20260427_144218] Agent result: passed=True, score=1.0000
+[22:44:13] [clawbench_acad-002-literature-review_glm-4.7_20260427_144407] Container started
+[22:44:13] [acad-002-literature-review] Harness detected, timeout adjusted: 3600 → 3780
+[22:47:08]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/academic-research/acad-002-literature-review/environment/setup.sh
+[22:47:08]   [container] [setup] setup.sh 成功
+[22:47:08]   [container] [setup] 工作空间文件: ['abstracts.csv', 'instruction.md']
+[22:47:08]   [container] DONE
+[22:47:08] [clawbench_acad-002-literature-review_glm-4.7_20260427_144407] Agent finished in 175.17s, returncode=0
+[22:47:08] [clawbench_acad-002-literature-review_glm-4.7_20260427_144407] Agent result: passed=True, score=1.0000
+[22:47:15] [clawbench_acad-003-statistical-analysis_glm-4.7_20260427_144709] Container started
+[22:47:15] [acad-003-statistical-analysis] Harness detected, timeout adjusted: 3600 → 3780
+[22:50:45]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/academic-research/acad-003-statistical-analysis/environment/setup.sh
+[22:50:45]   [container] [setup] setup.sh 成功
+[22:50:45]   [container] [setup] 工作空间文件: ['instruction.md', 'experiment_data.csv']
+[22:50:45]   [container] DONE
+[22:50:45] [clawbench_acad-003-statistical-analysis_glm-4.7_20260427_144709] Agent finished in 210.23s, returncode=0
+[22:50:45] [clawbench_acad-003-statistical-analysis_glm-4.7_20260427_144709] Agent result: passed=False, score=0.7500
+[22:50:46] [acad-004-plagiarism-check] Found cached result, skipping
+[22:50:52] [clawbench_acad-005-metadata-extraction_glm-4.7_20260427_145046] Container started
+[22:50:52] [acad-005-metadata-extraction] Harness detected, timeout adjusted: 3600 → 3780
+[22:52:06]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/academic-research/acad-005-metadata-extraction/environment/setup.sh
+[22:52:06]   [container] [setup] setup.sh 成功
+[22:52:06]   [container] [setup] 工作空间文件: ['instruction.md']
+[22:52:06]   [container] DONE
+[22:52:06] [clawbench_acad-005-metadata-extraction_glm-4.7_20260427_145046] Agent finished in 74.27s, returncode=0
+[22:52:06] [clawbench_acad-005-metadata-extraction_glm-4.7_20260427_145046] Agent result: passed=True, score=1.0000
+[22:52:13] [clawbench_acct-001-journal-entries_glm-4.7_20260427_145207] Container started
+[22:52:13] [acct-001-journal-entries] Harness detected, timeout adjusted: 3600 → 3780
+[22:57:00]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/accounting/acct-001-journal-entries/environment/setup.sh
+[22:57:00]   [container] [setup] setup.sh 成功
+[22:57:00]   [container] [setup] 工作空间文件: ['instruction.md', 'transactions.csv']
+[22:57:00]   [container] DONE
+[22:57:00] [clawbench_acct-001-journal-entries_glm-4.7_20260427_145207] Agent finished in 286.70s, returncode=0
+[22:57:00] [clawbench_acct-001-journal-entries_glm-4.7_20260427_145207] Agent result: passed=True, score=1.0000
+[22:57:06] [clawbench_acct-002-trial-balance_glm-4.7_20260427_145700] Container started
+[22:57:06] [acct-002-trial-balance] Harness detected, timeout adjusted: 3600 → 3780
+[22:58:44]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/accounting/acct-002-trial-balance/environment/setup.sh
+[22:58:44]   [container] [setup] setup.sh 成功
+[22:58:44]   [container] [setup] 工作空间文件: ['ledger.csv', 'instruction.md']
+[22:58:44]   [container] DONE
+[22:58:44] [clawbench_acct-002-trial-balance_glm-4.7_20260427_145700] Agent finished in 97.02s, returncode=0
+[22:58:44] [clawbench_acct-002-trial-balance_glm-4.7_20260427_145700] Agent result: passed=True, score=1.0000
+[22:58:50] [clawbench_acct-003-depreciation_glm-4.7_20260427_145844] Container started
+[22:58:50] [acct-003-depreciation] Harness detected, timeout adjusted: 3600 → 3780
+[23:00:44]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/accounting/acct-003-depreciation/environment/setup.sh
+[23:00:44]   [container] [setup] setup.sh 成功
+[23:00:44]   [container] [setup] 工作空间文件: ['assets.csv', 'instruction.md']
+[23:00:44]   [container] DONE
+[23:00:44] [clawbench_acct-003-depreciation_glm-4.7_20260427_145844] Agent finished in 113.59s, returncode=0
+[23:00:44] [clawbench_acct-003-depreciation_glm-4.7_20260427_145844] Agent result: passed=True, score=1.0000
+[23:00:51] [clawbench_acct-004-bank-reconciliation_glm-4.7_20260427_150044] Container started
+[23:00:51] [acct-004-bank-reconciliation] Harness detected, timeout adjusted: 3600 → 3780
+[23:03:37]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/accounting/acct-004-bank-reconciliation/environment/setup.sh
+[23:03:37]   [container] [setup] setup.sh 成功
+[23:03:37]   [container] [setup] 工作空间文件: ['bank_statement.csv', 'company_ledger.csv', 'instruction.md']
+[23:03:37]   [container] DONE
+[23:03:37] [clawbench_acct-004-bank-reconciliation_glm-4.7_20260427_150044] Agent finished in 166.85s, returncode=0
+[23:03:38] [clawbench_acct-004-bank-reconciliation_glm-4.7_20260427_150044] Agent result: passed=True, score=1.0000
+[23:03:44] [clawbench_acct-005-financial-statements_glm-4.7_20260427_150338] Container started
+[23:03:44] [acct-005-financial-statements] Harness detected, timeout adjusted: 3600 → 3780
+[23:07:42]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/accounting/acct-005-financial-statements/environment/setup.sh
+[23:07:42]   [container] [setup] setup.sh 成功
+[23:07:42]   [container] [setup] 工作空间文件: ['trial_balance.csv', 'instruction.md']
+[23:07:42]   [container] DONE
+[23:07:42] [clawbench_acct-005-financial-statements_glm-4.7_20260427_150338] Agent finished in 237.75s, returncode=0
+[23:07:42] [clawbench_acct-005-financial-statements_glm-4.7_20260427_150338] Agent result: passed=False, score=0.5000
+[23:07:45] [clawbench_bio-001-sequence-analysis_glm-4.7_20260427_150743] Container started
+[23:07:45] [bio-001-sequence-analysis] Harness detected, timeout adjusted: 3600 → 3780
+[23:14:20]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/bioinformatics/bio-001-sequence-analysis/environment/setup.sh
+[23:14:20]   [container] [setup] setup.sh 成功
+[23:14:20]   [container] [setup] 工作空间文件: ['instruction.md', 'sequences.fasta']
+[23:14:20]   [container] DONE
+[23:14:20] [clawbench_bio-001-sequence-analysis_glm-4.7_20260427_150743] Agent finished in 395.54s, returncode=0
+[23:14:20] [clawbench_bio-001-sequence-analysis_glm-4.7_20260427_150743] Agent result: passed=True, score=1.0000
+[23:14:23] [clawbench_bio-002-protein-alignment_glm-4.7_20260427_151421] Container started
+[23:14:23] [bio-002-protein-alignment] Harness detected, timeout adjusted: 3600 → 3780
+[23:18:55]   [container] num_seqs = 25
+[23:18:55]   [container] min_len = 50
+[23:18:55]   [container] max_len = 100
+[23:18:55]   [container] 
+[23:18:55]   [container] with open(f"{os.environ.get(\"WORKSPACE\", os.getcwd())}/proteins.fasta", "w") as f:
+[23:18:55]   [container]     for i in range(1, num_seqs + 1):
+[23:18:55]   [container]         length = random.randint(min_len, max_len)
+[23:18:55]   [container]         seq = "".join(random.choices(amino_acids, k=length))
+[23:18:55]   [container]         f.write(f">seq{i}\n")
+[23:18:55]   [container]         # Write sequence in lines of max 60 chars
+[23:18:55]   [container]         for j in range(0, length, 60):
+[23:18:55]   [container]             f.write(seq[j:j+60] + "\n")
+[23:18:55]   [container] '
+[23:18:55]   [container]   File "<string>", line 10
+[23:18:55]   [container]     with open(f"{os.environ.get(\"WORKSPACE\", os.getcwd())}/proteins.fasta", "w") as f:
+[23:18:55]   [container]                                  ^
+[23:18:55]   [container] SyntaxError: unexpected character after line continuation character
+[23:18:55]   [container] 
+[23:18:55]   [container] [setup] 工作空间文件: ['instruction.md']
+[23:18:55]   [container] DONE
+[23:18:55] [clawbench_bio-002-protein-alignment_glm-4.7_20260427_151421] Agent finished in 271.90s, returncode=0
+[23:18:55] [clawbench_bio-002-protein-alignment_glm-4.7_20260427_151421] Agent result: passed=True, score=1.0000
+[23:18:55] [bio-003-gene-expression] Found cached result, skipping
+[23:18:55] [bio-004-phylogenetic] Found cached result, skipping
+[23:18:57] [clawbench_bio-005-variant-annotation_glm-4.7_20260427_151855] Container started
+[23:18:57] [bio-005-variant-annotation] Harness detected, timeout adjusted: 3600 → 3780
+[23:20:20]   [container]         length = random.randint(5000, 20000)
+[23:20:20]   [container]         end = start + length
+[23:20:20]   [container]         func = random.choice(functions)
+[23:20:20]   [container]         regions.append([gene, chrom, start, end, func])
+[23:20:20]   [container]         # Next gene region start with some gap
+[23:20:20]   [container]         start = end + random.randint(1000, 5000)
+[23:20:20]   [container] 
+[23:20:20]   [container] with open(f"{os.environ.get(\"WORKSPACE\", os.getcwd())}/gene_regions.csv", "w", newline="") as f:
+[23:20:20]   [container]     writer = csv.writer(f)
+[23:20:20]   [container]     writer.writerow(["gene", "chrom", "start", "end", "function"])
+[23:20:20]   [container]     for row in regions:
+[23:20:20]   [container]         writer.writerow(row)
+[23:20:20]   [container] '
+[23:20:20]   [container]   File "<string>", line 21
+[23:20:20]   [container]     with open(f"{os.environ.get(\"WORKSPACE\", os.getcwd())}/gene_regions.csv", "w", newline="") as f:
+[23:20:20]   [container]                                  ^
+[23:20:20]   [container] SyntaxError: unexpected character after line continuation character
+[23:20:20]   [container] 
+[23:20:20]   [container] [setup] 工作空间文件: ['instruction.md']
+[23:20:20]   [container] DONE
+[23:20:20] [clawbench_bio-005-variant-annotation_glm-4.7_20260427_151855] Agent finished in 83.16s, returncode=0
+[23:20:20] [clawbench_bio-005-variant-annotation_glm-4.7_20260427_151855] Agent result: passed=False, score=0.6667
+[23:20:20] [cal-001] Found cached result, skipping
+[23:20:20] [cal-002] Found cached result, skipping
+[23:20:22] [clawbench_cal-003_glm-4.7_20260427_152020] Container started
+[23:20:22] [cal-003] Harness detected, timeout adjusted: 120 → 300
+[23:21:07]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-003-list-today-schedule/environment/setup.sh
+[23:21:07]   [container] [setup] setup.sh 成功
+[23:21:07]   [container] [setup] 工作空间文件: ['.gitkeep', 'instruction.md', 'calendar.json']
+[23:21:07]   [container] DONE
+[23:21:07] [clawbench_cal-003_glm-4.7_20260427_152020] Agent finished in 45.12s, returncode=0
+[23:21:08] [clawbench_cal-003_glm-4.7_20260427_152020] Agent result: passed=True, score=1.0000
+[23:21:10] [clawbench_cal-004_glm-4.7_20260427_152108] Container started
+[23:21:10] [cal-004] Harness detected, timeout adjusted: 120 → 300
+[23:22:34]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-004-set-reminder/environment/setup.sh
+[23:22:34]   [container] [setup] setup.sh 成功
+[23:22:34]   [container] [setup] 工作空间文件: ['.gitkeep', 'instruction.md', 'calendar.json']
+[23:22:34]   [container] DONE
+[23:22:34] [clawbench_cal-004_glm-4.7_20260427_152108] Agent finished in 84.18s, returncode=0
+[23:22:34] [clawbench_cal-004_glm-4.7_20260427_152108] Agent result: passed=True, score=1.0000
+[23:22:36] [clawbench_cal-005_glm-4.7_20260427_152234] Container started
+[23:22:36] [cal-005] Harness detected, timeout adjusted: 120 → 300
+[23:23:08]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-005-change-meeting-time/environment/setup.sh
+[23:23:08]   [container] [setup] setup.sh 成功
+[23:23:08]   [container] [setup] 工作空间文件: ['.gitkeep', 'instruction.md', 'calendar.json']
+[23:23:08]   [container] DONE
+[23:23:08] [clawbench_cal-005_glm-4.7_20260427_152234] Agent finished in 31.87s, returncode=0
+[23:23:08] [clawbench_cal-005_glm-4.7_20260427_152234] Agent result: passed=True, score=1.0000
+[23:23:10] [clawbench_cal-006_glm-4.7_20260427_152308] Container started
+[23:23:10] [cal-006] Harness detected, timeout adjusted: 180 → 360
+[23:24:05]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-006-create-recurring-meeting/environment/setup.sh
+[23:24:05]   [container] [setup] setup.sh 成功
+[23:24:05]   [container] [setup] 工作空间文件: ['.gitkeep', 'instruction.md']
+[23:24:05]   [container] DONE
+[23:24:05] [clawbench_cal-006_glm-4.7_20260427_152308] Agent finished in 54.37s, returncode=0
+[23:24:05] [clawbench_cal-006_glm-4.7_20260427_152308] Agent result: passed=True, score=1.0000
+[23:24:07] [clawbench_cal-007_glm-4.7_20260427_152405] Container started
+[23:24:07] [cal-007] Harness detected, timeout adjusted: 180 → 360
+[23:25:12]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-007-timezone-conversion/environment/setup.sh
+[23:25:12]   [container] [setup] setup.sh 成功
+[23:25:12]   [container] [setup] 工作空间文件: ['.gitkeep', 'instruction.md', 'calendar.json']
+[23:25:12]   [container] DONE
+[23:25:12] [clawbench_cal-007_glm-4.7_20260427_152405] Agent finished in 65.07s, returncode=0
+[23:25:12] [clawbench_cal-007_glm-4.7_20260427_152405] Agent result: passed=True, score=1.0000
+[23:25:12] [cal-008] Found cached result, skipping
+[23:25:14] [clawbench_cal-009_glm-4.7_20260427_152512] Container started
+[23:25:14] [cal-009] Harness detected, timeout adjusted: 180 → 360
+[23:26:59]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-009-find-free-slots/environment/setup.sh
+[23:26:59]   [container] [setup] setup.sh 成功
+[23:26:59]   [container] [setup] 工作空间文件: ['.gitkeep', 'instruction.md', 'calendar.json']
+[23:26:59]   [container] DONE
+[23:26:59] [clawbench_cal-009_glm-4.7_20260427_152512] Agent finished in 104.89s, returncode=0
+[23:26:59] [clawbench_cal-009_glm-4.7_20260427_152512] Agent result: passed=True, score=1.0000
+[23:27:01] [clawbench_cal-010_glm-4.7_20260427_152659] Container started
+[23:27:01] [cal-010] Harness detected, timeout adjusted: 180 → 360
+[23:27:34]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-010-meeting-duration-stats/environment/setup.sh
+[23:27:34]   [container] [setup] setup.sh 成功
+[23:27:34]   [container] [setup] 工作空间文件: ['.gitkeep', 'instruction.md', 'calendar.json']
+[23:27:34]   [container] DONE
+[23:27:34] [clawbench_cal-010_glm-4.7_20260427_152659] Agent finished in 33.29s, returncode=0
+[23:27:34] [clawbench_cal-010_glm-4.7_20260427_152659] Agent result: passed=True, score=1.0000
+[23:27:37] [clawbench_cal-011_glm-4.7_20260427_152735] Container started
+[23:27:37] [cal-011] Harness detected, timeout adjusted: 240 → 420
+[23:29:57]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-011-conflict-detection/environment/setup.sh
+[23:29:57]   [container] [setup] setup.sh 成功
+[23:29:57]   [container] [setup] 工作空间文件: ['.gitkeep', 'instruction.md', 'calendar.json']
+[23:29:57]   [container] DONE
+[23:29:57] [clawbench_cal-011_glm-4.7_20260427_152735] Agent finished in 140.89s, returncode=0
+[23:29:58] [clawbench_cal-011_glm-4.7_20260427_152735] Agent result: passed=True, score=1.0000
+[23:30:00] [clawbench_cal-012_glm-4.7_20260427_152958] Container started
+[23:30:00] [cal-012] Harness detected, timeout adjusted: 240 → 420
+[23:31:11]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-012-calendar-merge/environment/setup.sh
+[23:31:11]   [container] [setup] setup.sh 成功
+[23:31:11]   [container] [setup] 工作空间文件: ['personal_calendar.json', '.gitkeep', 'work_calendar.json', 'instruction.md']
+[23:31:11]   [container] DONE
+[23:31:11] [clawbench_cal-012_glm-4.7_20260427_152958] Agent finished in 70.95s, returncode=0
+[23:31:11] [clawbench_cal-012_glm-4.7_20260427_152958] Agent result: passed=True, score=1.0000
+[23:31:13] [clawbench_cal-013_glm-4.7_20260427_153111] Container started
+[23:31:13] [cal-013] Harness detected, timeout adjusted: 240 → 420
+[23:31:47]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-013-meeting-notes-generator/environment/setup.sh
+[23:31:47]   [container] [setup] setup.sh 成功
+[23:31:47]   [container] [setup] 工作空间文件: ['attendees.json', '.gitkeep', 'instruction.md', 'meeting.json']
+[23:31:47]   [container] DONE
+[23:31:47] [clawbench_cal-013_glm-4.7_20260427_153111] Agent finished in 34.72s, returncode=0
+[23:31:48] [clawbench_cal-013_glm-4.7_20260427_153111] Agent result: passed=False, score=0.8824
+[23:31:50] [clawbench_cal-014_glm-4.7_20260427_153148] Container started
+[23:31:50] [cal-014] Harness detected, timeout adjusted: 300 → 480
+[23:36:42]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-014-weekly-schedule-optimization/environment/setup.sh
+[23:36:42]   [container] [setup] setup.sh 成功
+[23:36:42]   [container] [setup] 工作空间文件: ['.gitkeep', 'draft_schedule.json', 'instruction.md', 'preferences.json']
+[23:36:42]   [container] DONE
+[23:36:42] [clawbench_cal-014_glm-4.7_20260427_153148] Agent finished in 292.23s, returncode=0
+[23:36:42] [clawbench_cal-014_glm-4.7_20260427_153148] Agent result: passed=True, score=1.0000
+[23:36:45] [clawbench_cal-015_glm-4.7_20260427_153643] Container started
+[23:36:45] [cal-015] Harness detected, timeout adjusted: 300 → 480
+[23:37:45]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/calendar/cal-015-multi-person-availability/environment/setup.sh
+[23:37:45]   [container] [setup] setup.sh 成功
+[23:37:45]   [container] [setup] 工作空间文件: ['.gitkeep', 'instruction.md']
+[23:37:45]   [container] DONE
+[23:37:45] [clawbench_cal-015_glm-4.7_20260427_153643] Agent finished in 60.17s, returncode=0
+[23:37:45] [clawbench_cal-015_glm-4.7_20260427_153643] Agent result: passed=True, score=1.0000
+[23:37:47] [clawbench_med-001-patient-deidentify_glm-4.7_20260427_153745] Container started
+[23:37:47] [med-001-patient-deidentify] Harness detected, timeout adjusted: 3600 → 3780
+[23:39:22]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/clinical-data/med-001-patient-deidentify/environment/setup.sh
+[23:39:22]   [container] [setup] setup.sh 成功
+[23:39:22]   [container] [setup] 工作空间文件: ['patient_records.csv', 'instruction.md']
+[23:39:22]   [container] DONE
+[23:39:22] [clawbench_med-001-patient-deidentify_glm-4.7_20260427_153745] Agent finished in 94.89s, returncode=0
+[23:39:22] [clawbench_med-001-patient-deidentify_glm-4.7_20260427_153745] Agent result: passed=True, score=1.0000
+[23:39:24] [clawbench_med-002-lab-abnormality_glm-4.7_20260427_153922] Container started
+[23:39:24] [med-002-lab-abnormality] Harness detected, timeout adjusted: 3600 → 3780
+[23:42:20]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/clinical-data/med-002-lab-abnormality/environment/setup.sh
+[23:42:20]   [container] [setup] setup.sh 成功
+[23:42:20]   [container] [setup] 工作空间文件: ['lab_results.csv', 'instruction.md']
+[23:42:20]   [container] DONE
+[23:42:20] [clawbench_med-002-lab-abnormality_glm-4.7_20260427_153922] Agent finished in 175.42s, returncode=0
+[23:42:20] [clawbench_med-002-lab-abnormality_glm-4.7_20260427_153922] Agent result: passed=True, score=1.0000
+[23:42:22] [clawbench_med-003-drug-interaction_glm-4.7_20260427_154220] Container started
+[23:42:22] [med-003-drug-interaction] Harness detected, timeout adjusted: 3600 → 3780
+[23:43:34]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/clinical-data/med-003-drug-interaction/environment/setup.sh
+[23:43:34]   [container] [setup] setup.sh 成功
+[23:43:34]   [container] [setup] 工作空间文件: ['interaction_db.csv', 'instruction.md', 'patient_medications.csv']
+[23:43:34]   [container] DONE
+[23:43:34] [clawbench_med-003-drug-interaction_glm-4.7_20260427_154220] Agent finished in 71.95s, returncode=0
+[23:43:34] [clawbench_med-003-drug-interaction_glm-4.7_20260427_154220] Agent result: passed=False, score=0.6667
+[23:43:36] [clawbench_med-004-icd-coding_glm-4.7_20260427_154334] Container started
+[23:43:36] [med-004-icd-coding] Harness detected, timeout adjusted: 3600 → 3780
+[23:51:55]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/clinical-data/med-004-icd-coding/environment/setup.sh
+[23:51:55]   [container] [setup] setup.sh 失败 (rc=1)
+[23:51:55]   [container] [setup] stderr: Traceback (most recent call last):
+[23:51:55]   [container]   File "<stdin>", line 28, in <module>
+[23:51:55]   [container] FileNotFoundError: [Errno 2] No such file or directory: '$WORKSPACE/icd_mapping.csv'
+[23:51:55]   [container] 
+[23:51:55]   [container] [setup] 重试 (bash -x) ...
+[23:51:55]   [container] [setup] 重试也失败 (rc=1)
+[23:51:55]   [container] [setup] stderr: + set -euo pipefail
+[23:51:55]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[23:51:55]   [container] + mkdir -p /tmp/clawbench_workspace/clinical_notes
+[23:51:55]   [container] + python3 -
+[23:51:55]   [container] Traceback (most recent call last):
+[23:51:55]   [container]   File "<stdin>", line 28, in <module>
+[23:51:55]   [container] FileNotFoundError: [Errno 2] No such file or directory: '$WORKSPACE/icd_mapping.csv'
+[23:51:55]   [container] 
+[23:51:55]   [container] [setup] 工作空间文件: ['instruction.md']
+[23:51:55]   [container] DONE
+[23:51:55] [clawbench_med-004-icd-coding_glm-4.7_20260427_154334] Agent finished in 498.24s, returncode=0
+[23:51:55] [clawbench_med-004-icd-coding_glm-4.7_20260427_154334] Agent result: passed=True, score=1.0000
+[23:51:57] [clawbench_med-005-trial-eligibility_glm-4.7_20260427_155155] Container started
+[23:51:57] [med-005-trial-eligibility] Harness detected, timeout adjusted: 3600 → 3780
+[23:53:56]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/clinical-data/med-005-trial-eligibility/environment/setup.sh
+[23:53:56]   [container] [setup] setup.sh 成功
+[23:53:56]   [container] [setup] 工作空间文件: ['trial_criteria.json', 'instruction.md', 'patients.csv']
+[23:53:56]   [container] DONE
+[23:53:56] [clawbench_med-005-trial-eligibility_glm-4.7_20260427_155155] Agent finished in 119.38s, returncode=0
+[23:53:56] [clawbench_med-005-trial-eligibility_glm-4.7_20260427_155155] Agent result: passed=False, score=0.6667
+[23:53:58] [clawbench_code-001_glm-4.7_20260427_155357] Container started
+[23:53:58] [code-001] Harness detected, timeout adjusted: 180 → 360
+[23:56:44]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-001-write-unittest/environment/setup.sh
+[23:56:44]   [container] [setup] setup.sh 成功
+[23:56:44]   [container] [setup] 工作空间文件: ['instruction.md', 'calculator.py']
+[23:56:44]   [container] DONE
+[23:56:44] [clawbench_code-001_glm-4.7_20260427_155357] Agent finished in 165.35s, returncode=0
+[23:56:44] [clawbench_code-001_glm-4.7_20260427_155357] Agent result: passed=False, score=0.9000
+[23:56:46] [clawbench_code-002_glm-4.7_20260427_155644] Container started
+[23:56:46] [code-002] Harness detected, timeout adjusted: 120 → 300
+[00:00:04]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-002-implement-palindrome/environment/setup.sh
+[00:00:04]   [container] [setup] setup.sh 成功
+[00:00:04]   [container] [setup] 工作空间文件: ['instruction.md']
+[00:00:04]   [container] DONE
+[00:00:04] [clawbench_code-002_glm-4.7_20260427_155644] Agent finished in 197.83s, returncode=0
+[00:00:04] [clawbench_code-002_glm-4.7_20260427_155644] Agent result: passed=False, score=0.9000
+[00:00:06] [clawbench_code-003_glm-4.7_20260427_160004] Container started
+[00:00:06] [code-003] Harness detected, timeout adjusted: 120 → 300
+[00:01:52]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-003-add-type-annotations/environment/setup.sh
+[00:01:52]   [container] [setup] setup.sh 成功
+[00:01:52]   [container] [setup] 工作空间文件: ['instruction.md', 'utils.py']
+[00:01:52]   [container] DONE
+[00:01:52] [clawbench_code-003_glm-4.7_20260427_160004] Agent finished in 105.38s, returncode=0
+[00:01:52] [clawbench_code-003_glm-4.7_20260427_160004] Agent result: passed=False, score=0.9231
+[00:01:54] [clawbench_code-004_glm-4.7_20260427_160152] Container started
+[00:01:54] [code-004] Harness detected, timeout adjusted: 120 → 300
+[00:02:44]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-004-fix-syntax-errors/environment/setup.sh
+[00:02:44]   [container] [setup] setup.sh 成功
+[00:02:44]   [container] [setup] 工作空间文件: ['instruction.md', 'broken.py']
+[00:02:44]   [container] DONE
+[00:02:44] [clawbench_code-004_glm-4.7_20260427_160152] Agent finished in 50.76s, returncode=0
+[00:02:45] [clawbench_code-004_glm-4.7_20260427_160152] Agent result: passed=False, score=0.9167
+[00:02:47] [clawbench_code-005_glm-4.7_20260427_160245] Container started
+[00:02:47] [code-005] Harness detected, timeout adjusted: 150 → 330
+[00:03:29]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-005-implement-stack/environment/setup.sh
+[00:03:29]   [container] [setup] setup.sh 成功
+[00:03:29]   [container] [setup] 工作空间文件: ['instruction.md']
+[00:03:29]   [container] DONE
+[00:03:29] [clawbench_code-005_glm-4.7_20260427_160245] Agent finished in 42.63s, returncode=0
+[00:03:29] [clawbench_code-005_glm-4.7_20260427_160245] Agent result: passed=False, score=0.9286
+[00:03:30] [code-006] Found cached result, skipping
+[00:03:31] [clawbench_code-007_glm-4.7_20260427_160330] Container started
+[00:03:31] [code-007] Harness detected, timeout adjusted: 150 → 330
+[00:08:17]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-007-cli-argument-parser/environment/setup.sh
+[00:08:17]   [container] [setup] setup.sh 成功
+[00:08:17]   [container] [setup] 工作空间文件: ['instruction.md']
+[00:08:17]   [container] DONE
+[00:08:17] [clawbench_code-007_glm-4.7_20260427_160330] Agent finished in 285.97s, returncode=0
+[00:08:17] [clawbench_code-007_glm-4.7_20260427_160330] Agent result: passed=False, score=0.7778
+[00:08:20] [clawbench_code-008_glm-4.7_20260427_160818] Container started
+[00:08:20] [code-008] Harness detected, timeout adjusted: 150 → 330
+[00:09:15]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-008-implement-merge-sort/environment/setup.sh
+[00:09:15]   [container] [setup] setup.sh 成功
+[00:09:15]   [container] [setup] 工作空间文件: ['instruction.md']
+[00:09:15]   [container] DONE
+[00:09:15] [clawbench_code-008_glm-4.7_20260427_160818] Agent finished in 55.13s, returncode=0
+[00:09:15] [clawbench_code-008_glm-4.7_20260427_160818] Agent result: passed=False, score=0.9375
+[00:09:17] [clawbench_code-009_glm-4.7_20260427_160915] Container started
+[00:09:17] [code-009] Harness detected, timeout adjusted: 150 → 330
+[00:09:59]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-009-debug-calculator/environment/setup.sh
+[00:09:59]   [container] [setup] setup.sh 成功
+[00:09:59]   [container] [setup] 工作空间文件: ['instruction.md', 'calculator.py']
+[00:09:59]   [container] DONE
+[00:09:59] [clawbench_code-009_glm-4.7_20260427_160915] Agent finished in 41.84s, returncode=0
+[00:09:59] [clawbench_code-009_glm-4.7_20260427_160915] Agent result: passed=False, score=0.9444
+[00:09:59] [code-010] Found cached result, skipping
+[00:10:01] [clawbench_code-011_glm-4.7_20260427_160959] Container started
+[00:10:01] [code-011] Harness detected, timeout adjusted: 180 → 360
+[00:10:46]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-011-data-validation/environment/setup.sh
+[00:10:46]   [container] [setup] setup.sh 成功
+[00:10:46]   [container] [setup] 工作空间文件: ['instruction.md']
+[00:10:46]   [container] DONE
+[00:10:46] [clawbench_code-011_glm-4.7_20260427_160959] Agent finished in 44.66s, returncode=0
+[00:10:46] [clawbench_code-011_glm-4.7_20260427_160959] Agent result: passed=False, score=0.9667
+[00:10:48] [clawbench_code-012_glm-4.7_20260427_161046] Container started
+[00:10:48] [code-012] Harness detected, timeout adjusted: 180 → 360
+[00:12:43]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-012-design-patterns/environment/setup.sh
+[00:12:43]   [container] [setup] setup.sh 成功
+[00:12:43]   [container] [setup] 工作空间文件: ['instruction.md']
+[00:12:43]   [container] DONE
+[00:12:43] [clawbench_code-012_glm-4.7_20260427_161046] Agent finished in 114.69s, returncode=0
+[00:12:43] [clawbench_code-012_glm-4.7_20260427_161046] Agent result: passed=False, score=0.9412
+[00:12:43] [code-013] Found cached result, skipping
+[00:12:45] [clawbench_code-014_glm-4.7_20260427_161243] Container started
+[00:12:45] [code-014] Harness detected, timeout adjusted: 300 → 480
+[00:17:09]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-014-multi-file-refactor/environment/setup.sh
+[00:17:09]   [container] [setup] setup.sh 成功
+[00:17:09]   [container] [setup] 工作空间文件: ['instruction.md']
+[00:17:09]   [container] DONE
+[00:17:09]   [container-err] [_call_llm] Server error (attempt 1/4), retrying in 5s: litellm.BadRequestError: AnthropicException - {"type":"error","error":{"message":"操作失败","code":"500"},"request_id":"20260428001514b9f3502afaac44fb"}
+[00:17:09] [clawbench_code-014_glm-4.7_20260427_161243] Agent finished in 264.46s, returncode=0
+[00:17:09] [clawbench_code-014_glm-4.7_20260427_161243] Agent result: passed=False, score=0.9524
+[00:17:10] [code-015] Found cached result, skipping
+[00:17:11] [clawbench_comm-001_glm-4.7_20260427_161710] Container started
+[00:17:11] [comm-001] Harness detected, timeout adjusted: 120 → 300
+[00:18:31]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/communication/comm-001-format-message/environment/setup.sh
+[00:18:31]   [container] [setup] setup.sh 成功
+[00:18:31]   [container] [setup] 工作空间文件: ['instruction.md', 'message.json']
+[00:18:31]   [container] DONE
+[00:18:31] [clawbench_comm-001_glm-4.7_20260427_161710] Agent finished in 79.98s, returncode=0
+[00:18:31] [clawbench_comm-001_glm-4.7_20260427_161710] Agent result: passed=True, score=1.0000
+[00:18:34] [clawbench_comm-002_glm-4.7_20260427_161832] Container started
+[00:18:34] [comm-002] Harness detected, timeout adjusted: 120 → 300
+[00:19:10]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/communication/comm-002-contact-list/environment/setup.sh
+[00:19:10]   [container] [setup] setup.sh 成功
+[00:19:10]   [container] [setup] 工作空间文件: ['contacts_a.json', 'instruction.md', 'contacts_b.json']
+[00:19:10]   [container] DONE
+[00:19:10] [clawbench_comm-002_glm-4.7_20260427_161832] Agent finished in 36.27s, returncode=0
+[00:19:10] [clawbench_comm-002_glm-4.7_20260427_161832] Agent result: passed=True, score=1.0000
+[00:19:10] [comm-003] Found cached result, skipping
+[00:19:12] [clawbench_comm-004_glm-4.7_20260427_161910] Container started
+[00:19:12] [comm-004] Harness detected, timeout adjusted: 180 → 360
+[00:21:59]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/communication/comm-004-chat-analysis/environment/setup.sh
+[00:21:59]   [container] [setup] setup.sh 成功
+[00:21:59]   [container] [setup] 工作空间文件: ['chat_log.json', 'instruction.md']
+[00:21:59]   [container] DONE
+[00:21:59]   [container-err] [_call_llm] Server error (attempt 1/4), retrying in 5s: litellm.BadRequestError: AnthropicException - {"type":"error","error":{"message":"操作失败","code":"500"},"request_id":"202604280019164a1838487b3d45bf"}
+[00:21:59] [clawbench_comm-004_glm-4.7_20260427_161910] Agent finished in 166.79s, returncode=0
+[00:21:59] [clawbench_comm-004_glm-4.7_20260427_161910] Agent result: passed=True, score=1.0000
+[00:22:01] [clawbench_comm-005_glm-4.7_20260427_162159] Container started
+[00:22:01] [comm-005] Harness detected, timeout adjusted: 180 → 360
+[00:24:48]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/communication/comm-005-notification-routing/environment/setup.sh
+[00:24:48]   [container] [setup] setup.sh 成功
+[00:24:48]   [container] [setup] 工作空间文件: ['instruction.md', 'notifications.json', 'preferences.json']
+[00:24:48]   [container] DONE
+[00:24:48] [clawbench_comm-005_glm-4.7_20260427_162159] Agent finished in 166.37s, returncode=0
+[00:24:48] [clawbench_comm-005_glm-4.7_20260427_162159] Agent result: passed=True, score=1.0000
+[00:24:50] [clawbench_comm-006_glm-4.7_20260427_162448] Container started
+[00:24:50] [comm-006] Harness detected, timeout adjusted: 240 → 420
+[00:25:21]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/communication/comm-006-thread-summary/environment/setup.sh
+[00:25:21]   [container] [setup] setup.sh 成功
+[00:25:21]   [container] [setup] 工作空间文件: ['thread.json', 'instruction.md']
+[00:25:21]   [container] DONE
+[00:25:21] [clawbench_comm-006_glm-4.7_20260427_162448] Agent finished in 30.94s, returncode=0
+[00:25:21] [clawbench_comm-006_glm-4.7_20260427_162448] Agent result: passed=True, score=1.0000
+[00:25:23] [clawbench_comm-007_glm-4.7_20260427_162522] Container started
+[00:25:23] [comm-007] Harness detected, timeout adjusted: 240 → 420
+[00:26:17]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/communication/comm-007-cross-channel-sync/environment/setup.sh
+[00:26:17]   [container] [setup] setup.sh 成功
+[00:26:17]   [container] [setup] 工作空间文件: ['sync_rules.json', 'channels.json', 'instruction.md']
+[00:26:17]   [container] DONE
+[00:26:17] [clawbench_comm-007_glm-4.7_20260427_162522] Agent finished in 53.57s, returncode=0
+[00:26:17] [clawbench_comm-007_glm-4.7_20260427_162522] Agent result: passed=True, score=1.0000
+[00:26:17] [comm-008] Found cached result, skipping
+[00:26:19] [clawbench_comm-009_glm-4.7_20260427_162617] Container started
+[00:26:19] [comm-009] Harness detected, timeout adjusted: 180 → 360
+[00:29:01]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/communication/comm-009-meeting-notes/environment/setup.sh
+[00:29:01]   [container] [setup] setup.sh 成功
+[00:29:01]   [container] [setup] 工作空间文件: ['transcript.txt', 'instruction.md']
+[00:29:01]   [container] DONE
+[00:29:01] [clawbench_comm-009_glm-4.7_20260427_162617] Agent finished in 162.26s, returncode=0
+[00:29:01] [clawbench_comm-009_glm-4.7_20260427_162617] Agent result: passed=False, score=0.9630
+[00:29:03] [clawbench_comm-010_glm-4.7_20260427_162902] Container started
+[00:29:03] [comm-010] Harness detected, timeout adjusted: 300 → 480
+[00:29:51]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/communication/comm-010-notification-router/environment/setup.sh
+[00:29:51]   [container] [setup] setup.sh 成功
+[00:29:51]   [container] [setup] 工作空间文件: ['events.json', 'instruction.md', 'rules.yaml']
+[00:29:51]   [container] DONE
+[00:29:51] [clawbench_comm-010_glm-4.7_20260427_162902] Agent finished in 47.46s, returncode=0
+[00:29:51] [clawbench_comm-010_glm-4.7_20260427_162902] Agent result: passed=False, score=0.9630
+[00:29:53] [clawbench_comm-011_glm-4.7_20260427_162951] Container started
+[00:29:53] [comm-011] Harness detected, timeout adjusted: 120 → 300
+[00:30:33]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/communication/comm-011-meeting-notes-formatter/environment/setup.sh
+[00:30:33]   [container] [setup] setup.sh 成功
+[00:30:33]   [container] [setup] 工作空间文件: ['meeting.txt', 'instruction.md']
+[00:30:33]   [container] DONE
+[00:30:33] [clawbench_comm-011_glm-4.7_20260427_162951] Agent finished in 40.03s, returncode=0
+[00:30:33] [clawbench_comm-011_glm-4.7_20260427_162951] Agent result: passed=True, score=1.0000
+[00:30:35] [clawbench_comm-012_glm-4.7_20260427_163034] Container started
+[00:30:35] [comm-012] Harness detected, timeout adjusted: 120 → 300
+[00:31:15]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/communication/comm-012-contact-deduplicator/environment/setup.sh
+[00:31:15]   [container] [setup] setup.sh 成功
+[00:31:15]   [container] [setup] 工作空间文件: ['contacts.csv', 'instruction.md']
+[00:31:15]   [container] DONE
+[00:31:15] [clawbench_comm-012_glm-4.7_20260427_163034] Agent finished in 39.42s, returncode=0
+[00:31:15] [clawbench_comm-012_glm-4.7_20260427_163034] Agent result: passed=False, score=0.9333
+[00:31:17] [clawbench_comm-013_glm-4.7_20260427_163115] Container started
+[00:31:17] [comm-013] Harness detected, timeout adjusted: 120 → 300
+[00:31:56]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/communication/comm-013-announcement-generator/environment/setup.sh
+[00:31:56]   [container] [setup] setup.sh 成功
+[00:31:56]   [container] [setup] 工作空间文件: ['instruction.md', 'data.json', 'template.txt']
+[00:31:56]   [container] DONE
+[00:31:56] [clawbench_comm-013_glm-4.7_20260427_163115] Agent finished in 38.83s, returncode=0
+[00:31:56] [clawbench_comm-013_glm-4.7_20260427_163115] Agent result: passed=False, score=0.9231
+[00:31:56] [comm-014] Found cached result, skipping
+[00:31:58] [clawbench_comm-015_glm-4.7_20260427_163156] Container started
+[00:31:58] [comm-015] Harness detected, timeout adjusted: 120 → 300
+[00:32:46]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/communication/comm-015-channel-activity-report/environment/setup.sh
+[00:32:46]   [container] [setup] setup.sh 成功
+[00:32:46]   [container] [setup] 工作空间文件: ['channels.json', 'instruction.md']
+[00:32:46]   [container] DONE
+[00:32:46] [clawbench_comm-015_glm-4.7_20260427_163156] Agent finished in 47.92s, returncode=0
+[00:32:46] [clawbench_comm-015_glm-4.7_20260427_163156] Agent result: passed=True, score=1.0000
+[00:32:48] [clawbench_cont-001-sentiment-analysis_glm-4.7_20260427_163247] Container started
+[00:32:48] [cont-001-sentiment-analysis] Harness detected, timeout adjusted: 3600 → 3780
+[00:35:01]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/content-analysis/cont-001-sentiment-analysis/environment/setup.sh
+[00:35:01]   [container] [setup] setup.sh 成功
+[00:35:01]   [container] [setup] 工作空间文件: ['reviews.csv', 'instruction.md']
+[00:35:01]   [container] DONE
+[00:35:01] [clawbench_cont-001-sentiment-analysis_glm-4.7_20260427_163247] Agent finished in 133.02s, returncode=0
+[00:35:01] [clawbench_cont-001-sentiment-analysis_glm-4.7_20260427_163247] Agent result: passed=True, score=1.0000
+[00:35:04] [clawbench_cont-002-topic-modeling_glm-4.7_20260427_163502] Container started
+[00:35:04] [cont-002-topic-modeling] Harness detected, timeout adjusted: 3600 → 3780
+[00:40:50]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/content-analysis/cont-002-topic-modeling/environment/setup.sh
+[00:40:50]   [container] [setup] setup.sh 成功
+[00:40:50]   [container] [setup] 工作空间文件: ['instruction.md']
+[00:40:50]   [container] DONE
+[00:40:50] [clawbench_cont-002-topic-modeling_glm-4.7_20260427_163502] Agent finished in 346.56s, returncode=0
+[00:40:50] [clawbench_cont-002-topic-modeling_glm-4.7_20260427_163502] Agent result: passed=False, score=0.6000
+[00:40:53] [clawbench_cont-003-readability-audit_glm-4.7_20260427_164051] Container started
+[00:40:53] [cont-003-readability-audit] Harness detected, timeout adjusted: 3600 → 3780
+[00:43:26]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/content-analysis/cont-003-readability-audit/environment/setup.sh
+[00:43:26]   [container] [setup] setup.sh 成功
+[00:43:26]   [container] [setup] 工作空间文件: ['instruction.md']
+[00:43:26]   [container] DONE
+[00:43:26] [clawbench_cont-003-readability-audit_glm-4.7_20260427_164051] Agent finished in 152.92s, returncode=0
+[00:43:26] [clawbench_cont-003-readability-audit_glm-4.7_20260427_164051] Agent result: passed=False, score=0.7500
+[00:43:28] [clawbench_cont-004-media-bias_glm-4.7_20260427_164326] Container started
+[00:43:28] [cont-004-media-bias] Harness detected, timeout adjusted: 3600 → 3780
+[00:47:03]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/content-analysis/cont-004-media-bias/environment/setup.sh
+[00:47:03]   [container] [setup] setup.sh 成功
+[00:47:03]   [container] [setup] 工作空间文件: ['instruction.md']
+[00:47:03]   [container] DONE
+[00:47:03] [clawbench_cont-004-media-bias_glm-4.7_20260427_164326] Agent finished in 215.28s, returncode=0
+[00:47:03] [clawbench_cont-004-media-bias_glm-4.7_20260427_164326] Agent result: passed=False, score=0.5000
+[00:47:05] [clawbench_cont-005-translation-qa_glm-4.7_20260427_164703] Container started
+[00:47:05] [cont-005-translation-qa] Harness detected, timeout adjusted: 3600 → 3780
+[00:49:03]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/content-analysis/cont-005-translation-qa/environment/setup.sh
+[00:49:03]   [container] [setup] setup.sh 成功
+[00:49:03]   [container] [setup] 工作空间文件: ['instruction.md']
+[00:49:03]   [container] DONE
+[00:49:03] [clawbench_cont-005-translation-qa_glm-4.7_20260427_164703] Agent finished in 117.68s, returncode=0
+[00:49:03] [clawbench_cont-005-translation-qa_glm-4.7_20260427_164703] Agent result: passed=True, score=1.0000
+[00:49:05] [clawbench_law-001-nda-clause-extract_glm-4.7_20260427_164903] Container started
+[00:49:05] [law-001-nda-clause-extract] Harness detected, timeout adjusted: 3600 → 3780
+[00:50:10]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/contract-review/law-001-nda-clause-extract/environment/setup.sh
+[00:50:10]   [container] [setup] setup.sh 成功
+[00:50:10]   [container] [setup] 工作空间文件: ['instruction.md', 'nda_contract.txt']
+[00:50:10]   [container] DONE
+[00:50:10] [clawbench_law-001-nda-clause-extract_glm-4.7_20260427_164903] Agent finished in 64.86s, returncode=0
+[00:50:10] [clawbench_law-001-nda-clause-extract_glm-4.7_20260427_164903] Agent result: passed=True, score=1.0000
+[00:50:11] [law-002-lease-analysis] Found cached result, skipping
+[00:50:12] [clawbench_law-003-compliance-check_glm-4.7_20260427_165011] Container started
+[00:50:12] [law-003-compliance-check] Harness detected, timeout adjusted: 3600 → 3780
+[00:51:32]   [container]     ('\''travel_expenses'\'', '\''The contract must specify travel expense reimbursement.'\'', False),
+[00:51:32]   [container]     ('\''intellectual_property'\'', '\''The contract must specify intellectual property rights.'\'', True),
+[00:51:32]   [container]     ('\''child_labor'\'', '\''The contract must prohibit child labor.'\'', True),
+[00:51:32]   [container]     ('\''union_rights'\'', '\''The contract must specify union rights and representation.'\'', False),
+[00:51:32]   [container]     ('\''data_protection'\'', '\''The contract must specify data protection obligations.'\'', True),
+[00:51:32]   [container]     ('\''remote_work'\'', '\''The contract must specify remote work policies.'\'', False),
+[00:51:32]   [container] ]
+[00:51:32]   [container] 
+[00:51:32]   [container] with open(f'\''{os.environ.get(WORKSPACE, os.getcwd())}/labor_requirements.csv'\'', '\''w'\'', newline='\'''\'') as f:
+[00:51:32]   [container]     writer = csv.writer(f)
+[00:51:32]   [container]     writer.writerow(['\''requirement'\'', '\''description'\'', '\''mandatory'\''])
+[00:51:32]   [container]     for r in requirements:
+[00:51:32]   [container]         writer.writerow([r[0], r[1], str(r[2])])
+[00:51:32]   [container] '
+[00:51:32]   [container] Traceback (most recent call last):
+[00:51:32]   [container]   File "<string>", line 30, in <module>
+[00:51:32]   [container] NameError: name 'os' is not defined. Did you forget to import 'os'?
+[00:51:32]   [container] 
+[00:51:32]   [container] [setup] 工作空间文件: ['instruction.md']
+[00:51:32]   [container] DONE
+[00:51:32] [clawbench_law-003-compliance-check_glm-4.7_20260427_165011] Agent finished in 79.37s, returncode=0
+[00:51:32] [clawbench_law-003-compliance-check_glm-4.7_20260427_165011] Agent result: passed=False, score=0.5000
+[00:51:34] [clawbench_law-004-ip-license-review_glm-4.7_20260427_165132] Container started
+[00:51:34] [law-004-ip-license-review] Harness detected, timeout adjusted: 3600 → 3780
+[00:52:08]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/contract-review/law-004-ip-license-review/environment/setup.sh
+[00:52:08]   [container] [setup] setup.sh 成功
+[00:52:08]   [container] [setup] 工作空间文件: ['instruction.md', 'license_agreement.txt']
+[00:52:08]   [container] DONE
+[00:52:08] [clawbench_law-004-ip-license-review_glm-4.7_20260427_165132] Agent finished in 34.24s, returncode=0
+[00:52:08] [clawbench_law-004-ip-license-review_glm-4.7_20260427_165132] Agent result: passed=True, score=1.0000
+[00:52:10] [clawbench_law-005-merger-due-diligence_glm-4.7_20260427_165209] Container started
+[00:52:10] [law-005-merger-due-diligence] Harness detected, timeout adjusted: 3600 → 3780
+[00:54:18]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/contract-review/law-005-merger-due-diligence/environment/setup.sh
+[00:54:18]   [container] [setup] setup.sh 失败 (rc=1)
+[00:54:18]   [container] [setup] stderr:   File "<stdin>", line 47
+[00:54:18]   [container]     with open("{}/merger_agreement.txt".format(""" + "${WORKSPACE}" + ""), "w", encoding="utf-8") as f:
+[00:54:18]   [container]                                                ^
+[00:54:18]   [container] SyntaxError: unterminated triple-quoted string literal (detected at line 53)
+[00:54:18]   [container] 
+[00:54:18]   [container] [setup] 重试 (bash -x) ...
+[00:54:18]   [container] [setup] 重试也失败 (rc=1)
+[00:54:18]   [container] [setup] stderr: + set -euo pipefail
+[00:54:18]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[00:54:18]   [container] + mkdir -p /tmp/clawbench_workspace
+[00:54:18]   [container] + python3 -
+[00:54:18]   [container]   File "<stdin>", line 47
+[00:54:18]   [container]     with open("{}/merger_agreement.txt".format(""" + "${WORKSPACE}" + ""), "w", encoding="utf-8") as f:
+[00:54:18]   [container]                                                ^
+[00:54:18]   [container] SyntaxError: unterminated triple-quoted string literal (detected at line 53)
+[00:54:18]   [container] 
+[00:54:18]   [container] [setup] 工作空间文件: ['instruction.md']
+[00:54:18]   [container] DONE
+[00:54:18] [clawbench_law-005-merger-due-diligence_glm-4.7_20260427_165209] Agent finished in 127.35s, returncode=0
+[00:54:18] [clawbench_law-005-merger-due-diligence_glm-4.7_20260427_165209] Agent result: passed=True, score=1.0000
+[00:54:20] [clawbench_xdom-001_glm-4.7_20260427_165418] Container started
+[00:54:20] [xdom-001] Harness detected, timeout adjusted: 300 → 480
+[00:55:48]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-001-email-to-calendar/environment/setup.sh
+[00:55:48]   [container] [setup] setup.sh 成功
+[00:55:48]   [container] [setup] 工作空间文件: ['instruction.md', 'emails.json']
+[00:55:48]   [container] DONE
+[00:55:48] [clawbench_xdom-001_glm-4.7_20260427_165418] Agent finished in 87.68s, returncode=0
+[00:55:48] [clawbench_xdom-001_glm-4.7_20260427_165418] Agent result: passed=True, score=1.0000
+[00:55:50] [clawbench_xdom-002_glm-4.7_20260427_165548] Container started
+[00:55:50] [xdom-002] Harness detected, timeout adjusted: 300 → 480
+[00:56:39]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-002-code-review-report/environment/setup.sh
+[00:56:39]   [container] [setup] setup.sh 成功
+[00:56:39]   [container] [setup] 工作空间文件: ['pull_request.py', 'instruction.md']
+[00:56:39]   [container] DONE
+[00:56:39] [clawbench_xdom-002_glm-4.7_20260427_165548] Agent finished in 49.03s, returncode=0
+[00:56:39] [clawbench_xdom-002_glm-4.7_20260427_165548] Agent result: passed=True, score=1.0000
+[00:56:41] [clawbench_xdom-003_glm-4.7_20260427_165639] Container started
+[00:56:41] [xdom-003] Harness detected, timeout adjusted: 300 → 480
+[00:58:09]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-003-data-to-presentation/environment/setup.sh
+[00:58:09]   [container] [setup] setup.sh 成功
+[00:58:09]   [container] [setup] 工作空间文件: ['quarterly_data.csv', 'instruction.md']
+[00:58:09]   [container] DONE
+[00:58:09] [clawbench_xdom-003_glm-4.7_20260427_165639] Agent finished in 88.22s, returncode=0
+[00:58:09] [clawbench_xdom-003_glm-4.7_20260427_165639] Agent result: passed=True, score=1.0000
+[00:58:11] [clawbench_xdom-004_glm-4.7_20260427_165810] Container started
+[00:58:11] [xdom-004] Harness detected, timeout adjusted: 300 → 480
+[01:01:38]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-004-log-to-alert/environment/setup.sh
+[01:01:38]   [container] [setup] setup.sh 失败 (rc=1)
+[01:01:38]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/cross-domain/xdom-004-log-to-alert/environment/data/application.log': No such file or directory
+[01:01:38]   [container] 
+[01:01:38]   [container] [setup] 重试 (bash -x) ...
+[01:01:38]   [container] [setup] 重试也失败 (rc=1)
+[01:01:38]   [container] [setup] stderr: + set -euo pipefail
+[01:01:38]   [container] +++ dirname /app/claw-bench/tasks/cross-domain/xdom-004-log-to-alert/environment/setup.sh
+[01:01:38]   [container] ++ cd /app/claw-bench/tasks/cross-domain/xdom-004-log-to-alert/environment/..
+[01:01:38]   [container] ++ pwd
+[01:01:38]   [container] + TASK_DIR=/app/claw-bench/tasks/cross-domain/xdom-004-log-to-alert
+[01:01:38]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[01:01:38]   [container] + mkdir -p /tmp/clawbench_workspace
+[01:01:38]   [container] + cp /app/claw-bench/tasks/cross-domain/xdom-004-log-to-alert/environment/data/application.log /tmp/clawbench_workspace/application.log
+[01:01:38]   [container] cp: cannot stat '/app/claw-bench/tasks/cross-domain/xdom-004-log-to-alert/environment/data/application.log': No such file or directory
+[01:01:38]   [container] 
+[01:01:38]   [container] [setup] 工作空间文件: ['alert_rules.json', 'instruction.md']
+[01:01:38]   [container] DONE
+[01:01:38] [clawbench_xdom-004_glm-4.7_20260427_165810] Agent finished in 207.17s, returncode=0
+[01:01:38] [clawbench_xdom-004_glm-4.7_20260427_165810] Agent result: passed=False, score=0.9474
+[01:01:39] [xdom-005] Found cached result, skipping
+[01:01:41] [clawbench_xdom-006_glm-4.7_20260427_170139] Container started
+[01:01:41] [xdom-006] Harness detected, timeout adjusted: 300 → 480
+[01:02:40]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-006-csv-data-pipeline/environment/setup.sh
+[01:02:40]   [container] [setup] setup.sh 成功
+[01:02:40]   [container] [setup] 工作空间文件: ['input.csv', 'pipeline_config.json', 'instruction.md']
+[01:02:40]   [container] DONE
+[01:02:40] [clawbench_xdom-006_glm-4.7_20260427_170139] Agent finished in 58.49s, returncode=0
+[01:02:40] [clawbench_xdom-006_glm-4.7_20260427_170139] Agent result: passed=False, score=0.9048
+[01:02:40] [xdom-007] Found cached result, skipping
+[01:02:42] [clawbench_xdom-008_glm-4.7_20260427_170240] Container started
+[01:02:42] [xdom-008] Harness detected, timeout adjusted: 300 → 480
+[01:07:17]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-008-security-audit-remediation/environment/setup.sh
+[01:07:17]   [container] [setup] setup.sh 成功
+[01:07:17]   [container] [setup] 工作空间文件: ['auth.py', 'instruction.md', 'api.py', 'utils.py']
+[01:07:17]   [container] DONE
+[01:07:17] [clawbench_xdom-008_glm-4.7_20260427_170240] Agent finished in 275.55s, returncode=0
+[01:07:17] [clawbench_xdom-008_glm-4.7_20260427_170240] Agent result: passed=False, score=0.9524
+[01:07:20] [clawbench_xdom-009_glm-4.7_20260427_170718] Container started
+[01:07:20] [xdom-009] Harness detected, timeout adjusted: 600 → 780
+[01:12:18]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-009-full-project-setup/environment/setup.sh
+[01:12:18]   [container] [setup] setup.sh 成功
+[01:12:18]   [container] [setup] 工作空间文件: ['project_brief.md', 'instruction.md']
+[01:12:18]   [container] DONE
+[01:12:18] [clawbench_xdom-009_glm-4.7_20260427_170718] Agent finished in 298.87s, returncode=0
+[01:12:19] [clawbench_xdom-009_glm-4.7_20260427_170718] Agent result: passed=False, score=0.9615
+[01:12:21] [clawbench_xdom-010_glm-4.7_20260427_171219] Container started
+[01:12:21] [xdom-010] Harness detected, timeout adjusted: 600 → 780
+[01:16:00]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-010-incident-response/environment/setup.sh
+[01:16:00]   [container] [setup] setup.sh 失败 (rc=1)
+[01:16:00]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/cross-domain/xdom-010-incident-response/environment/data/service.log': No such file or directory
+[01:16:00]   [container] 
+[01:16:00]   [container] [setup] 重试 (bash -x) ...
+[01:16:00]   [container] [setup] 重试也失败 (rc=1)
+[01:16:00]   [container] [setup] stderr: + set -euo pipefail
+[01:16:00]   [container] +++ dirname /app/claw-bench/tasks/cross-domain/xdom-010-incident-response/environment/setup.sh
+[01:16:00]   [container] ++ cd /app/claw-bench/tasks/cross-domain/xdom-010-incident-response/environment/..
+[01:16:00]   [container] ++ pwd
+[01:16:00]   [container] + TASK_DIR=/app/claw-bench/tasks/cross-domain/xdom-010-incident-response
+[01:16:00]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[01:16:00]   [container] + mkdir -p /tmp/clawbench_workspace/incident_data
+[01:16:00]   [container] + cp /app/claw-bench/tasks/cross-domain/xdom-010-incident-response/environment/data/service.log /tmp/clawbench_workspace/incident_data/service.log
+[01:16:00]   [container] cp: cannot stat '/app/claw-bench/tasks/cross-domain/xdom-010-incident-response/environment/data/service.log': No such file or directory
+[01:16:00]   [container] 
+[01:16:00]   [container] [setup] 工作空间文件: ['alerts.json', 'team_contacts.json', 'instruction.md', 'config_change.json']
+[01:16:00]   [container] DONE
+[01:16:00] [clawbench_xdom-010_glm-4.7_20260427_171219] Agent finished in 219.15s, returncode=0
+[01:16:00] [clawbench_xdom-010_glm-4.7_20260427_171219] Agent result: passed=False, score=0.7600
+[01:16:02] [clawbench_xdom-011_glm-4.7_20260427_171600] Container started
+[01:16:02] [xdom-011] Harness detected, timeout adjusted: 600 → 780
+[01:22:03]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-011-data-migration-plan/environment/setup.sh
+[01:22:03]   [container] [setup] setup.sh 成功
+[01:22:03]   [container] [setup] 工作空间文件: ['source_schema.json', 'sample_data.csv', 'target_schema.json', 'instruction.md']
+[01:22:03]   [container] DONE
+[01:22:03] [clawbench_xdom-011_glm-4.7_20260427_171600] Agent finished in 360.65s, returncode=0
+[01:22:03] [clawbench_xdom-011_glm-4.7_20260427_171600] Agent result: passed=False, score=0.9583
+[01:22:05] [clawbench_xdom-012_glm-4.7_20260427_172203] Container started
+[01:22:05] [xdom-012] Harness detected, timeout adjusted: 600 → 780
+[01:27:00]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-012-automated-docs-generator/environment/setup.sh
+[01:27:00]   [container] [setup] setup.sh 成功
+[01:27:00]   [container] [setup] 工作空间文件: ['auth.py', 'models.py', 'database.py', 'instruction.md', 'api.py', 'utils.py']
+[01:27:00]   [container] DONE
+[01:27:00] [clawbench_xdom-012_glm-4.7_20260427_172203] Agent finished in 294.36s, returncode=0
+[01:27:00] [clawbench_xdom-012_glm-4.7_20260427_172203] Agent result: passed=True, score=1.0000
+[01:27:02] [clawbench_xdom-013_glm-4.7_20260427_172700] Container started
+[01:27:02] [xdom-013] Harness detected, timeout adjusted: 600 → 780
+[01:30:16]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-013-incident-response-pipeline/environment/setup.sh
+[01:30:16]   [container] [setup] setup.sh 成功
+[01:30:16]   [container] [setup] 工作空间文件: ['runbook.md', 'instruction.md', 'network.yaml']
+[01:30:16]   [container] DONE
+[01:30:16] [clawbench_xdom-013_glm-4.7_20260427_172700] Agent finished in 193.88s, returncode=0
+[01:30:16] [clawbench_xdom-013_glm-4.7_20260427_172700] Agent result: passed=False, score=0.1935
+[01:30:18] [clawbench_xdom-014_glm-4.7_20260427_173016] Container started
+[01:30:18] [xdom-014] Harness detected, timeout adjusted: 600 → 780
+[01:33:10]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-014-data-driven-email-campaign/environment/setup.sh
+[01:33:10]   [container] [setup] setup.sh 成功
+[01:33:10]   [container] [setup] 工作空间文件: ['customers.csv', 'rules.toml', 'instruction.md']
+[01:33:10]   [container] DONE
+[01:33:10] [clawbench_xdom-014_glm-4.7_20260427_173016] Agent finished in 172.15s, returncode=0
+[01:33:10] [clawbench_xdom-014_glm-4.7_20260427_173016] Agent result: passed=False, score=0.4000
+[01:33:12] [clawbench_xdom-015_glm-4.7_20260427_173310] Container started
+[01:33:12] [xdom-015] Harness detected, timeout adjusted: 600 → 780
+[01:36:59]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-015-automated-code-review-report/environment/setup.sh
+[01:36:59]   [container] [setup] setup.sh 成功
+[01:36:59]   [container] [setup] 工作空间文件: ['changes.diff', 'instruction.md', 'project.toml', 'standards.md']
+[01:36:59]   [container] DONE
+[01:36:59] [clawbench_xdom-015_glm-4.7_20260427_173310] Agent finished in 227.32s, returncode=0
+[01:36:59] [clawbench_xdom-015_glm-4.7_20260427_173310] Agent result: passed=True, score=0.2258
+[01:37:02] [clawbench_xdom-016_glm-4.7_20260427_173700] Container started
+[01:37:02] [xdom-016] Harness detected, timeout adjusted: 240 → 420
+[01:37:34]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-016-meeting-to-tasks/environment/setup.sh
+[01:37:34]   [container] [setup] setup.sh 成功
+[01:37:34]   [container] [setup] 工作空间文件: ['meeting_notes.md', 'instruction.md']
+[01:37:34]   [container] DONE
+[01:37:34] [clawbench_xdom-016_glm-4.7_20260427_173700] Agent finished in 32.81s, returncode=0
+[01:37:35] [clawbench_xdom-016_glm-4.7_20260427_173700] Agent result: passed=True, score=1.0000
+[01:37:37] [clawbench_xdom-017_glm-4.7_20260427_173735] Container started
+[01:37:37] [xdom-017] Harness detected, timeout adjusted: 240 → 420
+[01:38:21]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-017-travel-itinerary/environment/setup.sh
+[01:38:21]   [container] [setup] setup.sh 成功
+[01:38:21]   [container] [setup] 工作空间文件: ['meetings.json', 'instruction.md', 'flight_booking.json', 'hotel_booking.json']
+[01:38:21]   [container] DONE
+[01:38:21] [clawbench_xdom-017_glm-4.7_20260427_173735] Agent finished in 44.21s, returncode=0
+[01:38:21] [clawbench_xdom-017_glm-4.7_20260427_173735] Agent result: passed=True, score=1.0000
+[01:38:23] [clawbench_cs-001-api-rate-limiter_glm-4.7_20260427_173821] Container started
+[01:38:23] [cs-001-api-rate-limiter] Harness detected, timeout adjusted: 3600 → 3780
+[01:40:20]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cs-engineering/cs-001-api-rate-limiter/environment/setup.sh
+[01:40:20]   [container] [setup] setup.sh 成功
+[01:40:20]   [container] [setup] 工作空间文件: ['instruction.md']
+[01:40:20]   [container] DONE
+[01:40:20] [clawbench_cs-001-api-rate-limiter_glm-4.7_20260427_173821] Agent finished in 116.19s, returncode=0
+[01:40:20] [clawbench_cs-001-api-rate-limiter_glm-4.7_20260427_173821] Agent result: passed=False, score=0.8000
+[01:40:22] [clawbench_cs-002-db-migration_glm-4.7_20260427_174020] Container started
+[01:40:22] [cs-002-db-migration] Harness detected, timeout adjusted: 3600 → 3780
+[01:42:30]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cs-engineering/cs-002-db-migration/environment/setup.sh
+[01:42:30]   [container] [setup] setup.sh 失败 (rc=127)
+[01:42:30]   [container] [setup] stderr: /app/claw-bench/tasks/cs-engineering/cs-002-db-migration/environment/setup.sh: line 9: sqlite3: command not found
+[01:42:30]   [container] 
+[01:42:30]   [container] [setup] 重试 (bash -x) ...
+[01:42:30]   [container] [setup] 重试也失败 (rc=127)
+[01:42:30]   [container] [setup] stderr: + set -euo pipefail
+[01:42:30]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[01:42:30]   [container] + export WORKSPACE
+[01:42:30]   [container] + mkdir -p /tmp/clawbench_workspace
+[01:42:30]   [container] + sqlite3 /tmp/clawbench_workspace/app.db
+[01:42:30]   [container] /app/claw-bench/tasks/cs-engineering/cs-002-db-migration/environment/setup.sh: line 9: sqlite3: command not found
+[01:42:30]   [container] 
+[01:42:30]   [container] [setup] 工作空间文件: ['instruction.md']
+[01:42:30]   [container] DONE
+[01:42:30] [clawbench_cs-002-db-migration_glm-4.7_20260427_174020] Agent finished in 128.73s, returncode=0
+[01:42:30] [clawbench_cs-002-db-migration_glm-4.7_20260427_174020] Agent result: passed=False, score=0.6667
+[01:42:33] [clawbench_cs-003-log-analyzer_glm-4.7_20260427_174231] Container started
+[01:42:33] [cs-003-log-analyzer] Harness detected, timeout adjusted: 3600 → 3780
+[01:45:57]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cs-engineering/cs-003-log-analyzer/environment/setup.sh
+[01:45:57]   [container] [setup] setup.sh 成功
+[01:45:57]   [container] [setup] 工作空间文件: ['instruction.md', 'server.log']
+[01:45:57]   [container] DONE
+[01:45:57] [clawbench_cs-003-log-analyzer_glm-4.7_20260427_174231] Agent finished in 204.03s, returncode=0
+[01:45:57] [clawbench_cs-003-log-analyzer_glm-4.7_20260427_174231] Agent result: passed=False, score=0.5000
+[01:45:59] [clawbench_cs-004-ci-pipeline_glm-4.7_20260427_174557] Container started
+[01:45:59] [cs-004-ci-pipeline] Harness detected, timeout adjusted: 3600 → 3780
+[01:49:05]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cs-engineering/cs-004-ci-pipeline/environment/setup.sh
+[01:49:05]   [container] [setup] setup.sh 成功
+[01:49:05]   [container] [setup] 工作空间文件: ['instruction.md']
+[01:49:05]   [container] DONE
+[01:49:05] [clawbench_cs-004-ci-pipeline_glm-4.7_20260427_174557] Agent finished in 185.99s, returncode=0
+[01:49:05] [clawbench_cs-004-ci-pipeline_glm-4.7_20260427_174557] Agent result: passed=True, score=1.0000
+[01:49:07] [clawbench_cs-005-api-design_glm-4.7_20260427_174905] Container started
+[01:49:07] [cs-005-api-design] Harness detected, timeout adjusted: 3600 → 3780
+[01:52:24]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cs-engineering/cs-005-api-design/environment/setup.sh
+[01:52:24]   [container] [setup] setup.sh 成功
+[01:52:24]   [container] [setup] 工作空间文件: ['instruction.md', 'api_requirements.txt']
+[01:52:24]   [container] DONE
+[01:52:24] [clawbench_cs-005-api-design_glm-4.7_20260427_174905] Agent finished in 197.14s, returncode=0
+[01:52:24] [clawbench_cs-005-api-design_glm-4.7_20260427_174905] Agent result: passed=False, score=0.8000
+[01:52:26] [clawbench_data-001_glm-4.7_20260427_175225] Container started
+[01:52:26] [data-001] Harness detected, timeout adjusted: 120 → 300
+[01:52:55]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-001/environment/setup.sh
+[01:52:55]   [container] [setup] setup.sh 成功
+[01:52:55]   [container] [setup] 工作空间文件: ['instruction.md', 'numbers.csv']
+[01:52:55]   [container] DONE
+[01:52:55] [clawbench_data-001_glm-4.7_20260427_175225] Agent finished in 28.31s, returncode=0
+[01:52:55] [clawbench_data-001_glm-4.7_20260427_175225] Agent result: passed=False, score=0.9231
+[01:52:55] [data-002] Found cached result, skipping
+[01:52:55] [data-003] Found cached result, skipping
+[01:52:57] [clawbench_data-004_glm-4.7_20260427_175255] Container started
+[01:52:57] [data-004] Harness detected, timeout adjusted: 180 → 360
+[01:57:27]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-004/environment/setup.sh
+[01:57:27]   [container] [setup] setup.sh 成功
+[01:57:27]   [container] [setup] 工作空间文件: ['instruction.md', 'transactions.csv']
+[01:57:27]   [container] DONE
+[01:57:27] [clawbench_data-004_glm-4.7_20260427_175255] Agent finished in 270.43s, returncode=0
+[01:57:27] [clawbench_data-004_glm-4.7_20260427_175255] Agent result: passed=True, score=1.0000
+[01:57:28] [data-005] Found cached result, skipping
+[01:57:30] [clawbench_data-006_glm-4.7_20260427_175728] Container started
+[01:57:30] [data-006] Harness detected, timeout adjusted: 180 → 360
+[01:59:08]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-006/environment/setup.sh
+[01:59:08]   [container] [setup] setup.sh 成功
+[01:59:08]   [container] [setup] 工作空间文件: ['daily_sales.csv', 'instruction.md']
+[01:59:08]   [container] DONE
+[01:59:08] [clawbench_data-006_glm-4.7_20260427_175728] Agent finished in 97.98s, returncode=0
+[01:59:08] [clawbench_data-006_glm-4.7_20260427_175728] Agent result: passed=True, score=1.0000
+[01:59:10] [clawbench_data-007_glm-4.7_20260427_175908] Container started
+[01:59:10] [data-007] Harness detected, timeout adjusted: 180 → 360
+[01:59:52]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-007/environment/setup.sh
+[01:59:52]   [container] [setup] setup.sh 成功
+[01:59:52]   [container] [setup] 工作空间文件: ['customers.csv', 'orders.csv', 'instruction.md']
+[01:59:52]   [container] DONE
+[01:59:52] [clawbench_data-007_glm-4.7_20260427_175908] Agent finished in 42.36s, returncode=0
+[01:59:52] [clawbench_data-007_glm-4.7_20260427_175908] Agent result: passed=True, score=1.0000
+[01:59:54] [clawbench_data-008_glm-4.7_20260427_175953] Container started
+[01:59:54] [data-008] Harness detected, timeout adjusted: 240 → 420
+[02:01:18]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-008/environment/setup.sh
+[02:01:18]   [container] [setup] setup.sh 成功
+[02:01:18]   [container] [setup] 工作空间文件: ['instruction.md', 'dataset.csv']
+[02:01:18]   [container] DONE
+[02:01:18] [clawbench_data-008_glm-4.7_20260427_175953] Agent finished in 83.97s, returncode=0
+[02:01:18] [clawbench_data-008_glm-4.7_20260427_175953] Agent result: passed=True, score=1.0000
+[02:01:21] [clawbench_data-009_glm-4.7_20260427_180119] Container started
+[02:01:21] [data-009] Harness detected, timeout adjusted: 240 → 420
+[02:09:23] [clawbench_data-010_glm-4.7_20260427_180921] Container started
+[02:09:23] [data-010] Harness detected, timeout adjusted: 240 → 420
+[02:10:36]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-010/environment/setup.sh
+[02:10:36]   [container] [setup] setup.sh 成功
+[02:10:36]   [container] [setup] 工作空间文件: ['q3.csv', 'q2.csv', 'q1.csv', 'instruction.md']
+[02:10:36]   [container] DONE
+[02:10:36] [clawbench_data-010_glm-4.7_20260427_180921] Agent finished in 72.90s, returncode=0
+[02:10:36] [clawbench_data-010_glm-4.7_20260427_180921] Agent result: passed=True, score=1.0000
+[02:10:38] [clawbench_data-011_glm-4.7_20260427_181036] Container started
+[02:10:38] [data-011] Harness detected, timeout adjusted: 300 → 480
+[02:11:37]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-011/environment/setup.sh
+[02:11:37]   [container] [setup] setup.sh 成功
+[02:11:37]   [container] [setup] 工作空间文件: ['instruction.md', 'company_data.csv']
+[02:11:37]   [container] DONE
+[02:11:37] [clawbench_data-011_glm-4.7_20260427_181036] Agent finished in 58.92s, returncode=0
+[02:11:37] [clawbench_data-011_glm-4.7_20260427_181036] Agent result: passed=True, score=1.0000
+[02:11:39] [clawbench_data-012_glm-4.7_20260427_181138] Container started
+[02:11:39] [data-012] Harness detected, timeout adjusted: 300 → 480
+[02:12:36]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-012/environment/setup.sh
+[02:12:36]   [container] [setup] setup.sh 成功
+[02:12:36]   [container] [setup] 工作空间文件: ['instruction.md', 'historical.csv']
+[02:12:36]   [container] DONE
+[02:12:36] [clawbench_data-012_glm-4.7_20260427_181138] Agent finished in 57.03s, returncode=0
+[02:12:36] [clawbench_data-012_glm-4.7_20260427_181138] Agent result: passed=True, score=1.0000
+[02:12:39] [clawbench_data-013_glm-4.7_20260427_181237] Container started
+[02:12:39] [data-013] Harness detected, timeout adjusted: 180 → 360
+[02:13:49]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-013-outlier-detection/environment/setup.sh
+[02:13:49]   [container] [setup] setup.sh 成功
+[02:13:49]   [container] [setup] 工作空间文件: ['instruction.md', 'measurements.csv']
+[02:13:49]   [container] DONE
+[02:13:49] [clawbench_data-013_glm-4.7_20260427_181237] Agent finished in 70.84s, returncode=0
+[02:13:49] [clawbench_data-013_glm-4.7_20260427_181237] Agent result: passed=True, score=1.0000
+[02:13:50] [data-014] Found cached result, skipping
+[02:13:50] [data-015] Found cached result, skipping
+[02:13:50] [data-016] Found cached result, skipping
+[02:13:51] [clawbench_data-017_glm-4.7_20260427_181350] Container started
+[02:13:51] [data-017] Harness detected, timeout adjusted: 180 → 360
+[02:15:00]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-017-employee-attendance-report/environment/setup.sh
+[02:15:00]   [container] [setup] setup.sh 成功
+[02:15:00]   [container] [setup] 工作空间文件: ['instruction.md', 'attendance.csv']
+[02:15:00]   [container] DONE
+[02:15:00] [clawbench_data-017_glm-4.7_20260427_181350] Agent finished in 68.05s, returncode=0
+[02:15:00] [clawbench_data-017_glm-4.7_20260427_181350] Agent result: passed=True, score=1.0000
+[02:15:00] [ds-001-customer-segmentation] Found cached result, skipping
+[02:15:02] [clawbench_ds-002-ab-testing_glm-4.7_20260427_181500] Container started
+[02:15:02] [ds-002-ab-testing] Harness detected, timeout adjusted: 3600 → 3780
+[02:16:09]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-science/ds-002-ab-testing/environment/setup.sh
+[02:16:09]   [container] [setup] setup.sh 成功
+[02:16:09]   [container] [setup] 工作空间文件: ['instruction.md', 'ab_test.csv']
+[02:16:09]   [container] DONE
+[02:16:09] [clawbench_ds-002-ab-testing_glm-4.7_20260427_181500] Agent finished in 67.64s, returncode=0
+[02:16:09] [clawbench_ds-002-ab-testing_glm-4.7_20260427_181500] Agent result: passed=True, score=1.0000
+[02:16:11] [clawbench_ds-003-feature-engineering_glm-4.7_20260427_181610] Container started
+[02:16:11] [ds-003-feature-engineering] Harness detected, timeout adjusted: 3600 → 3780
+[02:18:22]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-science/ds-003-feature-engineering/environment/setup.sh
+[02:18:22]   [container] [setup] setup.sh 失败 (rc=1)
+[02:18:22]   [container] [setup] stderr: Traceback (most recent call last):
+[02:18:22]   [container]   File "<stdin>", line 2, in <module>
+[02:18:22]   [container] ModuleNotFoundError: No module named 'pandas'
+[02:18:22]   [container] 
+[02:18:22]   [container] [setup] 重试 (bash -x) ...
+[02:18:22]   [container] [setup] 重试也失败 (rc=1)
+[02:18:22]   [container] [setup] stderr: + set -euo pipefail
+[02:18:22]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[02:18:22]   [container] + export WORKSPACE
+[02:18:22]   [container] + mkdir -p /tmp/clawbench_workspace
+[02:18:22]   [container] + python3 -
+[02:18:22]   [container] Traceback (most recent call last):
+[02:18:22]   [container]   File "<stdin>", line 2, in <module>
+[02:18:22]   [container] ModuleNotFoundError: No module named 'pandas'
+[02:18:22]   [container] 
+[02:18:22]   [container] [setup] 工作空间文件: ['instruction.md']
+[02:18:22]   [container] DONE
+[02:18:22] [clawbench_ds-003-feature-engineering_glm-4.7_20260427_181610] Agent finished in 130.43s, returncode=0
+[02:18:22] [clawbench_ds-003-feature-engineering_glm-4.7_20260427_181610] Agent result: passed=False, score=0.6000
+[02:18:24] [clawbench_ds-004-time-series_glm-4.7_20260427_181822] Container started
+[02:18:24] [ds-004-time-series] Harness detected, timeout adjusted: 3600 → 3780
+[02:23:15]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-science/ds-004-time-series/environment/setup.sh
+[02:23:15]   [container] [setup] setup.sh 失败 (rc=1)
+[02:23:15]   [container] [setup] stderr: Traceback (most recent call last):
+[02:23:15]   [container]   File "<stdin>", line 3, in <module>
+[02:23:15]   [container] ModuleNotFoundError: No module named 'pandas'
+[02:23:15]   [container] 
+[02:23:15]   [container] [setup] 重试 (bash -x) ...
+[02:23:15]   [container] [setup] 重试也失败 (rc=1)
+[02:23:15]   [container] [setup] stderr: + set -euo pipefail
+[02:23:15]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[02:23:15]   [container] + export WORKSPACE
+[02:23:15]   [container] + mkdir -p /tmp/clawbench_workspace
+[02:23:15]   [container] + python3 -
+[02:23:15]   [container] Traceback (most recent call last):
+[02:23:15]   [container]   File "<stdin>", line 3, in <module>
+[02:23:15]   [container] ModuleNotFoundError: No module named 'pandas'
+[02:23:15]   [container] 
+[02:23:15]   [container] [setup] 工作空间文件: ['instruction.md']
+[02:23:15]   [container] DONE
+[02:23:15] [clawbench_ds-004-time-series_glm-4.7_20260427_181822] Agent finished in 290.56s, returncode=0
+[02:23:15] [clawbench_ds-004-time-series_glm-4.7_20260427_181822] Agent result: passed=False, score=0.0000
+[02:23:18] [clawbench_ds-005-anomaly-detection_glm-4.7_20260427_182315] Container started
+[02:23:18] [ds-005-anomaly-detection] Harness detected, timeout adjusted: 3600 → 3780
+[02:24:53]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-science/ds-005-anomaly-detection/environment/setup.sh
+[02:24:53]   [container] [setup] setup.sh 成功
+[02:24:53]   [container] [setup] 工作空间文件: ['sensor_data.csv', 'instruction.md']
+[02:24:53]   [container] DONE
+[02:24:53] [clawbench_ds-005-anomaly-detection_glm-4.7_20260427_182315] Agent finished in 95.02s, returncode=0
+[02:24:53] [clawbench_ds-005-anomaly-detection_glm-4.7_20260427_182315] Agent result: passed=True, score=1.0000
+[02:24:53] [db-001] Found cached result, skipping
+[02:24:55] [clawbench_db-002_glm-4.7_20260427_182453] Container started
+[02:24:55] [db-002] Harness detected, timeout adjusted: 180 → 360
+[02:25:46]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/database/db-002/environment/setup.sh
+[02:25:46]   [container] [setup] setup.sh 失败 (rc=1)
+[02:25:46]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/database/db-002/environment/data/schema.sql': No such file or directory
+[02:25:46]   [container] 
+[02:25:46]   [container] [setup] 重试 (bash -x) ...
+[02:25:46]   [container] [setup] 重试也失败 (rc=1)
+[02:25:46]   [container] [setup] stderr: + set -euo pipefail
+[02:25:46]   [container] +++ dirname /app/claw-bench/tasks/database/db-002/environment/setup.sh
+[02:25:46]   [container] ++ cd /app/claw-bench/tasks/database/db-002/environment/..
+[02:25:46]   [container] ++ pwd
+[02:25:46]   [container] + TASK_DIR=/app/claw-bench/tasks/database/db-002
+[02:25:46]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[02:25:46]   [container] + mkdir -p /tmp/clawbench_workspace
+[02:25:46]   [container] + cp /app/claw-bench/tasks/database/db-002/environment/data/schema.sql /tmp/clawbench_workspace/schema.sql
+[02:25:46]   [container] cp: cannot stat '/app/claw-bench/tasks/database/db-002/environment/data/schema.sql': No such file or directory
+[02:25:46]   [container] 
+[02:25:46]   [container] [setup] 工作空间文件: ['instruction.md']
+[02:25:46]   [container] DONE
+[02:25:46] [clawbench_db-002_glm-4.7_20260427_182453] Agent finished in 50.98s, returncode=0
+[02:25:46] [clawbench_db-002_glm-4.7_20260427_182453] Agent result: passed=False, score=0.6000
+[02:25:48] [clawbench_db-003_glm-4.7_20260427_182547] Container started
+[02:25:48] [db-003] Harness detected, timeout adjusted: 180 → 360
+[02:26:39]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/database/db-003/environment/setup.sh
+[02:26:39]   [container] [setup] setup.sh 失败 (rc=1)
+[02:26:39]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/database/db-003/environment/data/requirements.txt': No such file or directory
+[02:26:39]   [container] 
+[02:26:39]   [container] [setup] 重试 (bash -x) ...
+[02:26:39]   [container] [setup] 重试也失败 (rc=1)
+[02:26:39]   [container] [setup] stderr: + set -euo pipefail
+[02:26:39]   [container] +++ dirname /app/claw-bench/tasks/database/db-003/environment/setup.sh
+[02:26:39]   [container] ++ cd /app/claw-bench/tasks/database/db-003/environment/..
+[02:26:39]   [container] ++ pwd
+[02:26:39]   [container] + TASK_DIR=/app/claw-bench/tasks/database/db-003
+[02:26:39]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[02:26:39]   [container] + mkdir -p /tmp/clawbench_workspace
+[02:26:39]   [container] + cp /app/claw-bench/tasks/database/db-003/environment/data/requirements.txt /tmp/clawbench_workspace/requirements.txt
+[02:26:39]   [container] cp: cannot stat '/app/claw-bench/tasks/database/db-003/environment/data/requirements.txt': No such file or directory
+[02:26:39]   [container] 
+[02:26:39]   [container] [setup] 工作空间文件: ['instruction.md']
+[02:26:39]   [container] DONE
+[02:26:39] [clawbench_db-003_glm-4.7_20260427_182547] Agent finished in 50.59s, returncode=0
+[02:26:39] [clawbench_db-003_glm-4.7_20260427_182547] Agent result: passed=True, score=1.0000
+[02:26:41] [clawbench_db-004_glm-4.7_20260427_182639] Container started
+[02:26:41] [db-004] Harness detected, timeout adjusted: 240 → 420
+[02:30:19]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/database/db-004/environment/setup.sh
+[02:30:19]   [container] [setup] setup.sh 失败 (rc=1)
+[02:30:19]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/database/db-004/environment/data/old_schema.sql': No such file or directory
+[02:30:19]   [container] 
+[02:30:19]   [container] [setup] 重试 (bash -x) ...
+[02:30:19]   [container] [setup] 重试也失败 (rc=1)
+[02:30:19]   [container] [setup] stderr: + set -euo pipefail
+[02:30:19]   [container] +++ dirname /app/claw-bench/tasks/database/db-004/environment/setup.sh
+[02:30:19]   [container] ++ cd /app/claw-bench/tasks/database/db-004/environment/..
+[02:30:19]   [container] ++ pwd
+[02:30:19]   [container] + TASK_DIR=/app/claw-bench/tasks/database/db-004
+[02:30:19]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[02:30:19]   [container] + mkdir -p /tmp/clawbench_workspace
+[02:30:19]   [container] + cp /app/claw-bench/tasks/database/db-004/environment/data/old_schema.sql /tmp/clawbench_workspace/old_schema.sql
+[02:30:19]   [container] cp: cannot stat '/app/claw-bench/tasks/database/db-004/environment/data/old_schema.sql': No such file or directory
+[02:30:19]   [container] 
+[02:30:19]   [container] [setup] 工作空间文件: ['instruction.md']
+[02:30:19]   [container] DONE
+[02:30:19] [clawbench_db-004_glm-4.7_20260427_182639] Agent finished in 217.84s, returncode=0
+[02:30:19] [clawbench_db-004_glm-4.7_20260427_182639] Agent result: passed=False, score=0.6500
+[02:30:21] [clawbench_db-005_glm-4.7_20260427_183020] Container started
+[02:30:21] [db-005] Harness detected, timeout adjusted: 300 → 480
+[02:31:44]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/database/db-005/environment/setup.sh
+[02:31:44]   [container] [setup] setup.sh 失败 (rc=1)
+[02:31:44]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/database/db-005/environment/data/*': No such file or directory
+[02:31:44]   [container] 
+[02:31:44]   [container] [setup] 重试 (bash -x) ...
+[02:31:44]   [container] [setup] 重试也失败 (rc=1)
+[02:31:44]   [container] [setup] stderr: + set -euo pipefail
+[02:31:44]   [container] +++ dirname /app/claw-bench/tasks/database/db-005/environment/setup.sh
+[02:31:44]   [container] ++ cd /app/claw-bench/tasks/database/db-005/environment/..
+[02:31:44]   [container] ++ pwd
+[02:31:44]   [container] + TASK_DIR=/app/claw-bench/tasks/database/db-005
+[02:31:44]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[02:31:44]   [container] + mkdir -p /tmp/clawbench_workspace
+[02:31:44]   [container] + cp '/app/claw-bench/tasks/database/db-005/environment/data/*' /tmp/clawbench_workspace/
+[02:31:44]   [container] cp: cannot stat '/app/claw-bench/tasks/database/db-005/environment/data/*': No such file or directory
+[02:31:44]   [container] 
+[02:31:44]   [container] [setup] 工作空间文件: ['instruction.md']
+[02:31:44]   [container] DONE
+[02:31:44] [clawbench_db-005_glm-4.7_20260427_183020] Agent finished in 82.56s, returncode=0
+[02:31:44] [clawbench_db-005_glm-4.7_20260427_183020] Agent result: passed=False, score=0.7222
+[02:31:46] [clawbench_debug-001_glm-4.7_20260427_183144] Container started
+[02:31:46] [debug-001] Harness detected, timeout adjusted: 120 → 300
+[02:33:37]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/debugging/debug-001/environment/setup.sh
+[02:33:37]   [container] [setup] setup.sh 失败 (rc=1)
+[02:33:37]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/debugging/debug-001/environment/data/buggy.py': No such file or directory
+[02:33:37]   [container] 
+[02:33:37]   [container] [setup] 重试 (bash -x) ...
+[02:33:37]   [container] [setup] 重试也失败 (rc=1)
+[02:33:37]   [container] [setup] stderr: + set -euo pipefail
+[02:33:37]   [container] +++ dirname /app/claw-bench/tasks/debugging/debug-001/environment/setup.sh
+[02:33:37]   [container] ++ cd /app/claw-bench/tasks/debugging/debug-001/environment/..
+[02:33:37]   [container] ++ pwd
+[02:33:37]   [container] + TASK_DIR=/app/claw-bench/tasks/debugging/debug-001
+[02:33:37]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[02:33:37]   [container] + mkdir -p /tmp/clawbench_workspace
+[02:33:37]   [container] + cp /app/claw-bench/tasks/debugging/debug-001/environment/data/buggy.py /tmp/clawbench_workspace/buggy.py
+[02:33:37]   [container] cp: cannot stat '/app/claw-bench/tasks/debugging/debug-001/environment/data/buggy.py': No such file or directory
+[02:33:37]   [container] 
+[02:33:37]   [container] [setup] 工作空间文件: ['instruction.md']
+[02:33:37]   [container] DONE
+[02:33:37] [clawbench_debug-001_glm-4.7_20260427_183144] Agent finished in 111.37s, returncode=0
+[02:33:37] [clawbench_debug-001_glm-4.7_20260427_183144] Agent result: passed=False, score=0.8333
+[02:33:38] [debug-002] Found cached result, skipping
+[02:33:39] [clawbench_debug-003_glm-4.7_20260427_183338] Container started
+[02:33:39] [debug-003] Harness detected, timeout adjusted: 120 → 300
+[02:35:20]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/debugging/debug-003/environment/setup.sh
+[02:35:20]   [container] [setup] setup.sh 失败 (rc=1)
+[02:35:20]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/debugging/debug-003/environment/data/processor.py': No such file or directory
+[02:35:20]   [container] 
+[02:35:20]   [container] [setup] 重试 (bash -x) ...
+[02:35:20]   [container] [setup] 重试也失败 (rc=1)
+[02:35:20]   [container] [setup] stderr: + set -euo pipefail
+[02:35:20]   [container] +++ dirname /app/claw-bench/tasks/debugging/debug-003/environment/setup.sh
+[02:35:20]   [container] ++ cd /app/claw-bench/tasks/debugging/debug-003/environment/..
+[02:35:20]   [container] ++ pwd
+[02:35:20]   [container] + TASK_DIR=/app/claw-bench/tasks/debugging/debug-003
+[02:35:20]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[02:35:20]   [container] + mkdir -p /tmp/clawbench_workspace
+[02:35:20]   [container] + cp /app/claw-bench/tasks/debugging/debug-003/environment/data/processor.py /tmp/clawbench_workspace/processor.py
+[02:35:20]   [container] cp: cannot stat '/app/claw-bench/tasks/debugging/debug-003/environment/data/processor.py': No such file or directory
+[02:35:20]   [container] 
+[02:35:20]   [container] [setup] 工作空间文件: ['instruction.md']
+[02:35:20]   [container] DONE
+[02:35:20] [clawbench_debug-003_glm-4.7_20260427_183338] Agent finished in 100.45s, returncode=0
+[02:35:20] [clawbench_debug-003_glm-4.7_20260427_183338] Agent result: passed=False, score=0.9444
+[02:35:22] [clawbench_debug-004_glm-4.7_20260427_183520] Container started
+[02:35:22] [debug-004] Harness detected, timeout adjusted: 180 → 360
+[02:36:50]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/debugging/debug-004/environment/setup.sh
+[02:36:50]   [container] [setup] setup.sh 失败 (rc=1)
+[02:36:50]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/debugging/debug-004/environment/data/main.py': No such file or directory
+[02:36:50]   [container] 
+[02:36:50]   [container] [setup] 重试 (bash -x) ...
+[02:36:50]   [container] [setup] 重试也失败 (rc=1)
+[02:36:50]   [container] [setup] stderr: + set -euo pipefail
+[02:36:50]   [container] +++ dirname /app/claw-bench/tasks/debugging/debug-004/environment/setup.sh
+[02:36:50]   [container] ++ cd /app/claw-bench/tasks/debugging/debug-004/environment/..
+[02:36:50]   [container] ++ pwd
+[02:36:50]   [container] + TASK_DIR=/app/claw-bench/tasks/debugging/debug-004
+[02:36:50]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[02:36:50]   [container] + mkdir -p /tmp/clawbench_workspace
+[02:36:50]   [container] + cp /app/claw-bench/tasks/debugging/debug-004/environment/data/main.py /tmp/clawbench_workspace/main.py
+[02:36:50]   [container] cp: cannot stat '/app/claw-bench/tasks/debugging/debug-004/environment/data/main.py': No such file or directory
+[02:36:50]   [container] 
+[02:36:50]   [container] [setup] 工作空间文件: ['instruction.md']
+[02:36:50]   [container] DONE
+[02:36:50] [clawbench_debug-004_glm-4.7_20260427_183520] Agent finished in 87.55s, returncode=0
+[02:36:50] [clawbench_debug-004_glm-4.7_20260427_183520] Agent result: passed=False, score=0.7500
+[02:36:52] [clawbench_debug-005_glm-4.7_20260427_183650] Container started
+[02:36:52] [debug-005] Harness detected, timeout adjusted: 180 → 360
+[02:38:54]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/debugging/debug-005/environment/setup.sh
+[02:38:54]   [container] [setup] setup.sh 失败 (rc=1)
+[02:38:54]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/debugging/debug-005/environment/data/slow_search.py': No such file or directory
+[02:38:54]   [container] 
+[02:38:54]   [container] [setup] 重试 (bash -x) ...
+[02:38:54]   [container] [setup] 重试也失败 (rc=1)
+[02:38:54]   [container] [setup] stderr: + set -euo pipefail
+[02:38:54]   [container] +++ dirname /app/claw-bench/tasks/debugging/debug-005/environment/setup.sh
+[02:38:54]   [container] ++ cd /app/claw-bench/tasks/debugging/debug-005/environment/..
+[02:38:54]   [container] ++ pwd
+[02:38:54]   [container] + TASK_DIR=/app/claw-bench/tasks/debugging/debug-005
+[02:38:54]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[02:38:54]   [container] + mkdir -p /tmp/clawbench_workspace
+[02:38:54]   [container] + cp /app/claw-bench/tasks/debugging/debug-005/environment/data/slow_search.py /tmp/clawbench_workspace/slow_search.py
+[02:38:54]   [container] cp: cannot stat '/app/claw-bench/tasks/debugging/debug-005/environment/data/slow_search.py': No such file or directory
+[02:38:54]   [container] 
+[02:38:54]   [container] [setup] 工作空间文件: ['instruction.md']
+[02:38:54]   [container] DONE
+[02:38:54] [clawbench_debug-005_glm-4.7_20260427_183650] Agent finished in 122.65s, returncode=0
+[02:38:54] [clawbench_debug-005_glm-4.7_20260427_183650] Agent result: passed=True, score=1.0000
+[02:38:57] [clawbench_doc-001_glm-4.7_20260427_183855] Container started
+[02:38:57] [doc-001] Harness detected, timeout adjusted: 120 → 300
+[02:40:19]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-001-text-formatting/environment/setup.sh
+[02:40:19]   [container] [setup] setup.sh 成功
+[02:40:19]   [container] [setup] 工作空间文件: ['document.txt', 'instruction.md', 'rules.json']
+[02:40:19]   [container] DONE
+[02:40:19] [clawbench_doc-001_glm-4.7_20260427_183855] Agent finished in 82.18s, returncode=0
+[02:40:19] [clawbench_doc-001_glm-4.7_20260427_183855] Agent result: passed=False, score=0.9000
+[02:40:21] [clawbench_doc-002_glm-4.7_20260427_184019] Container started
+[02:40:21] [doc-002] Harness detected, timeout adjusted: 120 → 300
+[02:40:51]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-002-markdown-to-html/environment/setup.sh
+[02:40:51]   [container] [setup] setup.sh 成功
+[02:40:51]   [container] [setup] 工作空间文件: ['document.md', 'instruction.md']
+[02:40:51]   [container] DONE
+[02:40:51] [clawbench_doc-002_glm-4.7_20260427_184019] Agent finished in 30.51s, returncode=0
+[02:40:51] [clawbench_doc-002_glm-4.7_20260427_184019] Agent result: passed=True, score=1.0000
+[02:40:54] [clawbench_doc-003_glm-4.7_20260427_184052] Container started
+[02:40:54] [doc-003] Harness detected, timeout adjusted: 120 → 300
+[02:41:19]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-003-extract-toc/environment/setup.sh
+[02:41:19]   [container] [setup] setup.sh 成功
+[02:41:19]   [container] [setup] 工作空间文件: ['document.md', 'instruction.md']
+[02:41:19]   [container] DONE
+[02:41:19] [clawbench_doc-003_glm-4.7_20260427_184052] Agent finished in 25.79s, returncode=0
+[02:41:19] [clawbench_doc-003_glm-4.7_20260427_184052] Agent result: passed=True, score=1.0000
+[02:41:22] [clawbench_doc-004_glm-4.7_20260427_184120] Container started
+[02:41:22] [doc-004] Harness detected, timeout adjusted: 180 → 360
+[02:41:57]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-004-find-replace/environment/setup.sh
+[02:41:57]   [container] [setup] setup.sh 成功
+[02:41:57]   [container] [setup] 工作空间文件: ['replacements.json', 'document.txt', 'instruction.md']
+[02:41:57]   [container] DONE
+[02:41:57] [clawbench_doc-004_glm-4.7_20260427_184120] Agent finished in 35.63s, returncode=0
+[02:41:57] [clawbench_doc-004_glm-4.7_20260427_184120] Agent result: passed=False, score=0.9444
+[02:41:59] [clawbench_doc-005_glm-4.7_20260427_184158] Container started
+[02:41:59] [doc-005] Harness detected, timeout adjusted: 180 → 360
+[02:44:21]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-005-document-comparison/environment/setup.sh
+[02:44:21]   [container] [setup] setup.sh 成功
+[02:44:21]   [container] [setup] 工作空间文件: ['instruction.md', 'v1.txt', 'v2.txt']
+[02:44:21]   [container] DONE
+[02:44:21] [clawbench_doc-005_glm-4.7_20260427_184158] Agent finished in 141.91s, returncode=0
+[02:44:21] [clawbench_doc-005_glm-4.7_20260427_184158] Agent result: passed=True, score=1.0000
+[02:44:24] [clawbench_doc-006_glm-4.7_20260427_184422] Container started
+[02:44:24] [doc-006] Harness detected, timeout adjusted: 180 → 360
+[02:44:45]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-006-template-rendering/environment/setup.sh
+[02:44:45]   [container] [setup] setup.sh 成功
+[02:44:45]   [container] [setup] 工作空间文件: ['template.md', 'instruction.md', 'data.json']
+[02:44:45]   [container] DONE
+[02:44:45] [clawbench_doc-006_glm-4.7_20260427_184422] Agent finished in 21.30s, returncode=0
+[02:44:45] [clawbench_doc-006_glm-4.7_20260427_184422] Agent result: passed=True, score=1.0000
+[02:44:46] [doc-007] Found cached result, skipping
+[02:44:47] [clawbench_doc-008_glm-4.7_20260427_184446] Container started
+[02:44:47] [doc-008] Harness detected, timeout adjusted: 300 → 480
+[02:45:19]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-008-document-restructuring/environment/setup.sh
+[02:45:19]   [container] [setup] setup.sh 成功
+[02:45:19]   [container] [setup] 工作空间文件: ['messy_doc.md', 'instruction.md', 'outline.json']
+[02:45:19]   [container] DONE
+[02:45:19] [clawbench_doc-008_glm-4.7_20260427_184446] Agent finished in 31.43s, returncode=0
+[02:45:19] [clawbench_doc-008_glm-4.7_20260427_184446] Agent result: passed=False, score=0.9583
+[02:45:22] [clawbench_doc-009_glm-4.7_20260427_184519] Container started
+[02:45:22] [doc-009] Harness detected, timeout adjusted: 180 → 360
+[02:45:56]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-009-markdown-table-formatter/environment/setup.sh
+[02:45:56]   [container] [setup] setup.sh 成功
+[02:45:56]   [container] [setup] 工作空间文件: ['input.md', 'instruction.md']
+[02:45:56]   [container] DONE
+[02:45:56] [clawbench_doc-009_glm-4.7_20260427_184519] Agent finished in 34.29s, returncode=0
+[02:45:56] [clawbench_doc-009_glm-4.7_20260427_184519] Agent result: passed=False, score=0.9286
+[02:45:58] [clawbench_doc-010_glm-4.7_20260427_184556] Container started
+[02:45:58] [doc-010] Harness detected, timeout adjusted: 240 → 420
+[02:46:50]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-010-document-template-engine/environment/setup.sh
+[02:46:50]   [container] [setup] setup.sh 成功
+[02:46:50]   [container] [setup] 工作空间文件: ['instruction.md', 'data.json', 'template.txt']
+[02:46:50]   [container] DONE
+[02:46:50] [clawbench_doc-010_glm-4.7_20260427_184556] Agent finished in 51.94s, returncode=0
+[02:46:50] [clawbench_doc-010_glm-4.7_20260427_184556] Agent result: passed=False, score=0.9600
+[02:46:52] [clawbench_doc-011_glm-4.7_20260427_184650] Container started
+[02:46:52] [doc-011] Harness detected, timeout adjusted: 120 → 300
+[02:47:36]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-011-markdown-toc-generator/environment/setup.sh
+[02:47:36]   [container] [setup] setup.sh 成功
+[02:47:36]   [container] [setup] 工作空间文件: ['document.md', 'instruction.md']
+[02:47:36]   [container] DONE
+[02:47:36] [clawbench_doc-011_glm-4.7_20260427_184650] Agent finished in 44.07s, returncode=0
+[02:47:36] [clawbench_doc-011_glm-4.7_20260427_184650] Agent result: passed=True, score=1.0000
+[02:47:36] [doc-012] Found cached result, skipping
+[02:47:38] [clawbench_doc-013_glm-4.7_20260427_184736] Container started
+[02:47:38] [doc-013] Harness detected, timeout adjusted: 120 → 300
+[02:48:21]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-013-csv-report-formatter/environment/setup.sh
+[02:48:21]   [container] [setup] setup.sh 成功
+[02:48:21]   [container] [setup] 工作空间文件: ['data.csv', 'instruction.md']
+[02:48:21]   [container] DONE
+[02:48:21] [clawbench_doc-013_glm-4.7_20260427_184736] Agent finished in 42.69s, returncode=0
+[02:48:21] [clawbench_doc-013_glm-4.7_20260427_184736] Agent result: passed=True, score=1.0000
+[02:48:21] [doc-014] Found cached result, skipping
+[02:48:23] [clawbench_doc-015_glm-4.7_20260427_184821] Container started
+[02:48:23] [doc-015] Harness detected, timeout adjusted: 120 → 300
+[02:48:55]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-015-changelog-generator/environment/setup.sh
+[02:48:55]   [container] [setup] setup.sh 失败 (rc=1)
+[02:48:55]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/document-editing/doc-015-changelog-generator/environment/data/commits.jsonl': No such file or directory
+[02:48:55]   [container] 
+[02:48:55]   [container] [setup] 重试 (bash -x) ...
+[02:48:55]   [container] [setup] 重试也失败 (rc=1)
+[02:48:55]   [container] [setup] stderr: + set -euo pipefail
+[02:48:55]   [container] +++ dirname /app/claw-bench/tasks/document-editing/doc-015-changelog-generator/environment/setup.sh
+[02:48:55]   [container] ++ cd /app/claw-bench/tasks/document-editing/doc-015-changelog-generator/environment/..
+[02:48:55]   [container] ++ pwd
+[02:48:55]   [container] + TASK_DIR=/app/claw-bench/tasks/document-editing/doc-015-changelog-generator
+[02:48:55]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[02:48:55]   [container] + mkdir -p /tmp/clawbench_workspace
+[02:48:55]   [container] + cp /app/claw-bench/tasks/document-editing/doc-015-changelog-generator/environment/data/commits.jsonl /tmp/clawbench_workspace/commits.jsonl
+[02:48:55]   [container] cp: cannot stat '/app/claw-bench/tasks/document-editing/doc-015-changelog-generator/environment/data/commits.jsonl': No such file or directory
+[02:48:55]   [container] 
+[02:48:55]   [container] [setup] 工作空间文件: ['instruction.md']
+[02:48:55]   [container] DONE
+[02:48:55] [clawbench_doc-015_glm-4.7_20260427_184821] Agent finished in 32.10s, returncode=0
+[02:48:55] [clawbench_doc-015_glm-4.7_20260427_184821] Agent result: passed=False, score=0.6000
+[02:48:57] [clawbench_doc-016_glm-4.7_20260427_184856] Container started
+[02:48:57] [doc-016] Harness detected, timeout adjusted: 180 → 360
+[02:49:26]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-016-meeting-minutes/environment/setup.sh
+[02:49:26]   [container] [setup] setup.sh 成功
+[02:49:26]   [container] [setup] 工作空间文件: ['instruction.md', 'raw_notes.txt']
+[02:49:26]   [container] DONE
+[02:49:26] [clawbench_doc-016_glm-4.7_20260427_184856] Agent finished in 28.97s, returncode=0
+[02:49:26] [clawbench_doc-016_glm-4.7_20260427_184856] Agent result: passed=True, score=1.0000
+[02:49:28] [clawbench_doc-017_glm-4.7_20260427_184927] Container started
+[02:49:28] [doc-017] Harness detected, timeout adjusted: 180 → 360
+[02:50:26]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-017-weekly-status-report/environment/setup.sh
+[02:50:26]   [container] [setup] setup.sh 成功
+[02:50:26]   [container] [setup] 工作空间文件: ['wednesday.txt', 'friday.txt', 'instruction.md', 'monday.txt', 'tuesday.txt', 'thursday.txt']
+[02:50:26]   [container] DONE
+[02:50:26] [clawbench_doc-017_glm-4.7_20260427_184927] Agent finished in 57.47s, returncode=0
+[02:50:26] [clawbench_doc-017_glm-4.7_20260427_184927] Agent result: passed=True, score=1.0000
+[02:50:28] [clawbench_doc-018_glm-4.7_20260427_185026] Container started
+[02:50:28] [doc-018] Harness detected, timeout adjusted: 180 → 360
+[02:51:06]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-018-invoice-generator/environment/setup.sh
+[02:51:06]   [container] [setup] setup.sh 成功
+[02:51:06]   [container] [setup] 工作空间文件: ['instruction.md', 'order.json']
+[02:51:06]   [container] DONE
+[02:51:06] [clawbench_doc-018_glm-4.7_20260427_185026] Agent finished in 37.75s, returncode=0
+[02:51:06] [clawbench_doc-018_glm-4.7_20260427_185026] Agent result: passed=True, score=1.0000
+[02:51:08] [clawbench_edu-001-rubric-grading_glm-4.7_20260427_185106] Container started
+[02:51:08] [edu-001-rubric-grading] Harness detected, timeout adjusted: 3600 → 3780
+[02:53:21]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/educational-assessment/edu-001-rubric-grading/environment/setup.sh
+[02:53:21]   [container] [setup] setup.sh 成功
+[02:53:21]   [container] [setup] 工作空间文件: ['rubric.csv', 'instruction.md', 'english_words.txt']
+[02:53:21]   [container] DONE
+[02:53:21] [clawbench_edu-001-rubric-grading_glm-4.7_20260427_185106] Agent finished in 132.55s, returncode=0
+[02:53:21] [clawbench_edu-001-rubric-grading_glm-4.7_20260427_185106] Agent result: passed=True, score=1.0000
+[02:53:23] [clawbench_edu-002-item-analysis_glm-4.7_20260427_185321] Container started
+[02:53:23] [edu-002-item-analysis] Harness detected, timeout adjusted: 3600 → 3780
+[02:54:39]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/educational-assessment/edu-002-item-analysis/environment/setup.sh
+[02:54:39]   [container] [setup] setup.sh 成功
+[02:54:39]   [container] [setup] 工作空间文件: ['instruction.md', 'exam_responses.csv']
+[02:54:39]   [container] DONE
+[02:54:39] [clawbench_edu-002-item-analysis_glm-4.7_20260427_185321] Agent finished in 76.22s, returncode=0
+[02:54:39] [clawbench_edu-002-item-analysis_glm-4.7_20260427_185321] Agent result: passed=False, score=0.6667
+[02:54:39] [edu-003-learning-path] Found cached result, skipping
+[02:54:41] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260427_185439] Container started
+[02:54:41] [edu-004-curriculum-mapping] Harness detected, timeout adjusted: 3600 → 3780
+[02:56:16]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/educational-assessment/edu-004-curriculum-mapping/environment/setup.sh
+[02:56:16]   [container] [setup] setup.sh 成功
+[02:56:16]   [container] [setup] 工作空间文件: ['standards.csv', 'course_objectives.csv', 'instruction.md']
+[02:56:16]   [container] DONE
+[02:56:16] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260427_185439] Agent finished in 94.62s, returncode=0
+[02:56:16] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260427_185439] Agent result: passed=False, score=0.7500
+[02:56:18] [clawbench_edu-005-assessment-generation_glm-4.7_20260427_185616] Container started
+[02:56:18] [edu-005-assessment-generation] Harness detected, timeout adjusted: 3600 → 3780
+[02:58:17]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/educational-assessment/edu-005-assessment-generation/environment/setup.sh
+[02:58:17]   [container] [setup] setup.sh 成功
+[02:58:17]   [container] [setup] 工作空间文件: ['instruction.md', 'learning_objectives.csv', 'content_outline.json']
+[02:58:17]   [container] DONE
+[02:58:17] [clawbench_edu-005-assessment-generation_glm-4.7_20260427_185616] Agent finished in 119.07s, returncode=0
+[02:58:17] [clawbench_edu-005-assessment-generation_glm-4.7_20260427_185616] Agent result: passed=True, score=1.0000
+[02:58:19] [clawbench_eml-001_glm-4.7_20260427_185817] Container started
+[02:58:19] [eml-001] Harness detected, timeout adjusted: 120 → 300
+[02:59:02]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-001-parse-email-headers/environment/setup.sh
+[02:59:02]   [container] [setup] setup.sh 成功
+[02:59:02]   [container] [setup] 工作空间文件: ['email.txt', 'instruction.md']
+[02:59:02]   [container] DONE
+[02:59:02] [clawbench_eml-001_glm-4.7_20260427_185817] Agent finished in 43.37s, returncode=0
+[02:59:02] [clawbench_eml-001_glm-4.7_20260427_185817] Agent result: passed=True, score=1.0000
+[02:59:05] [clawbench_eml-002_glm-4.7_20260427_185903] Container started
+[02:59:05] [eml-002] Harness detected, timeout adjusted: 120 → 300
+[02:59:26]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-002-compose-from-template/environment/setup.sh
+[02:59:26]   [container] [setup] setup.sh 成功
+[02:59:26]   [container] [setup] 工作空间文件: ['instruction.md', 'template.txt', 'contacts.json']
+[02:59:26]   [container] DONE
+[02:59:26] [clawbench_eml-002_glm-4.7_20260427_185903] Agent finished in 21.51s, returncode=0
+[02:59:26] [clawbench_eml-002_glm-4.7_20260427_185903] Agent result: passed=False, score=0.8571
+[02:59:28] [clawbench_eml-003_glm-4.7_20260427_185926] Container started
+[02:59:28] [eml-003] Harness detected, timeout adjusted: 120 → 300
+[02:59:53]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-003-count-by-sender/environment/setup.sh
+[02:59:53]   [container] [setup] setup.sh 成功
+[02:59:53]   [container] [setup] 工作空间文件: ['inbox.json', 'instruction.md']
+[02:59:53]   [container] DONE
+[02:59:53] [clawbench_eml-003_glm-4.7_20260427_185926] Agent finished in 24.81s, returncode=0
+[02:59:53] [clawbench_eml-003_glm-4.7_20260427_185926] Agent result: passed=True, score=1.0000
+[02:59:55] [clawbench_eml-004_glm-4.7_20260427_185953] Container started
+[02:59:55] [eml-004] Harness detected, timeout adjusted: 180 → 360
+[03:00:31]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-004-classify-emails/environment/setup.sh
+[03:00:31]   [container] [setup] setup.sh 成功
+[03:00:31]   [container] [setup] 工作空间文件: ['instruction.md', 'emails.json']
+[03:00:31]   [container] DONE
+[03:00:31] [clawbench_eml-004_glm-4.7_20260427_185953] Agent finished in 35.30s, returncode=0
+[03:00:31] [clawbench_eml-004_glm-4.7_20260427_185953] Agent result: passed=True, score=1.0000
+[03:00:33] [clawbench_eml-005_glm-4.7_20260427_190031] Container started
+[03:00:33] [eml-005] Harness detected, timeout adjusted: 180 → 360
+[03:01:59]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-005-extract-action-items/environment/setup.sh
+[03:01:59]   [container] [setup] setup.sh 成功
+[03:01:59]   [container] [setup] 工作空间文件: ['email_thread.json', 'instruction.md']
+[03:01:59]   [container] DONE
+[03:01:59] [clawbench_eml-005_glm-4.7_20260427_190031] Agent finished in 86.44s, returncode=0
+[03:01:59] [clawbench_eml-005_glm-4.7_20260427_190031] Agent result: passed=True, score=1.0000
+[03:02:01] [clawbench_eml-006_glm-4.7_20260427_190200] Container started
+[03:02:01] [eml-006] Harness detected, timeout adjusted: 180 → 360
+[03:02:43]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-006-generate-summary/environment/setup.sh
+[03:02:43]   [container] [setup] setup.sh 成功
+[03:02:43]   [container] [setup] 工作空间文件: ['long_email.txt', 'instruction.md']
+[03:02:43]   [container] DONE
+[03:02:43] [clawbench_eml-006_glm-4.7_20260427_190200] Agent finished in 41.36s, returncode=0
+[03:02:43] [clawbench_eml-006_glm-4.7_20260427_190200] Agent result: passed=True, score=1.0000
+[03:02:45] [clawbench_eml-007_glm-4.7_20260427_190243] Container started
+[03:02:45] [eml-007] Harness detected, timeout adjusted: 180 → 360
+[03:03:32]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-007-filter-sort-inbox/environment/setup.sh
+[03:03:32]   [container] [setup] setup.sh 成功
+[03:03:32]   [container] [setup] 工作空间文件: ['inbox.json', 'instruction.md']
+[03:03:32]   [container] DONE
+[03:03:32] [clawbench_eml-007_glm-4.7_20260427_190243] Agent finished in 46.92s, returncode=0
+[03:03:32] [clawbench_eml-007_glm-4.7_20260427_190243] Agent result: passed=True, score=1.0000
+[03:03:34] [clawbench_eml-008_glm-4.7_20260427_190332] Container started
+[03:03:34] [eml-008] Harness detected, timeout adjusted: 180 → 360
+[03:04:15]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-008-attachment-inventory/environment/setup.sh
+[03:04:15]   [container] [setup] setup.sh 成功
+[03:04:15]   [container] [setup] 工作空间文件: ['instruction.md']
+[03:04:15]   [container] DONE
+[03:04:15] [clawbench_eml-008_glm-4.7_20260427_190332] Agent finished in 41.13s, returncode=0
+[03:04:15] [clawbench_eml-008_glm-4.7_20260427_190332] Agent result: passed=True, score=1.0000
+[03:04:17] [clawbench_eml-009_glm-4.7_20260427_190416] Container started
+[03:04:17] [eml-009] Harness detected, timeout adjusted: 300 → 480
+[03:05:54]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-009-thread-reconstruction/environment/setup.sh
+[03:05:54]   [container] [setup] setup.sh 成功
+[03:05:54]   [container] [setup] 工作空间文件: ['flat_emails.json', 'instruction.md']
+[03:05:54]   [container] DONE
+[03:05:54] [clawbench_eml-009_glm-4.7_20260427_190416] Agent finished in 96.67s, returncode=0
+[03:05:54] [clawbench_eml-009_glm-4.7_20260427_190416] Agent result: passed=False, score=0.9412
+[03:05:56] [clawbench_eml-010_glm-4.7_20260427_190554] Container started
+[03:05:56] [eml-010] Harness detected, timeout adjusted: 300 → 480
+[03:10:34]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-010-auto-reply-generator/environment/setup.sh
+[03:10:34]   [container] [setup] setup.sh 成功
+[03:10:34]   [container] [setup] 工作空间文件: ['incoming.json', 'instruction.md', 'rules.json']
+[03:10:34]   [container] DONE
+[03:10:34] [clawbench_eml-010_glm-4.7_20260427_190554] Agent finished in 277.27s, returncode=0
+[03:10:34] [clawbench_eml-010_glm-4.7_20260427_190554] Agent result: passed=True, score=1.0000
+[03:10:36] [clawbench_eml-011_glm-4.7_20260427_191034] Container started
+[03:10:36] [eml-011] Harness detected, timeout adjusted: 300 → 480
+[03:11:52]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-011-analytics-dashboard/environment/setup.sh
+[03:11:52]   [container] [setup] setup.sh 成功
+[03:11:52]   [container] [setup] 工作空间文件: ['email_archive.json', 'instruction.md']
+[03:11:52]   [container] DONE
+[03:11:52] [clawbench_eml-011_glm-4.7_20260427_191034] Agent finished in 76.77s, returncode=0
+[03:11:53] [clawbench_eml-011_glm-4.7_20260427_191034] Agent result: passed=False, score=0.9474
+[03:11:55] [clawbench_eml-012_glm-4.7_20260427_191153] Container started
+[03:11:55] [eml-012] Harness detected, timeout adjusted: 600 → 780
+[03:13:47]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-012-complex-workflow/environment/setup.sh
+[03:13:47]   [container] [setup] setup.sh 成功
+[03:13:47]   [container] [setup] 工作空间文件: ['instruction.md', 'routing_rules.json', 'incoming_batch.json']
+[03:13:47]   [container] DONE
+[03:13:47] [clawbench_eml-012_glm-4.7_20260427_191153] Agent finished in 112.28s, returncode=0
+[03:13:47] [clawbench_eml-012_glm-4.7_20260427_191153] Agent result: passed=True, score=1.0000
+[03:13:49] [clawbench_eml-013_glm-4.7_20260427_191348] Container started
+[03:13:49] [eml-013] Harness detected, timeout adjusted: 120 → 300
+[03:14:28]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-013-signature-extractor/environment/setup.sh
+[03:14:28]   [container] [setup] setup.sh 成功
+[03:14:28]   [container] [setup] 工作空间文件: ['instruction.md', 'emails.txt']
+[03:14:28]   [container] DONE
+[03:14:28] [clawbench_eml-013_glm-4.7_20260427_191348] Agent finished in 38.69s, returncode=0
+[03:14:28] [clawbench_eml-013_glm-4.7_20260427_191348] Agent result: passed=False, score=0.9524
+[03:14:30] [clawbench_eml-014_glm-4.7_20260427_191428] Container started
+[03:14:30] [eml-014] Harness detected, timeout adjusted: 180 → 360
+[03:15:58]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-014-thread-reconstructor/environment/setup.sh
+[03:15:58]   [container] [setup] setup.sh 成功
+[03:15:58]   [container] [setup] 工作空间文件: ['instruction.md', 'emails.json']
+[03:15:58]   [container] DONE
+[03:15:58] [clawbench_eml-014_glm-4.7_20260427_191428] Agent finished in 87.93s, returncode=0
+[03:15:58] [clawbench_eml-014_glm-4.7_20260427_191428] Agent result: passed=False, score=0.9565
+[03:16:00] [clawbench_eml-015_glm-4.7_20260427_191559] Container started
+[03:16:00] [eml-015] Harness detected, timeout adjusted: 180 → 360
+[03:16:41]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-015-auto-reply-generator/environment/setup.sh
+[03:16:41]   [container] [setup] setup.sh 成功
+[03:16:41]   [container] [setup] 工作空间文件: ['inbox.json', 'instruction.md', 'rules.yaml', 'rules.json']
+[03:16:41]   [container] DONE
+[03:16:41] [clawbench_eml-015_glm-4.7_20260427_191559] Agent finished in 40.89s, returncode=0
+[03:16:41] [clawbench_eml-015_glm-4.7_20260427_191559] Agent result: passed=False, score=0.9565
+[03:16:43] [clawbench_eml-016_glm-4.7_20260427_191641] Container started
+[03:16:43] [eml-016] Harness detected, timeout adjusted: 180 → 360
+[03:17:22]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-016-weekly-digest-generator/environment/setup.sh
+[03:17:22]   [container] [setup] setup.sh 成功
+[03:17:22]   [container] [setup] 工作空间文件: ['email_01.json', 'email_06.json', 'email_07.json', 'instruction.md', 'email_08.json', 'email_04.json', 'email_05.json', 'email_02.json', 'email_03.json']
+[03:17:22]   [container] DONE
+[03:17:22] [clawbench_eml-016_glm-4.7_20260427_191641] Agent finished in 39.14s, returncode=0
+[03:17:22] [clawbench_eml-016_glm-4.7_20260427_191641] Agent result: passed=True, score=1.0000
+[03:17:25] [clawbench_eml-017_glm-4.7_20260427_191723] Container started
+[03:17:25] [eml-017] Harness detected, timeout adjusted: 180 → 360
+[03:17:53]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-017-out-of-office-responder/environment/setup.sh
+[03:17:53]   [container] [setup] setup.sh 成功
+[03:17:53]   [container] [setup] 工作空间文件: ['incoming_01.json', 'instruction.md', 'ooo_config.json', 'incoming_04.json', 'incoming_02.json', 'incoming_03.json']
+[03:17:53]   [container] DONE
+[03:17:53] [clawbench_eml-017_glm-4.7_20260427_191723] Agent finished in 28.56s, returncode=0
+[03:17:53] [clawbench_eml-017_glm-4.7_20260427_191723] Agent result: passed=True, score=1.0000
+[03:17:56] [clawbench_eml-018_glm-4.7_20260427_191754] Container started
+[03:17:56] [eml-018] Harness detected, timeout adjusted: 240 → 420
+[03:20:49]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-018-expense-receipt-emails/environment/setup.sh
+[03:20:49]   [container] [setup] setup.sh 成功
+[03:20:49]   [container] [setup] 工作空间文件: ['receipt_04.json', 'receipt_05.json', 'receipt_02.json', 'receipt_03.json', 'instruction.md', 'receipt_01.json', 'receipt_06.json']
+[03:20:49]   [container] DONE
+[03:20:49] [clawbench_eml-018_glm-4.7_20260427_191754] Agent finished in 173.89s, returncode=0
+[03:20:49] [clawbench_eml-018_glm-4.7_20260427_191754] Agent result: passed=True, score=1.0000
+[03:20:52] [clawbench_file-001_glm-4.7_20260427_192050] Container started
+[03:20:52] [file-001] Harness detected, timeout adjusted: 120 → 300
+[03:21:08]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/file-operations/file-001-csv-to-markdown/environment/setup.sh
+[03:21:08]   [container] [setup] setup.sh 成功
+[03:21:08]   [container] [setup] 工作空间文件: ['sample.csv', 'instruction.md']
+[03:21:08]   [container] DONE
+[03:21:08] [clawbench_file-001_glm-4.7_20260427_192050] Agent finished in 16.08s, returncode=0
+[03:21:08] [clawbench_file-001_glm-4.7_20260427_192050] Agent result: passed=True, score=1.0000
+[03:21:08] [file-002] Found cached result, skipping
+[03:21:10] [clawbench_file-003_glm-4.7_20260427_192108] Container started
+[03:21:10] [file-003] Harness detected, timeout adjusted: 120 → 300
+[03:21:28]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/file-operations/file-003-find-and-replace/environment/setup.sh
+[03:21:28]   [container] [setup] setup.sh 成功
+[03:21:28]   [container] [setup] 工作空间文件: ['instruction.md', 'input.txt']
+[03:21:28]   [container] DONE
+[03:21:28] [clawbench_file-003_glm-4.7_20260427_192108] Agent finished in 18.15s, returncode=0
+[03:21:28] [clawbench_file-003_glm-4.7_20260427_192108] Agent result: passed=True, score=1.0000
+[03:21:28] [file-004] Found cached result, skipping
+[03:21:30] [clawbench_file-005_glm-4.7_20260427_192128] Container started
+[03:21:30] [file-005] Harness detected, timeout adjusted: 120 → 300
+[03:21:51]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/file-operations/file-005-merge-files/environment/setup.sh
+[03:21:51]   [container] [setup] setup.sh 成功
+[03:21:51]   [container] [setup] 工作空间文件: ['instruction.md', 'part2.txt', 'part3.txt', 'part1.txt']
+[03:21:51]   [container] DONE
+[03:21:51] [clawbench_file-005_glm-4.7_20260427_192128] Agent finished in 20.83s, returncode=0
+[03:21:51] [clawbench_file-005_glm-4.7_20260427_192128] Agent result: passed=True, score=1.0000
+[03:21:52] [file-006] Found cached result, skipping
+[03:21:53] [clawbench_file-007_glm-4.7_20260427_192152] Container started
+[03:21:53] [file-007] Harness detected, timeout adjusted: 120 → 300
+[03:22:43]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/file-operations/file-007-json-to-yaml/environment/setup.sh
+[03:22:43]   [container] [setup] setup.sh 成功
+[03:22:43]   [container] [setup] 工作空间文件: ['config.json', 'instruction.md']
+[03:22:43]   [container] DONE
+[03:22:43] [clawbench_file-007_glm-4.7_20260427_192152] Agent finished in 50.03s, returncode=0
+[03:22:43] [clawbench_file-007_glm-4.7_20260427_192152] Agent result: passed=True, score=1.0000
+[03:22:46] [clawbench_file-008_glm-4.7_20260427_192244] Container started
+[03:22:46] [file-008] Harness detected, timeout adjusted: 120 → 300
+[03:23:14]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/file-operations/file-008-deduplicate-lines/environment/setup.sh
+[03:23:14]   [container] [setup] setup.sh 成功
+[03:23:14]   [container] [setup] 工作空间文件: ['instruction.md', 'data.txt']
+[03:23:14]   [container] DONE
+[03:23:14] [clawbench_file-008_glm-4.7_20260427_192244] Agent finished in 28.11s, returncode=0
+[03:23:14] [clawbench_file-008_glm-4.7_20260427_192244] Agent result: passed=True, score=1.0000
+[03:23:16] [clawbench_file-009_glm-4.7_20260427_192314] Container started
+[03:23:16] [file-009] Harness detected, timeout adjusted: 120 → 300
+[03:23:46]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/file-operations/file-009-word-frequency/environment/setup.sh
+[03:23:46]   [container] [setup] setup.sh 成功
+[03:23:46]   [container] [setup] 工作空间文件: ['instruction.md', 'article.txt']
+[03:23:46]   [container] DONE
+[03:23:46] [clawbench_file-009_glm-4.7_20260427_192314] Agent finished in 29.84s, returncode=0
+[03:23:46] [clawbench_file-009_glm-4.7_20260427_192314] Agent result: passed=True, score=1.0000
+[03:23:48] [clawbench_file-010_glm-4.7_20260427_192346] Container started
+[03:23:48] [file-010] Harness detected, timeout adjusted: 120 → 300
+[03:24:29]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/file-operations/file-010-directory-tree/environment/setup.sh
+[03:24:29]   [container] [setup] setup.sh 成功
+[03:24:29]   [container] [setup] 工作空间文件: ['instruction.md']
+[03:24:29]   [container] DONE
+[03:24:29] [clawbench_file-010_glm-4.7_20260427_192346] Agent finished in 40.79s, returncode=0
+[03:24:29] [clawbench_file-010_glm-4.7_20260427_192346] Agent result: passed=True, score=0.7857
+[03:24:31] [clawbench_file-011_glm-4.7_20260427_192430] Container started
+[03:24:31] [file-011] Harness detected, timeout adjusted: 120 → 300
+[03:24:59]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/file-operations/file-011-log-filtering/environment/setup.sh
+[03:24:59]   [container] [setup] setup.sh 失败 (rc=1)
+[03:24:59]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/file-operations/file-011-log-filtering/environment/data/app.log': No such file or directory
+[03:24:59]   [container] 
+[03:24:59]   [container] [setup] 重试 (bash -x) ...
+[03:24:59]   [container] [setup] 重试也失败 (rc=1)
+[03:24:59]   [container] [setup] stderr: + set -euo pipefail
+[03:24:59]   [container] +++ dirname /app/claw-bench/tasks/file-operations/file-011-log-filtering/environment/setup.sh
+[03:24:59]   [container] ++ cd /app/claw-bench/tasks/file-operations/file-011-log-filtering/environment/..
+[03:24:59]   [container] ++ pwd
+[03:24:59]   [container] + TASK_DIR=/app/claw-bench/tasks/file-operations/file-011-log-filtering
+[03:24:59]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[03:24:59]   [container] + mkdir -p /tmp/clawbench_workspace
+[03:24:59]   [container] + cp /app/claw-bench/tasks/file-operations/file-011-log-filtering/environment/data/app.log /tmp/clawbench_workspace/app.log
+[03:24:59]   [container] cp: cannot stat '/app/claw-bench/tasks/file-operations/file-011-log-filtering/environment/data/app.log': No such file or directory
+[03:24:59]   [container] 
+[03:24:59]   [container] [setup] 工作空间文件: ['instruction.md']
+[03:24:59]   [container] DONE
+[03:24:59] [clawbench_file-011_glm-4.7_20260427_192430] Agent finished in 27.79s, returncode=0
+[03:24:59] [clawbench_file-011_glm-4.7_20260427_192430] Agent result: passed=False, score=0.6923
+[03:25:01] [clawbench_file-012_glm-4.7_20260427_192500] Container started
+[03:25:01] [file-012] Harness detected, timeout adjusted: 120 → 300
+[03:25:23]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/file-operations/file-012-csv-stats/environment/setup.sh
+[03:25:23]   [container] [setup] setup.sh 成功
+[03:25:23]   [container] [setup] 工作空间文件: ['instruction.md', 'sales.csv']
+[03:25:23]   [container] DONE
+[03:25:23] [clawbench_file-012_glm-4.7_20260427_192500] Agent finished in 21.29s, returncode=0
+[03:25:23] [clawbench_file-012_glm-4.7_20260427_192500] Agent result: passed=True, score=1.0000
+[03:25:23] [file-013] Found cached result, skipping
+[03:25:25] [clawbench_file-014_glm-4.7_20260427_192523] Container started
+[03:25:25] [file-014] Harness detected, timeout adjusted: 120 → 300
+[03:26:22]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/file-operations/file-014-file-diff/environment/setup.sh
+[03:26:22]   [container] [setup] setup.sh 成功
+[03:26:22]   [container] [setup] 工作空间文件: ['original.txt', 'instruction.md', 'modified.txt']
+[03:26:22]   [container] DONE
+[03:26:22] [clawbench_file-014_glm-4.7_20260427_192523] Agent finished in 57.37s, returncode=0
+[03:26:22] [clawbench_file-014_glm-4.7_20260427_192523] Agent result: passed=True, score=1.0000
+[03:26:23] [file-015] Found cached result, skipping
+[03:26:25] [clawbench_fin-001-portfolio-beta_glm-4.7_20260427_192623] Container started
+[03:26:25] [fin-001-portfolio-beta] Harness detected, timeout adjusted: 3600 → 3780
+[03:27:33]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/financial-analysis/fin-001-portfolio-beta/environment/setup.sh
+[03:27:33]   [container] [setup] setup.sh 成功
+[03:27:33]   [container] [setup] 工作空间文件: ['stock_returns.csv', 'instruction.md']
+[03:27:33]   [container] DONE
+[03:27:33] [clawbench_fin-001-portfolio-beta_glm-4.7_20260427_192623] Agent finished in 68.07s, returncode=0
+[03:27:33] [clawbench_fin-001-portfolio-beta_glm-4.7_20260427_192623] Agent result: passed=True, score=1.0000
+[03:27:35] [clawbench_fin-002-dcf-valuation_glm-4.7_20260427_192733] Container started
+[03:27:35] [fin-002-dcf-valuation] Harness detected, timeout adjusted: 3600 → 3780
+[03:29:20]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/financial-analysis/fin-002-dcf-valuation/environment/setup.sh
+[03:29:20]   [container] [setup] setup.sh 成功
+[03:29:20]   [container] [setup] 工作空间文件: ['instruction.md', 'financials.csv']
+[03:29:20]   [container] DONE
+[03:29:20] [clawbench_fin-002-dcf-valuation_glm-4.7_20260427_192733] Agent finished in 104.91s, returncode=0
+[03:29:20] [clawbench_fin-002-dcf-valuation_glm-4.7_20260427_192733] Agent result: passed=True, score=1.0000
+[03:29:22] [clawbench_fin-003-risk-metrics_glm-4.7_20260427_192920] Container started
+[03:29:22] [fin-003-risk-metrics] Harness detected, timeout adjusted: 3600 → 3780
+[03:30:14]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/financial-analysis/fin-003-risk-metrics/environment/setup.sh
+[03:30:14]   [container] [setup] setup.sh 成功
+[03:30:14]   [container] [setup] 工作空间文件: ['portfolio_returns.csv', 'instruction.md']
+[03:30:14]   [container] DONE
+[03:30:14] [clawbench_fin-003-risk-metrics_glm-4.7_20260427_192920] Agent finished in 52.40s, returncode=0
+[03:30:14] [clawbench_fin-003-risk-metrics_glm-4.7_20260427_192920] Agent result: passed=True, score=1.0000
+[03:30:17] [clawbench_fin-004-earnings-report_glm-4.7_20260427_193015] Container started
+[03:30:17] [fin-004-earnings-report] Harness detected, timeout adjusted: 3600 → 3780
+[03:30:56]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/financial-analysis/fin-004-earnings-report/environment/setup.sh
+[03:30:56]   [container] [setup] setup.sh 成功
+[03:30:56]   [container] [setup] 工作空间文件: ['earnings_q2.txt', 'earnings_q1.txt', 'instruction.md']
+[03:30:56]   [container] DONE
+[03:30:56] [clawbench_fin-004-earnings-report_glm-4.7_20260427_193015] Agent finished in 39.18s, returncode=0
+[03:30:56] [clawbench_fin-004-earnings-report_glm-4.7_20260427_193015] Agent result: passed=True, score=1.0000
+[03:30:58] [clawbench_fin-005-forex-arbitrage_glm-4.7_20260427_193056] Container started
+[03:30:58] [fin-005-forex-arbitrage] Harness detected, timeout adjusted: 3600 → 3780
+[03:31:45]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/financial-analysis/fin-005-forex-arbitrage/environment/setup.sh
+[03:31:45]   [container] [setup] setup.sh 成功
+[03:31:45]   [container] [setup] 工作空间文件: ['exchange_rates.csv', 'instruction.md']
+[03:31:45]   [container] DONE
+[03:31:45] [clawbench_fin-005-forex-arbitrage_glm-4.7_20260427_193056] Agent finished in 46.79s, returncode=0
+[03:31:45] [clawbench_fin-005-forex-arbitrage_glm-4.7_20260427_193056] Agent result: passed=True, score=1.0000
+[03:31:47] [clawbench_fin-006_glm-4.7_20260427_193145] Container started
+[03:31:47] [fin-006] Harness detected, timeout adjusted: 300 → 480
+[03:32:56]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/financial-analysis/fin-006-analyze-stock-portfolio-risk-using-var-and-cvar/environment/setup.sh
+[03:32:56]   [container] [setup] setup.sh 成功
+[03:32:56]   [container] [setup] 工作空间文件: ['portfolio_returns.csv', 'instruction.md']
+[03:32:56]   [container] DONE
+[03:32:56] [clawbench_fin-006_glm-4.7_20260427_193145] Agent finished in 68.60s, returncode=0
+[03:32:56] [clawbench_fin-006_glm-4.7_20260427_193145] Agent result: passed=False, score=0.8000
+[03:32:58] [clawbench_fin-008_glm-4.7_20260427_193256] Container started
+[03:32:58] [fin-008] Harness detected, timeout adjusted: 300 → 480
+[03:33:34]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/financial-analysis/fin-008-calculate-wacc-from-financial-statements/environment/setup.sh
+[03:33:34]   [container] [setup] setup.sh 成功
+[03:33:34]   [container] [setup] 工作空间文件: ['balance_sheet.csv', 'income_statement.csv', 'instruction.md']
+[03:33:34]   [container] DONE
+[03:33:34] [clawbench_fin-008_glm-4.7_20260427_193256] Agent finished in 36.05s, returncode=0
+[03:33:34] [clawbench_fin-008_glm-4.7_20260427_193256] Agent result: passed=True, score=1.0000
+[03:33:35] [mkt-001-survey-analysis] Found cached result, skipping
+[03:33:35] [mkt-002-competitor-matrix] Found cached result, skipping
+[03:33:37] [clawbench_mkt-003-pricing-analysis_glm-4.7_20260427_193335] Container started
+[03:33:37] [mkt-003-pricing-analysis] Harness detected, timeout adjusted: 3600 → 3780
+[03:37:11]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/market-research/mkt-003-pricing-analysis/environment/setup.sh
+[03:37:11]   [container] [setup] setup.sh 成功
+[03:37:11]   [container] [setup] 工作空间文件: ['instruction.md', 'pricing_history.csv']
+[03:37:11]   [container] DONE
+[03:37:11] [clawbench_mkt-003-pricing-analysis_glm-4.7_20260427_193335] Agent finished in 214.41s, returncode=0
+[03:37:11] [clawbench_mkt-003-pricing-analysis_glm-4.7_20260427_193335] Agent result: passed=False, score=0.0000
+[03:37:13] [clawbench_mkt-004-trend-extraction_glm-4.7_20260427_193711] Container started
+[03:37:13] [mkt-004-trend-extraction] Harness detected, timeout adjusted: 3600 → 3780
+[03:39:53]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/market-research/mkt-004-trend-extraction/environment/setup.sh
+[03:39:53]   [container] [setup] setup.sh 成功
+[03:39:53]   [container] [setup] 工作空间文件: ['monthly_sales.csv', 'instruction.md']
+[03:39:53]   [container] DONE
+[03:39:53] [clawbench_mkt-004-trend-extraction_glm-4.7_20260427_193711] Agent finished in 159.58s, returncode=0
+[03:39:53] [clawbench_mkt-004-trend-extraction_glm-4.7_20260427_193711] Agent result: passed=True, score=1.0000
+[03:39:55] [clawbench_mkt-005-market-sizing_glm-4.7_20260427_193953] Container started
+[03:39:55] [mkt-005-market-sizing] Harness detected, timeout adjusted: 3600 → 3780
+[03:40:41]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/market-research/mkt-005-market-sizing/environment/setup.sh
+[03:40:41]   [container] [setup] setup.sh 成功
+[03:40:41]   [container] [setup] 工作空间文件: ['instruction.md', 'market_data.csv', 'company_data.json']
+[03:40:41]   [container] DONE
+[03:40:41]   [container-err] [92m19:40:01 - LiteLLM:WARNING[0m: get_model_cost_map.py:271 - LiteLLM: Failed to fetch remote model cost map from https://raw.githubusercontent.com/BerriAI/litellm/main/model_prices_and_context_window.json: The read operation timed out. Falling back to local backup.
+[03:40:41] [clawbench_mkt-005-market-sizing_glm-4.7_20260427_193953] Agent finished in 45.68s, returncode=0
+[03:40:41] [clawbench_mkt-005-market-sizing_glm-4.7_20260427_193953] Agent result: passed=True, score=1.0000
+[03:40:43] [clawbench_mem-001_glm-4.7_20260427_194041] Container started
+[03:40:43] [mem-001] Harness detected, timeout adjusted: 120 → 300
+[03:41:09]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-001-recall-given-name/environment/setup.sh
+[03:41:09]   [container] [setup] setup.sh 成功
+[03:41:09]   [container] [setup] 工作空间文件: ['notes.txt', 'instruction.md', 'inventory.csv']
+[03:41:09]   [container] DONE
+[03:41:09] [clawbench_mem-001_glm-4.7_20260427_194041] Agent finished in 26.54s, returncode=0
+[03:41:09] [clawbench_mem-001_glm-4.7_20260427_194041] Agent result: passed=True, score=1.0000
+[03:41:12] [clawbench_mem-002_glm-4.7_20260427_194110] Container started
+[03:41:12] [mem-002] Harness detected, timeout adjusted: 180 → 360
+[03:41:47]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-002-multi-step-instructions/environment/setup.sh
+[03:41:47]   [container] [setup] setup.sh 成功
+[03:41:47]   [container] [setup] 工作空间文件: ['instruction.md', 'words.txt']
+[03:41:47]   [container] DONE
+[03:41:47] [clawbench_mem-002_glm-4.7_20260427_194110] Agent finished in 35.64s, returncode=0
+[03:41:47] [clawbench_mem-002_glm-4.7_20260427_194110] Agent result: passed=True, score=1.0000
+[03:41:50] [clawbench_mem-003_glm-4.7_20260427_194148] Container started
+[03:41:50] [mem-003] Harness detected, timeout adjusted: 180 → 360
+[03:42:40]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-003-context-carry-over/environment/setup.sh
+[03:42:40]   [container] [setup] setup.sh 成功
+[03:42:40]   [container] [setup] 工作空间文件: ['config.json', 'instruction.md']
+[03:42:40]   [container] DONE
+[03:42:40] [clawbench_mem-003_glm-4.7_20260427_194148] Agent finished in 50.30s, returncode=0
+[03:42:40] [clawbench_mem-003_glm-4.7_20260427_194148] Agent result: passed=True, score=1.0000
+[03:42:42] [clawbench_mem-004_glm-4.7_20260427_194240] Container started
+[03:42:42] [mem-004] Harness detected, timeout adjusted: 180 → 360
+[03:43:13]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-004-contradiction-resolution/environment/setup.sh
+[03:43:13]   [container] [setup] setup.sh 成功
+[03:43:13]   [container] [setup] 工作空间文件: ['spec.txt', 'instruction.md']
+[03:43:13]   [container] DONE
+[03:43:13] [clawbench_mem-004_glm-4.7_20260427_194240] Agent finished in 30.34s, returncode=0
+[03:43:13] [clawbench_mem-004_glm-4.7_20260427_194240] Agent result: passed=False, score=0.9524
+[03:43:15] [clawbench_mem-005_glm-4.7_20260427_194313] Container started
+[03:43:15] [mem-005] Harness detected, timeout adjusted: 300 → 480
+[03:43:31]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-005-long-document-summarization/environment/setup.sh
+[03:43:31]   [container] [setup] setup.sh 成功
+[03:43:31]   [container] [setup] 工作空间文件: ['instruction.md', 'report.txt']
+[03:43:31]   [container] DONE
+[03:43:31] [clawbench_mem-005_glm-4.7_20260427_194313] Agent finished in 16.40s, returncode=0
+[03:43:31] [clawbench_mem-005_glm-4.7_20260427_194313] Agent result: passed=False, score=0.2174
+[03:43:33] [clawbench_mem-006_glm-4.7_20260427_194332] Container started
+[03:43:33] [mem-006] Harness detected, timeout adjusted: 300 → 480
+[03:45:10]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-006-cross-reference-synthesis/environment/setup.sh
+[03:45:10]   [container] [setup] setup.sh 成功
+[03:45:10]   [container] [setup] 工作空间文件: ['performance.csv', 'instruction.md', 'employees.csv', 'projects.csv']
+[03:45:10]   [container] DONE
+[03:45:10] [clawbench_mem-006_glm-4.7_20260427_194332] Agent finished in 96.38s, returncode=0
+[03:45:10] [clawbench_mem-006_glm-4.7_20260427_194332] Agent result: passed=True, score=1.0000
+[03:45:12] [clawbench_mem-007_glm-4.7_20260427_194510] Container started
+[03:45:12] [mem-007] Harness detected, timeout adjusted: 300 → 480
+[03:45:43]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-007-instruction-chaining/environment/setup.sh
+[03:45:43]   [container] [setup] setup.sh 成功
+[03:45:43]   [container] [setup] 工作空间文件: ['raw_data.txt', 'instruction.md']
+[03:45:43]   [container] DONE
+[03:45:43] [clawbench_mem-007_glm-4.7_20260427_194510] Agent finished in 31.49s, returncode=0
+[03:45:43] [clawbench_mem-007_glm-4.7_20260427_194510] Agent result: passed=False, score=0.9615
+[03:45:46] [clawbench_mem-008_glm-4.7_20260427_194544] Container started
+[03:45:46] [mem-008] Harness detected, timeout adjusted: 300 → 480
+[03:46:56]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-008-ambiguous-requirements/environment/setup.sh
+[03:46:56]   [container] [setup] setup.sh 成功
+[03:46:56]   [container] [setup] 工作空间文件: ['requirements.txt', 'instruction.md']
+[03:46:56]   [container] DONE
+[03:46:56] [clawbench_mem-008_glm-4.7_20260427_194544] Agent finished in 69.77s, returncode=0
+[03:46:56] [clawbench_mem-008_glm-4.7_20260427_194544] Agent result: passed=True, score=1.0000
+[03:46:58] [clawbench_mem-009_glm-4.7_20260427_194656] Container started
+[03:46:58] [mem-009] Harness detected, timeout adjusted: 180 → 360
+[03:47:47]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-009-sequential-state-tracking/environment/setup.sh
+[03:47:47]   [container] [setup] setup.sh 成功
+[03:47:47]   [container] [setup] 工作空间文件: ['instruction.md', 'transitions.txt']
+[03:47:47]   [container] DONE
+[03:47:47] [clawbench_mem-009_glm-4.7_20260427_194656] Agent finished in 48.80s, returncode=0
+[03:47:47] [clawbench_mem-009_glm-4.7_20260427_194656] Agent result: passed=True, score=1.0000
+[03:47:49] [clawbench_mem-010_glm-4.7_20260427_194747] Container started
+[03:47:49] [mem-010] Harness detected, timeout adjusted: 180 → 360
+[03:48:12]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-010-multi-file-context-correlation/environment/setup.sh
+[03:48:12]   [container] [setup] setup.sh 成功
+[03:48:12]   [container] [setup] 工作空间文件: ['instruction.md']
+[03:48:12]   [container] DONE
+[03:48:12] [clawbench_mem-010_glm-4.7_20260427_194747] Agent finished in 23.10s, returncode=0
+[03:48:12] [clawbench_mem-010_glm-4.7_20260427_194747] Agent result: passed=False, score=0.6000
+[03:48:14] [clawbench_mem-011_glm-4.7_20260427_194813] Container started
+[03:48:14] [mem-011] Harness detected, timeout adjusted: 180 → 360
+[03:48:52]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-011-conversation-tracker/environment/setup.sh
+[03:48:52]   [container] [setup] setup.sh 失败 (rc=1)
+[03:48:52]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/memory/mem-011-conversation-tracker/environment/data/conversation.jsonl': No such file or directory
+[03:48:52]   [container] 
+[03:48:52]   [container] [setup] 重试 (bash -x) ...
+[03:48:52]   [container] [setup] 重试也失败 (rc=1)
+[03:48:52]   [container] [setup] stderr: + set -euo pipefail
+[03:48:52]   [container] +++ dirname /app/claw-bench/tasks/memory/mem-011-conversation-tracker/environment/setup.sh
+[03:48:52]   [container] ++ cd /app/claw-bench/tasks/memory/mem-011-conversation-tracker/environment/..
+[03:48:52]   [container] ++ pwd
+[03:48:52]   [container] + TASK_DIR=/app/claw-bench/tasks/memory/mem-011-conversation-tracker
+[03:48:52]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[03:48:52]   [container] + mkdir -p /tmp/clawbench_workspace
+[03:48:52]   [container] + cp /app/claw-bench/tasks/memory/mem-011-conversation-tracker/environment/data/conversation.jsonl /tmp/clawbench_workspace/
+[03:48:52]   [container] cp: cannot stat '/app/claw-bench/tasks/memory/mem-011-conversation-tracker/environment/data/conversation.jsonl': No such file or directory
+[03:48:52]   [container] 
+[03:48:52]   [container] [setup] 工作空间文件: ['instruction.md']
+[03:48:52]   [container] DONE
+[03:48:52] [clawbench_mem-011_glm-4.7_20260427_194813] Agent finished in 38.01s, returncode=0
+[03:48:52] [clawbench_mem-011_glm-4.7_20260427_194813] Agent result: passed=False, score=0.7500
+[03:48:53] [mem-012] Found cached result, skipping
+[03:48:55] [clawbench_mem-013_glm-4.7_20260427_194853] Container started
+[03:48:55] [mem-013] Harness detected, timeout adjusted: 240 → 420
+[03:50:13]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-013-entity-relationship-tracker/environment/setup.sh
+[03:50:13]   [container] [setup] setup.sh 失败 (rc=1)
+[03:50:13]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/memory/mem-013-entity-relationship-tracker/environment/data/events.jsonl': No such file or directory
+[03:50:13]   [container] 
+[03:50:13]   [container] [setup] 重试 (bash -x) ...
+[03:50:13]   [container] [setup] 重试也失败 (rc=1)
+[03:50:13]   [container] [setup] stderr: + set -euo pipefail
+[03:50:13]   [container] +++ dirname /app/claw-bench/tasks/memory/mem-013-entity-relationship-tracker/environment/setup.sh
+[03:50:13]   [container] ++ cd /app/claw-bench/tasks/memory/mem-013-entity-relationship-tracker/environment/..
+[03:50:13]   [container] ++ pwd
+[03:50:13]   [container] + TASK_DIR=/app/claw-bench/tasks/memory/mem-013-entity-relationship-tracker
+[03:50:13]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[03:50:13]   [container] + mkdir -p /tmp/clawbench_workspace
+[03:50:13]   [container] + cp /app/claw-bench/tasks/memory/mem-013-entity-relationship-tracker/environment/data/events.jsonl /tmp/clawbench_workspace/
+[03:50:13]   [container] cp: cannot stat '/app/claw-bench/tasks/memory/mem-013-entity-relationship-tracker/environment/data/events.jsonl': No such file or directory
+[03:50:13]   [container] 
+[03:50:13]   [container] [setup] 工作空间文件: ['instruction.md']
+[03:50:13]   [container] DONE
+[03:50:13] [clawbench_mem-013_glm-4.7_20260427_194853] Agent finished in 78.70s, returncode=0
+[03:50:13] [clawbench_mem-013_glm-4.7_20260427_194853] Agent result: passed=False, score=0.4348
+[03:50:14] [mem-014] Found cached result, skipping
+[03:50:16] [clawbench_mem-015_glm-4.7_20260427_195014] Container started
+[03:50:16] [mem-015] Harness detected, timeout adjusted: 240 → 420
+[03:53:15]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-015-timeline-reconstructor/environment/setup.sh
+[03:53:15]   [container] [setup] setup.sh 成功
+[03:53:15]   [container] [setup] 工作空间文件: ['anchors.json', 'instruction.md', 'fragments.json']
+[03:53:15]   [container] DONE
+[03:53:15] [clawbench_mem-015_glm-4.7_20260427_195014] Agent finished in 179.84s, returncode=0
+[03:53:15] [clawbench_mem-015_glm-4.7_20260427_195014] Agent result: passed=False, score=0.9615
+[03:53:18] [clawbench_mag-001_glm-4.7_20260427_195316] Container started
+[03:53:18] [mag-001] Harness detected, timeout adjusted: 600 → 780
+[03:58:13]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multi-agent/mag-001-code-review-pipeline/environment/setup.sh
+[03:58:13]   [container] [setup] setup.sh 成功
+[03:58:13]   [container] [setup] 工作空间文件: ['data_processor.py', 'text_utils.py', 'instruction.md', 'calculator.py']
+[03:58:13]   [container] DONE
+[03:58:13] [clawbench_mag-001_glm-4.7_20260427_195316] Agent finished in 295.04s, returncode=0
+[03:58:13] [clawbench_mag-001_glm-4.7_20260427_195316] Agent result: passed=False, score=0.8000
+[03:58:15] [clawbench_mag-002_glm-4.7_20260427_195813] Container started
+[03:58:15] [mag-002] Harness detected, timeout adjusted: 600 → 780
+[04:02:51]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multi-agent/mag-002-research-debate/environment/setup.sh
+[04:02:51]   [container] [setup] setup.sh 成功
+[04:02:51]   [container] [setup] 工作空间文件: ['topic.md', 'instruction.md']
+[04:02:51]   [container] DONE
+[04:02:51] [clawbench_mag-002_glm-4.7_20260427_195813] Agent finished in 276.35s, returncode=0
+[04:02:51] [clawbench_mag-002_glm-4.7_20260427_195813] Agent result: passed=True, score=1.0000
+[04:02:54] [clawbench_mag-003_glm-4.7_20260427_200252] Container started
+[04:02:54] [mag-003] Harness detected, timeout adjusted: 600 → 780
+[04:07:11]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multi-agent/mag-003-data-pipeline-handoff/environment/setup.sh
+[04:07:11]   [container] [setup] setup.sh 成功
+[04:07:11]   [container] [setup] 工作空间文件: ['instruction.md', 'raw_data.csv']
+[04:07:11]   [container] DONE
+[04:07:11] [clawbench_mag-003_glm-4.7_20260427_200252] Agent finished in 256.88s, returncode=0
+[04:07:11] [clawbench_mag-003_glm-4.7_20260427_200252] Agent result: passed=False, score=0.9091
+[04:07:13] [clawbench_mag-004_glm-4.7_20260427_200711] Container started
+[04:07:13] [mag-004] Harness detected, timeout adjusted: 900 → 1080
+[04:12:00]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multi-agent/mag-004-project-decomposition/environment/setup.sh
+[04:12:00]   [container] [setup] setup.sh 成功
+[04:12:00]   [container] [setup] 工作空间文件: ['requirements.md', 'instruction.md']
+[04:12:00]   [container] DONE
+[04:12:00] [clawbench_mag-004_glm-4.7_20260427_200711] Agent finished in 287.37s, returncode=0
+[04:12:00] [clawbench_mag-004_glm-4.7_20260427_200711] Agent result: passed=True, score=1.0000
+[04:12:03] [clawbench_mm-001_glm-4.7_20260427_201201] Container started
+[04:12:03] [mm-001] Harness detected, timeout adjusted: 120 → 300
+[04:12:30]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multimodal/mm-001-json-to-yaml/environment/setup.sh
+[04:12:30]   [container] [setup] setup.sh 成功
+[04:12:30]   [container] [setup] 工作空间文件: ['config.json', 'instruction.md']
+[04:12:30]   [container] DONE
+[04:12:30] [clawbench_mm-001_glm-4.7_20260427_201201] Agent finished in 27.56s, returncode=0
+[04:12:30] [clawbench_mm-001_glm-4.7_20260427_201201] Agent result: passed=True, score=1.0000
+[04:12:32] [clawbench_mm-002_glm-4.7_20260427_201230] Container started
+[04:12:32] [mm-002] Harness detected, timeout adjusted: 180 → 360
+[04:13:43]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multimodal/mm-002-csv-json-merge/environment/setup.sh
+[04:13:43]   [container] [setup] setup.sh 成功
+[04:13:43]   [container] [setup] 工作空间文件: ['instruction.md', 'performance.json', 'employees.csv']
+[04:13:43]   [container] DONE
+[04:13:43] [clawbench_mm-002_glm-4.7_20260427_201230] Agent finished in 70.29s, returncode=0
+[04:13:43] [clawbench_mm-002_glm-4.7_20260427_201230] Agent result: passed=True, score=1.0000
+[04:13:45] [clawbench_mm-003_glm-4.7_20260427_201343] Container started
+[04:13:45] [mm-003] Harness detected, timeout adjusted: 180 → 360
+[04:14:34]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multimodal/mm-003-code-doc-extraction/environment/setup.sh
+[04:14:34]   [container] [setup] setup.sh 成功
+[04:14:34]   [container] [setup] 工作空间文件: ['data_processor.py', 'instruction.md']
+[04:14:34]   [container] DONE
+[04:14:34] [clawbench_mm-003_glm-4.7_20260427_201343] Agent finished in 48.77s, returncode=0
+[04:14:34] [clawbench_mm-003_glm-4.7_20260427_201343] Agent result: passed=True, score=1.0000
+[04:14:36] [clawbench_mm-004_glm-4.7_20260427_201434] Container started
+[04:14:36] [mm-004] Harness detected, timeout adjusted: 180 → 360
+[04:21:38] [clawbench_mm-005_glm-4.7_20260427_202136] Container started
+[04:21:38] [mm-005] Harness detected, timeout adjusted: 240 → 420
+[04:22:27]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multimodal/mm-005-multi-format-pipeline/environment/setup.sh
+[04:22:27]   [container] [setup] setup.sh 成功
+[04:22:27]   [container] [setup] 工作空间文件: ['products.csv', 'rules.toml', 'instruction.md', 'discounts.json', 'tags.txt']
+[04:22:27]   [container] DONE
+[04:22:27] [clawbench_mm-005_glm-4.7_20260427_202136] Agent finished in 48.28s, returncode=0
+[04:22:27] [clawbench_mm-005_glm-4.7_20260427_202136] Agent result: passed=True, score=1.0000
+[04:22:29] [clawbench_mm-006_glm-4.7_20260427_202227] Container started
+[04:22:29] [mm-006] Harness detected, timeout adjusted: 300 → 480
+[04:23:02]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multimodal/mm-006-schema-migration/environment/setup.sh
+[04:23:02]   [container] [setup] setup.sh 成功
+[04:23:02]   [container] [setup] 工作空间文件: ['instruction.md', 'old_schema.sql', 'new_schema.sql']
+[04:23:02]   [container] DONE
+[04:23:02] [clawbench_mm-006_glm-4.7_20260427_202227] Agent finished in 32.77s, returncode=0
+[04:23:02] [clawbench_mm-006_glm-4.7_20260427_202227] Agent result: passed=True, score=1.0000
+[04:23:02] [mm-007] Found cached result, skipping
+[04:23:02] [mm-008] Found cached result, skipping
+[04:23:04] [clawbench_mm-009_glm-4.7_20260427_202302] Container started
+[04:23:04] [mm-009] Harness detected, timeout adjusted: 300 → 480
+[04:24:27]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multimodal/mm-009-markdown-report/environment/setup.sh
+[04:24:27]   [container] [setup] setup.sh 成功
+[04:24:27]   [container] [setup] 工作空间文件: ['template.md', 'targets.json', 'instruction.md', 'sales.csv']
+[04:24:27]   [container] DONE
+[04:24:27] [clawbench_mm-009_glm-4.7_20260427_202302] Agent finished in 83.57s, returncode=0
+[04:24:27] [clawbench_mm-009_glm-4.7_20260427_202302] Agent result: passed=False, score=0.8947
+[04:24:30] [clawbench_mm-010_glm-4.7_20260427_202428] Container started
+[04:24:30] [mm-010] Harness detected, timeout adjusted: 300 → 480
+[04:26:05]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multimodal/mm-010-db-schema-docs/environment/setup.sh
+[04:26:05]   [container] [setup] setup.sh 成功
+[04:26:05]   [container] [setup] 工作空间文件: ['schema.sql', 'instruction.md']
+[04:26:05]   [container] DONE
+[04:26:05] [clawbench_mm-010_glm-4.7_20260427_202428] Agent finished in 95.45s, returncode=0
+[04:26:05] [clawbench_mm-010_glm-4.7_20260427_202428] Agent result: passed=True, score=1.0000
+[04:26:08] [clawbench_mm-011_glm-4.7_20260427_202605] Container started
+[04:26:08] [mm-011] Harness detected, timeout adjusted: 300 → 480
+[04:26:33]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multimodal/mm-011-svg-chart-generator/environment/setup.sh
+[04:26:33]   [container] [setup] setup.sh 成功
+[04:26:33]   [container] [setup] 工作空间文件: ['chart_data.json', 'instruction.md']
+[04:26:33]   [container] DONE
+[04:26:33] [clawbench_mm-011_glm-4.7_20260427_202605] Agent finished in 25.00s, returncode=0
+[04:26:33] [clawbench_mm-011_glm-4.7_20260427_202605] Agent result: passed=True, score=1.0000
+[04:26:35] [clawbench_mm-012_glm-4.7_20260427_202633] Container started
+[04:26:35] [mm-012] Harness detected, timeout adjusted: 300 → 480
+[04:27:04]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multimodal/mm-012-html-report-from-mixed-sources/environment/setup.sh
+[04:27:04]   [container] [setup] setup.sh 成功
+[04:27:04]   [container] [setup] 工作空间文件: ['metadata.json', 'instruction.md', 'text_summary.txt', 'data_table.csv']
+[04:27:04]   [container] DONE
+[04:27:04] [clawbench_mm-012_glm-4.7_20260427_202633] Agent finished in 28.92s, returncode=0
+[04:27:04] [clawbench_mm-012_glm-4.7_20260427_202633] Agent result: passed=True, score=1.0000
+[04:27:06] [clawbench_mm-013_glm-4.7_20260427_202704] Container started
+[04:27:06] [mm-013] Harness detected, timeout adjusted: 300 → 480
+[04:27:36]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multimodal/mm-013-data-format-converter/environment/setup.sh
+[04:27:36]   [container] [setup] setup.sh 成功
+[04:27:36]   [container] [setup] 工作空间文件: ['input.csv', 'instruction.md', 'schema.json']
+[04:27:36]   [container] DONE
+[04:27:36] [clawbench_mm-013_glm-4.7_20260427_202704] Agent finished in 30.16s, returncode=0
+[04:27:36] [clawbench_mm-013_glm-4.7_20260427_202704] Agent result: passed=True, score=1.0000
+[04:27:36] [mm-014] Found cached result, skipping
+[04:27:38] [clawbench_mm-015_glm-4.7_20260427_202736] Container started
+[04:27:38] [mm-015] Harness detected, timeout adjusted: 300 → 480
+[04:28:23]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multimodal/mm-015-multi-format-aggregator/environment/setup.sh
+[04:28:23]   [container] [setup] setup.sh 成功
+[04:28:23]   [container] [setup] 工作空间文件: ['notes.txt', 'instruction.md', 'inventory.json', 'sales.csv']
+[04:28:23]   [container] DONE
+[04:28:23] [clawbench_mm-015_glm-4.7_20260427_202736] Agent finished in 44.71s, returncode=0
+[04:28:23] [clawbench_mm-015_glm-4.7_20260427_202736] Agent result: passed=True, score=1.0000
+[04:28:25] [clawbench_plan-001_glm-4.7_20260427_202823] Container started
+[04:28:25] [plan-001] Harness detected, timeout adjusted: 180 → 360
+[04:30:26]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/planning/plan-001/environment/setup.sh
+[04:30:26]   [container] [setup] setup.sh 失败 (rc=1)
+[04:30:26]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/planning/plan-001/environment/data/*': No such file or directory
+[04:30:26]   [container] 
+[04:30:26]   [container] [setup] 重试 (bash -x) ...
+[04:30:26]   [container] [setup] 重试也失败 (rc=1)
+[04:30:26]   [container] [setup] stderr: + set -euo pipefail
+[04:30:26]   [container] +++ dirname /app/claw-bench/tasks/planning/plan-001/environment/setup.sh
+[04:30:26]   [container] ++ cd /app/claw-bench/tasks/planning/plan-001/environment/..
+[04:30:26]   [container] ++ pwd
+[04:30:26]   [container] + TASK_DIR=/app/claw-bench/tasks/planning/plan-001
+[04:30:26]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[04:30:26]   [container] + mkdir -p /tmp/clawbench_workspace
+[04:30:26]   [container] + cp '/app/claw-bench/tasks/planning/plan-001/environment/data/*' /tmp/clawbench_workspace/
+[04:30:26]   [container] cp: cannot stat '/app/claw-bench/tasks/planning/plan-001/environment/data/*': No such file or directory
+[04:30:26]   [container] 
+[04:30:26]   [container] [setup] 工作空间文件: ['instruction.md']
+[04:30:26]   [container] DONE
+[04:30:26] [clawbench_plan-001_glm-4.7_20260427_202823] Agent finished in 121.39s, returncode=0
+[04:30:26] [clawbench_plan-001_glm-4.7_20260427_202823] Agent result: passed=False, score=0.0667
+[04:30:29] [clawbench_plan-002_glm-4.7_20260427_203027] Container started
+[04:30:29] [plan-002] Harness detected, timeout adjusted: 240 → 420
+[04:32:14]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/planning/plan-002/environment/setup.sh
+[04:32:14]   [container] [setup] setup.sh 失败 (rc=1)
+[04:32:14]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/planning/plan-002/environment/data/*': No such file or directory
+[04:32:14]   [container] 
+[04:32:14]   [container] [setup] 重试 (bash -x) ...
+[04:32:14]   [container] [setup] 重试也失败 (rc=1)
+[04:32:14]   [container] [setup] stderr: + set -euo pipefail
+[04:32:14]   [container] +++ dirname /app/claw-bench/tasks/planning/plan-002/environment/setup.sh
+[04:32:14]   [container] ++ cd /app/claw-bench/tasks/planning/plan-002/environment/..
+[04:32:14]   [container] ++ pwd
+[04:32:14]   [container] + TASK_DIR=/app/claw-bench/tasks/planning/plan-002
+[04:32:14]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[04:32:14]   [container] + mkdir -p /tmp/clawbench_workspace
+[04:32:14]   [container] + cp '/app/claw-bench/tasks/planning/plan-002/environment/data/*' /tmp/clawbench_workspace/
+[04:32:14]   [container] cp: cannot stat '/app/claw-bench/tasks/planning/plan-002/environment/data/*': No such file or directory
+[04:32:14]   [container] 
+[04:32:14]   [container] [setup] 工作空间文件: ['instruction.md']
+[04:32:14]   [container] DONE
+[04:32:14] [clawbench_plan-002_glm-4.7_20260427_203027] Agent finished in 104.96s, returncode=0
+[04:32:14] [clawbench_plan-002_glm-4.7_20260427_203027] Agent result: passed=True, score=1.0000
+[04:32:16] [clawbench_plan-003_glm-4.7_20260427_203214] Container started
+[04:32:16] [plan-003] Harness detected, timeout adjusted: 240 → 420
+[04:33:32]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/planning/plan-003/environment/setup.sh
+[04:33:32]   [container] [setup] setup.sh 失败 (rc=1)
+[04:33:32]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/planning/plan-003/environment/data/*': No such file or directory
+[04:33:32]   [container] 
+[04:33:32]   [container] [setup] 重试 (bash -x) ...
+[04:33:32]   [container] [setup] 重试也失败 (rc=1)
+[04:33:32]   [container] [setup] stderr: + set -euo pipefail
+[04:33:32]   [container] +++ dirname /app/claw-bench/tasks/planning/plan-003/environment/setup.sh
+[04:33:32]   [container] ++ cd /app/claw-bench/tasks/planning/plan-003/environment/..
+[04:33:32]   [container] ++ pwd
+[04:33:32]   [container] + TASK_DIR=/app/claw-bench/tasks/planning/plan-003
+[04:33:32]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[04:33:32]   [container] + mkdir -p /tmp/clawbench_workspace
+[04:33:32]   [container] + cp '/app/claw-bench/tasks/planning/plan-003/environment/data/*' /tmp/clawbench_workspace/
+[04:33:32]   [container] cp: cannot stat '/app/claw-bench/tasks/planning/plan-003/environment/data/*': No such file or directory
+[04:33:32]   [container] 
+[04:33:32]   [container] [setup] 工作空间文件: ['instruction.md']
+[04:33:32]   [container] DONE
+[04:33:32] [clawbench_plan-003_glm-4.7_20260427_203214] Agent finished in 76.41s, returncode=0
+[04:33:32] [clawbench_plan-003_glm-4.7_20260427_203214] Agent result: passed=False, score=0.9375
+[04:33:34] [clawbench_plan-004_glm-4.7_20260427_203333] Container started
+[04:33:34] [plan-004] Harness detected, timeout adjusted: 300 → 480
+[04:37:40]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/planning/plan-004/environment/setup.sh
+[04:37:40]   [container] [setup] setup.sh 失败 (rc=1)
+[04:37:40]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/planning/plan-004/environment/data/*': No such file or directory
+[04:37:40]   [container] 
+[04:37:40]   [container] [setup] 重试 (bash -x) ...
+[04:37:40]   [container] [setup] 重试也失败 (rc=1)
+[04:37:40]   [container] [setup] stderr: + set -euo pipefail
+[04:37:40]   [container] +++ dirname /app/claw-bench/tasks/planning/plan-004/environment/setup.sh
+[04:37:40]   [container] ++ cd /app/claw-bench/tasks/planning/plan-004/environment/..
+[04:37:40]   [container] ++ pwd
+[04:37:40]   [container] + TASK_DIR=/app/claw-bench/tasks/planning/plan-004
+[04:37:40]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[04:37:40]   [container] + mkdir -p /tmp/clawbench_workspace
+[04:37:40]   [container] + cp '/app/claw-bench/tasks/planning/plan-004/environment/data/*' /tmp/clawbench_workspace/
+[04:37:40]   [container] cp: cannot stat '/app/claw-bench/tasks/planning/plan-004/environment/data/*': No such file or directory
+[04:37:40]   [container] 
+[04:37:40]   [container] [setup] 工作空间文件: ['instruction.md']
+[04:37:40]   [container] DONE
+[04:37:40] [clawbench_plan-004_glm-4.7_20260427_203333] Agent finished in 245.30s, returncode=0
+[04:37:40] [clawbench_plan-004_glm-4.7_20260427_203333] Agent result: passed=True, score=1.0000
+[04:37:42] [clawbench_plan-005_glm-4.7_20260427_203740] Container started
+[04:37:42] [plan-005] Harness detected, timeout adjusted: 360 → 540
+[04:40:15]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/planning/plan-005/environment/setup.sh
+[04:40:15]   [container] [setup] setup.sh 失败 (rc=1)
+[04:40:15]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/planning/plan-005/environment/data/*': No such file or directory
+[04:40:15]   [container] 
+[04:40:15]   [container] [setup] 重试 (bash -x) ...
+[04:40:15]   [container] [setup] 重试也失败 (rc=1)
+[04:40:15]   [container] [setup] stderr: + set -euo pipefail
+[04:40:15]   [container] +++ dirname /app/claw-bench/tasks/planning/plan-005/environment/setup.sh
+[04:40:15]   [container] ++ cd /app/claw-bench/tasks/planning/plan-005/environment/..
+[04:40:15]   [container] ++ pwd
+[04:40:15]   [container] + TASK_DIR=/app/claw-bench/tasks/planning/plan-005
+[04:40:15]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[04:40:15]   [container] + mkdir -p /tmp/clawbench_workspace
+[04:40:15]   [container] + cp '/app/claw-bench/tasks/planning/plan-005/environment/data/*' /tmp/clawbench_workspace/
+[04:40:15]   [container] cp: cannot stat '/app/claw-bench/tasks/planning/plan-005/environment/data/*': No such file or directory
+[04:40:15]   [container] 
+[04:40:15]   [container] [setup] 工作空间文件: ['instruction.md']
+[04:40:15]   [container] DONE
+[04:40:15] [clawbench_plan-005_glm-4.7_20260427_203740] Agent finished in 153.77s, returncode=0
+[04:40:16] [clawbench_plan-005_glm-4.7_20260427_203740] Agent result: passed=False, score=0.8519
+[04:40:18] [clawbench_reg-001-gdpr-audit_glm-4.7_20260427_204016] Container started
+[04:40:18] [reg-001-gdpr-audit] Harness detected, timeout adjusted: 3600 → 3780
+[04:41:18]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/regulatory-compliance/reg-001-gdpr-audit/environment/setup.sh
+[04:41:18]   [container] [setup] setup.sh 成功
+[04:41:18]   [container] [setup] 工作空间文件: ['processing_records.csv', 'instruction.md']
+[04:41:18]   [container] DONE
+[04:41:18] [clawbench_reg-001-gdpr-audit_glm-4.7_20260427_204016] Agent finished in 59.82s, returncode=0
+[04:41:18] [clawbench_reg-001-gdpr-audit_glm-4.7_20260427_204016] Agent result: passed=True, score=1.0000
+[04:41:20] [clawbench_reg-002-sox-controls_glm-4.7_20260427_204118] Container started
+[04:41:20] [reg-002-sox-controls] Harness detected, timeout adjusted: 3600 → 3780
+[04:42:59]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/regulatory-compliance/reg-002-sox-controls/environment/setup.sh
+[04:42:59]   [container] [setup] setup.sh 成功
+[04:42:59]   [container] [setup] 工作空间文件: ['controls.csv', 'instruction.md']
+[04:42:59]   [container] DONE
+[04:42:59] [clawbench_reg-002-sox-controls_glm-4.7_20260427_204118] Agent finished in 99.46s, returncode=0
+[04:42:59] [clawbench_reg-002-sox-controls_glm-4.7_20260427_204118] Agent result: passed=True, score=1.0000
+[04:43:01] [clawbench_reg-003-aml-screening_glm-4.7_20260427_204300] Container started
+[04:43:01] [reg-003-aml-screening] Harness detected, timeout adjusted: 3600 → 3780
+[04:44:20]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/regulatory-compliance/reg-003-aml-screening/environment/setup.sh
+[04:44:20]   [container] [setup] setup.sh 成功
+[04:44:20]   [container] [setup] 工作空间文件: ['instruction.md', 'transactions.csv']
+[04:44:20]   [container] DONE
+[04:44:20] [clawbench_reg-003-aml-screening_glm-4.7_20260427_204300] Agent finished in 78.42s, returncode=0
+[04:44:20] [clawbench_reg-003-aml-screening_glm-4.7_20260427_204300] Agent result: passed=True, score=1.0000
+[04:44:22] [clawbench_reg-004-hipaa-assessment_glm-4.7_20260427_204420] Container started
+[04:44:22] [reg-004-hipaa-assessment] Harness detected, timeout adjusted: 3600 → 3780
+[04:44:53]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/regulatory-compliance/reg-004-hipaa-assessment/environment/setup.sh
+[04:44:53]   [container] [setup] setup.sh 成功
+[04:44:53]   [container] [setup] 工作空间文件: ['system_config.json', 'instruction.md']
+[04:44:53]   [container] DONE
+[04:44:53] [clawbench_reg-004-hipaa-assessment_glm-4.7_20260427_204420] Agent finished in 31.10s, returncode=0
+[04:44:53] [clawbench_reg-004-hipaa-assessment_glm-4.7_20260427_204420] Agent result: passed=True, score=1.0000
+[04:44:55] [clawbench_reg-005-environmental-report_glm-4.7_20260427_204453] Container started
+[04:44:55] [reg-005-environmental-report] Harness detected, timeout adjusted: 3600 → 3780
+[04:45:47]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/regulatory-compliance/reg-005-environmental-report/environment/setup.sh
+[04:45:47]   [container] [setup] setup.sh 成功
+[04:45:47]   [container] [setup] 工作空间文件: ['emissions_data.csv', 'instruction.md']
+[04:45:47]   [container] DONE
+[04:45:47] [clawbench_reg-005-environmental-report_glm-4.7_20260427_204453] Agent finished in 51.46s, returncode=0
+[04:45:47] [clawbench_reg-005-environmental-report_glm-4.7_20260427_204453] Agent result: passed=True, score=1.0000
+[04:45:49] [clawbench_sci-001-ode-solver_glm-4.7_20260427_204547] Container started
+[04:45:49] [sci-001-ode-solver] Harness detected, timeout adjusted: 3600 → 3780
+[04:46:37]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/scientific-computing/sci-001-ode-solver/environment/setup.sh
+[04:46:37]   [container] [setup] setup.sh 成功
+[04:46:37]   [container] [setup] 工作空间文件: ['parameters.json', 'instruction.md']
+[04:46:37]   [container] DONE
+[04:46:37] [clawbench_sci-001-ode-solver_glm-4.7_20260427_204547] Agent finished in 48.20s, returncode=0
+[04:46:37] [clawbench_sci-001-ode-solver_glm-4.7_20260427_204547] Agent result: passed=True, score=1.0000
+[04:46:39] [clawbench_sci-002-monte-carlo_glm-4.7_20260427_204638] Container started
+[04:46:39] [sci-002-monte-carlo] Harness detected, timeout adjusted: 3600 → 3780
+[04:47:20]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/scientific-computing/sci-002-monte-carlo/environment/setup.sh
+[04:47:20]   [container] [setup] setup.sh 成功
+[04:47:20]   [container] [setup] 工作空间文件: ['instruction.md', '.placeholder']
+[04:47:20]   [container] DONE
+[04:47:20] [clawbench_sci-002-monte-carlo_glm-4.7_20260427_204638] Agent finished in 40.87s, returncode=0
+[04:47:20] [clawbench_sci-002-monte-carlo_glm-4.7_20260427_204638] Agent result: passed=False, score=0.6000
+[04:47:23] [clawbench_sci-003-matrix-decomposition_glm-4.7_20260427_204721] Container started
+[04:47:23] [sci-003-matrix-decomposition] Harness detected, timeout adjusted: 3600 → 3780
+[04:48:22]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/scientific-computing/sci-003-matrix-decomposition/environment/setup.sh
+[04:48:22]   [container] [setup] setup.sh 成功
+[04:48:22]   [container] [setup] 工作空间文件: ['instruction.md', 'data_matrix.csv']
+[04:48:22]   [container] DONE
+[04:48:22] [clawbench_sci-003-matrix-decomposition_glm-4.7_20260427_204721] Agent finished in 59.71s, returncode=0
+[04:48:22] [clawbench_sci-003-matrix-decomposition_glm-4.7_20260427_204721] Agent result: passed=True, score=1.0000
+[04:48:24] [clawbench_sci-004-signal-processing_glm-4.7_20260427_204823] Container started
+[04:48:24] [sci-004-signal-processing] Harness detected, timeout adjusted: 3600 → 3780
+[04:55:13]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/scientific-computing/sci-004-signal-processing/environment/setup.sh
+[04:55:13]   [container] [setup] setup.sh 失败 (rc=1)
+[04:55:13]   [container] [setup] stderr: Traceback (most recent call last):
+[04:55:13]   [container]   File "<stdin>", line 3, in <module>
+[04:55:13]   [container] ModuleNotFoundError: No module named 'pandas'
+[04:55:13]   [container] 
+[04:55:13]   [container] [setup] 重试 (bash -x) ...
+[04:55:13]   [container] [setup] 重试也失败 (rc=1)
+[04:55:13]   [container] [setup] stderr: + set -euo pipefail
+[04:55:13]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[04:55:13]   [container] + export WORKSPACE
+[04:55:13]   [container] + mkdir -p /tmp/clawbench_workspace
+[04:55:13]   [container] + python3 -
+[04:55:13]   [container] Traceback (most recent call last):
+[04:55:13]   [container]   File "<stdin>", line 3, in <module>
+[04:55:13]   [container] ModuleNotFoundError: No module named 'pandas'
+[04:55:13]   [container] 
+[04:55:13]   [container] [setup] 工作空间文件: ['instruction.md']
+[04:55:13]   [container] DONE
+[04:55:13] [clawbench_sci-004-signal-processing_glm-4.7_20260427_204823] Agent finished in 408.34s, returncode=0
+[04:55:13] [clawbench_sci-004-signal-processing_glm-4.7_20260427_204823] Agent result: passed=False, score=0.0000
+[04:55:15] [clawbench_sci-005-optimization_glm-4.7_20260427_205513] Container started
+[04:55:15] [sci-005-optimization] Harness detected, timeout adjusted: 3600 → 3780
+[04:59:05]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/scientific-computing/sci-005-optimization/environment/setup.sh
+[04:59:05]   [container] [setup] setup.sh 失败 (rc=1)
+[04:59:05]   [container] [setup] stderr: Traceback (most recent call last):
+[04:59:05]   [container]   File "<stdin>", line 38, in <module>
+[04:59:05]   [container] FileNotFoundError: [Errno 2] No such file or directory: '$WORKSPACE/optimization_problem.json'
+[04:59:05]   [container] 
+[04:59:05]   [container] [setup] 重试 (bash -x) ...
+[04:59:05]   [container] [setup] 重试也失败 (rc=1)
+[04:59:05]   [container] [setup] stderr: + set -euo pipefail
+[04:59:05]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[04:59:05]   [container] + mkdir -p /tmp/clawbench_workspace
+[04:59:05]   [container] + python3 -
+[04:59:05]   [container] Traceback (most recent call last):
+[04:59:05]   [container]   File "<stdin>", line 38, in <module>
+[04:59:05]   [container] FileNotFoundError: [Errno 2] No such file or directory: '$WORKSPACE/optimization_problem.json'
+[04:59:05]   [container] 
+[04:59:05]   [container] [setup] 工作空间文件: ['instruction.md']
+[04:59:05]   [container] DONE
+[04:59:05] [clawbench_sci-005-optimization_glm-4.7_20260427_205513] Agent finished in 229.54s, returncode=0
+[04:59:05] [clawbench_sci-005-optimization_glm-4.7_20260427_205513] Agent result: passed=False, score=0.6667
+[04:59:07] [clawbench_sec-001_glm-4.7_20260427_205905] Container started
+[04:59:07] [sec-001] Harness detected, timeout adjusted: 120 → 300
+[05:00:23]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/security/sec-001-detect-hardcoded-credentials/environment/setup.sh
+[05:00:23]   [container] [setup] setup.sh 成功
+[05:00:23]   [container] [setup] 工作空间文件: ['auth_service.py', 'config.py', 'instruction.md', 'api_client.py']
+[05:00:23]   [container] DONE
+[05:00:23] [clawbench_sec-001_glm-4.7_20260427_205905] Agent finished in 75.98s, returncode=0
+[05:00:23] [clawbench_sec-001_glm-4.7_20260427_205905] Agent result: passed=False, score=0.9091
+[05:00:23] [sec-002] Found cached result, skipping
+[05:00:25] [clawbench_sec-003_glm-4.7_20260427_210023] Container started
+[05:00:25] [sec-003] Harness detected, timeout adjusted: 120 → 300
+[05:01:49]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/security/sec-003-check-file-permissions/environment/setup.sh
+[05:01:49]   [container] [setup] setup.sh 成功
+[05:01:49]   [container] [setup] 工作空间文件: ['permissions.txt', 'instruction.md']
+[05:01:49]   [container] DONE
+[05:01:49] [clawbench_sec-003_glm-4.7_20260427_210023] Agent finished in 84.51s, returncode=0
+[05:01:49] [clawbench_sec-003_glm-4.7_20260427_210023] Agent result: passed=True, score=1.0000
+[05:01:52] [clawbench_sec-004_glm-4.7_20260427_210150] Container started
+[05:01:52] [sec-004] Harness detected, timeout adjusted: 180 → 360
+[05:02:22]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/security/sec-004-sql-injection-detection/environment/setup.sh
+[05:02:22]   [container] [setup] setup.sh 成功
+[05:02:22]   [container] [setup] 工作空间文件: ['instruction.md', 'queries.py']
+[05:02:22]   [container] DONE
+[05:02:22] [clawbench_sec-004_glm-4.7_20260427_210150] Agent finished in 30.29s, returncode=0
+[05:02:22] [clawbench_sec-004_glm-4.7_20260427_210150] Agent result: passed=False, score=0.9333
+[05:02:24] [clawbench_sec-005_glm-4.7_20260427_210222] Container started
+[05:02:24] [sec-005] Harness detected, timeout adjusted: 180 → 360
+[05:03:52]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/security/sec-005-xss-vulnerability-scan/environment/setup.sh
+[05:03:52]   [container] [setup] setup.sh 成功
+[05:03:52]   [container] [setup] 工作空间文件: ['profile.html', 'dashboard.html', 'instruction.md', 'comment.html', 'search.html', 'settings.html']
+[05:03:52]   [container] DONE
+[05:03:52] [clawbench_sec-005_glm-4.7_20260427_210222] Agent finished in 87.67s, returncode=0
+[05:03:52] [clawbench_sec-005_glm-4.7_20260427_210222] Agent result: passed=True, score=1.0000
+[05:03:54] [clawbench_sec-006_glm-4.7_20260427_210352] Container started
+[05:03:54] [sec-006] Harness detected, timeout adjusted: 180 → 360
+[05:05:34]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/security/sec-006-dependency-vulnerability-check/environment/setup.sh
+[05:05:34]   [container] [setup] setup.sh 成功
+[05:05:34]   [container] [setup] 工作空间文件: ['vuln_database.json', 'requirements.txt', 'instruction.md']
+[05:05:34]   [container] DONE
+[05:05:34] [clawbench_sec-006_glm-4.7_20260427_210352] Agent finished in 99.74s, returncode=0
+[05:05:34] [clawbench_sec-006_glm-4.7_20260427_210352] Agent result: passed=True, score=1.0000
+[05:05:36] [clawbench_sec-007_glm-4.7_20260427_210534] Container started
+[05:05:36] [sec-007] Harness detected, timeout adjusted: 180 → 360
+[05:08:01]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/security/sec-007-log-forensics/environment/setup.sh
+[05:08:01]   [container] [setup] setup.sh 失败 (rc=1)
+[05:08:01]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/security/sec-007-log-forensics/environment/data/access.log': No such file or directory
+[05:08:01]   [container] 
+[05:08:01]   [container] [setup] 重试 (bash -x) ...
+[05:08:01]   [container] [setup] 重试也失败 (rc=1)
+[05:08:01]   [container] [setup] stderr: + set -euo pipefail
+[05:08:01]   [container] +++ dirname /app/claw-bench/tasks/security/sec-007-log-forensics/environment/setup.sh
+[05:08:01]   [container] ++ cd /app/claw-bench/tasks/security/sec-007-log-forensics/environment/..
+[05:08:01]   [container] ++ pwd
+[05:08:01]   [container] + TASK_DIR=/app/claw-bench/tasks/security/sec-007-log-forensics
+[05:08:01]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[05:08:01]   [container] + mkdir -p /tmp/clawbench_workspace
+[05:08:01]   [container] + cp /app/claw-bench/tasks/security/sec-007-log-forensics/environment/data/access.log /tmp/clawbench_workspace/access.log
+[05:08:01]   [container] cp: cannot stat '/app/claw-bench/tasks/security/sec-007-log-forensics/environment/data/access.log': No such file or directory
+[05:08:01]   [container] 
+[05:08:01]   [container] [setup] 工作空间文件: ['instruction.md']
+[05:08:01]   [container] DONE
+[05:08:01] [clawbench_sec-007_glm-4.7_20260427_210534] Agent finished in 144.92s, returncode=0
+[05:08:01] [clawbench_sec-007_glm-4.7_20260427_210534] Agent result: passed=False, score=0.7500
+[05:08:03] [clawbench_sec-008_glm-4.7_20260427_210801] Container started
+[05:08:03] [sec-008] Harness detected, timeout adjusted: 180 → 360
+[05:08:52]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/security/sec-008-encryption-validation/environment/setup.sh
+[05:08:52]   [container] [setup] setup.sh 成功
+[05:08:52]   [container] [setup] 工作空间文件: ['instruction.md', 'crypto_config.json']
+[05:08:52]   [container] DONE
+[05:08:52] [clawbench_sec-008_glm-4.7_20260427_210801] Agent finished in 48.52s, returncode=0
+[05:08:52] [clawbench_sec-008_glm-4.7_20260427_210801] Agent result: passed=True, score=1.0000
+[05:08:54] [clawbench_sec-009_glm-4.7_20260427_210852] Container started
+[05:08:54] [sec-009] Harness detected, timeout adjusted: 240 → 420
+[05:09:33]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/security/sec-009-api-security-audit/environment/setup.sh
+[05:09:33]   [container] [setup] setup.sh 成功
+[05:09:33]   [container] [setup] 工作空间文件: ['instruction.md', 'api_spec.json']
+[05:09:33]   [container] DONE
+[05:09:33] [clawbench_sec-009_glm-4.7_20260427_210852] Agent finished in 38.77s, returncode=0
+[05:09:33] [clawbench_sec-009_glm-4.7_20260427_210852] Agent result: passed=False, score=0.8889
+[05:09:35] [clawbench_sec-010_glm-4.7_20260427_210933] Container started
+[05:09:35] [sec-010] Harness detected, timeout adjusted: 240 → 420
+[05:10:38]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/security/sec-010-network-policy-analysis/environment/setup.sh
+[05:10:38]   [container] [setup] setup.sh 成功
+[05:10:38]   [container] [setup] 工作空间文件: ['firewall_rules.json', 'instruction.md']
+[05:10:38]   [container] DONE
+[05:10:38] [clawbench_sec-010_glm-4.7_20260427_210933] Agent finished in 63.51s, returncode=0
+[05:10:38] [clawbench_sec-010_glm-4.7_20260427_210933] Agent result: passed=True, score=1.0000
+[05:10:41] [clawbench_sec-011_glm-4.7_20260427_211039] Container started
+[05:10:41] [sec-011] Harness detected, timeout adjusted: 240 → 420
+[05:14:02]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/security/sec-011-incident-response-plan/environment/setup.sh
+[05:14:02]   [container] [setup] setup.sh 成功
+[05:14:02]   [container] [setup] 工作空间文件: ['incident.json', 'instruction.md', 'playbooks.json']
+[05:14:02]   [container] DONE
+[05:14:02] [clawbench_sec-011_glm-4.7_20260427_211039] Agent finished in 201.70s, returncode=0
+[05:14:02] [clawbench_sec-011_glm-4.7_20260427_211039] Agent result: passed=False, score=0.9474
+[05:14:04] [clawbench_sec-012_glm-4.7_20260427_211403] Container started
+[05:14:04] [sec-012] Harness detected, timeout adjusted: 240 → 420
+[05:14:53]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/security/sec-012-secrets-scanning-git-history/environment/setup.sh
+[05:14:53]   [container] [setup] setup.sh 成功
+[05:14:53]   [container] [setup] 工作空间文件: ['commit_01.diff', 'commit_10.diff', 'commit_06.diff', 'commit_07.diff', 'instruction.md', 'commit_08.diff', 'commit_04.diff', 'commit_05.diff', 'commit_09.diff', 'commit_02.diff', 'commit_03.diff']
+[05:14:53]   [container] DONE
+[05:14:53] [clawbench_sec-012_glm-4.7_20260427_211403] Agent finished in 48.33s, returncode=0
+[05:14:53] [clawbench_sec-012_glm-4.7_20260427_211403] Agent result: passed=False, score=0.8235
+[05:14:55] [clawbench_sec-013_glm-4.7_20260427_211453] Container started
+[05:14:55] [sec-013] Harness detected, timeout adjusted: 300 → 480
+[05:19:57]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/security/sec-013-threat-model-generation/environment/setup.sh
+[05:19:57]   [container] [setup] setup.sh 成功
+[05:19:57]   [container] [setup] 工作空间文件: ['instruction.md', 'architecture.json']
+[05:19:57]   [container] DONE
+[05:19:57] [clawbench_sec-013_glm-4.7_20260427_211453] Agent finished in 301.91s, returncode=0
+[05:19:57] [clawbench_sec-013_glm-4.7_20260427_211453] Agent result: passed=True, score=1.0000
+[05:19:59] [clawbench_sec-014_glm-4.7_20260427_211957] Container started
+[05:19:59] [sec-014] Harness detected, timeout adjusted: 300 → 480
+[05:21:59]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/security/sec-014-compliance-audit/environment/setup.sh
+[05:21:59]   [container] [setup] setup.sh 成功
+[05:21:59]   [container] [setup] 工作空间文件: ['logging.json', 'compliance_rules.json', 'auth_config.json', 'web_server.json', 'instruction.md', 'database.json', 'network.json']
+[05:21:59]   [container] DONE
+[05:21:59] [clawbench_sec-014_glm-4.7_20260427_211957] Agent finished in 119.99s, returncode=0
+[05:21:59] [clawbench_sec-014_glm-4.7_20260427_211957] Agent result: passed=True, score=1.0000
+[05:22:01] [clawbench_sec-015_glm-4.7_20260427_212200] Container started
+[05:22:01] [sec-015] Harness detected, timeout adjusted: 360 → 540
+[05:24:42]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/security/sec-015-full-security-assessment/environment/setup.sh
+[05:24:42]   [container] [setup] setup.sh 成功
+[05:24:42]   [container] [setup] 工作空间文件: ['config.py', 'requirements.txt', 'Dockerfile', 'instruction.md', 'app.py', 'docker-compose.yml']
+[05:24:42]   [container] DONE
+[05:24:42] [clawbench_sec-015_glm-4.7_20260427_212200] Agent finished in 160.31s, returncode=0
+[05:24:42] [clawbench_sec-015_glm-4.7_20260427_212200] Agent result: passed=False, score=0.2917
+[05:24:44] [clawbench_sys-001_glm-4.7_20260427_212442] Container started
+[05:24:44] [sys-001] Harness detected, timeout adjusted: 120 → 300
+[05:25:57]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-001-disk-usage-report/environment/setup.sh
+[05:25:57]   [container] [setup] setup.sh 成功
+[05:25:57]   [container] [setup] 工作空间文件: ['filesystem.txt', 'instruction.md']
+[05:25:57]   [container] DONE
+[05:25:57] [clawbench_sys-001_glm-4.7_20260427_212442] Agent finished in 73.61s, returncode=0
+[05:25:57] [clawbench_sys-001_glm-4.7_20260427_212442] Agent result: passed=True, score=1.0000
+[05:25:59] [clawbench_sys-002_glm-4.7_20260427_212558] Container started
+[05:25:59] [sys-002] Harness detected, timeout adjusted: 120 → 300
+[05:28:20]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-002-parse-process-list/environment/setup.sh
+[05:28:20]   [container] [setup] setup.sh 成功
+[05:28:20]   [container] [setup] 工作空间文件: ['instruction.md', 'processes.txt']
+[05:28:20]   [container] DONE
+[05:28:20] [clawbench_sys-002_glm-4.7_20260427_212558] Agent finished in 140.97s, returncode=0
+[05:28:20] [clawbench_sys-002_glm-4.7_20260427_212558] Agent result: passed=True, score=1.0000
+[05:28:21] [sys-003] Found cached result, skipping
+[05:28:23] [clawbench_sys-004_glm-4.7_20260427_212821] Container started
+[05:28:23] [sys-004] Harness detected, timeout adjusted: 180 → 360
+[05:29:00]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-004-log-analysis/environment/setup.sh
+[05:29:00]   [container] [setup] setup.sh 成功
+[05:29:00]   [container] [setup] 工作空间文件: ['instruction.md', 'syslog.txt']
+[05:29:00]   [container] DONE
+[05:29:00] [clawbench_sys-004_glm-4.7_20260427_212821] Agent finished in 36.97s, returncode=0
+[05:29:00] [clawbench_sys-004_glm-4.7_20260427_212821] Agent result: passed=True, score=1.0000
+[05:29:02] [clawbench_sys-005_glm-4.7_20260427_212900] Container started
+[05:29:02] [sys-005] Harness detected, timeout adjusted: 180 → 360
+[05:32:27]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-005-cron-expression-parser/environment/setup.sh
+[05:32:27]   [container] [setup] setup.sh 成功
+[05:32:27]   [container] [setup] 工作空间文件: ['instruction.md', 'crontab.txt']
+[05:32:27]   [container] DONE
+[05:32:27] [clawbench_sys-005_glm-4.7_20260427_212900] Agent finished in 204.80s, returncode=0
+[05:32:27] [clawbench_sys-005_glm-4.7_20260427_212900] Agent result: passed=False, score=0.9474
+[05:32:29] [clawbench_sys-006_glm-4.7_20260427_213227] Container started
+[05:32:29] [sys-006] Harness detected, timeout adjusted: 180 → 360
+[05:33:44]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-006-config-file-audit/environment/setup.sh
+[05:33:44]   [container] [setup] setup.sh 成功
+[05:33:44]   [container] [setup] 工作空间文件: ['my.cnf', 'ssh_config', 'instruction.md', 'nginx.conf']
+[05:33:44]   [container] DONE
+[05:33:44] [clawbench_sys-006_glm-4.7_20260427_213227] Agent finished in 75.25s, returncode=0
+[05:33:44] [clawbench_sys-006_glm-4.7_20260427_213227] Agent result: passed=True, score=1.0000
+[05:33:46] [clawbench_sys-007_glm-4.7_20260427_213344] Container started
+[05:33:46] [sys-007] Harness detected, timeout adjusted: 180 → 360
+[05:34:50]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-007-service-dependency-mapping/environment/setup.sh
+[05:34:50]   [container] [setup] setup.sh 成功
+[05:34:50]   [container] [setup] 工作空间文件: ['services.yaml', 'instruction.md']
+[05:34:50]   [container] DONE
+[05:34:50] [clawbench_sys-007_glm-4.7_20260427_213344] Agent finished in 64.14s, returncode=0
+[05:34:50] [clawbench_sys-007_glm-4.7_20260427_213344] Agent result: passed=True, score=1.0000
+[05:34:51] [sys-008] Found cached result, skipping
+[05:34:52] [clawbench_sys-009_glm-4.7_20260427_213451] Container started
+[05:34:52] [sys-009] Harness detected, timeout adjusted: 240 → 420
+[05:36:28]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-009-performance-diagnostic/environment/setup.sh
+[05:36:28]   [container] [setup] setup.sh 成功
+[05:36:28]   [container] [setup] 工作空间文件: ['memory.csv', 'instruction.md', 'disk_io.csv', 'cpu.csv']
+[05:36:28]   [container] DONE
+[05:36:28] [clawbench_sys-009_glm-4.7_20260427_213451] Agent finished in 95.90s, returncode=0
+[05:36:28] [clawbench_sys-009_glm-4.7_20260427_213451] Agent result: passed=True, score=1.0000
+[05:36:30] [clawbench_sys-010_glm-4.7_20260427_213629] Container started
+[05:36:30] [sys-010] Harness detected, timeout adjusted: 300 → 480
+[05:42:00]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-010-infrastructure-migration-plan/environment/setup.sh
+[05:42:00]   [container] [setup] setup.sh 成功
+[05:42:00]   [container] [setup] 工作空间文件: ['requirements.yaml', 'instruction.md', 'infrastructure.yaml']
+[05:42:00]   [container] DONE
+[05:42:00] [clawbench_sys-010_glm-4.7_20260427_213629] Agent finished in 329.65s, returncode=0
+[05:42:00] [clawbench_sys-010_glm-4.7_20260427_213629] Agent result: passed=True, score=1.0000
+[05:42:00] [sys-011] Found cached result, skipping
+[05:42:02] [clawbench_sys-012_glm-4.7_20260427_214200] Container started
+[05:42:02] [sys-012] Harness detected, timeout adjusted: 120 → 300
+[05:42:35]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-012-cron-parser/environment/setup.sh
+[05:42:35]   [container] [setup] setup.sh 成功
+[05:42:35]   [container] [setup] 工作空间文件: ['instruction.md', 'crontab.txt']
+[05:42:35]   [container] DONE
+[05:42:35] [clawbench_sys-012_glm-4.7_20260427_214200] Agent finished in 32.39s, returncode=0
+[05:42:35] [clawbench_sys-012_glm-4.7_20260427_214200] Agent result: passed=False, score=0.6500
+[05:42:37] [clawbench_sys-013_glm-4.7_20260427_214235] Container started
+[05:42:37] [sys-013] Harness detected, timeout adjusted: 120 → 300
+[05:47:21]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-013-log-rotation-planner/environment/setup.sh
+[05:47:21]   [container] [setup] setup.sh 成功
+[05:47:21]   [container] [setup] 工作空间文件: ['instruction.md', 'log_inventory.json']
+[05:47:21]   [container] DONE
+[05:47:21] [clawbench_sys-013_glm-4.7_20260427_214235] Agent finished in 284.47s, returncode=0
+[05:47:22] [clawbench_sys-013_glm-4.7_20260427_214235] Agent result: passed=False, score=0.7308
+[05:47:24] [clawbench_sys-014_glm-4.7_20260427_214722] Container started
+[05:47:24] [sys-014] Harness detected, timeout adjusted: 120 → 300
+[05:47:52]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-014-service-dependency-resolver/environment/setup.sh
+[05:47:52]   [container] [setup] setup.sh 成功
+[05:47:52]   [container] [setup] 工作空间文件: ['services.json', 'instruction.md']
+[05:47:52]   [container] DONE
+[05:47:52] [clawbench_sys-014_glm-4.7_20260427_214722] Agent finished in 28.77s, returncode=0
+[05:47:52] [clawbench_sys-014_glm-4.7_20260427_214722] Agent result: passed=False, score=0.6667
+[05:47:53] [sys-015] Found cached result, skipping
+[05:47:53] [web-001] Found cached result, skipping
+[05:47:55] [clawbench_web-002_glm-4.7_20260427_214753] Container started
+[05:47:55] [web-002] Harness detected, timeout adjusted: 120 → 300
+[05:48:45]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/web-browsing/web-002-parse-table/environment/setup.sh
+[05:48:45]   [container] [setup] setup.sh 成功
+[05:48:45]   [container] [setup] 工作空间文件: ['page.html', 'instruction.md']
+[05:48:45]   [container] DONE
+[05:48:45] [clawbench_web-002_glm-4.7_20260427_214753] Agent finished in 49.90s, returncode=0
+[05:48:45] [clawbench_web-002_glm-4.7_20260427_214753] Agent result: passed=True, score=1.0000
+[05:48:47] [clawbench_web-003_glm-4.7_20260427_214845] Container started
+[05:48:47] [web-003] Harness detected, timeout adjusted: 120 → 300
+[05:49:44]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/web-browsing/web-003-extract-structured/environment/setup.sh
+[05:49:44]   [container] [setup] setup.sh 成功
+[05:49:44]   [container] [setup] 工作空间文件: ['instruction.md', 'product_page.html']
+[05:49:44]   [container] DONE
+[05:49:44] [clawbench_web-003_glm-4.7_20260427_214845] Agent finished in 57.57s, returncode=0
+[05:49:44] [clawbench_web-003_glm-4.7_20260427_214845] Agent result: passed=True, score=1.0000
+[05:49:46] [clawbench_web-004_glm-4.7_20260427_214945] Container started
+[05:49:46] [web-004] Harness detected, timeout adjusted: 180 → 360
+[05:50:09]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/web-browsing/web-004-form-inventory/environment/setup.sh
+[05:50:09]   [container] [setup] setup.sh 成功
+[05:50:09]   [container] [setup] 工作空间文件: ['form.html', 'instruction.md']
+[05:50:09]   [container] DONE
+[05:50:09] [clawbench_web-004_glm-4.7_20260427_214945] Agent finished in 22.62s, returncode=0
+[05:50:09] [clawbench_web-004_glm-4.7_20260427_214945] Agent result: passed=True, score=1.0000
+[05:50:11] [clawbench_web-005_glm-4.7_20260427_215009] Container started
+[05:50:11] [web-005] Harness detected, timeout adjusted: 180 → 360
+[05:50:40]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/web-browsing/web-005-multi-page-aggregate/environment/setup.sh
+[05:50:40]   [container] [setup] setup.sh 成功
+[05:50:40]   [container] [setup] 工作空间文件: ['instruction.md']
+[05:50:40]   [container] DONE
+[05:50:40] [clawbench_web-005_glm-4.7_20260427_215009] Agent finished in 28.68s, returncode=0
+[05:50:40] [clawbench_web-005_glm-4.7_20260427_215009] Agent result: passed=True, score=1.0000
+[05:50:42] [clawbench_web-006_glm-4.7_20260427_215040] Container started
+[05:50:42] [web-006] Harness detected, timeout adjusted: 240 → 420
+[05:51:13]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/web-browsing/web-006-accessibility-audit/environment/setup.sh
+[05:51:13]   [container] [setup] setup.sh 成功
+[05:51:13]   [container] [setup] 工作空间文件: ['instruction.md']
+[05:51:13]   [container] DONE
+[05:51:13] [clawbench_web-006_glm-4.7_20260427_215040] Agent finished in 31.04s, returncode=0
+[05:51:13] [clawbench_web-006_glm-4.7_20260427_215040] Agent result: passed=False, score=0.9500
+[05:51:15] [clawbench_web-007_glm-4.7_20260427_215114] Container started
+[05:51:15] [web-007] Harness detected, timeout adjusted: 240 → 420
+[05:52:00]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/web-browsing/web-007-seo-analysis/environment/setup.sh
+[05:52:00]   [container] [setup] setup.sh 成功
+[05:52:00]   [container] [setup] 工作空间文件: ['instruction.md']
+[05:52:00]   [container] DONE
+[05:52:00] [clawbench_web-007_glm-4.7_20260427_215114] Agent finished in 44.14s, returncode=0
+[05:52:00] [clawbench_web-007_glm-4.7_20260427_215114] Agent result: passed=True, score=1.0000
+[05:52:02] [clawbench_web-008_glm-4.7_20260427_215200] Container started
+[05:52:02] [web-008] Harness detected, timeout adjusted: 300 → 480
+[05:54:01]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/web-browsing/web-008-site-structure/environment/setup.sh
+[05:54:01]   [container] [setup] setup.sh 成功
+[05:54:01]   [container] [setup] 工作空间文件: ['instruction.md']
+[05:54:01]   [container] DONE
+[05:54:01] [clawbench_web-008_glm-4.7_20260427_215200] Agent finished in 119.62s, returncode=0
+[05:54:01] [clawbench_web-008_glm-4.7_20260427_215200] Agent result: passed=True, score=1.0000
+[05:54:02] [web-009] Found cached result, skipping
+[05:54:03] [clawbench_web-010_glm-4.7_20260427_215402] Container started
+[05:54:03] [web-010] Harness detected, timeout adjusted: 240 → 420
+[05:54:50]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/web-browsing/web-010-html-diff-report/environment/setup.sh
+[05:54:50]   [container] [setup] setup.sh 成功
+[05:54:50]   [container] [setup] 工作空间文件: ['instruction.md', 'after.html', 'before.html']
+[05:54:50]   [container] DONE
+[05:54:50] [clawbench_web-010_glm-4.7_20260427_215402] Agent finished in 46.58s, returncode=0
+[05:54:50] [clawbench_web-010_glm-4.7_20260427_215402] Agent result: passed=False, score=0.9615
+[05:54:51] [web-011] Found cached result, skipping
+[05:54:52] [clawbench_web-012_glm-4.7_20260427_215451] Container started
+[05:54:52] [web-012] Harness detected, timeout adjusted: 120 → 300
+[05:55:13]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/web-browsing/web-012-sitemap-generator/environment/setup.sh
+[05:55:13]   [container] [setup] setup.sh 成功
+[05:55:13]   [container] [setup] 工作空间文件: ['instruction.md']
+[05:55:13]   [container] DONE
+[05:55:13] [clawbench_web-012_glm-4.7_20260427_215451] Agent finished in 21.21s, returncode=0
+[05:55:14] [clawbench_web-012_glm-4.7_20260427_215451] Agent result: passed=False, score=0.5882
+[05:55:16] [clawbench_web-013_glm-4.7_20260427_215514] Container started
+[05:55:16] [web-013] Harness detected, timeout adjusted: 120 → 300
+[05:55:59]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/web-browsing/web-013-form-data-extractor/environment/setup.sh
+[05:55:59]   [container] [setup] setup.sh 成功
+[05:55:59]   [container] [setup] 工作空间文件: ['form.html', 'instruction.md']
+[05:55:59]   [container] DONE
+[05:55:59] [clawbench_web-013_glm-4.7_20260427_215514] Agent finished in 42.99s, returncode=0
+[05:55:59] [clawbench_web-013_glm-4.7_20260427_215514] Agent result: passed=False, score=0.6316
+[05:55:59] [web-014] Found cached result, skipping
+[05:55:59] [web-015] Found cached result, skipping
+[05:55:59] [wfl-001] Found cached result, skipping
+[05:56:01] [clawbench_wfl-002_glm-4.7_20260427_215559] Container started
+[05:56:01] [wfl-002] Harness detected, timeout adjusted: 120 → 300
+[05:56:47]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-002-sequential-task-execution/environment/setup.sh
+[05:56:47]   [container] [setup] setup.sh 成功
+[05:56:47]   [container] [setup] 工作空间文件: ['instruction.md', 'input.txt', 'tasks.json']
+[05:56:47]   [container] DONE
+[05:56:47] [clawbench_wfl-002_glm-4.7_20260427_215559] Agent finished in 45.98s, returncode=0
+[05:56:47] [clawbench_wfl-002_glm-4.7_20260427_215559] Agent result: passed=True, score=1.0000
+[05:56:49] [clawbench_wfl-003_glm-4.7_20260427_215647] Container started
+[05:56:49] [wfl-003] Harness detected, timeout adjusted: 180 → 360
+[05:57:31]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-003-multi-step-data-pipeline/environment/setup.sh
+[05:57:31]   [container] [setup] setup.sh 成功
+[05:57:31]   [container] [setup] 工作空间文件: ['data.csv', 'instruction.md', 'pipeline.json']
+[05:57:31]   [container] DONE
+[05:57:31] [clawbench_wfl-003_glm-4.7_20260427_215647] Agent finished in 41.94s, returncode=0
+[05:57:31] [clawbench_wfl-003_glm-4.7_20260427_215647] Agent result: passed=False, score=0.9444
+[05:57:33] [clawbench_wfl-004_glm-4.7_20260427_215731] Container started
+[05:57:33] [wfl-004] Harness detected, timeout adjusted: 180 → 360
+[05:58:30]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-004-retry-with-backoff/environment/setup.sh
+[05:58:30]   [container] [setup] setup.sh 成功
+[05:58:30]   [container] [setup] 工作空间文件: ['instruction.md', 'jobs.json']
+[05:58:30]   [container] DONE
+[05:58:30] [clawbench_wfl-004_glm-4.7_20260427_215731] Agent finished in 57.29s, returncode=0
+[05:58:30] [clawbench_wfl-004_glm-4.7_20260427_215731] Agent result: passed=True, score=1.0000
+[05:58:33] [clawbench_wfl-005_glm-4.7_20260427_215831] Container started
+[05:58:33] [wfl-005] Harness detected, timeout adjusted: 180 → 360
+[06:00:16]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-005-parallel-task-fanout/environment/setup.sh
+[06:00:16]   [container] [setup] setup.sh 成功
+[06:00:16]   [container] [setup] 工作空间文件: ['instruction.md']
+[06:00:16]   [container] DONE
+[06:00:16] [clawbench_wfl-005_glm-4.7_20260427_215831] Agent finished in 103.41s, returncode=0
+[06:00:16] [clawbench_wfl-005_glm-4.7_20260427_215831] Agent result: passed=True, score=1.0000
+[06:00:18] [clawbench_wfl-006_glm-4.7_20260427_220016] Container started
+[06:00:18] [wfl-006] Harness detected, timeout adjusted: 180 → 360
+[06:03:40]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-006-event-driven-workflow/environment/setup.sh
+[06:03:40]   [container] [setup] setup.sh 成功
+[06:03:40]   [container] [setup] 工作空间文件: ['events.json', 'instruction.md', 'rules.json']
+[06:03:40]   [container] DONE
+[06:03:40] [clawbench_wfl-006_glm-4.7_20260427_220016] Agent finished in 201.99s, returncode=0
+[06:03:40] [clawbench_wfl-006_glm-4.7_20260427_220016] Agent result: passed=True, score=1.0000
+[06:03:41] [wfl-007] Found cached result, skipping
+[06:03:41] [wfl-008] Found cached result, skipping
+[06:03:42] [clawbench_wfl-009_glm-4.7_20260427_220341] Container started
+[06:03:42] [wfl-009] Harness detected, timeout adjusted: 300 → 480
+[06:05:08]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-009-scheduled-workflow-plan/environment/setup.sh
+[06:05:08]   [container] [setup] setup.sh 成功
+[06:05:08]   [container] [setup] 工作空间文件: ['instruction.md', 'tasks.json']
+[06:05:08]   [container] DONE
+[06:05:08] [clawbench_wfl-009_glm-4.7_20260427_220341] Agent finished in 85.76s, returncode=0
+[06:05:08] [clawbench_wfl-009_glm-4.7_20260427_220341] Agent result: passed=True, score=1.0000
+[06:05:10] [clawbench_wfl-010_glm-4.7_20260427_220508] Container started
+[06:05:10] [wfl-010] Harness detected, timeout adjusted: 360 → 540
+[06:07:11]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-010-complex-multi-system-integration/environment/setup.sh
+[06:07:11]   [container] [setup] setup.sh 成功
+[06:07:11]   [container] [setup] 工作空间文件: ['orders.csv', 'pricing_rules.json', 'customers.json', 'instruction.md']
+[06:07:11]   [container] DONE
+[06:07:11] [clawbench_wfl-010_glm-4.7_20260427_220508] Agent finished in 120.52s, returncode=0
+[06:07:11] [clawbench_wfl-010_glm-4.7_20260427_220508] Agent result: passed=False, score=0.5556
+[06:07:13] [clawbench_wfl-011_glm-4.7_20260427_220711] Container started
+[06:07:13] [wfl-011] Harness detected, timeout adjusted: 120 → 300
+[06:08:02]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-011-pipeline-validator/environment/setup.sh
+[06:08:02]   [container] [setup] setup.sh 成功
+[06:08:02]   [container] [setup] 工作空间文件: ['instruction.md', 'pipeline.json']
+[06:08:02]   [container] DONE
+[06:08:02] [clawbench_wfl-011_glm-4.7_20260427_220711] Agent finished in 48.78s, returncode=0
+[06:08:02] [clawbench_wfl-011_glm-4.7_20260427_220711] Agent result: passed=False, score=0.5000
+[06:08:04] [clawbench_wfl-012_glm-4.7_20260427_220802] Container started
+[06:08:04] [wfl-012] Harness detected, timeout adjusted: 120 → 300
+[06:09:15]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-012-batch-file-renamer/environment/setup.sh
+[06:09:15]   [container] [setup] setup.sh 成功
+[06:09:15]   [container] [setup] 工作空间文件: ['rename_rules.json', 'file_list.json', 'instruction.md']
+[06:09:15]   [container] DONE
+[06:09:15] [clawbench_wfl-012_glm-4.7_20260427_220802] Agent finished in 71.23s, returncode=0
+[06:09:15] [clawbench_wfl-012_glm-4.7_20260427_220802] Agent result: passed=False, score=0.5333
+[06:09:16] [wfl-013] Found cached result, skipping
+[06:09:16] [wfl-014] Found cached result, skipping
+[06:09:16] [wfl-015] Found cached result, skipping
+[06:09:18] [clawbench_wfl-016_glm-4.7_20260427_220916] Container started
+[06:09:18] [wfl-016] Harness detected, timeout adjusted: 240 → 420
+[06:10:26]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-016-onboarding-checklist/environment/setup.sh
+[06:10:26]   [container] [setup] setup.sh 成功
+[06:10:26]   [container] [setup] 工作空间文件: ['instruction.md', 'new_hire.json', 'equipment_by_dept.json']
+[06:10:26]   [container] DONE
+[06:10:26] [clawbench_wfl-016_glm-4.7_20260427_220916] Agent finished in 68.19s, returncode=0
+[06:10:26] [clawbench_wfl-016_glm-4.7_20260427_220916] Agent result: passed=True, score=1.0000
+[06:10:28] [clawbench_wfl-017_glm-4.7_20260427_221026] Container started
+[06:10:28] [wfl-017] Harness detected, timeout adjusted: 180 → 360
+[06:11:06]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-017-standup-aggregator/environment/setup.sh
+[06:11:06]   [container] [setup] setup.sh 成功
+[06:11:06]   [container] [setup] 工作空间文件: ['dave.json', 'alice.json', 'instruction.md', 'carol.json', 'bob.json']
+[06:11:06]   [container] DONE
+[06:11:06] [clawbench_wfl-017_glm-4.7_20260427_221026] Agent finished in 38.27s, returncode=0
+[06:11:06] [clawbench_wfl-017_glm-4.7_20260427_221026] Agent result: passed=True, score=1.0000
+[06:11:07]   [clawbench-official×glm-4.7] done: score=90.3, scored=188/308
+[06:11:07] 
+

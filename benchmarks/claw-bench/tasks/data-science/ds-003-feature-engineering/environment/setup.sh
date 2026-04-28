@@ -5,7 +5,7 @@ export WORKSPACE
 
 mkdir -p "$WORKSPACE"
 
-python3 - <<EOF
+python3 - <<'EOF'
 import os; WORKSPACE = os.environ.get('WORKSPACE', os.getcwd())
 import pandas as pd
 import numpy as np

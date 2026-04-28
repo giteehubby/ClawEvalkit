@@ -1,0 +1,136 @@
+[22:58:15] [datasets] JAX version 0.9.2 available.
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/zai-org/ZClawBench/resolve/main/README.md (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: c82f3ab7-b0c8-4a7c-bccd-2eaad47b74dd)')' thrown while requesting HEAD https://huggingface.co/datasets/zai-org/ZClawBench/resolve/main/README.md
+[22:58:21] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/zai-org/ZClawBench/resolve/main/README.md (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: c82f3ab7-b0c8-4a7c-bccd-2eaad47b74dd)')' thrown while requesting HEAD https://huggingface.co/datasets/zai-org/ZClawBench/resolve/main/README.md
+Retrying in 1s [Retry 1/5].
+[22:58:21] [huggingface_hub.utils._http] Retrying in 1s [Retry 1/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/zai-org/ZClawBench/resolve/main/README.md (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 7f94e217-07a3-4505-a65e-9a2fb36b144d)')' thrown while requesting HEAD https://huggingface.co/datasets/zai-org/ZClawBench/resolve/main/README.md
+[22:58:27] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/zai-org/ZClawBench/resolve/main/README.md (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 7f94e217-07a3-4505-a65e-9a2fb36b144d)')' thrown while requesting HEAD https://huggingface.co/datasets/zai-org/ZClawBench/resolve/main/README.md
+Retrying in 2s [Retry 2/5].
+[22:58:27] [huggingface_hub.utils._http] Retrying in 2s [Retry 2/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/zai-org/ZClawBench/resolve/main/README.md (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 20951b26-c54a-4b13-96b3-aecfc7281a70)')' thrown while requesting HEAD https://huggingface.co/datasets/zai-org/ZClawBench/resolve/main/README.md
+[22:58:34] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/zai-org/ZClawBench/resolve/main/README.md (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 20951b26-c54a-4b13-96b3-aecfc7281a70)')' thrown while requesting HEAD https://huggingface.co/datasets/zai-org/ZClawBench/resolve/main/README.md
+Retrying in 4s [Retry 3/5].
+[22:58:34] [huggingface_hub.utils._http] Retrying in 4s [Retry 3/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/zai-org/ZClawBench/resolve/main/README.md (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: ef3bef2a-e6e0-4b42-be6a-ea349fdc1b8f)')' thrown while requesting HEAD https://huggingface.co/datasets/zai-org/ZClawBench/resolve/main/README.md
+[22:58:44] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/zai-org/ZClawBench/resolve/main/README.md (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: ef3bef2a-e6e0-4b42-be6a-ea349fdc1b8f)')' thrown while requesting HEAD https://huggingface.co/datasets/zai-org/ZClawBench/resolve/main/README.md
+Retrying in 8s [Retry 4/5].
+[22:58:44] [huggingface_hub.utils._http] Retrying in 8s [Retry 4/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/zai-org/ZClawBench/resolve/main/README.md (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 83097ecc-88d8-4d18-8ae1-632c5c219972)')' thrown while requesting HEAD https://huggingface.co/datasets/zai-org/ZClawBench/resolve/main/README.md
+[22:58:57] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/zai-org/ZClawBench/resolve/main/README.md (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 83097ecc-88d8-4d18-8ae1-632c5c219972)')' thrown while requesting HEAD https://huggingface.co/datasets/zai-org/ZClawBench/resolve/main/README.md
+Retrying in 8s [Retry 5/5].
+[22:58:57] [huggingface_hub.utils._http] Retrying in 8s [Retry 5/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/zai-org/ZClawBench/resolve/main/README.md (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 5c4441ce-beef-4b87-a6a5-c80d9156196b)')' thrown while requesting HEAD https://huggingface.co/datasets/zai-org/ZClawBench/resolve/main/README.md
+[22:59:10] [huggingface_hub.utils._http] '(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /datasets/zai-org/ZClawBench/resolve/main/README.md (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)')))"), '(Request ID: 5c4441ce-beef-4b87-a6a5-c80d9156196b)')' thrown while requesting HEAD https://huggingface.co/datasets/zai-org/ZClawBench/resolve/main/README.md
+Using the latest cached version of the dataset since zai-org/ZClawBench couldn't be found on the Hugging Face Hub
+[22:59:10] [datasets.load] Using the latest cached version of the dataset since zai-org/ZClawBench couldn't be found on the Hugging Face Hub
+Found the latest cached dataset configuration 'default' at /Users/lijiawei/.cache/huggingface/datasets/zai-org___z_claw_bench/default/0.0.0/1827e7630e3650c27bc0189e099490824a05ce0a (last modified on Tue Apr  7 14:54:53 2026).
+[22:59:10] [datasets.packaged_modules.cache.cache] Found the latest cached dataset configuration 'default' at /Users/lijiawei/.cache/huggingface/datasets/zai-org___z_claw_bench/default/0.0.0/1827e7630e3650c27bc0189e099490824a05ce0a (last modified on Tue Apr  7 14:54:53 2026).
+[22:58:13] Config: bench=['zclawbench', 'wildclawbench', 'clawbench-official', 'pinchbench', 'agentbench', 'skillbench', 'skillsbench', 'tribe', 'claweval'], models=['glm-4.7'], sample=all
+[22:58:13] 
+============================================================
+[22:58:13] BENCHMARK: ZClawBench (116 tasks)
+[22:58:13] ============================================================
+[22:58:13]   [zclawbench×glm-4.7] evaluating...
+[22:58:15] Loading ZClawBench from HuggingFace: zai-org/ZClawBench (docker=True, tasks=116)
+[22:59:10] [zclawbench] 汇总已保存: 0/0 完成
+[22:59:10]   [zclawbench×glm-4.7] done: score=0, scored=0/0
+[22:59:10] 
+============================================================
+[22:59:10] BENCHMARK: WildClawBench (60 tasks)
+[22:59:10] ============================================================
+[22:59:10]   [wildclawbench×glm-4.7] evaluating...
+[22:59:11]   [wildclawbench×glm-4.7] done: score=0, scored=0/0
+[22:59:11] 
+============================================================
+[22:59:11] BENCHMARK: ClawBench Official (250 tasks)
+[22:59:11] ============================================================
+[22:59:11]   [clawbench-official×glm-4.7] evaluating...
+[22:59:11] No tasks matched task_ids: ['clawbench-official:cs-001-api-rate-limiter']
+[22:59:11]   [clawbench-official×glm-4.7] done: score=0, scored=0/0
+[22:59:11]   [clawbench-official×glm-4.7] error: no tasks matched: ['clawbench-official:cs-001-api-rate-limiter']
+[22:59:11] 
+============================================================
+[22:59:11] BENCHMARK: PinchBench (23 tasks)
+[22:59:11] ============================================================
+[22:59:11]   [pinchbench×glm-4.7] evaluating...
+[22:59:11]   [pinchbench×glm-4.7] done: score=0, scored=0/0
+[22:59:11]   [pinchbench×glm-4.7] error: no tasks matched task_ids: ['clawbench-official:cs-001-api-rate-limiter']
+[22:59:11] 
+============================================================
+[22:59:11] BENCHMARK: AgentBench (40 tasks)
+[22:59:11] ============================================================
+[22:59:11]   [agentbench×glm-4.7] evaluating...
+[22:59:11]   [agentbench×glm-4.7] done: score=0, scored=0/0
+[22:59:11]   [agentbench×glm-4.7] error: No tasks found matching task_ids: ['clawbench-official:cs-001-api-rate-limiter']
+[22:59:11] 
+============================================================
+[22:59:11] BENCHMARK: SkillBench (22 tasks)
+[22:59:11] ============================================================
+[22:59:11]   [skillbench×glm-4.7] evaluating...
+[22:59:11]   [skillbench×glm-4.7] done: score=0, scored=0/0
+[22:59:11]   [skillbench×glm-4.7] error: skillbench dir not found
+[22:59:11] 
+============================================================
+[22:59:11] BENCHMARK: SkillsBench (56 tasks)
+[22:59:11] ============================================================
+[22:59:11]   [skillsbench×glm-4.7] evaluating...
+[22:59:11]   [skillsbench×glm-4.7] done: score=0, scored=0/0
+[22:59:11]   [skillsbench×glm-4.7] error: no tasks match task_ids: ['clawbench-official:cs-001-api-rate-limiter']
+[22:59:11] 
+============================================================
+[22:59:11] BENCHMARK: Claw-Bench-Tribe (8 tasks)
+[22:59:11] ============================================================
+[22:59:11]   [tribe×glm-4.7] evaluating...
+[22:59:11] [tribe] 汇总已保存: 0/8 完成
+[22:59:11] [tribe/docker] Running test 1/8: basic_chat
+[22:59:12] [basic_chat] Docker container started: tribe_basic_chat_glm-4.7_1776956351
+[22:59:12] [basic_chat] Agent finished in 0.11s, returncode=1
+[22:59:12] [basic_chat] ✗ Failed
+[22:59:12] [tribe] 汇总已保存: 0/8 完成
+[22:59:12] [tribe/docker] Running test 2/8: reasoning_math
+[22:59:13] [reasoning_math] Docker container started: tribe_reasoning_math_glm-4.7_1776956352
+[22:59:13] [reasoning_math] Agent finished in 0.05s, returncode=1
+[22:59:14] [reasoning_math] ✗ Failed
+[22:59:14] [tribe] 汇总已保存: 0/8 完成
+[22:59:14] [tribe/docker] Running test 3/8: instruction_following
+[22:59:15] [instruction_following] Docker container started: tribe_instruction_following_glm-4.7_1776956354
+[22:59:15] [instruction_following] Agent finished in 0.05s, returncode=1
+[22:59:15] [instruction_following] ✗ Failed
+[22:59:15] [tribe] 汇总已保存: 0/8 完成
+[22:59:15] [tribe/docker] Running test 4/8: reasoning_tags
+[22:59:16] [reasoning_tags] Docker container started: tribe_reasoning_tags_glm-4.7_1776956355
+[22:59:16] [reasoning_tags] Agent finished in 0.05s, returncode=1
+[22:59:16] [reasoning_tags] ✗ Failed
+[22:59:16] [tribe] 汇总已保存: 0/8 完成
+[22:59:16] [tribe/docker] Running test 5/8: response_quality
+[22:59:17] [response_quality] Docker container started: tribe_response_quality_glm-4.7_1776956356
+[22:59:17] [response_quality] Agent finished in 0.05s, returncode=1
+[22:59:18] [response_quality] ✗ Failed
+[22:59:18] [tribe] 汇总已保存: 0/8 完成
+[22:59:18] [tribe/docker] Running test 6/8: complex_instructions
+[22:59:18] [complex_instructions] Docker container started: tribe_complex_instructions_glm-4.7_1776956358
+[22:59:18] [complex_instructions] Agent finished in 0.05s, returncode=1
+[22:59:19] [complex_instructions] ✗ Failed
+[22:59:19] [tribe] 汇总已保存: 0/8 完成
+[22:59:19] [tribe/docker] Running test 7/8: json_output
+[22:59:20] [json_output] Docker container started: tribe_json_output_glm-4.7_1776956359
+[22:59:20] [json_output] Agent finished in 0.05s, returncode=1
+[22:59:20] [json_output] ✗ Failed
+[22:59:20] [tribe] 汇总已保存: 0/8 完成
+[22:59:20] [tribe/docker] Running test 8/8: adversarial_input
+[22:59:21] [adversarial_input] Docker container started: tribe_adversarial_input_glm-4.7_1776956360
+[22:59:21] [adversarial_input] Agent finished in 0.05s, returncode=1
+[22:59:21] [adversarial_input] ✗ Failed
+[22:59:21] [tribe] 汇总已保存: 0/8 完成
+[22:59:21]   [tribe×glm-4.7] done: score=0.0, scored=0/8
+[22:59:21] 
+============================================================
+[22:59:21] BENCHMARK: ClawEval (300 tasks)
+[22:59:21] ============================================================
+[22:59:21]   [claweval×glm-4.7] evaluating...
+[22:59:21] [claweval] Docker image 'claw-eval-agent:latest' found
+[22:59:21] [claweval] Evaluating 0 tasks with model=glm-4.7, parallel=1
+[22:59:21] [claweval] 汇总已保存: 0/0 完成
+[22:59:21]   [claweval×glm-4.7] done: score=0.0, scored=0/0
+[22:59:21] 
+

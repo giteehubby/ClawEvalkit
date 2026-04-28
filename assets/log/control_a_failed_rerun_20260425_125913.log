@@ -1,0 +1,16 @@
+[12:59:14] 从文件加载任务列表: error_analysis/inputs/control_a_failed.csv
+[12:59:14]   clawbench: 4 tasks
+[12:59:14] Config: bench=['clawbench'], models=['glm-4.7'], sample=all
+[12:59:14] 
+============================================================
+[12:59:14] BENCHMARK: clawbench (4 tasks from file)
+[12:59:14] ============================================================
+[12:59:14]   [clawbench×glm-4.7] evaluating...
+[12:59:15] [code-002] Found cached result, skipping
+[12:59:15] [code-014] Found cached result, skipping
+[12:59:15] [cont-004-media-bias] Found cached result, skipping
+[12:59:15] [plan-003] Found cached result, skipping
+[12:59:15]   [clawbench×glm-4.7] done: score=82.2, scored=0/4
+[12:59:15]   [clawbench×glm-4.7] done: score=82.2, scored=0/4
+[12:59:15] 
+

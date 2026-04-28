@@ -1,0 +1,45 @@
+[21:42:38] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=all
+[21:42:38] 
+============================================================
+[21:42:38] BENCHMARK: ClawBench Official (250 tasks)
+[21:42:38] ============================================================
+[21:42:38]   [clawbench-official×glm-4.7] evaluating...
+[21:42:41] [clawbench_law-002-lease-analysis_glm-4.7_20260425_134239] Container started
+[21:43:36]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/contract-review/law-002-lease-analysis/environment/setup.sh
+[21:43:36]   [container] [setup] setup.sh 失败 (rc=1)
+[21:43:36]   [container] [setup] stderr: /app/claw-bench/tasks/contract-review/law-002-lease-analysis/environment/setup.sh: line 8: $5: unbound variable
+[21:43:36]   [container] 
+[21:43:36]   [container] [setup] 重试 (bash -x) ...
+[21:43:36]   [container] [setup] 重试也失败 (rc=1)
+[21:43:36]   [container] [setup] stderr: + set -euo pipefail
+[21:43:36]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[21:43:36]   [container] + export WORKSPACE
+[21:43:36]   [container] + mkdir -p /tmp/clawbench_workspace
+[21:43:36]   [container] + python3 -
+[21:43:36]   [container] /app/claw-bench/tasks/contract-review/law-002-lease-analysis/environment/setup.sh: line 8: $5: unbound variable
+[21:43:36]   [container] 
+[21:43:36]   [container] [setup] 工作空间文件: ['instruction.md']
+[21:43:36]   [container] [_run_loop] Empty response at iteration 18, retrying once
+[21:43:36]   [container] [_run_loop] Retry got tool_calls at iteration 18
+[21:43:36]   [container] DONE
+[21:43:36] [clawbench_law-002-lease-analysis_glm-4.7_20260425_134239] Agent finished in 55.08s, returncode=0
+[21:43:36] [clawbench_law-002-lease-analysis_glm-4.7_20260425_134239] Agent result: passed=False, score=0.0000
+[21:43:37]   [clawbench-official×glm-4.7] done: score=0.0, scored=0/1
+[21:43:37] 
+
+[21:50:13] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=all
+[21:50:13] 
+============================================================
+[21:50:13] BENCHMARK: ClawBench Official (250 tasks)
+[21:50:13] ============================================================
+[21:50:13]   [clawbench-official×glm-4.7] evaluating...
+[21:50:16] [clawbench_law-002-lease-analysis_glm-4.7_20260425_135014] Container started
+[21:51:15]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/contract-review/law-002-lease-analysis/environment/setup.sh
+[21:51:15]   [container] [setup] setup.sh 成功
+[21:51:15]   [container] [setup] 工作空间文件: ['instruction.md', 'lease_agreement.txt']
+[21:51:15]   [container] DONE
+[21:51:15] [clawbench_law-002-lease-analysis_glm-4.7_20260425_135014] Agent finished in 59.27s, returncode=0
+[21:51:15] [clawbench_law-002-lease-analysis_glm-4.7_20260425_135014] Agent result: passed=True, score=1.0000
+[21:51:16]   [clawbench-official×glm-4.7] done: score=100.0, scored=1/1
+[21:51:16] 
+

@@ -1,0 +1,30 @@
+[13:37:53] 从文件加载任务列表: error_analysis/inputs/control_a_failed.csv
+[13:37:53]   clawbench: 4 tasks
+[13:37:53] Config: bench=['clawbench'], models=['glm-4.7'], sample=all
+[13:37:53] 
+============================================================
+[13:37:53] BENCHMARK: clawbench (4 tasks from file)
+[13:37:53] ============================================================
+[13:37:53]   [clawbench×glm-4.7] evaluating...
+[13:37:57] [clawbench_code-002_glm-4.7_20260425_053755] Container started
+[13:38:55]   [container] DONE
+[13:38:55] [clawbench_code-002_glm-4.7_20260425_053755] Agent finished in 58.40s, returncode=0
+[13:38:55] [clawbench_code-002_glm-4.7_20260425_053755] Agent result: passed=False, score=0.9000
+[13:38:57] [clawbench_code-014_glm-4.7_20260425_053856] Container started
+[13:43:10]   [container] DONE
+[13:43:10] [clawbench_code-014_glm-4.7_20260425_053856] Agent finished in 253.23s, returncode=0
+[13:43:10] [clawbench_code-014_glm-4.7_20260425_053856] Agent result: passed=False, score=0.9524
+[13:43:13] [clawbench_cont-004-media-bias_glm-4.7_20260425_054311] Container started
+[13:50:38]   [container] DONE
+[13:50:38] [clawbench_cont-004-media-bias_glm-4.7_20260425_054311] Agent finished in 445.78s, returncode=0
+[13:50:38] [clawbench_cont-004-media-bias_glm-4.7_20260425_054311] Agent result: passed=False, score=0.5000
+[13:50:41] [clawbench_plan-003_glm-4.7_20260425_055039] Container started
+[13:55:29]   [container] DONE
+[13:55:29]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/constraints.json
+[13:55:29]   [container-err] LLM reflection failed: 'NanoBotAgent' object is not callable
+[13:55:29] [clawbench_plan-003_glm-4.7_20260425_055039] Agent finished in 288.74s, returncode=0
+[13:55:29] [clawbench_plan-003_glm-4.7_20260425_055039] Agent result: passed=False, score=0.9375
+[13:55:30]   [clawbench×glm-4.7] done: score=82.2, scored=0/4
+[13:55:30]   [clawbench×glm-4.7] done: score=82.2, scored=0/4
+[13:55:30] 
+

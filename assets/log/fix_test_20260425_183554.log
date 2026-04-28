@@ -1,0 +1,20 @@
+[18:35:55] 从文件加载任务列表: /tmp/test_tasks.csv
+[18:35:55]   clawbench: 2 tasks
+[18:35:55] Config: bench=['clawbench'], models=['glm-4.7'], sample=all
+[18:35:55] 
+============================================================
+[18:35:55] BENCHMARK: clawbench (2 tasks from file)
+[18:35:55] ============================================================
+[18:35:55]   [clawbench×glm-4.7] evaluating...
+[18:35:59] [clawbench_wfl-012_glm-4.7_20260425_103556] Container started
+[18:35:59] [clawbench_cs-005-api-design_glm-4.7_20260425_103556] Container started
+[18:37:58]   [container] DONE
+[18:37:58] [clawbench_wfl-012_glm-4.7_20260425_103556] Agent finished in 119.06s, returncode=0
+[18:37:58] [clawbench_wfl-012_glm-4.7_20260425_103556] Agent result: passed=False, score=0.5333
+[18:40:30]   [container] DONE
+[18:40:30] [clawbench_cs-005-api-design_glm-4.7_20260425_103556] Agent finished in 271.47s, returncode=0
+[18:40:30] [clawbench_cs-005-api-design_glm-4.7_20260425_103556] Agent result: passed=False, score=0.8000
+[18:40:31]   [clawbench×glm-4.7] done: score=66.7, scored=0/2
+[18:40:31]   [clawbench×glm-4.7] done: score=66.7, scored=0/2
+[18:40:31] 
+

@@ -1,0 +1,30 @@
+[19:41:28] 从文件加载任务列表: /tmp/timeout_tasks.csv
+[19:41:28]   clawbench: 5 tasks
+[19:41:28] Config: bench=['clawbench'], models=['glm-4.7'], sample=all
+[19:41:28] 
+============================================================
+[19:41:28] BENCHMARK: clawbench (5 tasks from file)
+[19:41:28] ============================================================
+[19:41:28]   [clawbench×glm-4.7] evaluating...
+[19:41:32] [clawbench_db-004_glm-4.7_20260425_114130] Container started
+[19:41:32] [clawbench_law-002-lease-analysis_glm-4.7_20260425_114130] Container started
+[19:46:14]   [container] DONE
+[19:46:14]   [container-err] Retry exhausted for <tool_call>read_file: Error: Unknown tool: <tool_call>read_file
+[19:46:14] [clawbench_law-002-lease-analysis_glm-4.7_20260425_114130] Agent finished in 282.40s, returncode=0
+[19:46:14] [clawbench_law-002-lease-analysis_glm-4.7_20260425_114130] Agent result: passed=False, score=0.7500
+[19:46:17] [clawbench_tool-002_glm-4.7_20260425_114615] Container started
+[19:49:34] [clawbench_web-015_glm-4.7_20260425_114932] Container started
+[19:50:18]   [container] DONE
+[19:50:18] [clawbench_tool-002_glm-4.7_20260425_114615] Agent finished in 241.37s, returncode=0
+[19:50:18] [clawbench_tool-002_glm-4.7_20260425_114615] Agent result: passed=False, score=0.6471
+[19:50:20] [clawbench_wfl-012_glm-4.7_20260425_115018] Container started
+[19:50:55]   [container] DONE
+[19:50:55] [clawbench_wfl-012_glm-4.7_20260425_115018] Agent finished in 35.21s, returncode=0
+[19:50:56] [clawbench_wfl-012_glm-4.7_20260425_115018] Agent result: passed=False, score=0.5333
+[19:52:31]   [container] DONE
+[19:52:31] [clawbench_web-015_glm-4.7_20260425_114932] Agent finished in 176.48s, returncode=0
+[19:52:31] [clawbench_web-015_glm-4.7_20260425_114932] Agent result: passed=False, score=0.6957
+[19:52:31]   [clawbench×glm-4.7] done: score=65.7, scored=0/5
+[19:52:31]   [clawbench×glm-4.7] done: score=65.7, scored=0/5
+[19:52:31] 
+

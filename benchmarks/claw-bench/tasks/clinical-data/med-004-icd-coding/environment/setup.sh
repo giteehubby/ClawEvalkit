@@ -5,7 +5,7 @@ WORKSPACE="${1:-workspace}"
 mkdir -p "$WORKSPACE/clinical_notes"
 
 # Generate icd_mapping.csv with realistic keywords and ICD-10 codes
-python3 - <<EOF
+python3 - <<'EOF'
 import csv
 import random
 random.seed(42)
@@ -41,7 +41,7 @@ with open(f"{"$WORKSPACE"}/icd_mapping.csv", "w", newline='') as f:
 EOF
 
 # Generate 25 clinical note text files with some keywords randomly inserted
-python3 - <<EOF
+python3 - <<'EOF'
 import random
 random.seed(42)
 import os
