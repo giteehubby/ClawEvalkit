@@ -1,0 +1,90 @@
+[14:09:39] 从文件加载任务列表: assets/log/mem_structured_failed_tasks.txt
+[14:09:39]   clawbench: 7 tasks
+[14:09:39] Config: bench=['clawbench'], models=['glm-4.7'], sample=all
+[14:09:39] 
+============================================================
+[14:09:39] BENCHMARK: clawbench (7 tasks from file)
+[14:09:39] ============================================================
+[14:09:39]   [clawbench×glm-4.7] evaluating...
+[14:09:42] [clawbench_mem-001_glm-4.7_20260430_060941] Container started
+[14:09:42] [mem-001] Harness detected, timeout adjusted: 120 → 300
+[14:12:11]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-001-recall-given-name/environment/setup.sh
+[14:12:11]   [container] [setup] setup.sh 成功
+[14:12:11]   [container] [setup] 工作空间文件: ['notes.txt', 'instruction.md', 'inventory.csv']
+[14:12:11]   [container] DONE
+[14:12:11]   [container-err] /usr/local/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:75: RuntimeWarning: coroutine 'Logging.async_success_handler' was never awaited
+[14:12:11]   [container-err]   self._queue = None
+[14:12:11]   [container-err] RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+[14:12:11]   [container-err] /usr/local/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:75: RuntimeWarning: coroutine 'Logging.async_success_handler' was never awaited
+[14:12:11]   [container-err]   self._queue = None
+[14:12:11]   [container-err] RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+[14:12:11] [clawbench_mem-001_glm-4.7_20260430_060941] Agent finished in 148.32s, returncode=0
+[14:12:11] [clawbench_mem-001_glm-4.7_20260430_060941] Agent result: passed=False, score=0.9286
+[14:12:13] [clawbench_mem-002_glm-4.7_20260430_061211] Container started
+[14:12:13] [mem-002] Harness detected, timeout adjusted: 180 → 360
+[14:19:16] [clawbench_mem-004_glm-4.7_20260430_061914] Container started
+[14:19:16] [mem-004] Harness detected, timeout adjusted: 180 → 360
+[14:21:01]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-004-contradiction-resolution/environment/setup.sh
+[14:21:01]   [container] [setup] setup.sh 成功
+[14:21:01]   [container] [setup] 工作空间文件: ['spec.txt', 'instruction.md']
+[14:21:01]   [container] DONE
+[14:21:01]   [container-err] /usr/local/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:75: RuntimeWarning: coroutine 'Logging.async_success_handler' was never awaited
+[14:21:01]   [container-err]   self._queue = None
+[14:21:01]   [container-err] RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+[14:21:01] [clawbench_mem-004_glm-4.7_20260430_061914] Agent finished in 105.86s, returncode=0
+[14:21:01] [clawbench_mem-004_glm-4.7_20260430_061914] Agent result: passed=False, score=0.9524
+[14:21:04] [clawbench_mem-005_glm-4.7_20260430_062102] Container started
+[14:21:04] [mem-005] Harness detected, timeout adjusted: 300 → 480
+[14:21:26]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-005-long-document-summarization/environment/setup.sh
+[14:21:26]   [container] [setup] setup.sh 成功
+[14:21:26]   [container] [setup] 工作空间文件: ['instruction.md', 'report.txt']
+[14:21:26]   [container] DONE
+[14:21:26]   [container-err] /usr/local/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:75: RuntimeWarning: coroutine 'Logging.async_success_handler' was never awaited
+[14:21:26]   [container-err]   self._queue = None
+[14:21:26]   [container-err] RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+[14:21:26] [clawbench_mem-005_glm-4.7_20260430_062102] Agent finished in 22.14s, returncode=0
+[14:21:26] [clawbench_mem-005_glm-4.7_20260430_062102] Agent result: passed=False, score=0.2174
+[14:21:28] [clawbench_mem-007_glm-4.7_20260430_062126] Container started
+[14:21:28] [mem-007] Harness detected, timeout adjusted: 300 → 480
+[14:23:30]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-007-instruction-chaining/environment/setup.sh
+[14:23:30]   [container] [setup] setup.sh 成功
+[14:23:30]   [container] [setup] 工作空间文件: ['raw_data.txt', 'instruction.md']
+[14:23:30]   [container] DONE
+[14:23:30]   [container-err] /usr/local/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:75: RuntimeWarning: coroutine 'Logging.async_success_handler' was never awaited
+[14:23:30]   [container-err]   self._queue = None
+[14:23:30]   [container-err] RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+[14:23:30] [clawbench_mem-007_glm-4.7_20260430_062126] Agent finished in 122.09s, returncode=0
+[14:23:30] [clawbench_mem-007_glm-4.7_20260430_062126] Agent result: passed=False, score=0.8846
+[14:23:33] [clawbench_mem-010_glm-4.7_20260430_062331] Container started
+[14:23:33] [mem-010] Harness detected, timeout adjusted: 180 → 360
+[14:24:35]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-010-multi-file-context-correlation/environment/setup.sh
+[14:24:35]   [container] [setup] setup.sh 成功
+[14:24:35]   [container] [setup] 工作空间文件: ['file_a.txt', 'file_b.txt', 'file_c.txt', 'file_d.txt', 'file_e.txt', 'instruction.md']
+[14:24:35]   [container] DONE
+[14:24:35]   [container-err]            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+[14:24:35]   [container-err]   File "/usr/local/lib/python3.12/json/decoder.py", line 338, in decode
+[14:24:35]   [container-err]     obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+[14:24:35]   [container-err]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[14:24:35]   [container-err]   File "/usr/local/lib/python3.12/json/decoder.py", line 356, in raw_decode
+[14:24:35]   [container-err]     raise JSONDecodeError("Expecting value", s, err.value) from None
+[14:24:35]   [container-err] json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+[14:24:35]   [container-err] /usr/local/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:75: RuntimeWarning: coroutine 'Logging.async_success_handler' was never awaited
+[14:24:35]   [container-err]   self._queue = None
+[14:24:35]   [container-err] RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+[14:24:35] [clawbench_mem-010_glm-4.7_20260430_062331] Agent finished in 62.29s, returncode=0
+[14:24:35] [clawbench_mem-010_glm-4.7_20260430_062331] Agent result: passed=True, score=1.0000
+[14:24:37] [clawbench_mem-015_glm-4.7_20260430_062435] Container started
+[14:24:37] [mem-015] Harness detected, timeout adjusted: 240 → 420
+[14:26:13]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-015-timeline-reconstructor/environment/setup.sh
+[14:26:13]   [container] [setup] setup.sh 成功
+[14:26:13]   [container] [setup] 工作空间文件: ['anchors.json', 'instruction.md', 'fragments.json']
+[14:26:13]   [container] DONE
+[14:26:13]   [container-err] /usr/local/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:75: RuntimeWarning: coroutine 'Logging.async_success_handler' was never awaited
+[14:26:13]   [container-err]   self._queue = None
+[14:26:13]   [container-err] RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+[14:26:13] [clawbench_mem-015_glm-4.7_20260430_062435] Agent finished in 95.98s, returncode=0
+[14:26:13] [clawbench_mem-015_glm-4.7_20260430_062435] Agent result: passed=False, score=0.9615
+[14:26:14]   [clawbench×glm-4.7] done: score=82.4, scored=1/7
+[14:26:14]   [clawbench×glm-4.7] done: score=82.4, scored=0/7
+[14:26:14] 
+

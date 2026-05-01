@@ -121,7 +121,6 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
             for line in reversed(proc.stdout.strip().splitlines()):
                 try:
                     data = json.loads(line)
-                    self.save_result("clawbench-official", model_key, data, f"{model_key}_sample{sample_n}.json")
                     return data
                 except json.JSONDecodeError:
                     continue
@@ -320,7 +319,6 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                         log(f"[{tid}] Thread exception: {exc}")
                         results.append({"task_id": tid, "status": "error", "error": str(exc)})
 
-        # 汇总结果
         scores = [r["score"] for r in results if r.get("status") == "success"]
         passed = sum(1 for r in results if r.get("passed"))
         overall = round(sum(scores) / len(scores) * 100, 1) if scores else 0
@@ -330,7 +328,6 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
             "total": len(tasks),
             "details": results
         }
-        self.save_result("clawbench-official", model_key, final, "result.json")
         return final
 
     def _load_tasks(self, bench_dir: Path) -> tuple[list, dict]:
@@ -433,6 +430,11 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
         # 挂载 HuggingFace 缓存（避免容器内重复下载 embedding 模型）
         project_root = Path(__file__).resolve().parent.parent.parent
         hf_cache = project_root / ".cache" / "huggingface"
+        # 优先使用项目缓存，若为空则 fallback 到用户目录缓存
+        if not any(hf_cache.iterdir()):
+            user_hf = Path.home() / ".cache" / "huggingface"
+            if user_hf.exists():
+                hf_cache = user_hf
         hf_cache.mkdir(parents=True, exist_ok=True)
         volume_mounts.extend(["-v", f"{hf_cache}:/root/.cache/huggingface"])
 
@@ -458,7 +460,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
              "-e", "http_proxy=",
              "-e", "https_proxy=",
              container_name,
-             "pip", "install", "-q", "tomli", "pytest-json-report"],
+             "pip", "install", "-q", "tomli", "pytest-json-report", "sentence-transformers"],
             capture_output=True, text=True, env=install_env, timeout=120
         )
 

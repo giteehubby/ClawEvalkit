@@ -6,6 +6,7 @@ from enum import Enum
 # Maps config key suffix → harness module path
 HARNESS_MODULE_MAP = {
     "memory_config": "harness.agent.memory",
+    "structured_memory_config": "harness.agent.memory_structured",
     "control_config": "harness.agent.control",
     "collab_config": "harness.agent.collaboration",
     "procedural_config": "harness.agent.procedure",

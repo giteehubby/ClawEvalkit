@@ -64,7 +64,6 @@ class SkillBench(BaseBenchmark):
         log(f"[skillbench] Final score: {score}% ({total_pass}/{total_tasks})")
 
         result = {"score": score, "passed": total_pass, "total": total_tasks, "pass_rate": f"{total_pass}/{total_tasks}"}
-        self.save_result("skillbench", model_key, result)
         return result
 
 

@@ -24,8 +24,9 @@
 mac上配置了clash verge(虚拟网卡模式),端口是7897
 
 ## 仓库
-1. 本地项目与代码仓库https://github.com/linjh1118/ClawEvalkit同步
+1. 本地项目与代码仓库https://github.com/linjh1118/ClawEvalkit同步，对应main分支
 2. OpenClawPro是子模块，对应https://github.com/linjh1118/OpenClawPro，对应master分支
+3.用户让你同步仓库时，上述两个都要同步（拉取远程、解决冲突、提交修改、推送）
 
 
 ## 语言习惯
@@ -35,3 +36,6 @@ mac上配置了clash verge(虚拟网卡模式),端口是7897
 
 ## 其他要求
 1. 得到实验结果后，使用html可视化(深色主题)
+
+## 项目说明
+1. 入口是run.py(必须指定--docker)

@@ -1,0 +1,9 @@
+usage: run.py [-h] [--bench BENCH] [--model MODEL] [--sample SAMPLE]
+              [--summary] [--list] [--force] [--docker] [--parallel PARALLEL]
+              [--env ENV] [--output-dir OUTPUT_DIR]
+              [--transcripts-dir TRANSCRIPTS_DIR] [--max-turns MAX_TURNS]
+              [--task TASK] [--category CATEGORY] [--reuse-container]
+              [--judge-model JUDGE_MODEL] [--include-multimodal]
+              [--harness {collaboration,control,memory,procedure,combo}]
+run.py: error: argument --harness: invalid choice: 'collab_cmd' (choose from collaboration, control, memory, procedure, combo)
+ERROR conda.cli.main_run:execute(142): `conda run python run.py --bench agentbench --model glm-4.7 --docker --harness collab_cmd --task extract-structured-data,context-retention --parallel 1 --output-dir outputs/harness/collab_cmd_test` failed. (See above for error)

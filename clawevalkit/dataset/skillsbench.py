@@ -425,7 +425,6 @@ class SkillsBench(BaseBenchmark):
             "pass_rate": f"{passed}/{total}", "max_turns": max_turns,
             "skipped_docker": len(SKIP_TASKS_DOCKER), "results": results,
         }
-        self.save_result("skillsbench", model_key, summary)
         log(f"[skillsbench] 汇总已保存: {passed}/{total} passed, {total - scored} pending")
 
     def _remove_container(self, container_name: str):

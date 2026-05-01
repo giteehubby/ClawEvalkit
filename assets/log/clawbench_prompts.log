@@ -1,0 +1,25 @@
+============================================================
+Clawbench GLM-4.7 Error Classification Prompt Generator
+============================================================
+
+[1/3] Loading clawbench task definitions...
+  Loaded 309 task definitions
+
+[2/3] Collecting failures (passed = False)...
+  Found 86 failures
+
+  Score distribution of failures:
+    0.0-0.4: 12
+    0.4-0.6: 13
+    0.6-0.8: 38
+    0.8-1.0: 23
+
+[3/3] Building classification prompts...
+  Generated 86 prompts
+
+Saved prompts to: /Volumes/F/work/ClawEvalkit-private/error_analysis/outputs/clawbench_glm_prompts.json
+Saved summary to: /Volumes/F/work/ClawEvalkit-private/error_analysis/outputs/clawbench_glm_summary.csv
+
+============================================================
+Done! Next step: run classification via LLM
+============================================================

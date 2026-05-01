@@ -1,0 +1,240 @@
+[14:37:43] 从文件加载任务列表: t5_combo_tasks.csv
+[14:37:43]   clawbench: 25 tasks
+[14:37:43]   claweval: 30 tasks
+[14:37:43]   agentbench: 3 tasks
+[14:37:43] Config: bench=['clawbench', 'claweval', 'agentbench'], models=['glm-4.7'], sample=all
+[14:37:43] 
+============================================================
+[14:37:43] BENCHMARK: clawbench (25 tasks from file)
+[14:37:43] ============================================================
+[14:37:43]   [clawbench×glm-4.7] evaluating...
+[14:37:45] [acct-005-financial-statements] Found cached result, skipping
+[14:37:45] [bio-005-variant-annotation] Found cached result, skipping
+[14:37:45] [med-005-trial-eligibility] Found cached result, skipping
+[14:37:47] [clawbench_cont-004-media-bias_glm-4.7_20260429_063745] Container started
+[14:37:47] [cont-004-media-bias] Harness detected, timeout adjusted: 3600 → 3780
+[14:37:47] [clawbench_bio-003-gene-expression_glm-4.7_20260429_063745] Container started
+[14:37:47] [bio-003-gene-expression] Harness detected, timeout adjusted: 3600 → 3780
+[14:39:29]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/bioinformatics/bio-003-gene-expression/environment/setup.sh
+[14:39:29]   [container] [setup] setup.sh 成功
+[14:39:29]   [container] [setup] 工作空间文件: ['instruction.md', 'expression_matrix.csv']
+[14:39:29]   [container] DONE
+[14:39:29] [clawbench_bio-003-gene-expression_glm-4.7_20260429_063745] Agent finished in 101.33s, returncode=0
+[14:39:29] [clawbench_bio-003-gene-expression_glm-4.7_20260429_063745] Agent result: passed=False, score=0.7500
+[14:39:31] [clawbench_xdom-014_glm-4.7_20260429_063929] Container started
+[14:39:31] [xdom-014] Harness detected, timeout adjusted: 600 → 780
+[14:39:32]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/content-analysis/cont-004-media-bias/environment/setup.sh
+[14:39:32]   [container] [setup] setup.sh 成功
+[14:39:32]   [container] [setup] 工作空间文件: ['instruction.md']
+[14:39:32]   [container] DONE
+[14:39:32] [clawbench_cont-004-media-bias_glm-4.7_20260429_063745] Agent finished in 104.85s, returncode=0
+[14:39:32] [clawbench_cont-004-media-bias_glm-4.7_20260429_063745] Agent result: passed=False, score=0.5000
+[14:39:34] [clawbench_cs-003-log-analyzer_glm-4.7_20260429_063932] Container started
+[14:39:34] [cs-003-log-analyzer] Harness detected, timeout adjusted: 3600 → 3780
+[14:39:35]   [container-err] Traceback (most recent call last):
+[14:39:35]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:39:35]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:39:35]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:39:35] [clawbench_xdom-014_glm-4.7_20260429_063929] Agent finished in 3.56s, returncode=1
+[14:39:35] [clawbench_xdom-014_glm-4.7_20260429_063929] agent_result.json not found
+[14:39:37]   [container-err] Traceback (most recent call last):
+[14:39:37]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:39:37]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:39:37]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:39:37] [clawbench_cs-003-log-analyzer_glm-4.7_20260429_063932] Agent finished in 3.05s, returncode=1
+[14:39:37] [clawbench_cs-003-log-analyzer_glm-4.7_20260429_063932] agent_result.json not found
+[14:39:37] [clawbench_cs-005-api-design_glm-4.7_20260429_063935] Container started
+[14:39:37] [cs-005-api-design] Harness detected, timeout adjusted: 3600 → 3780
+[14:39:40] [clawbench_data-003_glm-4.7_20260429_063938] Container started
+[14:39:40] [data-003] Harness detected, timeout adjusted: 120 → 300
+[14:39:41]   [container-err] Traceback (most recent call last):
+[14:39:41]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:39:41]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:39:41]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:39:41] [clawbench_cs-005-api-design_glm-4.7_20260429_063935] Agent finished in 3.38s, returncode=1
+[14:39:41] [clawbench_cs-005-api-design_glm-4.7_20260429_063935] agent_result.json not found
+[14:39:43]   [container-err] Traceback (most recent call last):
+[14:39:43]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:39:43]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:39:43]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:39:43] [clawbench_data-003_glm-4.7_20260429_063938] Agent finished in 3.24s, returncode=1
+[14:39:43] [clawbench_data-003_glm-4.7_20260429_063938] agent_result.json not found
+[14:39:43] [clawbench_ds-003-feature-engineering_glm-4.7_20260429_063941] Container started
+[14:39:43] [ds-003-feature-engineering] Harness detected, timeout adjusted: 3600 → 3780
+[14:39:46] [clawbench_ds-004-time-series_glm-4.7_20260429_063943] Container started
+[14:39:46] [ds-004-time-series] Harness detected, timeout adjusted: 3600 → 3780
+[14:39:47]   [container-err] Traceback (most recent call last):
+[14:39:47]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:39:47]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:39:47]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:39:47] [clawbench_ds-003-feature-engineering_glm-4.7_20260429_063941] Agent finished in 3.47s, returncode=1
+[14:39:47] [clawbench_ds-003-feature-engineering_glm-4.7_20260429_063941] agent_result.json not found
+[14:39:49] [clawbench_db-001_glm-4.7_20260429_063947] Container started
+[14:39:49] [db-001] Harness detected, timeout adjusted: 120 → 300
+[14:39:49]   [container-err] Traceback (most recent call last):
+[14:39:49]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:39:49]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:39:49]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:39:49] [clawbench_ds-004-time-series_glm-4.7_20260429_063943] Agent finished in 3.58s, returncode=1
+[14:39:49] [clawbench_ds-004-time-series_glm-4.7_20260429_063943] agent_result.json not found
+[14:39:52] [clawbench_db-002_glm-4.7_20260429_063950] Container started
+[14:39:52] [db-002] Harness detected, timeout adjusted: 180 → 360
+[14:39:52]   [container-err] Traceback (most recent call last):
+[14:39:52]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:39:52]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:39:52]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:39:52] [clawbench_db-001_glm-4.7_20260429_063947] Agent finished in 3.09s, returncode=1
+[14:39:52] [clawbench_db-001_glm-4.7_20260429_063947] agent_result.json not found
+[14:39:55]   [container-err] Traceback (most recent call last):
+[14:39:55]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:39:55]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:39:55]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:39:55] [clawbench_db-002_glm-4.7_20260429_063950] Agent finished in 3.32s, returncode=1
+[14:39:55] [clawbench_db-002_glm-4.7_20260429_063950] agent_result.json not found
+[14:39:55] [clawbench_db-004_glm-4.7_20260429_063953] Container started
+[14:39:55] [db-004] Harness detected, timeout adjusted: 240 → 420
+[14:39:57] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260429_063956] Container started
+[14:39:57] [edu-004-curriculum-mapping] Harness detected, timeout adjusted: 3600 → 3780
+[14:39:58]   [container-err] Traceback (most recent call last):
+[14:39:58]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:39:58]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:39:58]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:39:58] [clawbench_db-004_glm-4.7_20260429_063953] Agent finished in 3.07s, returncode=1
+[14:39:58] [clawbench_db-004_glm-4.7_20260429_063953] agent_result.json not found
+[14:40:00]   [container-err] Traceback (most recent call last):
+[14:40:00]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:40:00]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:40:00]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:40:00] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260429_063956] Agent finished in 3.16s, returncode=1
+[14:40:01] [clawbench_edu-004-curriculum-mapping_glm-4.7_20260429_063956] agent_result.json not found
+[14:40:01] [clawbench_fin-006_glm-4.7_20260429_063959] Container started
+[14:40:01] [fin-006] Harness detected, timeout adjusted: 300 → 480
+[14:40:03] [clawbench_mm-006_glm-4.7_20260429_064001] Container started
+[14:40:03] [mm-006] Harness detected, timeout adjusted: 300 → 480
+[14:40:04]   [container-err] Traceback (most recent call last):
+[14:40:04]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:40:04]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:40:04]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:40:04] [clawbench_fin-006_glm-4.7_20260429_063959] Agent finished in 2.85s, returncode=1
+[14:40:04] [clawbench_fin-006_glm-4.7_20260429_063959] agent_result.json not found
+[14:40:06]   [container-err] Traceback (most recent call last):
+[14:40:06]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:40:06]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:40:06]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:40:06] [clawbench_mm-006_glm-4.7_20260429_064001] Agent finished in 2.96s, returncode=1
+[14:40:06] [clawbench_mm-006_glm-4.7_20260429_064001] agent_result.json not found
+[14:40:06] [clawbench_sci-002-monte-carlo_glm-4.7_20260429_064005] Container started
+[14:40:06] [sci-002-monte-carlo] Harness detected, timeout adjusted: 3600 → 3780
+[14:40:08] [clawbench_sci-005-optimization_glm-4.7_20260429_064006] Container started
+[14:40:08] [sci-005-optimization] Harness detected, timeout adjusted: 3600 → 3780
+[14:40:09]   [container-err] Traceback (most recent call last):
+[14:40:09]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:40:09]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:40:09]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:40:09] [clawbench_sci-002-monte-carlo_glm-4.7_20260429_064005] Agent finished in 2.95s, returncode=1
+[14:40:09] [clawbench_sci-002-monte-carlo_glm-4.7_20260429_064005] agent_result.json not found
+[14:40:11]   [container-err] Traceback (most recent call last):
+[14:40:11]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:40:11]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:40:11]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:40:11] [clawbench_sci-005-optimization_glm-4.7_20260429_064006] Agent finished in 2.95s, returncode=1
+[14:40:11] [clawbench_sci-005-optimization_glm-4.7_20260429_064006] agent_result.json not found
+[14:40:12] [clawbench_web-011_glm-4.7_20260429_064010] Container started
+[14:40:12] [web-011] Harness detected, timeout adjusted: 120 → 300
+[14:40:13] [clawbench_web-015_glm-4.7_20260429_064011] Container started
+[14:40:13] [web-015] Harness detected, timeout adjusted: 120 → 300
+[14:40:15]   [container-err] Traceback (most recent call last):
+[14:40:15]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:40:15]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:40:15]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:40:15] [clawbench_web-011_glm-4.7_20260429_064010] Agent finished in 3.01s, returncode=1
+[14:40:15] [clawbench_web-011_glm-4.7_20260429_064010] agent_result.json not found
+[14:40:16]   [container-err] Traceback (most recent call last):
+[14:40:16]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:40:16]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:40:16]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:40:16] [clawbench_web-015_glm-4.7_20260429_064011] Agent finished in 3.40s, returncode=1
+[14:40:16] [clawbench_web-015_glm-4.7_20260429_064011] agent_result.json not found
+[14:40:17] [clawbench_wfl-012_glm-4.7_20260429_064015] Container started
+[14:40:17] [wfl-012] Harness detected, timeout adjusted: 120 → 300
+[14:40:20]   [container-err] Traceback (most recent call last):
+[14:40:20]   [container-err]   File "/tmp/exec_nanobot.py", line 35, in <module>
+[14:40:20]   [container-err]     from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+[14:40:20]   [container-err] ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+[14:40:20] [clawbench_wfl-012_glm-4.7_20260429_064015] Agent finished in 2.82s, returncode=1
+[14:40:20] [clawbench_wfl-012_glm-4.7_20260429_064015] agent_result.json not found
+[14:40:20]   [clawbench×glm-4.7] done: score=61.7, scored=0/22
+[14:40:20]   [clawbench×glm-4.7] done: score=61.7, scored=0/22
+[14:40:20] 
+============================================================
+[14:40:20] BENCHMARK: claweval (30 tasks from file)
+[14:40:20] ============================================================
+[14:40:20]   [claweval×glm-4.7] evaluating...
+[14:40:20] [claweval] Docker image 'claw-eval-agent:latest' found
+[14:40:21] [claweval] Evaluating 30 tasks with model=glm-4.7, parallel=2
+[14:40:21] [claweval] 汇总已保存: 0/30 完成
+[14:40:21]   [claweval×glm-4.7] done: score=0.0, scored=0/30
+[14:40:21]   [claweval×glm-4.7] done: score=0.0, scored=0/30
+[14:40:21] 
+============================================================
+[14:40:21] BENCHMARK: agentbench (3 tasks from file)
+[14:40:21] ============================================================
+[14:40:21]   [agentbench×glm-4.7] evaluating...
+[14:40:22] [agent_compare-technologies_glm-4.7_20260429_064021] Container started
+[14:40:22] [agent_compare-technologies_glm-4.7_20260429_064021] Workspace copied to /tmp/workspace/:
+total 12
+drwxr-xr-x 1  501 dialout   40 Apr 29 06:40 .
+drwxrwxrwt 1 root root      32 Apr 29 06:40 ..
+-rw-r--r-- 1  501 dialout 3587 Apr 23 08:10 tech-a.txt
+-rw-r--r-- 1  501 dialout 4487 Apr 23 08:10 tech-b.txt
+
+[14:40:22] [agent_memory-organization_glm-4.7_20260429_064021] Container started
+[14:40:22] [agent_memory-organization_glm-4.7_20260429_064021] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  0 Apr 29 06:40 .
+drwxrwxrwt 1 root root    32 Apr 29 06:40 ..
+
+[14:40:25] [agent_compare-technologies_glm-4.7_20260429_064021] Agent finished in 2.82s, returncode=1
+[14:40:25] [agent_compare-technologies_glm-4.7_20260429_064021] Agent stderr: Traceback (most recent call last):
+  File "/tmp/exec_nanobot.py", line 10, in <module>
+    from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+
+[14:40:25] [agent_compare-technologies_glm-4.7_20260429_064021] agent_result.json not found at outputs/harness/combo/agentbench/glm-4.7/compare-technologies/agent_result.json
+[14:40:25] [agent_memory-organization_glm-4.7_20260429_064021] Agent finished in 2.76s, returncode=1
+[14:40:25] [agent_memory-organization_glm-4.7_20260429_064021] Agent stderr: Traceback (most recent call last):
+  File "/tmp/exec_nanobot.py", line 10, in <module>
+    from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+
+[14:40:25] [agent_memory-organization_glm-4.7_20260429_064021] agent_result.json not found at outputs/harness/combo/agentbench/glm-4.7/memory-organization/agent_result.json
+[14:40:25] [agent_memory-organization_glm-4.7_20260429_064021] Scores: L0=50.0 L1=60.0 L2=50.0 L3=50.0 | Overall=51.5
+[14:40:25] [agent_compare-technologies_glm-4.7_20260429_064021] Scores: L0=0.0 L1=60.0 L2=50.0 L3=50.0 | Overall=45.0
+[14:40:25] [agent_memory-organization_glm-4.7_20260429_064021] Result saved to outputs/harness/combo/agentbench/glm-4.7/memory-organization/result.json
+[14:40:25] [agent_large-codebase-navigation_glm-4.7_20260429_064025] Running setup.sh for task large-codebase-navigation
+[14:40:26] [agent_large-codebase-navigation_glm-4.7_20260429_064025] setup.sh completed successfully
+[14:40:26] [agent_compare-technologies_glm-4.7_20260429_064021] Result saved to outputs/harness/combo/agentbench/glm-4.7/compare-technologies/result.json
+[14:40:27] [agent_large-codebase-navigation_glm-4.7_20260429_064025] Container started
+[14:40:27] [agent_large-codebase-navigation_glm-4.7_20260429_064025] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   62 Apr 29 06:40 .
+drwxrwxrwt 1 root root      32 Apr 29 06:40 ..
+drwxr-xr-x 1  501 dialout  128 Apr 29 06:40 .git
+-rw-r--r-- 1  501 dialout 1195 Apr 29 06:40 README.md
+drwxr-xr-x 1  501 dialout   62 Apr 29 06:40 config
+drwxr-xr-x 1  501 dialout   28 Apr 29 06:40 docs
+drwxr-xr-x 1  501 dialout   70 Apr 29 06:40 src
+drwxr-xr-x 1  501 dialout  138 Apr 29 06:40 tests
+
+[14:40:29] [agent_large-codebase-navigation_glm-4.7_20260429_064025] Agent finished in 2.65s, returncode=1
+[14:40:29] [agent_large-codebase-navigation_glm-4.7_20260429_064025] Agent stderr: Traceback (most recent call last):
+  File "/tmp/exec_nanobot.py", line 10, in <module>
+    from harness.agent.control import ControlConfig, PlanFirstConfig, ReflectionConfig, ReplanConfig, RetryConfig, VerifyConfig
+ImportError: cannot import name 'VerifyConfig' from 'harness.agent.control' (/root/OpenClawPro/harness/agent/control/__init__.py). Did you mean: 'RetryConfig'?
+
+[14:40:29] [agent_large-codebase-navigation_glm-4.7_20260429_064025] agent_result.json not found at outputs/harness/combo/agentbench/glm-4.7/large-codebase-navigation/agent_result.json
+[14:40:29] [agent_large-codebase-navigation_glm-4.7_20260429_064025] Scores: L0=0.0 L1=60.0 L2=50.0 L3=50.0 | Overall=46.5
+[14:40:30] [agent_large-codebase-navigation_glm-4.7_20260429_064025] Result saved to outputs/harness/combo/agentbench/glm-4.7/large-codebase-navigation/result.json
+[14:40:30]   [agentbench×glm-4.7] done: score=0, scored=0/3
+[14:40:30]   [agentbench×glm-4.7] done: score=0, scored=0/3
+[14:40:30] 
+

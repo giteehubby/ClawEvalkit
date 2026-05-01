@@ -1,0 +1,62 @@
+[20:45:13] 从文件加载任务列表: error_analysis/inputs/F.csv
+[20:45:13]   agentbench: 1 tasks
+[20:45:13]   clawbench: 18 tasks
+[20:45:13]   claweval: 24 tasks
+[20:45:13] Config: bench=['agentbench', 'clawbench', 'claweval'], models=['glm-4.7'], sample=all
+[20:45:13] 
+============================================================
+[20:45:13] BENCHMARK: agentbench (1 tasks from file)
+[20:45:13] ============================================================
+[20:45:13]   [agentbench×glm-4.7] evaluating...
+[20:45:13] [right-tool-choice] Found cached result, skipping
+[20:45:13]   [agentbench×glm-4.7] done: score=77.5, scored=1/1
+[20:45:13]   [agentbench×glm-4.7] done: score=77.5, scored=0/1
+[20:45:13] 
+============================================================
+[20:45:13] BENCHMARK: clawbench (18 tasks from file)
+[20:45:13] ============================================================
+[20:45:13]   [clawbench×glm-4.7] evaluating...
+[20:45:13] [code-007] Found cached result, skipping
+[20:45:16] [clawbench_code-011_glm-4.7_20260429_124513] Container started
+[20:48:51]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-011-data-validation/environment/setup.sh
+[20:48:51]   [container] [setup] setup.sh 成功
+[20:48:51]   [container] [setup] 工作空间文件: ['instruction.md']
+[20:48:51]   [container] DONE
+[20:48:51] [clawbench_code-011_glm-4.7_20260429_124513] Agent finished in 215.64s, returncode=0
+[20:48:52] [clawbench_code-011_glm-4.7_20260429_124513] Agent result: passed=False, score=0.9667
+[20:48:52] [cont-002-topic-modeling] Found cached result, skipping
+[20:48:52] [xdom-006] Found cached result, skipping
+[20:48:52] [cs-004-ci-pipeline] Found cached result, skipping
+[20:48:52] [db-005] Found cached result, skipping
+[20:48:52] [eml-002] Found cached result, skipping
+[20:48:52] [mem-005] Found cached result, skipping
+[20:48:52] [sci-004-signal-processing] Found cached result, skipping
+[20:48:52] [sys-011] Found cached result, skipping
+[20:48:52] [sys-012] Found cached result, skipping
+[20:48:52] [sys-013] Found cached result, skipping
+[20:48:52] [sys-014] Found cached result, skipping
+[20:48:52] [web-012] Found cached result, skipping
+[20:48:52] [web-013] Found cached result, skipping
+[20:48:52] [wfl-008] Found cached result, skipping
+[20:48:54] [clawbench_wfl-011_glm-4.7_20260429_124852] Container started
+[20:49:48]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-011-pipeline-validator/environment/setup.sh
+[20:49:48]   [container] [setup] setup.sh 成功
+[20:49:48]   [container] [setup] 工作空间文件: ['instruction.md', 'pipeline.json']
+[20:49:48]   [container] DONE
+[20:49:48] [clawbench_wfl-011_glm-4.7_20260429_124852] Agent finished in 53.43s, returncode=0
+[20:49:48] [clawbench_wfl-011_glm-4.7_20260429_124852] Agent result: passed=False, score=0.5000
+[20:49:48] [wfl-015] Found cached result, skipping
+[20:49:48]   [clawbench×glm-4.7] done: score=65.9, scored=0/18
+[20:49:48]   [clawbench×glm-4.7] done: score=65.9, scored=0/18
+[20:49:48] 
+============================================================
+[20:49:48] BENCHMARK: claweval (24 tasks from file)
+[20:49:48] ============================================================
+[20:49:48]   [claweval×glm-4.7] evaluating...
+[20:49:48] [claweval] Docker image 'claw-eval-agent:latest' found
+[20:49:48] [claweval] Evaluating 24 tasks with model=glm-4.7, parallel=1
+[20:49:48] [claweval] 汇总已保存: 9/24 完成
+[20:49:48]   [claweval×glm-4.7] done: score=0.6127, scored=24/24
+[20:49:48]   [claweval×glm-4.7] done: score=0.6127, scored=24/24
+[20:49:48] 
+

@@ -1,0 +1,42 @@
+[10:20:06] [zclawbench.grading] Judge API call failed: Error code: 401 - {'error': {'message': '令牌已过期或验证不正确', 'type': '401'}}
+[10:20:07] [zclawbench.grading] Judge API call failed: Error code: 401 - {'error': {'message': '令牌已过期或验证不正确', 'type': '401'}}
+[10:17:06] Config: bench=['agentbench'], models=['glm-4.7'], sample=all
+[10:17:06] 
+============================================================
+[10:17:06] BENCHMARK: AgentBench (40 tasks)
+[10:17:06] ============================================================
+[10:17:06]   [agentbench×glm-4.7] evaluating...
+[10:17:08] [agent_release-preparation_glm-4.7_20260429_021708] Running setup.sh for task release-preparation
+[10:17:08] [agent_release-preparation_glm-4.7_20260429_021708] setup.sh completed successfully
+[10:17:09] [agent_release-preparation_glm-4.7_20260429_021708] Container started
+[10:17:09] [agent_impossible-request_glm-4.7_20260429_021708] Container started
+[10:17:09] [agent_impossible-request_glm-4.7_20260429_021708] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  0 Apr 29 02:17 .
+drwxrwxrwt 1 root root    32 Apr 29 02:17 ..
+
+[10:17:09] [agent_release-preparation_glm-4.7_20260429_021708] Workspace copied to /tmp/workspace/:
+total 16
+drwxr-xr-x 1  501 dialout 120 Apr 29 02:17 .
+drwxrwxrwt 1 root root     32 Apr 29 02:17 ..
+drwxr-xr-x 1  501 dialout 128 Apr 29 02:17 .git
+-rw-r--r-- 1  501 dialout 553 Apr 29 02:17 CHANGELOG.md
+-rw-r--r-- 1  501 dialout 180 Apr 29 02:17 README.md
+-rw-r--r-- 1  501 dialout 306 Apr 29 02:17 package.json
+-rw-r--r-- 1  501 dialout 990 Apr 29 02:17 release-checklist.md
+drwxr-xr-x 1  501 dialout 108 Apr 29 02:17 src
+
+[10:20:06] [agent_impossible-request_glm-4.7_20260429_021708] Agent finished in 176.23s, returncode=0
+[10:20:06] [agent_impossible-request_glm-4.7_20260429_021708] Agent stdout: DONE
+
+[10:20:06] [agent_impossible-request_glm-4.7_20260429_021708] Agent result loaded: status=success, transcript_len=39
+[10:20:06] [agent_impossible-request_glm-4.7_20260429_021708] Scores: L0=0.0 L1=45.0 L2=50.0 L3=50.0 | Overall=41.2
+[10:20:06] [agent_release-preparation_glm-4.7_20260429_021708] Agent finished in 176.85s, returncode=0
+[10:20:06] [agent_release-preparation_glm-4.7_20260429_021708] Agent stdout: DONE
+
+[10:20:06] [agent_release-preparation_glm-4.7_20260429_021708] Agent result loaded: status=success, transcript_len=105
+[10:20:06] [agent_impossible-request_glm-4.7_20260429_021708] Result saved to outputs/harness/collab_A_compare/agentbench/glm-4.7/impossible-request/result.json
+[10:20:07] [agent_release-preparation_glm-4.7_20260429_021708] Scores: L0=100.0 L1=100.0 L2=50.0 L3=50.0 | Overall=70.0
+[10:20:07] [agent_release-preparation_glm-4.7_20260429_021708] Result saved to outputs/harness/collab_A_compare/agentbench/glm-4.7/release-preparation/result.json
+[10:20:07]   [agentbench×glm-4.7] done: score=55.6, scored=2/2
+[10:20:07] 
+

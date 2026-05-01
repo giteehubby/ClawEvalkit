@@ -133,9 +133,6 @@ class BaseBenchmark(ABC):
                 "results": results
             }
 
-        # Save summary
-        self.save_result(bench_key, model_key, summary)
-
         from ..utils.log import log
         log(f"[{bench_key}] 汇总已保存: {summary.get('passed', summary.get('scored', 0))}/{len(all_task_ids)} 完成")
 

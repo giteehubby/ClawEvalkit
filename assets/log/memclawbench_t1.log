@@ -1,0 +1,345 @@
+[20:35:47] 从文件加载任务列表: error_analysis/inputs/memset.csv
+[20:35:47]   agentbench: 2 tasks
+[20:35:47]   clawbench: 16 tasks
+[20:35:47]   claweval: 7 tasks
+[20:35:47] Config: bench=['agentbench', 'clawbench', 'claweval'], models=['glm-4.7'], sample=all
+[20:35:47] 
+============================================================
+[20:35:47] BENCHMARK: agentbench (2 tasks from file)
+[20:35:47] ============================================================
+[20:35:47]   [agentbench×glm-4.7] evaluating...
+[20:35:49] [constraint-accumulation] Found cached result, skipping
+[20:35:49] [repo-refactor] Found cached result, skipping
+[20:35:49]   [agentbench×glm-4.7] done: score=92.7, scored=2/2
+[20:35:49]   [agentbench×glm-4.7] done: score=92.7, scored=0/2
+[20:35:49] 
+============================================================
+[20:35:49] BENCHMARK: clawbench (16 tasks from file)
+[20:35:49] ============================================================
+[20:35:49]   [clawbench×glm-4.7] evaluating...
+[20:35:49] [cs-001-api-rate-limiter] Found cached result, skipping
+[20:35:51] [clawbench_mem-001_glm-4.7_20260429_123549] Container started
+[20:35:51] [mem-001] Harness detected, timeout adjusted: 120 → 300
+[20:36:26]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-001-recall-given-name/environment/setup.sh
+[20:36:26]   [container] [setup] setup.sh 成功
+[20:36:26]   [container] [setup] 工作空间文件: ['notes.txt', 'instruction.md', 'inventory.csv']
+[20:36:26]   [container] DONE
+[20:36:26]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[20:36:26]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3312.20it/s]
+[20:36:26]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[20:36:26]   [container-err] Key                     | Status     |  | 
+[20:36:26]   [container-err] ------------------------+------------+--+-
+[20:36:26]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[20:36:26]   [container-err] 
+[20:36:26]   [container-err] Notes:
+[20:36:26]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[20:36:26] [clawbench_mem-001_glm-4.7_20260429_123549] Agent finished in 35.35s, returncode=0
+[20:36:26] [clawbench_mem-001_glm-4.7_20260429_123549] Agent result: passed=False, score=0.9286
+[20:36:29] [clawbench_mem-002_glm-4.7_20260429_123627] Container started
+[20:36:29] [mem-002] Harness detected, timeout adjusted: 180 → 360
+[20:37:59]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-002-multi-step-instructions/environment/setup.sh
+[20:37:59]   [container] [setup] setup.sh 成功
+[20:37:59]   [container] [setup] 工作空间文件: ['instruction.md', 'words.txt']
+[20:37:59]   [container] DONE
+[20:37:59]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[20:37:59]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 24152.36it/s]
+[20:37:59]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[20:37:59]   [container-err] Key                     | Status     |  | 
+[20:37:59]   [container-err] ------------------------+------------+--+-
+[20:37:59]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[20:37:59]   [container-err] 
+[20:37:59]   [container-err] Notes:
+[20:37:59]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[20:37:59] [clawbench_mem-002_glm-4.7_20260429_123627] Agent finished in 90.35s, returncode=0
+[20:37:59] [clawbench_mem-002_glm-4.7_20260429_123627] Agent result: passed=True, score=1.0000
+[20:38:02] [clawbench_mem-003_glm-4.7_20260429_123800] Container started
+[20:38:02] [mem-003] Harness detected, timeout adjusted: 180 → 360
+[20:39:12]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-003-context-carry-over/environment/setup.sh
+[20:39:12]   [container] [setup] setup.sh 成功
+[20:39:12]   [container] [setup] 工作空间文件: ['config.json', 'instruction.md']
+[20:39:12]   [container] DONE
+[20:39:12]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[20:39:12]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 32671.35it/s]
+[20:39:12]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[20:39:12]   [container-err] Key                     | Status     |  | 
+[20:39:12]   [container-err] ------------------------+------------+--+-
+[20:39:12]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[20:39:12]   [container-err] 
+[20:39:12]   [container-err] Notes:
+[20:39:12]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[20:39:12] [clawbench_mem-003_glm-4.7_20260429_123800] Agent finished in 70.52s, returncode=0
+[20:39:12] [clawbench_mem-003_glm-4.7_20260429_123800] Agent result: passed=True, score=1.0000
+[20:39:15] [clawbench_mem-004_glm-4.7_20260429_123913] Container started
+[20:39:15] [mem-004] Harness detected, timeout adjusted: 180 → 360
+[20:40:05]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-004-contradiction-resolution/environment/setup.sh
+[20:40:05]   [container] [setup] setup.sh 成功
+[20:40:05]   [container] [setup] 工作空间文件: ['spec.txt', 'instruction.md']
+[20:40:05]   [container] DONE
+[20:40:05]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[20:40:05]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 35364.55it/s]
+[20:40:05]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[20:40:05]   [container-err] Key                     | Status     |  | 
+[20:40:05]   [container-err] ------------------------+------------+--+-
+[20:40:05]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[20:40:05]   [container-err] 
+[20:40:05]   [container-err] Notes:
+[20:40:05]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[20:40:05] [clawbench_mem-004_glm-4.7_20260429_123913] Agent finished in 49.77s, returncode=0
+[20:40:05] [clawbench_mem-004_glm-4.7_20260429_123913] Agent result: passed=False, score=0.9524
+[20:40:07] [clawbench_mem-005_glm-4.7_20260429_124005] Container started
+[20:40:07] [mem-005] Harness detected, timeout adjusted: 300 → 480
+[20:41:12]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-005-long-document-summarization/environment/setup.sh
+[20:41:12]   [container] [setup] setup.sh 成功
+[20:41:12]   [container] [setup] 工作空间文件: ['instruction.md', 'report.txt']
+[20:41:12]   [container] DONE
+[20:41:12]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[20:41:12]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 27682.51it/s]
+[20:41:12]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[20:41:12]   [container-err] Key                     | Status     |  | 
+[20:41:12]   [container-err] ------------------------+------------+--+-
+[20:41:12]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[20:41:12]   [container-err] 
+[20:41:12]   [container-err] Notes:
+[20:41:12]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[20:41:12] [clawbench_mem-005_glm-4.7_20260429_124005] Agent finished in 64.54s, returncode=0
+[20:41:12] [clawbench_mem-005_glm-4.7_20260429_124005] Agent result: passed=False, score=0.2174
+[20:41:14] [clawbench_mem-006_glm-4.7_20260429_124112] Container started
+[20:41:14] [mem-006] Harness detected, timeout adjusted: 300 → 480
+[20:42:36]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-006-cross-reference-synthesis/environment/setup.sh
+[20:42:36]   [container] [setup] setup.sh 成功
+[20:42:36]   [container] [setup] 工作空间文件: ['performance.csv', 'instruction.md', 'employees.csv', 'projects.csv']
+[20:42:36]   [container] DONE
+[20:42:36]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[20:42:36]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 2787.74it/s]
+[20:42:36]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[20:42:36]   [container-err] Key                     | Status     |  | 
+[20:42:36]   [container-err] ------------------------+------------+--+-
+[20:42:36]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[20:42:36]   [container-err] 
+[20:42:36]   [container-err] Notes:
+[20:42:36]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[20:42:36] [clawbench_mem-006_glm-4.7_20260429_124112] Agent finished in 81.70s, returncode=0
+[20:42:36] [clawbench_mem-006_glm-4.7_20260429_124112] Agent result: passed=True, score=1.0000
+[20:42:39] [clawbench_mem-007_glm-4.7_20260429_124237] Container started
+[20:42:39] [mem-007] Harness detected, timeout adjusted: 300 → 480
+[20:44:43]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-007-instruction-chaining/environment/setup.sh
+[20:44:43]   [container] [setup] setup.sh 成功
+[20:44:43]   [container] [setup] 工作空间文件: ['raw_data.txt', 'instruction.md']
+[20:44:43]   [container] DONE
+[20:44:43]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[20:44:43]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 30869.12it/s]
+[20:44:43]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[20:44:43]   [container-err] Key                     | Status     |  | 
+[20:44:43]   [container-err] ------------------------+------------+--+-
+[20:44:43]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[20:44:43]   [container-err] 
+[20:44:43]   [container-err] Notes:
+[20:44:43]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[20:44:43] [clawbench_mem-007_glm-4.7_20260429_124237] Agent finished in 124.14s, returncode=0
+[20:44:43] [clawbench_mem-007_glm-4.7_20260429_124237] Agent result: passed=True, score=1.0000
+[20:44:46] [clawbench_mem-008_glm-4.7_20260429_124443] Container started
+[20:44:46] [mem-008] Harness detected, timeout adjusted: 300 → 480
+[20:47:50]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-008-ambiguous-requirements/environment/setup.sh
+[20:47:50]   [container] [setup] setup.sh 成功
+[20:47:50]   [container] [setup] 工作空间文件: ['requirements.txt', 'instruction.md']
+[20:47:50]   [container] DONE
+[20:47:50]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[20:47:50]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 30615.36it/s]
+[20:47:50]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[20:47:50]   [container-err] Key                     | Status     |  | 
+[20:47:50]   [container-err] ------------------------+------------+--+-
+[20:47:50]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[20:47:50]   [container-err] 
+[20:47:50]   [container-err] Notes:
+[20:47:50]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[20:47:50] [clawbench_mem-008_glm-4.7_20260429_124443] Agent finished in 184.49s, returncode=0
+[20:47:50] [clawbench_mem-008_glm-4.7_20260429_124443] Agent result: passed=True, score=1.0000
+[20:47:53] [clawbench_mem-009_glm-4.7_20260429_124751] Container started
+[20:47:53] [mem-009] Harness detected, timeout adjusted: 180 → 360
+[20:49:18]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-009-sequential-state-tracking/environment/setup.sh
+[20:49:18]   [container] [setup] setup.sh 成功
+[20:49:18]   [container] [setup] 工作空间文件: ['instruction.md', 'transitions.txt']
+[20:49:18]   [container] DONE
+[20:49:18]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[20:49:18]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 30395.65it/s]
+[20:49:18]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[20:49:18]   [container-err] Key                     | Status     |  | 
+[20:49:18]   [container-err] ------------------------+------------+--+-
+[20:49:18]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[20:49:18]   [container-err] 
+[20:49:18]   [container-err] Notes:
+[20:49:18]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[20:49:18] [clawbench_mem-009_glm-4.7_20260429_124751] Agent finished in 85.47s, returncode=0
+[20:49:18] [clawbench_mem-009_glm-4.7_20260429_124751] Agent result: passed=True, score=1.0000
+[20:49:21] [clawbench_mem-010_glm-4.7_20260429_124919] Container started
+[20:49:21] [mem-010] Harness detected, timeout adjusted: 180 → 360
+[20:50:18]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-010-multi-file-context-correlation/environment/setup.sh
+[20:50:18]   [container] [setup] setup.sh 成功
+[20:50:18]   [container] [setup] 工作空间文件: ['instruction.md']
+[20:50:18]   [container] DONE
+[20:50:18]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[20:50:18]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 23172.95it/s]
+[20:50:18]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[20:50:18]   [container-err] Key                     | Status     |  | 
+[20:50:18]   [container-err] ------------------------+------------+--+-
+[20:50:18]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[20:50:18]   [container-err] 
+[20:50:18]   [container-err] Notes:
+[20:50:18]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[20:50:18] [clawbench_mem-010_glm-4.7_20260429_124919] Agent finished in 57.61s, returncode=0
+[20:50:18] [clawbench_mem-010_glm-4.7_20260429_124919] Agent result: passed=False, score=0.6000
+[20:50:21] [clawbench_mem-011_glm-4.7_20260429_125019] Container started
+[20:50:21] [mem-011] Harness detected, timeout adjusted: 180 → 360
+[20:51:22]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-011-conversation-tracker/environment/setup.sh
+[20:51:22]   [container] [setup] setup.sh 失败 (rc=1)
+[20:51:22]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/memory/mem-011-conversation-tracker/environment/data/conversation.jsonl': No such file or directory
+[20:51:22]   [container] 
+[20:51:22]   [container] [setup] 重试 (bash -x) ...
+[20:51:22]   [container] [setup] 重试也失败 (rc=1)
+[20:51:22]   [container] [setup] stderr: + set -euo pipefail
+[20:51:22]   [container] +++ dirname /app/claw-bench/tasks/memory/mem-011-conversation-tracker/environment/setup.sh
+[20:51:22]   [container] ++ cd /app/claw-bench/tasks/memory/mem-011-conversation-tracker/environment/..
+[20:51:22]   [container] ++ pwd
+[20:51:22]   [container] + TASK_DIR=/app/claw-bench/tasks/memory/mem-011-conversation-tracker
+[20:51:22]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[20:51:22]   [container] + mkdir -p /tmp/clawbench_workspace
+[20:51:22]   [container] + cp /app/claw-bench/tasks/memory/mem-011-conversation-tracker/environment/data/conversation.jsonl /tmp/clawbench_workspace/
+[20:51:22]   [container] cp: cannot stat '/app/claw-bench/tasks/memory/mem-011-conversation-tracker/environment/data/conversation.jsonl': No such file or directory
+[20:51:22]   [container] 
+[20:51:22]   [container] [setup] 工作空间文件: ['instruction.md']
+[20:51:22]   [container] DONE
+[20:51:22]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[20:51:22]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3509.25it/s]
+[20:51:22]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[20:51:22]   [container-err] Key                     | Status     |  | 
+[20:51:22]   [container-err] ------------------------+------------+--+-
+[20:51:22]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[20:51:22]   [container-err] 
+[20:51:22]   [container-err] Notes:
+[20:51:22]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[20:51:22] [clawbench_mem-011_glm-4.7_20260429_125019] Agent finished in 60.78s, returncode=0
+[20:51:22] [clawbench_mem-011_glm-4.7_20260429_125019] Agent result: passed=False, score=0.7500
+[20:51:24] [clawbench_mem-012_glm-4.7_20260429_125122] Container started
+[20:51:24] [mem-012] Harness detected, timeout adjusted: 180 → 360
+[20:52:11]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-012-fact-extraction-and-update/environment/setup.sh
+[20:52:11]   [container] [setup] setup.sh 失败 (rc=1)
+[20:52:11]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/memory/mem-012-fact-extraction-and-update/environment/data/updates.jsonl': No such file or directory
+[20:52:11]   [container] 
+[20:52:11]   [container] [setup] 重试 (bash -x) ...
+[20:52:11]   [container] [setup] 重试也失败 (rc=1)
+[20:52:11]   [container] [setup] stderr: + set -euo pipefail
+[20:52:11]   [container] +++ dirname /app/claw-bench/tasks/memory/mem-012-fact-extraction-and-update/environment/setup.sh
+[20:52:11]   [container] ++ cd /app/claw-bench/tasks/memory/mem-012-fact-extraction-and-update/environment/..
+[20:52:11]   [container] ++ pwd
+[20:52:11]   [container] + TASK_DIR=/app/claw-bench/tasks/memory/mem-012-fact-extraction-and-update
+[20:52:11]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[20:52:11]   [container] + mkdir -p /tmp/clawbench_workspace
+[20:52:11]   [container] + cp /app/claw-bench/tasks/memory/mem-012-fact-extraction-and-update/environment/data/updates.jsonl /tmp/clawbench_workspace/
+[20:52:11]   [container] cp: cannot stat '/app/claw-bench/tasks/memory/mem-012-fact-extraction-and-update/environment/data/updates.jsonl': No such file or directory
+[20:52:11]   [container] 
+[20:52:11]   [container] [setup] 工作空间文件: ['instruction.md']
+[20:52:11]   [container] DONE
+[20:52:11]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[20:52:11]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 35574.22it/s]
+[20:52:11]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[20:52:11]   [container-err] Key                     | Status     |  | 
+[20:52:11]   [container-err] ------------------------+------------+--+-
+[20:52:11]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[20:52:11]   [container-err] 
+[20:52:11]   [container-err] Notes:
+[20:52:11]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[20:52:11] [clawbench_mem-012_glm-4.7_20260429_125122] Agent finished in 46.33s, returncode=0
+[20:52:11] [clawbench_mem-012_glm-4.7_20260429_125122] Agent result: passed=False, score=0.5455
+[20:52:13] [clawbench_mem-013_glm-4.7_20260429_125211] Container started
+[20:52:13] [mem-013] Harness detected, timeout adjusted: 240 → 420
+[20:53:42]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-013-entity-relationship-tracker/environment/setup.sh
+[20:53:42]   [container] [setup] setup.sh 失败 (rc=1)
+[20:53:42]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/memory/mem-013-entity-relationship-tracker/environment/data/events.jsonl': No such file or directory
+[20:53:42]   [container] 
+[20:53:42]   [container] [setup] 重试 (bash -x) ...
+[20:53:42]   [container] [setup] 重试也失败 (rc=1)
+[20:53:42]   [container] [setup] stderr: + set -euo pipefail
+[20:53:42]   [container] +++ dirname /app/claw-bench/tasks/memory/mem-013-entity-relationship-tracker/environment/setup.sh
+[20:53:42]   [container] ++ cd /app/claw-bench/tasks/memory/mem-013-entity-relationship-tracker/environment/..
+[20:53:42]   [container] ++ pwd
+[20:53:42]   [container] + TASK_DIR=/app/claw-bench/tasks/memory/mem-013-entity-relationship-tracker
+[20:53:42]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[20:53:42]   [container] + mkdir -p /tmp/clawbench_workspace
+[20:53:42]   [container] + cp /app/claw-bench/tasks/memory/mem-013-entity-relationship-tracker/environment/data/events.jsonl /tmp/clawbench_workspace/
+[20:53:42]   [container] cp: cannot stat '/app/claw-bench/tasks/memory/mem-013-entity-relationship-tracker/environment/data/events.jsonl': No such file or directory
+[20:53:42]   [container] 
+[20:53:42]   [container] [setup] 工作空间文件: ['instruction.md']
+[20:53:42]   [container] DONE
+[20:53:42]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[20:53:42]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 51362.90it/s]
+[20:53:42]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[20:53:42]   [container-err] Key                     | Status     |  | 
+[20:53:42]   [container-err] ------------------------+------------+--+-
+[20:53:42]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[20:53:42]   [container-err] 
+[20:53:42]   [container-err] Notes:
+[20:53:42]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[20:53:42] [clawbench_mem-013_glm-4.7_20260429_125211] Agent finished in 89.10s, returncode=0
+[20:53:42] [clawbench_mem-013_glm-4.7_20260429_125211] Agent result: passed=False, score=0.4348
+[20:53:45] [clawbench_mem-014_glm-4.7_20260429_125343] Container started
+[20:53:45] [mem-014] Harness detected, timeout adjusted: 240 → 420
+[20:54:46]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-014-preference-learning/environment/setup.sh
+[20:54:46]   [container] [setup] setup.sh 失败 (rc=1)
+[20:54:46]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/memory/mem-014-preference-learning/environment/data/interactions.jsonl': No such file or directory
+[20:54:46]   [container] 
+[20:54:46]   [container] [setup] 重试 (bash -x) ...
+[20:54:46]   [container] [setup] 重试也失败 (rc=1)
+[20:54:46]   [container] [setup] stderr: + set -euo pipefail
+[20:54:46]   [container] +++ dirname /app/claw-bench/tasks/memory/mem-014-preference-learning/environment/setup.sh
+[20:54:46]   [container] ++ cd /app/claw-bench/tasks/memory/mem-014-preference-learning/environment/..
+[20:54:46]   [container] ++ pwd
+[20:54:46]   [container] + TASK_DIR=/app/claw-bench/tasks/memory/mem-014-preference-learning
+[20:54:46]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[20:54:46]   [container] + mkdir -p /tmp/clawbench_workspace
+[20:54:46]   [container] + cp /app/claw-bench/tasks/memory/mem-014-preference-learning/environment/data/interactions.jsonl /tmp/clawbench_workspace/
+[20:54:46]   [container] cp: cannot stat '/app/claw-bench/tasks/memory/mem-014-preference-learning/environment/data/interactions.jsonl': No such file or directory
+[20:54:46]   [container] 
+[20:54:46]   [container] [setup] 工作空间文件: ['instruction.md']
+[20:54:46]   [container] DONE
+[20:54:46]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[20:54:46]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 28994.18it/s]
+[20:54:46]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[20:54:46]   [container-err] Key                     | Status     |  | 
+[20:54:46]   [container-err] ------------------------+------------+--+-
+[20:54:46]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[20:54:46]   [container-err] 
+[20:54:46]   [container-err] Notes:
+[20:54:46]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[20:54:46] [clawbench_mem-014_glm-4.7_20260429_125343] Agent finished in 60.87s, returncode=0
+[20:54:46] [clawbench_mem-014_glm-4.7_20260429_125343] Agent result: passed=False, score=0.5455
+[20:54:48] [clawbench_mem-015_glm-4.7_20260429_125446] Container started
+[20:54:48] [mem-015] Harness detected, timeout adjusted: 240 → 420
+[20:55:30]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-015-timeline-reconstructor/environment/setup.sh
+[20:55:30]   [container] [setup] setup.sh 成功
+[20:55:30]   [container] [setup] 工作空间文件: ['anchors.json', 'instruction.md', 'fragments.json']
+[20:55:30]   [container] DONE
+[20:55:30]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[20:55:30]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3988.23it/s]
+[20:55:30]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[20:55:30]   [container-err] Key                     | Status     |  | 
+[20:55:30]   [container-err] ------------------------+------------+--+-
+[20:55:30]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[20:55:30]   [container-err] 
+[20:55:30]   [container-err] Notes:
+[20:55:30]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[20:55:30] [clawbench_mem-015_glm-4.7_20260429_125446] Agent finished in 41.39s, returncode=0
+[20:55:30] [clawbench_mem-015_glm-4.7_20260429_125446] Agent result: passed=False, score=0.9615
+[20:55:30]   [clawbench×glm-4.7] done: score=80.8, scored=7/16
+[20:55:30]   [clawbench×glm-4.7] done: score=80.8, scored=0/16
+[20:55:30] 
+============================================================
+[20:55:30] BENCHMARK: claweval (7 tasks from file)
+[20:55:30] ============================================================
+[20:55:30]   [claweval×glm-4.7] evaluating...
+[20:55:31] [claweval] Docker image 'claw-eval-agent:latest' found
+[20:55:31] [claweval] Evaluating 7 tasks with model=glm-4.7, parallel=1
+[20:55:31] [claweval] 汇总已保存: 3/7 完成
+[20:55:31]   [claweval×glm-4.7] done: score=0.7039, scored=7/7
+[20:55:31]   [claweval×glm-4.7] done: score=0.7039, scored=7/7
+[20:55:31] 
+

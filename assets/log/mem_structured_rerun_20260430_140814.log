@@ -1,0 +1,13 @@
+[14:08:14] 从文件加载任务列表: assets/log/mem_structured_failed_tasks.txt
+[14:08:14]   clawbench-official: 7 tasks
+[14:08:14] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=all
+[14:08:14] 
+============================================================
+[14:08:14] BENCHMARK: clawbench-official (7 tasks from file)
+[14:08:14] ============================================================
+[14:08:14]   [clawbench-official×glm-4.7] evaluating...
+[14:08:16]   [clawbench-official×glm-4.7] done: score=0, scored=0/0
+[14:08:16]   [clawbench-official×glm-4.7] error: no output
+[14:08:16]   [clawbench-official×glm-4.7] done: score=0, scored=0/0
+[14:08:16] 
+

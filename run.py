@@ -154,8 +154,8 @@ def main():
     parser.add_argument("--reuse-container", action="store_true", help="Reuse existing containers (skip rebuild, preserves pip installs)")
     parser.add_argument("--judge-model", help="Judge model for scoring (e.g., minimax/claude-3.5-sonnet, claude-sonnet-4.6)")
     parser.add_argument("--include-multimodal", action="store_true", help="Include multimodal tasks (for ClawEval only, default: excluded)")
-    parser.add_argument("--harness", choices=["collaboration", "control", "memory", "procedure", "combo"],
-                        help="Enable a harness recipe for NanoBotAgent (collaboration/control/memory/procedure/combo)")
+    parser.add_argument("--harness", choices=["collaboration", "collab_cmd", "control", "memory", "memory_structured", "procedure", "combo"],
+                        help="Enable a harness recipe for NanoBotAgent (collaboration/collab_cmd/control/memory/memory_structured/procedure/combo)")
     args = parser.parse_args()
 
     # Only set transcripts_dir if explicitly provided; otherwise let each bench

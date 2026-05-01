@@ -1,0 +1,8 @@
+usage: run.py [-h] [--bench BENCH] [--model MODEL] [--sample SAMPLE]
+              [--summary] [--list] [--force] [--docker] [--parallel PARALLEL]
+              [--env ENV] [--output-dir OUTPUT_DIR]
+              [--transcripts-dir TRANSCRIPTS_DIR] [--max-turns MAX_TURNS]
+              [--task TASK] [--category CATEGORY] [--reuse-container]
+              [--judge-model JUDGE_MODEL] [--include-multimodal]
+              [--harness {collaboration,collab_cmd,control,memory,memory_structured,procedure,combo}]
+run.py: error: unrecognized arguments: --task_ids mem-001 mem-002 mem-004 mem-005 mem-007 mem-010 mem-015

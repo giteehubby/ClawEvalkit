@@ -295,10 +295,14 @@ def _call_judge_litellm(
 ) -> Optional[str]:
     """调用 Judge 模型（通过 litellm，用于 bigmodel/GLM 等 Anthropic endpoint）。"""
     import litellm
+    # For bigmodel, need anthropic/ prefix for litellm routing
+    model = judge_model
+    if not model.startswith("anthropic/") and not model.startswith("openai/") and not model.startswith("azure/"):
+        model = f"anthropic/{model}"
     for attempt in range(max_retries):
         try:
             response = litellm.completion(
-                model=judge_model,
+                model=model,
                 messages=messages,
                 api_key=api_key,
                 api_base=api_base,
@@ -377,11 +381,9 @@ def run_judge_eval(
 
     try:
         if is_bigmodel:
-            # bigmodel endpoint is Anthropic-compatible, use Anthropic SDK directly
-            import anthropic
-            client = anthropic.Anthropic(api_key=api_key, base_url=base_url)
-            result_text = _call_judge_with_retry(
-                client, judge_model, messages, client_type="anthropic"
+            # bigmodel endpoint: use litellm with api_key and api_base to ensure correct auth
+            result_text = _call_judge_litellm(
+                judge_model, messages, api_key, base_url
             )
         elif use_anthropic:
             import anthropic

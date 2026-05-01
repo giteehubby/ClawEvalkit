@@ -1,0 +1,8 @@
+bench_id,task_id
+clawbench,mem-001-recall-given-name
+clawbench,mem-002-multi-step-instructions
+clawbench,mem-004-contradiction-resolution
+clawbench,mem-005-long-document-summarization
+clawbench,mem-007-instruction-chaining
+clawbench,mem-010-multi-file-context-correlation
+clawbench,mem-015-timeline-reconstructor

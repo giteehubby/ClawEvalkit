@@ -1,0 +1,25 @@
+============================================================
+AgentBench GLM-4.7 Error Classification Prompt Generator
+============================================================
+
+[1/3] Loading agentbench task definitions...
+  Loaded 39 task definitions
+
+[2/3] Collecting failures (score < 90)...
+  Found 30 failures out of 40 tasks
+
+  Score distribution of failures:
+    0-20: 0
+    20-40: 2
+    40-60: 4
+    60-80: 12
+
+[3/3] Building classification prompts...
+  Generated 30 prompts
+
+Saved prompts to: /Volumes/F/work/ClawEvalkit-private/error_analysis/outputs/agentbench_glm_prompts.json
+Saved summary to: /Volumes/F/work/ClawEvalkit-private/error_analysis/outputs/agentbench_glm_summary.csv
+
+============================================================
+Done! Next step: run classification via LLM
+============================================================

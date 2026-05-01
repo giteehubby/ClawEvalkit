@@ -1,0 +1,20 @@
+[13:37:39] Config: bench=['clawbench-official'], models=['glm-4.7'], sample=all
+[13:37:39] 
+============================================================
+[13:37:39] BENCHMARK: ClawBench Official (250 tasks)
+[13:37:39] ============================================================
+[13:37:39]   [clawbench-official×glm-4.7] evaluating...
+[13:37:43] [clawbench_mem-005_glm-4.7_20260430_053740] Container started
+[13:37:43] [mem-005] Harness detected, timeout adjusted: 300 → 480
+[13:41:41]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-005-long-document-summarization/environment/setup.sh
+[13:41:41]   [container] [setup] setup.sh 成功
+[13:41:41]   [container] [setup] 工作空间文件: ['instruction.md', 'report.txt']
+[13:41:41]   [container] DONE
+[13:41:41]   [container-err] /usr/local/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:75: RuntimeWarning: coroutine 'Logging.async_success_handler' was never awaited
+[13:41:41]   [container-err]   self._queue = None
+[13:41:41]   [container-err] RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+[13:41:41] [clawbench_mem-005_glm-4.7_20260430_053740] Agent finished in 237.72s, returncode=0
+[13:41:41] [clawbench_mem-005_glm-4.7_20260430_053740] Agent result: passed=False, score=0.6957
+[13:41:41]   [clawbench-official×glm-4.7] done: score=69.6, scored=0/1
+[13:41:41] 
+

@@ -27,7 +27,7 @@ BENCH_CARDS_MAP = {
 }
 
 
-def get_harness_config(harness: str, bench_key: str = None) -> dict:
+def get_harness_config(harness: str, bench_key: str = None, model_config: dict = None) -> dict:
     """Convert harness recipe name to agent constructor kwargs dict.
 
     Returns a dict like {"memory_config": MemoryConfig(enabled=True)} that
@@ -99,8 +99,20 @@ def get_harness_config(harness: str, bench_key: str = None) -> dict:
         from OpenClawPro.harness.agent.collaboration import CollabConfig
         return {"collab_config": CollabConfig(enabled=True, mode="executor_verifier")}
     elif harness == "collab_cmd":
-        from OpenClawPro.harness.agent.collaboration import CollabConfig
-        return {"collab_config": CollabConfig(enabled=True, mode="commander_executor")}
+        from OpenClawPro.harness.agent.collaboration import CollabConfig, HandoffPolicy
+        return {
+            "collab_config": CollabConfig(
+                enabled=True,
+                mode="commander_executor",
+                max_handoffs=60,
+                handoff_policy=HandoffPolicy(
+                    trigger="on_error",
+                    max_context_length=4000,
+                    include_tool_history=True,
+                    include_memory=True,
+                ),
+            )
+        }
     elif harness == "procedure":
         from OpenClawPro.harness.agent.procedure import (
             ProceduralConfig,
@@ -153,6 +165,20 @@ def get_harness_config(harness: str, bench_key: str = None) -> dict:
                 enabled=True,
                 program_support=program_support,
                 skill_activation=skill_activation,
+            )
+        }
+    elif harness == "memory_structured":
+        # H2: Structured State Tracker — 主动维护四个 slots:
+        # constraints, derived_facts, pending_subgoals, artifact_paths
+        # 验证 state abstraction failure 假说
+        from OpenClawPro.harness.agent.memory_structured import StructuredMemoryConfig
+        mc = model_config or {}
+        return {
+            "structured_memory_config": StructuredMemoryConfig(
+                enabled=True,
+                llm_model=mc.get("model", "glm-4"),
+                llm_api_url=mc.get("api_url", ""),
+                llm_api_key=mc.get("api_key", ""),
             )
         }
     elif harness == "combo":
@@ -287,7 +313,7 @@ def infer_data_job(bench_key: str, model_key: str, sample: int = 0,
     # 提取 harness 并转化为 agent config kwargs
     harness = kwargs.pop("harness", None)
     if harness:
-        evaluate_kwargs["harness_config"] = get_harness_config(harness, bench_key)
+        evaluate_kwargs["harness_config"] = get_harness_config(harness, bench_key, config)
     result = bench.evaluate(model_key, config, **evaluate_kwargs, **kwargs)
 
     score = result.get("score", 0)

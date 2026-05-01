@@ -275,6 +275,57 @@ def visualize(data: dict):
 # ── main ──────────────────────────────────────────────────
 
 
+def save_markdown(data: dict, output_path: Path):
+    """将统计数据保存为 Markdown 表格"""
+    harness_types = sorted(data["harness"].keys())
+
+    lines = [
+        f"# Outputs 实验统计总览 (Model: {MODEL})",
+        "",
+        "## Average Score",
+        "",
+        f"| Benchmark | Total | BL Avg | " + " | ".join(ht.capitalize() + " Avg" for ht in harness_types) + " |",
+        f"| --- | ---: | ---: |" + " ---: |" * len(harness_types),
+    ]
+
+    for bk in BENCH_NAME_MAP:
+        bl = data["baseline"].get(bk, {"tasks_run": 0, "total": 0, "avg": 0})
+        name = DISPLAY_NAMES.get(bk, bk)
+        if bk not in data["baseline"] and not any(bk in data["harness"].get(ht, {}) for ht in harness_types):
+            continue
+        row = f"| {name} | {bl['total']} | {bl['avg']:.1f} |"
+        for ht in harness_types:
+            hd = data["harness"].get(ht, {}).get(bk, {"tasks_run": 0, "avg": 0})
+            row += f" {hd['avg']:.1f} |"
+        lines.append(row)
+
+    lines += [
+        "",
+        "## Completion Rate (%)",
+        "",
+        f"| Benchmark | Total | BL | " + " | ".join(ht.capitalize() for ht in harness_types) + " |",
+        f"| --- | ---: | ---: |" + " ---: |" * len(harness_types),
+    ]
+
+    for bk in BENCH_NAME_MAP:
+        bl = data["baseline"].get(bk, {"tasks_run": 0, "total": 0})
+        if bk not in data["baseline"] and not any(bk in data["harness"].get(ht, {}) for ht in harness_types):
+            continue
+        name = DISPLAY_NAMES.get(bk, bk)
+        total = bl["total"]
+        bl_rate = bl["tasks_run"] / total * 100 if total > 0 else 0
+        row = f"| {name} | {total} | {bl_rate:.1f}% |"
+        for ht in harness_types:
+            hd = data["harness"].get(ht, {}).get(bk, {"tasks_run": 0, "total": 0})
+            ht_total = hd.get("total", total)
+            ht_rate = hd["tasks_run"] / ht_total * 100 if ht_total > 0 else 0
+            row += f" {ht_rate:.1f}% |"
+        lines.append(row)
+
+    output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"Markdown 已保存: {output_path}")
+
+
 def main():
     print("正在收集数据...")
     data = collect_all_data()
@@ -320,6 +371,7 @@ def main():
         print(line)
 
     visualize(data)
+    save_markdown(data, OUTPUTS_DIR / "outputs_summary.md")
 
 
 if __name__ == "__main__":

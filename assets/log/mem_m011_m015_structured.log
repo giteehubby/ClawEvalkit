@@ -1,0 +1,54 @@
+[21:59:38] 从文件加载任务列表: error_analysis/inputs/memset_m011_m015.csv
+[21:59:38]   clawbench: 5 tasks
+[21:59:38] Config: bench=['clawbench'], models=['glm-4.7'], sample=all
+[21:59:38] 
+============================================================
+[21:59:38] BENCHMARK: clawbench (5 tasks from file)
+[21:59:38] ============================================================
+[21:59:38]   [clawbench×glm-4.7] evaluating...
+[21:59:42] [clawbench_mem-011_glm-4.7_20260429_135940] Container started
+[21:59:42] [mem-011] Harness detected, timeout adjusted: 180 → 360
+[22:00:25]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-011-conversation-tracker/environment/setup.sh
+[22:00:25]   [container] [setup] setup.sh 成功
+[22:00:25]   [container] [setup] 工作空间文件: ['conversation.jsonl', 'instruction.md']
+[22:00:25]   [container] DONE
+[22:00:25] [clawbench_mem-011_glm-4.7_20260429_135940] Agent finished in 43.29s, returncode=0
+[22:00:25] [clawbench_mem-011_glm-4.7_20260429_135940] Agent result: passed=True, score=1.0000
+[22:00:27] [clawbench_mem-012_glm-4.7_20260429_140026] Container started
+[22:00:27] [mem-012] Harness detected, timeout adjusted: 180 → 360
+[22:01:23]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-012-fact-extraction-and-update/environment/setup.sh
+[22:01:23]   [container] [setup] setup.sh 成功
+[22:01:23]   [container] [setup] 工作空间文件: ['updates.jsonl', 'instruction.md']
+[22:01:23]   [container] DONE
+[22:01:23] [clawbench_mem-012_glm-4.7_20260429_140026] Agent finished in 55.48s, returncode=0
+[22:01:23] [clawbench_mem-012_glm-4.7_20260429_140026] Agent result: passed=True, score=1.0000
+[22:01:25] [clawbench_mem-013_glm-4.7_20260429_140123] Container started
+[22:01:25] [mem-013] Harness detected, timeout adjusted: 240 → 420
+[22:02:37]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-013-entity-relationship-tracker/environment/setup.sh
+[22:02:37]   [container] [setup] setup.sh 成功
+[22:02:37]   [container] [setup] 工作空间文件: ['instruction.md', 'events.jsonl']
+[22:02:37]   [container] DONE
+[22:02:37] [clawbench_mem-013_glm-4.7_20260429_140123] Agent finished in 72.02s, returncode=0
+[22:02:37] [clawbench_mem-013_glm-4.7_20260429_140123] Agent result: passed=True, score=1.0000
+[22:02:40] [clawbench_mem-014_glm-4.7_20260429_140238] Container started
+[22:02:40] [mem-014] Harness detected, timeout adjusted: 240 → 420
+[22:04:10]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-014-preference-learning/environment/setup.sh
+[22:04:10]   [container] [setup] setup.sh 成功
+[22:04:10]   [container] [setup] 工作空间文件: ['instruction.md', 'interactions.jsonl']
+[22:04:10]   [container] DONE
+[22:04:10]   [container-err] [_call_llm] Server error (attempt 1/4), retrying in 5s: litellm.InternalServerError: AnthropicException - {"error":{"code":"1234","message":"网络错误，错误id 20260429220347f3fe2c560a2948d7 ，请稍后重试。"},"request_id":"20260429220347f3fe2c560a2948d7"}. Handle with `litellm.InternalServerError`.
+[22:04:10]   [container-err] [_call_llm] Server error (attempt 2/4), retrying in 10s: litellm.InternalServerError: AnthropicException - {"error":{"code":"1234","message":"网络错误，错误id 20260429220352fe9e61f6436d4bf6 ，请稍后重试。"},"request_id":"20260429220352fe9e61f6436d4bf6"}. Handle with `litellm.InternalServerError`.
+[22:04:10] [clawbench_mem-014_glm-4.7_20260429_140238] Agent finished in 90.33s, returncode=0
+[22:04:10] [clawbench_mem-014_glm-4.7_20260429_140238] Agent result: passed=True, score=1.0000
+[22:04:12] [clawbench_mem-015_glm-4.7_20260429_140410] Container started
+[22:04:12] [mem-015] Harness detected, timeout adjusted: 240 → 420
+[22:05:15]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/memory/mem-015-timeline-reconstructor/environment/setup.sh
+[22:05:15]   [container] [setup] setup.sh 成功
+[22:05:15]   [container] [setup] 工作空间文件: ['anchors.json', 'instruction.md', 'fragments.json']
+[22:05:15]   [container] DONE
+[22:05:15] [clawbench_mem-015_glm-4.7_20260429_140410] Agent finished in 62.72s, returncode=0
+[22:05:15] [clawbench_mem-015_glm-4.7_20260429_140410] Agent result: passed=False, score=0.9615
+[22:05:15]   [clawbench×glm-4.7] done: score=99.2, scored=4/5
+[22:05:15]   [clawbench×glm-4.7] done: score=99.2, scored=0/5
+[22:05:15] 
+

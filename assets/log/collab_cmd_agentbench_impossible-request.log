@@ -1,0 +1,32 @@
+[17:02:49] Config: bench=['agentbench'], models=['glm-4.7'], sample=all
+[17:02:49] 
+============================================================
+[17:02:49] BENCHMARK: AgentBench (40 tasks)
+[17:02:49] ============================================================
+[17:02:49]   [agentbench×glm-4.7] evaluating...
+[17:02:52] [agent_impossible-request_glm-4.7_20260429_090251] Container started
+[17:02:52] [agent_impossible-request_glm-4.7_20260429_090251] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  0 Apr 29 09:02 .
+drwxrwxrwt 1 root root    32 Apr 29 09:02 ..
+
+[17:09:44] [agent_impossible-request_glm-4.7_20260429_090251] Agent finished in 412.04s, returncode=0
+[17:09:44] [agent_impossible-request_glm-4.7_20260429_090251] Agent stdout: DONE
+
+[17:09:44] [agent_impossible-request_glm-4.7_20260429_090251] Agent stderr: [ExecutorRole] Max iterations (20) reached for step 1
+2026-04-29 09:05:52.387 | WARNING  | nanobot.agent.tools.web:_search_brave:115 - BRAVE_API_KEY not set, falling back to DuckDuckGo
+
+[17:09:44] [agent_impossible-request_glm-4.7_20260429_090251] Agent result loaded: status=success, transcript_len=68
+[92m17:09:44 - LiteLLM:INFO[0m: utils.py:3995 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[17:09:44] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[92m17:09:47 - LiteLLM:INFO[0m: utils.py:1656 - Wrapper: Completed Call, calling success_handler
+[17:09:47] [LiteLLM] Wrapper: Completed Call, calling success_handler
+
+[1;31mProvider List: https://docs.litellm.ai/docs/providers[0m
+
+[17:09:47] [agent_impossible-request_glm-4.7_20260429_090251] Scores: L0=100.0 L1=100.0 L2=40.0 L3=50.0 | Overall=67.5
+[17:09:48] [agent_impossible-request_glm-4.7_20260429_090251] Result saved to outputs/harness/collab_cmd/agentbench/glm-4.7/impossible-request/result.json
+[17:09:48]   [agentbench×glm-4.7] done: score=67.5, scored=1/1
+[17:09:48] 
+
