@@ -14,6 +14,7 @@ from .openrouter import OpenRouterAPI
 PROVIDERS = {
     "ark": ArkAPI,
     "gpt_proxy": OpenAIProxyAPI,
+    "glm": OpenAIProxyAPI,
     "openai": OpenAIProxyAPI,
     "openrouter": OpenRouterAPI,
 }

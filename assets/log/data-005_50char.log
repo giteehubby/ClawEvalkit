@@ -1,0 +1,24 @@
+[10:22:04] Config: bench=['clawbench-official'], models=['qwen3.6-27b'], sample=all
+[10:22:04] 
+============================================================
+[10:22:04] BENCHMARK: ClawBench Official (250 tasks)
+[10:22:04] ============================================================
+[10:22:04]   [clawbench-official×qwen3.6-27b] evaluating...
+[10:22:07] [clawbench_data-005_qwen3.6-27b_20260521_022205] Container started
+[10:22:07] [data-005] Harness detected, timeout adjusted: 180 → 360
+[10:26:35]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-005/environment/setup.sh
+[10:26:35]   [container] [setup] setup.sh 成功
+[10:26:35]   [container] [setup] 工作空间文件: ['instruction.md', 'measurements.csv']
+[10:26:35]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[10:26:35]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=968, finish_reason=stop, reasoning_tokens=3144
+[10:26:35]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[10:26:35]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1094, finish_reason=stop, reasoning_tokens=2729
+[10:26:35]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[10:26:35]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=472, finish_reason=stop, reasoning_tokens=1651
+[10:26:35]   [container] DONE
+[10:26:35] [clawbench_data-005_qwen3.6-27b_20260521_022205] Agent finished in 267.26s, returncode=0
+[10:26:35] [clawbench_data-005_qwen3.6-27b_20260521_022205] Agent result: passed=True, score=1.0000
+[10:26:35] [data-005] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory_structured/clawbench-official/qwen3.6-27b/data-005.json
+[10:26:35]   [clawbench-official×qwen3.6-27b] done: score=100.0, scored=1/1
+[10:26:35] 
+

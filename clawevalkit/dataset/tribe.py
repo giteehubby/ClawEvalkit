@@ -90,6 +90,7 @@ def _build_tribe_exec_script(test_id: str, prompt: str, config: dict,
     # Build harness import lines and constructor kwargs
     harness_imports, harness_kwargs_str = build_harness_script_parts(harness_config)
     harness_imports += "\n"  # extra newline for concatenation style in this file
+    prompt_escaped = prompt.replace("'", "\\'")
 
     return f"""
 import sys
@@ -114,7 +115,7 @@ agent = NanoBotAgent(
 
 try:
     result = agent.execute(
-        '''{prompt.replace("'", "\\'")}''',
+        '''{prompt_escaped}''',
         session_id='tribe_docker_{test_id}',
     )
     output = {{

@@ -8,7 +8,7 @@ import re
 import time
 
 import anthropic
-from openai import OpenAI
+from openai import AzureOpenAI, OpenAI
 from pydantic import BaseModel
 
 from ..models.trace import _now
@@ -61,6 +61,11 @@ def _is_anthropic_endpoint(base_url: str) -> bool:
     return "/anthropic" in base_url or "anthropic.ai" in base_url
 
 
+def _is_azure_endpoint(base_url: str) -> bool:
+    """Check if base_url points to an Azure OpenAI-compatible API (including ModelHub)."""
+    return "aidp.bytedance.net" in base_url or ("azure" in base_url.lower() and "/anthropic" not in base_url)
+
+
 class LLMJudge:
     """Judge communication quality using an LLM via OpenAI or Anthropic-compatible API.
 
@@ -78,10 +83,10 @@ class LLMJudge:
         self.model_id = model_id
         self._call_log: list[dict] = []
         self._use_anthropic = _is_anthropic_endpoint(base_url)
+        self._use_azure = not self._use_anthropic and _is_azure_endpoint(base_url)
 
         if self._use_anthropic:
             self._anthropic_client = anthropic.Anthropic(api_key=api_key or "dummy", base_url=base_url)
-            # Wrap messages.create for call counting
             _orig = self._anthropic_client.messages.create
             _log = self._call_log
             def _counting_create(*args, **kwargs):
@@ -93,6 +98,24 @@ class LLMJudge:
                 })
                 return result
             self._anthropic_client.messages.create = _counting_create
+        elif self._use_azure:
+            self.client = AzureOpenAI(
+                api_key=api_key or "dummy",
+                api_version="2024-02-01",
+                azure_endpoint=base_url.rstrip("/"),
+                timeout=120.0,
+            )
+            _orig_create = self.client.chat.completions.create
+            _log = self._call_log
+            def _counting_create(*args, **kwargs):
+                result = _orig_create(*args, **kwargs)
+                _log.append({
+                    "method": "client.chat.completions.create",
+                    "model": kwargs.get("model", getattr(result, "model", "")),
+                    "timestamp": _now(),
+                })
+                return result
+            self.client.chat.completions.create = _counting_create
         else:
             self.client = OpenAI(api_key=api_key or "dummy", base_url=base_url)
             _orig_create = self.client.chat.completions.create

@@ -1,0 +1,20 @@
+[09:51:59] Config: bench=['clawbench-official'], models=['qwen3.6-27b'], sample=all
+[09:51:59] 
+============================================================
+[09:51:59] BENCHMARK: ClawBench Official (250 tasks)
+[09:51:59] ============================================================
+[09:51:59]   [clawbench-official×qwen3.6-27b] evaluating...
+[09:52:02] [clawbench_data-005_qwen3.6-27b_20260521_015200] Container started
+[09:52:02] [data-005] Harness detected, timeout adjusted: 180 → 360
+[09:55:24]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-005/environment/setup.sh
+[09:55:24]   [container] [setup] setup.sh 成功
+[09:55:24]   [container] [setup] 工作空间文件: ['instruction.md', 'measurements.csv']
+[09:55:24]   [container] DONE
+[09:55:24]   [container-err] [StructuredMemoryStore] Batch update LLM returned empty/None content
+[09:55:24]   [container-err] [StructuredMemoryStore] LLM update failed: LLM returned empty content, falling back to regex
+[09:55:24] [clawbench_data-005_qwen3.6-27b_20260521_015200] Agent finished in 201.89s, returncode=0
+[09:55:24] [clawbench_data-005_qwen3.6-27b_20260521_015200] Agent result: passed=True, score=1.0000
+[09:55:24] [data-005] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory_structured/clawbench-official/qwen3.6-27b/data-005.json
+[09:55:24]   [clawbench-official×qwen3.6-27b] done: score=100.0, scored=1/1
+[09:55:24] 
+

@@ -1,0 +1,39 @@
+[14:14:06] Config: bench=['clawbench-official'], models=['qwen3.6-27b'], sample=all
+[14:14:06] 
+============================================================
+[14:14:06] BENCHMARK: ClawBench Official (250 tasks)
+[14:14:06] ============================================================
+[14:14:06]   [clawbench-official×qwen3.6-27b] evaluating...
+[14:14:10] [clawbench_ds-004-time-series_qwen3.6-27b_20260521_061408] Container started
+[14:28:31]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-science/ds-004-time-series/environment/setup.sh
+[14:28:31]   [container] [setup] setup.sh 成功
+[14:28:31]   [container] [setup] 工作空间文件: ['timeseries.csv', 'instruction.md']
+[14:28:31]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:28:31]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1089, finish_reason=stop, reasoning_tokens=2589
+[14:28:31]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:28:31]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1324, finish_reason=stop, reasoning_tokens=3794
+[14:28:31]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:28:31]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=369, finish_reason=stop, reasoning_tokens=1412
+[14:28:31]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:28:31]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=652, finish_reason=stop, reasoning_tokens=2196
+[14:28:31]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:28:31]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=361, finish_reason=stop, reasoning_tokens=2538
+[14:28:31]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:28:31]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=545, finish_reason=stop, reasoning_tokens=1586
+[14:28:31]   [container] DONE
+[14:28:31]   [container-err] 
+[14:28:31]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:28:31]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3451.03it/s]
+[14:28:31]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:28:31]   [container-err] Key                     | Status     |  | 
+[14:28:31]   [container-err] ------------------------+------------+--+-
+[14:28:31]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[14:28:31]   [container-err] 
+[14:28:31]   [container-err] Notes:
+[14:28:31]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:28:31] [clawbench_ds-004-time-series_qwen3.6-27b_20260521_061408] Agent finished in 860.85s, returncode=0
+[14:28:31] [clawbench_ds-004-time-series_qwen3.6-27b_20260521_061408] Agent result: passed=True, score=1.0000
+[14:28:32] [ds-004-time-series] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/ds-004-time-series.json
+[14:28:32]   [clawbench-official×qwen3.6-27b] done: score=100.0, scored=1/1
+[14:28:32] 
+

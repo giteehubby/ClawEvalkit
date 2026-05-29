@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Volumes/F/work/ClawEvalkit-private-emnlp/run.py", line 54, in <module>
+    from clawevalkit.dataset import BENCHMARKS, list_benchmarks
+  File "/Volumes/F/work/ClawEvalkit-private-emnlp/clawevalkit/dataset/__init__.py", line 15, in <module>
+    from .claweval import ClawEval
+  File "/Volumes/F/work/ClawEvalkit-private-emnlp/clawevalkit/dataset/claweval.py", line 896
+    audit_data = self._collect_audit_data(task)
+    ^^^^^^^^^^
+SyntaxError: expected 'except' or 'finally' block
+ERROR conda.cli.main_run:execute(142): `conda run python run.py --bench claweval --docker --force --harness memory_structured --task T006_email_reply_draft --model glm-4.7 --judge-model glm-5` failed. (See above for error)

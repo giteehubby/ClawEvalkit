@@ -1,0 +1,26 @@
+[92m10:30:56 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[10:30:56] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[92m10:31:00 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[10:31:00] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[10:27:46] Config: bench=['agentbench'], models=['qwen3.6-27b'], sample=all
+[10:27:46] 
+============================================================
+[10:27:46] BENCHMARK: AgentBench (39 tasks)
+[10:27:46] ============================================================
+[10:27:46]   [agentbench×qwen3.6-27b] evaluating...
+[10:27:48] [agent_missing-dependency_qwen3.6-27b_20260521_022747] Container started
+[10:27:48] [agent_missing-dependency_qwen3.6-27b_20260521_022747] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  0 May 21 02:27 .
+drwxrwxrwt 1 root root    32 May 21 02:27 ..
+
+[10:30:56] [agent_missing-dependency_qwen3.6-27b_20260521_022747] Agent finished in 187.47s, returncode=0
+[10:30:56] [agent_missing-dependency_qwen3.6-27b_20260521_022747] Agent stdout: DONE
+
+[10:30:56] [agent_missing-dependency_qwen3.6-27b_20260521_022747] Agent result loaded: status=success, transcript_len=53
+[10:31:00] [agent_missing-dependency_qwen3.6-27b_20260521_022747] Scores: L0=0.0 L1=30.0 L2=100.0 L3=100.0 | Overall=67.5
+[10:31:01] [agent_missing-dependency_qwen3.6-27b_20260521_022747] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/collaboration/agentbench/qwen3.6-27b/missing-dependency/result.json
+[10:31:01]   [agentbench×qwen3.6-27b] done: score=67.5, scored=1/1
+[10:31:01] 
+

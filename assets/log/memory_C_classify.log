@@ -1,0 +1,58 @@
+[13:56:08] 从文件加载任务列表: error_analysis/classify_outputs/qwen-3.6-27b/deepseek_classify/inputs/memory_C.csv
+[13:56:08]   clawbench: 1 tasks
+[13:56:08]   pinchbench: 1 tasks
+[13:56:08] Config: bench=['clawbench', 'pinchbench'], models=['qwen3.6-27b'], sample=all
+[13:56:08] 
+============================================================
+[13:56:08] BENCHMARK: clawbench (1 tasks from file)
+[13:56:08] ============================================================
+[13:56:08]   [clawbench×qwen3.6-27b] evaluating...
+[13:56:13] [clawbench_sys-013_qwen3.6-27b_20260521_055610] Container started
+[13:57:02]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-013-log-rotation-planner/environment/setup.sh
+[13:57:02]   [container] [setup] setup.sh 成功
+[13:57:02]   [container] [setup] 工作空间文件: ['instruction.md', 'log_inventory.json']
+[13:57:02]   [container] DONE
+[13:57:02]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[13:57:02]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3618.96it/s]
+[13:57:02]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[13:57:02]   [container-err] Key                     | Status     |  | 
+[13:57:02]   [container-err] ------------------------+------------+--+-
+[13:57:02]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[13:57:02]   [container-err] 
+[13:57:02]   [container-err] Notes:
+[13:57:02]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[13:57:02] [clawbench_sys-013_qwen3.6-27b_20260521_055610] Agent finished in 49.12s, returncode=0
+[13:57:02] [clawbench_sys-013_qwen3.6-27b_20260521_055610] Agent result: passed=False, score=0.7308
+[13:57:02] [sys-013] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/clawbench-official/qwen3.6-27b/sys-013.json
+[13:57:02]   [clawbench×qwen3.6-27b] done: score=73.1, scored=0/1
+[13:57:02]   [clawbench×qwen3.6-27b] done: score=73.1, scored=0/1
+[13:57:02] 
+============================================================
+[13:57:02] BENCHMARK: pinchbench (1 tasks from file)
+[13:57:02] ============================================================
+[13:57:02]   [pinchbench×qwen3.6-27b] evaluating...
+[13:57:03] [pinchbench] Filtered to 1 tasks by task_ids: ['task_22_second_brain']
+[13:57:03] [pinchbench] 汇总已保存: 1/1 完成
+[13:57:03] [task_22_second_brain] No workspace_files defined in task
+[13:57:05] [pinch_task_22_second_brain_qwen3.6-27b_20260521_055703] Container started
+[13:59:25] [pinch_task_22_second_brain_qwen3.6-27b_20260521_055703] Agent finished in 140.42s, returncode=0
+[13:59:25] [pinch_task_22_second_brain_qwen3.6-27b_20260521_055703] DONE
+[13:59:25] [pinch_task_22_second_brain_qwen3.6-27b_20260521_055703] [STDERR] 
+[13:59:25] [pinch_task_22_second_brain_qwen3.6-27b_20260521_055703] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[13:59:25] [pinch_task_22_second_brain_qwen3.6-27b_20260521_055703] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 5362.23it/s]
+[13:59:25] [pinch_task_22_second_brain_qwen3.6-27b_20260521_055703] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[13:59:25] [pinch_task_22_second_brain_qwen3.6-27b_20260521_055703] [STDERR] Key                     | Status     |  | 
+[13:59:25] [pinch_task_22_second_brain_qwen3.6-27b_20260521_055703] [STDERR] ------------------------+------------+--+-
+[13:59:25] [pinch_task_22_second_brain_qwen3.6-27b_20260521_055703] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[13:59:25] [pinch_task_22_second_brain_qwen3.6-27b_20260521_055703] [STDERR] 
+[13:59:25] [pinch_task_22_second_brain_qwen3.6-27b_20260521_055703] [STDERR] Notes:
+[13:59:25] [pinch_task_22_second_brain_qwen3.6-27b_20260521_055703] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[13:59:25] [pinch_task_22_second_brain_qwen3.6-27b_20260521_055703] Agent result loaded: status=success, transcript_len=99
+[13:59:29] [task_22_second_brain] Hybrid score: 0.0750 (auto=0.0000, llm=0.1500)
+[13:59:30] [task_22_second_brain] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_22_second_brain/transcript.json
+[13:59:30] [task_22_second_brain] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_22_second_brain/result.json
+[13:59:30] [pinchbench] 汇总已保存: 1/1 完成
+[13:59:30]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[13:59:30]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[13:59:30] 
+

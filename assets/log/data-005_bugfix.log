@@ -1,0 +1,28 @@
+[09:38:59] Config: bench=['clawbench-official'], models=['qwen3.6-27b'], sample=all
+[09:38:59] 
+============================================================
+[09:38:59] BENCHMARK: ClawBench Official (250 tasks)
+[09:38:59] ============================================================
+[09:38:59]   [clawbench-official×qwen3.6-27b] evaluating...
+[09:39:02] [clawbench_data-005_qwen3.6-27b_20260521_013900] Container started
+[09:39:02] [data-005] Harness detected, timeout adjusted: 180 → 360
+[09:41:01]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-005/environment/setup.sh
+[09:41:01]   [container] [setup] setup.sh 成功
+[09:41:01]   [container] [setup] 工作空间文件: ['instruction.md', 'measurements.csv']
+[09:41:01]   [container] DONE
+[09:41:01]   [container-err]   self._queue = None
+[09:41:01]   [container-err] RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+[09:41:01]   [container-err] [StructuredMemoryStore] absorb_user_message failed: LLM returned empty content, fallback to regex
+[09:41:01]   [container-err] [StructuredMemoryStore] Batch update LLM returned empty/None content
+[09:41:01]   [container-err] [StructuredMemoryStore] LLM update failed: LLM returned empty content, falling back to regex
+[09:41:01]   [container-err] Task was destroyed but it is pending!
+[09:41:01]   [container-err] task: <Task pending name='Task-22' coro=<LoggingWorker._worker_loop() done, defined at /usr/local/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:110> wait_for=<Future cancelled>>
+[09:41:01]   [container-err] /usr/local/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:75: RuntimeWarning: coroutine 'Logging.async_success_handler' was never awaited
+[09:41:01]   [container-err]   self._queue = None
+[09:41:01]   [container-err] RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+[09:41:01] [clawbench_data-005_qwen3.6-27b_20260521_013900] Agent finished in 118.23s, returncode=0
+[09:41:01] [clawbench_data-005_qwen3.6-27b_20260521_013900] Agent result: passed=False, score=0.8571
+[09:41:01] [data-005] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory_structured/clawbench-official/qwen3.6-27b/data-005.json
+[09:41:01]   [clawbench-official×qwen3.6-27b] done: score=85.7, scored=0/1
+[09:41:01] 
+

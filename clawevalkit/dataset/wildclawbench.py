@@ -131,6 +131,9 @@ def _build_exec_script(
     api_key = config.get("api_key", "")
     # Build harness import lines and constructor kwargs
     harness_imports, harness_kwargs_str = build_harness_script_parts(harness_config)
+    # Pre-compute values that contain backslashes (not allowed inside f-string expressions)
+    prompt_escaped = prompt.replace("'", "\\'")
+    skills_inject = ("system_prompt = system_prompt + '''\\n\\n" + skills_summary + "'''") if skills_summary else ""
     return f"""
 import sys
 import json
@@ -150,11 +153,11 @@ agent = NanoBotAgent(
     disable_safety_guard=True,{harness_kwargs_str}
 )
 system_prompt = \"\"\"You are an expert in a restricted, non-interactive environment. Solve the task efficiently before the timeout ({timeout_seconds}s). Run all processes in the foreground without user input or background services. Provide a complete, functional solution in a single pass with no placeholders.\"\"\"
-{skills_summary and f"system_prompt = system_prompt + '''\\\\n\\\\n{skills_summary}'''" or ""}
+{skills_inject}
 try:
     start_time = time.time()
     result = agent.execute(
-        '''{prompt.replace("'", "\\'")}''',
+        '''{prompt_escaped}''',
         session_id=session_id,
         workspace=workspace,
         system_prompt=system_prompt,

@@ -607,7 +607,6 @@ class ZClawBench(BaseBenchmark):
             # Save cache
             try:
                 self._save_task_result("zclawbench", model_key, tid, result)
-                log(f"[{tid}] Result saved to outputs/zclawbench/{model_key}/{tid}/result.json")
             except Exception as e:
                 log(f"[{tid}] Failed to save result: {e}")
 

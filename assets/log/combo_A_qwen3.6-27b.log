@@ -1,0 +1,1057 @@
+[13:12:57] 从文件加载任务列表: error_analysis/classify_outputs/qwen-3.6-27b/deepseek_classify/inputs/combo_A.csv
+[13:12:57]   agentbench: 6 tasks
+[13:12:57]   clawbench: 24 tasks
+[13:12:57]   pinchbench: 5 tasks
+[13:12:57] Config: bench=['agentbench', 'clawbench', 'pinchbench'], models=['qwen3.6-27b'], sample=all
+[13:12:57] 
+============================================================
+[13:12:57] BENCHMARK: agentbench (6 tasks from file)
+[13:12:57] ============================================================
+[13:12:57]   [agentbench×qwen3.6-27b] evaluating...
+[13:12:59] [agent_repo-refactor_qwen3.6-27b_20260521_051259] Running setup.sh for task repo-refactor
+[13:12:59] [agent_repo-refactor_qwen3.6-27b_20260521_051259] setup.sh completed successfully
+[13:13:00] [agent_missing-dependency_qwen3.6-27b_20260521_051259] Container started
+[13:13:00] [agent_missing-dependency_qwen3.6-27b_20260521_051259] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  0 May 21 05:12 .
+drwxrwxrwt 1 root root    32 May 21 05:13 ..
+
+[13:13:01] [agent_no-unnecessary-changes_qwen3.6-27b_20260521_051259] Container started
+[13:13:01] [agent_corrupted-input_qwen3.6-27b_20260521_051259] Container started
+[13:13:01] [agent_no-unnecessary-changes_qwen3.6-27b_20260521_051259] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   18 May 21 05:12 .
+drwxrwxrwt 1 root root      32 May 21 05:13 ..
+-rw-r--r-- 1  501 dialout 3789 Apr 23 08:10 report.md
+
+[13:13:01] [agent_corrupted-input_qwen3.6-27b_20260521_051259] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout  18 May 21 05:12 .
+drwxrwxrwt 1 root root     32 May 21 05:13 ..
+-rw-r--r-- 1  501 dialout 751 Apr 23 08:10 data.json
+
+[13:13:01] [agent_repo-refactor_qwen3.6-27b_20260521_051259] Container started
+[13:13:01] [agent_repo-refactor_qwen3.6-27b_20260521_051259] Workspace copied to /tmp/workspace/:
+total 44
+drwxr-xr-x 1  501 dialout  242 May 21 05:12 .
+drwxrwxrwt 1 root root      32 May 21 05:13 ..
+drwxr-xr-x 1  501 dialout  128 May 21 05:12 .git
+-rw-r--r-- 1  501 dialout  873 May 21 05:12 REFACTOR_PLAN.md
+-rw-r--r-- 1  501 dialout 1206 May 21 05:12 analytics.py
+-rw-r--r-- 1  501 dialout 1124 May 21 05:12 app.py
+-rw-r--r-- 1  501 dialout 1287 May 21 05:12 contacts.py
+-rw-r--r-- 1  501 dialout  847 May 21 05:12 dashboard.py
+drwxr-xr-x 1  501 dialout   20 May 21 05:12 data
+-rw-r--r-- 1  501 
+[13:16:19] [agent_corrupted-input_qwen3.6-27b_20260521_051259] Agent finished in 197.67s, returncode=0
+[13:16:19] [agent_corrupted-input_qwen3.6-27b_20260521_051259] Agent stdout: [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[StructuredMemoryStore] LLM init response: content_type=str, content_len=529, finish_reason=stop, reasoning_tokens=1759
+[StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[StructuredMemoryStore] LLM init response: content_type=str, content_len=526, finish_reason=stop, reasoning_tokens=1810
+[Structure
+[13:16:19] [agent_corrupted-input_qwen3.6-27b_20260521_051259] Agent stderr: [ProceduralTrigger] Failed to initialize dense retriever: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.
+Check your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation#offline-mode'.. Falling back to keyword matching.
+
+[13:16:19] [agent_corrupted-input_qwen3.6-27b_20260521_051259] Agent result loaded: status=success, transcript_len=33
+[92m13:16:19 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[13:16:19] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[92m13:16:22 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[13:16:22] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[13:16:22] [agent_corrupted-input_qwen3.6-27b_20260521_051259] Scores: L0=100.0 L1=100.0 L2=25.0 L3=0.0 | Overall=46.2
+[13:16:22] [agent_corrupted-input_qwen3.6-27b_20260521_051259] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/agentbench/qwen3.6-27b/corrupted-input/result.json
+[13:16:25] [agent_right-tool-choice_qwen3.6-27b_20260521_051622] Container started
+[13:16:25] [agent_right-tool-choice_qwen3.6-27b_20260521_051622] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   24 May 21 05:16 .
+drwxrwxrwt 1 root root      32 May 21 05:16 ..
+-rw-r--r-- 1  501 dialout 1205 Apr 23 08:10 contacts.txt
+
+[13:16:44] [agent_no-unnecessary-changes_qwen3.6-27b_20260521_051259] Agent finished in 222.97s, returncode=0
+[13:16:44] [agent_no-unnecessary-changes_qwen3.6-27b_20260521_051259] Agent stdout: [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[StructuredMemoryStore] LLM init response: content_type=str, content_len=362, finish_reason=stop, reasoning_tokens=1927
+[StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[StructuredMemoryStore] LLM init response: content_type=str, content_len=395, finish_reason=stop, reasoning_tokens=2061
+DONE
+
+[13:16:44] [agent_no-unnecessary-changes_qwen3.6-27b_20260521_051259] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+[ProceduralTrigger] Failed to initialize dense retriever: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.
+Check your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation
+[13:16:44] [agent_no-unnecessary-changes_qwen3.6-27b_20260521_051259] Agent result loaded: status=success, transcript_len=22
+[92m13:16:44 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[13:16:44] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[92m13:16:46 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[13:16:46] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[13:16:46] [agent_no-unnecessary-changes_qwen3.6-27b_20260521_051259] Scores: L0=50.0 L1=100.0 L2=100.0 L3=100.0 | Overall=92.5
+[13:16:47] [agent_no-unnecessary-changes_qwen3.6-27b_20260521_051259] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/agentbench/qwen3.6-27b/no-unnecessary-changes/result.json
+[13:16:47] [agent_targeted-fix_qwen3.6-27b_20260521_051647] Running setup.sh for task targeted-fix
+[13:16:47] [agent_targeted-fix_qwen3.6-27b_20260521_051647] setup.sh completed successfully
+[13:16:48] [agent_targeted-fix_qwen3.6-27b_20260521_051647] Container started
+[13:16:48] [agent_targeted-fix_qwen3.6-27b_20260521_051647] Workspace copied to /tmp/workspace/:
+total 8
+drwxr-xr-x 1  501 dialout  80 May 21 05:16 .
+drwxrwxrwt 1 root root     32 May 21 05:16 ..
+drwxr-xr-x 1  501 dialout 128 May 21 05:16 .git
+-rw-r--r-- 1  501 dialout 627 May 21 05:16 BUG_REPORT.md
+-rw-r--r-- 1  501 dialout 629 May 21 05:16 README.md
+drwxr-xr-x 1  501 dialout  22 May 21 05:16 config
+drwxr-xr-x 1  501 dialout  70 May 21 05:16 src
+drwxr-xr-x 1  501 dialout 108 May 21 05:16 tests
+
+[13:16:49] [agent_missing-dependency_qwen3.6-27b_20260521_051259] Agent finished in 228.99s, returncode=0
+[13:16:49] [agent_missing-dependency_qwen3.6-27b_20260521_051259] Agent stdout: [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[StructuredMemoryStore] LLM init response: content_type=str, content_len=587, finish_reason=stop, reasoning_tokens=1610
+[StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[StructuredMemoryStore] LLM init response: content_type=str, content_len=570, finish_reason=stop, reasoning_tokens=1750
+[Structure
+[13:16:49] [agent_missing-dependency_qwen3.6-27b_20260521_051259] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+[ProceduralTrigger] Failed to initialize dense retriever: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.
+Check your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation
+[13:16:49] [agent_missing-dependency_qwen3.6-27b_20260521_051259] Agent result loaded: status=success, transcript_len=60
+[92m13:16:49 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[13:16:49] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[92m13:16:51 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[13:16:51] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[13:16:51] [agent_missing-dependency_qwen3.6-27b_20260521_051259] Scores: L0=0.0 L1=80.0 L2=100.0 L3=100.0 | Overall=80.0
+[13:16:52] [agent_missing-dependency_qwen3.6-27b_20260521_051259] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/agentbench/qwen3.6-27b/missing-dependency/result.json
+[13:19:03] [agent_right-tool-choice_qwen3.6-27b_20260521_051622] Agent finished in 157.09s, returncode=0
+[13:19:03] [agent_right-tool-choice_qwen3.6-27b_20260521_051622] Agent stdout: [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[StructuredMemoryStore] LLM init response: content_type=str, content_len=471, finish_reason=stop, reasoning_tokens=1445
+[StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[StructuredMemoryStore] LLM init response: content_type=str, content_len=459, finish_reason=stop, reasoning_tokens=1425
+[Structure
+[13:19:03] [agent_right-tool-choice_qwen3.6-27b_20260521_051622] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+[ProceduralTrigger] Failed to initialize dense retriever: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.
+Check your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation
+[13:19:03] [agent_right-tool-choice_qwen3.6-27b_20260521_051622] Agent result loaded: status=success, transcript_len=32
+[92m13:19:03 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[13:19:03] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[92m13:19:05 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[13:19:05] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[13:19:05] [agent_right-tool-choice_qwen3.6-27b_20260521_051622] Scores: L0=100.0 L1=100.0 L2=100.0 L3=100.0 | Overall=100.0
+[13:19:05] [agent_right-tool-choice_qwen3.6-27b_20260521_051622] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/agentbench/qwen3.6-27b/right-tool-choice/result.json
+[13:20:48] [agent_targeted-fix_qwen3.6-27b_20260521_051647] Agent finished in 239.09s, returncode=0
+[13:20:48] [agent_targeted-fix_qwen3.6-27b_20260521_051647] Agent stdout: [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[StructuredMemoryStore] LLM init response: content_type=str, content_len=379, finish_reason=stop, reasoning_tokens=1256
+[StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[StructuredMemoryStore] LLM init response: content_type=str, content_len=360, finish_reason=stop, reasoning_tokens=1260
+[Structure
+[13:20:48] [agent_targeted-fix_qwen3.6-27b_20260521_051647] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+[ProceduralTrigger] Failed to initialize dense retriever: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.
+Check your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation
+[13:20:48] [agent_targeted-fix_qwen3.6-27b_20260521_051647] Agent result loaded: status=success, transcript_len=58
+[92m13:20:48 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[13:20:48] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[92m13:20:50 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[13:20:50] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[13:20:50] [agent_targeted-fix_qwen3.6-27b_20260521_051647] Scores: L0=100.0 L1=80.0 L2=100.0 L3=100.0 | Overall=91.0
+[13:20:51] [agent_targeted-fix_qwen3.6-27b_20260521_051647] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/agentbench/qwen3.6-27b/targeted-fix/result.json
+[13:22:39] [agent_repo-refactor_qwen3.6-27b_20260521_051259] Agent finished in 578.27s, returncode=0
+[13:22:39] [agent_repo-refactor_qwen3.6-27b_20260521_051259] Agent stdout: [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[StructuredMemoryStore] LLM init response: content_type=str, content_len=930, finish_reason=stop, reasoning_tokens=2462
+[StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[StructuredMemoryStore] LLM init response: content_type=str, content_len=1168, finish_reason=stop, reasoning_tokens=3011
+[Structur
+[13:22:39] [agent_repo-refactor_qwen3.6-27b_20260521_051259] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+[ProceduralTrigger] Failed to initialize dense retriever: We couldn't connect to 'https://huggingface.co' to load the files, and couldn't find them in the cached files.
+Check your internet connection or see how to run the library in offline mode at 'https://huggingface.co/docs/transformers/installation
+[13:22:39] [agent_repo-refactor_qwen3.6-27b_20260521_051259] Agent result loaded: status=success, transcript_len=196
+[92m13:22:40 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[13:22:40] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[92m13:22:42 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[13:22:42] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[13:22:42] [agent_repo-refactor_qwen3.6-27b_20260521_051259] Scores: L0=100.0 L1=65.0 L2=100.0 L3=100.0 | Overall=91.2
+[13:22:43] [agent_repo-refactor_qwen3.6-27b_20260521_051259] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/agentbench/qwen3.6-27b/repo-refactor/result.json
+[13:22:43]   [agentbench×qwen3.6-27b] done: score=83.5, scored=6/6
+[13:22:43]   [agentbench×qwen3.6-27b] done: score=83.5, scored=0/6
+[13:22:43] 
+============================================================
+[13:22:43] BENCHMARK: clawbench (24 tasks from file)
+[13:22:43] ============================================================
+[13:22:43]   [clawbench×qwen3.6-27b] evaluating...
+[13:22:46] [clawbench_law-003-compliance-check_qwen3.6-27b_20260521_052243] Container started
+[13:22:47] [clawbench_acad-003-statistical-analysis_qwen3.6-27b_20260521_052243] Container started
+[13:22:47] [clawbench_comm-014_qwen3.6-27b_20260521_052243] Container started
+[13:22:47] [clawbench_bio-005-variant-annotation_qwen3.6-27b_20260521_052243] Container started
+[13:26:01]   [container] [setup] 重试 (bash -x) ...
+[13:26:01]   [container] [setup] 重试也失败 (rc=1)
+[13:26:01]   [container] [setup] stderr: + set -euo pipefail
+[13:26:01]   [container] +++ dirname /app/claw-bench/tasks/communication/comm-014-chat-sentiment-analysis/environment/setup.sh
+[13:26:01]   [container] ++ cd /app/claw-bench/tasks/communication/comm-014-chat-sentiment-analysis/environment/..
+[13:26:01]   [container] ++ pwd
+[13:26:01]   [container] + TASK_DIR=/app/claw-bench/tasks/communication/comm-014-chat-sentiment-analysis
+[13:26:01]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[13:26:01]   [container] + mkdir -p /tmp/clawbench_workspace
+[13:26:01]   [container] + cp /app/claw-bench/tasks/communication/comm-014-chat-sentiment-analysis/environment/data/chat_log.jsonl /tmp/clawbench_workspace/chat_log.jsonl
+[13:26:01]   [container] cp: cannot stat '/app/claw-bench/tasks/communication/comm-014-chat-sentiment-analysis/environment/data/chat_log.jsonl': No such file or directory
+[13:26:01]   [container] 
+[13:26:01]   [container] [setup] 工作空间文件: ['instruction.md', 'keywords.json']
+[13:26:01]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:26:01]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=877, finish_reason=stop, reasoning_tokens=2286
+[13:26:01]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:26:01]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1152, finish_reason=stop, reasoning_tokens=2282
+[13:26:01]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:26:01]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=460, finish_reason=stop, reasoning_tokens=2314
+[13:26:01]   [container] DONE
+[13:26:01]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[13:26:01]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11741.73it/s]
+[13:26:01]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[13:26:01]   [container-err] Key                     | Status     |  | 
+[13:26:01]   [container-err] ------------------------+------------+--+-
+[13:26:01]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[13:26:01]   [container-err] 
+[13:26:01]   [container-err] Notes:
+[13:26:01]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[13:26:01]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/chat_log.jsonl
+[13:26:01] [clawbench_comm-014_qwen3.6-27b_20260521_052243] Agent finished in 194.20s, returncode=0
+[13:26:01] [clawbench_comm-014_qwen3.6-27b_20260521_052243] Agent result: passed=False, score=0.3889
+[13:26:02] [comm-014] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/comm-014.json
+[13:26:04] [clawbench_cs-005-api-design_qwen3.6-27b_20260521_052602] Container started
+[13:27:05]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/academic-research/acad-003-statistical-analysis/environment/setup.sh
+[13:27:05]   [container] [setup] setup.sh 成功
+[13:27:05]   [container] [setup] 工作空间文件: ['instruction.md', 'experiment_data.csv']
+[13:27:05]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:27:05]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1004, finish_reason=stop, reasoning_tokens=2983
+[13:27:05]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:27:05]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1286, finish_reason=stop, reasoning_tokens=3137
+[13:27:05]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:27:05]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=472, finish_reason=stop, reasoning_tokens=1769
+[13:27:05]   [container] DONE
+[13:27:05]   [container-err] 
+[13:27:05]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[13:27:05]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 22997.78it/s]
+[13:27:05]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[13:27:05]   [container-err] Key                     | Status     |  | 
+[13:27:05]   [container-err] ------------------------+------------+--+-
+[13:27:05]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[13:27:05]   [container-err] 
+[13:27:05]   [container-err] Notes:
+[13:27:05]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[13:27:05] [clawbench_acad-003-statistical-analysis_qwen3.6-27b_20260521_052243] Agent finished in 258.57s, returncode=0
+[13:27:05] [clawbench_acad-003-statistical-analysis_qwen3.6-27b_20260521_052243] Agent result: passed=False, score=0.7500
+[13:27:06] [acad-003-statistical-analysis] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/acad-003-statistical-analysis.json
+[13:27:08] [clawbench_ds-003-feature-engineering_qwen3.6-27b_20260521_052706] Container started
+[13:34:03]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cs-engineering/cs-005-api-design/environment/setup.sh
+[13:34:03]   [container] [setup] setup.sh 成功
+[13:34:03]   [container] [setup] 工作空间文件: ['instruction.md', 'api_requirements.txt']
+[13:34:03]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:34:03]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1213, finish_reason=stop, reasoning_tokens=2353
+[13:34:03]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:34:03]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1121, finish_reason=stop, reasoning_tokens=3313
+[13:34:03]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:34:03]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=576, finish_reason=stop, reasoning_tokens=1541
+[13:34:03]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:34:03]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=641, finish_reason=stop, reasoning_tokens=1438
+[13:34:03]   [container] DONE
+[13:34:03]   [container-err] 
+[13:34:03]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[13:34:03]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 6442.67it/s]
+[13:34:03]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[13:34:03]   [container-err] Key                     | Status     |  | 
+[13:34:03]   [container-err] ------------------------+------------+--+-
+[13:34:03]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[13:34:03]   [container-err] 
+[13:34:03]   [container-err] Notes:
+[13:34:03]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[13:34:03] [clawbench_cs-005-api-design_qwen3.6-27b_20260521_052602] Agent finished in 478.88s, returncode=0
+[13:34:03] [clawbench_cs-005-api-design_qwen3.6-27b_20260521_052602] Agent result: passed=False, score=0.8000
+[13:34:04] [cs-005-api-design] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/cs-005-api-design.json
+[13:34:06] [clawbench_debug-001_qwen3.6-27b_20260521_053404] Container started
+[13:36:28]   [container]     with open(f"{os.environ.get(\"WORKSPACE\", os.getcwd())}/gene_regions.csv", "w", newline="") as f:
+[13:36:28]   [container]                                  ^
+[13:36:28]   [container] SyntaxError: unexpected character after line continuation character
+[13:36:28]   [container] 
+[13:36:28]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:36:28]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:36:28]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1316, finish_reason=stop, reasoning_tokens=3493
+[13:36:28]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:36:28]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=948, finish_reason=stop, reasoning_tokens=3557
+[13:36:28]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:36:28]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=259, finish_reason=stop, reasoning_tokens=1600
+[13:36:28]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:36:28]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=433, finish_reason=stop, reasoning_tokens=2229
+[13:36:28]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:36:28]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=410, finish_reason=stop, reasoning_tokens=2315
+[13:36:28]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:36:28]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=401, finish_reason=stop, reasoning_tokens=1912
+[13:36:28]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:36:28]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=390, finish_reason=stop, reasoning_tokens=2073
+[13:36:28]   [container] DONE
+[13:36:28]   [container-err] 
+[13:36:28]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[13:36:28]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3996.13it/s]
+[13:36:28]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[13:36:28]   [container-err] Key                     | Status     |  | 
+[13:36:28]   [container-err] ------------------------+------------+--+-
+[13:36:28]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[13:36:28]   [container-err] 
+[13:36:28]   [container-err] Notes:
+[13:36:28]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[13:36:28] [clawbench_bio-005-variant-annotation_qwen3.6-27b_20260521_052243] Agent finished in 820.97s, returncode=0
+[13:36:28] [clawbench_bio-005-variant-annotation_qwen3.6-27b_20260521_052243] Agent result: passed=True, score=1.0000
+[13:36:29] [bio-005-variant-annotation] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/bio-005-variant-annotation.json
+[13:36:32] [clawbench_debug-002_qwen3.6-27b_20260521_053629] Container started
+[13:37:53]   [container]         writer.writerow([r[0], r[1], str(r[2])])
+[13:37:53]   [container] '
+[13:37:53]   [container] Traceback (most recent call last):
+[13:37:53]   [container]   File "<string>", line 30, in <module>
+[13:37:53]   [container] NameError: name 'os' is not defined. Did you forget to import 'os'?
+[13:37:53]   [container] 
+[13:37:53]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:37:53]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:37:53]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=964, finish_reason=stop, reasoning_tokens=1773
+[13:37:53]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:37:53]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1097, finish_reason=stop, reasoning_tokens=2809
+[13:37:53]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:37:53]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=395, finish_reason=stop, reasoning_tokens=2824
+[13:37:53]   [container] [_run_loop] Empty response at iteration 5, retrying once
+[13:37:53]   [container] [_run_loop] Retry got tool_calls at iteration 5
+[13:37:53]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:37:53]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=237, finish_reason=stop, reasoning_tokens=2256
+[13:37:53]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:37:53]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=496, finish_reason=stop, reasoning_tokens=2179
+[13:37:53]   [container] DONE
+[13:37:53]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[13:37:53]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3030.89it/s]
+[13:37:53]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[13:37:53]   [container-err] Key                     | Status     |  | 
+[13:37:53]   [container-err] ------------------------+------------+--+-
+[13:37:53]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[13:37:53]   [container-err] 
+[13:37:53]   [container-err] Notes:
+[13:37:53]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[13:37:53] [clawbench_law-003-compliance-check_qwen3.6-27b_20260521_052243] Agent finished in 906.44s, returncode=0
+[13:37:53] [clawbench_law-003-compliance-check_qwen3.6-27b_20260521_052243] Agent result: passed=False, score=0.5000
+[13:37:53] [law-003-compliance-check] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/law-003-compliance-check.json
+[13:37:55] [clawbench_debug-003_qwen3.6-27b_20260521_053753] Container started
+[13:42:11]   [container] ++ cd /app/claw-bench/tasks/debugging/debug-001/environment/..
+[13:42:11]   [container] ++ pwd
+[13:42:11]   [container] + TASK_DIR=/app/claw-bench/tasks/debugging/debug-001
+[13:42:11]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[13:42:11]   [container] + mkdir -p /tmp/clawbench_workspace
+[13:42:11]   [container] + cp /app/claw-bench/tasks/debugging/debug-001/environment/data/buggy.py /tmp/clawbench_workspace/buggy.py
+[13:42:11]   [container] cp: cannot stat '/app/claw-bench/tasks/debugging/debug-001/environment/data/buggy.py': No such file or directory
+[13:42:11]   [container] 
+[13:42:11]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:42:11]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:42:11]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=890, finish_reason=stop, reasoning_tokens=2406
+[13:42:11]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:42:11]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=766, finish_reason=stop, reasoning_tokens=2007
+[13:42:11]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:42:11]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=567, finish_reason=stop, reasoning_tokens=2054
+[13:42:11]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:42:11]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=554, finish_reason=stop, reasoning_tokens=3504
+[13:42:11]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:42:11]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=431, finish_reason=stop, reasoning_tokens=2207
+[13:42:11]   [container] DONE
+[13:42:11]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[13:42:11]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3157.46it/s]
+[13:42:11]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[13:42:11]   [container-err] Key                     | Status     |  | 
+[13:42:11]   [container-err] ------------------------+------------+--+-
+[13:42:11]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[13:42:11]   [container-err] 
+[13:42:11]   [container-err] Notes:
+[13:42:11]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[13:42:11]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/buggy.py
+[13:42:11] [clawbench_debug-001_qwen3.6-27b_20260521_053404] Agent finished in 484.82s, returncode=0
+[13:42:11] [clawbench_debug-001_qwen3.6-27b_20260521_053404] Agent result: passed=False, score=0.8889
+[13:42:11] [debug-001] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/debug-001.json
+[13:42:13] [clawbench_debug-004_qwen3.6-27b_20260521_054211] Container started
+[13:42:54]   [container] [setup] 重试 (bash -x) ...
+[13:42:54]   [container] [setup] 重试也失败 (rc=1)
+[13:42:54]   [container] [setup] stderr: + set -euo pipefail
+[13:42:54]   [container] +++ dirname /app/claw-bench/tasks/debugging/debug-002/environment/setup.sh
+[13:42:54]   [container] ++ cd /app/claw-bench/tasks/debugging/debug-002/environment/..
+[13:42:54]   [container] ++ pwd
+[13:42:54]   [container] + TASK_DIR=/app/claw-bench/tasks/debugging/debug-002
+[13:42:54]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[13:42:54]   [container] + mkdir -p /tmp/clawbench_workspace
+[13:42:54]   [container] + cp /app/claw-bench/tasks/debugging/debug-002/environment/data/calculator.py /tmp/clawbench_workspace/calculator.py
+[13:42:54]   [container] cp: cannot stat '/app/claw-bench/tasks/debugging/debug-002/environment/data/calculator.py': No such file or directory
+[13:42:54]   [container] 
+[13:42:54]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:42:54]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:42:54]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=701, finish_reason=stop, reasoning_tokens=2148
+[13:42:54]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:42:54]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=787, finish_reason=stop, reasoning_tokens=2722
+[13:42:54]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:42:54]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=662, finish_reason=stop, reasoning_tokens=2569
+[13:42:54]   [container] DONE
+[13:42:54]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[13:42:54]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3505.83it/s]
+[13:42:54]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[13:42:54]   [container-err] Key                     | Status     |  | 
+[13:42:54]   [container-err] ------------------------+------------+--+-
+[13:42:54]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[13:42:54]   [container-err] 
+[13:42:54]   [container-err] Notes:
+[13:42:54]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[13:42:54]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/calculator.py
+[13:42:54] [clawbench_debug-002_qwen3.6-27b_20260521_053629] Agent finished in 382.17s, returncode=0
+[13:42:54] [clawbench_debug-002_qwen3.6-27b_20260521_053629] Agent result: passed=False, score=0.7368
+[13:42:55] [debug-002] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/debug-002.json
+[13:42:59] [clawbench_edu-001-rubric-grading_qwen3.6-27b_20260521_054255] Container started
+[13:44:36]   [container] + mkdir -p /tmp/clawbench_workspace
+[13:44:36]   [container] + python3 -
+[13:44:36]   [container] Traceback (most recent call last):
+[13:44:36]   [container]   File "<stdin>", line 2, in <module>
+[13:44:36]   [container] ModuleNotFoundError: No module named 'pandas'
+[13:44:36]   [container] 
+[13:44:36]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:44:36]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:44:36]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1237, finish_reason=stop, reasoning_tokens=3194
+[13:44:36]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:44:36]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1194, finish_reason=stop, reasoning_tokens=3802
+[13:44:36]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:44:36]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=389, finish_reason=stop, reasoning_tokens=1745
+[13:44:36]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:44:36]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=450, finish_reason=stop, reasoning_tokens=1949
+[13:44:36]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:44:36]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=700, finish_reason=stop, reasoning_tokens=2453
+[13:44:36]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:44:36]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=489, finish_reason=stop, reasoning_tokens=2242
+[13:44:36]   [container] DONE
+[13:44:36]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[13:44:36]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 2830.72it/s]
+[13:44:36]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[13:44:36]   [container-err] Key                     | Status     |  | 
+[13:44:36]   [container-err] ------------------------+------------+--+-
+[13:44:36]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[13:44:36]   [container-err] 
+[13:44:36]   [container-err] Notes:
+[13:44:36]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[13:44:36] [clawbench_ds-003-feature-engineering_qwen3.6-27b_20260521_052706] Agent finished in 1047.83s, returncode=0
+[13:44:36] [clawbench_ds-003-feature-engineering_qwen3.6-27b_20260521_052706] Agent result: passed=False, score=0.6000
+[13:44:37] [ds-003-feature-engineering] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/ds-003-feature-engineering.json
+[13:44:40] [clawbench_edu-002-item-analysis_qwen3.6-27b_20260521_054437] Container started
+[13:49:00]   [container] [setup] stderr: + set -euo pipefail
+[13:49:00]   [container] +++ dirname /app/claw-bench/tasks/debugging/debug-004/environment/setup.sh
+[13:49:00]   [container] ++ cd /app/claw-bench/tasks/debugging/debug-004/environment/..
+[13:49:00]   [container] ++ pwd
+[13:49:00]   [container] + TASK_DIR=/app/claw-bench/tasks/debugging/debug-004
+[13:49:00]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[13:49:00]   [container] + mkdir -p /tmp/clawbench_workspace
+[13:49:00]   [container] + cp /app/claw-bench/tasks/debugging/debug-004/environment/data/main.py /tmp/clawbench_workspace/main.py
+[13:49:00]   [container] cp: cannot stat '/app/claw-bench/tasks/debugging/debug-004/environment/data/main.py': No such file or directory
+[13:49:00]   [container] 
+[13:49:00]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:49:00]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:49:00]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=971, finish_reason=stop, reasoning_tokens=2507
+[13:49:00]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:49:00]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1035, finish_reason=stop, reasoning_tokens=2718
+[13:49:00]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:49:00]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=392, finish_reason=stop, reasoning_tokens=2359
+[13:49:00]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:49:00]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=320, finish_reason=stop, reasoning_tokens=1648
+[13:49:00]   [container] DONE
+[13:49:00]   [container-err] 
+[13:49:00]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[13:49:00]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 2673.76it/s]
+[13:49:00]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[13:49:00]   [container-err] Key                     | Status     |  | 
+[13:49:00]   [container-err] ------------------------+------------+--+-
+[13:49:00]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[13:49:00]   [container-err] 
+[13:49:00]   [container-err] Notes:
+[13:49:00]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[13:49:00] [clawbench_debug-004_qwen3.6-27b_20260521_054211] Agent finished in 406.85s, returncode=0
+[13:49:00] [clawbench_debug-004_qwen3.6-27b_20260521_054211] Agent result: passed=False, score=0.7500
+[13:49:01] [debug-004] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/debug-004.json
+[13:49:03] [clawbench_eml-002_qwen3.6-27b_20260521_054901] Container started
+[13:49:15]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/educational-assessment/edu-002-item-analysis/environment/setup.sh
+[13:49:15]   [container] [setup] setup.sh 成功
+[13:49:15]   [container] [setup] 工作空间文件: ['instruction.md', 'exam_responses.csv']
+[13:49:15]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:49:15]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1165, finish_reason=stop, reasoning_tokens=2527
+[13:49:15]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:49:15]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1109, finish_reason=stop, reasoning_tokens=2450
+[13:49:15]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:49:15]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=478, finish_reason=stop, reasoning_tokens=1444
+[13:49:15]   [container] DONE
+[13:49:15]   [container-err] 
+[13:49:15]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[13:49:15]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9260.93it/s]
+[13:49:15]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[13:49:15]   [container-err] Key                     | Status     |  | 
+[13:49:15]   [container-err] ------------------------+------------+--+-
+[13:49:15]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[13:49:15]   [container-err] 
+[13:49:15]   [container-err] Notes:
+[13:49:15]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[13:49:15] [clawbench_edu-002-item-analysis_qwen3.6-27b_20260521_054437] Agent finished in 274.50s, returncode=0
+[13:49:15] [clawbench_edu-002-item-analysis_qwen3.6-27b_20260521_054437] Agent result: passed=False, score=0.6667
+[13:49:15] [edu-002-item-analysis] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/edu-002-item-analysis.json
+[13:49:17] [clawbench_file-011_qwen3.6-27b_20260521_054915] Container started
+[13:50:52]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/educational-assessment/edu-001-rubric-grading/environment/setup.sh
+[13:50:52]   [container] [setup] setup.sh 成功
+[13:50:52]   [container] [setup] 工作空间文件: ['rubric.csv', 'instruction.md', 'english_words.txt']
+[13:50:52]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:50:52]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1070, finish_reason=stop, reasoning_tokens=2693
+[13:50:52]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:50:52]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=994, finish_reason=stop, reasoning_tokens=2415
+[13:50:52]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:50:52]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=446, finish_reason=stop, reasoning_tokens=1632
+[13:50:52]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:50:52]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=425, finish_reason=stop, reasoning_tokens=1440
+[13:50:52]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:50:52]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=487, finish_reason=stop, reasoning_tokens=2305
+[13:50:52]   [container] DONE
+[13:50:52]   [container-err] 
+[13:50:52]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[13:50:52]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11675.40it/s]
+[13:50:52]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[13:50:52]   [container-err] Key                     | Status     |  | 
+[13:50:52]   [container-err] ------------------------+------------+--+-
+[13:50:52]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[13:50:52]   [container-err] 
+[13:50:52]   [container-err] Notes:
+[13:50:52]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[13:50:52] [clawbench_edu-001-rubric-grading_qwen3.6-27b_20260521_054255] Agent finished in 473.10s, returncode=0
+[13:50:52] [clawbench_edu-001-rubric-grading_qwen3.6-27b_20260521_054255] Agent result: passed=False, score=0.8000
+[13:50:52] [edu-001-rubric-grading] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/edu-001-rubric-grading.json
+[13:50:55] [clawbench_fin-006_qwen3.6-27b_20260521_055052] Container started
+[13:52:08]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-002-compose-from-template/environment/setup.sh
+[13:52:08]   [container] [setup] setup.sh 成功
+[13:52:08]   [container] [setup] 工作空间文件: ['instruction.md', 'template.txt', 'contacts.json']
+[13:52:08]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:52:08]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=883, finish_reason=stop, reasoning_tokens=1936
+[13:52:08]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:52:08]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=980, finish_reason=stop, reasoning_tokens=2882
+[13:52:08]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:52:08]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=580, finish_reason=stop, reasoning_tokens=1715
+[13:52:08]   [container] DONE
+[13:52:08]   [container-err] 
+[13:52:08]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[13:52:08]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3015.82it/s]
+[13:52:08]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[13:52:08]   [container-err] Key                     | Status     |  | 
+[13:52:08]   [container-err] ------------------------+------------+--+-
+[13:52:08]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[13:52:08]   [container-err] 
+[13:52:08]   [container-err] Notes:
+[13:52:08]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[13:52:08] [clawbench_eml-002_qwen3.6-27b_20260521_054901] Agent finished in 185.05s, returncode=0
+[13:52:08] [clawbench_eml-002_qwen3.6-27b_20260521_054901] Agent result: passed=False, score=0.8571
+[13:52:09] [eml-002] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/eml-002.json
+[13:52:12] [clawbench_mag-003_qwen3.6-27b_20260521_055209] Container started
+[13:59:48]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/financial-analysis/fin-006-analyze-stock-portfolio-risk-using-var-and-cvar/environment/setup.sh
+[13:59:48]   [container] [setup] setup.sh 成功
+[13:59:48]   [container] [setup] 工作空间文件: ['portfolio_returns.csv', 'instruction.md']
+[13:59:48]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:59:48]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=971, finish_reason=stop, reasoning_tokens=2478
+[13:59:48]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:59:48]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1175, finish_reason=stop, reasoning_tokens=3104
+[13:59:48]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[13:59:48]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=642, finish_reason=stop, reasoning_tokens=1981
+[13:59:48]   [container] DONE
+[13:59:48]   [container-err] 
+[13:59:48]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[13:59:48]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3151.96it/s]
+[13:59:48]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[13:59:48]   [container-err] Key                     | Status     |  | 
+[13:59:48]   [container-err] ------------------------+------------+--+-
+[13:59:48]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[13:59:48]   [container-err] 
+[13:59:48]   [container-err] Notes:
+[13:59:48]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[13:59:48] [clawbench_fin-006_qwen3.6-27b_20260521_055052] Agent finished in 532.86s, returncode=0
+[13:59:48] [clawbench_fin-006_qwen3.6-27b_20260521_055052] Agent result: passed=False, score=0.6000
+[13:59:48] [fin-006] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/fin-006.json
+[13:59:51] [clawbench_mm-004_qwen3.6-27b_20260521_055948] Container started
+[14:02:56]   [container] ++ cd /app/claw-bench/tasks/debugging/debug-003/environment/..
+[14:02:56]   [container] ++ pwd
+[14:02:56]   [container] + TASK_DIR=/app/claw-bench/tasks/debugging/debug-003
+[14:02:56]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[14:02:56]   [container] + mkdir -p /tmp/clawbench_workspace
+[14:02:56]   [container] + cp /app/claw-bench/tasks/debugging/debug-003/environment/data/processor.py /tmp/clawbench_workspace/processor.py
+[14:02:56]   [container] cp: cannot stat '/app/claw-bench/tasks/debugging/debug-003/environment/data/processor.py': No such file or directory
+[14:02:56]   [container] 
+[14:02:56]   [container] [setup] 工作空间文件: ['instruction.md']
+[14:02:56]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:02:56]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=978, finish_reason=stop, reasoning_tokens=2232
+[14:02:56]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:02:56]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1035, finish_reason=stop, reasoning_tokens=2130
+[14:02:56]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:02:56]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=375, finish_reason=stop, reasoning_tokens=2357
+[14:02:56]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:02:56]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=542, finish_reason=stop, reasoning_tokens=2581
+[14:02:56]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:02:56]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=560, finish_reason=stop, reasoning_tokens=1719
+[14:02:56]   [container] DONE
+[14:02:56]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:02:56]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 38339.84it/s]
+[14:02:56]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:02:56]   [container-err] Key                     | Status     |  | 
+[14:02:56]   [container-err] ------------------------+------------+--+-
+[14:02:56]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[14:02:56]   [container-err] 
+[14:02:56]   [container-err] Notes:
+[14:02:56]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:02:56]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/processor.py
+[14:02:56] [clawbench_debug-003_qwen3.6-27b_20260521_053753] Agent finished in 1501.02s, returncode=0
+[14:02:56] [clawbench_debug-003_qwen3.6-27b_20260521_053753] Agent result: passed=False, score=0.9444
+[14:02:57] [debug-003] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/debug-003.json
+[14:03:00] [clawbench_sci-002-monte-carlo_qwen3.6-27b_20260521_060257] Container started
+[14:04:47]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multimodal/mm-004-log-analysis-config/environment/setup.sh
+[14:04:47]   [container] [setup] setup.sh 成功
+[14:04:47]   [container] [setup] 工作空间文件: ['config.yaml', 'instruction.md']
+[14:04:47]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:04:47]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=888, finish_reason=stop, reasoning_tokens=2398
+[14:04:47]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:04:47]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1020, finish_reason=stop, reasoning_tokens=2636
+[14:04:47]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:04:47]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=517, finish_reason=stop, reasoning_tokens=1830
+[14:04:47]   [container] DONE
+[14:04:47]   [container-err] 
+[14:04:47]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:04:47]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3185.05it/s]
+[14:04:47]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:04:47]   [container-err] Key                     | Status     |  | 
+[14:04:47]   [container-err] ------------------------+------------+--+-
+[14:04:47]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[14:04:47]   [container-err] 
+[14:04:47]   [container-err] Notes:
+[14:04:47]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:04:47] [clawbench_mm-004_qwen3.6-27b_20260521_055948] Agent finished in 296.13s, returncode=0
+[14:04:47] [clawbench_mm-004_qwen3.6-27b_20260521_055948] Agent result: passed=False, score=0.2632
+[14:04:48] [mm-004] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/mm-004.json
+[14:04:51] [clawbench_sci-004-signal-processing_qwen3.6-27b_20260521_060448] Container started
+[14:05:33]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multi-agent/mag-003-data-pipeline-handoff/environment/setup.sh
+[14:05:33]   [container] [setup] setup.sh 成功
+[14:05:33]   [container] [setup] 工作空间文件: ['instruction.md', 'raw_data.csv']
+[14:05:33]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:05:33]   [container] [StructuredMemoryStore] LLM init response: content_type=NoneType, content_len=0, finish_reason=stop, reasoning_tokens=3559
+[14:05:33]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:05:33]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=2116, finish_reason=stop, reasoning_tokens=3503
+[14:05:33]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:05:33]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=454, finish_reason=stop, reasoning_tokens=2649
+[14:05:33]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:05:33]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=403, finish_reason=stop, reasoning_tokens=2122
+[14:05:33]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:05:33]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=813, finish_reason=stop, reasoning_tokens=1935
+[14:05:33]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:05:33]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=558, finish_reason=stop, reasoning_tokens=1949
+[14:05:33]   [container] DONE
+[14:05:33]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:05:33]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 24373.11it/s]
+[14:05:33]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:05:33]   [container-err] Key                     | Status     |  | 
+[14:05:33]   [container-err] ------------------------+------------+--+-
+[14:05:33]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[14:05:33]   [container-err] 
+[14:05:33]   [container-err] Notes:
+[14:05:33]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:05:33]   [container-err] Preflight check failed for write_file: ["write_file requires 'path' parameter"]
+[14:05:33] [clawbench_mag-003_qwen3.6-27b_20260521_055209] Agent finished in 800.89s, returncode=0
+[14:05:33] [clawbench_mag-003_qwen3.6-27b_20260521_055209] Agent result: passed=False, score=0.8182
+[14:05:33] [mag-003] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/mag-003.json
+[14:05:37] [clawbench_sci-005-optimization_qwen3.6-27b_20260521_060533] Container started
+[14:06:06]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/scientific-computing/sci-002-monte-carlo/environment/setup.sh
+[14:06:06]   [container] [setup] setup.sh 成功
+[14:06:06]   [container] [setup] 工作空间文件: ['instruction.md', '.placeholder']
+[14:06:06]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:06:06]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1069, finish_reason=stop, reasoning_tokens=3327
+[14:06:06]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:06:06]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1123, finish_reason=stop, reasoning_tokens=2743
+[14:06:06]   [container] DONE
+[14:06:06]   [container-err] 
+[14:06:06]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:06:06]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3384.09it/s]
+[14:06:06]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:06:06]   [container-err] Key                     | Status     |  | 
+[14:06:06]   [container-err] ------------------------+------------+--+-
+[14:06:06]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[14:06:06]   [container-err] 
+[14:06:06]   [container-err] Notes:
+[14:06:06]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:06:06] [clawbench_sci-002-monte-carlo_qwen3.6-27b_20260521_060257] Agent finished in 186.74s, returncode=0
+[14:06:06] [clawbench_sci-002-monte-carlo_qwen3.6-27b_20260521_060257] Agent result: passed=True, score=1.0000
+[14:06:07] [sci-002-monte-carlo] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/sci-002-monte-carlo.json
+[14:06:09] [clawbench_sec-007_qwen3.6-27b_20260521_060607] Container started
+[14:09:12]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/scientific-computing/sci-004-signal-processing/environment/setup.sh
+[14:09:12]   [container] [setup] setup.sh 成功
+[14:09:12]   [container] [setup] 工作空间文件: ['instruction.md', 'signal.csv']
+[14:09:12]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:09:12]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1423, finish_reason=stop, reasoning_tokens=2500
+[14:09:12]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:09:12]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1476, finish_reason=stop, reasoning_tokens=3045
+[14:09:12]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:09:12]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=489, finish_reason=stop, reasoning_tokens=1985
+[14:09:12]   [container] DONE
+[14:09:12]   [container-err] 
+[14:09:12]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:09:12]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3308.06it/s]
+[14:09:12]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:09:12]   [container-err] Key                     | Status     |  | 
+[14:09:12]   [container-err] ------------------------+------------+--+-
+[14:09:12]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[14:09:12]   [container-err] 
+[14:09:12]   [container-err] Notes:
+[14:09:12]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:09:12] [clawbench_sci-004-signal-processing_qwen3.6-27b_20260521_060448] Agent finished in 261.00s, returncode=0
+[14:09:12] [clawbench_sci-004-signal-processing_qwen3.6-27b_20260521_060448] Agent result: passed=False, score=0.6250
+[14:09:12] [sci-004-signal-processing] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/sci-004-signal-processing.json
+[14:09:15] [clawbench_sys-014_qwen3.6-27b_20260521_060912] Container started
+[14:12:34]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-014-service-dependency-resolver/environment/setup.sh
+[14:12:34]   [container] [setup] setup.sh 成功
+[14:12:34]   [container] [setup] 工作空间文件: ['services.json', 'instruction.md']
+[14:12:34]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:12:34]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1231, finish_reason=stop, reasoning_tokens=3115
+[14:12:34]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:12:34]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1020, finish_reason=stop, reasoning_tokens=2819
+[14:12:34]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:12:34]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=562, finish_reason=stop, reasoning_tokens=1540
+[14:12:34]   [container] DONE
+[14:12:34]   [container-err] 
+[14:12:34]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:12:34]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 19070.91it/s]
+[14:12:34]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:12:34]   [container-err] Key                     | Status     |  | 
+[14:12:34]   [container-err] ------------------------+------------+--+-
+[14:12:34]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[14:12:34]   [container-err] 
+[14:12:34]   [container-err] Notes:
+[14:12:34]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:12:34] [clawbench_sys-014_qwen3.6-27b_20260521_060912] Agent finished in 199.55s, returncode=0
+[14:12:34] [clawbench_sys-014_qwen3.6-27b_20260521_060912] Agent result: passed=False, score=0.6667
+[14:12:36] [sys-014] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/sys-014.json
+[14:12:44] [clawbench_wfl-011_qwen3.6-27b_20260521_061236] Container started
+[14:14:02]   [container] [setup] stderr: + set -euo pipefail
+[14:14:02]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[14:14:02]   [container] + mkdir -p /tmp/clawbench_workspace
+[14:14:02]   [container] + python3 -
+[14:14:02]   [container] Traceback (most recent call last):
+[14:14:02]   [container]   File "<stdin>", line 38, in <module>
+[14:14:02]   [container] FileNotFoundError: [Errno 2] No such file or directory: '$WORKSPACE/optimization_problem.json'
+[14:14:02]   [container] 
+[14:14:02]   [container] [setup] 工作空间文件: ['instruction.md']
+[14:14:02]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:14:02]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1324, finish_reason=stop, reasoning_tokens=3049
+[14:14:02]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:14:02]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1198, finish_reason=stop, reasoning_tokens=2527
+[14:14:02]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:14:02]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=531, finish_reason=stop, reasoning_tokens=2125
+[14:14:02]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:14:02]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=452, finish_reason=stop, reasoning_tokens=2399
+[14:14:02]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:14:02]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=518, finish_reason=stop, reasoning_tokens=1756
+[14:14:02]   [container] DONE
+[14:14:02]   [container-err] 
+[14:14:02]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:14:02]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 16039.11it/s]
+[14:14:02]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:14:02]   [container-err] Key                     | Status     |  | 
+[14:14:02]   [container-err] ------------------------+------------+--+-
+[14:14:02]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[14:14:02]   [container-err] 
+[14:14:02]   [container-err] Notes:
+[14:14:02]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:14:02] [clawbench_sci-005-optimization_qwen3.6-27b_20260521_060533] Agent finished in 504.73s, returncode=0
+[14:14:02] [clawbench_sci-005-optimization_qwen3.6-27b_20260521_060533] Agent result: passed=False, score=0.6667
+[14:14:02] [sci-005-optimization] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/sci-005-optimization.json
+[14:14:05] [clawbench_wfl-012_qwen3.6-27b_20260521_061402] Container started
+[14:17:01]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-011-pipeline-validator/environment/setup.sh
+[14:17:01]   [container] [setup] setup.sh 成功
+[14:17:01]   [container] [setup] 工作空间文件: ['instruction.md', 'pipeline.json']
+[14:17:01]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:17:01]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=901, finish_reason=stop, reasoning_tokens=2016
+[14:17:01]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:17:01]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=959, finish_reason=stop, reasoning_tokens=2683
+[14:17:01]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:17:01]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=488, finish_reason=stop, reasoning_tokens=1557
+[14:17:01]   [container] DONE
+[14:17:01]   [container-err] 
+[14:17:01]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:17:01]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 16302.39it/s]
+[14:17:01]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:17:01]   [container-err] Key                     | Status     |  | 
+[14:17:01]   [container-err] ------------------------+------------+--+-
+[14:17:01]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[14:17:01]   [container-err] 
+[14:17:01]   [container-err] Notes:
+[14:17:01]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:17:01] [clawbench_wfl-011_qwen3.6-27b_20260521_061236] Agent finished in 256.95s, returncode=0
+[14:17:01] [clawbench_wfl-011_qwen3.6-27b_20260521_061236] Agent result: passed=False, score=0.5000
+[14:17:02] [wfl-011] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/wfl-011.json
+[14:17:42]   [container] + TASK_DIR=/app/claw-bench/tasks/security/sec-007-log-forensics
+[14:17:42]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[14:17:42]   [container] + mkdir -p /tmp/clawbench_workspace
+[14:17:42]   [container] + cp /app/claw-bench/tasks/security/sec-007-log-forensics/environment/data/access.log /tmp/clawbench_workspace/access.log
+[14:17:42]   [container] cp: cannot stat '/app/claw-bench/tasks/security/sec-007-log-forensics/environment/data/access.log': No such file or directory
+[14:17:42]   [container] 
+[14:17:42]   [container] [setup] 工作空间文件: ['instruction.md']
+[14:17:42]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:17:42]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1089, finish_reason=stop, reasoning_tokens=3371
+[14:17:42]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:17:42]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1088, finish_reason=stop, reasoning_tokens=2298
+[14:17:42]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:17:42]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=328, finish_reason=stop, reasoning_tokens=1655
+[14:17:42]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:17:42]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=352, finish_reason=stop, reasoning_tokens=1726
+[14:17:42]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:17:42]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=1031, finish_reason=stop, reasoning_tokens=2061
+[14:17:42]   [container] [_run_loop] Empty response at iteration 15, retrying once
+[14:17:42]   [container] [_run_loop] Retry still empty at iteration 15, returning
+[14:17:42]   [container] DONE
+[14:17:42]   [container-err] 
+[14:17:42]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:17:42]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9976.75it/s]
+[14:17:42]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:17:42]   [container-err] Key                     | Status     |  | 
+[14:17:42]   [container-err] ------------------------+------------+--+-
+[14:17:42]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[14:17:42]   [container-err] 
+[14:17:42]   [container-err] Notes:
+[14:17:42]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:17:42] [clawbench_sec-007_qwen3.6-27b_20260521_060607] Agent finished in 692.45s, returncode=0
+[14:17:42] [clawbench_sec-007_qwen3.6-27b_20260521_060607] Agent result: passed=False, score=0.2500
+[14:17:43] [sec-007] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/sec-007.json
+[14:19:06]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-012-batch-file-renamer/environment/setup.sh
+[14:19:06]   [container] [setup] setup.sh 成功
+[14:19:06]   [container] [setup] 工作空间文件: ['rename_rules.json', 'file_list.json', 'instruction.md']
+[14:19:06]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:19:06]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=930, finish_reason=stop, reasoning_tokens=1854
+[14:19:06]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:19:06]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=919, finish_reason=stop, reasoning_tokens=2494
+[14:19:06]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:19:06]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=480, finish_reason=stop, reasoning_tokens=1639
+[14:19:06]   [container] DONE
+[14:19:06]   [container-err] 
+[14:19:06]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:19:06]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 85125.78it/s]
+[14:19:06]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:19:06]   [container-err] Key                     | Status     |  | 
+[14:19:06]   [container-err] ------------------------+------------+--+-
+[14:19:06]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[14:19:06]   [container-err] 
+[14:19:06]   [container-err] Notes:
+[14:19:06]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:19:06] [clawbench_wfl-012_qwen3.6-27b_20260521_061402] Agent finished in 301.50s, returncode=0
+[14:19:06] [clawbench_wfl-012_qwen3.6-27b_20260521_061402] Agent result: passed=False, score=0.5333
+[14:19:07] [wfl-012] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/wfl-012.json
+[14:20:32]   [container] ++ cd /app/claw-bench/tasks/file-operations/file-011-log-filtering/environment/..
+[14:20:32]   [container] ++ pwd
+[14:20:32]   [container] + TASK_DIR=/app/claw-bench/tasks/file-operations/file-011-log-filtering
+[14:20:32]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[14:20:32]   [container] + mkdir -p /tmp/clawbench_workspace
+[14:20:32]   [container] + cp /app/claw-bench/tasks/file-operations/file-011-log-filtering/environment/data/app.log /tmp/clawbench_workspace/app.log
+[14:20:32]   [container] cp: cannot stat '/app/claw-bench/tasks/file-operations/file-011-log-filtering/environment/data/app.log': No such file or directory
+[14:20:32]   [container] 
+[14:20:32]   [container] [setup] 工作空间文件: ['instruction.md']
+[14:20:32]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:20:32]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=738, finish_reason=stop, reasoning_tokens=1705
+[14:20:32]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:20:32]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=689, finish_reason=stop, reasoning_tokens=2208
+[14:20:32]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:20:32]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=523, finish_reason=stop, reasoning_tokens=2099
+[14:20:32]   [container] [_run_loop] Empty response at iteration 5, retrying once
+[14:20:32]   [container] [_run_loop] Retry got tool_calls at iteration 5
+[14:20:32]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:20:32]   [container] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=445, finish_reason=stop, reasoning_tokens=1811
+[14:20:32]   [container] DONE
+[14:20:32]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:20:32]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4783.46it/s]
+[14:20:32]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:20:32]   [container-err] Key                     | Status     |  | 
+[14:20:32]   [container-err] ------------------------+------------+--+-
+[14:20:32]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[14:20:32]   [container-err] 
+[14:20:32]   [container-err] Notes:
+[14:20:32]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:20:32]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/app.log
+[14:20:32] [clawbench_file-011_qwen3.6-27b_20260521_054915] Agent finished in 1874.35s, returncode=0
+[14:20:32] [clawbench_file-011_qwen3.6-27b_20260521_054915] Agent result: passed=False, score=0.6923
+[14:20:33] [file-011] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/clawbench-official/qwen3.6-27b/file-011.json
+[14:20:33]   [clawbench×qwen3.6-27b] done: score=67.9, scored=2/24
+[14:20:33]   [clawbench×qwen3.6-27b] done: score=67.9, scored=0/24
+[14:20:33] 
+============================================================
+[14:20:33] BENCHMARK: pinchbench (5 tasks from file)
+[14:20:33] ============================================================
+[14:20:33]   [pinchbench×qwen3.6-27b] evaluating...
+[14:20:33] [pinchbench] Filtered to 5 tasks by task_ids: ['task_20_eli5_pdf_summary', 'task_13_image_gen', 'task_03_blog', 'task_07_email', 'task_05_summary']
+[14:20:33] [pinchbench] 汇总已保存: 5/5 完成
+[14:20:33] [task_05_summary] Preparing 1 workspace file(s): ['summary_source.txt']
+[14:20:33] [task_03_blog] No workspace_files defined in task
+[14:20:33] [task_13_image_gen] No workspace_files defined in task
+[14:20:33] [task_07_email] No workspace_files defined in task
+[14:20:33] [task_05_summary] Wrote workspace file: summary_source.txt
+[14:20:36] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] Container started
+[14:20:36] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] Container started
+[14:20:36] [pinch_task_07_email_qwen3.6-27b_20260521_062033] Container started
+[14:20:36] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] Container started
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] Agent finished in 191.70s, returncode=0
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [DEBUG] Workspace: /tmp/workspace, exists=True
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [DEBUG] Contents: []
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [PROGRESS] Task started at 1779344439.4669502
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init response: content_type=str, content_len=645, finish_reason=stop, reasoning_tokens=1906
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init response: content_type=str, content_len=397, finish_reason=stop, reasoning_tokens=1115
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=594, finish_reason=stop, reasoning_tokens=1628
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [PROGRESS] Task finished at 186.8s, status=success
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [STDERR] Plan generation returned empty (attempt 1/3)
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [STDERR] Plan generation returned empty (attempt 2/3)
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [STDERR] Plan generation returned empty (attempt 3/3)
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [STDERR] Plan generation failed after 3 attempts, returning empty plan
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [STDERR] 
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 25218.22it/s]
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [STDERR] Key                     | Status     |  | 
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [STDERR] ------------------------+------------+--+-
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [STDERR] 
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [STDERR] Notes:
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:23:48] [pinch_task_07_email_qwen3.6-27b_20260521_062033] Agent result loaded: status=success, transcript_len=29
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] Agent finished in 192.12s, returncode=0
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [DEBUG] Workspace: /tmp/workspace, exists=True
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [DEBUG] Contents: [PosixPath('/tmp/workspace/summary_source.txt')]
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [PROGRESS] Task started at 1779344439.4768171
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init response: content_type=str, content_len=574, finish_reason=stop, reasoning_tokens=1669
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init response: content_type=str, content_len=541, finish_reason=stop, reasoning_tokens=1403
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=530, finish_reason=stop, reasoning_tokens=2431
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [PROGRESS] Task finished at 188.2s, status=success
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [STDERR] Plan generation returned empty (attempt 1/3)
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [STDERR] Plan generation returned empty (attempt 2/3)
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [STDERR] Plan generation returned empty (attempt 3/3)
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [STDERR] Plan generation failed after 3 attempts, returning empty plan
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [STDERR] 
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 43606.88it/s]
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [STDERR] Key                     | Status     |  | 
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [STDERR] ------------------------+------------+--+-
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [STDERR] 
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [STDERR] Notes:
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:23:48] [pinch_task_05_summary_qwen3.6-27b_20260521_062033] Agent result loaded: status=success, transcript_len=34
+[14:23:51] [task_07_email] LLM Judge score: 0.9000
+[14:23:52] [task_07_email] Saved transcript to outputs/harness/combo/pinchbench/transcripts/qwen3.6-27b/task_07_email/transcript.json
+[14:23:52] [task_07_email] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/pinchbench/qwen3.6-27b/task_07_email/result.json
+[14:23:52] [task_20_eli5_pdf_summary] Preparing 1 workspace file(s): [{'source': 'GPT4.pdf', 'dest': 'GPT4.pdf'}]
+[14:23:52] [pinchbench] 汇总已保存: 5/5 完成
+[14:23:52] [task_20_eli5_pdf_summary] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/GPT4.pdf -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_20_eli5_pdf_summary_k09f4gti/workspace/GPT4.pdf
+[14:23:52] [task_05_summary] LLM Judge score: 0.9125
+[14:23:53] [task_05_summary] Saved transcript to outputs/harness/combo/pinchbench/transcripts/qwen3.6-27b/task_05_summary/transcript.json
+[14:23:53] [task_05_summary] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/pinchbench/qwen3.6-27b/task_05_summary/result.json
+[14:23:53] [pinchbench] 汇总已保存: 5/5 完成
+[14:23:54] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] Container started
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] Agent finished in 292.72s, returncode=0
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [DEBUG] Workspace: /tmp/workspace, exists=True
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [DEBUG] Contents: [PosixPath('/tmp/workspace/GPT4.pdf')]
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [PROGRESS] Task started at 1779344638.0715582
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [StructuredMemoryStore] LLM init response: content_type=str, content_len=633, finish_reason=stop, reasoning_tokens=1949
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [StructuredMemoryStore] LLM init response: content_type=str, content_len=626, finish_reason=stop, reasoning_tokens=1942
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=204, finish_reason=stop, reasoning_tokens=1926
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [STDERR] Plan generation returned empty (attempt 1/3)
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [STDERR] Plan generation returned empty (attempt 2/3)
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [STDERR] Plan generation returned empty (attempt 3/3)
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [STDERR] Plan generation failed after 3 attempts, returning empty plan
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [STDERR] 
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 5405.30it/s]
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [STDERR] Key                     | Status     |  | 
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [STDERR] ------------------------+------------+--+-
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [STDERR] 
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [STDERR] Notes:
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:28:47] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260521_062352] Agent result loaded: status=success, transcript_len=56
+[14:28:52] [task_20_eli5_pdf_summary] LLM Judge score: 0.8000
+[14:28:52] [task_20_eli5_pdf_summary] Saved transcript to outputs/harness/combo/pinchbench/transcripts/qwen3.6-27b/task_20_eli5_pdf_summary/transcript.json
+[14:28:52] [task_20_eli5_pdf_summary] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/pinchbench/qwen3.6-27b/task_20_eli5_pdf_summary/result.json
+[14:28:52] [pinchbench] 汇总已保存: 5/5 完成
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] Agent finished in 513.50s, returncode=0
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [DEBUG] Workspace: /tmp/workspace, exists=True
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [DEBUG] Contents: []
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [PROGRESS] Task started at 1779344439.4765415
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init response: content_type=str, content_len=611, finish_reason=stop, reasoning_tokens=1919
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init response: content_type=str, content_len=855, finish_reason=stop, reasoning_tokens=1426
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=281, finish_reason=stop, reasoning_tokens=1739
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [STDERR] 
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4930.31it/s]
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [STDERR] Key                     | Status     |  | 
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [STDERR] ------------------------+------------+--+-
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [STDERR] 
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [STDERR] Notes:
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:29:09] [pinch_task_13_image_gen_qwen3.6-27b_20260521_062033] Agent result loaded: status=success, transcript_len=72
+[14:29:16] [task_13_image_gen] Hybrid score: 0.2167 (auto=0.3333, llm=0.1000)
+[14:29:17] [task_13_image_gen] Saved transcript to outputs/harness/combo/pinchbench/transcripts/qwen3.6-27b/task_13_image_gen/transcript.json
+[14:29:17] [task_13_image_gen] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/pinchbench/qwen3.6-27b/task_13_image_gen/result.json
+[14:29:17] [pinchbench] 汇总已保存: 5/5 完成
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] Agent finished in 718.11s, returncode=0
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [DEBUG] Workspace: /tmp/workspace, exists=True
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [DEBUG] Contents: []
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [PROGRESS] Task started at 1779344439.4669437
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init response: content_type=str, content_len=506, finish_reason=stop, reasoning_tokens=1939
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] LLM init response: content_type=str, content_len=712, finish_reason=stop, reasoning_tokens=2399
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] Batch LLM response: content_type=str, content_len=322, finish_reason=stop, reasoning_tokens=1886
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [STDERR] 
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 21830.98it/s]
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [STDERR] Key                     | Status     |  | 
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [STDERR] ------------------------+------------+--+-
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [STDERR] 
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [STDERR] Notes:
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:32:34] [pinch_task_03_blog_qwen3.6-27b_20260521_062033] Agent result loaded: status=success, transcript_len=146
+[14:32:40] [task_03_blog] LLM Judge score: 0.8875
+[14:32:40] [task_03_blog] Saved transcript to outputs/harness/combo/pinchbench/transcripts/qwen3.6-27b/task_03_blog/transcript.json
+[14:32:40] [task_03_blog] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/combo/pinchbench/qwen3.6-27b/task_03_blog/result.json
+[14:32:40] [pinchbench] 汇总已保存: 5/5 完成
+[14:32:40]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[14:32:40]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[14:32:40] 
+

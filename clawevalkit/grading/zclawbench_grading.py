@@ -362,6 +362,7 @@ def run_judge_eval(
     # OpenRouter also serves anthropic/ models but via OpenAI SDK
     is_openrouter = "openrouter" in base_url.lower()
     is_bigmodel = "bigmodel" in base_url.lower()
+    is_azure = "aidp.bytedance.net" in base_url.lower() or ("azure" in base_url.lower() and "anthropic" not in base_url.lower())
     use_anthropic = ("minimax" in base_url.lower() or
                      (judge_model.startswith("anthropic/") and not is_openrouter and not is_bigmodel))
 
@@ -380,7 +381,11 @@ def run_judge_eval(
     ]
 
     try:
-        if is_bigmodel:
+        if is_azure:
+            from openai import AzureOpenAI
+            client = AzureOpenAI(api_key=api_key, api_version="2024-02-01", azure_endpoint=base_url.rstrip("/"), timeout=120.0)
+            result_text = _call_judge_with_retry(client, judge_model, messages, client_type="openai")
+        elif is_bigmodel:
             # bigmodel endpoint: use litellm with api_key and api_base to ensure correct auth
             result_text = _call_judge_litellm(
                 judge_model, messages, api_key, base_url

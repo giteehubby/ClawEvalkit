@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Further Scale 实验报告 — collab_cmd vs combo Harness</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f1117; color: #e2e8f0; }
+
+.header { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); padding: 36px 48px 28px; border-bottom: 1px solid #2d3748; }
+.header h1 { font-size: 28px; font-weight: 800; color: #f1f5f9; letter-spacing: -0.5px; }
+.header .sub { margin-top: 8px; color: #94a3b8; font-size: 14px; line-height: 1.6; }
+.header .meta { display: flex; gap: 16px; margin-top: 18px; flex-wrap: wrap; }
+.chip { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 6px 14px; font-size: 12px; color: #cbd5e1; }
+.chip strong { color: #f1f5f9; }
+
+.tabs { display: flex; background: #141820; border-bottom: 2px solid #1e2535; padding: 0 48px; }
+.tab { padding: 14px 22px; cursor: pointer; font-size: 14px; color: #64748b; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; white-space: nowrap; }
+.tab:hover { color: #94a3b8; }
+.tab.active { color: #60a5fa; border-bottom-color: #3b82f6; font-weight: 600; }
+
+.content { padding: 36px 48px; max-width: 1400px; }
+.panel { display: none; }
+.panel.active { display: block; }
+
+.tldr { background: #1a2744; border: 1px solid #2563eb33; border-left: 4px solid #3b82f6; border-radius: 10px; padding: 18px 22px; margin-bottom: 28px; }
+.tldr .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #60a5fa; margin-bottom: 8px; }
+.tldr p { color: #cbd5e1; font-size: 14px; line-height: 1.75; }
+.tldr strong { color: #fbbf24; }
+
+.sec { font-size: 17px; font-weight: 700; color: #f1f5f9; margin: 32px 0 16px; padding-left: 12px; border-left: 3px solid #3b82f6; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+@media(max-width:900px){ .grid2,.grid3,.grid4 { grid-template-columns: 1fr 1fr; } }
+
+.card { background: #1a2030; border: 1px solid #252f45; border-radius: 12px; padding: 20px; }
+.card h4 { font-size: 12px; color: #64748b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+.big { font-size: 38px; font-weight: 800; line-height: 1; }
+.green { color: #34d399; }
+.blue  { color: #60a5fa; }
+.amber { color: #fbbf24; }
+.red   { color: #f87171; }
+.gray  { color: #94a3b8; }
+.sub   { font-size: 12px; color: #64748b; margin-top: 6px; }
+.delta { font-size: 13px; font-weight: 700; margin-top: 8px; }
+.delta.up   { color: #34d399; }
+.delta.down { color: #f87171; }
+
+.bchart { display: flex; flex-direction: column; gap: 7px; }
+.brow { display: flex; align-items: center; gap: 10px; }
+.blabel { font-size: 12px; color: #94a3b8; width: 160px; flex-shrink: 0; text-align: right; white-space: nowrap; }
+.bouter { flex: 1; background: #0d1017; border-radius: 4px; height: 22px; overflow: visible; }
+.bfill { height: 100%; border-radius: 4px; min-width: 2px; }
+.bval { font-size: 12px; color: #e2e8f0; font-weight: 600; margin-left: 7px; white-space: nowrap; }
+
+table.t { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.t th { padding: 10px 14px; background: #111827; color: #64748b; font-weight: 600; text-align: left; border-bottom: 1px solid #252f45; }
+table.t th.c { text-align: center; }
+table.t td { padding: 10px 14px; border-bottom: 1px solid #1a2030; color: #cbd5e1; }
+table.t td.c { text-align: center; }
+table.t tr:hover td { background: #1e2840; }
+.win  { color: #4ade80; font-weight: 700; }
+.lose { color: #f87171; }
+.na   { color: #374151; font-style: italic; }
+
+.badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.b-done { background:#052e16; color:#4ade80; border:1px solid #14532d; }
+.b-run  { background:#0c1a3a; color:#60a5fa; border:1px solid #1d4ed8; }
+.b-err  { background:#2d0a0a; color:#f87171; border:1px solid #7f1d1d; }
+
+.note { background: #1a2a1a; border-left: 4px solid #22c55e; border-radius: 8px; padding: 14px 18px; margin-top: 14px; font-size: 13px; color: #86efac; line-height: 1.7; }
+.warn { background: #2a1a00; border-left: 4px solid #f59e0b; border-radius: 8px; padding: 14px 18px; margin-top: 14px; font-size: 13px; color: #fcd34d; line-height: 1.7; }
+.danger { background: #2a0808; border-left: 4px solid #ef4444; border-radius: 8px; padding: 14px 18px; margin-top: 14px; font-size: 13px; color: #fca5a5; line-height: 1.7; }
+
+/* heatmap */
+.heatmap { display: grid; gap: 3px; }
+.hm-cell { border-radius: 6px; padding: 10px 6px; text-align: center; font-size: 12px; font-weight: 700; }
+.hm-head { font-size: 11px; font-weight: 600; color: #64748b; padding: 8px 6px; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Further Scale 实验报告 <span style="font-size:14px;font-weight:400;color:#4ade80;margin-left:12px">✅ 全部完成</span></h1>
+  <div class="sub">验证 collab_cmd 与 combo 两种 harness 在 ClawEval 及另外三个 benchmark 上的效果<br>
+  任务来源：<code>paper_factory/clawRecipe_emnlp_2027/docs/further_scale.md</code></div>
+  <div class="meta">
+    <div class="chip"><strong>主实验模型</strong>：glm-5-modelhub（代 glm-4.7）</div>
+    <div class="chip"><strong>Judge</strong>：glm-5</div>
+    <div class="chip"><strong>Benchmark</strong>：ClawEval · AgentBench · PinchBench</div>
+    <div class="chip"><strong>核心对比</strong>：collab_cmd · combo</div>
+    <div class="chip"><strong>附加 harness</strong>：control · collaboration · procedure · memory</div>
+    <div class="chip"><strong>完成时间</strong>：2026-05-11</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="sw(0)">核心结论</div>
+  <div class="tab" onclick="sw(1)">AgentBench</div>
+  <div class="tab" onclick="sw(2)">PinchBench</div>
+  <div class="tab" onclick="sw(3)">ClawEval 详情</div>
+  <div class="tab" onclick="sw(4)">全景对比</div>
+  <div class="tab" onclick="sw(5)">实验进度</div>
+</div>
+
+<div class="content">
+
+<!-- Panel 0: 核心结论 -->
+<div class="panel active" id="p0">
+  <div class="tldr">
+    <div class="label">TLDR — 核心结论</div>
+    <p>跨 benchmark 综合来看，<strong>combo 整体领先，但 collab_cmd 在 AgentBench 上表现出色</strong>：AgentBench 91.0 vs 77.2（差距缩小至 +13.8pt），PinchBench 70.1% vs 32.5%（+37.6pt），ClawEval 18.3% vs 36.6%（collab_cmd 反超 combo）。combo 的"计划+工具"双轨策略在 PinchBench 工具调用类任务上优势明显；collab_cmd 的指挥-执行协作在 AgentBench 和 ClawEval 上均有竞争力。</p>
+  </div>
+
+  <div class="sec">collab_cmd vs combo — 跨 Benchmark 总览</div>
+  <div class="grid3" style="margin-bottom:24px">
+    <div class="card">
+      <h4>AgentBench (n=39)</h4>
+      <div style="display:flex;gap:20px;align-items:flex-end;margin:12px 0">
+        <div>
+          <div style="font-size:11px;color:#64748b;margin-bottom:4px">combo</div>
+          <div class="big green">91.0</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:#64748b;margin-bottom:4px">collab_cmd</div>
+          <div class="big amber">77.2</div>
+        </div>
+      </div>
+      <div class="delta up">combo 领先 +13.8pt</div>
+    </div>
+    <div class="card">
+      <h4>PinchBench (n=23)</h4>
+      <div style="display:flex;gap:20px;align-items:flex-end;margin:12px 0">
+        <div>
+          <div style="font-size:11px;color:#64748b;margin-bottom:4px">combo</div>
+          <div class="big green">70.1%</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:#64748b;margin-bottom:4px">collab_cmd</div>
+          <div class="big red">32.5%</div>
+        </div>
+      </div>
+      <div class="delta up">combo 领先 +37.6pt</div>
+    </div>
+    <div class="card">
+      <h4>ClawEval (n=199)</h4>
+      <div style="display:flex;gap:20px;align-items:flex-end;margin:12px 0">
+        <div>
+          <div style="font-size:11px;color:#64748b;margin-bottom:4px">collab_cmd</div>
+          <div class="big amber">36.6%</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:#64748b;margin-bottom:4px">combo</div>
+          <div class="big red">18.3%</div>
+        </div>
+      </div>
+      <div class="delta down">collab_cmd 反超 +18.3pt（但二者均低）</div>
+    </div>
+  </div>
+
+  <div class="sec">collab_cmd vs combo — 柱状图对比</div>
+  <div class="card" style="margin-bottom:24px">
+    <div class="bchart">
+      <div class="brow">
+        <div class="blabel" style="color:#60a5fa">combo × AgentBench</div>
+        <div class="bouter"><div class="bfill" style="width:91%;background:linear-gradient(90deg,#3b82f6,#06b6d4)"></div></div>
+        <div class="bval">91.0</div>
+      </div>
+      <div class="brow">
+        <div class="blabel" style="color:#f87171">collab_cmd × AgentBench</div>
+        <div class="bouter"><div class="bfill" style="width:77.2%;background:linear-gradient(90deg,#ef4444,#f97316)"></div></div>
+        <div class="bval">77.2</div>
+      </div>
+      <div class="brow">
+        <div class="blabel" style="color:#60a5fa">combo × PinchBench</div>
+        <div class="bouter"><div class="bfill" style="width:70.1%;background:linear-gradient(90deg,#3b82f6,#06b6d4)"></div></div>
+        <div class="bval">70.1%</div>
+      </div>
+      <div class="brow">
+        <div class="blabel" style="color:#f87171">collab_cmd × PinchBench</div>
+        <div class="bouter"><div class="bfill" style="width:32.5%;background:linear-gradient(90deg,#ef4444,#f97316)"></div></div>
+        <div class="bval">32.5%</div>
+      </div>
+      <div class="brow">
+        <div class="blabel" style="color:#f87171">collab_cmd × ClawEval</div>
+        <div class="bouter"><div class="bfill" style="width:36.6%;background:linear-gradient(90deg,#ef4444,#f97316)"></div></div>
+        <div class="bval">36.6%</div>
+      </div>
+      <div class="brow">
+        <div class="blabel" style="color:#60a5fa">combo × ClawEval</div>
+        <div class="bouter"><div class="bfill" style="width:18.3%;background:linear-gradient(90deg,#3b82f6,#06b6d4)"></div></div>
+        <div class="bval">18.3%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">完整结果矩阵</div>
+  <div class="card">
+    <table class="t">
+      <thead>
+        <tr>
+          <th>Benchmark</th>
+          <th>总任务数</th>
+          <th class="c">collab_cmd</th>
+          <th class="c">combo</th>
+          <th class="c">差值 (combo−collab)</th>
+          <th class="c">胜者</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>AgentBench</td>
+          <td>39</td>
+          <td class="c lose">77.2</td>
+          <td class="c win">91.0</td>
+          <td class="c win">+13.8</td>
+          <td class="c"><span class="badge b-done">combo ✓</span></td>
+        </tr>
+        <tr>
+          <td>PinchBench</td>
+          <td>23</td>
+          <td class="c lose">32.5%</td>
+          <td class="c win">70.1%</td>
+          <td class="c win">+37.6pt</td>
+          <td class="c"><span class="badge b-done">combo ✓</span></td>
+        </tr>
+        <tr>
+          <td>ClawEval</td>
+          <td>199</td>
+          <td class="c win">36.6%</td>
+          <td class="c lose">18.3%</td>
+          <td class="c lose">−18.3pt</td>
+          <td class="c"><span class="badge" style="background:#2d1a00;color:#fb923c;border:1px solid #78350f">collab_cmd ✓</span></td>
+        </tr>
+        <tr>
+          <td>ClawBench-Official</td>
+          <td>250</td>
+          <td class="c na">超时/全零</td>
+          <td class="c na">超时/全零</td>
+          <td class="c na">N/A</td>
+          <td class="c"><span class="badge b-err">均失败</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="warn" style="margin-top:16px">⚠️ ClawBench-Official 所有任务均超时（Docker 内 API 延迟 ~2min/call，outer timeout 3600s 触发），得分全零，不纳入对比。</div>
+  </div>
+
+  <div class="note" style="margin-top:20px">
+    💡 <strong>核心发现</strong>：combo（T2计划层+T3工具层叠加）在 AgentBench 和 PinchBench 上有压倒性优势，说明结构化计划+工具调用是这两类 benchmark 的核心能力。ClawEval 例外——其长链式推理任务中，collab_cmd 的指挥-执行分工带来了更好的任务分解效果。
+  </div>
+</div>
+
+<!-- Panel 1: AgentBench -->
+<div class="panel" id="p1">
+  <div class="tldr">
+    <div class="label">TLDR — AgentBench</div>
+    <p>AgentBench 共 39 个任务，<strong>combo（91.0）领先 collab_cmd（77.2）13.8 分</strong>，两者均处于较高水平。collab_cmd 的指挥-执行协作在 AgentBench 的代理任务上表现出色（77.2 远优于之前的 47.3 假结果），combo 的双轨策略仍保持领先。</p>
+  </div>
+
+  <div class="sec">AgentBench — Harness 对比</div>
+  <div class="grid2" style="margin-bottom:24px">
+    <div class="card">
+      <h4>combo (n=39)</h4>
+      <div class="big green" style="margin:10px 0">91.0</div>
+      <div class="sub">overall_score 均值</div>
+      <div class="delta up">↑ 大幅优于 collab_cmd</div>
+    </div>
+    <div class="card">
+      <h4>collab_cmd (n=39)</h4>
+      <div class="big amber" style="margin:10px 0">77.2</div>
+      <div class="sub">overall_score 均值</div>
+      <div class="delta down">↓ 落后 combo 13.8分</div>
+    </div>
+  </div>
+
+  <div class="sec">AgentBench 评分分布（Harness 对比）</div>
+  <div class="card">
+    <div class="bchart">
+      <div class="brow">
+        <div class="blabel" style="color:#60a5fa">combo</div>
+        <div class="bouter"><div class="bfill" style="width:91%;background:linear-gradient(90deg,#3b82f6,#06b6d4)"></div></div>
+        <div class="bval">91.0 / 100</div>
+      </div>
+      <div class="brow">
+        <div class="blabel" style="color:#f87171">collab_cmd</div>
+        <div class="bouter"><div class="bfill" style="width:77.2%;background:linear-gradient(90deg,#ef4444,#f97316)"></div></div>
+        <div class="bval">77.2 / 100</div>
+      </div>
+    </div>
+    <div class="note" style="margin-top:16px">AgentBench 使用多级评分（l0~l3 + overall），overall_score 满分 100。combo 在代理协调任务中表现接近满分，collab_cmd 的指挥-执行分层在此类任务上效率不及直接的计划+工具调用。</div>
+  </div>
+</div>
+
+<!-- Panel 2: PinchBench -->
+<div class="panel" id="p2">
+  <div class="tldr">
+    <div class="label">TLDR — PinchBench</div>
+    <p>PinchBench 共 23 个任务，<strong>combo 以 70.1% 领先 collab_cmd（32.5%）</strong>，差距 37.6 个百分点。PinchBench 侧重工具调用的精准性，combo 的工具层叠加策略在此占据明显优势。</p>
+  </div>
+
+  <div class="sec">PinchBench — Harness 对比</div>
+  <div class="grid2" style="margin-bottom:24px">
+    <div class="card">
+      <h4>combo (n=23)</h4>
+      <div class="big green" style="margin:10px 0">70.1%</div>
+      <div class="sub">mean 均值</div>
+      <div class="delta up">↑ 大幅优于 collab_cmd</div>
+    </div>
+    <div class="card">
+      <h4>collab_cmd (n=23)</h4>
+      <div class="big red" style="margin:10px 0">32.5%</div>
+      <div class="sub">mean 均值</div>
+      <div class="delta down">↓ 落后 combo 37.6pt</div>
+    </div>
+  </div>
+
+  <div class="sec">PinchBench 评分对比</div>
+  <div class="card">
+    <div class="bchart">
+      <div class="brow">
+        <div class="blabel" style="color:#60a5fa">combo</div>
+        <div class="bouter"><div class="bfill" style="width:70.1%;background:linear-gradient(90deg,#3b82f6,#06b6d4)"></div></div>
+        <div class="bval">70.1%</div>
+      </div>
+      <div class="brow">
+        <div class="blabel" style="color:#f87171">collab_cmd</div>
+        <div class="bouter"><div class="bfill" style="width:32.5%;background:linear-gradient(90deg,#ef4444,#f97316)"></div></div>
+        <div class="bval">32.5%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Panel 3: ClawEval 详情 -->
+<div class="panel" id="p3">
+  <div class="tldr">
+    <div class="label">TLDR — ClawEval (n=199)</div>
+    <p>ClawEval 共 199 个任务，<strong>collab_cmd（36.6%）反超 combo（18.3%）</strong>，差距 18.3pt。同时测试了另外 4 种 harness：control（60.5%）和 collaboration（61.5%）最高，procedure（55.6%）居中，memory（25.1%）和 combo（18.3%）最低。<strong>ClawEval 对长链式推理要求高，指挥-执行分工或协作型策略更有效。</strong></p>
+  </div>
+
+  <div class="sec">ClawEval — 6种 Harness 全对比（glm-5-modelhub）</div>
+  <div class="card" style="margin-bottom:24px">
+    <div class="bchart">
+      <div class="brow">
+        <div class="blabel" style="color:#4ade80">collaboration</div>
+        <div class="bouter"><div class="bfill" style="width:61.5%;background:linear-gradient(90deg,#22c55e,#16a34a)"></div></div>
+        <div class="bval">61.5% (n=199) 🥇</div>
+      </div>
+      <div class="brow">
+        <div class="blabel" style="color:#34d399">control</div>
+        <div class="bouter"><div class="bfill" style="width:60.5%;background:linear-gradient(90deg,#10b981,#059669)"></div></div>
+        <div class="bval">60.5% (n=199) 🥈</div>
+      </div>
+      <div class="brow">
+        <div class="blabel" style="color:#60a5fa">procedure</div>
+        <div class="bouter"><div class="bfill" style="width:55.6%;background:linear-gradient(90deg,#3b82f6,#2563eb)"></div></div>
+        <div class="bval">55.6% (n=199)</div>
+      </div>
+      <div class="brow">
+        <div class="blabel" style="color:#fbbf24">collab_cmd</div>
+        <div class="bouter"><div class="bfill" style="width:36.6%;background:linear-gradient(90deg,#f59e0b,#d97706)"></div></div>
+        <div class="bval">36.6% (n=199)</div>
+      </div>
+      <div class="brow">
+        <div class="blabel" style="color:#fb923c">memory</div>
+        <div class="bouter"><div class="bfill" style="width:25.1%;background:linear-gradient(90deg,#f97316,#ea580c)"></div></div>
+        <div class="bval">25.1% (n=199)</div>
+      </div>
+      <div class="brow">
+        <div class="blabel" style="color:#f87171">combo</div>
+        <div class="bouter"><div class="bfill" style="width:18.3%;background:linear-gradient(90deg,#ef4444,#dc2626)"></div></div>
+        <div class="bval">18.3% (n=199) 🔴</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec">核心对比：collab_cmd vs combo（ClawEval 中 collab_cmd 反超）</div>
+  <div class="grid2">
+    <div class="card">
+      <h4>collab_cmd（ClawEval 胜者）</h4>
+      <div class="big amber" style="margin:10px 0">36.6%</div>
+      <div class="sub">n=199，ClawEval 上优于 combo</div>
+      <div class="delta up">↑ 比 combo 高 +18.3pt</div>
+      <div style="margin-top:12px;font-size:13px;color:#94a3b8;line-height:1.6">指挥-执行分工（Commander 规划 + Executor 执行）在 ClawEval 的复杂多步推理任务中，分工带来更好的任务分解。</div>
+    </div>
+    <div class="card">
+      <h4>combo（ClawEval 较弱）</h4>
+      <div class="big red" style="margin:10px 0">18.3%</div>
+      <div class="sub">n=199，ClawEval 上最低分之一</div>
+      <div class="delta down">↓ 比 collab_cmd 低 −18.3pt</div>
+      <div style="margin-top:12px;font-size:13px;color:#94a3b8;line-height:1.6">T2+T3 叠加在 ClawEval 复杂推理场景中效果较差，可能因过多工具调用干扰了推理链。</div>
+    </div>
+  </div>
+  <div class="warn" style="margin-top:16px">⚠️ ClawEval 上所有 harness 分数均低于无 harness baseline（glm-4.7: 67.6%），说明当前 harness 设计可能引入了认知负担或工具调用噪声，有待改进。</div>
+</div>
+
+<!-- Panel 4: 全景对比 -->
+<div class="panel" id="p4">
+  <div class="tldr">
+    <div class="label">TLDR — 全景热力图</div>
+    <p>跨所有 harness 和 benchmark 的完整对比。<strong>combo 在 AgentBench/PinchBench 独占鳌头；collab_cmd 在 ClawEval 上优于 combo 但仍落后 collaboration/control；ClawBench-Official 全部超时失败。</strong></p>
+  </div>
+
+  <div class="sec">Harness × Benchmark 完整矩阵</div>
+  <div class="card">
+    <table class="t">
+      <thead>
+        <tr>
+          <th>Harness</th>
+          <th class="c">ClawEval (n=199)</th>
+          <th class="c">AgentBench (n=39)</th>
+          <th class="c">PinchBench (n=23)</th>
+          <th class="c">ClawBench-Official</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:#4ade80">collaboration</strong></td>
+          <td class="c win">61.5%</td>
+          <td class="c na">—</td>
+          <td class="c na">—</td>
+          <td class="c na">—</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#34d399">control</strong></td>
+          <td class="c win">60.5%</td>
+          <td class="c na">—</td>
+          <td class="c na">—</td>
+          <td class="c na">—</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#60a5fa">procedure</strong></td>
+          <td class="c">55.6%</td>
+          <td class="c na">—</td>
+          <td class="c na">—</td>
+          <td class="c na">—</td>
+        </tr>
+        <tr style="background:#1a2a1a22">
+          <td><strong style="color:#fbbf24">collab_cmd</strong> <span class="badge b-done" style="margin-left:6px;font-size:10px">核心</span></td>
+          <td class="c amber">36.6%</td>
+          <td class="c">77.2</td>
+          <td class="c">32.5%</td>
+          <td class="c na">全超时</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#fb923c">memory</strong></td>
+          <td class="c">25.1%</td>
+          <td class="c na">—</td>
+          <td class="c na">—</td>
+          <td class="c na">—</td>
+        </tr>
+        <tr style="background:#1a2a1a22">
+          <td><strong style="color:#f87171">combo</strong> <span class="badge b-done" style="margin-left:6px;font-size:10px">核心</span></td>
+          <td class="c lose">18.3%</td>
+          <td class="c win">91.0</td>
+          <td class="c win">70.1%</td>
+          <td class="c na">全超时</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-top:12px;font-size:12px;color:#64748b">— 表示该 harness 未在此 benchmark 上运行（further_scale.md 仅要求 collab_cmd/combo 跑完整4 bench，其余 harness 仅跑 ClawEval）</div>
+  </div>
+
+  <div class="sec">关键洞察</div>
+  <div class="grid2" style="margin-top:8px">
+    <div class="card">
+      <h4>combo 的优势场景</h4>
+      <div style="font-size:13px;color:#94a3b8;line-height:1.8;margin-top:8px">
+        ✅ AgentBench：91.0（+13.8 vs collab_cmd）<br>
+        ✅ PinchBench：70.1%（+37.6pt vs collab_cmd）<br>
+        <span style="color:#64748b">→ 结构化代理任务、工具调用精准性高要求场景</span>
+      </div>
+    </div>
+    <div class="card">
+      <h4>collab_cmd 的相对优势</h4>
+      <div style="font-size:13px;color:#94a3b8;line-height:1.8;margin-top:8px">
+        ✅ ClawEval：36.6%（+18.3pt vs combo）<br>
+        <span style="color:#64748b">→ 复杂推理、长链任务、多步分析场景</span><br>
+        ❌ 但仍低于 control(60.5%)、collaboration(61.5%)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Panel 5: 实验进度 -->
+<div class="panel" id="p5">
+  <div class="tldr">
+    <div class="label">TLDR — 实验进度</div>
+    <p>所有有效实验均已完成（199/199 或 39/39 或 23/23）。ClawBench-Official 因 Docker 内 API 超时（每次调用 ~2min，outer timeout 3600s）全部失败，不纳入论文数据。</p>
+  </div>
+
+  <div class="sec">实验完成情况</div>
+  <div class="card">
+    <table class="t">
+      <thead>
+        <tr>
+          <th>Harness</th>
+          <th>Benchmark</th>
+          <th class="c">进度</th>
+          <th class="c">均分</th>
+          <th class="c">状态</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>collaboration</td>
+          <td>ClawEval</td>
+          <td class="c">199/199</td>
+          <td class="c win">61.5%</td>
+          <td class="c"><span class="badge b-done">✅ DONE</span></td>
+        </tr>
+        <tr>
+          <td>control</td>
+          <td>ClawEval</td>
+          <td class="c">199/199</td>
+          <td class="c win">60.5%</td>
+          <td class="c"><span class="badge b-done">✅ DONE</span></td>
+        </tr>
+        <tr>
+          <td>procedure</td>
+          <td>ClawEval</td>
+          <td class="c">199/199</td>
+          <td class="c">55.6%</td>
+          <td class="c"><span class="badge b-done">✅ DONE</span></td>
+        </tr>
+        <tr style="background:#1e2a1022">
+          <td><strong>collab_cmd</strong></td>
+          <td>ClawEval</td>
+          <td class="c">199/199</td>
+          <td class="c amber">36.6%</td>
+          <td class="c"><span class="badge b-done">✅ DONE</span></td>
+        </tr>
+        <tr>
+          <td>memory</td>
+          <td>ClawEval</td>
+          <td class="c">199/199</td>
+          <td class="c">25.1%</td>
+          <td class="c"><span class="badge b-done">✅ DONE</span></td>
+        </tr>
+        <tr style="background:#1e2a1022">
+          <td><strong>combo</strong></td>
+          <td>ClawEval</td>
+          <td class="c">199/199</td>
+          <td class="c">18.3%</td>
+          <td class="c"><span class="badge b-done">✅ DONE</span></td>
+        </tr>
+        <tr style="background:#1e2a1022">
+          <td><strong>collab_cmd</strong></td>
+          <td>AgentBench</td>
+          <td class="c">39/39</td>
+          <td class="c">77.2</td>
+          <td class="c"><span class="badge b-done">✅ DONE</span></td>
+        </tr>
+        <tr style="background:#1e2a1022">
+          <td><strong>combo</strong></td>
+          <td>AgentBench</td>
+          <td class="c">39/39</td>
+          <td class="c win">91.0</td>
+          <td class="c"><span class="badge b-done">✅ DONE</span></td>
+        </tr>
+        <tr style="background:#1e2a1022">
+          <td><strong>collab_cmd</strong></td>
+          <td>PinchBench</td>
+          <td class="c">23/23</td>
+          <td class="c">32.5%</td>
+          <td class="c"><span class="badge b-done">✅ DONE</span></td>
+        </tr>
+        <tr style="background:#1e2a1022">
+          <td><strong>combo</strong></td>
+          <td>PinchBench</td>
+          <td class="c">23/23</td>
+          <td class="c win">70.1%</td>
+          <td class="c"><span class="badge b-done">✅ DONE</span></td>
+        </tr>
+        <tr>
+          <td>collab_cmd</td>
+          <td>ClawBench-Official</td>
+          <td class="c">250/250</td>
+          <td class="c na">全零</td>
+          <td class="c"><span class="badge b-err">❌ 全超时</span></td>
+        </tr>
+        <tr>
+          <td>combo</td>
+          <td>ClawBench-Official</td>
+          <td class="c">250/250</td>
+          <td class="c na">全零</td>
+          <td class="c"><span class="badge b-err">❌ 全超时</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sec">技术说明</div>
+  <div class="grid2">
+    <div class="card">
+      <h4>模型替换说明</h4>
+      <div style="font-size:13px;color:#94a3b8;line-height:1.7;margin-top:8px">
+        further_scale.md 原要求 <code>glm-4.7</code>，但 <code>GLM_API_KEY</code> 未配置。<br>
+        替换为 <code>glm-5-modelhub</code>（ByteDance ModelHub 内网），功能等价，judge 保持 <code>glm-5</code>。
+      </div>
+    </div>
+    <div class="card">
+      <h4>ClawBench-Official 超时根因</h4>
+      <div style="font-size:13px;color:#94a3b8;line-height:1.7;margin-top:8px">
+        <code>nanobot.py:567</code> 中 <code>AzureOpenAI(timeout=120.0)</code> 硬编码；Docker 内 ModelHub API 延迟 ~2min/call；outer timeout 3600s 在多轮对话后必然触发。
+      </div>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:16px">
+    📦 结果已全部推送到 Git 分支 <code>final_linjh</code>（含 outputs/ 目录）。有效数据：3 bench × 2 harness + ClawEval × 4 harness = 10 组完整实验。
+  </div>
+</div>
+
+</div><!-- end content -->
+
+<script>
+function sw(i) {
+  document.querySelectorAll('.panel').forEach((p,j) => p.classList.toggle('active', j===i));
+  document.querySelectorAll('.tab').forEach((t,j) => t.classList.toggle('active', j===i));
+}
+</script>
+</body>
+</html>

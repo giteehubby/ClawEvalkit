@@ -1,0 +1,35 @@
+[92m10:09:09 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[10:09:09] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[92m10:09:11 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[10:09:11] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[10:07:29] Config: bench=['agentbench'], models=['qwen3.6-27b'], sample=all
+[10:07:29] 
+============================================================
+[10:07:29] BENCHMARK: AgentBench (39 tasks)
+[10:07:29] ============================================================
+[10:07:29]   [agentbench×qwen3.6-27b] evaluating...
+[10:07:30] [agent_misleading-error-message_qwen3.6-27b_20260521_020730] Running setup.sh for task misleading-error-message
+[10:07:31] [agent_misleading-error-message_qwen3.6-27b_20260521_020730] setup.sh completed successfully
+[10:07:31] [agent_misleading-error-message_qwen3.6-27b_20260521_020730] Container started
+[10:07:32] [agent_misleading-error-message_qwen3.6-27b_20260521_020730] Workspace copied to /tmp/workspace/:
+total 8
+drwxr-xr-x 1  501 dialout  84 May 21 02:07 .
+drwxrwxrwt 1 root root     32 May 21 02:07 ..
+drwxr-xr-x 1  501 dialout 128 May 21 02:07 .git
+-rw-r--r-- 1  501 dialout 924 May 21 02:07 BUG_REPORT.md
+-rw-r--r-- 1  501 dialout 695 May 21 02:07 app.js
+drwxr-xr-x 1  501 dialout  32 May 21 02:07 lib
+drwxr-xr-x 1  501 dialout  14 May 21 02:07 middleware
+drwxr-xr-x 1  501 dialout  34 May 21 02:07 routes
+
+[10:09:08] [agent_misleading-error-message_qwen3.6-27b_20260521_020730] Agent finished in 96.89s, returncode=0
+[10:09:08] [agent_misleading-error-message_qwen3.6-27b_20260521_020730] Agent stdout: DONE
+
+[10:09:08] [agent_misleading-error-message_qwen3.6-27b_20260521_020730] Agent result loaded: status=success, transcript_len=42
+[10:09:11] [agent_misleading-error-message_qwen3.6-27b_20260521_020730] Scores: L0=100.0 L1=70.0 L2=100.0 L3=100.0 | Overall=92.5
+[10:09:11] [agent_misleading-error-message_qwen3.6-27b_20260521_020730] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/collaboration/agentbench/qwen3.6-27b/misleading-error-message/result.json
+[10:09:11]   [agentbench×qwen3.6-27b] done: score=92.5, scored=1/1
+[10:09:11] 
+

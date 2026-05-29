@@ -1,0 +1,100 @@
+[14:12:15] 从文件加载任务列表: error_analysis/classify_outputs/qwen-3.6-27b/deepseek_classify/inputs/procedure_E.csv
+[14:12:15]   clawbench: 3 tasks
+[14:12:15]   pinchbench: 1 tasks
+[14:12:15] Config: bench=['clawbench', 'pinchbench'], models=['qwen3.6-27b'], sample=all
+[14:12:15] 
+============================================================
+[14:12:15] BENCHMARK: clawbench (3 tasks from file)
+[14:12:15] ============================================================
+[14:12:15]   [clawbench×qwen3.6-27b] evaluating...
+[14:12:19] [clawbench_xdom-014_qwen3.6-27b_20260521_061216] Container started
+[14:12:19] [clawbench_cs-003-log-analyzer_qwen3.6-27b_20260521_061216] Container started
+[14:12:19] [clawbench_cont-004-media-bias_qwen3.6-27b_20260521_061216] Container started
+[14:13:34]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/content-analysis/cont-004-media-bias/environment/setup.sh
+[14:13:34]   [container] [setup] setup.sh 成功
+[14:13:34]   [container] [setup] 工作空间文件: ['instruction.md']
+[14:13:34]   [container] DONE
+[14:13:34]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:13:34]   [container-err] Loading weights:  32%|███▏      | 33/103 [00:00<00:00, 312.75it/s]
+[14:13:34]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 943.44it/s]
+[14:13:34]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:13:34]   [container-err] Key                     | Status     |  | 
+[14:13:34]   [container-err] ------------------------+------------+--+-
+[14:13:34]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[14:13:34]   [container-err] 
+[14:13:34]   [container-err] Notes:
+[14:13:34]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:13:34] [clawbench_cont-004-media-bias_qwen3.6-27b_20260521_061216] Agent finished in 74.43s, returncode=0
+[14:13:34] [clawbench_cont-004-media-bias_qwen3.6-27b_20260521_061216] Agent result: passed=True, score=1.0000
+[14:13:35] [cont-004-media-bias] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/clawbench-official/qwen3.6-27b/cont-004-media-bias.json
+[14:14:32]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cross-domain/xdom-014-data-driven-email-campaign/environment/setup.sh
+[14:14:32]   [container] [setup] setup.sh 成功
+[14:14:32]   [container] [setup] 工作空间文件: ['customers.csv', 'rules.toml', 'instruction.md']
+[14:14:32]   [container] DONE
+[14:14:32]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:14:32]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 1129.70it/s]
+[14:14:32]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:14:32]   [container-err] Key                     | Status     |  | 
+[14:14:32]   [container-err] ------------------------+------------+--+-
+[14:14:32]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[14:14:32]   [container-err] 
+[14:14:32]   [container-err] Notes:
+[14:14:32]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:14:32] [clawbench_xdom-014_qwen3.6-27b_20260521_061216] Agent finished in 132.59s, returncode=0
+[14:14:32] [clawbench_xdom-014_qwen3.6-27b_20260521_061216] Agent result: passed=False, score=0.8800
+[14:14:33] [xdom-014] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/clawbench-official/qwen3.6-27b/xdom-014.json
+[14:17:23]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cs-engineering/cs-003-log-analyzer/environment/setup.sh
+[14:17:23]   [container] [setup] setup.sh 成功
+[14:17:23]   [container] [setup] 工作空间文件: ['instruction.md', 'server.log']
+[14:17:23]   [container] DONE
+[14:17:23]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:17:23]   [container-err] Loading weights:  39%|███▉      | 40/103 [00:00<00:00, 385.82it/s]
+[14:17:23]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 981.31it/s]
+[14:17:23]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:17:23]   [container-err] Key                     | Status     |  | 
+[14:17:23]   [container-err] ------------------------+------------+--+-
+[14:17:23]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[14:17:23]   [container-err] 
+[14:17:23]   [container-err] Notes:
+[14:17:23]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:17:23] [clawbench_cs-003-log-analyzer_qwen3.6-27b_20260521_061216] Agent finished in 303.20s, returncode=0
+[14:17:23] [clawbench_cs-003-log-analyzer_qwen3.6-27b_20260521_061216] Agent result: passed=False, score=0.5000
+[14:17:24] [cs-003-log-analyzer] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/clawbench-official/qwen3.6-27b/cs-003-log-analyzer.json
+[14:17:24]   [clawbench×qwen3.6-27b] done: score=79.3, scored=1/3
+[14:17:24]   [clawbench×qwen3.6-27b] done: score=79.3, scored=0/3
+[14:17:24] 
+============================================================
+[14:17:24] BENCHMARK: pinchbench (1 tasks from file)
+[14:17:24] ============================================================
+[14:17:24]   [pinchbench×qwen3.6-27b] evaluating...
+[14:17:24] [pinchbench] Filtered to 1 tasks by task_ids: ['task_14_humanizer']
+[14:17:24] [pinchbench] 汇总已保存: 1/1 完成
+[14:17:24] [task_14_humanizer] Preparing 1 workspace file(s): [{'source': 'ai_blog.txt', 'dest': 'ai_blog.txt'}]
+[14:17:24] [task_14_humanizer] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/ai_blog.txt -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_14_humanizer_ywsgb9ly/workspace/ai_blog.txt
+[14:17:27] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] Container started
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] Agent finished in 105.02s, returncode=0
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] [DEBUG] Workspace: /tmp/workspace, exists=True
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] [DEBUG] Contents: [PosixPath('/tmp/workspace/ai_blog.txt')]
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] [PROGRESS] Task started at 1779344250.4067967
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] [PROGRESS] Task finished at 101.0s, status=success
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] [PROGRESS] Transcript entries: 29
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] DONE
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] [STDERR] 
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4974.59it/s]
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] [STDERR] Key                     | Status     |  | 
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] [STDERR] ------------------------+------------+--+-
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] [STDERR] 
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] [STDERR] Notes:
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[14:19:12] [pinch_task_14_humanizer_qwen3.6-27b_20260521_061724] Agent result loaded: status=success, transcript_len=29
+[14:19:17] [task_14_humanizer] LLM Judge score: 0.7000
+[14:19:17] [task_14_humanizer] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_14_humanizer/transcript.json
+[14:19:17] [task_14_humanizer] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_14_humanizer/result.json
+[14:19:17] [pinchbench] 汇总已保存: 1/1 完成
+[14:19:17]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[14:19:17]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[14:19:17] 
+

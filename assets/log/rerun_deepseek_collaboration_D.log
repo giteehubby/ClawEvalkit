@@ -1,0 +1,40 @@
+[13:26:49] Config: bench=['clawbench-official'], models=['qwen3.6-27b'], sample=all
+[13:26:49] 
+============================================================
+[13:26:49] BENCHMARK: ClawBench Official (250 tasks)
+[13:26:49] ============================================================
+[13:26:49]   [clawbench-official×qwen3.6-27b] evaluating...
+[13:26:54] [clawbench_acct-005-financial-statements_qwen3.6-27b_20260521_052650] Container started
+[13:29:26]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/accounting/acct-005-financial-statements/environment/setup.sh
+[13:29:26]   [container] [setup] setup.sh 成功
+[13:29:26]   [container] [setup] 工作空间文件: ['trial_balance.csv', 'instruction.md']
+[13:29:26]   [container] DONE
+[13:29:26] [clawbench_acct-005-financial-statements_qwen3.6-27b_20260521_052650] Agent finished in 151.39s, returncode=0
+[13:29:26] [clawbench_acct-005-financial-statements_qwen3.6-27b_20260521_052650] Agent result: passed=False, score=0.5000
+[13:29:26] [acct-005-financial-statements] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/collaboration/clawbench-official/qwen3.6-27b/acct-005-financial-statements.json
+[13:29:28] [clawbench_ds-004-time-series_qwen3.6-27b_20260521_052926] Container started
+[13:34:59]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-science/ds-004-time-series/environment/setup.sh
+[13:34:59]   [container] [setup] setup.sh 失败 (rc=1)
+[13:34:59]   [container] [setup] stderr: Traceback (most recent call last):
+[13:34:59]   [container]   File "<stdin>", line 3, in <module>
+[13:34:59]   [container] ModuleNotFoundError: No module named 'pandas'
+[13:34:59]   [container] 
+[13:34:59]   [container] [setup] 重试 (bash -x) ...
+[13:34:59]   [container] [setup] 重试也失败 (rc=1)
+[13:34:59]   [container] [setup] stderr: + set -euo pipefail
+[13:34:59]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[13:34:59]   [container] + export WORKSPACE
+[13:34:59]   [container] + mkdir -p /tmp/clawbench_workspace
+[13:34:59]   [container] + python3 -
+[13:34:59]   [container] Traceback (most recent call last):
+[13:34:59]   [container]   File "<stdin>", line 3, in <module>
+[13:34:59]   [container] ModuleNotFoundError: No module named 'pandas'
+[13:34:59]   [container] 
+[13:34:59]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:34:59]   [container] DONE
+[13:34:59] [clawbench_ds-004-time-series_qwen3.6-27b_20260521_052926] Agent finished in 330.24s, returncode=0
+[13:34:59] [clawbench_ds-004-time-series_qwen3.6-27b_20260521_052926] Agent result: passed=False, score=0.0000
+[13:34:59] [ds-004-time-series] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/collaboration/clawbench-official/qwen3.6-27b/ds-004-time-series.json
+[13:34:59]   [clawbench-official×qwen3.6-27b] done: score=25.0, scored=0/2
+[13:34:59] 
+

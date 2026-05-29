@@ -204,8 +204,24 @@ class ClawEval(BaseBenchmark):
             elif entry.get("role") in ("user", "assistant", "tool"):
                 # Normalized format: entry has role directly without type wrapper
                 msg_data = entry
+            elif entry_type == "collab_event":
+                # Extract user-visible content from collaboration events for grading
+                event_type = entry.get("event_type", "")
+                data = entry.get("data", {}) or {}
+                content = None
+                if event_type == "step_executed" and data.get("content"):
+                    content = data["content"]
+                elif event_type in ("final_synthesis", "plan_next") and data.get("raw_response"):
+                    content = data["raw_response"]
+                elif event_type == "commander_executor_complete" and data.get("final_synthesis_preview"):
+                    content = data["final_synthesis_preview"]
+
+                if content:
+                    msg = Message(role="assistant", content=[TextBlock(text=str(content))])
+                    messages.append(TraceMessage(trace_id=trace_id, message=msg))
+                continue
             else:
-                # Skip control_event, collab_event, procedural_event, memory_event, etc.
+                # Skip control_event, procedural_event, memory_event, etc.
                 continue
 
             role = msg_data.get("role", "user")
@@ -580,6 +596,12 @@ class ClawEval(BaseBenchmark):
                 log(f"[claweval] _run_loop error: {exc}")
                 status = "error"
                 break
+
+            # commander_executor 模式不会自动向 messages 添加 assistant 消息，
+            # 需要手动补充，确保后续 round 和用户模拟器能看到完整对话历史
+            if not messages or messages[-1].get("role") != "assistant":
+                if last_content and last_content not in ("Max iterations reached", ""):
+                    messages.append({"role": "assistant", "content": last_content})
 
             # Check if agent is waiting for user input (no tool calls in last assistant msg)
             last_assistant = None

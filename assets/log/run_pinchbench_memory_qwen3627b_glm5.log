@@ -1,0 +1,28 @@
+/var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/tmpaznujpcj: line 18: 67697 Terminated: 15          python run.py --bench pinchbench --harness memory --model qwen3.6-27b --judge-model glm-5 --docker
+ERROR conda.cli.main_run:execute(142): `conda run python run.py --bench pinchbench --harness memory --model qwen3.6-27b --judge-model glm-5 --docker` failed. (See above for error)
+[15:35:59] Config: bench=['pinchbench'], models=['qwen3.6-27b'], sample=all
+[15:35:59] 
+============================================================
+[15:35:59] BENCHMARK: PinchBench (23 tasks)
+[15:35:59] ============================================================
+[15:35:59]   [pinchbench×qwen3.6-27b] evaluating...
+[15:36:01] [pinchbench] 0 tasks cached, 23 remaining
+[15:36:01] [pinchbench] 汇总已保存: 0/23 完成
+[15:36:01] [pinchbench] Running task 1/23: task_00_sanity
+[15:36:01] [task_00_sanity] No workspace_files defined in task
+[15:36:01] [pinch_task_00_sanity_qwen3.6-27b_20260520_073601] Container started
+[15:36:07] [pinch_task_00_sanity_qwen3.6-27b_20260520_073601] Agent finished in 5.03s, returncode=0
+[15:36:07] [pinch_task_00_sanity_qwen3.6-27b_20260520_073601] [DEBUG] Workspace: /tmp/workspace, exists=True
+[15:36:07] [pinch_task_00_sanity_qwen3.6-27b_20260520_073601] [DEBUG] Contents: []
+[15:36:07] [pinch_task_00_sanity_qwen3.6-27b_20260520_073601] [PROGRESS] Task started at 1779262564.5841863
+[15:36:07] [pinch_task_00_sanity_qwen3.6-27b_20260520_073601] [PROGRESS] Task finished at 2.2s, status=success
+[15:36:07] [pinch_task_00_sanity_qwen3.6-27b_20260520_073601] [PROGRESS] Transcript entries: 5
+[15:36:07] [pinch_task_00_sanity_qwen3.6-27b_20260520_073601] DONE
+[15:36:07] [pinch_task_00_sanity_qwen3.6-27b_20260520_073601] Agent result loaded: status=success, transcript_len=5
+[15:36:07] [task_00_sanity] Grade score: 1.0000
+[15:36:07] [task_00_sanity] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_00_sanity/transcript.json
+[15:36:07] [task_00_sanity] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_00_sanity/result.json
+[15:36:07] [pinchbench] 汇总已保存: 1/23 完成
+[15:36:07] [pinchbench] Running task 2/23: task_01_calendar
+[15:36:07] [task_01_calendar] No workspace_files defined in task
+[15:36:08] [pinch_task_01_calendar_qwen3.6-27b_20260520_073607] Container started

@@ -1,0 +1,260 @@
+[92m20:06:18 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[20:06:18] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m20:06:23 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[20:06:23] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m20:07:41 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[20:07:41] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m20:07:45 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[20:07:45] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m20:09:57 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[20:09:57] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m20:09:59 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[20:09:59] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m20:12:08 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[20:12:08] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m20:12:09 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[20:12:09] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m20:12:11 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[20:12:11] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m20:12:15 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[20:12:15] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m20:56:34 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[20:56:34] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m20:56:40 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[20:56:40] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m21:33:11 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[21:33:11] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m21:33:16 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[21:33:16] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[20:02:39] 从文件加载任务列表: assets/task_list_agentbench_timeout_retry.txt
+[20:02:39]   agentbench: 8 tasks
+[20:02:39] Config: bench=['agentbench'], models=['qwen3.6-27b'], sample=all
+[20:02:39] 
+============================================================
+[20:02:39] BENCHMARK: agentbench (8 tasks from file)
+[20:02:39] ============================================================
+[20:02:39]   [agentbench×qwen3.6-27b] evaluating...
+[20:02:41] [agent_misleading-error-message_qwen3.6-27b_20260520_120241] Running setup.sh for task misleading-error-message
+[20:02:41] [agent_misleading-error-message_qwen3.6-27b_20260520_120241] setup.sh completed successfully
+[20:02:44] [agent_summary-statistics_qwen3.6-27b_20260520_120241] Container started
+[20:02:44] [agent_summary-statistics_qwen3.6-27b_20260520_120241] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   36 May 20 12:02 .
+drwxrwxrwt 1 root root      32 May 20 12:02 ..
+-rw-r--r-- 1  501 dialout 2957 Apr 23 08:10 survey-results.csv
+
+[20:02:44] [agent_misleading-error-message_qwen3.6-27b_20260520_120241] Container started
+[20:02:44] [agent_misleading-error-message_qwen3.6-27b_20260520_120241] Workspace copied to /tmp/workspace/:
+total 8
+drwxr-xr-x 1  501 dialout  84 May 20 12:02 .
+drwxrwxrwt 1 root root     32 May 20 12:02 ..
+drwxr-xr-x 1  501 dialout 128 May 20 12:02 .git
+-rw-r--r-- 1  501 dialout 924 May 20 12:02 BUG_REPORT.md
+-rw-r--r-- 1  501 dialout 695 May 20 12:02 app.js
+drwxr-xr-x 1  501 dialout  32 May 20 12:02 lib
+drwxr-xr-x 1  501 dialout  14 May 20 12:02 middleware
+drwxr-xr-x 1  501 dialout  34 May 20 12:02 routes
+
+[20:06:18] [agent_summary-statistics_qwen3.6-27b_20260520_120241] Agent finished in 214.12s, returncode=0
+[20:06:18] [agent_summary-statistics_qwen3.6-27b_20260520_120241] Agent stdout: DONE
+
+[20:06:18] [agent_summary-statistics_qwen3.6-27b_20260520_120241] Agent stderr: Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8833.91it/s]
+[1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ig
+[20:06:18] [agent_summary-statistics_qwen3.6-27b_20260520_120241] Agent result loaded: status=success, transcript_len=17
+[20:06:23] [agent_summary-statistics_qwen3.6-27b_20260520_120241] Scores: L0=100.0 L1=100.0 L2=100.0 L3=100.0 | Overall=100.0
+[20:06:24] [agent_summary-statistics_qwen3.6-27b_20260520_120241] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/agentbench/qwen3.6-27b/summary-statistics/result.json
+[20:06:26] [agent_project-proposal_qwen3.6-27b_20260520_120624] Container started
+[20:06:26] [agent_project-proposal_qwen3.6-27b_20260520_120624] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   34 May 20 12:06 .
+drwxrwxrwt 1 root root      32 May 20 12:06 ..
+-rw-r--r-- 1  501 dialout 2222 Apr 23 08:10 project-brief.txt
+
+[20:07:40] [agent_misleading-error-message_qwen3.6-27b_20260520_120241] Agent finished in 296.25s, returncode=0
+[20:07:40] [agent_misleading-error-message_qwen3.6-27b_20260520_120241] Agent stdout: DONE
+
+[20:07:40] [agent_misleading-error-message_qwen3.6-27b_20260520_120241] Agent stderr: Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 20864.16it/s]
+[1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be i
+[20:07:40] [agent_misleading-error-message_qwen3.6-27b_20260520_120241] Agent result loaded: status=success, transcript_len=44
+[20:07:45] [agent_misleading-error-message_qwen3.6-27b_20260520_120241] Scores: L0=100.0 L1=70.0 L2=100.0 L3=100.0 | Overall=92.5
+[20:07:46] [agent_misleading-error-message_qwen3.6-27b_20260520_120241] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/agentbench/qwen3.6-27b/misleading-error-message/result.json
+[20:07:48] [agent_skill-graph-creation_qwen3.6-27b_20260520_120746] Container started
+[20:07:48] [agent_skill-graph-creation_qwen3.6-27b_20260520_120746] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   42 May 20 12:07 .
+drwxrwxrwt 1 root root      32 May 20 12:07 ..
+-rw-r--r-- 1  501 dialout 2934 Apr 23 08:10 skill-requirements.md
+
+[20:09:55] [agent_skill-graph-creation_qwen3.6-27b_20260520_120746] Agent finished in 126.10s, returncode=0
+[20:09:55] [agent_skill-graph-creation_qwen3.6-27b_20260520_120746] Agent stdout: DONE
+
+[20:09:55] [agent_skill-graph-creation_qwen3.6-27b_20260520_120746] Agent stderr: Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 11200.76it/s]
+[1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be i
+[20:09:55] [agent_skill-graph-creation_qwen3.6-27b_20260520_120746] Agent result loaded: status=success, transcript_len=39
+[20:09:59] [agent_skill-graph-creation_qwen3.6-27b_20260520_120746] Scores: L0=100.0 L1=100.0 L2=100.0 L3=100.0 | Overall=100.0
+[20:10:00] [agent_skill-graph-creation_qwen3.6-27b_20260520_120746] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/agentbench/qwen3.6-27b/skill-graph-creation/result.json
+[20:10:00] [agent_constraint-accumulation_qwen3.6-27b_20260520_121000] Running setup.sh for task constraint-accumulation
+[20:10:01] [agent_constraint-accumulation_qwen3.6-27b_20260520_121000] setup.sh completed successfully
+[20:10:03] [agent_constraint-accumulation_qwen3.6-27b_20260520_121000] Container started
+[20:10:03] [agent_constraint-accumulation_qwen3.6-27b_20260520_121000] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  16 May 20 12:10 .
+drwxrwxrwt 1 root root     32 May 20 12:10 ..
+drwxr-xr-x 1  501 dialout 128 May 20 12:10 .git
+drwxr-xr-x 1  501 dialout  70 May 20 12:10 data
+
+[20:12:07] [agent_constraint-accumulation_qwen3.6-27b_20260520_121000] Agent finished in 124.35s, returncode=0
+[20:12:07] [agent_constraint-accumulation_qwen3.6-27b_20260520_121000] Agent stdout: DONE
+
+[20:12:07] [agent_constraint-accumulation_qwen3.6-27b_20260520_121000] Agent stderr: Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 40079.16it/s]
+[1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be i
+[20:12:07] [agent_constraint-accumulation_qwen3.6-27b_20260520_121000] Agent result loaded: status=success, transcript_len=60
+[20:12:09] [agent_project-proposal_qwen3.6-27b_20260520_120624] Agent finished in 342.73s, returncode=0
+[20:12:09] [agent_project-proposal_qwen3.6-27b_20260520_120624] Agent stdout: DONE
+
+[20:12:09] [agent_project-proposal_qwen3.6-27b_20260520_120624] Agent stderr: Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 9894.27it/s]
+[1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ig
+[20:12:09] [agent_project-proposal_qwen3.6-27b_20260520_120624] Agent result loaded: status=success, transcript_len=17
+[20:12:11] [agent_constraint-accumulation_qwen3.6-27b_20260520_121000] Scores: L0=100.0 L1=100.0 L2=100.0 L3=100.0 | Overall=100.0
+[20:12:12] [agent_constraint-accumulation_qwen3.6-27b_20260520_121000] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/agentbench/qwen3.6-27b/constraint-accumulation/result.json
+[20:12:12] [agent_release-preparation_qwen3.6-27b_20260520_121212] Running setup.sh for task release-preparation
+[20:12:13] [agent_release-preparation_qwen3.6-27b_20260520_121212] setup.sh completed successfully
+[20:12:15] [agent_project-proposal_qwen3.6-27b_20260520_120624] Scores: L0=100.0 L1=100.0 L2=100.0 L3=100.0 | Overall=100.0
+[20:12:16] [agent_release-preparation_qwen3.6-27b_20260520_121212] Container started
+[20:12:16] [agent_project-proposal_qwen3.6-27b_20260520_120624] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/agentbench/qwen3.6-27b/project-proposal/result.json
+[20:12:16] [agent_large-codebase-navigation_qwen3.6-27b_20260520_121216] Running setup.sh for task large-codebase-navigation
+[20:12:16] [agent_release-preparation_qwen3.6-27b_20260520_121212] Workspace copied to /tmp/workspace/:
+total 16
+drwxr-xr-x 1  501 dialout 120 May 20 12:12 .
+drwxrwxrwt 1 root root     32 May 20 12:12 ..
+drwxr-xr-x 1  501 dialout 128 May 20 12:12 .git
+-rw-r--r-- 1  501 dialout 553 May 20 12:12 CHANGELOG.md
+-rw-r--r-- 1  501 dialout 180 May 20 12:12 README.md
+-rw-r--r-- 1  501 dialout 306 May 20 12:12 package.json
+-rw-r--r-- 1  501 dialout 990 May 20 12:12 release-checklist.md
+drwxr-xr-x 1  501 dialout 108 May 20 12:12 src
+
+[20:12:16] [agent_large-codebase-navigation_qwen3.6-27b_20260520_121216] setup.sh completed successfully
+[20:12:20] [agent_large-codebase-navigation_qwen3.6-27b_20260520_121216] Container started
+[20:12:20] [agent_large-codebase-navigation_qwen3.6-27b_20260520_121216] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   62 May 20 12:12 .
+drwxrwxrwt 1 root root      32 May 20 12:12 ..
+drwxr-xr-x 1  501 dialout  128 May 20 12:12 .git
+-rw-r--r-- 1  501 dialout 1195 May 20 12:12 README.md
+drwxr-xr-x 1  501 dialout   62 May 20 12:12 config
+drwxr-xr-x 1  501 dialout   28 May 20 12:12 docs
+drwxr-xr-x 1  501 dialout   70 May 20 12:12 src
+drwxr-xr-x 1  501 dialout  138 May 20 12:12 tests
+
+[20:56:34] [agent_release-preparation_qwen3.6-27b_20260520_121212] Agent finished in 2657.64s, returncode=0
+[20:56:34] [agent_release-preparation_qwen3.6-27b_20260520_121212] Agent stdout: DONE
+
+[20:56:34] [agent_release-preparation_qwen3.6-27b_20260520_121212] Agent stderr: Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 33434.98it/s]
+[1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be i
+[20:56:34] [agent_release-preparation_qwen3.6-27b_20260520_121212] Agent result loaded: status=success, transcript_len=146
+[20:56:40] [agent_release-preparation_qwen3.6-27b_20260520_121212] Scores: L0=100.0 L1=65.0 L2=95.0 L3=97.5 | Overall=89.1
+[20:56:44] [agent_release-preparation_qwen3.6-27b_20260520_121212] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/agentbench/qwen3.6-27b/release-preparation/result.json
+[20:56:44] [agent_targeted-fix_qwen3.6-27b_20260520_125644] Running setup.sh for task targeted-fix
+[20:56:44] [agent_targeted-fix_qwen3.6-27b_20260520_125644] setup.sh completed successfully
+[20:56:46] [agent_targeted-fix_qwen3.6-27b_20260520_125644] Container started
+[20:56:46] [agent_targeted-fix_qwen3.6-27b_20260520_125644] Workspace copied to /tmp/workspace/:
+total 8
+drwxr-xr-x 1  501 dialout  80 May 20 12:56 .
+drwxrwxrwt 1 root root     32 May 20 12:56 ..
+drwxr-xr-x 1  501 dialout 128 May 20 12:56 .git
+-rw-r--r-- 1  501 dialout 627 May 20 12:56 BUG_REPORT.md
+-rw-r--r-- 1  501 dialout 629 May 20 12:56 README.md
+drwxr-xr-x 1  501 dialout  22 May 20 12:56 config
+drwxr-xr-x 1  501 dialout  70 May 20 12:56 src
+drwxr-xr-x 1  501 dialout 108 May 20 12:56 tests
+
+[21:33:11] [agent_targeted-fix_qwen3.6-27b_20260520_125644] Agent finished in 2184.86s, returncode=0
+[21:33:11] [agent_targeted-fix_qwen3.6-27b_20260520_125644] Agent stdout: DONE
+
+[21:33:11] [agent_targeted-fix_qwen3.6-27b_20260520_125644] Agent stderr: Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 103/103 [00:00<00:00, 23037.02it/s]
+[1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+Key                     | Status     |  | 
+------------------------+------------+--+-
+embeddings.position_ids | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be i
+[21:33:11] [agent_targeted-fix_qwen3.6-27b_20260520_125644] Agent result loaded: status=success, transcript_len=41
+[21:33:16] [agent_targeted-fix_qwen3.6-27b_20260520_125644] Scores: L0=100.0 L1=80.0 L2=100.0 L3=100.0 | Overall=91.0
+[21:33:16] [agent_targeted-fix_qwen3.6-27b_20260520_125644] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/agentbench/qwen3.6-27b/targeted-fix/result.json
+[22:13:24] [agent_large-codebase-navigation_qwen3.6-27b_20260520_121216] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/agentbench/qwen3.6-27b/large-codebase-navigation/result.json
+[22:13:24]   [agentbench×qwen3.6-27b] done: score=96.1, scored=7/8
+[22:13:24]   [agentbench×qwen3.6-27b] done: score=96.1, scored=0/8
+[22:13:24] 
+

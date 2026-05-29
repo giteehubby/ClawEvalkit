@@ -1,0 +1,1908 @@
+[18:30:45] 从文件加载任务列表: outputs/claweval/qwen3.6-27b/rejudge_tasks.csv
+[18:30:45]   claweval: 151 tasks
+[18:30:45] Config: bench=['claweval'], models=['qwen3.6-27b'], sample=all
+[18:30:45] 
+============================================================
+[18:30:45] BENCHMARK: claweval (151 tasks from file)
+[18:30:45] ============================================================
+[18:30:45]   [claweval×qwen3.6-27b] evaluating...
+[18:30:45] [claweval] Docker image 'claw-eval-agent:latest' found
+[18:30:46] [claweval] Evaluating 151 tasks with model=qwen3.6-27b, parallel=1
+[18:30:51] [agent.nanobot] Control modules initialized: enabled=False
+[18:30:51] [agent.nanobot] Loaded 9 skills from workspace
+[18:30:51] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:30:51] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:30:51] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:30:51] [agent.nanobot]   API Key: sk-o****c064
+[18:30:51] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T002_email_triage_vgb5ltsu
+[18:30:51] [agent.nanobot]   Timeout: 300s
+[18:30:51] [agent.nanobot] =================================================================
+  service 'gmail' started on port 9100
+[sandbox] Container claw-agent-T002_email_triage-aa08ad started at http://localhost:32922
+[sandbox] inject: 1/1 files into container
+[18:30:51] [claweval] Registered mock tool: gmail_list_messages -> POST http://localhost:9100/gmail/messages
+[18:30:51] [claweval] Registered mock tool: gmail_get_message -> POST http://localhost:9100/gmail/messages/get
+[18:30:51] [claweval] Registered mock tool: gmail_send_message -> POST http://localhost:9100/gmail/send
+[18:30:51] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:30:51] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:30:51] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:30:51] [agent.nanobot]   API Key: sk-o****c064
+[18:30:51] [agent.nanobot]   Max Tokens: 16384
+[18:30:51] [agent.nanobot]   Tools: 8
+[18:30:51] [agent.nanobot]   Is OpenRouter: True
+[18:30:51] [agent.nanobot]   Is Azure Proxy: False
+[18:30:51] [agent.nanobot]   Is Anthropic Compat: False
+[18:30:51] [agent.nanobot] ===================================================
+[92m18:30:51 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:30:51] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:31:01] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:31:01] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:31:01] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:31:01] [agent.nanobot]   API Key: sk-o****c064
+[18:31:01] [agent.nanobot]   Max Tokens: 16384
+[18:31:01] [agent.nanobot]   Tools: 8
+[18:31:01] [agent.nanobot]   Is OpenRouter: True
+[18:31:01] [agent.nanobot]   Is Azure Proxy: False
+[18:31:01] [agent.nanobot]   Is Anthropic Compat: False
+[18:31:01] [agent.nanobot] ===================================================
+[92m18:31:01 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:31:01] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[sandbox] Container claw-agent-T002_email_triage-aa08ad removed
+[judge-retry] (AttributeError), attempt 1/30, waiting 2.7s ...
+[judge-retry] (AttributeError), attempt 2/30, waiting 4.3s ...
+[judge-retry] (AttributeError), attempt 3/30, waiting 8.3s ...
+[judge-retry] (AttributeError), attempt 4/30, waiting 16.6s ...
+[judge-retry] (AttributeError), attempt 5/30, waiting 16.1s ...
+[judge-retry] (AttributeError), attempt 6/30, waiting 16.5s ...
+[judge-retry] (AttributeError), attempt 7/30, waiting 16.8s ...
+[judge-retry] (AttributeError), attempt 8/30, waiting 16.5s ...
+[judge-retry] (AttributeError), attempt 9/30, waiting 16.1s ...
+[judge-retry] (AttributeError), attempt 10/30, waiting 16.2s ...
+[judge-retry] (AttributeError), attempt 11/30, waiting 16.9s ...
+[judge-retry] (AttributeError), attempt 12/30, waiting 16.3s ...
+[judge-retry] (AttributeError), attempt 13/30, waiting 16.9s ...
+[judge-retry] (AttributeError), attempt 14/30, waiting 16.4s ...
+[judge-retry] (AttributeError), attempt 15/30, waiting 16.5s ...
+[judge-retry] (AttributeError), attempt 16/30, waiting 16.2s ...
+[judge-retry] (AttributeError), attempt 17/30, waiting 16.3s ...
+[judge-retry] (AttributeError), attempt 18/30, waiting 16.0s ...
+[judge-retry] (AttributeError), attempt 19/30, waiting 16.3s ...
+[judge-retry] (AttributeError), attempt 20/30, waiting 16.1s ...
+[judge-retry] (AttributeError), attempt 21/30, waiting 16.8s ...
+[judge-retry] (AttributeError), attempt 22/30, waiting 16.6s ...
+[judge-retry] (AttributeError), attempt 23/30, waiting 16.7s ...
+[judge-retry] (AttributeError), attempt 24/30, waiting 16.4s ...
+[judge-retry] (AttributeError), attempt 25/30, waiting 16.2s ...
+[judge-retry] (AttributeError), attempt 26/30, waiting 17.0s ...
+[judge-retry] (AttributeError), attempt 27/30, waiting 16.2s ...
+[judge-retry] (AttributeError), attempt 28/30, waiting 16.4s ...
+[judge-retry] (AttributeError), attempt 29/30, waiting 16.9s ...
+[judge-retry] (AttributeError), attempt 30/30, waiting 16.9s ...
+[judge-retry] (AttributeError), attempt 31/30, waiting 16.7s ...
+  service 'gmail' stopped
+[18:39:23] [T002_email_triage] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T002_email_triage/result.json
+[18:39:23] [claweval] 1/151 new tasks done (total: 1/151)
+[18:39:26] [agent.nanobot] Control modules initialized: enabled=False
+[18:39:26] [agent.nanobot] Loaded 9 skills from workspace
+[18:39:26] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:39:26] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:39:26] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:39:26] [agent.nanobot]   API Key: sk-o****c064
+[18:39:26] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T006_email_reply_draft_3tivxh_c
+[18:39:26] [agent.nanobot]   Timeout: 300s
+[18:39:26] [agent.nanobot] =================================================================
+  service 'gmail' started on port 9100
+[sandbox] Container claw-agent-T006_email_reply_draft-ab08a1 started at http://localhost:32924
+[sandbox] inject: 1/1 files into container
+[18:39:26] [claweval] Registered mock tool: gmail_list_messages -> POST http://localhost:9100/gmail/messages
+[18:39:26] [claweval] Registered mock tool: gmail_get_message -> POST http://localhost:9100/gmail/messages/get
+[18:39:26] [claweval] Registered mock tool: gmail_save_draft -> POST http://localhost:9100/gmail/drafts/save
+[18:39:26] [claweval] Registered mock tool: gmail_send_message -> POST http://localhost:9100/gmail/send
+[18:39:26] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:39:26] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:39:26] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:39:26] [agent.nanobot]   API Key: sk-o****c064
+[18:39:26] [agent.nanobot]   Max Tokens: 16384
+[18:39:26] [agent.nanobot]   Tools: 9
+[18:39:26] [agent.nanobot]   Is OpenRouter: True
+[18:39:26] [agent.nanobot]   Is Azure Proxy: False
+[18:39:26] [agent.nanobot]   Is Anthropic Compat: False
+[18:39:26] [agent.nanobot] ===================================================
+[92m18:39:26 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:39:26] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:39:28] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:39:28] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:39:28] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:39:28] [agent.nanobot]   API Key: sk-o****c064
+[18:39:28] [agent.nanobot]   Max Tokens: 16384
+[18:39:28] [agent.nanobot]   Tools: 9
+[18:39:28] [agent.nanobot]   Is OpenRouter: True
+[18:39:28] [agent.nanobot]   Is Azure Proxy: False
+[18:39:28] [agent.nanobot]   Is Anthropic Compat: False
+[18:39:28] [agent.nanobot] ===================================================
+[92m18:39:28 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:39:28] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:39:37] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-20' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[18:39:37] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:39:37] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:39:37] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:39:37] [agent.nanobot]   API Key: sk-o****c064
+[18:39:37] [agent.nanobot]   Max Tokens: 16384
+[18:39:37] [agent.nanobot]   Tools: 9
+[18:39:37] [agent.nanobot]   Is OpenRouter: True
+[18:39:37] [agent.nanobot]   Is Azure Proxy: False
+[18:39:37] [agent.nanobot]   Is Anthropic Compat: False
+[18:39:37] [agent.nanobot] ===================================================
+[92m18:39:37 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:39:37] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:40:15] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-28' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[18:40:15] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:40:15] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:40:15] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:40:15] [agent.nanobot]   API Key: sk-o****c064
+[18:40:15] [agent.nanobot]   Max Tokens: 16384
+[18:40:15] [agent.nanobot]   Tools: 9
+[18:40:15] [agent.nanobot]   Is OpenRouter: True
+[18:40:15] [agent.nanobot]   Is Azure Proxy: False
+[18:40:15] [agent.nanobot]   Is Anthropic Compat: False
+[18:40:15] [agent.nanobot] ===================================================
+[92m18:40:15 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:40:15] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:40:22] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-42' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[92m18:40:23 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:40:23] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:40:26 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:40:26] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m18:40:26 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:40:26] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:40:31 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:40:31] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m18:40:31 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:40:31] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:40:33 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:40:33] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[sandbox] Container claw-agent-T006_email_reply_draft-ab08a1 removed
+  service 'gmail' stopped
+[18:40:33] [T006_email_reply_draft] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T006_email_reply_draft/result.json
+[18:40:33] [claweval] 2/151 new tasks done (total: 2/151)
+[18:40:35] [agent.nanobot] Control modules initialized: enabled=False
+[18:40:35] [agent.nanobot] Loaded 9 skills from workspace
+[18:40:35] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:40:35] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:40:35] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:40:35] [agent.nanobot]   API Key: sk-o****c064
+[18:40:35] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T008_todo_management_pamsn6y5
+[18:40:35] [agent.nanobot]   Timeout: 300s
+[18:40:35] [agent.nanobot] =================================================================
+  service 'todo' started on port 9102
+[sandbox] Container claw-agent-T008_todo_management-920f17 started at http://localhost:32925
+[sandbox] inject: 1/1 files into container
+[18:40:35] [claweval] Registered mock tool: todo_list_tasks -> POST http://localhost:9102/todo/tasks
+[18:40:35] [claweval] Registered mock tool: todo_update_task -> POST http://localhost:9102/todo/tasks/update
+[18:40:35] [claweval] Registered mock tool: todo_create_task -> POST http://localhost:9102/todo/tasks/create
+[18:40:35] [claweval] Registered mock tool: todo_delete_task -> POST http://localhost:9102/todo/tasks/delete
+[18:40:35] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:40:35] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:40:35] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:40:35] [agent.nanobot]   API Key: sk-o****c064
+[18:40:35] [agent.nanobot]   Max Tokens: 16384
+[18:40:35] [agent.nanobot]   Tools: 9
+[18:40:35] [agent.nanobot]   Is OpenRouter: True
+[18:40:35] [agent.nanobot]   Is Azure Proxy: False
+[18:40:35] [agent.nanobot]   Is Anthropic Compat: False
+[18:40:35] [agent.nanobot] ===================================================
+[92m18:40:35 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:40:35] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:40:38] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:40:38] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:40:38] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:40:38] [agent.nanobot]   API Key: sk-o****c064
+[18:40:38] [agent.nanobot]   Max Tokens: 16384
+[18:40:38] [agent.nanobot]   Tools: 9
+[18:40:38] [agent.nanobot]   Is OpenRouter: True
+[18:40:38] [agent.nanobot]   Is Azure Proxy: False
+[18:40:38] [agent.nanobot]   Is Anthropic Compat: False
+[18:40:38] [agent.nanobot] ===================================================
+[92m18:40:38 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:40:38] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:41:05] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-61' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[18:41:05] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:41:05] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:41:05] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:41:05] [agent.nanobot]   API Key: sk-o****c064
+[18:41:05] [agent.nanobot]   Max Tokens: 16384
+[18:41:05] [agent.nanobot]   Tools: 9
+[18:41:05] [agent.nanobot]   Is OpenRouter: True
+[18:41:05] [agent.nanobot]   Is Azure Proxy: False
+[18:41:05] [agent.nanobot]   Is Anthropic Compat: False
+[18:41:05] [agent.nanobot] ===================================================
+[92m18:41:05 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:41:05] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:41:18] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-71' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[18:41:18] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:41:18] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:41:18] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:41:18] [agent.nanobot]   API Key: sk-o****c064
+[18:41:18] [agent.nanobot]   Max Tokens: 16384
+[18:41:18] [agent.nanobot]   Tools: 9
+[18:41:18] [agent.nanobot]   Is OpenRouter: True
+[18:41:18] [agent.nanobot]   Is Azure Proxy: False
+[18:41:18] [agent.nanobot]   Is Anthropic Compat: False
+[18:41:18] [agent.nanobot] ===================================================
+[92m18:41:18 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:41:18] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:41:24] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-81' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[92m18:41:25 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:41:25] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:41:30 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:41:30] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m18:41:30 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:41:30] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:41:34 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:41:34] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[sandbox] Container claw-agent-T008_todo_management-920f17 removed
+  service 'todo' stopped
+[18:41:34] [T008_todo_management] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T008_todo_management/result.json
+[18:41:34] [claweval] 3/151 new tasks done (total: 3/151)
+[18:41:34] [claweval] Auto-injected CONTACTS_FIXTURES=tasks/T009zh_contact_lookup/fixtures/contacts/contacts.json for T009zh_contact_lookup
+[18:41:38] [agent.nanobot] Control modules initialized: enabled=False
+[18:41:38] [agent.nanobot] Loaded 9 skills from workspace
+[18:41:38] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:41:38] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:41:38] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:41:38] [agent.nanobot]   API Key: sk-o****c064
+[18:41:38] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T009zh_contact_lookup_gknv_gyc
+[18:41:38] [agent.nanobot]   Timeout: 300s
+[18:41:38] [agent.nanobot] =================================================================
+  service 'contacts' started on port 9103
+[sandbox] Container claw-agent-T009zh_contact_lookup-0a6029 started at http://localhost:32926
+[sandbox] inject: 1/1 files into container
+[18:41:38] [claweval] Registered mock tool: contacts_search -> POST http://localhost:9103/contacts/search
+[18:41:38] [claweval] Registered mock tool: contacts_get -> POST http://localhost:9103/contacts/get
+[18:41:38] [claweval] Registered mock tool: contacts_send_message -> POST http://localhost:9103/contacts/send_message
+[18:41:38] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:41:38] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:41:38] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:41:38] [agent.nanobot]   API Key: sk-o****c064
+[18:41:38] [agent.nanobot]   Max Tokens: 16384
+[18:41:38] [agent.nanobot]   Tools: 8
+[18:41:38] [agent.nanobot]   Is OpenRouter: True
+[18:41:38] [agent.nanobot]   Is Azure Proxy: False
+[18:41:38] [agent.nanobot]   Is Anthropic Compat: False
+[18:41:38] [agent.nanobot] ===================================================
+[92m18:41:38 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:41:38] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:41:41] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:41:41] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:41:41] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:41:41] [agent.nanobot]   API Key: sk-o****c064
+[18:41:41] [agent.nanobot]   Max Tokens: 16384
+[18:41:41] [agent.nanobot]   Tools: 8
+[18:41:41] [agent.nanobot]   Is OpenRouter: True
+[18:41:41] [agent.nanobot]   Is Azure Proxy: False
+[18:41:41] [agent.nanobot]   Is Anthropic Compat: False
+[18:41:41] [agent.nanobot] ===================================================
+[92m18:41:41 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:41:41] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:41:43] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-102' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[92m18:41:44 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:41:44] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:41:48 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:41:48] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[sandbox] Container claw-agent-T009zh_contact_lookup-0a6029 removed
+  service 'contacts' stopped
+[18:41:48] [T009zh_contact_lookup] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T009zh_contact_lookup/result.json
+[18:41:48] [claweval] 4/151 new tasks done (total: 4/151)
+[18:41:50] [agent.nanobot] Control modules initialized: enabled=False
+[18:41:50] [agent.nanobot] Loaded 9 skills from workspace
+[18:41:50] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:41:50] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:41:50] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:41:50] [agent.nanobot]   API Key: sk-o****c064
+[18:41:50] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T010_contact_lookup_1uxs2v9_
+[18:41:50] [agent.nanobot]   Timeout: 300s
+[18:41:50] [agent.nanobot] =================================================================
+  service 'contacts' started on port 9103
+[sandbox] Container claw-agent-T010_contact_lookup-8929fb started at http://localhost:32927
+[sandbox] inject: 1/1 files into container
+[18:41:50] [claweval] Registered mock tool: contacts_search -> POST http://localhost:9103/contacts/search
+[18:41:50] [claweval] Registered mock tool: contacts_get -> POST http://localhost:9103/contacts/get
+[18:41:50] [claweval] Registered mock tool: contacts_send_message -> POST http://localhost:9103/contacts/send_message
+[18:41:50] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:41:50] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:41:50] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:41:50] [agent.nanobot]   API Key: sk-o****c064
+[18:41:50] [agent.nanobot]   Max Tokens: 16384
+[18:41:50] [agent.nanobot]   Tools: 8
+[18:41:50] [agent.nanobot]   Is OpenRouter: True
+[18:41:50] [agent.nanobot]   Is Azure Proxy: False
+[18:41:50] [agent.nanobot]   Is Anthropic Compat: False
+[18:41:50] [agent.nanobot] ===================================================
+[92m18:41:50 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:41:50] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:41:54] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:41:54] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:41:54] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:41:54] [agent.nanobot]   API Key: sk-o****c064
+[18:41:54] [agent.nanobot]   Max Tokens: 16384
+[18:41:54] [agent.nanobot]   Tools: 8
+[18:41:54] [agent.nanobot]   Is OpenRouter: True
+[18:41:54] [agent.nanobot]   Is Azure Proxy: False
+[18:41:54] [agent.nanobot]   Is Anthropic Compat: False
+[18:41:54] [agent.nanobot] ===================================================
+[92m18:41:54 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:41:54] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:41:59] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-119' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[18:41:59] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:41:59] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:41:59] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:41:59] [agent.nanobot]   API Key: sk-o****c064
+[18:41:59] [agent.nanobot]   Max Tokens: 16384
+[18:41:59] [agent.nanobot]   Tools: 8
+[18:41:59] [agent.nanobot]   Is OpenRouter: True
+[18:41:59] [agent.nanobot]   Is Azure Proxy: False
+[18:41:59] [agent.nanobot]   Is Anthropic Compat: False
+[18:41:59] [agent.nanobot] ===================================================
+[92m18:41:59 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:41:59] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:42:06] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-129' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[92m18:42:06 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:42:06] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:42:09 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:42:09] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[sandbox] Container claw-agent-T010_contact_lookup-8929fb removed
+  service 'contacts' stopped
+[18:42:10] [T010_contact_lookup] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T010_contact_lookup/result.json
+[18:42:10] [claweval] 5/151 new tasks done (total: 5/151)
+[18:42:10] [claweval] Auto-injected FINANCE_FIXTURES=tasks/T011zh_expense_report/fixtures/finance/transactions.json for T011zh_expense_report
+[18:42:11] [agent.nanobot] Control modules initialized: enabled=False
+[18:42:11] [agent.nanobot] Loaded 9 skills from workspace
+[18:42:11] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:42:11] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:42:11] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:42:11] [agent.nanobot]   API Key: sk-o****c064
+[18:42:11] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T011zh_expense_report_0452_gkg
+[18:42:11] [agent.nanobot]   Timeout: 300s
+[18:42:11] [agent.nanobot] =================================================================
+  service 'finance' started on port 9104
+[sandbox] Container claw-agent-T011zh_expense_report-3edf57 started at http://localhost:32928
+[sandbox] inject: 1/1 files into container
+[18:42:11] [claweval] Registered mock tool: finance_list_transactions -> POST http://localhost:9104/finance/transactions
+[18:42:11] [claweval] Registered mock tool: finance_get_transaction -> POST http://localhost:9104/finance/transactions/get
+[18:42:11] [claweval] Registered mock tool: finance_submit_report -> POST http://localhost:9104/finance/report/submit
+[18:42:11] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:42:11] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:42:11] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:42:11] [agent.nanobot]   API Key: sk-o****c064
+[18:42:11] [agent.nanobot]   Max Tokens: 16384
+[18:42:11] [agent.nanobot]   Tools: 8
+[18:42:11] [agent.nanobot]   Is OpenRouter: True
+[18:42:11] [agent.nanobot]   Is Azure Proxy: False
+[18:42:11] [agent.nanobot]   Is Anthropic Compat: False
+[18:42:11] [agent.nanobot] ===================================================
+[92m18:42:11 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:42:11] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:42:15] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:42:15] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:42:15] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:42:15] [agent.nanobot]   API Key: sk-o****c064
+[18:42:15] [agent.nanobot]   Max Tokens: 16384
+[18:42:15] [agent.nanobot]   Tools: 8
+[18:42:15] [agent.nanobot]   Is OpenRouter: True
+[18:42:15] [agent.nanobot]   Is Azure Proxy: False
+[18:42:15] [agent.nanobot]   Is Anthropic Compat: False
+[18:42:15] [agent.nanobot] ===================================================
+[92m18:42:15 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:42:15] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:42:29] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-144' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[18:42:29] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:42:29] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:42:29] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:42:29] [agent.nanobot]   API Key: sk-o****c064
+[18:42:29] [agent.nanobot]   Max Tokens: 16384
+[18:42:29] [agent.nanobot]   Tools: 8
+[18:42:29] [agent.nanobot]   Is OpenRouter: True
+[18:42:29] [agent.nanobot]   Is Azure Proxy: False
+[18:42:29] [agent.nanobot]   Is Anthropic Compat: False
+[18:42:29] [agent.nanobot] ===================================================
+[92m18:42:29 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:42:29] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:44:37] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-154' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[sandbox] Container claw-agent-T011zh_expense_report-3edf57 removed
+  service 'finance' stopped
+[18:44:38] [T011zh_expense_report] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T011zh_expense_report/result.json
+[18:44:38] [claweval] 6/151 new tasks done (total: 6/151)
+[18:44:38] [claweval] Auto-injected FINANCE_FIXTURES=tasks/T012_expense_report/fixtures/finance/transactions.json for T012_expense_report
+[18:44:40] [agent.nanobot] Control modules initialized: enabled=False
+[18:44:40] [agent.nanobot] Loaded 9 skills from workspace
+[18:44:40] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:44:40] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:44:40] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:44:40] [agent.nanobot]   API Key: sk-o****c064
+[18:44:40] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T012_expense_report_o240_0u7
+[18:44:40] [agent.nanobot]   Timeout: 300s
+[18:44:40] [agent.nanobot] =================================================================
+  service 'finance' started on port 9104
+[sandbox] Container claw-agent-T012_expense_report-361410 started at http://localhost:32929
+[sandbox] inject: 1/1 files into container
+[18:44:40] [claweval] Registered mock tool: finance_list_transactions -> POST http://localhost:9104/finance/transactions
+[18:44:40] [claweval] Registered mock tool: finance_get_transaction -> POST http://localhost:9104/finance/transactions/get
+[18:44:40] [claweval] Registered mock tool: finance_submit_report -> POST http://localhost:9104/finance/report/submit
+[18:44:40] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:44:40] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:44:40] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:44:40] [agent.nanobot]   API Key: sk-o****c064
+[18:44:40] [agent.nanobot]   Max Tokens: 16384
+[18:44:40] [agent.nanobot]   Tools: 8
+[18:44:40] [agent.nanobot]   Is OpenRouter: True
+[18:44:40] [agent.nanobot]   Is Azure Proxy: False
+[18:44:40] [agent.nanobot]   Is Anthropic Compat: False
+[18:44:40] [agent.nanobot] ===================================================
+[92m18:44:40 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:44:40] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:44:49] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:44:49] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:44:49] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:44:49] [agent.nanobot]   API Key: sk-o****c064
+[18:44:49] [agent.nanobot]   Max Tokens: 16384
+[18:44:49] [agent.nanobot]   Tools: 8
+[18:44:49] [agent.nanobot]   Is OpenRouter: True
+[18:44:49] [agent.nanobot]   Is Azure Proxy: False
+[18:44:49] [agent.nanobot]   Is Anthropic Compat: False
+[18:44:49] [agent.nanobot] ===================================================
+[92m18:44:49 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:44:49] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:45:03] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-169' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[92m18:45:04 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:45:04] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:45:09 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:45:09] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m18:45:09 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:45:09] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:45:14 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:45:14] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[sandbox] Container claw-agent-T012_expense_report-361410 removed
+  service 'finance' stopped
+[18:45:14] [T012_expense_report] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T012_expense_report/result.json
+[18:45:14] [claweval] 7/151 new tasks done (total: 7/151)
+[18:45:14] [claweval] Auto-injected HELPDESK_FIXTURES=tasks/T018_ticket_triage/fixtures/helpdesk/tickets.json for T018_ticket_triage
+[18:45:17] [agent.nanobot] Control modules initialized: enabled=False
+[18:45:17] [agent.nanobot] Loaded 9 skills from workspace
+[18:45:17] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:45:17] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:45:17] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:45:17] [agent.nanobot]   API Key: sk-o****c064
+[18:45:17] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T018_ticket_triage_tvq5fmsj
+[18:45:17] [agent.nanobot]   Timeout: 300s
+[18:45:17] [agent.nanobot] =================================================================
+  service 'helpdesk' started on port 9107
+[sandbox] Container claw-agent-T018_ticket_triage-7ed5eb started at http://localhost:32930
+[sandbox] inject: 1/1 files into container
+[18:45:17] [claweval] Registered mock tool: helpdesk_list_tickets -> POST http://localhost:9107/helpdesk/tickets
+[18:45:17] [claweval] Registered mock tool: helpdesk_get_ticket -> POST http://localhost:9107/helpdesk/tickets/get
+[18:45:17] [claweval] Registered mock tool: helpdesk_update_ticket -> POST http://localhost:9107/helpdesk/tickets/update
+[18:45:17] [claweval] Registered mock tool: helpdesk_close_ticket -> POST http://localhost:9107/helpdesk/tickets/close
+[18:45:17] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:45:17] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:45:17] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:45:17] [agent.nanobot]   API Key: sk-o****c064
+[18:45:17] [agent.nanobot]   Max Tokens: 16384
+[18:45:17] [agent.nanobot]   Tools: 9
+[18:45:17] [agent.nanobot]   Is OpenRouter: True
+[18:45:17] [agent.nanobot]   Is Azure Proxy: False
+[18:45:17] [agent.nanobot]   Is Anthropic Compat: False
+[18:45:17] [agent.nanobot] ===================================================
+[92m18:45:17 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:45:17] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:45:19] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:45:19] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:45:19] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:45:19] [agent.nanobot]   API Key: sk-o****c064
+[18:45:19] [agent.nanobot]   Max Tokens: 16384
+[18:45:19] [agent.nanobot]   Tools: 9
+[18:45:19] [agent.nanobot]   Is OpenRouter: True
+[18:45:19] [agent.nanobot]   Is Azure Proxy: False
+[18:45:19] [agent.nanobot]   Is Anthropic Compat: False
+[18:45:19] [agent.nanobot] ===================================================
+[92m18:45:19 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:45:19] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:46:00] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-186' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[18:46:00] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:46:00] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:46:00] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:46:00] [agent.nanobot]   API Key: sk-o****c064
+[18:46:00] [agent.nanobot]   Max Tokens: 16384
+[18:46:00] [agent.nanobot]   Tools: 9
+[18:46:00] [agent.nanobot]   Is OpenRouter: True
+[18:46:00] [agent.nanobot]   Is Azure Proxy: False
+[18:46:00] [agent.nanobot]   Is Anthropic Compat: False
+[18:46:00] [agent.nanobot] ===================================================
+[92m18:46:00 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:46:00] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:46:45] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-196' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[92m18:46:46 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:46:46] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:46:55 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:46:55] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[sandbox] Container claw-agent-T018_ticket_triage-7ed5eb removed
+  service 'helpdesk' stopped
+[18:46:55] [T018_ticket_triage] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T018_ticket_triage/result.json
+[18:46:55] [claweval] 8/151 new tasks done (total: 8/151)
+[18:46:55] [claweval] Auto-injected INVENTORY_FIXTURES=tasks/T019zh_inventory_check/fixtures/inventory/products.json for T019zh_inventory_check
+[18:47:00] [agent.nanobot] Control modules initialized: enabled=False
+[18:47:00] [agent.nanobot] Loaded 9 skills from workspace
+[18:47:00] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:47:00] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:47:00] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:47:00] [agent.nanobot]   API Key: sk-o****c064
+[18:47:00] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T019zh_inventory_check_w5xgbshs
+[18:47:00] [agent.nanobot]   Timeout: 300s
+[18:47:00] [agent.nanobot] =================================================================
+  service 'inventory' started on port 9108
+[sandbox] Container claw-agent-T019zh_inventory_check-896393 started at http://localhost:32932
+[sandbox] inject: 1/1 files into container
+[18:47:00] [claweval] Registered mock tool: inventory_list_products -> POST http://localhost:9108/inventory/products
+[18:47:00] [claweval] Registered mock tool: inventory_get_product -> POST http://localhost:9108/inventory/products/get
+[18:47:00] [claweval] Registered mock tool: inventory_create_order -> POST http://localhost:9108/inventory/orders/create
+[18:47:00] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:47:00] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:47:00] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:47:00] [agent.nanobot]   API Key: sk-o****c064
+[18:47:00] [agent.nanobot]   Max Tokens: 16384
+[18:47:00] [agent.nanobot]   Tools: 8
+[18:47:00] [agent.nanobot]   Is OpenRouter: True
+[18:47:00] [agent.nanobot]   Is Azure Proxy: False
+[18:47:00] [agent.nanobot]   Is Anthropic Compat: False
+[18:47:00] [agent.nanobot] ===================================================
+[92m18:47:00 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:47:00] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:47:03] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:47:03] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:47:03] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:47:03] [agent.nanobot]   API Key: sk-o****c064
+[18:47:03] [agent.nanobot]   Max Tokens: 16384
+[18:47:03] [agent.nanobot]   Tools: 8
+[18:47:03] [agent.nanobot]   Is OpenRouter: True
+[18:47:03] [agent.nanobot]   Is Azure Proxy: False
+[18:47:03] [agent.nanobot]   Is Anthropic Compat: False
+[18:47:03] [agent.nanobot] ===================================================
+[92m18:47:03 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:47:03] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:47:54] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-229' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[18:47:54] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:47:54] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:47:54] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:47:54] [agent.nanobot]   API Key: sk-o****c064
+[18:47:54] [agent.nanobot]   Max Tokens: 16384
+[18:47:54] [agent.nanobot]   Tools: 8
+[18:47:54] [agent.nanobot]   Is OpenRouter: True
+[18:47:54] [agent.nanobot]   Is Azure Proxy: False
+[18:47:54] [agent.nanobot]   Is Anthropic Compat: False
+[18:47:54] [agent.nanobot] ===================================================
+[92m18:47:54 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:47:54] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:48:03] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-239' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[92m18:48:04 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:48:04] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:48:09 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:48:09] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[sandbox] Container claw-agent-T019zh_inventory_check-896393 removed
+  service 'inventory' stopped
+[18:48:09] [T019zh_inventory_check] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T019zh_inventory_check/result.json
+[18:48:09] [claweval] 9/151 new tasks done (total: 9/151)
+[18:48:09] [claweval] Auto-injected INVENTORY_FIXTURES=tasks/T020_inventory_check/fixtures/inventory/products.json for T020_inventory_check
+[18:48:12] [agent.nanobot] Control modules initialized: enabled=False
+[18:48:12] [agent.nanobot] Loaded 9 skills from workspace
+[18:48:12] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:48:12] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:48:12] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:48:12] [agent.nanobot]   API Key: sk-o****c064
+[18:48:12] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T020_inventory_check_ud2cklin
+[18:48:12] [agent.nanobot]   Timeout: 300s
+[18:48:12] [agent.nanobot] =================================================================
+  service 'inventory' started on port 9108
+[sandbox] Container claw-agent-T020_inventory_check-17e4b0 started at http://localhost:32933
+[sandbox] inject: 1/1 files into container
+[18:48:12] [claweval] Registered mock tool: inventory_list_products -> POST http://localhost:9108/inventory/products
+[18:48:12] [claweval] Registered mock tool: inventory_get_product -> POST http://localhost:9108/inventory/products/get
+[18:48:12] [claweval] Registered mock tool: inventory_create_order -> POST http://localhost:9108/inventory/orders/create
+[18:48:12] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:48:12] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:48:12] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:48:12] [agent.nanobot]   API Key: sk-o****c064
+[18:48:12] [agent.nanobot]   Max Tokens: 16384
+[18:48:12] [agent.nanobot]   Tools: 8
+[18:48:12] [agent.nanobot]   Is OpenRouter: True
+[18:48:12] [agent.nanobot]   Is Azure Proxy: False
+[18:48:12] [agent.nanobot]   Is Anthropic Compat: False
+[18:48:12] [agent.nanobot] ===================================================
+[92m18:48:12 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:48:12] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:48:16] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:48:16] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:48:16] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:48:16] [agent.nanobot]   API Key: sk-o****c064
+[18:48:16] [agent.nanobot]   Max Tokens: 16384
+[18:48:16] [agent.nanobot]   Tools: 8
+[18:48:16] [agent.nanobot]   Is OpenRouter: True
+[18:48:16] [agent.nanobot]   Is Azure Proxy: False
+[18:48:16] [agent.nanobot]   Is Anthropic Compat: False
+[18:48:16] [agent.nanobot] ===================================================
+[92m18:48:16 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:48:16] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:48:35] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-266' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[18:48:35] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:48:35] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:48:35] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:48:35] [agent.nanobot]   API Key: sk-o****c064
+[18:48:35] [agent.nanobot]   Max Tokens: 16384
+[18:48:35] [agent.nanobot]   Tools: 8
+[18:48:35] [agent.nanobot]   Is OpenRouter: True
+[18:48:35] [agent.nanobot]   Is Azure Proxy: False
+[18:48:35] [agent.nanobot]   Is Anthropic Compat: False
+[18:48:35] [agent.nanobot] ===================================================
+[92m18:48:35 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:48:35] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:48:50] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-276' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[92m18:48:51 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:48:51] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:48:59 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:48:59] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[sandbox] Container claw-agent-T020_inventory_check-17e4b0 removed
+  service 'inventory' stopped
+[18:48:59] [T020_inventory_check] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T020_inventory_check/result.json
+[18:48:59] [claweval] 10/151 new tasks done (total: 10/151)
+[18:48:59] [claweval] Auto-injected RSS_FIXTURES=tasks/T021zh_newsletter_curation/fixtures/rss/articles.json for T021zh_newsletter_curation
+[18:49:01] [agent.nanobot] Control modules initialized: enabled=False
+[18:49:01] [agent.nanobot] Loaded 9 skills from workspace
+[18:49:01] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:49:01] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:49:01] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:49:01] [agent.nanobot]   API Key: sk-o****c064
+[18:49:01] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T021zh_newsletter_curation_5ojmbwgp
+[18:49:01] [agent.nanobot]   Timeout: 300s
+[18:49:01] [agent.nanobot] =================================================================
+  service 'rss' started on port 9109
+[sandbox] Container claw-agent-T021zh_newsletter_curation-c37ed0 started at http://localhost:32934
+[sandbox] inject: 1/1 files into container
+[18:49:01] [claweval] Registered mock tool: rss_list_feeds -> POST http://localhost:9109/rss/feeds
+[18:49:01] [claweval] Registered mock tool: rss_list_articles -> POST http://localhost:9109/rss/articles
+[18:49:01] [claweval] Registered mock tool: rss_get_article -> POST http://localhost:9109/rss/articles/get
+[18:49:01] [claweval] Registered mock tool: rss_publish -> POST http://localhost:9109/rss/publish
+[18:49:01] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:49:01] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:49:01] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:49:01] [agent.nanobot]   API Key: sk-o****c064
+[18:49:01] [agent.nanobot]   Max Tokens: 16384
+[18:49:01] [agent.nanobot]   Tools: 9
+[18:49:01] [agent.nanobot]   Is OpenRouter: True
+[18:49:01] [agent.nanobot]   Is Azure Proxy: False
+[18:49:01] [agent.nanobot]   Is Anthropic Compat: False
+[18:49:01] [agent.nanobot] ===================================================
+[92m18:49:01 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:49:01] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:49:23] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:49:23] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:49:23] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:49:23] [agent.nanobot]   API Key: sk-o****c064
+[18:49:23] [agent.nanobot]   Max Tokens: 16384
+[18:49:23] [agent.nanobot]   Tools: 9
+[18:49:23] [agent.nanobot]   Is OpenRouter: True
+[18:49:23] [agent.nanobot]   Is Azure Proxy: False
+[18:49:23] [agent.nanobot]   Is Anthropic Compat: False
+[18:49:23] [agent.nanobot] ===================================================
+[92m18:49:23 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:49:23] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:49:28] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-301' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[18:49:28] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:49:28] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:49:28] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:49:28] [agent.nanobot]   API Key: sk-o****c064
+[18:49:28] [agent.nanobot]   Max Tokens: 16384
+[18:49:28] [agent.nanobot]   Tools: 9
+[18:49:28] [agent.nanobot]   Is OpenRouter: True
+[18:49:28] [agent.nanobot]   Is Azure Proxy: False
+[18:49:28] [agent.nanobot]   Is Anthropic Compat: False
+[18:49:28] [agent.nanobot] ===================================================
+[92m18:49:28 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:49:28] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:49:47] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-311' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[18:49:47] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:49:47] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:49:47] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:49:47] [agent.nanobot]   API Key: sk-o****c064
+[18:49:47] [agent.nanobot]   Max Tokens: 16384
+[18:49:47] [agent.nanobot]   Tools: 9
+[18:49:47] [agent.nanobot]   Is OpenRouter: True
+[18:49:47] [agent.nanobot]   Is Azure Proxy: False
+[18:49:47] [agent.nanobot]   Is Anthropic Compat: False
+[18:49:47] [agent.nanobot] ===================================================
+[92m18:49:47 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:49:47] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:51:00] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-323' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[18:51:00] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:51:00] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:51:00] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:51:00] [agent.nanobot]   API Key: sk-o****c064
+[18:51:00] [agent.nanobot]   Max Tokens: 16384
+[18:51:00] [agent.nanobot]   Tools: 9
+[18:51:00] [agent.nanobot]   Is OpenRouter: True
+[18:51:00] [agent.nanobot]   Is Azure Proxy: False
+[18:51:00] [agent.nanobot]   Is Anthropic Compat: False
+[18:51:00] [agent.nanobot] ===================================================
+[92m18:51:00 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:51:00] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:51:21] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-339' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[92m18:51:22 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:51:22] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:51:28 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:51:28] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[sandbox] Container claw-agent-T021zh_newsletter_curation-c37ed0 removed
+  service 'rss' stopped
+[18:51:28] [T021zh_newsletter_curation] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T021zh_newsletter_curation/result.json
+[18:51:28] [claweval] 11/151 new tasks done (total: 11/151)
+[18:51:28] [claweval] Auto-injected RSS_FIXTURES=tasks/T022_newsletter_curation/fixtures/rss/articles.json for T022_newsletter_curation
+[18:51:31] [agent.nanobot] Control modules initialized: enabled=False
+[18:51:31] [agent.nanobot] Loaded 9 skills from workspace
+[18:51:31] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:51:31] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:51:31] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:51:31] [agent.nanobot]   API Key: sk-o****c064
+[18:51:31] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T022_newsletter_curation_jzool7p5
+[18:51:31] [agent.nanobot]   Timeout: 300s
+[18:51:31] [agent.nanobot] =================================================================
+  service 'rss' started on port 9109
+[sandbox] Container claw-agent-T022_newsletter_curation-5b597b started at http://localhost:32935
+[sandbox] inject: 1/1 files into container
+[18:51:31] [claweval] Registered mock tool: rss_list_feeds -> POST http://localhost:9109/rss/feeds
+[18:51:31] [claweval] Registered mock tool: rss_list_articles -> POST http://localhost:9109/rss/articles
+[18:51:31] [claweval] Registered mock tool: rss_get_article -> POST http://localhost:9109/rss/articles/get
+[18:51:31] [claweval] Registered mock tool: rss_publish -> POST http://localhost:9109/rss/publish
+[18:51:31] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:51:31] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:51:31] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:51:31] [agent.nanobot]   API Key: sk-o****c064
+[18:51:31] [agent.nanobot]   Max Tokens: 16384
+[18:51:31] [agent.nanobot]   Tools: 9
+[18:51:31] [agent.nanobot]   Is OpenRouter: True
+[18:51:31] [agent.nanobot]   Is Azure Proxy: False
+[18:51:31] [agent.nanobot]   Is Anthropic Compat: False
+[18:51:31] [agent.nanobot] ===================================================
+[92m18:51:31 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:51:31] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:51:33] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:51:33] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:51:33] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:51:33] [agent.nanobot]   API Key: sk-o****c064
+[18:51:33] [agent.nanobot]   Max Tokens: 16384
+[18:51:33] [agent.nanobot]   Tools: 9
+[18:51:33] [agent.nanobot]   Is OpenRouter: True
+[18:51:33] [agent.nanobot]   Is Azure Proxy: False
+[18:51:33] [agent.nanobot]   Is Anthropic Compat: False
+[18:51:33] [agent.nanobot] ===================================================
+[92m18:51:33 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:51:33] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:51:41] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-354' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[18:51:41] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:51:41] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:51:41] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:51:41] [agent.nanobot]   API Key: sk-o****c064
+[18:51:41] [agent.nanobot]   Max Tokens: 16384
+[18:51:41] [agent.nanobot]   Tools: 9
+[18:51:41] [agent.nanobot]   Is OpenRouter: True
+[18:51:41] [agent.nanobot]   Is Azure Proxy: False
+[18:51:41] [agent.nanobot]   Is Anthropic Compat: False
+[18:51:41] [agent.nanobot] ===================================================
+[92m18:51:41 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:51:41] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:51:45] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-364' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[18:51:45] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:51:45] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:51:45] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:51:45] [agent.nanobot]   API Key: sk-o****c064
+[18:51:45] [agent.nanobot]   Max Tokens: 16384
+[18:51:45] [agent.nanobot]   Tools: 9
+[18:51:45] [agent.nanobot]   Is OpenRouter: True
+[18:51:45] [agent.nanobot]   Is Azure Proxy: False
+[18:51:45] [agent.nanobot]   Is Anthropic Compat: False
+[18:51:45] [agent.nanobot] ===================================================
+[92m18:51:45 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:51:45] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:52:32] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-376' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[18:52:32] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:52:32] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:52:32] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:52:32] [agent.nanobot]   API Key: sk-o****c064
+[18:52:32] [agent.nanobot]   Max Tokens: 16384
+[18:52:32] [agent.nanobot]   Tools: 9
+[18:52:32] [agent.nanobot]   Is OpenRouter: True
+[18:52:32] [agent.nanobot]   Is Azure Proxy: False
+[18:52:32] [agent.nanobot]   Is Anthropic Compat: False
+[18:52:32] [agent.nanobot] ===================================================
+[92m18:52:32 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:52:32] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:52:45] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-392' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[92m18:52:46 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:52:46] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:52:53 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:52:53] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[sandbox] Container claw-agent-T022_newsletter_curation-5b597b removed
+  service 'rss' stopped
+[18:52:53] [T022_newsletter_curation] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T022_newsletter_curation/result.json
+[18:52:53] [claweval] 12/151 new tasks done (total: 12/151)
+[18:52:53] [claweval] Auto-injected CRM_FIXTURES=tasks/T023zh_crm_data_export/fixtures/crm/customers.json for T023zh_crm_data_export
+[18:52:56] [agent.nanobot] Control modules initialized: enabled=False
+[18:52:56] [agent.nanobot] Loaded 9 skills from workspace
+[18:52:56] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:52:56] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:52:56] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:52:56] [agent.nanobot]   API Key: sk-o****c064
+[18:52:56] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T023zh_crm_data_export_vw6coosi
+[18:52:56] [agent.nanobot]   Timeout: 300s
+[18:52:56] [agent.nanobot] =================================================================
+  service 'crm' started on port 9110
+[sandbox] Container claw-agent-T023zh_crm_data_export-4bc349 started at http://localhost:32936
+[sandbox] inject: 1/1 files into container
+[18:52:56] [claweval] Registered mock tool: crm_list_customers -> POST http://localhost:9110/crm/customers
+[18:52:56] [claweval] Registered mock tool: crm_get_customer -> POST http://localhost:9110/crm/customers/get
+[18:52:56] [claweval] Registered mock tool: crm_export_report -> POST http://localhost:9110/crm/export
+[18:52:56] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:52:56] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:52:56] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:52:56] [agent.nanobot]   API Key: sk-o****c064
+[18:52:56] [agent.nanobot]   Max Tokens: 16384
+[18:52:56] [agent.nanobot]   Tools: 8
+[18:52:56] [agent.nanobot]   Is OpenRouter: True
+[18:52:56] [agent.nanobot]   Is Azure Proxy: False
+[18:52:56] [agent.nanobot]   Is Anthropic Compat: False
+[18:52:56] [agent.nanobot] ===================================================
+[92m18:52:56 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:52:56] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:53:06] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:53:06] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:53:06] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:53:06] [agent.nanobot]   API Key: sk-o****c064
+[18:53:06] [agent.nanobot]   Max Tokens: 16384
+[18:53:06] [agent.nanobot]   Tools: 8
+[18:53:06] [agent.nanobot]   Is OpenRouter: True
+[18:53:06] [agent.nanobot]   Is Azure Proxy: False
+[18:53:06] [agent.nanobot]   Is Anthropic Compat: False
+[18:53:06] [agent.nanobot] ===================================================
+[92m18:53:06 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:53:06] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:53:13] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-407' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[18:53:13] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:53:13] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:53:13] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:53:13] [agent.nanobot]   API Key: sk-o****c064
+[18:53:13] [agent.nanobot]   Max Tokens: 16384
+[18:53:13] [agent.nanobot]   Tools: 8
+[18:53:13] [agent.nanobot]   Is OpenRouter: True
+[18:53:13] [agent.nanobot]   Is Azure Proxy: False
+[18:53:13] [agent.nanobot]   Is Anthropic Compat: False
+[18:53:13] [agent.nanobot] ===================================================
+[92m18:53:13 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:53:13] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:53:33] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-417' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[18:53:33] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:53:33] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:53:33] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:53:33] [agent.nanobot]   API Key: sk-o****c064
+[18:53:33] [agent.nanobot]   Max Tokens: 16384
+[18:53:33] [agent.nanobot]   Tools: 8
+[18:53:33] [agent.nanobot]   Is OpenRouter: True
+[18:53:33] [agent.nanobot]   Is Azure Proxy: False
+[18:53:33] [agent.nanobot]   Is Anthropic Compat: False
+[18:53:33] [agent.nanobot] ===================================================
+[92m18:53:33 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:53:33] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:53:44] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-431' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[92m18:53:45 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:53:45] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:53:51 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:53:51] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[sandbox] Container claw-agent-T023zh_crm_data_export-4bc349 removed
+  service 'crm' stopped
+[18:53:51] [T023zh_crm_data_export] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T023zh_crm_data_export/result.json
+[18:53:51] [claweval] 13/151 new tasks done (total: 13/151)
+[18:53:51] [claweval] Auto-injected CRM_FIXTURES=tasks/T024_crm_data_export/fixtures/crm/customers.json for T024_crm_data_export
+[18:53:55] [agent.nanobot] Control modules initialized: enabled=False
+[18:53:55] [agent.nanobot] Loaded 9 skills from workspace
+[18:53:55] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:53:55] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:53:55] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:53:55] [agent.nanobot]   API Key: sk-o****c064
+[18:53:55] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T024_crm_data_export_x3t4v541
+[18:53:55] [agent.nanobot]   Timeout: 300s
+[18:53:55] [agent.nanobot] =================================================================
+  service 'crm' started on port 9110
+[sandbox] Container claw-agent-T024_crm_data_export-08f47d started at http://localhost:32937
+[sandbox] inject: 1/1 files into container
+[18:53:55] [claweval] Registered mock tool: crm_list_customers -> POST http://localhost:9110/crm/customers
+[18:53:55] [claweval] Registered mock tool: crm_get_customer -> POST http://localhost:9110/crm/customers/get
+[18:53:55] [claweval] Registered mock tool: crm_export_report -> POST http://localhost:9110/crm/export
+[18:53:55] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:53:55] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:53:55] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:53:55] [agent.nanobot]   API Key: sk-o****c064
+[18:53:55] [agent.nanobot]   Max Tokens: 16384
+[18:53:55] [agent.nanobot]   Tools: 8
+[18:53:55] [agent.nanobot]   Is OpenRouter: True
+[18:53:55] [agent.nanobot]   Is Azure Proxy: False
+[18:53:55] [agent.nanobot]   Is Anthropic Compat: False
+[18:53:55] [agent.nanobot] ===================================================
+[92m18:53:55 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:53:55] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:53:59] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:53:59] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:53:59] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:53:59] [agent.nanobot]   API Key: sk-o****c064
+[18:53:59] [agent.nanobot]   Max Tokens: 16384
+[18:53:59] [agent.nanobot]   Tools: 8
+[18:53:59] [agent.nanobot]   Is OpenRouter: True
+[18:53:59] [agent.nanobot]   Is Azure Proxy: False
+[18:53:59] [agent.nanobot]   Is Anthropic Compat: False
+[18:53:59] [agent.nanobot] ===================================================
+[92m18:53:59 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:53:59] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:05] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-446' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[18:54:05] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:54:05] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:54:05] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:54:05] [agent.nanobot]   API Key: sk-o****c064
+[18:54:05] [agent.nanobot]   Max Tokens: 16384
+[18:54:05] [agent.nanobot]   Tools: 8
+[18:54:05] [agent.nanobot]   Is OpenRouter: True
+[18:54:05] [agent.nanobot]   Is Azure Proxy: False
+[18:54:05] [agent.nanobot]   Is Anthropic Compat: False
+[18:54:05] [agent.nanobot] ===================================================
+[92m18:54:05 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:05] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:09] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-456' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[92m18:54:10 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:54:10] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:54:15 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:54:15] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[sandbox] Container claw-agent-T024_crm_data_export-08f47d removed
+  service 'crm' stopped
+[18:54:15] [T024_crm_data_export] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T024_crm_data_export/result.json
+[18:54:15] [claweval] 14/151 new tasks done (total: 14/151)
+[18:54:17] [agent.nanobot] Control modules initialized: enabled=False
+[18:54:17] [agent.nanobot] Loaded 9 skills from workspace
+[18:54:17] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:54:17] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:54:17] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:54:17] [agent.nanobot]   API Key: sk-o****c064
+[18:54:17] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T025zh_ambiguous_contact_email_5b8hng1o
+[18:54:17] [agent.nanobot]   Timeout: 300s
+[18:54:17] [agent.nanobot] =================================================================
+  service 'contacts' started on port 9103
+  service 'gmail' started on port 9100
+[sandbox] Container claw-agent-T025zh_ambiguous_contact_email-960da8 started at http://localhost:32938
+[sandbox] inject: 2/2 files into container
+[18:54:17] [claweval] Registered mock tool: gmail_list_messages -> POST http://localhost:9100/gmail/messages
+[18:54:17] [claweval] Registered mock tool: gmail_get_message -> POST http://localhost:9100/gmail/messages/get
+[18:54:17] [claweval] Registered mock tool: contacts_search -> POST http://localhost:9103/contacts/search
+[18:54:17] [claweval] Registered mock tool: contacts_get -> POST http://localhost:9103/contacts/get
+[18:54:17] [claweval] Registered mock tool: gmail_send_message -> POST http://localhost:9100/gmail/send
+[18:54:17] [claweval] Registered mock tool: gmail_save_draft -> POST http://localhost:9100/gmail/drafts/save
+[18:54:17] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:54:17] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:54:17] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:54:17] [agent.nanobot]   API Key: sk-o****c064
+[18:54:17] [agent.nanobot]   Max Tokens: 16384
+[18:54:17] [agent.nanobot]   Tools: 11
+[18:54:17] [agent.nanobot]   Is OpenRouter: True
+[18:54:17] [agent.nanobot]   Is Azure Proxy: False
+[18:54:17] [agent.nanobot]   Is Anthropic Compat: False
+[18:54:17] [agent.nanobot] ===================================================
+[92m18:54:17 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:17] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:20] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:54:20] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:54:20] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:54:20] [agent.nanobot]   API Key: sk-o****c064
+[18:54:20] [agent.nanobot]   Max Tokens: 16384
+[18:54:20] [agent.nanobot]   Tools: 11
+[18:54:20] [agent.nanobot]   Is OpenRouter: True
+[18:54:20] [agent.nanobot]   Is Azure Proxy: False
+[18:54:20] [agent.nanobot]   Is Anthropic Compat: False
+[18:54:20] [agent.nanobot] ===================================================
+[92m18:54:20 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:20] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:21] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-471' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[18:54:21] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:54:21] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:54:21] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:54:21] [agent.nanobot]   API Key: sk-o****c064
+[18:54:21] [agent.nanobot]   Max Tokens: 16384
+[18:54:21] [agent.nanobot]   Tools: 11
+[18:54:21] [agent.nanobot]   Is OpenRouter: True
+[18:54:21] [agent.nanobot]   Is Azure Proxy: False
+[18:54:21] [agent.nanobot]   Is Anthropic Compat: False
+[18:54:21] [agent.nanobot] ===================================================
+[92m18:54:21 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:21] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:24] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-481' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[18:54:24] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:54:24] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:54:24] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:54:24] [agent.nanobot]   API Key: sk-o****c064
+[18:54:24] [agent.nanobot]   Max Tokens: 16384
+[18:54:24] [agent.nanobot]   Tools: 11
+[18:54:24] [agent.nanobot]   Is OpenRouter: True
+[18:54:24] [agent.nanobot]   Is Azure Proxy: False
+[18:54:24] [agent.nanobot]   Is Anthropic Compat: False
+[18:54:24] [agent.nanobot] ===================================================
+[92m18:54:24 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:24] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:30] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-489' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[18:54:30] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:54:30] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:54:30] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:54:30] [agent.nanobot]   API Key: sk-o****c064
+[18:54:30] [agent.nanobot]   Max Tokens: 16384
+[18:54:30] [agent.nanobot]   Tools: 11
+[18:54:30] [agent.nanobot]   Is OpenRouter: True
+[18:54:30] [agent.nanobot]   Is Azure Proxy: False
+[18:54:30] [agent.nanobot]   Is Anthropic Compat: False
+[18:54:30] [agent.nanobot] ===================================================
+[92m18:54:30 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:30] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:42] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-497' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[18:54:42] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:54:42] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:54:42] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:54:42] [agent.nanobot]   API Key: sk-o****c064
+[18:54:42] [agent.nanobot]   Max Tokens: 16384
+[18:54:42] [agent.nanobot]   Tools: 11
+[18:54:42] [agent.nanobot]   Is OpenRouter: True
+[18:54:42] [agent.nanobot]   Is Azure Proxy: False
+[18:54:42] [agent.nanobot]   Is Anthropic Compat: False
+[18:54:42] [agent.nanobot] ===================================================
+[92m18:54:42 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:42] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:45] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-505' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[sandbox] Container claw-agent-T025zh_ambiguous_contact_email-960da8 removed
+  service 'gmail' stopped
+  service 'contacts' stopped
+[18:54:47] [T025zh_ambiguous_contact_email] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T025zh_ambiguous_contact_email/result.json
+[18:54:47] [claweval] 15/151 new tasks done (total: 15/151)
+[18:54:49] [agent.nanobot] Control modules initialized: enabled=False
+[18:54:49] [agent.nanobot] Loaded 9 skills from workspace
+[18:54:49] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:54:49] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:54:49] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:54:49] [agent.nanobot]   API Key: sk-o****c064
+[18:54:49] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T026_ambiguous_contact_email_55oqzkp3
+[18:54:49] [agent.nanobot]   Timeout: 300s
+[18:54:49] [agent.nanobot] =================================================================
+  service 'contacts' started on port 9103
+  service 'gmail' started on port 9100
+[sandbox] Container claw-agent-T026_ambiguous_contact_email-e35ba1 started at http://localhost:32939
+[sandbox] inject: 2/2 files into container
+[18:54:49] [claweval] Registered mock tool: gmail_list_messages -> POST http://localhost:9100/gmail/messages
+[18:54:49] [claweval] Registered mock tool: gmail_get_message -> POST http://localhost:9100/gmail/messages/get
+[18:54:49] [claweval] Registered mock tool: contacts_search -> POST http://localhost:9103/contacts/search
+[18:54:49] [claweval] Registered mock tool: contacts_get -> POST http://localhost:9103/contacts/get
+[18:54:49] [claweval] Registered mock tool: gmail_send_message -> POST http://localhost:9100/gmail/send
+[18:54:49] [claweval] Registered mock tool: gmail_save_draft -> POST http://localhost:9100/gmail/drafts/save
+[18:54:49] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:54:49] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:54:49] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:54:49] [agent.nanobot]   API Key: sk-o****c064
+[18:54:49] [agent.nanobot]   Max Tokens: 16384
+[18:54:49] [agent.nanobot]   Tools: 11
+[18:54:49] [agent.nanobot]   Is OpenRouter: True
+[18:54:49] [agent.nanobot]   Is Azure Proxy: False
+[18:54:49] [agent.nanobot]   Is Anthropic Compat: False
+[18:54:49] [agent.nanobot] ===================================================
+[92m18:54:49 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:49] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:52] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:54:52] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:54:52] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:54:52] [agent.nanobot]   API Key: sk-o****c064
+[18:54:52] [agent.nanobot]   Max Tokens: 16384
+[18:54:52] [agent.nanobot]   Tools: 11
+[18:54:52] [agent.nanobot]   Is OpenRouter: True
+[18:54:52] [agent.nanobot]   Is Azure Proxy: False
+[18:54:52] [agent.nanobot]   Is Anthropic Compat: False
+[18:54:52] [agent.nanobot] ===================================================
+[92m18:54:52 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:52] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:58] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-520' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[18:54:58] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:54:58] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:54:58] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:54:58] [agent.nanobot]   API Key: sk-o****c064
+[18:54:58] [agent.nanobot]   Max Tokens: 16384
+[18:54:58] [agent.nanobot]   Tools: 11
+[18:54:58] [agent.nanobot]   Is OpenRouter: True
+[18:54:58] [agent.nanobot]   Is Azure Proxy: False
+[18:54:58] [agent.nanobot]   Is Anthropic Compat: False
+[18:54:58] [agent.nanobot] ===================================================
+[92m18:54:58 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:54:58] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:55:02] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-530' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[18:55:02] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:55:02] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:55:02] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:55:02] [agent.nanobot]   API Key: sk-o****c064
+[18:55:02] [agent.nanobot]   Max Tokens: 16384
+[18:55:02] [agent.nanobot]   Tools: 11
+[18:55:02] [agent.nanobot]   Is OpenRouter: True
+[18:55:02] [agent.nanobot]   Is Azure Proxy: False
+[18:55:02] [agent.nanobot]   Is Anthropic Compat: False
+[18:55:02] [agent.nanobot] ===================================================
+[92m18:55:02 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:55:02] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:56:04] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-538' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[18:56:04] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:56:04] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:56:04] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:56:04] [agent.nanobot]   API Key: sk-o****c064
+[18:56:04] [agent.nanobot]   Max Tokens: 16384
+[18:56:04] [agent.nanobot]   Tools: 11
+[18:56:04] [agent.nanobot]   Is OpenRouter: True
+[18:56:04] [agent.nanobot]   Is Azure Proxy: False
+[18:56:04] [agent.nanobot]   Is Anthropic Compat: False
+[18:56:04] [agent.nanobot] ===================================================
+[92m18:56:04 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:56:04] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:56:11] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-546' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[sandbox] Container claw-agent-T026_ambiguous_contact_email-e35ba1 removed
+  service 'gmail' stopped
+  service 'contacts' stopped
+[18:56:12] [T026_ambiguous_contact_email] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T026_ambiguous_contact_email/result.json
+[18:56:12] [claweval] 16/151 new tasks done (total: 16/151)
+[18:56:12] [claweval] Auto-injected CONFIG_FIXTURES=tasks/T027zh_api_config_audit/fixtures/config/integrations.json for T027zh_api_config_audit
+[18:56:15] [agent.nanobot] Control modules initialized: enabled=False
+[18:56:15] [agent.nanobot] Loaded 9 skills from workspace
+[18:56:15] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:56:15] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:56:15] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:56:15] [agent.nanobot]   API Key: sk-o****c064
+[18:56:15] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T027zh_api_config_audit_9ondrrwp
+[18:56:15] [agent.nanobot]   Timeout: 300s
+[18:56:15] [agent.nanobot] =================================================================
+  service 'config' started on port 9111
+[sandbox] Container claw-agent-T027zh_api_config_audit-dd2237 started at http://localhost:32940
+[sandbox] inject: 1/1 files into container
+[18:56:15] [claweval] Registered mock tool: config_list_integrations -> POST http://localhost:9111/config/integrations
+[18:56:15] [claweval] Registered mock tool: config_get_integration -> POST http://localhost:9111/config/integrations/get
+[18:56:15] [claweval] Registered mock tool: config_update_integration -> POST http://localhost:9111/config/integrations/update
+[18:56:15] [claweval] Registered mock tool: config_send_notification -> POST http://localhost:9111/config/notify
+[18:56:15] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:56:15] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:56:15] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:56:15] [agent.nanobot]   API Key: sk-o****c064
+[18:56:15] [agent.nanobot]   Max Tokens: 16384
+[18:56:15] [agent.nanobot]   Tools: 9
+[18:56:15] [agent.nanobot]   Is OpenRouter: True
+[18:56:15] [agent.nanobot]   Is Azure Proxy: False
+[18:56:15] [agent.nanobot]   Is Anthropic Compat: False
+[18:56:15] [agent.nanobot] ===================================================
+[92m18:56:15 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:56:15] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:56:24] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:56:24] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:56:24] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:56:24] [agent.nanobot]   API Key: sk-o****c064
+[18:56:24] [agent.nanobot]   Max Tokens: 16384
+[18:56:24] [agent.nanobot]   Tools: 9
+[18:56:24] [agent.nanobot]   Is OpenRouter: True
+[18:56:24] [agent.nanobot]   Is Azure Proxy: False
+[18:56:24] [agent.nanobot]   Is Anthropic Compat: False
+[18:56:24] [agent.nanobot] ===================================================
+[92m18:56:24 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:56:24] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:56:31] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-561' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[18:56:31] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:56:31] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:56:31] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:56:31] [agent.nanobot]   API Key: sk-o****c064
+[18:56:31] [agent.nanobot]   Max Tokens: 16384
+[18:56:31] [agent.nanobot]   Tools: 9
+[18:56:31] [agent.nanobot]   Is OpenRouter: True
+[18:56:31] [agent.nanobot]   Is Azure Proxy: False
+[18:56:31] [agent.nanobot]   Is Anthropic Compat: False
+[18:56:31] [agent.nanobot] ===================================================
+[92m18:56:31 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:56:31] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:57:04] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-571' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=1> is bound to a different event loop
+[92m18:57:05 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[18:57:05] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m18:57:08 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[18:57:08] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[sandbox] Container claw-agent-T027zh_api_config_audit-dd2237 removed
+  service 'config' stopped
+[18:57:08] [T027zh_api_config_audit] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/claweval/qwen3.6-27b/T027zh_api_config_audit/result.json
+[18:57:08] [claweval] 17/151 new tasks done (total: 17/151)
+[18:57:09] [claweval] Auto-injected CONFIG_FIXTURES=tasks/T028_api_config_audit/fixtures/config/integrations.json for T028_api_config_audit
+[18:57:10] [agent.nanobot] Control modules initialized: enabled=False
+[18:57:10] [agent.nanobot] Loaded 9 skills from workspace
+[18:57:10] [agent.nanobot] 🤖 =================== NanoBotAgent Initialized ===================
+[18:57:10] [agent.nanobot]   Model: qwen/qwen3.6-27b
+[18:57:10] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:57:10] [agent.nanobot]   API Key: sk-o****c064
+[18:57:10] [agent.nanobot]   Workspace: /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/claweval_T028_api_config_audit_1wgwdd1x
+[18:57:10] [agent.nanobot]   Timeout: 300s
+[18:57:10] [agent.nanobot] =================================================================
+  service 'config' started on port 9111
+[sandbox] Container claw-agent-T028_api_config_audit-6d9993 started at http://localhost:32942
+[sandbox] inject: 1/1 files into container
+[18:57:10] [claweval] Registered mock tool: config_list_integrations -> POST http://localhost:9111/config/integrations
+[18:57:10] [claweval] Registered mock tool: config_get_integration -> POST http://localhost:9111/config/integrations/get
+[18:57:10] [claweval] Registered mock tool: config_update_integration -> POST http://localhost:9111/config/integrations/update
+[18:57:10] [claweval] Registered mock tool: config_send_notification -> POST http://localhost:9111/config/notify
+[18:57:10] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:57:10] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:57:10] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:57:10] [agent.nanobot]   API Key: sk-o****c064
+[18:57:10] [agent.nanobot]   Max Tokens: 16384
+[18:57:10] [agent.nanobot]   Tools: 9
+[18:57:10] [agent.nanobot]   Is OpenRouter: True
+[18:57:10] [agent.nanobot]   Is Azure Proxy: False
+[18:57:10] [agent.nanobot]   Is Anthropic Compat: False
+[18:57:10] [agent.nanobot] ===================================================
+[92m18:57:10 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:57:10] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:57:14] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:57:14] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:57:14] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:57:14] [agent.nanobot]   API Key: sk-o****c064
+[18:57:14] [agent.nanobot]   Max Tokens: 16384
+[18:57:14] [agent.nanobot]   Tools: 9
+[18:57:14] [agent.nanobot]   Is OpenRouter: True
+[18:57:14] [agent.nanobot]   Is Azure Proxy: False
+[18:57:14] [agent.nanobot]   Is Anthropic Compat: False
+[18:57:14] [agent.nanobot] ===================================================
+[92m18:57:14 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:57:14] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:57:18] [asyncio] Task exception was never retrieved
+future: <Task finished name='Task-588' coro=<LoggingWorker._worker_loop() done, defined at /opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:91> exception=RuntimeError('<Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop')>
+Traceback (most recent call last):
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py", line 102, in _worker_loop
+    task = await self._queue.get()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/queues.py", line 155, in get
+    getter = self._get_loop().create_future()
+             ^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Caskroom/miniforge/base/envs/meda/lib/python3.12/asyncio/mixins.py", line 20, in _get_loop
+    raise RuntimeError(f'{self!r} is bound to a different event loop')
+RuntimeError: <Queue at 0x108956270 maxsize=50000 tasks=2> is bound to a different event loop
+[18:57:18] [agent.nanobot] 📞 ==================== LLM Call ====================
+[18:57:18] [agent.nanobot]   Requested Model: qwen/qwen3.6-27b
+[18:57:18] [agent.nanobot]   API URL: https://openrouter.ai/api/v1
+[18:57:18] [agent.nanobot]   API Key: sk-o****c064
+[18:57:18] [agent.nanobot]   Max Tokens: 16384
+[18:57:18] [agent.nanobot]   Tools: 9
+[18:57:18] [agent.nanobot]   Is OpenRouter: True
+[18:57:18] [agent.nanobot]   Is Azure Proxy: False
+[18:57:18] [agent.nanobot]   Is Anthropic Compat: False
+[18:57:18] [agent.nanobot] ===================================================
+[92m18:57:18 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter
+[18:57:18] [LiteLLM] 
+LiteLLM completion() model= qwen/qwen3.6-27b; provider = openrouter

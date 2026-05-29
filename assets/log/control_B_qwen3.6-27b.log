@@ -1,0 +1,113 @@
+[15:28:37] 从文件加载任务列表: error_analysis/classify_outputs/qwen-3.6-27b/deepseek_classify/inputs/control_B.csv
+[15:28:37]   agentbench: 1 tasks
+[15:28:37]   clawbench: 2 tasks
+[15:28:37]   pinchbench: 1 tasks
+[15:28:37] Config: bench=['agentbench', 'clawbench', 'pinchbench'], models=['qwen3.6-27b'], sample=all
+[15:28:37] 
+============================================================
+[15:28:37] BENCHMARK: agentbench (1 tasks from file)
+[15:28:37] ============================================================
+[15:28:37]   [agentbench×qwen3.6-27b] evaluating...
+[15:28:38] [agent_partial-recovery_qwen3.6-27b_20260521_072838] Running setup.sh for task partial-recovery
+[15:28:38] [agent_partial-recovery_qwen3.6-27b_20260521_072838] setup.sh completed successfully
+[15:28:39] [agent_partial-recovery_qwen3.6-27b_20260521_072838] Container started
+[15:28:39] [agent_partial-recovery_qwen3.6-27b_20260521_072838] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   34 May 21 07:28 .
+drwxrwxrwt 1 root root      32 May 21 07:28 ..
+drwxr-xr-x 1  501 dialout  128 May 21 07:28 .git
+drwxr-xr-x 1  501 dialout  260 May 21 07:28 data
+-rw-r--r-- 1  501 dialout 1444 May 21 07:28 import.py
+
+[15:31:29] [agent_partial-recovery_qwen3.6-27b_20260521_072838] Agent finished in 170.08s, returncode=0
+[15:31:29] [agent_partial-recovery_qwen3.6-27b_20260521_072838] Agent stdout: DONE
+
+[15:31:29] [agent_partial-recovery_qwen3.6-27b_20260521_072838] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+Retry exhausted for read_file: Error: Cannot read binary file /tmp/workspace/data/file_009.json (MIME: application/json). Only UTF-8 text and images are supported.
+
+[15:31:29] [agent_partial-recovery_qwen3.6-27b_20260521_072838] Agent result loaded: status=success, transcript_len=68
+[92m15:31:29 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[15:31:29] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[92m15:31:40 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[15:31:40] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[15:31:40] [agent_partial-recovery_qwen3.6-27b_20260521_072838] Scores: L0=90.5 L1=85.0 L2=100.0 L3=100.0 | Overall=94.8
+[15:31:40] [agent_partial-recovery_qwen3.6-27b_20260521_072838] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/partial-recovery/result.json
+[15:31:40]   [agentbench×qwen3.6-27b] done: score=94.8, scored=1/1
+[15:31:40]   [agentbench×qwen3.6-27b] done: score=94.8, scored=0/1
+[15:31:40] 
+============================================================
+[15:31:40] BENCHMARK: clawbench (2 tasks from file)
+[15:31:40] ============================================================
+[15:31:40]   [clawbench×qwen3.6-27b] evaluating...
+[15:31:43] [clawbench_code-007_qwen3.6-27b_20260521_073140] Container started
+[15:31:43] [clawbench_doc-015_qwen3.6-27b_20260521_073140] Container started
+[15:32:34]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/code-assistance/code-007-cli-argument-parser/environment/setup.sh
+[15:32:34]   [container] [setup] setup.sh 成功
+[15:32:34]   [container] [setup] 工作空间文件: ['instruction.md']
+[15:32:34]   [container] DONE
+[15:32:34]   [container-err] Plan generation returned empty (attempt 1/3)
+[15:32:34]   [container-err] Plan generation returned empty (attempt 2/3)
+[15:32:34]   [container-err] Plan generation returned empty (attempt 3/3)
+[15:32:34]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[15:32:34] [clawbench_code-007_qwen3.6-27b_20260521_073140] Agent finished in 51.16s, returncode=0
+[15:32:34] [clawbench_code-007_qwen3.6-27b_20260521_073140] Agent result: passed=False, score=0.7778
+[15:32:35] [code-007] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/code-007.json
+[15:33:21]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/document-editing/doc-015-changelog-generator/environment/setup.sh
+[15:33:21]   [container] [setup] setup.sh 失败 (rc=1)
+[15:33:21]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/document-editing/doc-015-changelog-generator/environment/data/commits.jsonl': No such file or directory
+[15:33:21]   [container] 
+[15:33:21]   [container] [setup] 重试 (bash -x) ...
+[15:33:21]   [container] [setup] 重试也失败 (rc=1)
+[15:33:21]   [container] [setup] stderr: + set -euo pipefail
+[15:33:21]   [container] +++ dirname /app/claw-bench/tasks/document-editing/doc-015-changelog-generator/environment/setup.sh
+[15:33:21]   [container] ++ cd /app/claw-bench/tasks/document-editing/doc-015-changelog-generator/environment/..
+[15:33:21]   [container] ++ pwd
+[15:33:21]   [container] + TASK_DIR=/app/claw-bench/tasks/document-editing/doc-015-changelog-generator
+[15:33:21]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[15:33:21]   [container] + mkdir -p /tmp/clawbench_workspace
+[15:33:21]   [container] + cp /app/claw-bench/tasks/document-editing/doc-015-changelog-generator/environment/data/commits.jsonl /tmp/clawbench_workspace/commits.jsonl
+[15:33:21]   [container] cp: cannot stat '/app/claw-bench/tasks/document-editing/doc-015-changelog-generator/environment/data/commits.jsonl': No such file or directory
+[15:33:21]   [container] 
+[15:33:21]   [container] [setup] 工作空间文件: ['instruction.md']
+[15:33:21]   [container] DONE
+[15:33:21]   [container-err] Plan generation returned empty (attempt 1/3)
+[15:33:21]   [container-err] Plan generation returned empty (attempt 2/3)
+[15:33:21]   [container-err] Plan generation returned empty (attempt 3/3)
+[15:33:21]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[15:33:21]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/commits.jsonl
+[15:33:21] [clawbench_doc-015_qwen3.6-27b_20260521_073140] Agent finished in 98.44s, returncode=0
+[15:33:21] [clawbench_doc-015_qwen3.6-27b_20260521_073140] Agent result: passed=False, score=0.6000
+[15:33:22] [doc-015] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/doc-015.json
+[15:33:22]   [clawbench×qwen3.6-27b] done: score=68.9, scored=0/2
+[15:33:22]   [clawbench×qwen3.6-27b] done: score=68.9, scored=0/2
+[15:33:22] 
+============================================================
+[15:33:22] BENCHMARK: pinchbench (1 tasks from file)
+[15:33:22] ============================================================
+[15:33:22]   [pinchbench×qwen3.6-27b] evaluating...
+[15:33:22] [pinchbench] Filtered to 1 tasks by task_ids: ['task_06_events']
+[15:33:22] [pinchbench] 汇总已保存: 1/1 完成
+[15:33:22] [task_06_events] No workspace_files defined in task
+[15:33:24] [pinch_task_06_events_qwen3.6-27b_20260521_073322] Container started
+[15:34:45] [pinch_task_06_events_qwen3.6-27b_20260521_073322] Agent finished in 81.64s, returncode=0
+[15:34:45] [pinch_task_06_events_qwen3.6-27b_20260521_073322] [DEBUG] Workspace: /tmp/workspace, exists=True
+[15:34:45] [pinch_task_06_events_qwen3.6-27b_20260521_073322] [DEBUG] Contents: []
+[15:34:45] [pinch_task_06_events_qwen3.6-27b_20260521_073322] [PROGRESS] Task started at 1779348806.597899
+[15:34:45] [pinch_task_06_events_qwen3.6-27b_20260521_073322] [PROGRESS] Task finished at 78.9s, status=success
+[15:34:45] [pinch_task_06_events_qwen3.6-27b_20260521_073322] [PROGRESS] Transcript entries: 23
+[15:34:45] [pinch_task_06_events_qwen3.6-27b_20260521_073322] DONE
+[15:34:45] [pinch_task_06_events_qwen3.6-27b_20260521_073322] [STDERR] 2026-05-21 07:33:54.467 | WARNING  | nanobot.agent.tools.web:_search_brave:115 - BRAVE_API_KEY not set, falling back to DuckDuckGo
+[15:34:45] [pinch_task_06_events_qwen3.6-27b_20260521_073322] Agent result loaded: status=success, transcript_len=23
+[15:34:52] [task_06_events] LLM Judge score: 0.4625
+[15:34:52] [task_06_events] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_06_events/transcript.json
+[15:34:52] [task_06_events] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_06_events/result.json
+[15:34:52] [pinchbench] 汇总已保存: 1/1 完成
+[15:34:52]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[15:34:52]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[15:34:52] 
+

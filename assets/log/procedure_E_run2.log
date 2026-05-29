@@ -1,0 +1,50 @@
+[10:40:29] 从文件加载任务列表: error_analysis/classify_outputs/qwen-3.6-27b/inputs/procedure_E.csv
+[10:40:29]   clawbench: 3 tasks
+[10:40:29]   pinchbench: 1 tasks
+[10:40:29] Config: bench=['clawbench', 'pinchbench'], models=['claude-sonnet'], sample=all
+[10:40:29] 
+============================================================
+[10:40:29] BENCHMARK: clawbench (3 tasks from file)
+[10:40:29] ============================================================
+[10:40:29]   [clawbench×claude-sonnet] evaluating...
+[10:40:33] [clawbench_acct-005-financial-statements_claude-sonnet-4.6_20260521_024030] Container started
+[10:40:33] [clawbench_mag-001_claude-sonnet-4.6_20260521_024030] Container started
+[10:40:33] [clawbench_cont-003-readability-audit_claude-sonnet-4.6_20260521_024030] Container started
+[10:41:44]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/content-analysis/cont-003-readability-audit/environment/setup.sh
+[10:41:44]   [container] [setup] setup.sh 成功
+[10:41:44]   [container] [setup] 工作空间文件: ['instruction.md']
+[10:41:44]   [container] DONE
+[10:41:44]   [container-err] [ProceduralStore] Cards directory does not exist: /Volumes/F/work/ClawEvalkit-private-emnlp/OpenClawPro/harness/agent/procedure/cards
+[10:41:44]   [container-err] [DenseRetriever] No card embeddings indexed. Returning empty.
+[10:41:44] [clawbench_cont-003-readability-audit_claude-sonnet-4.6_20260521_024030] Agent finished in 70.61s, returncode=0
+[10:41:44] [clawbench_cont-003-readability-audit_claude-sonnet-4.6_20260521_024030] Agent result: passed=False, score=0.5000
+[10:41:44] [cont-003-readability-audit] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/clawbench-official/claude-sonnet/cont-003-readability-audit.json
+[10:42:09]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/accounting/acct-005-financial-statements/environment/setup.sh
+[10:42:09]   [container] [setup] setup.sh 成功
+[10:42:09]   [container] [setup] 工作空间文件: ['trial_balance.csv', 'instruction.md']
+[10:42:09]   [container] DONE
+[10:42:09]   [container-err] [ProceduralStore] Cards directory does not exist: /Volumes/F/work/ClawEvalkit-private-emnlp/OpenClawPro/harness/agent/procedure/cards
+[10:42:09]   [container-err] [DenseRetriever] No card embeddings indexed. Returning empty.
+[10:42:09] [clawbench_acct-005-financial-statements_claude-sonnet-4.6_20260521_024030] Agent finished in 95.44s, returncode=0
+[10:42:09] [clawbench_acct-005-financial-statements_claude-sonnet-4.6_20260521_024030] Agent result: passed=False, score=0.5000
+[10:42:09] [acct-005-financial-statements] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/clawbench-official/claude-sonnet/acct-005-financial-statements.json
+[10:44:43]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multi-agent/mag-001-code-review-pipeline/environment/setup.sh
+[10:44:43]   [container] [setup] setup.sh 成功
+[10:44:43]   [container] [setup] 工作空间文件: ['data_processor.py', 'text_utils.py', 'instruction.md', 'calculator.py']
+[10:44:43]   [container] DONE
+[10:44:43]   [container-err] [ProceduralStore] Cards directory does not exist: /Volumes/F/work/ClawEvalkit-private-emnlp/OpenClawPro/harness/agent/procedure/cards
+[10:44:43]   [container-err] [DenseRetriever] No card embeddings indexed. Returning empty.
+[10:44:43] [clawbench_mag-001_claude-sonnet-4.6_20260521_024030] Agent finished in 249.50s, returncode=0
+[10:44:43] [clawbench_mag-001_claude-sonnet-4.6_20260521_024030] Agent result: passed=False, score=0.8000
+[10:44:43] [mag-001] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/clawbench-official/claude-sonnet/mag-001.json
+[10:44:43]   [clawbench×claude-sonnet] done: score=60.0, scored=0/3
+[10:44:43]   [clawbench×claude-sonnet] done: score=60.0, scored=0/3
+[10:44:43] 
+============================================================
+[10:44:43] BENCHMARK: pinchbench (1 tasks from file)
+[10:44:43] ============================================================
+[10:44:43]   [pinchbench×claude-sonnet] evaluating...
+[10:44:43]   [pinchbench×claude-sonnet] done: score=86.9, scored=0/23
+[10:44:43]   [pinchbench×claude-sonnet] done: score=86.9, scored=0/23
+[10:44:43] 
+

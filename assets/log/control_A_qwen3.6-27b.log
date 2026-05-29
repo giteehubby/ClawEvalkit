@@ -1,0 +1,659 @@
+[13:12:57] 从文件加载任务列表: error_analysis/classify_outputs/qwen-3.6-27b/deepseek_classify/inputs/control_A.csv
+[13:12:57]   agentbench: 2 tasks
+[13:12:57]   clawbench: 27 tasks
+[13:12:57]   pinchbench: 5 tasks
+[13:12:57] Config: bench=['agentbench', 'clawbench', 'pinchbench'], models=['qwen3.6-27b'], sample=all
+[13:12:57] 
+============================================================
+[13:12:57] BENCHMARK: agentbench (2 tasks from file)
+[13:12:57] ============================================================
+[13:12:57]   [agentbench×qwen3.6-27b] evaluating...
+[13:12:58] [agent_repo-refactor_qwen3.6-27b_20260521_051258] Running setup.sh for task repo-refactor
+[13:12:58] [agent_repo-refactor_qwen3.6-27b_20260521_051258] setup.sh completed successfully
+[13:13:00] [agent_missing-dependency_qwen3.6-27b_20260521_051258] Container started
+[13:13:00] [agent_repo-refactor_qwen3.6-27b_20260521_051258] Container started
+[13:13:00] [agent_repo-refactor_qwen3.6-27b_20260521_051258] Workspace copied to /tmp/workspace/:
+total 44
+drwxr-xr-x 1  501 dialout  242 May 21 05:12 .
+drwxrwxrwt 1 root root      32 May 21 05:13 ..
+drwxr-xr-x 1  501 dialout  128 May 21 05:12 .git
+-rw-r--r-- 1  501 dialout  873 May 21 05:12 REFACTOR_PLAN.md
+-rw-r--r-- 1  501 dialout 1206 May 21 05:12 analytics.py
+-rw-r--r-- 1  501 dialout 1124 May 21 05:12 app.py
+-rw-r--r-- 1  501 dialout 1287 May 21 05:12 contacts.py
+-rw-r--r-- 1  501 dialout  847 May 21 05:12 dashboard.py
+drwxr-xr-x 1  501 dialout   20 May 21 05:12 data
+-rw-r--r-- 1  501 
+[13:13:00] [agent_missing-dependency_qwen3.6-27b_20260521_051258] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  0 May 21 05:12 .
+drwxrwxrwt 1 root root    32 May 21 05:13 ..
+
+[13:15:12] [agent_missing-dependency_qwen3.6-27b_20260521_051258] Agent finished in 131.71s, returncode=0
+[13:15:12] [agent_missing-dependency_qwen3.6-27b_20260521_051258] Agent stdout: DONE
+
+[13:15:12] [agent_missing-dependency_qwen3.6-27b_20260521_051258] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[13:15:12] [agent_missing-dependency_qwen3.6-27b_20260521_051258] Agent result loaded: status=success, transcript_len=38
+[92m13:15:12 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[13:15:12] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[92m13:15:14 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[13:15:14] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[13:15:14] [agent_missing-dependency_qwen3.6-27b_20260521_051258] Scores: L0=0.0 L1=60.0 L2=100.0 L3=100.0 | Overall=75.0
+[13:15:15] [agent_missing-dependency_qwen3.6-27b_20260521_051258] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/missing-dependency/result.json
+[13:16:11] [agent_repo-refactor_qwen3.6-27b_20260521_051258] Agent finished in 190.59s, returncode=0
+[13:16:11] [agent_repo-refactor_qwen3.6-27b_20260521_051258] Agent stdout: DONE
+
+[13:16:11] [agent_repo-refactor_qwen3.6-27b_20260521_051258] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[13:16:11] [agent_repo-refactor_qwen3.6-27b_20260521_051258] Agent result loaded: status=success, transcript_len=119
+[92m13:16:11 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[13:16:11] [LiteLLM] 
+LiteLLM completion() model= glm-4.7; provider = anthropic
+[92m13:16:14 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[13:16:14] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[13:16:14] [agent_repo-refactor_qwen3.6-27b_20260521_051258] Scores: L0=88.2 L1=65.0 L2=100.0 L3=100.0 | Overall=89.5
+[13:16:15] [agent_repo-refactor_qwen3.6-27b_20260521_051258] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/repo-refactor/result.json
+[13:16:15]   [agentbench×qwen3.6-27b] done: score=82.2, scored=2/2
+[13:16:15]   [agentbench×qwen3.6-27b] done: score=82.2, scored=0/2
+[13:16:15] 
+============================================================
+[13:16:15] BENCHMARK: clawbench (27 tasks from file)
+[13:16:15] ============================================================
+[13:16:15]   [clawbench×qwen3.6-27b] evaluating...
+[13:16:20] [clawbench_acad-003-statistical-analysis_qwen3.6-27b_20260521_051615] Container started
+[13:16:20] [clawbench_med-003-drug-interaction_qwen3.6-27b_20260521_051615] Container started
+[13:16:20] [clawbench_comm-014_qwen3.6-27b_20260521_051615] Container started
+[13:16:20] [clawbench_bio-005-variant-annotation_qwen3.6-27b_20260521_051615] Container started
+[13:17:29]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/academic-research/acad-003-statistical-analysis/environment/setup.sh
+[13:17:29]   [container] [setup] setup.sh 成功
+[13:17:29]   [container] [setup] 工作空间文件: ['instruction.md', 'experiment_data.csv']
+[13:17:29]   [container] DONE
+[13:17:29]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:17:29]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:17:29]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:17:29]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:17:29] [clawbench_acad-003-statistical-analysis_qwen3.6-27b_20260521_051615] Agent finished in 69.24s, returncode=0
+[13:17:29] [clawbench_acad-003-statistical-analysis_qwen3.6-27b_20260521_051615] Agent result: passed=False, score=0.7500
+[13:17:30] [acad-003-statistical-analysis] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/acad-003-statistical-analysis.json
+[13:17:32] [clawbench_cont-002-topic-modeling_qwen3.6-27b_20260521_051730] Container started
+[13:17:59]   [container]         length = random.randint(5000, 20000)
+[13:17:59]   [container]         end = start + length
+[13:17:59]   [container]         func = random.choice(functions)
+[13:17:59]   [container]         regions.append([gene, chrom, start, end, func])
+[13:17:59]   [container]         # Next gene region start with some gap
+[13:17:59]   [container]         start = end + random.randint(1000, 5000)
+[13:17:59]   [container] 
+[13:17:59]   [container] with open(f"{os.environ.get(\"WORKSPACE\", os.getcwd())}/gene_regions.csv", "w", newline="") as f:
+[13:17:59]   [container]     writer = csv.writer(f)
+[13:17:59]   [container]     writer.writerow(["gene", "chrom", "start", "end", "function"])
+[13:17:59]   [container]     for row in regions:
+[13:17:59]   [container]         writer.writerow(row)
+[13:17:59]   [container] '
+[13:17:59]   [container]   File "<string>", line 21
+[13:17:59]   [container]     with open(f"{os.environ.get(\"WORKSPACE\", os.getcwd())}/gene_regions.csv", "w", newline="") as f:
+[13:17:59]   [container]                                  ^
+[13:17:59]   [container] SyntaxError: unexpected character after line continuation character
+[13:17:59]   [container] 
+[13:17:59]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:17:59]   [container] DONE
+[13:17:59]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:17:59]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:17:59]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:17:59]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:17:59] [clawbench_bio-005-variant-annotation_qwen3.6-27b_20260521_051615] Agent finished in 98.51s, returncode=0
+[13:17:59] [clawbench_bio-005-variant-annotation_qwen3.6-27b_20260521_051615] Agent result: passed=False, score=0.6667
+[13:17:59] [bio-005-variant-annotation] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/bio-005-variant-annotation.json
+[13:18:02] [clawbench_law-003-compliance-check_qwen3.6-27b_20260521_051759] Container started
+[13:18:14]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/communication/comm-014-chat-sentiment-analysis/environment/setup.sh
+[13:18:14]   [container] [setup] setup.sh 失败 (rc=1)
+[13:18:14]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/communication/comm-014-chat-sentiment-analysis/environment/data/chat_log.jsonl': No such file or directory
+[13:18:14]   [container] 
+[13:18:14]   [container] [setup] 重试 (bash -x) ...
+[13:18:14]   [container] [setup] 重试也失败 (rc=1)
+[13:18:14]   [container] [setup] stderr: + set -euo pipefail
+[13:18:14]   [container] +++ dirname /app/claw-bench/tasks/communication/comm-014-chat-sentiment-analysis/environment/setup.sh
+[13:18:14]   [container] ++ cd /app/claw-bench/tasks/communication/comm-014-chat-sentiment-analysis/environment/..
+[13:18:14]   [container] ++ pwd
+[13:18:14]   [container] + TASK_DIR=/app/claw-bench/tasks/communication/comm-014-chat-sentiment-analysis
+[13:18:14]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[13:18:14]   [container] + mkdir -p /tmp/clawbench_workspace
+[13:18:14]   [container] + cp /app/claw-bench/tasks/communication/comm-014-chat-sentiment-analysis/environment/data/chat_log.jsonl /tmp/clawbench_workspace/chat_log.jsonl
+[13:18:14]   [container] cp: cannot stat '/app/claw-bench/tasks/communication/comm-014-chat-sentiment-analysis/environment/data/chat_log.jsonl': No such file or directory
+[13:18:14]   [container] 
+[13:18:14]   [container] [setup] 工作空间文件: ['instruction.md', 'keywords.json']
+[13:18:14]   [container] DONE
+[13:18:14]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:18:14]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:18:14]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:18:14]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:18:14]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/chat_log.jsonl
+[13:18:14] [clawbench_comm-014_qwen3.6-27b_20260521_051615] Agent finished in 113.87s, returncode=0
+[13:18:14] [clawbench_comm-014_qwen3.6-27b_20260521_051615] Agent result: passed=False, score=0.7778
+[13:18:14] [comm-014] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/comm-014.json
+[13:18:17] [clawbench_cs-005-api-design_qwen3.6-27b_20260521_051814] Container started
+[13:18:39]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/clinical-data/med-003-drug-interaction/environment/setup.sh
+[13:18:39]   [container] [setup] setup.sh 成功
+[13:18:39]   [container] [setup] 工作空间文件: ['interaction_db.csv', 'instruction.md', 'patient_medications.csv']
+[13:18:39]   [container] DONE
+[13:18:39]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:18:39]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:18:39] [clawbench_med-003-drug-interaction_qwen3.6-27b_20260521_051615] Agent finished in 138.98s, returncode=0
+[13:18:39] [clawbench_med-003-drug-interaction_qwen3.6-27b_20260521_051615] Agent result: passed=False, score=0.6667
+[13:18:39] [med-003-drug-interaction] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/med-003-drug-interaction.json
+[13:18:42] [clawbench_ds-003-feature-engineering_qwen3.6-27b_20260521_051839] Container started
+[13:20:50]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-science/ds-003-feature-engineering/environment/setup.sh
+[13:20:50]   [container] [setup] setup.sh 失败 (rc=1)
+[13:20:50]   [container] [setup] stderr: Traceback (most recent call last):
+[13:20:50]   [container]   File "<stdin>", line 2, in <module>
+[13:20:50]   [container] ModuleNotFoundError: No module named 'pandas'
+[13:20:50]   [container] 
+[13:20:50]   [container] [setup] 重试 (bash -x) ...
+[13:20:50]   [container] [setup] 重试也失败 (rc=1)
+[13:20:50]   [container] [setup] stderr: + set -euo pipefail
+[13:20:50]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[13:20:50]   [container] + export WORKSPACE
+[13:20:50]   [container] + mkdir -p /tmp/clawbench_workspace
+[13:20:50]   [container] + python3 -
+[13:20:50]   [container] Traceback (most recent call last):
+[13:20:50]   [container]   File "<stdin>", line 2, in <module>
+[13:20:50]   [container] ModuleNotFoundError: No module named 'pandas'
+[13:20:50]   [container] 
+[13:20:50]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:20:50]   [container] DONE
+[13:20:50]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:20:50]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:20:50]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:20:50]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:20:50]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/raw_data.csv
+[13:20:50] [clawbench_ds-003-feature-engineering_qwen3.6-27b_20260521_051839] Agent finished in 128.02s, returncode=0
+[13:20:50] [clawbench_ds-003-feature-engineering_qwen3.6-27b_20260521_051839] Agent result: passed=False, score=0.6000
+[13:20:50] [ds-003-feature-engineering] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/ds-003-feature-engineering.json
+[13:20:54] [clawbench_debug-001_qwen3.6-27b_20260521_052050] Container started
+[13:20:56]   [container]     ('\''travel_expenses'\'', '\''The contract must specify travel expense reimbursement.'\'', False),
+[13:20:56]   [container]     ('\''intellectual_property'\'', '\''The contract must specify intellectual property rights.'\'', True),
+[13:20:56]   [container]     ('\''child_labor'\'', '\''The contract must prohibit child labor.'\'', True),
+[13:20:56]   [container]     ('\''union_rights'\'', '\''The contract must specify union rights and representation.'\'', False),
+[13:20:56]   [container]     ('\''data_protection'\'', '\''The contract must specify data protection obligations.'\'', True),
+[13:20:56]   [container]     ('\''remote_work'\'', '\''The contract must specify remote work policies.'\'', False),
+[13:20:56]   [container] ]
+[13:20:56]   [container] 
+[13:20:56]   [container] with open(f'\''{os.environ.get(WORKSPACE, os.getcwd())}/labor_requirements.csv'\'', '\''w'\'', newline='\'''\'') as f:
+[13:20:56]   [container]     writer = csv.writer(f)
+[13:20:56]   [container]     writer.writerow(['\''requirement'\'', '\''description'\'', '\''mandatory'\''])
+[13:20:56]   [container]     for r in requirements:
+[13:20:56]   [container]         writer.writerow([r[0], r[1], str(r[2])])
+[13:20:56]   [container] '
+[13:20:56]   [container] Traceback (most recent call last):
+[13:20:56]   [container]   File "<string>", line 30, in <module>
+[13:20:56]   [container] NameError: name 'os' is not defined. Did you forget to import 'os'?
+[13:20:56]   [container] 
+[13:20:56]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:20:56]   [container] DONE
+[13:20:56]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:20:56]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:20:56]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:20:56]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:20:56] [clawbench_law-003-compliance-check_qwen3.6-27b_20260521_051759] Agent finished in 173.26s, returncode=0
+[13:20:56] [clawbench_law-003-compliance-check_qwen3.6-27b_20260521_051759] Agent result: passed=False, score=0.5000
+[13:20:56] [law-003-compliance-check] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/law-003-compliance-check.json
+[13:20:56]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/content-analysis/cont-002-topic-modeling/environment/setup.sh
+[13:20:56]   [container] [setup] setup.sh 成功
+[13:20:56]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:20:56]   [container] DONE
+[13:20:56]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:20:56]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:20:56]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:20:56]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:20:56] [clawbench_cont-002-topic-modeling_qwen3.6-27b_20260521_051730] Agent finished in 204.33s, returncode=0
+[13:20:56] [clawbench_cont-002-topic-modeling_qwen3.6-27b_20260521_051730] Agent result: passed=False, score=0.6000
+[13:20:57] [cont-002-topic-modeling] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/cont-002-topic-modeling.json
+[13:20:58]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/cs-engineering/cs-005-api-design/environment/setup.sh
+[13:20:58]   [container] [setup] setup.sh 成功
+[13:20:58]   [container] [setup] 工作空间文件: ['instruction.md', 'api_requirements.txt']
+[13:20:58]   [container] DONE
+[13:20:58] [clawbench_cs-005-api-design_qwen3.6-27b_20260521_051814] Agent finished in 161.04s, returncode=0
+[13:20:58] [clawbench_cs-005-api-design_qwen3.6-27b_20260521_051814] Agent result: passed=False, score=0.8000
+[13:20:59] [cs-005-api-design] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/cs-005-api-design.json
+[13:21:00] [clawbench_debug-002_qwen3.6-27b_20260521_052056] Container started
+[13:21:00] [clawbench_debug-004_qwen3.6-27b_20260521_052057] Container started
+[13:21:01] [clawbench_edu-001-rubric-grading_qwen3.6-27b_20260521_052059] Container started
+[13:22:36]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/debugging/debug-004/environment/setup.sh
+[13:22:36]   [container] [setup] setup.sh 失败 (rc=1)
+[13:22:36]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/debugging/debug-004/environment/data/main.py': No such file or directory
+[13:22:36]   [container] 
+[13:22:36]   [container] [setup] 重试 (bash -x) ...
+[13:22:36]   [container] [setup] 重试也失败 (rc=1)
+[13:22:36]   [container] [setup] stderr: + set -euo pipefail
+[13:22:36]   [container] +++ dirname /app/claw-bench/tasks/debugging/debug-004/environment/setup.sh
+[13:22:36]   [container] ++ cd /app/claw-bench/tasks/debugging/debug-004/environment/..
+[13:22:36]   [container] ++ pwd
+[13:22:36]   [container] + TASK_DIR=/app/claw-bench/tasks/debugging/debug-004
+[13:22:36]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[13:22:36]   [container] + mkdir -p /tmp/clawbench_workspace
+[13:22:36]   [container] + cp /app/claw-bench/tasks/debugging/debug-004/environment/data/main.py /tmp/clawbench_workspace/main.py
+[13:22:36]   [container] cp: cannot stat '/app/claw-bench/tasks/debugging/debug-004/environment/data/main.py': No such file or directory
+[13:22:36]   [container] 
+[13:22:36]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:22:36]   [container] DONE
+[13:22:36]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:22:36]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:22:36]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:22:36]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:22:36]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/main.py
+[13:22:36]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/utils.py
+[13:22:36]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/config.py
+[13:22:36] [clawbench_debug-004_qwen3.6-27b_20260521_052057] Agent finished in 96.15s, returncode=0
+[13:22:36] [clawbench_debug-004_qwen3.6-27b_20260521_052057] Agent result: passed=False, score=0.7500
+[13:22:37] [debug-004] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/debug-004.json
+[13:22:39]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/debugging/debug-002/environment/setup.sh
+[13:22:39]   [container] [setup] setup.sh 失败 (rc=1)
+[13:22:39]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/debugging/debug-002/environment/data/calculator.py': No such file or directory
+[13:22:39]   [container] 
+[13:22:39]   [container] [setup] 重试 (bash -x) ...
+[13:22:39]   [container] [setup] 重试也失败 (rc=1)
+[13:22:39]   [container] [setup] stderr: + set -euo pipefail
+[13:22:39]   [container] +++ dirname /app/claw-bench/tasks/debugging/debug-002/environment/setup.sh
+[13:22:39]   [container] ++ cd /app/claw-bench/tasks/debugging/debug-002/environment/..
+[13:22:39]   [container] ++ pwd
+[13:22:39]   [container] + TASK_DIR=/app/claw-bench/tasks/debugging/debug-002
+[13:22:39]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[13:22:39]   [container] + mkdir -p /tmp/clawbench_workspace
+[13:22:39]   [container] + cp /app/claw-bench/tasks/debugging/debug-002/environment/data/calculator.py /tmp/clawbench_workspace/calculator.py
+[13:22:39]   [container] cp: cannot stat '/app/claw-bench/tasks/debugging/debug-002/environment/data/calculator.py': No such file or directory
+[13:22:39]   [container] 
+[13:22:39]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:22:39]   [container] DONE
+[13:22:39]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:22:39]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:22:39]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:22:39]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:22:39]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/calculator.py
+[13:22:39] [clawbench_debug-002_qwen3.6-27b_20260521_052056] Agent finished in 98.95s, returncode=0
+[13:22:39] [clawbench_debug-002_qwen3.6-27b_20260521_052056] Agent result: passed=False, score=0.7895
+[13:22:39] [debug-002] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/debug-002.json
+[13:22:40] [clawbench_edu-002-item-analysis_qwen3.6-27b_20260521_052237] Container started
+[13:22:41] [clawbench_eml-002_qwen3.6-27b_20260521_052239] Container started
+[13:22:55]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/debugging/debug-001/environment/setup.sh
+[13:22:55]   [container] [setup] setup.sh 失败 (rc=1)
+[13:22:55]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/debugging/debug-001/environment/data/buggy.py': No such file or directory
+[13:22:55]   [container] 
+[13:22:55]   [container] [setup] 重试 (bash -x) ...
+[13:22:55]   [container] [setup] 重试也失败 (rc=1)
+[13:22:55]   [container] [setup] stderr: + set -euo pipefail
+[13:22:55]   [container] +++ dirname /app/claw-bench/tasks/debugging/debug-001/environment/setup.sh
+[13:22:55]   [container] ++ cd /app/claw-bench/tasks/debugging/debug-001/environment/..
+[13:22:55]   [container] ++ pwd
+[13:22:55]   [container] + TASK_DIR=/app/claw-bench/tasks/debugging/debug-001
+[13:22:55]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[13:22:55]   [container] + mkdir -p /tmp/clawbench_workspace
+[13:22:55]   [container] + cp /app/claw-bench/tasks/debugging/debug-001/environment/data/buggy.py /tmp/clawbench_workspace/buggy.py
+[13:22:55]   [container] cp: cannot stat '/app/claw-bench/tasks/debugging/debug-001/environment/data/buggy.py': No such file or directory
+[13:22:55]   [container] 
+[13:22:55]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:22:55]   [container] DONE
+[13:22:55]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:22:55]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:22:55]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:22:55]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:22:55]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/buggy.py
+[13:22:55] [clawbench_debug-001_qwen3.6-27b_20260521_052050] Agent finished in 121.24s, returncode=0
+[13:22:55] [clawbench_debug-001_qwen3.6-27b_20260521_052050] Agent result: passed=False, score=0.8889
+[13:22:56] [debug-001] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/debug-001.json
+[13:22:59] [clawbench_file-011_qwen3.6-27b_20260521_052256] Container started
+[13:23:11]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/educational-assessment/edu-001-rubric-grading/environment/setup.sh
+[13:23:11]   [container] [setup] setup.sh 成功
+[13:23:11]   [container] [setup] 工作空间文件: ['rubric.csv', 'instruction.md', 'english_words.txt']
+[13:23:11]   [container] DONE
+[13:23:11]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:23:11]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:23:11]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:23:11]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:23:11] [clawbench_edu-001-rubric-grading_qwen3.6-27b_20260521_052059] Agent finished in 130.21s, returncode=0
+[13:23:11] [clawbench_edu-001-rubric-grading_qwen3.6-27b_20260521_052059] Agent result: passed=True, score=1.0000
+[13:23:11] [edu-001-rubric-grading] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/edu-001-rubric-grading.json
+[13:23:14] [clawbench_fin-006_qwen3.6-27b_20260521_052311] Container started
+[13:23:51]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/email/eml-002-compose-from-template/environment/setup.sh
+[13:23:51]   [container] [setup] setup.sh 成功
+[13:23:51]   [container] [setup] 工作空间文件: ['instruction.md', 'template.txt', 'contacts.json']
+[13:23:51]   [container] DONE
+[13:23:51]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:23:51] [clawbench_eml-002_qwen3.6-27b_20260521_052239] Agent finished in 70.03s, returncode=0
+[13:23:51] [clawbench_eml-002_qwen3.6-27b_20260521_052239] Agent result: passed=False, score=0.8571
+[13:23:52] [eml-002] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/eml-002.json
+[13:23:54] [clawbench_mkt-003-pricing-analysis_qwen3.6-27b_20260521_052352] Container started
+[13:24:10]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/file-operations/file-011-log-filtering/environment/setup.sh
+[13:24:10]   [container] [setup] setup.sh 失败 (rc=1)
+[13:24:10]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/file-operations/file-011-log-filtering/environment/data/app.log': No such file or directory
+[13:24:10]   [container] 
+[13:24:10]   [container] [setup] 重试 (bash -x) ...
+[13:24:10]   [container] [setup] 重试也失败 (rc=1)
+[13:24:10]   [container] [setup] stderr: + set -euo pipefail
+[13:24:10]   [container] +++ dirname /app/claw-bench/tasks/file-operations/file-011-log-filtering/environment/setup.sh
+[13:24:10]   [container] ++ cd /app/claw-bench/tasks/file-operations/file-011-log-filtering/environment/..
+[13:24:10]   [container] ++ pwd
+[13:24:10]   [container] + TASK_DIR=/app/claw-bench/tasks/file-operations/file-011-log-filtering
+[13:24:10]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[13:24:10]   [container] + mkdir -p /tmp/clawbench_workspace
+[13:24:10]   [container] + cp /app/claw-bench/tasks/file-operations/file-011-log-filtering/environment/data/app.log /tmp/clawbench_workspace/app.log
+[13:24:10]   [container] cp: cannot stat '/app/claw-bench/tasks/file-operations/file-011-log-filtering/environment/data/app.log': No such file or directory
+[13:24:10]   [container] 
+[13:24:10]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:24:10]   [container] DONE
+[13:24:10]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:24:10]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:24:10]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:24:10]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:24:10]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/app.log
+[13:24:10] [clawbench_file-011_qwen3.6-27b_20260521_052256] Agent finished in 71.06s, returncode=0
+[13:24:10] [clawbench_file-011_qwen3.6-27b_20260521_052256] Agent result: passed=False, score=0.6923
+[13:24:11] [file-011] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/file-011.json
+[13:24:13] [clawbench_mag-003_qwen3.6-27b_20260521_052411] Container started
+[13:25:45]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/financial-analysis/fin-006-analyze-stock-portfolio-risk-using-var-and-cvar/environment/setup.sh
+[13:25:45]   [container] [setup] setup.sh 成功
+[13:25:45]   [container] [setup] 工作空间文件: ['portfolio_returns.csv', 'instruction.md']
+[13:25:45]   [container] DONE
+[13:25:45]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:25:45]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:25:45]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:25:45]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:25:45] [clawbench_fin-006_qwen3.6-27b_20260521_052311] Agent finished in 150.76s, returncode=0
+[13:25:45] [clawbench_fin-006_qwen3.6-27b_20260521_052311] Agent result: passed=False, score=0.0000
+[13:25:45] [fin-006] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/fin-006.json
+[13:25:47] [clawbench_mm-004_qwen3.6-27b_20260521_052545] Container started
+[13:25:52]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/market-research/mkt-003-pricing-analysis/environment/setup.sh
+[13:25:52]   [container] [setup] setup.sh 成功
+[13:25:52]   [container] [setup] 工作空间文件: ['instruction.md', 'pricing_history.csv']
+[13:25:52]   [container] DONE
+[13:25:52]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:25:52]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:25:52]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:25:52]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:25:52] [clawbench_mkt-003-pricing-analysis_qwen3.6-27b_20260521_052352] Agent finished in 117.52s, returncode=0
+[13:25:52] [clawbench_mkt-003-pricing-analysis_qwen3.6-27b_20260521_052352] Agent result: passed=False, score=0.0000
+[13:25:52] [mkt-003-pricing-analysis] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/mkt-003-pricing-analysis.json
+[13:25:54] [clawbench_reg-002-sox-controls_qwen3.6-27b_20260521_052552] Container started
+[13:28:31]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/educational-assessment/edu-002-item-analysis/environment/setup.sh
+[13:28:31]   [container] [setup] setup.sh 成功
+[13:28:31]   [container] [setup] 工作空间文件: ['instruction.md', 'exam_responses.csv']
+[13:28:31]   [container] DONE
+[13:28:31]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:28:31]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:28:31]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:28:31]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:28:31] [clawbench_edu-002-item-analysis_qwen3.6-27b_20260521_052237] Agent finished in 351.90s, returncode=0
+[13:28:32] [clawbench_edu-002-item-analysis_qwen3.6-27b_20260521_052237] Agent result: passed=False, score=0.6667
+[13:28:32] [edu-002-item-analysis] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/edu-002-item-analysis.json
+[13:28:34] [clawbench_sci-002-monte-carlo_qwen3.6-27b_20260521_052832] Container started
+[13:28:51]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/regulatory-compliance/reg-002-sox-controls/environment/setup.sh
+[13:28:51]   [container] [setup] setup.sh 成功
+[13:28:51]   [container] [setup] 工作空间文件: ['controls.csv', 'instruction.md']
+[13:28:51]   [container] DONE
+[13:28:51]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:28:51]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:28:51]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:28:51]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:28:51] [clawbench_reg-002-sox-controls_qwen3.6-27b_20260521_052552] Agent finished in 176.51s, returncode=0
+[13:28:51] [clawbench_reg-002-sox-controls_qwen3.6-27b_20260521_052552] Agent result: passed=False, score=0.6667
+[13:28:51] [reg-002-sox-controls] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/reg-002-sox-controls.json
+[13:28:54] [clawbench_sci-004-signal-processing_qwen3.6-27b_20260521_052851] Container started
+[13:29:30]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multi-agent/mag-003-data-pipeline-handoff/environment/setup.sh
+[13:29:30]   [container] [setup] setup.sh 成功
+[13:29:30]   [container] [setup] 工作空间文件: ['instruction.md', 'raw_data.csv']
+[13:29:30]   [container] DONE
+[13:29:30]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:29:30]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:29:30]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:29:30]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:29:30] [clawbench_mag-003_qwen3.6-27b_20260521_052411] Agent finished in 316.08s, returncode=0
+[13:29:30] [clawbench_mag-003_qwen3.6-27b_20260521_052411] Agent result: passed=False, score=0.8182
+[13:29:30] [mag-003] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/mag-003.json
+[13:29:32] [clawbench_sci-005-optimization_qwen3.6-27b_20260521_052930] Container started
+[13:30:07]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/scientific-computing/sci-002-monte-carlo/environment/setup.sh
+[13:30:07]   [container] [setup] setup.sh 成功
+[13:30:07]   [container] [setup] 工作空间文件: ['instruction.md', '.placeholder']
+[13:30:07]   [container] DONE
+[13:30:07]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:30:07]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:30:07]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:30:07]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:30:07] [clawbench_sci-002-monte-carlo_qwen3.6-27b_20260521_052832] Agent finished in 92.47s, returncode=0
+[13:30:07] [clawbench_sci-002-monte-carlo_qwen3.6-27b_20260521_052832] Agent result: passed=False, score=0.8000
+[13:30:08] [sci-002-monte-carlo] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/sci-002-monte-carlo.json
+[13:30:10] [clawbench_sec-007_qwen3.6-27b_20260521_053008] Container started
+[13:31:00]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/scientific-computing/sci-004-signal-processing/environment/setup.sh
+[13:31:00]   [container] [setup] setup.sh 失败 (rc=1)
+[13:31:00]   [container] [setup] stderr: Traceback (most recent call last):
+[13:31:00]   [container]   File "<stdin>", line 3, in <module>
+[13:31:00]   [container] ModuleNotFoundError: No module named 'pandas'
+[13:31:00]   [container] 
+[13:31:00]   [container] [setup] 重试 (bash -x) ...
+[13:31:00]   [container] [setup] 重试也失败 (rc=1)
+[13:31:00]   [container] [setup] stderr: + set -euo pipefail
+[13:31:00]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[13:31:00]   [container] + export WORKSPACE
+[13:31:00]   [container] + mkdir -p /tmp/clawbench_workspace
+[13:31:00]   [container] + python3 -
+[13:31:00]   [container] Traceback (most recent call last):
+[13:31:00]   [container]   File "<stdin>", line 3, in <module>
+[13:31:00]   [container] ModuleNotFoundError: No module named 'pandas'
+[13:31:00]   [container] 
+[13:31:00]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:31:00]   [container] DONE
+[13:31:00]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:31:00]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:31:00]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:31:00]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:31:00]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/signal.csv
+[13:31:00] [clawbench_sci-004-signal-processing_qwen3.6-27b_20260521_052851] Agent finished in 126.39s, returncode=0
+[13:31:00] [clawbench_sci-004-signal-processing_qwen3.6-27b_20260521_052851] Agent result: passed=False, score=0.0000
+[13:31:01] [sci-004-signal-processing] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/sci-004-signal-processing.json
+[13:31:03] [clawbench_sys-014_qwen3.6-27b_20260521_053101] Container started
+[13:31:43]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/scientific-computing/sci-005-optimization/environment/setup.sh
+[13:31:43]   [container] [setup] setup.sh 失败 (rc=1)
+[13:31:43]   [container] [setup] stderr: Traceback (most recent call last):
+[13:31:43]   [container]   File "<stdin>", line 38, in <module>
+[13:31:43]   [container] FileNotFoundError: [Errno 2] No such file or directory: '$WORKSPACE/optimization_problem.json'
+[13:31:43]   [container] 
+[13:31:43]   [container] [setup] 重试 (bash -x) ...
+[13:31:43]   [container] [setup] 重试也失败 (rc=1)
+[13:31:43]   [container] [setup] stderr: + set -euo pipefail
+[13:31:43]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[13:31:43]   [container] + mkdir -p /tmp/clawbench_workspace
+[13:31:43]   [container] + python3 -
+[13:31:43]   [container] Traceback (most recent call last):
+[13:31:43]   [container]   File "<stdin>", line 38, in <module>
+[13:31:43]   [container] FileNotFoundError: [Errno 2] No such file or directory: '$WORKSPACE/optimization_problem.json'
+[13:31:43]   [container] 
+[13:31:43]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:31:43]   [container] DONE
+[13:31:43]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:31:43]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:31:43]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:31:43]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:31:43]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/optimization_problem.json
+[13:31:43] [clawbench_sci-005-optimization_qwen3.6-27b_20260521_052930] Agent finished in 130.69s, returncode=0
+[13:31:43] [clawbench_sci-005-optimization_qwen3.6-27b_20260521_052930] Agent result: passed=False, score=0.6667
+[13:31:43] [sci-005-optimization] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/sci-005-optimization.json
+[13:31:47] [clawbench_wfl-011_qwen3.6-27b_20260521_053143] Container started
+[13:32:12]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-014-service-dependency-resolver/environment/setup.sh
+[13:32:12]   [container] [setup] setup.sh 成功
+[13:32:12]   [container] [setup] 工作空间文件: ['services.json', 'instruction.md']
+[13:32:12]   [container] DONE
+[13:32:12]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:32:12]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:32:12]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:32:12]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:32:12] [clawbench_sys-014_qwen3.6-27b_20260521_053101] Agent finished in 69.46s, returncode=0
+[13:32:12] [clawbench_sys-014_qwen3.6-27b_20260521_053101] Agent result: passed=False, score=0.6667
+[13:32:13] [sys-014] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/sys-014.json
+[13:32:15] [clawbench_wfl-012_qwen3.6-27b_20260521_053213] Container started
+[13:33:39]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-011-pipeline-validator/environment/setup.sh
+[13:33:39]   [container] [setup] setup.sh 成功
+[13:33:39]   [container] [setup] 工作空间文件: ['instruction.md', 'pipeline.json']
+[13:33:39]   [container] DONE
+[13:33:39]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:33:39]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:33:39]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:33:39]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:33:39] [clawbench_wfl-011_qwen3.6-27b_20260521_053143] Agent finished in 111.85s, returncode=0
+[13:33:39] [clawbench_wfl-011_qwen3.6-27b_20260521_053143] Agent result: passed=False, score=0.5000
+[13:33:39] [wfl-011] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/wfl-011.json
+[13:33:41]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multimodal/mm-004-log-analysis-config/environment/setup.sh
+[13:33:41]   [container] [setup] setup.sh 成功
+[13:33:41]   [container] [setup] 工作空间文件: ['config.yaml', 'instruction.md']
+[13:33:41]   [container] DONE
+[13:33:41] [clawbench_mm-004_qwen3.6-27b_20260521_052545] Agent finished in 473.85s, returncode=0
+[13:33:41] [clawbench_mm-004_qwen3.6-27b_20260521_052545] Agent result: passed=False, score=0.9474
+[13:33:41] [mm-004] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/mm-004.json
+[13:33:47]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/workflow-automation/wfl-012-batch-file-renamer/environment/setup.sh
+[13:33:47]   [container] [setup] setup.sh 成功
+[13:33:47]   [container] [setup] 工作空间文件: ['rename_rules.json', 'file_list.json', 'instruction.md']
+[13:33:47]   [container] DONE
+[13:33:47]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:33:47]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:33:47]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:33:47]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:33:47] [clawbench_wfl-012_qwen3.6-27b_20260521_053213] Agent finished in 91.84s, returncode=0
+[13:33:47] [clawbench_wfl-012_qwen3.6-27b_20260521_053213] Agent result: passed=False, score=0.5333
+[13:33:48] [wfl-012] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/wfl-012.json
+[13:40:49]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/security/sec-007-log-forensics/environment/setup.sh
+[13:40:49]   [container] [setup] setup.sh 失败 (rc=1)
+[13:40:49]   [container] [setup] stderr: cp: cannot stat '/app/claw-bench/tasks/security/sec-007-log-forensics/environment/data/access.log': No such file or directory
+[13:40:49]   [container] 
+[13:40:49]   [container] [setup] 重试 (bash -x) ...
+[13:40:49]   [container] [setup] 重试也失败 (rc=1)
+[13:40:49]   [container] [setup] stderr: + set -euo pipefail
+[13:40:49]   [container] +++ dirname /app/claw-bench/tasks/security/sec-007-log-forensics/environment/setup.sh
+[13:40:49]   [container] ++ cd /app/claw-bench/tasks/security/sec-007-log-forensics/environment/..
+[13:40:49]   [container] ++ pwd
+[13:40:49]   [container] + TASK_DIR=/app/claw-bench/tasks/security/sec-007-log-forensics
+[13:40:49]   [container] + WORKSPACE=/tmp/clawbench_workspace
+[13:40:49]   [container] + mkdir -p /tmp/clawbench_workspace
+[13:40:49]   [container] + cp /app/claw-bench/tasks/security/sec-007-log-forensics/environment/data/access.log /tmp/clawbench_workspace/access.log
+[13:40:49]   [container] cp: cannot stat '/app/claw-bench/tasks/security/sec-007-log-forensics/environment/data/access.log': No such file or directory
+[13:40:49]   [container] 
+[13:40:49]   [container] [setup] 工作空间文件: ['instruction.md']
+[13:40:49]   [container] DONE
+[13:40:49]   [container-err] Plan generation returned empty (attempt 1/3)
+[13:40:49]   [container-err] Plan generation returned empty (attempt 2/3)
+[13:40:49]   [container-err] Plan generation returned empty (attempt 3/3)
+[13:40:49]   [container-err] Plan generation failed after 3 attempts, returning empty plan
+[13:40:49]   [container-err] Retry exhausted for read_file: Error: File not found: /tmp/clawbench_workspace/access.log
+[13:40:49] [clawbench_sec-007_qwen3.6-27b_20260521_053008] Agent finished in 639.46s, returncode=0
+[13:40:49] [clawbench_sec-007_qwen3.6-27b_20260521_053008] Agent result: passed=False, score=0.7500
+[13:40:50] [sec-007] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/clawbench-official/qwen3.6-27b/sec-007.json
+[13:40:50]   [clawbench×qwen3.6-27b] done: score=64.3, scored=1/27
+[13:40:50]   [clawbench×qwen3.6-27b] done: score=64.3, scored=0/27
+[13:40:50] 
+============================================================
+[13:40:50] BENCHMARK: pinchbench (5 tasks from file)
+[13:40:50] ============================================================
+[13:40:50]   [pinchbench×qwen3.6-27b] evaluating...
+[13:40:50] [pinchbench] Filtered to 5 tasks by task_ids: ['task_15_daily_summary', 'task_13_image_gen', 'task_03_blog', 'task_07_email', 'task_05_summary']
+[13:40:50] [pinchbench] 汇总已保存: 5/5 完成
+[13:40:50] [task_03_blog] No workspace_files defined in task
+[13:40:50] [task_13_image_gen] No workspace_files defined in task
+[13:40:50] [task_07_email] No workspace_files defined in task
+[13:40:50] [task_05_summary] Preparing 1 workspace file(s): ['summary_source.txt']
+[13:40:50] [task_05_summary] Wrote workspace file: summary_source.txt
+[13:40:53] [pinch_task_03_blog_qwen3.6-27b_20260521_054050] Container started
+[13:40:53] [pinch_task_07_email_qwen3.6-27b_20260521_054050] Container started
+[13:40:53] [pinch_task_13_image_gen_qwen3.6-27b_20260521_054050] Container started
+[13:40:54] [pinch_task_05_summary_qwen3.6-27b_20260521_054050] Container started
+[13:41:51] [pinch_task_07_email_qwen3.6-27b_20260521_054050] Agent finished in 57.51s, returncode=0
+[13:41:51] [pinch_task_07_email_qwen3.6-27b_20260521_054050] [DEBUG] Workspace: /tmp/workspace, exists=True
+[13:41:51] [pinch_task_07_email_qwen3.6-27b_20260521_054050] [DEBUG] Contents: []
+[13:41:51] [pinch_task_07_email_qwen3.6-27b_20260521_054050] [PROGRESS] Task started at 1779342056.4841754
+[13:41:51] [pinch_task_07_email_qwen3.6-27b_20260521_054050] [PROGRESS] Task finished at 54.3s, status=success
+[13:41:51] [pinch_task_07_email_qwen3.6-27b_20260521_054050] [PROGRESS] Transcript entries: 11
+[13:41:51] [pinch_task_07_email_qwen3.6-27b_20260521_054050] DONE
+[13:41:51] [pinch_task_07_email_qwen3.6-27b_20260521_054050] [STDERR] Plan generation returned empty (attempt 1/3)
+[13:41:51] [pinch_task_07_email_qwen3.6-27b_20260521_054050] [STDERR] Plan generation returned empty (attempt 2/3)
+[13:41:51] [pinch_task_07_email_qwen3.6-27b_20260521_054050] [STDERR] Plan generation returned empty (attempt 3/3)
+[13:41:51] [pinch_task_07_email_qwen3.6-27b_20260521_054050] [STDERR] Plan generation failed after 3 attempts, returning empty plan
+[13:41:51] [pinch_task_07_email_qwen3.6-27b_20260521_054050] Agent result loaded: status=success, transcript_len=11
+[13:41:53] [task_07_email] LLM Judge score: 0.9000
+[13:41:54] [task_07_email] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_07_email/transcript.json
+[13:41:54] [task_07_email] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_07_email/result.json
+[13:41:54] [task_15_daily_summary] Preparing 5 workspace file(s): ['research/market_analysis.txt', 'research/competitor_intelligence.txt', 'research/customer_feedback.txt', 'research/product_updates.txt', 'research/industry_news.txt']
+[13:41:54] [task_15_daily_summary] Wrote workspace file: research/market_analysis.txt
+[13:41:54] [task_15_daily_summary] Wrote workspace file: research/competitor_intelligence.txt
+[13:41:54] [task_15_daily_summary] Wrote workspace file: research/customer_feedback.txt
+[13:41:54] [task_15_daily_summary] Wrote workspace file: research/product_updates.txt
+[13:41:54] [task_15_daily_summary] Wrote workspace file: research/industry_news.txt
+[13:41:54] [pinchbench] 汇总已保存: 5/5 完成
+[13:41:56] [pinch_task_15_daily_summary_qwen3.6-27b_20260521_054154] Container started
+[13:42:02] [pinch_task_03_blog_qwen3.6-27b_20260521_054050] Agent finished in 68.49s, returncode=0
+[13:42:02] [pinch_task_03_blog_qwen3.6-27b_20260521_054050] [DEBUG] Workspace: /tmp/workspace, exists=True
+[13:42:02] [pinch_task_03_blog_qwen3.6-27b_20260521_054050] [DEBUG] Contents: []
+[13:42:02] [pinch_task_03_blog_qwen3.6-27b_20260521_054050] [PROGRESS] Task started at 1779342056.4841738
+[13:42:02] [pinch_task_03_blog_qwen3.6-27b_20260521_054050] [PROGRESS] Task finished at 65.3s, status=success
+[13:42:02] [pinch_task_03_blog_qwen3.6-27b_20260521_054050] [PROGRESS] Transcript entries: 11
+[13:42:02] [pinch_task_03_blog_qwen3.6-27b_20260521_054050] DONE
+[13:42:02] [pinch_task_03_blog_qwen3.6-27b_20260521_054050] [STDERR] Plan generation returned empty (attempt 1/3)
+[13:42:02] [pinch_task_03_blog_qwen3.6-27b_20260521_054050] [STDERR] Plan generation returned empty (attempt 2/3)
+[13:42:02] [pinch_task_03_blog_qwen3.6-27b_20260521_054050] [STDERR] Plan generation returned empty (attempt 3/3)
+[13:42:02] [pinch_task_03_blog_qwen3.6-27b_20260521_054050] [STDERR] Plan generation failed after 3 attempts, returning empty plan
+[13:42:02] [pinch_task_03_blog_qwen3.6-27b_20260521_054050] Agent result loaded: status=success, transcript_len=11
+[13:42:04] [task_03_blog] LLM Judge score: 1.0000
+[13:42:04] [task_03_blog] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_03_blog/transcript.json
+[13:42:04] [task_03_blog] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_03_blog/result.json
+[13:42:04] [pinchbench] 汇总已保存: 5/5 完成
+[13:43:20] [pinch_task_05_summary_qwen3.6-27b_20260521_054050] Agent finished in 146.56s, returncode=0
+[13:43:20] [pinch_task_05_summary_qwen3.6-27b_20260521_054050] [DEBUG] Workspace: /tmp/workspace, exists=True
+[13:43:20] [pinch_task_05_summary_qwen3.6-27b_20260521_054050] [DEBUG] Contents: [PosixPath('/tmp/workspace/summary_source.txt')]
+[13:43:20] [pinch_task_05_summary_qwen3.6-27b_20260521_054050] [PROGRESS] Task started at 1779342057.2328596
+[13:43:20] [pinch_task_05_summary_qwen3.6-27b_20260521_054050] [PROGRESS] Task finished at 143.4s, status=success
+[13:43:20] [pinch_task_05_summary_qwen3.6-27b_20260521_054050] [PROGRESS] Transcript entries: 44
+[13:43:20] [pinch_task_05_summary_qwen3.6-27b_20260521_054050] DONE
+[13:43:20] [pinch_task_05_summary_qwen3.6-27b_20260521_054050] [STDERR] Plan generation returned empty (attempt 1/3)
+[13:43:20] [pinch_task_05_summary_qwen3.6-27b_20260521_054050] Agent result loaded: status=success, transcript_len=44
+[13:43:24] [task_05_summary] LLM Judge score: 0.7375
+[13:43:24] [task_05_summary] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_05_summary/transcript.json
+[13:43:24] [task_05_summary] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_05_summary/result.json
+[13:43:24] [pinchbench] 汇总已保存: 5/5 完成
+[13:43:25] [pinch_task_15_daily_summary_qwen3.6-27b_20260521_054154] Agent finished in 89.03s, returncode=0
+[13:43:25] [pinch_task_15_daily_summary_qwen3.6-27b_20260521_054154] [DEBUG] Workspace: /tmp/workspace, exists=True
+[13:43:25] [pinch_task_15_daily_summary_qwen3.6-27b_20260521_054154] [DEBUG] Contents: [PosixPath('/tmp/workspace/research')]
+[13:43:25] [pinch_task_15_daily_summary_qwen3.6-27b_20260521_054154] [PROGRESS] Task started at 1779342119.6206763
+[13:43:25] [pinch_task_15_daily_summary_qwen3.6-27b_20260521_054154] [PROGRESS] Task finished at 85.9s, status=success
+[13:43:25] [pinch_task_15_daily_summary_qwen3.6-27b_20260521_054154] [PROGRESS] Transcript entries: 32
+[13:43:25] [pinch_task_15_daily_summary_qwen3.6-27b_20260521_054154] DONE
+[13:43:25] [pinch_task_15_daily_summary_qwen3.6-27b_20260521_054154] [STDERR] Plan generation returned empty (attempt 1/3)
+[13:43:25] [pinch_task_15_daily_summary_qwen3.6-27b_20260521_054154] [STDERR] Plan generation returned empty (attempt 2/3)
+[13:43:25] [pinch_task_15_daily_summary_qwen3.6-27b_20260521_054154] [STDERR] Plan generation returned empty (attempt 3/3)
+[13:43:25] [pinch_task_15_daily_summary_qwen3.6-27b_20260521_054154] [STDERR] Plan generation failed after 3 attempts, returning empty plan
+[13:43:25] [pinch_task_15_daily_summary_qwen3.6-27b_20260521_054154] Agent result loaded: status=success, transcript_len=32
+[13:43:29] [task_15_daily_summary] LLM Judge score: 1.0000
+[13:43:29] [task_15_daily_summary] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_15_daily_summary/transcript.json
+[13:43:29] [task_15_daily_summary] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_15_daily_summary/result.json
+[13:43:29] [pinchbench] 汇总已保存: 5/5 完成
+[13:44:03] [pinch_task_13_image_gen_qwen3.6-27b_20260521_054050] Agent finished in 189.01s, returncode=0
+[13:44:03] [pinch_task_13_image_gen_qwen3.6-27b_20260521_054050] [DEBUG] Workspace: /tmp/workspace, exists=True
+[13:44:03] [pinch_task_13_image_gen_qwen3.6-27b_20260521_054050] [DEBUG] Contents: []
+[13:44:03] [pinch_task_13_image_gen_qwen3.6-27b_20260521_054050] [PROGRESS] Task started at 1779342056.8731217
+[13:44:03] [pinch_task_13_image_gen_qwen3.6-27b_20260521_054050] [PROGRESS] Task finished at 185.9s, status=success
+[13:44:03] [pinch_task_13_image_gen_qwen3.6-27b_20260521_054050] [PROGRESS] Transcript entries: 59
+[13:44:03] [pinch_task_13_image_gen_qwen3.6-27b_20260521_054050] DONE
+[13:44:03] [pinch_task_13_image_gen_qwen3.6-27b_20260521_054050] [STDERR] Plan generation returned empty (attempt 1/3)
+[13:44:03] [pinch_task_13_image_gen_qwen3.6-27b_20260521_054050] [STDERR] Plan generation returned empty (attempt 2/3)
+[13:44:03] [pinch_task_13_image_gen_qwen3.6-27b_20260521_054050] [STDERR] Plan generation returned empty (attempt 3/3)
+[13:44:03] [pinch_task_13_image_gen_qwen3.6-27b_20260521_054050] [STDERR] Plan generation failed after 3 attempts, returning empty plan
+[13:44:03] [pinch_task_13_image_gen_qwen3.6-27b_20260521_054050] Agent result loaded: status=success, transcript_len=59
+[13:44:05] [task_13_image_gen] Hybrid score: 0.4892 (auto=0.3333, llm=0.6450)
+[13:44:06] [task_13_image_gen] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_13_image_gen/transcript.json
+[13:44:06] [task_13_image_gen] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_13_image_gen/result.json
+[13:44:06] [pinchbench] 汇总已保存: 5/5 完成
+[13:44:06]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[13:44:06]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[13:44:06] 
+

@@ -1,0 +1,29 @@
+[23:49:40] Config: bench=['pinchbench'], models=['qwen3.6-27b'], sample=all
+[23:49:40] 
+============================================================
+[23:49:40] BENCHMARK: PinchBench (23 tasks)
+[23:49:40] ============================================================
+[23:49:40]   [pinchbench×qwen3.6-27b] evaluating...
+[23:49:41] [pinchbench] Filtered to 1 tasks by task_ids: ['task_03_blog']
+[23:49:41] [pinchbench] 汇总已保存: 0/1 完成
+[23:49:41] [pinchbench] Running task 1/1: task_03_blog
+[23:49:41] [task_03_blog] No workspace_files defined in task
+[23:49:44] [pinch_task_03_blog_qwen3.6-27b_20260520_154941] Container started
+[23:51:06] [pinch_task_03_blog_qwen3.6-27b_20260520_154941] Agent finished in 82.17s, returncode=0
+[23:51:06] [pinch_task_03_blog_qwen3.6-27b_20260520_154941] [DEBUG] Workspace: /tmp/workspace, exists=True
+[23:51:06] [pinch_task_03_blog_qwen3.6-27b_20260520_154941] [DEBUG] Contents: []
+[23:51:06] [pinch_task_03_blog_qwen3.6-27b_20260520_154941] [PROGRESS] Task started at 1779292187.3120575
+[23:51:06] [pinch_task_03_blog_qwen3.6-27b_20260520_154941] [PROGRESS] Task finished at 77.5s, status=error
+[23:51:06] [pinch_task_03_blog_qwen3.6-27b_20260520_154941] [PROGRESS] Transcript entries: 4
+[23:51:06] [pinch_task_03_blog_qwen3.6-27b_20260520_154941] DONE
+[23:51:06] [pinch_task_03_blog_qwen3.6-27b_20260520_154941] [STDERR] '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[23:51:06] [pinch_task_03_blog_qwen3.6-27b_20260520_154941] [STDERR] Retrying in 1s [Retry 1/5].
+[23:51:06] [pinch_task_03_blog_qwen3.6-27b_20260520_154941] [STDERR] [execute] Exception caught: RuntimeError: Cannot send a request, as the client has been closed.
+[23:51:06] [pinch_task_03_blog_qwen3.6-27b_20260520_154941] Agent result loaded: status=error, transcript_len=4
+[23:51:10] [task_03_blog] LLM Judge score: 0.0000
+[23:51:10] [task_03_blog] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_03_blog/transcript.json
+[23:51:10] [task_03_blog] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_03_blog/result.json
+[23:51:10] [pinchbench] 汇总已保存: 0/1 完成
+[23:51:10]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[23:51:10] 
+

@@ -1,0 +1,17 @@
+[13:51:50] Config: bench=['clawbench-official'], models=['qwen3.6-27b'], sample=all
+[13:51:50] 
+============================================================
+[13:51:50] BENCHMARK: ClawBench Official (250 tasks)
+[13:51:50] ============================================================
+[13:51:50]   [clawbench-official×qwen3.6-27b] evaluating...
+[13:51:54] [clawbench_ds-004-time-series_qwen3.6-27b_20260521_055152] Container started
+[14:03:17]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-science/ds-004-time-series/environment/setup.sh
+[14:03:17]   [container] [setup] setup.sh 成功
+[14:03:17]   [container] [setup] 工作空间文件: ['timeseries.csv', 'instruction.md']
+[14:03:17]   [container] DONE
+[14:03:17] [clawbench_ds-004-time-series_qwen3.6-27b_20260521_055152] Agent finished in 683.19s, returncode=0
+[14:03:17] [clawbench_ds-004-time-series_qwen3.6-27b_20260521_055152] Agent result: passed=True, score=1.0000
+[14:03:18] [ds-004-time-series] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/collaboration/clawbench-official/qwen3.6-27b/ds-004-time-series.json
+[14:03:18]   [clawbench-official×qwen3.6-27b] done: score=100.0, scored=1/1
+[14:03:18] 
+

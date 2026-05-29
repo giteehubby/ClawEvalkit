@@ -1,0 +1,1368 @@
+[13:40:32] Config: bench=['agentbench', 'pinchbench'], models=['qwen3.6-27b'], sample=all
+[13:40:32] 
+============================================================
+[13:40:32] BENCHMARK: AgentBench (39 tasks)
+[13:40:32] ============================================================
+[13:40:32]   [agentbench×qwen3.6-27b] evaluating...
+[13:40:35] [agent_cross-reference_qwen3.6-27b_20260520_054034] Container started
+[13:40:35] [agent_cross-reference_qwen3.6-27b_20260520_054034] Workspace copied to /tmp/workspace/:
+total 8
+drwxr-xr-x 1  501 dialout   46 May 20 05:40 .
+drwxrwxrwt 1 root root      32 May 20 05:40 ..
+-rw-r--r-- 1  501 dialout 1173 Apr 23 08:10 inventory.csv
+-rw-r--r-- 1  501 dialout 1588 Apr 23 08:10 orders.csv
+
+[13:42:21] [agent_cross-reference_qwen3.6-27b_20260520_054034] Agent finished in 105.60s, returncode=0
+[13:42:21] [agent_cross-reference_qwen3.6-27b_20260520_054034] Agent stdout: DONE
+
+[13:42:21] [agent_cross-reference_qwen3.6-27b_20260520_054034] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[13:42:21] [agent_cross-reference_qwen3.6-27b_20260520_054034] Agent result loaded: status=success, transcript_len=23
+[13:42:25] [agent_cross-reference_qwen3.6-27b_20260520_054034] Scores: L0=100.0 L1=100.0 L2=100.0 L3=97.5 | Overall=99.1
+[13:42:25] [agent_cross-reference_qwen3.6-27b_20260520_054034] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/cross-reference/result.json
+[13:42:27] [agent_find-anomalies_qwen3.6-27b_20260520_054225] Container started
+[13:42:27] [agent_find-anomalies_qwen3.6-27b_20260520_054225] Workspace copied to /tmp/workspace/:
+total 8
+drwxr-xr-x 1  501 dialout   28 May 20 05:42 .
+drwxrwxrwt 1 root root      32 May 20 05:42 ..
+-rw-r--r-- 1  501 dialout 4255 Apr 23 08:10 sales-data.csv
+
+[13:46:16] [agent_find-anomalies_qwen3.6-27b_20260520_054225] Agent finished in 229.13s, returncode=0
+[13:46:16] [agent_find-anomalies_qwen3.6-27b_20260520_054225] Agent stdout: DONE
+
+[13:46:16] [agent_find-anomalies_qwen3.6-27b_20260520_054225] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[13:46:16] [agent_find-anomalies_qwen3.6-27b_20260520_054225] Agent result loaded: status=success, transcript_len=23
+[13:46:20] [agent_find-anomalies_qwen3.6-27b_20260520_054225] Scores: L0=100.0 L1=100.0 L2=97.5 L3=97.5 | Overall=98.5
+[13:46:21] [agent_find-anomalies_qwen3.6-27b_20260520_054225] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/find-anomalies/result.json
+[13:46:21] [agent_log-pattern-detection_qwen3.6-27b_20260520_054621] Running setup.sh for task log-pattern-detection
+[13:46:21] [agent_log-pattern-detection_qwen3.6-27b_20260520_054621] setup.sh completed successfully
+[13:46:22] [agent_log-pattern-detection_qwen3.6-27b_20260520_054621] Container started
+[13:46:22] [agent_log-pattern-detection_qwen3.6-27b_20260520_054621] Workspace copied to /tmp/workspace/:
+total 8
+drwxr-xr-x 1  501 dialout  58 May 20 05:46 .
+drwxrwxrwt 1 root root     32 May 20 05:46 ..
+drwxr-xr-x 1  501 dialout 128 May 20 05:46 .git
+drwxr-xr-x 1  501 dialout 130 May 20 05:46 logs
+-rw-r--r-- 1  501 dialout 131 May 20 05:46 sla.yaml
+-rw-r--r-- 1  501 dialout 354 May 20 05:46 topology.yaml
+
+[13:49:32] [agent_log-pattern-detection_qwen3.6-27b_20260520_054621] Agent finished in 190.34s, returncode=0
+[13:49:32] [agent_log-pattern-detection_qwen3.6-27b_20260520_054621] Agent stdout: DONE
+
+[13:49:32] [agent_log-pattern-detection_qwen3.6-27b_20260520_054621] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[13:49:32] [agent_log-pattern-detection_qwen3.6-27b_20260520_054621] Agent result loaded: status=success, transcript_len=35
+[13:49:37] [agent_log-pattern-detection_qwen3.6-27b_20260520_054621] Scores: L0=85.0 L1=100.0 L2=97.5 L3=97.5 | Overall=96.2
+[13:49:38] [agent_log-pattern-detection_qwen3.6-27b_20260520_054621] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/log-pattern-detection/result.json
+[13:49:38] [agent_multi-format-reconciliation_qwen3.6-27b_20260520_054938] Running setup.sh for task multi-format-reconciliation
+[13:49:40] [agent_multi-format-reconciliation_qwen3.6-27b_20260520_054938] setup.sh completed successfully
+[13:49:41] [agent_multi-format-reconciliation_qwen3.6-27b_20260520_054938] Container started
+[13:49:41] [agent_multi-format-reconciliation_qwen3.6-27b_20260520_054938] Workspace copied to /tmp/workspace/:
+total 60
+drwxr-xr-x 1  501 dialout    94 May 20 05:49 .
+drwxrwxrwt 1 root root       32 May 20 05:49 ..
+drwxr-xr-x 1  501 dialout   128 May 20 05:49 .git
+-rw-r--r-- 1  501 dialout 13929 May 20 05:49 bank-statement.txt
+-rw-r--r-- 1  501 dialout 11044 May 20 05:49 invoices.csv
+-rw-r--r-- 1  501 dialout 29720 May 20 05:49 payments.json
+
+[13:56:01] [agent_multi-format-reconciliation_qwen3.6-27b_20260520_054938] Agent finished in 379.74s, returncode=0
+[13:56:01] [agent_multi-format-reconciliation_qwen3.6-27b_20260520_054938] Agent stdout: DONE
+
+[13:56:01] [agent_multi-format-reconciliation_qwen3.6-27b_20260520_054938] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[13:56:01] [agent_multi-format-reconciliation_qwen3.6-27b_20260520_054938] Agent result loaded: status=success, transcript_len=62
+[13:56:10] [agent_multi-format-reconciliation_qwen3.6-27b_20260520_054938] Scores: L0=60.0 L1=100.0 L2=91.5 L3=92.5 | Overall=89.2
+[13:56:10] [agent_multi-format-reconciliation_qwen3.6-27b_20260520_054938] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/multi-format-reconciliation/result.json
+[13:56:11] [agent_summary-statistics_qwen3.6-27b_20260520_055610] Container started
+[13:56:11] [agent_summary-statistics_qwen3.6-27b_20260520_055610] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   36 May 20 05:56 .
+drwxrwxrwt 1 root root      32 May 20 05:56 ..
+-rw-r--r-- 1  501 dialout 2957 Apr 23 08:10 survey-results.csv
+
+[13:57:31] [agent_summary-statistics_qwen3.6-27b_20260520_055610] Agent finished in 79.60s, returncode=0
+[13:57:31] [agent_summary-statistics_qwen3.6-27b_20260520_055610] Agent stdout: DONE
+
+[13:57:31] [agent_summary-statistics_qwen3.6-27b_20260520_055610] Agent result loaded: status=success, transcript_len=17
+[13:57:35] [agent_summary-statistics_qwen3.6-27b_20260520_055610] Scores: L0=100.0 L1=100.0 L2=100.0 L3=100.0 | Overall=100.0
+[13:57:36] [agent_summary-statistics_qwen3.6-27b_20260520_055610] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/summary-statistics/result.json
+[13:57:36] [agent_cascading-failures_qwen3.6-27b_20260520_055736] Running setup.sh for task cascading-failures
+[13:57:36] [agent_cascading-failures_qwen3.6-27b_20260520_055736] setup.sh completed successfully
+[13:57:37] [agent_cascading-failures_qwen3.6-27b_20260520_055736] Container started
+[13:57:37] [agent_cascading-failures_qwen3.6-27b_20260520_055736] Workspace copied to /tmp/workspace/:
+total 20
+drwxr-xr-x 1  501 dialout 120 May 20 05:57 .
+drwxrwxrwt 1 root root     32 May 20 05:57 ..
+drwxr-xr-x 1  501 dialout 128 May 20 05:57 .git
+drwxr-xr-x 1  501 dialout  18 May 20 05:57 data
+-rw-r--r-- 1  501 dialout 362 May 20 05:57 export.py
+-rw-r--r-- 1  501 dialout 206 May 20 05:57 ingest.py
+-rw-r--r-- 1  501 dialout 472 May 20 05:57 pipeline.py
+-rw-r--r-- 1  501 dialout 759 May 20 05:57 transform.py
+-rw-r--r-- 1  501 dialout 368 May 20 05:57 validate.py
+
+[13:58:50] [agent_cascading-failures_qwen3.6-27b_20260520_055736] Agent finished in 72.78s, returncode=0
+[13:58:50] [agent_cascading-failures_qwen3.6-27b_20260520_055736] Agent stdout: DONE
+
+[13:58:50] [agent_cascading-failures_qwen3.6-27b_20260520_055736] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[13:58:50] [agent_cascading-failures_qwen3.6-27b_20260520_055736] Agent result loaded: status=success, transcript_len=44
+[13:58:59] [agent_cascading-failures_qwen3.6-27b_20260520_055736] Scores: L0=57.1 L1=100.0 L2=100.0 L3=100.0 | Overall=93.6
+[13:59:00] [agent_cascading-failures_qwen3.6-27b_20260520_055736] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/cascading-failures/result.json
+[13:59:01] [agent_corrupted-input_qwen3.6-27b_20260520_055900] Container started
+[13:59:01] [agent_corrupted-input_qwen3.6-27b_20260520_055900] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout  18 May 20 05:59 .
+drwxrwxrwt 1 root root     32 May 20 05:59 ..
+-rw-r--r-- 1  501 dialout 751 Apr 23 08:10 data.json
+
+[14:00:47] [agent_corrupted-input_qwen3.6-27b_20260520_055900] Agent finished in 105.80s, returncode=0
+[14:00:47] [agent_corrupted-input_qwen3.6-27b_20260520_055900] Agent stdout: DONE
+
+[14:00:47] [agent_corrupted-input_qwen3.6-27b_20260520_055900] Agent result loaded: status=success, transcript_len=26
+[14:00:51] [agent_corrupted-input_qwen3.6-27b_20260520_055900] Scores: L0=100.0 L1=85.0 L2=92.5 L3=97.5 | Overall=93.5
+[14:00:52] [agent_corrupted-input_qwen3.6-27b_20260520_055900] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/corrupted-input/result.json
+[14:00:53] [agent_impossible-request_qwen3.6-27b_20260520_060052] Container started
+[14:00:53] [agent_impossible-request_qwen3.6-27b_20260520_060052] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  0 May 20 06:00 .
+drwxrwxrwt 1 root root    32 May 20 06:00 ..
+
+[14:04:00] [agent_impossible-request_qwen3.6-27b_20260520_060052] Agent finished in 187.00s, returncode=0
+[14:04:00] [agent_impossible-request_qwen3.6-27b_20260520_060052] Agent stdout: DONE
+
+[14:04:00] [agent_impossible-request_qwen3.6-27b_20260520_060052] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[14:04:00] [agent_impossible-request_qwen3.6-27b_20260520_060052] Agent result loaded: status=success, transcript_len=20
+[14:04:06] [agent_impossible-request_qwen3.6-27b_20260520_060052] Scores: L0=100.0 L1=80.0 L2=92.5 L3=92.5 | Overall=90.5
+[14:04:07] [agent_impossible-request_qwen3.6-27b_20260520_060052] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/impossible-request/result.json
+[14:04:07] [agent_misleading-error-message_qwen3.6-27b_20260520_060407] Running setup.sh for task misleading-error-message
+[14:04:07] [agent_misleading-error-message_qwen3.6-27b_20260520_060407] setup.sh completed successfully
+[14:04:08] [agent_misleading-error-message_qwen3.6-27b_20260520_060407] Container started
+[14:04:08] [agent_misleading-error-message_qwen3.6-27b_20260520_060407] Workspace copied to /tmp/workspace/:
+total 8
+drwxr-xr-x 1  501 dialout  84 May 20 06:04 .
+drwxrwxrwt 1 root root     32 May 20 06:04 ..
+drwxr-xr-x 1  501 dialout 128 May 20 06:04 .git
+-rw-r--r-- 1  501 dialout 924 May 20 06:04 BUG_REPORT.md
+-rw-r--r-- 1  501 dialout 695 May 20 06:04 app.js
+drwxr-xr-x 1  501 dialout  32 May 20 06:04 lib
+drwxr-xr-x 1  501 dialout  14 May 20 06:04 middleware
+drwxr-xr-x 1  501 dialout  34 May 20 06:04 routes
+
+[14:06:06] [agent_misleading-error-message_qwen3.6-27b_20260520_060407] Agent finished in 117.91s, returncode=0
+[14:06:06] [agent_misleading-error-message_qwen3.6-27b_20260520_060407] Agent stdout: DONE
+
+[14:06:06] [agent_misleading-error-message_qwen3.6-27b_20260520_060407] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+
+[14:06:06] [agent_misleading-error-message_qwen3.6-27b_20260520_060407] Agent result loaded: status=success, transcript_len=38
+[14:06:11] [agent_misleading-error-message_qwen3.6-27b_20260520_060407] Scores: L0=100.0 L1=70.0 L2=100.0 L3=100.0 | Overall=92.5
+[14:06:12] [agent_misleading-error-message_qwen3.6-27b_20260520_060407] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/misleading-error-message/result.json
+[14:06:13] [agent_missing-dependency_qwen3.6-27b_20260520_060612] Container started
+[14:06:13] [agent_missing-dependency_qwen3.6-27b_20260520_060612] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  0 May 20 06:06 .
+drwxrwxrwt 1 root root    32 May 20 06:06 ..
+
+[14:07:59] [agent_missing-dependency_qwen3.6-27b_20260520_060612] Agent finished in 106.73s, returncode=0
+[14:07:59] [agent_missing-dependency_qwen3.6-27b_20260520_060612] Agent stdout: DONE
+
+[14:08:00] [agent_missing-dependency_qwen3.6-27b_20260520_060612] Agent result loaded: status=success, transcript_len=38
+[14:08:07] [agent_missing-dependency_qwen3.6-27b_20260520_060612] Scores: L0=0.0 L1=45.0 L2=95.0 L3=95.0 | Overall=68.2
+[14:08:08] [agent_missing-dependency_qwen3.6-27b_20260520_060612] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/missing-dependency/result.json
+[14:08:08] [agent_partial-recovery_qwen3.6-27b_20260520_060808] Running setup.sh for task partial-recovery
+[14:08:08] [agent_partial-recovery_qwen3.6-27b_20260520_060808] setup.sh completed successfully
+[14:08:09] [agent_partial-recovery_qwen3.6-27b_20260520_060808] Container started
+[14:08:09] [agent_partial-recovery_qwen3.6-27b_20260520_060808] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   34 May 20 06:08 .
+drwxrwxrwt 1 root root      32 May 20 06:08 ..
+drwxr-xr-x 1  501 dialout  128 May 20 06:08 .git
+drwxr-xr-x 1  501 dialout  260 May 20 06:08 data
+-rw-r--r-- 1  501 dialout 1444 May 20 06:08 import.py
+
+[14:09:24] [agent_partial-recovery_qwen3.6-27b_20260520_060808] Agent finished in 75.23s, returncode=0
+[14:09:24] [agent_partial-recovery_qwen3.6-27b_20260520_060808] Agent stdout: DONE
+
+[14:09:24] [agent_partial-recovery_qwen3.6-27b_20260520_060808] Agent stderr: Retry exhausted for read_file: Error: Cannot read binary file /tmp/workspace/data/file_009.json (MIME: application/json). Only UTF-8 text and images are supported.
+
+[14:09:24] [agent_partial-recovery_qwen3.6-27b_20260520_060808] Agent result loaded: status=success, transcript_len=59
+[14:09:30] [agent_partial-recovery_qwen3.6-27b_20260520_060808] Scores: L0=90.5 L1=70.0 L2=92.5 L3=97.5 | Overall=88.3
+[14:09:30] [agent_partial-recovery_qwen3.6-27b_20260520_060808] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/partial-recovery/result.json
+[14:09:31] [agent_data-spreadsheet_qwen3.6-27b_20260520_060930] Container started
+[14:09:31] [agent_data-spreadsheet_qwen3.6-27b_20260520_060930] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   30 May 20 06:09 .
+drwxrwxrwt 1 root root      32 May 20 06:09 ..
+-rw-r--r-- 1  501 dialout 1894 Apr 23 08:10 raw-records.txt
+
+[14:11:59] [agent_data-spreadsheet_qwen3.6-27b_20260520_060930] Agent finished in 147.26s, returncode=0
+[14:11:59] [agent_data-spreadsheet_qwen3.6-27b_20260520_060930] Agent stdout: DONE
+
+[14:11:59] [agent_data-spreadsheet_qwen3.6-27b_20260520_060930] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[14:11:59] [agent_data-spreadsheet_qwen3.6-27b_20260520_060930] Agent result loaded: status=success, transcript_len=35
+[14:12:06] [agent_data-spreadsheet_qwen3.6-27b_20260520_060930] Scores: L0=100.0 L1=80.0 L2=95.0 L3=92.5 | Overall=91.1
+[14:12:06] [agent_data-spreadsheet_qwen3.6-27b_20260520_060930] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/data-spreadsheet/result.json
+[14:12:07] [agent_linked-project-scaffold_qwen3.6-27b_20260520_061206] Container started
+[14:12:07] [agent_linked-project-scaffold_qwen3.6-27b_20260520_061206] Workspace copied to /tmp/workspace/:
+total 8
+drwxr-xr-x 1  501 dialout   30 May 20 06:12 .
+drwxrwxrwt 1 root root      32 May 20 06:12 ..
+-rw-r--r-- 1  501 dialout 4402 Apr 23 08:10 architecture.md
+
+[14:13:29] [agent_linked-project-scaffold_qwen3.6-27b_20260520_061206] Agent finished in 81.76s, returncode=0
+[14:13:29] [agent_linked-project-scaffold_qwen3.6-27b_20260520_061206] Agent stdout: DONE
+
+[14:13:29] [agent_linked-project-scaffold_qwen3.6-27b_20260520_061206] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[14:13:29] [agent_linked-project-scaffold_qwen3.6-27b_20260520_061206] Agent result loaded: status=success, transcript_len=68
+[14:13:36] [agent_linked-project-scaffold_qwen3.6-27b_20260520_061206] Scores: L0=67.6 L1=80.0 L2=92.5 L3=95.0 | Overall=86.5
+[14:13:36] [agent_linked-project-scaffold_qwen3.6-27b_20260520_061206] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/linked-project-scaffold/result.json
+[14:13:36] [agent_migration-script_qwen3.6-27b_20260520_061336] Running setup.sh for task migration-script
+[14:13:36] [agent_migration-script_qwen3.6-27b_20260520_061336] setup.sh completed successfully
+[14:13:37] [agent_migration-script_qwen3.6-27b_20260520_061336] Container started
+[14:13:38] [agent_migration-script_qwen3.6-27b_20260520_061336] Workspace copied to /tmp/workspace/:
+total 12
+drwxr-xr-x 1  501 dialout    56 May 20 06:13 .
+drwxrwxrwt 1 root root       32 May 20 06:13 ..
+drwxr-xr-x 1  501 dialout   128 May 20 06:13 .git
+-rw-r--r-- 1  501 dialout 10869 May 20 06:13 MIGRATION_GUIDE.md
+drwxr-xr-x 1  501 dialout    26 May 20 06:13 config
+
+[14:15:33] [agent_migration-script_qwen3.6-27b_20260520_061336] Agent finished in 115.26s, returncode=0
+[14:15:33] [agent_migration-script_qwen3.6-27b_20260520_061336] Agent stdout: DONE
+
+[14:15:33] [agent_migration-script_qwen3.6-27b_20260520_061336] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[14:15:33] [agent_migration-script_qwen3.6-27b_20260520_061336] Agent result loaded: status=success, transcript_len=35
+[14:15:39] [agent_migration-script_qwen3.6-27b_20260520_061336] Scores: L0=100.0 L1=100.0 L2=100.0 L3=97.5 | Overall=99.1
+[14:15:40] [agent_migration-script_qwen3.6-27b_20260520_061336] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/migration-script/result.json
+[14:15:41] [agent_pitch-deck-outline_qwen3.6-27b_20260520_061540] Container started
+[14:15:41] [agent_pitch-deck-outline_qwen3.6-27b_20260520_061540] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   32 May 20 06:15 .
+drwxrwxrwt 1 root root      32 May 20 06:15 ..
+-rw-r--r-- 1  501 dialout 4064 Apr 23 08:10 startup-info.txt
+
+[14:16:50] [agent_pitch-deck-outline_qwen3.6-27b_20260520_061540] Agent finished in 69.35s, returncode=0
+[14:16:50] [agent_pitch-deck-outline_qwen3.6-27b_20260520_061540] Agent stdout: DONE
+
+[14:16:50] [agent_pitch-deck-outline_qwen3.6-27b_20260520_061540] Agent stderr: Plan generation returned empty (attempt 1/3)
+
+[14:16:50] [agent_pitch-deck-outline_qwen3.6-27b_20260520_061540] Agent result loaded: status=success, transcript_len=17
+[14:16:57] [agent_pitch-deck-outline_qwen3.6-27b_20260520_061540] Scores: L0=100.0 L1=100.0 L2=100.0 L3=100.0 | Overall=100.0
+[14:16:58] [agent_pitch-deck-outline_qwen3.6-27b_20260520_061540] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/pitch-deck-outline/result.json
+[14:16:59] [agent_project-proposal_qwen3.6-27b_20260520_061658] Container started
+[14:16:59] [agent_project-proposal_qwen3.6-27b_20260520_061658] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   34 May 20 06:16 .
+drwxrwxrwt 1 root root      32 May 20 06:16 ..
+-rw-r--r-- 1  501 dialout 2222 Apr 23 08:10 project-brief.txt
+
+[14:18:51] [agent_project-proposal_qwen3.6-27b_20260520_061658] Agent finished in 111.70s, returncode=0
+[14:18:51] [agent_project-proposal_qwen3.6-27b_20260520_061658] Agent stdout: DONE
+
+[14:18:51] [agent_project-proposal_qwen3.6-27b_20260520_061658] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[14:18:51] [agent_project-proposal_qwen3.6-27b_20260520_061658] Agent result loaded: status=success, transcript_len=17
+[14:18:57] [agent_project-proposal_qwen3.6-27b_20260520_061658] Scores: L0=100.0 L1=100.0 L2=100.0 L3=97.5 | Overall=99.1
+[14:18:57] [agent_project-proposal_qwen3.6-27b_20260520_061658] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/project-proposal/result.json
+[14:18:57] [agent_project-scaffold_qwen3.6-27b_20260520_061857] Running setup.sh for task project-scaffold
+[14:18:57] [agent_project-scaffold_qwen3.6-27b_20260520_061857] setup.sh completed successfully
+[14:18:59] [agent_project-scaffold_qwen3.6-27b_20260520_061857] Container started
+[14:18:59] [agent_project-scaffold_qwen3.6-27b_20260520_061857] Workspace copied to /tmp/workspace/:
+total 8
+drwxr-xr-x 1  501 dialout   38 May 20 06:18 .
+drwxrwxrwt 1 root root      32 May 20 06:18 ..
+drwxr-xr-x 1  501 dialout  128 May 20 06:18 .git
+-rw-r--r-- 1  501 dialout 4740 May 20 06:18 requirements.md
+
+[14:22:38] [agent_project-scaffold_qwen3.6-27b_20260520_061857] Agent finished in 218.95s, returncode=0
+[14:22:38] [agent_project-scaffold_qwen3.6-27b_20260520_061857] Agent stdout: DONE
+
+[14:22:38] [agent_project-scaffold_qwen3.6-27b_20260520_061857] Agent stderr: Plan generation returned empty (attempt 1/3)
+
+[14:22:38] [agent_project-scaffold_qwen3.6-27b_20260520_061857] Agent result loaded: status=success, transcript_len=86
+[14:22:46] [agent_project-scaffold_qwen3.6-27b_20260520_061857] Scores: L0=100.0 L1=65.0 L2=97.5 L3=97.5 | Overall=89.8
+[14:22:46] [agent_project-scaffold_qwen3.6-27b_20260520_061857] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/project-scaffold/result.json
+[14:22:47] [agent_skill-graph-creation_qwen3.6-27b_20260520_062246] Container started
+[14:22:47] [agent_skill-graph-creation_qwen3.6-27b_20260520_062246] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   42 May 20 06:22 .
+drwxrwxrwt 1 root root      32 May 20 06:22 ..
+-rw-r--r-- 1  501 dialout 2934 Apr 23 08:10 skill-requirements.md
+
+[14:25:20] [agent_skill-graph-creation_qwen3.6-27b_20260520_062246] Agent finished in 152.48s, returncode=0
+[14:25:20] [agent_skill-graph-creation_qwen3.6-27b_20260520_062246] Agent stdout: DONE
+
+[14:25:20] [agent_skill-graph-creation_qwen3.6-27b_20260520_062246] Agent stderr: Plan generation returned empty (attempt 1/3)
+
+[14:25:20] [agent_skill-graph-creation_qwen3.6-27b_20260520_062246] Agent result loaded: status=success, transcript_len=44
+[14:25:25] [agent_skill-graph-creation_qwen3.6-27b_20260520_062246] Scores: L0=92.9 L1=100.0 L2=97.5 L3=97.5 | Overall=97.4
+[14:25:25] [agent_skill-graph-creation_qwen3.6-27b_20260520_062246] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/skill-graph-creation/result.json
+[14:25:25] [agent_skill-graph-refactor_qwen3.6-27b_20260520_062525] Running setup.sh for task skill-graph-refactor
+[14:25:25] [agent_skill-graph-refactor_qwen3.6-27b_20260520_062525] setup.sh completed successfully
+[14:25:26] [agent_skill-graph-refactor_qwen3.6-27b_20260520_062525] Container started
+[14:25:26] [agent_skill-graph-refactor_qwen3.6-27b_20260520_062525] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  20 May 20 06:25 .
+drwxrwxrwt 1 root root     32 May 20 06:25 ..
+drwxr-xr-x 1  501 dialout 128 May 20 06:25 .git
+drwxr-xr-x 1  501 dialout 160 May 20 06:25 skills
+
+[14:27:38] [agent_skill-graph-refactor_qwen3.6-27b_20260520_062525] Agent finished in 131.32s, returncode=0
+[14:27:38] [agent_skill-graph-refactor_qwen3.6-27b_20260520_062525] Agent stdout: DONE
+
+[14:27:38] [agent_skill-graph-refactor_qwen3.6-27b_20260520_062525] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[14:27:38] [agent_skill-graph-refactor_qwen3.6-27b_20260520_062525] Agent result loaded: status=success, transcript_len=65
+[14:27:48] [agent_skill-graph-refactor_qwen3.6-27b_20260520_062525] Scores: L0=100.0 L1=100.0 L2=92.5 L3=95.0 | Overall=96.4
+[14:27:48] [agent_skill-graph-refactor_qwen3.6-27b_20260520_062525] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/skill-graph-refactor/result.json
+[14:27:49] [agent_structured-form_qwen3.6-27b_20260520_062748] Container started
+[14:27:49] [agent_structured-form_qwen3.6-27b_20260520_062748] Workspace copied to /tmp/workspace/:
+total 8
+drwxr-xr-x 1  501 dialout   42 May 20 06:27 .
+drwxrwxrwt 1 root root      32 May 20 06:27 ..
+-rw-r--r-- 1  501 dialout 4222 Apr 23 08:10 form-requirements.txt
+
+[14:28:54] [agent_structured-form_qwen3.6-27b_20260520_062748] Agent finished in 64.93s, returncode=0
+[14:28:54] [agent_structured-form_qwen3.6-27b_20260520_062748] Agent stdout: DONE
+
+[14:28:54] [agent_structured-form_qwen3.6-27b_20260520_062748] Agent result loaded: status=success, transcript_len=17
+[14:28:59] [agent_structured-form_qwen3.6-27b_20260520_062748] Scores: L0=100.0 L1=100.0 L2=100.0 L3=95.0 | Overall=98.2
+[14:29:00] [agent_structured-form_qwen3.6-27b_20260520_062748] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/structured-form/result.json
+[14:29:00] [agent_constraint-accumulation_qwen3.6-27b_20260520_062900] Running setup.sh for task constraint-accumulation
+[14:29:00] [agent_constraint-accumulation_qwen3.6-27b_20260520_062900] setup.sh completed successfully
+[14:29:01] [agent_constraint-accumulation_qwen3.6-27b_20260520_062900] Container started
+[14:29:01] [agent_constraint-accumulation_qwen3.6-27b_20260520_062900] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  16 May 20 06:29 .
+drwxrwxrwt 1 root root     32 May 20 06:29 ..
+drwxr-xr-x 1  501 dialout 128 May 20 06:29 .git
+drwxr-xr-x 1  501 dialout  70 May 20 06:29 data
+
+[14:40:24] [agent_constraint-accumulation_qwen3.6-27b_20260520_062900] Agent finished in 683.15s, returncode=0
+[14:40:24] [agent_constraint-accumulation_qwen3.6-27b_20260520_062900] Agent stdout: DONE
+
+[14:40:24] [agent_constraint-accumulation_qwen3.6-27b_20260520_062900] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation 
+[14:40:24] [agent_constraint-accumulation_qwen3.6-27b_20260520_062900] Agent result loaded: status=success, transcript_len=85
+[14:40:31] [agent_constraint-accumulation_qwen3.6-27b_20260520_062900] Scores: L0=100.0 L1=100.0 L2=95.0 L3=97.5 | Overall=98.0
+[14:40:31] [agent_constraint-accumulation_qwen3.6-27b_20260520_062900] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/constraint-accumulation/result.json
+[14:40:32] [agent_context-retention_qwen3.6-27b_20260520_064031] Container started
+[14:40:32] [agent_context-retention_qwen3.6-27b_20260520_064031] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   28 May 20 06:40 .
+drwxrwxrwt 1 root root      32 May 20 06:40 ..
+-rw-r--r-- 1  501 dialout 1502 Apr 23 08:10 sales-data.csv
+
+[14:48:56] [agent_context-retention_qwen3.6-27b_20260520_064031] Agent finished in 503.07s, returncode=0
+[14:48:56] [agent_context-retention_qwen3.6-27b_20260520_064031] Agent stdout: DONE
+
+[14:48:56] [agent_context-retention_qwen3.6-27b_20260520_064031] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+Plan generation 
+[14:48:56] [agent_context-retention_qwen3.6-27b_20260520_064031] Agent result loaded: status=success, transcript_len=74
+[14:49:12] [agent_context-retention_qwen3.6-27b_20260520_064031] Scores: L0=100.0 L1=80.0 L2=92.5 L3=88.5 | Overall=91.5
+[14:49:12] [agent_context-retention_qwen3.6-27b_20260520_064031] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/context-retention/result.json
+[14:49:12] [agent_interleaved-projects_qwen3.6-27b_20260520_064912] Running setup.sh for task interleaved-projects
+[14:49:12] [agent_interleaved-projects_qwen3.6-27b_20260520_064912] setup.sh completed successfully
+[14:49:13] [agent_interleaved-projects_qwen3.6-27b_20260520_064912] Container started
+[14:49:13] [agent_interleaved-projects_qwen3.6-27b_20260520_064912] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  58 May 20 06:49 .
+drwxrwxrwt 1 root root     32 May 20 06:49 ..
+drwxr-xr-x 1  501 dialout 128 May 20 06:49 .git
+drwxr-xr-x 1  501 dialout  84 May 20 06:49 project-alpha
+drwxr-xr-x 1  501 dialout  62 May 20 06:49 project-beta
+
+[14:53:04] [agent_interleaved-projects_qwen3.6-27b_20260520_064912] Agent finished in 230.77s, returncode=0
+[14:53:04] [agent_interleaved-projects_qwen3.6-27b_20260520_064912] Agent stdout: DONE
+
+[14:53:04] [agent_interleaved-projects_qwen3.6-27b_20260520_064912] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[14:53:04] [agent_interleaved-projects_qwen3.6-27b_20260520_064912] Agent result loaded: status=success, transcript_len=68
+[14:53:18] [agent_interleaved-projects_qwen3.6-27b_20260520_064912] Scores: L0=100.0 L1=100.0 L2=97.5 L3=97.5 | Overall=98.5
+[14:53:19] [agent_interleaved-projects_qwen3.6-27b_20260520_064912] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/interleaved-projects/result.json
+[14:53:20] [agent_memory-organization_qwen3.6-27b_20260520_065319] Container started
+[14:53:20] [agent_memory-organization_qwen3.6-27b_20260520_065319] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  0 May 20 06:53 .
+drwxrwxrwt 1 root root    32 May 20 06:53 ..
+
+[14:54:38] [agent_memory-organization_qwen3.6-27b_20260520_065319] Agent finished in 77.56s, returncode=0
+[14:54:38] [agent_memory-organization_qwen3.6-27b_20260520_065319] Agent stdout: DONE
+
+[14:54:38] [agent_memory-organization_qwen3.6-27b_20260520_065319] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[14:54:38] [agent_memory-organization_qwen3.6-27b_20260520_065319] Agent result loaded: status=success, transcript_len=28
+[14:54:45] [agent_memory-organization_qwen3.6-27b_20260520_065319] Scores: L0=50.0 L1=100.0 L2=92.5 L3=90.0 | Overall=80.0
+[14:54:45] [agent_memory-organization_qwen3.6-27b_20260520_065319] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/memory-organization/result.json
+[14:54:46] [agent_recall-distraction_qwen3.6-27b_20260520_065445] Container started
+[14:54:46] [agent_recall-distraction_qwen3.6-27b_20260520_065445] WARNING: /tmp/workspace appears empty! Files: total 0
+drwxr-xr-x 1  501 dialout  0 May 20 06:54 .
+drwxrwxrwt 1 root root    32 May 20 06:54 ..
+
+[14:57:01] [agent_recall-distraction_qwen3.6-27b_20260520_065445] Agent finished in 134.68s, returncode=0
+[14:57:01] [agent_recall-distraction_qwen3.6-27b_20260520_065445] Agent stdout: DONE
+
+[14:57:01] [agent_recall-distraction_qwen3.6-27b_20260520_065445] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+Plan generation returned empty (attempt 1/3)
+
+[14:57:01] [agent_recall-distraction_qwen3.6-27b_20260520_065445] Agent result loaded: status=success, transcript_len=42
+[14:57:09] [agent_recall-distraction_qwen3.6-27b_20260520_065445] Scores: L0=100.0 L1=100.0 L2=95.0 L3=97.5 | Overall=97.9
+[14:57:10] [agent_recall-distraction_qwen3.6-27b_20260520_065445] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/recall-distraction/result.json
+[14:57:10] [agent_data-pipeline_qwen3.6-27b_20260520_065710] Container started
+[14:57:10] [agent_data-pipeline_qwen3.6-27b_20260520_065710] Workspace copied to /tmp/workspace/:
+total 8
+drwxr-xr-x 1  501 dialout   32 May 20 06:57 .
+drwxrwxrwt 1 root root      32 May 20 06:57 ..
+-rw-r--r-- 1  501 dialout 5942 Apr 23 08:10 raw-feedback.csv
+
+[14:58:36] [agent_data-pipeline_qwen3.6-27b_20260520_065710] Agent finished in 85.40s, returncode=0
+[14:58:36] [agent_data-pipeline_qwen3.6-27b_20260520_065710] Agent stdout: DONE
+
+[14:58:36] [agent_data-pipeline_qwen3.6-27b_20260520_065710] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[14:58:36] [agent_data-pipeline_qwen3.6-27b_20260520_065710] Agent result loaded: status=success, transcript_len=23
+[14:58:44] [agent_data-pipeline_qwen3.6-27b_20260520_065710] Scores: L0=100.0 L1=100.0 L2=87.5 L3=82.5 | Overall=90.8
+[14:58:45] [agent_data-pipeline_qwen3.6-27b_20260520_065710] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/data-pipeline/result.json
+[14:58:46] [agent_meeting-to-tasks_qwen3.6-27b_20260520_065845] Container started
+[14:58:46] [agent_meeting-to-tasks_qwen3.6-27b_20260520_065845] Workspace copied to /tmp/workspace/:
+total 8
+drwxr-xr-x 1  501 dialout   34 May 20 06:58 .
+drwxrwxrwt 1 root root      32 May 20 06:58 ..
+-rw-r--r-- 1  501 dialout 4288 Apr 23 08:10 meeting-notes.txt
+
+[14:59:55] [agent_meeting-to-tasks_qwen3.6-27b_20260520_065845] Agent finished in 68.92s, returncode=0
+[14:59:55] [agent_meeting-to-tasks_qwen3.6-27b_20260520_065845] Agent stdout: DONE
+
+[14:59:55] [agent_meeting-to-tasks_qwen3.6-27b_20260520_065845] Agent result loaded: status=success, transcript_len=17
+[15:00:02] [agent_meeting-to-tasks_qwen3.6-27b_20260520_065845] Scores: L0=100.0 L1=100.0 L2=100.0 L3=97.5 | Overall=99.1
+[15:00:02] [agent_meeting-to-tasks_qwen3.6-27b_20260520_065845] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/meeting-to-tasks/result.json
+[15:00:02] [agent_release-preparation_qwen3.6-27b_20260520_070002] Running setup.sh for task release-preparation
+[15:00:02] [agent_release-preparation_qwen3.6-27b_20260520_070002] setup.sh completed successfully
+[15:00:03] [agent_release-preparation_qwen3.6-27b_20260520_070002] Container started
+[15:00:03] [agent_release-preparation_qwen3.6-27b_20260520_070002] Workspace copied to /tmp/workspace/:
+total 16
+drwxr-xr-x 1  501 dialout 120 May 20 07:00 .
+drwxrwxrwt 1 root root     32 May 20 07:00 ..
+drwxr-xr-x 1  501 dialout 128 May 20 07:00 .git
+-rw-r--r-- 1  501 dialout 553 May 20 07:00 CHANGELOG.md
+-rw-r--r-- 1  501 dialout 180 May 20 07:00 README.md
+-rw-r--r-- 1  501 dialout 306 May 20 07:00 package.json
+-rw-r--r-- 1  501 dialout 990 May 20 07:00 release-checklist.md
+drwxr-xr-x 1  501 dialout 108 May 20 07:00 src
+
+[15:01:52] [agent_release-preparation_qwen3.6-27b_20260520_070002] Agent finished in 109.27s, returncode=0
+[15:01:52] [agent_release-preparation_qwen3.6-27b_20260520_070002] Agent stdout: DONE
+
+[15:01:52] [agent_release-preparation_qwen3.6-27b_20260520_070002] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[15:01:53] [agent_release-preparation_qwen3.6-27b_20260520_070002] Agent result loaded: status=success, transcript_len=116
+[15:01:59] [agent_release-preparation_qwen3.6-27b_20260520_070002] Scores: L0=100.0 L1=65.0 L2=77.5 L3=80.0 | Overall=78.6
+[15:01:59] [agent_release-preparation_qwen3.6-27b_20260520_070002] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/release-preparation/result.json
+[15:01:59] [agent_repo-refactor_qwen3.6-27b_20260520_070159] Running setup.sh for task repo-refactor
+[15:01:59] [agent_repo-refactor_qwen3.6-27b_20260520_070159] setup.sh completed successfully
+[15:02:00] [agent_repo-refactor_qwen3.6-27b_20260520_070159] Container started
+[15:02:00] [agent_repo-refactor_qwen3.6-27b_20260520_070159] Workspace copied to /tmp/workspace/:
+total 44
+drwxr-xr-x 1  501 dialout  242 May 20 07:01 .
+drwxrwxrwt 1 root root      32 May 20 07:02 ..
+drwxr-xr-x 1  501 dialout  128 May 20 07:01 .git
+-rw-r--r-- 1  501 dialout  873 May 20 07:01 REFACTOR_PLAN.md
+-rw-r--r-- 1  501 dialout 1206 May 20 07:01 analytics.py
+-rw-r--r-- 1  501 dialout 1124 May 20 07:01 app.py
+-rw-r--r-- 1  501 dialout 1287 May 20 07:01 contacts.py
+-rw-r--r-- 1  501 dialout  847 May 20 07:01 dashboard.py
+drwxr-xr-x 1  501 dialout   20 May 20 07:01 data
+-rw-r--r-- 1  501 
+[15:04:46] [agent_repo-refactor_qwen3.6-27b_20260520_070159] Agent finished in 165.55s, returncode=0
+[15:04:46] [agent_repo-refactor_qwen3.6-27b_20260520_070159] Agent stdout: DONE
+
+[15:04:46] [agent_repo-refactor_qwen3.6-27b_20260520_070159] Agent result loaded: status=success, transcript_len=116
+[15:04:54] [agent_repo-refactor_qwen3.6-27b_20260520_070159] Scores: L0=88.2 L1=65.0 L2=95.0 L3=97.5 | Overall=87.4
+[15:04:55] [agent_repo-refactor_qwen3.6-27b_20260520_070159] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/repo-refactor/result.json
+[15:04:55] [agent_codebase-archaeology_qwen3.6-27b_20260520_070455] Running setup.sh for task codebase-archaeology
+[15:04:55] [agent_codebase-archaeology_qwen3.6-27b_20260520_070455] setup.sh completed successfully
+[15:04:56] [agent_codebase-archaeology_qwen3.6-27b_20260520_070455] Container started
+[15:04:56] [agent_codebase-archaeology_qwen3.6-27b_20260520_070455] Workspace copied to /tmp/workspace/:
+total 20
+drwxr-xr-x 1  501 dialout  104 May 20 07:04 .
+drwxrwxrwt 1 root root      32 May 20 07:04 ..
+drwxr-xr-x 1  501 dialout  128 May 20 07:04 .git
+-rw-r--r-- 1  501 dialout   65 May 20 07:04 .gitignore
+-rw-r--r-- 1  501 dialout 1118 May 20 07:04 README.md
+-rw-r--r-- 1  501 dialout   12 May 20 07:04 requirements.txt
+-rw-r--r-- 1  501 dialout 4297 May 20 07:04 stats.py
+drwxr-xr-x 1  501 dialout  300 May 20 07:04 tests
+
+[15:06:51] [agent_codebase-archaeology_qwen3.6-27b_20260520_070455] Agent finished in 114.91s, returncode=0
+[15:06:51] [agent_codebase-archaeology_qwen3.6-27b_20260520_070455] Agent stdout: DONE
+
+[15:06:51] [agent_codebase-archaeology_qwen3.6-27b_20260520_070455] Agent stderr: Plan generation returned empty (attempt 1/3)
+
+[15:06:51] [agent_codebase-archaeology_qwen3.6-27b_20260520_070455] Agent result loaded: status=success, transcript_len=65
+[15:06:56] [agent_codebase-archaeology_qwen3.6-27b_20260520_070455] Scores: L0=100.0 L1=85.0 L2=100.0 L3=100.0 | Overall=96.2
+[15:06:56] [agent_codebase-archaeology_qwen3.6-27b_20260520_070455] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/codebase-archaeology/result.json
+[15:06:57] [agent_compare-technologies_qwen3.6-27b_20260520_070656] Container started
+[15:06:57] [agent_compare-technologies_qwen3.6-27b_20260520_070656] Workspace copied to /tmp/workspace/:
+total 12
+drwxr-xr-x 1  501 dialout   40 May 20 07:06 .
+drwxrwxrwt 1 root root      32 May 20 07:06 ..
+-rw-r--r-- 1  501 dialout 3587 Apr 23 08:10 tech-a.txt
+-rw-r--r-- 1  501 dialout 4487 Apr 23 08:10 tech-b.txt
+
+[15:08:39] [agent_compare-technologies_qwen3.6-27b_20260520_070656] Agent finished in 101.82s, returncode=0
+[15:08:39] [agent_compare-technologies_qwen3.6-27b_20260520_070656] Agent stdout: DONE
+
+[15:08:39] [agent_compare-technologies_qwen3.6-27b_20260520_070656] Agent result loaded: status=success, transcript_len=20
+[15:08:56] [agent_compare-technologies_qwen3.6-27b_20260520_070656] Scores: L0=85.0 L1=100.0 L2=100.0 L3=95.0 | Overall=96.0
+[15:08:56] [agent_compare-technologies_qwen3.6-27b_20260520_070656] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/compare-technologies/result.json
+[15:08:57] [agent_extract-structured-data_qwen3.6-27b_20260520_070856] Container started
+[15:08:57] [agent_extract-structured-data_qwen3.6-27b_20260520_070856] Workspace copied to /tmp/workspace/:
+total 8
+drwxr-xr-x 1  501 dialout   44 May 20 07:08 .
+drwxrwxrwt 1 root root      32 May 20 07:08 ..
+-rw-r--r-- 1  501 dialout 5864 Apr 23 08:10 meeting-transcript.txt
+
+[15:10:49] [agent_extract-structured-data_qwen3.6-27b_20260520_070856] Agent finished in 111.84s, returncode=0
+[15:10:49] [agent_extract-structured-data_qwen3.6-27b_20260520_070856] Agent stdout: DONE
+
+[15:10:49] [agent_extract-structured-data_qwen3.6-27b_20260520_070856] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+
+[15:10:49] [agent_extract-structured-data_qwen3.6-27b_20260520_070856] Agent result loaded: status=success, transcript_len=17
+[15:10:55] [agent_extract-structured-data_qwen3.6-27b_20260520_070856] Scores: L0=100.0 L1=100.0 L2=100.0 L3=100.0 | Overall=100.0
+[15:10:55] [agent_extract-structured-data_qwen3.6-27b_20260520_070856] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/extract-structured-data/result.json
+[15:10:55] [agent_multi-source-synthesis_qwen3.6-27b_20260520_071055] Running setup.sh for task multi-source-synthesis
+[15:10:55] [agent_multi-source-synthesis_qwen3.6-27b_20260520_071055] setup.sh completed successfully
+[15:10:56] [agent_multi-source-synthesis_qwen3.6-27b_20260520_071055] Container started
+[15:10:56] [agent_multi-source-synthesis_qwen3.6-27b_20260520_071055] Workspace copied to /tmp/workspace/:
+total 20
+drwxr-xr-x 1  501 dialout  174 May 20 07:10 .
+drwxrwxrwt 1 root root      32 May 20 07:10 ..
+drwxr-xr-x 1  501 dialout  128 May 20 07:10 .git
+-rw-r--r-- 1  501 dialout 2152 May 20 07:10 compliance-feedback.md
+-rw-r--r-- 1  501 dialout 1223 May 20 07:10 constraints.md
+-rw-r--r-- 1  501 dialout 1863 May 20 07:10 cto-feedback.md
+-rw-r--r-- 1  501 dialout 1895 May 20 07:10 product-spec.md
+-rw-r--r-- 1  501 dialout 1808 May 20 07:10 sales-feedback.md
+
+[15:13:02] [agent_multi-source-synthesis_qwen3.6-27b_20260520_071055] Agent finished in 125.90s, returncode=0
+[15:13:02] [agent_multi-source-synthesis_qwen3.6-27b_20260520_071055] Agent stdout: DONE
+
+[15:13:02] [agent_multi-source-synthesis_qwen3.6-27b_20260520_071055] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[15:13:02] [agent_multi-source-synthesis_qwen3.6-27b_20260520_071055] Agent result loaded: status=success, transcript_len=32
+[15:13:12] [agent_multi-source-synthesis_qwen3.6-27b_20260520_071055] Scores: L0=85.0 L1=100.0 L2=100.0 L3=97.5 | Overall=96.9
+[15:13:12] [agent_multi-source-synthesis_qwen3.6-27b_20260520_071055] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/multi-source-synthesis/result.json
+[15:13:13] [agent_summarize-doc_qwen3.6-27b_20260520_071312] Container started
+[15:13:13] [agent_summarize-doc_qwen3.6-27b_20260520_071312] Workspace copied to /tmp/workspace/:
+total 12
+drwxr-xr-x 1  501 dialout    28 May 20 07:13 .
+drwxrwxrwt 1 root root       32 May 20 07:13 ..
+-rw-r--r-- 1  501 dialout 11548 Apr 23 08:10 whitepaper.txt
+
+[15:14:29] [agent_summarize-doc_qwen3.6-27b_20260520_071312] Agent finished in 75.55s, returncode=0
+[15:14:29] [agent_summarize-doc_qwen3.6-27b_20260520_071312] Agent stdout: DONE
+
+[15:14:29] [agent_summarize-doc_qwen3.6-27b_20260520_071312] Agent stderr: Plan generation returned empty (attempt 1/3)
+
+[15:14:29] [agent_summarize-doc_qwen3.6-27b_20260520_071312] Agent result loaded: status=success, transcript_len=17
+[15:14:33] [agent_summarize-doc_qwen3.6-27b_20260520_071312] Scores: L0=100.0 L1=100.0 L2=100.0 L3=100.0 | Overall=100.0
+[15:14:34] [agent_summarize-doc_qwen3.6-27b_20260520_071312] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/summarize-doc/result.json
+[15:14:34] [agent_large-codebase-navigation_qwen3.6-27b_20260520_071434] Running setup.sh for task large-codebase-navigation
+[15:14:34] [agent_large-codebase-navigation_qwen3.6-27b_20260520_071434] setup.sh completed successfully
+[15:14:35] [agent_large-codebase-navigation_qwen3.6-27b_20260520_071434] Container started
+[15:14:35] [agent_large-codebase-navigation_qwen3.6-27b_20260520_071434] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   62 May 20 07:14 .
+drwxrwxrwt 1 root root      32 May 20 07:14 ..
+drwxr-xr-x 1  501 dialout  128 May 20 07:14 .git
+-rw-r--r-- 1  501 dialout 1195 May 20 07:14 README.md
+drwxr-xr-x 1  501 dialout   62 May 20 07:14 config
+drwxr-xr-x 1  501 dialout   28 May 20 07:14 docs
+drwxr-xr-x 1  501 dialout   70 May 20 07:14 src
+drwxr-xr-x 1  501 dialout  138 May 20 07:14 tests
+
+[15:20:46] [agent_large-codebase-navigation_qwen3.6-27b_20260520_071434] Agent finished in 371.67s, returncode=0
+[15:20:46] [agent_large-codebase-navigation_qwen3.6-27b_20260520_071434] Agent stdout: DONE
+
+[15:20:46] [agent_large-codebase-navigation_qwen3.6-27b_20260520_071434] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[15:20:46] [agent_large-codebase-navigation_qwen3.6-27b_20260520_071434] Agent result loaded: status=success, transcript_len=32
+[15:20:54] [agent_large-codebase-navigation_qwen3.6-27b_20260520_071434] Scores: L0=100.0 L1=100.0 L2=100.0 L3=97.5 | Overall=99.5
+[15:20:55] [agent_large-codebase-navigation_qwen3.6-27b_20260520_071434] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/large-codebase-navigation/result.json
+[15:20:56] [agent_minimal-reads_qwen3.6-27b_20260520_072055] Container started
+[15:20:56] [agent_minimal-reads_qwen3.6-27b_20260520_072055] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout  22 May 20 07:20 .
+drwxrwxrwt 1 root root     32 May 20 07:20 ..
+-rw-r--r-- 1  501 dialout 495 Apr 23 08:10 config.json
+
+[15:22:22] [agent_minimal-reads_qwen3.6-27b_20260520_072055] Agent finished in 86.21s, returncode=0
+[15:22:22] [agent_minimal-reads_qwen3.6-27b_20260520_072055] Agent stdout: DONE
+
+[15:22:22] [agent_minimal-reads_qwen3.6-27b_20260520_072055] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[15:22:22] [agent_minimal-reads_qwen3.6-27b_20260520_072055] Agent result loaded: status=success, transcript_len=11
+[15:22:28] [agent_minimal-reads_qwen3.6-27b_20260520_072055] Scores: L0=100.0 L1=100.0 L2=95.0 L3=92.5 | Overall=97.1
+[15:22:29] [agent_minimal-reads_qwen3.6-27b_20260520_072055] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/minimal-reads/result.json
+[15:22:30] [agent_no-unnecessary-changes_qwen3.6-27b_20260520_072229] Container started
+[15:22:30] [agent_no-unnecessary-changes_qwen3.6-27b_20260520_072229] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   18 May 20 07:22 .
+drwxrwxrwt 1 root root      32 May 20 07:22 ..
+-rw-r--r-- 1  501 dialout 3789 Apr 23 08:10 report.md
+
+[15:23:56] [agent_no-unnecessary-changes_qwen3.6-27b_20260520_072229] Agent finished in 86.54s, returncode=0
+[15:23:56] [agent_no-unnecessary-changes_qwen3.6-27b_20260520_072229] Agent stdout: DONE
+
+[15:23:56] [agent_no-unnecessary-changes_qwen3.6-27b_20260520_072229] Agent stderr: Plan generation returned empty (attempt 1/3)
+Plan generation returned empty (attempt 2/3)
+Plan generation returned empty (attempt 3/3)
+Plan generation failed after 3 attempts, returning empty plan
+
+[15:23:56] [agent_no-unnecessary-changes_qwen3.6-27b_20260520_072229] Agent result loaded: status=success, transcript_len=11
+[15:24:05] [agent_no-unnecessary-changes_qwen3.6-27b_20260520_072229] Scores: L0=50.0 L1=100.0 L2=100.0 L3=100.0 | Overall=92.5
+[15:24:05] [agent_no-unnecessary-changes_qwen3.6-27b_20260520_072229] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/no-unnecessary-changes/result.json
+[15:24:07] [agent_right-tool-choice_qwen3.6-27b_20260520_072405] Container started
+[15:24:07] [agent_right-tool-choice_qwen3.6-27b_20260520_072405] Workspace copied to /tmp/workspace/:
+total 4
+drwxr-xr-x 1  501 dialout   24 May 20 07:24 .
+drwxrwxrwt 1 root root      32 May 20 07:24 ..
+-rw-r--r-- 1  501 dialout 1205 Apr 23 08:10 contacts.txt
+
+[15:26:44] [agent_right-tool-choice_qwen3.6-27b_20260520_072405] Agent finished in 157.06s, returncode=0
+[15:26:44] [agent_right-tool-choice_qwen3.6-27b_20260520_072405] Agent stdout: DONE
+
+[15:26:44] [agent_right-tool-choice_qwen3.6-27b_20260520_072405] Agent result loaded: status=success, transcript_len=17
+[15:26:49] [agent_right-tool-choice_qwen3.6-27b_20260520_072405] Scores: L0=100.0 L1=100.0 L2=95.0 L3=97.5 | Overall=98.4
+[15:26:49] [agent_right-tool-choice_qwen3.6-27b_20260520_072405] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/right-tool-choice/result.json
+[15:26:49] [agent_targeted-fix_qwen3.6-27b_20260520_072649] Running setup.sh for task targeted-fix
+[15:26:49] [agent_targeted-fix_qwen3.6-27b_20260520_072649] setup.sh completed successfully
+[15:26:50] [agent_targeted-fix_qwen3.6-27b_20260520_072649] Container started
+[15:26:50] [agent_targeted-fix_qwen3.6-27b_20260520_072649] Workspace copied to /tmp/workspace/:
+total 8
+drwxr-xr-x 1  501 dialout  80 May 20 07:26 .
+drwxrwxrwt 1 root root     32 May 20 07:26 ..
+drwxr-xr-x 1  501 dialout 128 May 20 07:26 .git
+-rw-r--r-- 1  501 dialout 627 May 20 07:26 BUG_REPORT.md
+-rw-r--r-- 1  501 dialout 629 May 20 07:26 README.md
+drwxr-xr-x 1  501 dialout  22 May 20 07:26 config
+drwxr-xr-x 1  501 dialout  70 May 20 07:26 src
+drwxr-xr-x 1  501 dialout 108 May 20 07:26 tests
+
+[15:28:15] [agent_targeted-fix_qwen3.6-27b_20260520_072649] Agent finished in 84.31s, returncode=0
+[15:28:15] [agent_targeted-fix_qwen3.6-27b_20260520_072649] Agent stdout: DONE
+
+[15:28:15] [agent_targeted-fix_qwen3.6-27b_20260520_072649] Agent result loaded: status=success, transcript_len=23
+[15:28:19] [agent_targeted-fix_qwen3.6-27b_20260520_072649] Scores: L0=100.0 L1=100.0 L2=100.0 L3=100.0 | Overall=100.0
+[15:28:19] [agent_targeted-fix_qwen3.6-27b_20260520_072649] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/agentbench/qwen3.6-27b/targeted-fix/result.json
+[15:28:19]   [agentbench×qwen3.6-27b] done: score=94.0, scored=39/39
+[15:28:19] 
+============================================================
+[15:28:19] BENCHMARK: PinchBench (23 tasks)
+[15:28:19] ============================================================
+[15:28:19]   [pinchbench×qwen3.6-27b] evaluating...
+[15:28:19] [pinchbench] 0 tasks cached, 23 remaining
+[15:28:19] [pinchbench] 汇总已保存: 0/23 完成
+[15:28:19] [pinchbench] Running task 1/23: task_00_sanity
+[15:28:19] [task_00_sanity] No workspace_files defined in task
+[15:28:20] [pinch_task_00_sanity_qwen3.6-27b_20260520_072819] Container started
+[15:28:54] [pinch_task_00_sanity_qwen3.6-27b_20260520_072819] Agent finished in 33.89s, returncode=0
+[15:28:54] [pinch_task_00_sanity_qwen3.6-27b_20260520_072819] [DEBUG] Workspace: /tmp/workspace, exists=True
+[15:28:54] [pinch_task_00_sanity_qwen3.6-27b_20260520_072819] [DEBUG] Contents: []
+[15:28:54] [pinch_task_00_sanity_qwen3.6-27b_20260520_072819] [PROGRESS] Task started at 1779262103.438706
+[15:28:54] [pinch_task_00_sanity_qwen3.6-27b_20260520_072819] [PROGRESS] Task finished at 30.9s, status=success
+[15:28:54] [pinch_task_00_sanity_qwen3.6-27b_20260520_072819] [PROGRESS] Transcript entries: 5
+[15:28:54] [pinch_task_00_sanity_qwen3.6-27b_20260520_072819] DONE
+[15:28:54] [pinch_task_00_sanity_qwen3.6-27b_20260520_072819] Agent result loaded: status=success, transcript_len=5
+[15:28:54] [task_00_sanity] Grade score: 1.0000
+[15:28:55] [task_00_sanity] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_00_sanity/transcript.json
+[15:28:55] [task_00_sanity] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_00_sanity/result.json
+[15:28:55] [pinchbench] 汇总已保存: 1/23 完成
+[15:28:55] [pinchbench] Running task 2/23: task_01_calendar
+[15:28:55] [task_01_calendar] No workspace_files defined in task
+[15:28:55] [pinch_task_01_calendar_qwen3.6-27b_20260520_072855] Container started
+[15:30:00] [pinch_task_01_calendar_qwen3.6-27b_20260520_072855] Agent finished in 64.92s, returncode=0
+[15:30:00] [pinch_task_01_calendar_qwen3.6-27b_20260520_072855] [DEBUG] Workspace: /tmp/workspace, exists=True
+[15:30:00] [pinch_task_01_calendar_qwen3.6-27b_20260520_072855] [DEBUG] Contents: []
+[15:30:00] [pinch_task_01_calendar_qwen3.6-27b_20260520_072855] [PROGRESS] Task started at 1779262139.5213776
+[15:30:00] [pinch_task_01_calendar_qwen3.6-27b_20260520_072855] [PROGRESS] Task finished at 61.1s, status=success
+[15:30:00] [pinch_task_01_calendar_qwen3.6-27b_20260520_072855] [PROGRESS] Transcript entries: 14
+[15:30:00] [pinch_task_01_calendar_qwen3.6-27b_20260520_072855] DONE
+[15:30:00] [pinch_task_01_calendar_qwen3.6-27b_20260520_072855] Agent result loaded: status=success, transcript_len=14
+[15:30:01] [task_01_calendar] Grade score: 1.0000
+[15:30:01] [task_01_calendar] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_01_calendar/transcript.json
+[15:30:01] [task_01_calendar] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_01_calendar/result.json
+[15:30:01] [pinchbench] 汇总已保存: 2/23 完成
+[15:30:01] [pinchbench] Running task 3/23: task_02_stock
+[15:30:01] [task_02_stock] No workspace_files defined in task
+[15:30:02] [pinch_task_02_stock_qwen3.6-27b_20260520_073001] Container started
+[15:32:35] [pinch_task_02_stock_qwen3.6-27b_20260520_073001] Agent finished in 153.44s, returncode=0
+[15:32:35] [pinch_task_02_stock_qwen3.6-27b_20260520_073001] [DEBUG] Workspace: /tmp/workspace, exists=True
+[15:32:35] [pinch_task_02_stock_qwen3.6-27b_20260520_073001] [DEBUG] Contents: []
+[15:32:35] [pinch_task_02_stock_qwen3.6-27b_20260520_073001] [PROGRESS] Task started at 1779262205.24711
+[15:32:35] [pinch_task_02_stock_qwen3.6-27b_20260520_073001] [PROGRESS] Task finished at 150.4s, status=success
+[15:32:35] [pinch_task_02_stock_qwen3.6-27b_20260520_073001] [PROGRESS] Transcript entries: 26
+[15:32:35] [pinch_task_02_stock_qwen3.6-27b_20260520_073001] DONE
+[15:32:35] [pinch_task_02_stock_qwen3.6-27b_20260520_073001] Agent result loaded: status=success, transcript_len=26
+[15:32:36] [task_02_stock] Grade score: 1.0000
+[15:32:36] [task_02_stock] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_02_stock/transcript.json
+[15:32:36] [task_02_stock] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_02_stock/result.json
+[15:32:36] [pinchbench] 汇总已保存: 3/23 完成
+[15:32:36] [pinchbench] Running task 4/23: task_03_blog
+[15:32:36] [task_03_blog] No workspace_files defined in task
+[15:32:37] [pinch_task_03_blog_qwen3.6-27b_20260520_073236] Container started
+[15:34:44] [pinch_task_03_blog_qwen3.6-27b_20260520_073236] Agent finished in 126.67s, returncode=0
+[15:34:44] [pinch_task_03_blog_qwen3.6-27b_20260520_073236] [DEBUG] Workspace: /tmp/workspace, exists=True
+[15:34:44] [pinch_task_03_blog_qwen3.6-27b_20260520_073236] [DEBUG] Contents: []
+[15:34:44] [pinch_task_03_blog_qwen3.6-27b_20260520_073236] [PROGRESS] Task started at 1779262360.3724546
+[15:34:44] [pinch_task_03_blog_qwen3.6-27b_20260520_073236] [PROGRESS] Task finished at 123.8s, status=success
+[15:34:44] [pinch_task_03_blog_qwen3.6-27b_20260520_073236] [PROGRESS] Transcript entries: 17
+[15:34:44] [pinch_task_03_blog_qwen3.6-27b_20260520_073236] DONE
+[15:34:44] [pinch_task_03_blog_qwen3.6-27b_20260520_073236] Agent result loaded: status=success, transcript_len=17
+[15:34:50] [task_03_blog] LLM Judge score: 0.8800
+[15:34:50] [task_03_blog] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_03_blog/transcript.json
+[15:34:50] [task_03_blog] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_03_blog/result.json
+[15:34:50] [pinchbench] 汇总已保存: 4/23 完成
+[15:34:50] [pinchbench] Running task 5/23: task_04_weather
+[15:34:50] [task_04_weather] No workspace_files defined in task
+[15:34:51] [pinch_task_04_weather_qwen3.6-27b_20260520_073450] Container started
+[15:36:42] [pinch_task_04_weather_qwen3.6-27b_20260520_073450] Agent finished in 110.28s, returncode=0
+[15:36:42] [pinch_task_04_weather_qwen3.6-27b_20260520_073450] [DEBUG] Workspace: /tmp/workspace, exists=True
+[15:36:42] [pinch_task_04_weather_qwen3.6-27b_20260520_073450] [DEBUG] Contents: []
+[15:36:42] [pinch_task_04_weather_qwen3.6-27b_20260520_073450] [PROGRESS] Task started at 1779262494.7975872
+[15:36:42] [pinch_task_04_weather_qwen3.6-27b_20260520_073450] [PROGRESS] Task finished at 107.0s, status=success
+[15:36:42] [pinch_task_04_weather_qwen3.6-27b_20260520_073450] [PROGRESS] Transcript entries: 17
+[15:36:42] [pinch_task_04_weather_qwen3.6-27b_20260520_073450] DONE
+[15:36:42] [pinch_task_04_weather_qwen3.6-27b_20260520_073450] Agent result loaded: status=success, transcript_len=17
+[15:36:42] [task_04_weather] Grade score: 1.0000
+[15:36:42] [task_04_weather] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_04_weather/transcript.json
+[15:36:42] [task_04_weather] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_04_weather/result.json
+[15:36:42] [pinchbench] 汇总已保存: 5/23 完成
+[15:36:42] [pinchbench] Running task 6/23: task_05_summary
+[15:36:42] [task_05_summary] Preparing 1 workspace file(s): ['summary_source.txt']
+[15:36:42] [task_05_summary] Wrote workspace file: summary_source.txt
+[15:36:44] [pinch_task_05_summary_qwen3.6-27b_20260520_073642] Container started
+[15:37:42] [pinch_task_05_summary_qwen3.6-27b_20260520_073642] Agent finished in 57.96s, returncode=0
+[15:37:42] [pinch_task_05_summary_qwen3.6-27b_20260520_073642] [DEBUG] Workspace: /tmp/workspace, exists=True
+[15:37:42] [pinch_task_05_summary_qwen3.6-27b_20260520_073642] [DEBUG] Contents: [PosixPath('/tmp/workspace/summary_source.txt')]
+[15:37:42] [pinch_task_05_summary_qwen3.6-27b_20260520_073642] [PROGRESS] Task started at 1779262607.7898104
+[15:37:42] [pinch_task_05_summary_qwen3.6-27b_20260520_073642] [PROGRESS] Task finished at 54.2s, status=success
+[15:37:42] [pinch_task_05_summary_qwen3.6-27b_20260520_073642] [PROGRESS] Transcript entries: 11
+[15:37:42] [pinch_task_05_summary_qwen3.6-27b_20260520_073642] DONE
+[15:37:42] [pinch_task_05_summary_qwen3.6-27b_20260520_073642] Agent result loaded: status=success, transcript_len=11
+[15:37:50] [task_05_summary] LLM Judge score: 0.8400
+[15:37:50] [task_05_summary] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_05_summary/transcript.json
+[15:37:50] [task_05_summary] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_05_summary/result.json
+[15:37:50] [pinchbench] 汇总已保存: 6/23 完成
+[15:37:50] [pinchbench] Running task 7/23: task_06_events
+[15:37:50] [task_06_events] No workspace_files defined in task
+[15:37:51] [pinch_task_06_events_qwen3.6-27b_20260520_073750] Container started
+[15:43:57] [pinch_task_06_events_qwen3.6-27b_20260520_073750] Agent finished in 365.49s, returncode=0
+[15:43:57] [pinch_task_06_events_qwen3.6-27b_20260520_073750] [DEBUG] Workspace: /tmp/workspace, exists=True
+[15:43:57] [pinch_task_06_events_qwen3.6-27b_20260520_073750] [DEBUG] Contents: []
+[15:43:57] [pinch_task_06_events_qwen3.6-27b_20260520_073750] [PROGRESS] Task started at 1779262674.339062
+[15:43:57] [pinch_task_06_events_qwen3.6-27b_20260520_073750] [PROGRESS] Task finished at 362.5s, status=success
+[15:43:57] [pinch_task_06_events_qwen3.6-27b_20260520_073750] [PROGRESS] Transcript entries: 56
+[15:43:57] [pinch_task_06_events_qwen3.6-27b_20260520_073750] DONE
+[15:43:57] [pinch_task_06_events_qwen3.6-27b_20260520_073750] Agent result loaded: status=success, transcript_len=56
+[15:44:03] [task_06_events] LLM Judge score: 0.7000
+[15:44:04] [task_06_events] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_06_events/transcript.json
+[15:44:04] [task_06_events] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_06_events/result.json
+[15:44:04] [pinchbench] 汇总已保存: 7/23 完成
+[15:44:04] [pinchbench] Running task 8/23: task_07_email
+[15:44:04] [task_07_email] No workspace_files defined in task
+[15:44:05] [pinch_task_07_email_qwen3.6-27b_20260520_074404] Container started
+[15:45:57] [pinch_task_07_email_qwen3.6-27b_20260520_074404] Agent finished in 112.29s, returncode=0
+[15:45:57] [pinch_task_07_email_qwen3.6-27b_20260520_074404] [DEBUG] Workspace: /tmp/workspace, exists=True
+[15:45:57] [pinch_task_07_email_qwen3.6-27b_20260520_074404] [DEBUG] Contents: []
+[15:45:57] [pinch_task_07_email_qwen3.6-27b_20260520_074404] [PROGRESS] Task started at 1779263047.9841201
+[15:45:57] [pinch_task_07_email_qwen3.6-27b_20260520_074404] [PROGRESS] Task finished at 109.4s, status=success
+[15:45:57] [pinch_task_07_email_qwen3.6-27b_20260520_074404] [PROGRESS] Transcript entries: 11
+[15:45:57] [pinch_task_07_email_qwen3.6-27b_20260520_074404] DONE
+[15:45:57] [pinch_task_07_email_qwen3.6-27b_20260520_074404] Agent result loaded: status=success, transcript_len=11
+[15:46:02] [task_07_email] LLM Judge score: 0.8700
+[15:46:03] [task_07_email] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_07_email/transcript.json
+[15:46:03] [task_07_email] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_07_email/result.json
+[15:46:03] [pinchbench] 汇总已保存: 8/23 完成
+[15:46:03] [pinchbench] Running task 9/23: task_08_memory
+[15:46:03] [task_08_memory] Preparing 1 workspace file(s): ['notes.md']
+[15:46:03] [task_08_memory] Wrote workspace file: notes.md
+[15:46:04] [pinch_task_08_memory_qwen3.6-27b_20260520_074603] Container started
+[15:47:06] [pinch_task_08_memory_qwen3.6-27b_20260520_074603] Agent finished in 62.78s, returncode=0
+[15:47:06] [pinch_task_08_memory_qwen3.6-27b_20260520_074603] [DEBUG] Workspace: /tmp/workspace, exists=True
+[15:47:06] [pinch_task_08_memory_qwen3.6-27b_20260520_074603] [DEBUG] Contents: [PosixPath('/tmp/workspace/notes.md')]
+[15:47:06] [pinch_task_08_memory_qwen3.6-27b_20260520_074603] [PROGRESS] Task started at 1779263166.6566348
+[15:47:06] [pinch_task_08_memory_qwen3.6-27b_20260520_074603] [PROGRESS] Task finished at 60.1s, status=success
+[15:47:06] [pinch_task_08_memory_qwen3.6-27b_20260520_074603] [PROGRESS] Transcript entries: 11
+[15:47:06] [pinch_task_08_memory_qwen3.6-27b_20260520_074603] DONE
+[15:47:07] [pinch_task_08_memory_qwen3.6-27b_20260520_074603] Agent result loaded: status=success, transcript_len=11
+[15:47:07] [task_08_memory] Grade score: 0.9000
+[15:47:07] [task_08_memory] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_08_memory/transcript.json
+[15:47:07] [task_08_memory] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_08_memory/result.json
+[15:47:07] [pinchbench] 汇总已保存: 9/23 完成
+[15:47:07] [pinchbench] Running task 10/23: task_09_files
+[15:47:07] [task_09_files] No workspace_files defined in task
+[15:47:08] [pinch_task_09_files_qwen3.6-27b_20260520_074707] Container started
+[15:48:22] [pinch_task_09_files_qwen3.6-27b_20260520_074707] Agent finished in 74.56s, returncode=0
+[15:48:22] [pinch_task_09_files_qwen3.6-27b_20260520_074707] [DEBUG] Workspace: /tmp/workspace, exists=True
+[15:48:22] [pinch_task_09_files_qwen3.6-27b_20260520_074707] [DEBUG] Contents: []
+[15:48:22] [pinch_task_09_files_qwen3.6-27b_20260520_074707] [PROGRESS] Task started at 1779263230.911403
+[15:48:22] [pinch_task_09_files_qwen3.6-27b_20260520_074707] [PROGRESS] Task finished at 71.8s, status=success
+[15:48:22] [pinch_task_09_files_qwen3.6-27b_20260520_074707] [PROGRESS] Transcript entries: 26
+[15:48:22] [pinch_task_09_files_qwen3.6-27b_20260520_074707] DONE
+[15:48:23] [pinch_task_09_files_qwen3.6-27b_20260520_074707] Agent result loaded: status=success, transcript_len=26
+[15:48:23] [task_09_files] Grade score: 1.0000
+[15:48:23] [task_09_files] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_09_files/transcript.json
+[15:48:23] [task_09_files] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_09_files/result.json
+[15:48:23] [pinchbench] 汇总已保存: 10/23 完成
+[15:48:23] [pinchbench] Running task 11/23: task_10_workflow
+[15:48:23] [task_10_workflow] Preparing 1 workspace file(s): ['config.json']
+[15:48:23] [task_10_workflow] Wrote workspace file: config.json
+[15:48:24] [pinch_task_10_workflow_qwen3.6-27b_20260520_074823] Container started
+[15:50:16] [pinch_task_10_workflow_qwen3.6-27b_20260520_074823] Agent finished in 112.49s, returncode=0
+[15:50:16] [pinch_task_10_workflow_qwen3.6-27b_20260520_074823] [DEBUG] Workspace: /tmp/workspace, exists=True
+[15:50:16] [pinch_task_10_workflow_qwen3.6-27b_20260520_074823] [DEBUG] Contents: [PosixPath('/tmp/workspace/config.json')]
+[15:50:16] [pinch_task_10_workflow_qwen3.6-27b_20260520_074823] [PROGRESS] Task started at 1779263307.1784587
+[15:50:16] [pinch_task_10_workflow_qwen3.6-27b_20260520_074823] [PROGRESS] Task finished at 109.5s, status=success
+[15:50:16] [pinch_task_10_workflow_qwen3.6-27b_20260520_074823] [PROGRESS] Transcript entries: 20
+[15:50:16] [pinch_task_10_workflow_qwen3.6-27b_20260520_074823] DONE
+[15:50:16] [pinch_task_10_workflow_qwen3.6-27b_20260520_074823] Agent result loaded: status=success, transcript_len=20
+[15:50:49] [task_10_workflow] Hybrid score: 0.8900 (auto=1.0000, llm=0.7800)
+[15:50:49] [task_10_workflow] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_10_workflow/transcript.json
+[15:50:49] [task_10_workflow] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_10_workflow/result.json
+[15:50:49] [pinchbench] 汇总已保存: 11/23 完成
+[15:50:49] [pinchbench] Running task 12/23: task_11_clawdhub
+[15:50:49] [task_11_clawdhub] No workspace_files defined in task
+[15:50:50] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_075049] Container started
+[15:52:40] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_075049] Agent finished in 109.40s, returncode=0
+[15:52:40] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_075049] [DEBUG] Workspace: /tmp/workspace, exists=True
+[15:52:40] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_075049] [DEBUG] Contents: []
+[15:52:40] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_075049] [PROGRESS] Task started at 1779263453.3901896
+[15:52:40] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_075049] [PROGRESS] Task finished at 106.6s, status=success
+[15:52:40] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_075049] [PROGRESS] Transcript entries: 20
+[15:52:40] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_075049] DONE
+[15:52:40] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_075049] Agent result loaded: status=success, transcript_len=20
+[15:52:40] [task_11_clawdhub] Grade score: 1.0000
+[15:52:40] [task_11_clawdhub] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_11_clawdhub/transcript.json
+[15:52:40] [task_11_clawdhub] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_11_clawdhub/result.json
+[15:52:40] [pinchbench] 汇总已保存: 12/23 完成
+[15:52:40] [pinchbench] Running task 13/23: task_12_skill_search
+[15:52:40] [task_12_skill_search] Preparing 2 workspace file(s): ['config/settings.json', 'config/database.yml']
+[15:52:40] [task_12_skill_search] Wrote workspace file: config/settings.json
+[15:52:40] [task_12_skill_search] Wrote workspace file: config/database.yml
+[15:52:41] [pinch_task_12_skill_search_qwen3.6-27b_20260520_075240] Container started
+[15:54:44] [pinch_task_12_skill_search_qwen3.6-27b_20260520_075240] Agent finished in 122.51s, returncode=0
+[15:54:44] [pinch_task_12_skill_search_qwen3.6-27b_20260520_075240] [DEBUG] Workspace: /tmp/workspace, exists=True
+[15:54:44] [pinch_task_12_skill_search_qwen3.6-27b_20260520_075240] [DEBUG] Contents: [PosixPath('/tmp/workspace/config')]
+[15:54:44] [pinch_task_12_skill_search_qwen3.6-27b_20260520_075240] [PROGRESS] Task started at 1779263564.10593
+[15:54:44] [pinch_task_12_skill_search_qwen3.6-27b_20260520_075240] [PROGRESS] Task finished at 119.7s, status=success
+[15:54:44] [pinch_task_12_skill_search_qwen3.6-27b_20260520_075240] [PROGRESS] Transcript entries: 38
+[15:54:44] [pinch_task_12_skill_search_qwen3.6-27b_20260520_075240] DONE
+[15:54:44] [pinch_task_12_skill_search_qwen3.6-27b_20260520_075240] Agent result loaded: status=success, transcript_len=38
+[15:54:44] [task_12_skill_search] Grade score: 1.0000
+[15:54:44] [task_12_skill_search] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_12_skill_search/transcript.json
+[15:54:44] [task_12_skill_search] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_12_skill_search/result.json
+[15:54:44] [pinchbench] 汇总已保存: 13/23 完成
+[15:54:44] [pinchbench] Running task 14/23: task_13_image_gen
+[15:54:44] [task_13_image_gen] No workspace_files defined in task
+[15:54:45] [pinch_task_13_image_gen_qwen3.6-27b_20260520_075444] Container started
+[16:05:11] [pinch_task_13_image_gen_qwen3.6-27b_20260520_075444] Agent finished in 625.45s, returncode=0
+[16:05:11] [pinch_task_13_image_gen_qwen3.6-27b_20260520_075444] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:05:11] [pinch_task_13_image_gen_qwen3.6-27b_20260520_075444] [DEBUG] Contents: []
+[16:05:11] [pinch_task_13_image_gen_qwen3.6-27b_20260520_075444] [PROGRESS] Task started at 1779263688.1828244
+[16:05:11] [pinch_task_13_image_gen_qwen3.6-27b_20260520_075444] [PROGRESS] Task finished at 622.6s, status=success
+[16:05:11] [pinch_task_13_image_gen_qwen3.6-27b_20260520_075444] [PROGRESS] Transcript entries: 68
+[16:05:11] [pinch_task_13_image_gen_qwen3.6-27b_20260520_075444] DONE
+[16:05:11] [pinch_task_13_image_gen_qwen3.6-27b_20260520_075444] Agent result loaded: status=success, transcript_len=68
+[16:05:16] [task_13_image_gen] Hybrid score: 0.5617 (auto=0.3333, llm=0.7900)
+[16:05:16] [task_13_image_gen] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_13_image_gen/transcript.json
+[16:05:16] [task_13_image_gen] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_13_image_gen/result.json
+[16:05:16] [pinchbench] 汇总已保存: 14/23 完成
+[16:05:16] [pinchbench] Running task 15/23: task_14_humanizer
+[16:05:16] [task_14_humanizer] Preparing 1 workspace file(s): [{'source': 'ai_blog.txt', 'dest': 'ai_blog.txt'}]
+[16:05:16] [task_14_humanizer] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/ai_blog.txt -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_14_humanizer_u7d5oa_6/workspace/ai_blog.txt
+[16:05:17] [pinch_task_14_humanizer_qwen3.6-27b_20260520_080516] Container started
+[16:08:37] [pinch_task_14_humanizer_qwen3.6-27b_20260520_080516] Agent finished in 199.73s, returncode=0
+[16:08:37] [pinch_task_14_humanizer_qwen3.6-27b_20260520_080516] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:08:37] [pinch_task_14_humanizer_qwen3.6-27b_20260520_080516] [DEBUG] Contents: [PosixPath('/tmp/workspace/ai_blog.txt')]
+[16:08:37] [pinch_task_14_humanizer_qwen3.6-27b_20260520_080516] [PROGRESS] Task started at 1779264320.49827
+[16:08:37] [pinch_task_14_humanizer_qwen3.6-27b_20260520_080516] [PROGRESS] Task finished at 196.9s, status=success
+[16:08:37] [pinch_task_14_humanizer_qwen3.6-27b_20260520_080516] [PROGRESS] Transcript entries: 32
+[16:08:37] [pinch_task_14_humanizer_qwen3.6-27b_20260520_080516] DONE
+[16:08:37] [pinch_task_14_humanizer_qwen3.6-27b_20260520_080516] Agent result loaded: status=success, transcript_len=32
+[16:08:43] [task_14_humanizer] LLM Judge score: 0.8300
+[16:08:43] [task_14_humanizer] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_14_humanizer/transcript.json
+[16:08:43] [task_14_humanizer] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_14_humanizer/result.json
+[16:08:43] [pinchbench] 汇总已保存: 15/23 完成
+[16:08:43] [pinchbench] Running task 16/23: task_15_daily_summary
+[16:08:43] [task_15_daily_summary] Preparing 5 workspace file(s): ['research/market_analysis.txt', 'research/competitor_intelligence.txt', 'research/customer_feedback.txt', 'research/product_updates.txt', 'research/industry_news.txt']
+[16:08:43] [task_15_daily_summary] Wrote workspace file: research/market_analysis.txt
+[16:08:43] [task_15_daily_summary] Wrote workspace file: research/competitor_intelligence.txt
+[16:08:43] [task_15_daily_summary] Wrote workspace file: research/customer_feedback.txt
+[16:08:43] [task_15_daily_summary] Wrote workspace file: research/product_updates.txt
+[16:08:43] [task_15_daily_summary] Wrote workspace file: research/industry_news.txt
+[16:08:44] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_080843] Container started
+[16:12:32] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_080843] Agent finished in 227.50s, returncode=0
+[16:12:32] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_080843] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:12:32] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_080843] [DEBUG] Contents: [PosixPath('/tmp/workspace/research')]
+[16:12:32] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_080843] [PROGRESS] Task started at 1779264527.1411965
+[16:12:32] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_080843] [PROGRESS] Task finished at 224.7s, status=success
+[16:12:32] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_080843] [PROGRESS] Transcript entries: 29
+[16:12:32] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_080843] DONE
+[16:12:32] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_080843] Agent result loaded: status=success, transcript_len=29
+[16:12:41] [task_15_daily_summary] LLM Judge score: 0.8800
+[16:12:42] [task_15_daily_summary] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_15_daily_summary/transcript.json
+[16:12:42] [task_15_daily_summary] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_15_daily_summary/result.json
+[16:12:42] [pinchbench] 汇总已保存: 16/23 完成
+[16:12:42] [pinchbench] Running task 17/23: task_16_email_triage
+[16:12:42] [task_16_email_triage] Preparing 13 workspace file(s): ['inbox/email_01.txt', 'inbox/email_02.txt', 'inbox/email_03.txt', 'inbox/email_04.txt', 'inbox/email_05.txt', 'inbox/email_06.txt', 'inbox/email_07.txt', 'inbox/email_08.txt', 'inbox/email_09.txt', 'inbox/email_10.txt', 'inbox/email_11.txt', 'inbox/email_12.txt', 'inbox/email_13.txt']
+[16:12:42] [task_16_email_triage] Wrote workspace file: inbox/email_01.txt
+[16:12:42] [task_16_email_triage] Wrote workspace file: inbox/email_02.txt
+[16:12:42] [task_16_email_triage] Wrote workspace file: inbox/email_03.txt
+[16:12:42] [task_16_email_triage] Wrote workspace file: inbox/email_04.txt
+[16:12:42] [task_16_email_triage] Wrote workspace file: inbox/email_05.txt
+[16:12:42] [task_16_email_triage] Wrote workspace file: inbox/email_06.txt
+[16:12:42] [task_16_email_triage] Wrote workspace file: inbox/email_07.txt
+[16:12:42] [task_16_email_triage] Wrote workspace file: inbox/email_08.txt
+[16:12:42] [task_16_email_triage] Wrote workspace file: inbox/email_09.txt
+[16:12:42] [task_16_email_triage] Wrote workspace file: inbox/email_10.txt
+[16:12:42] [task_16_email_triage] Wrote workspace file: inbox/email_11.txt
+[16:12:42] [task_16_email_triage] Wrote workspace file: inbox/email_12.txt
+[16:12:42] [task_16_email_triage] Wrote workspace file: inbox/email_13.txt
+[16:12:43] [pinch_task_16_email_triage_qwen3.6-27b_20260520_081242] Container started
+[16:19:29] [pinch_task_16_email_triage_qwen3.6-27b_20260520_081242] Agent finished in 405.98s, returncode=0
+[16:19:29] [pinch_task_16_email_triage_qwen3.6-27b_20260520_081242] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:19:29] [pinch_task_16_email_triage_qwen3.6-27b_20260520_081242] [DEBUG] Contents: [PosixPath('/tmp/workspace/inbox')]
+[16:19:29] [pinch_task_16_email_triage_qwen3.6-27b_20260520_081242] [PROGRESS] Task started at 1779264765.8973434
+[16:19:29] [pinch_task_16_email_triage_qwen3.6-27b_20260520_081242] [PROGRESS] Task finished at 403.0s, status=success
+[16:19:29] [pinch_task_16_email_triage_qwen3.6-27b_20260520_081242] [PROGRESS] Transcript entries: 53
+[16:19:29] [pinch_task_16_email_triage_qwen3.6-27b_20260520_081242] DONE
+[16:19:29] [pinch_task_16_email_triage_qwen3.6-27b_20260520_081242] Agent result loaded: status=success, transcript_len=53
+[16:19:39] [task_16_email_triage] Hybrid score: 0.8671 (auto=0.7727, llm=0.9300)
+[16:19:39] [task_16_email_triage] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_16_email_triage/transcript.json
+[16:19:39] [task_16_email_triage] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_16_email_triage/result.json
+[16:19:39] [pinchbench] 汇总已保存: 17/23 完成
+[16:19:39] [pinchbench] Running task 18/23: task_17_email_search
+[16:19:39] [task_17_email_search] Preparing 11 workspace file(s): ['emails/2026-01-15_project_alpha_kickoff.txt', 'emails/2026-01-22_alpha_data_pipeline.txt', 'emails/2026-02-03_alpha_budget_concern.txt', 'emails/2026-02-05_alpha_api_design.txt', 'emails/2026-02-10_alpha_security_review.txt', 'emails/2026-02-12_alpha_phase1_complete.txt', 'emails/2026-02-14_alpha_client_feedback.txt', 'emails/2026-02-18_alpha_timeline_slip.txt', 'emails/2026-02-20_unrelated_team_lunch.txt', 'emails/2026-02-22_unrelated_conference.txt', 'emails/2026-02-25_alpha_frontend_progress.txt']
+[16:19:39] [task_17_email_search] Wrote workspace file: emails/2026-01-15_project_alpha_kickoff.txt
+[16:19:39] [task_17_email_search] Wrote workspace file: emails/2026-01-22_alpha_data_pipeline.txt
+[16:19:39] [task_17_email_search] Wrote workspace file: emails/2026-02-03_alpha_budget_concern.txt
+[16:19:39] [task_17_email_search] Wrote workspace file: emails/2026-02-05_alpha_api_design.txt
+[16:19:39] [task_17_email_search] Wrote workspace file: emails/2026-02-10_alpha_security_review.txt
+[16:19:39] [task_17_email_search] Wrote workspace file: emails/2026-02-12_alpha_phase1_complete.txt
+[16:19:39] [task_17_email_search] Wrote workspace file: emails/2026-02-14_alpha_client_feedback.txt
+[16:19:39] [task_17_email_search] Wrote workspace file: emails/2026-02-18_alpha_timeline_slip.txt
+[16:19:39] [task_17_email_search] Wrote workspace file: emails/2026-02-20_unrelated_team_lunch.txt
+[16:19:39] [task_17_email_search] Wrote workspace file: emails/2026-02-22_unrelated_conference.txt
+[16:19:39] [task_17_email_search] Wrote workspace file: emails/2026-02-25_alpha_frontend_progress.txt
+[16:19:40] [pinch_task_17_email_search_qwen3.6-27b_20260520_081939] Container started
+[16:23:29] [pinch_task_17_email_search_qwen3.6-27b_20260520_081939] Agent finished in 229.27s, returncode=0
+[16:23:29] [pinch_task_17_email_search_qwen3.6-27b_20260520_081939] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:23:29] [pinch_task_17_email_search_qwen3.6-27b_20260520_081939] [DEBUG] Contents: [PosixPath('/tmp/workspace/emails')]
+[16:23:29] [pinch_task_17_email_search_qwen3.6-27b_20260520_081939] [PROGRESS] Task started at 1779265183.0827067
+[16:23:29] [pinch_task_17_email_search_qwen3.6-27b_20260520_081939] [PROGRESS] Task finished at 226.4s, status=success
+[16:23:29] [pinch_task_17_email_search_qwen3.6-27b_20260520_081939] [PROGRESS] Transcript entries: 47
+[16:23:29] [pinch_task_17_email_search_qwen3.6-27b_20260520_081939] DONE
+[16:23:29] [pinch_task_17_email_search_qwen3.6-27b_20260520_081939] Agent result loaded: status=success, transcript_len=47
+[16:23:37] [task_17_email_search] Hybrid score: 0.8940 (auto=0.9750, llm=0.8400)
+[16:23:38] [task_17_email_search] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_17_email_search/transcript.json
+[16:23:38] [task_17_email_search] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_17_email_search/result.json
+[16:23:38] [pinchbench] 汇总已保存: 18/23 完成
+[16:23:38] [pinchbench] Running task 19/23: task_16_market_research
+[16:23:38] [task_16_market_research] No workspace_files defined in task
+[16:23:39] [pinch_task_16_market_research_qwen3.6-27b_20260520_082338] Container started
+[16:29:58] [pinch_task_16_market_research_qwen3.6-27b_20260520_082338] Agent finished in 379.10s, returncode=0
+[16:29:58] [pinch_task_16_market_research_qwen3.6-27b_20260520_082338] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:29:58] [pinch_task_16_market_research_qwen3.6-27b_20260520_082338] [DEBUG] Contents: []
+[16:29:58] [pinch_task_16_market_research_qwen3.6-27b_20260520_082338] [PROGRESS] Task started at 1779265422.0059285
+[16:29:58] [pinch_task_16_market_research_qwen3.6-27b_20260520_082338] [PROGRESS] Task finished at 376.3s, status=success
+[16:29:58] [pinch_task_16_market_research_qwen3.6-27b_20260520_082338] [PROGRESS] Transcript entries: 41
+[16:29:58] [pinch_task_16_market_research_qwen3.6-27b_20260520_082338] DONE
+[16:29:58] [pinch_task_16_market_research_qwen3.6-27b_20260520_082338] Agent result loaded: status=success, transcript_len=41
+[16:30:05] [task_16_market_research] Hybrid score: 0.9350 (auto=1.0000, llm=0.8700)
+[16:30:06] [task_16_market_research] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_16_market_research/transcript.json
+[16:30:06] [task_16_market_research] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_16_market_research/result.json
+[16:30:06] [pinchbench] 汇总已保存: 19/23 完成
+[16:30:06] [pinchbench] Running task 20/23: task_18_spreadsheet_summary
+[16:30:06] [task_18_spreadsheet_summary] Preparing 2 workspace file(s): [{'source': 'quarterly_sales.csv', 'dest': 'quarterly_sales.csv'}, {'source': 'company_expenses.xlsx', 'dest': 'company_expenses.xlsx'}]
+[16:30:06] [task_18_spreadsheet_summary] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/quarterly_sales.csv -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_18_spreadsheet_summary_yo7o4u92/workspace/quarterly_sales.csv
+[16:30:06] [task_18_spreadsheet_summary] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/company_expenses.xlsx -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_18_spreadsheet_summary_yo7o4u92/workspace/company_expenses.xlsx
+[16:30:07] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_083006] Container started
+[16:33:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_083006] Agent finished in 188.74s, returncode=0
+[16:33:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_083006] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:33:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_083006] [DEBUG] Contents: [PosixPath('/tmp/workspace/company_expenses.xlsx'), PosixPath('/tmp/workspace/quarterly_sales.csv')]
+[16:33:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_083006] [PROGRESS] Task started at 1779265810.505636
+[16:33:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_083006] [PROGRESS] Task finished at 185.8s, status=success
+[16:33:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_083006] [PROGRESS] Transcript entries: 29
+[16:33:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_083006] DONE
+[16:33:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_083006] Agent result loaded: status=success, transcript_len=29
+[16:33:22] [task_18_spreadsheet_summary] Hybrid score: 0.9780 (auto=1.0000, llm=0.9450)
+[16:33:22] [task_18_spreadsheet_summary] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_18_spreadsheet_summary/transcript.json
+[16:33:22] [task_18_spreadsheet_summary] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_18_spreadsheet_summary/result.json
+[16:33:22] [pinchbench] 汇总已保存: 20/23 完成
+[16:33:22] [pinchbench] Running task 21/23: task_20_eli5_pdf_summary
+[16:33:22] [task_20_eli5_pdf_summary] Preparing 1 workspace file(s): [{'source': 'GPT4.pdf', 'dest': 'GPT4.pdf'}]
+[16:33:22] [task_20_eli5_pdf_summary] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/GPT4.pdf -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_20_eli5_pdf_summary_dstt73g1/workspace/GPT4.pdf
+[16:33:24] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_083322] Container started
+[16:34:46] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_083322] Agent finished in 81.54s, returncode=0
+[16:34:46] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_083322] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:34:46] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_083322] [DEBUG] Contents: [PosixPath('/tmp/workspace/GPT4.pdf')]
+[16:34:46] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_083322] [PROGRESS] Task started at 1779266007.2215517
+[16:34:46] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_083322] [PROGRESS] Task finished at 78.8s, status=success
+[16:34:46] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_083322] [PROGRESS] Transcript entries: 23
+[16:34:46] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_083322] DONE
+[16:34:46] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_083322] Agent result loaded: status=success, transcript_len=23
+[16:34:51] [task_20_eli5_pdf_summary] LLM Judge score: 0.9000
+[16:34:51] [task_20_eli5_pdf_summary] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_20_eli5_pdf_summary/transcript.json
+[16:34:51] [task_20_eli5_pdf_summary] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_20_eli5_pdf_summary/result.json
+[16:34:51] [pinchbench] 汇总已保存: 21/23 完成
+[16:34:51] [pinchbench] Running task 22/23: task_21_openclaw_comprehension
+[16:34:51] [task_21_openclaw_comprehension] Preparing 1 workspace file(s): [{'source': 'OpenClaw Agent Use Cases and Gap Analysis for PinchBench.pdf', 'dest': 'openclaw_report.pdf'}]
+[16:34:51] [task_21_openclaw_comprehension] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/OpenClaw Agent Use Cases and Gap Analysis for PinchBench.pdf -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_21_openclaw_comprehension__74ltcqg/workspace/openclaw_report.pdf
+[16:34:52] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_083451] Container started
+[16:37:49] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_083451] Agent finished in 176.67s, returncode=0
+[16:37:49] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_083451] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:37:49] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_083451] [DEBUG] Contents: [PosixPath('/tmp/workspace/openclaw_report.pdf')]
+[16:37:49] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_083451] [PROGRESS] Task started at 1779266095.463607
+[16:37:49] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_083451] [PROGRESS] Task finished at 173.6s, status=success
+[16:37:49] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_083451] [PROGRESS] Transcript entries: 29
+[16:37:49] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_083451] DONE
+[16:37:49] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_083451] Agent result loaded: status=success, transcript_len=29
+[16:37:49] [task_21_openclaw_comprehension] Grade score: 0.9444
+[16:37:50] [task_21_openclaw_comprehension] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_21_openclaw_comprehension/transcript.json
+[16:37:50] [task_21_openclaw_comprehension] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_21_openclaw_comprehension/result.json
+[16:37:50] [pinchbench] 汇总已保存: 22/23 完成
+[16:37:50] [pinchbench] Running task 23/23: task_22_second_brain
+[16:37:50] [task_22_second_brain] No workspace_files defined in task
+[16:37:51] [pinch_task_22_second_brain_qwen3.6-27b_20260520_083750] Container started
+[16:42:16] [pinch_task_22_second_brain_qwen3.6-27b_20260520_083750] Agent finished in 265.08s, returncode=0
+[16:42:16] [pinch_task_22_second_brain_qwen3.6-27b_20260520_083750] DONE
+[16:42:16] [pinch_task_22_second_brain_qwen3.6-27b_20260520_083750] Agent result loaded: status=success, transcript_len=63
+[16:42:22] [task_22_second_brain] Hybrid score: 0.9350 (auto=1.0000, llm=0.8700)
+[16:42:23] [task_22_second_brain] Saved transcript to outputs/harness/control/pinchbench/transcripts/qwen3.6-27b/task_22_second_brain/transcript.json
+[16:42:23] [task_22_second_brain] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/control/pinchbench/qwen3.6-27b/task_22_second_brain/result.json
+[16:42:23] [pinchbench] 汇总已保存: 23/23 完成
+[16:42:23]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[16:42:23] 
+
+[92m13:42:21 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[13:42:21] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m13:42:25 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[13:42:25] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m13:46:16 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[13:46:16] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m13:46:20 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[13:46:20] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m13:49:32 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[13:49:32] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m13:49:37 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[13:49:37] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m13:56:01 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[13:56:01] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m13:56:10 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[13:56:10] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m13:57:31 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[13:57:31] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m13:57:35 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[13:57:35] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m13:58:50 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[13:58:50] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m13:58:59 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[13:58:59] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:00:47 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:00:47] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:00:51 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:00:51] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:04:00 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:04:00] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:04:06 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:04:06] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:06:06 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:06:06] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:06:11 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:06:11] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:08:00 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:08:00] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:08:07 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:08:07] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:09:25 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:09:25] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:09:30 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:09:30] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:11:59 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:11:59] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:12:06 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:12:06] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:13:30 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:13:30] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:13:36 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:13:36] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:15:33 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:15:33] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:15:39 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:15:39] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:16:50 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:16:50] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:16:57 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:16:57] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:18:51 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:18:51] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:18:57 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:18:57] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:22:38 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:22:38] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:22:46 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:22:46] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:25:20 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:25:20] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:25:25 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:25:25] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:27:38 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:27:38] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:27:48 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:27:48] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:28:54 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:28:54] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:28:59 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:28:59] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:40:24 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:40:24] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:40:31 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:40:31] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:48:56 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:48:56] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:49:12 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:49:12] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:53:04 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:53:04] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:53:18 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:53:18] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:54:38 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:54:38] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:54:45 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:54:45] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:57:01 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:57:01] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:57:09 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:57:09] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:58:36 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:58:36] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m14:58:44 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[14:58:44] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m14:59:55 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[14:59:55] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m15:00:02 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[15:00:02] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m15:01:53 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[15:01:53] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m15:01:59 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[15:01:59] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m15:04:46 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[15:04:46] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m15:04:54 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[15:04:54] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m15:06:52 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[15:06:52] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m15:06:56 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[15:06:56] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m15:08:39 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[15:08:39] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m15:08:56 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[15:08:56] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m15:10:49 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[15:10:49] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m15:10:55 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[15:10:55] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m15:13:02 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[15:13:02] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m15:13:12 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[15:13:12] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m15:14:29 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[15:14:29] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m15:14:33 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[15:14:33] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m15:20:46 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[15:20:46] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m15:20:54 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[15:20:54] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m15:22:22 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[15:22:22] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m15:22:28 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[15:22:28] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m15:23:56 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[15:23:56] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m15:24:05 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[15:24:05] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m15:26:44 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[15:26:44] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m15:26:49 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[15:26:49] [LiteLLM] Wrapper: Completed Call, calling success_handler
+[92m15:28:15 - LiteLLM:INFO[0m: utils.py:3419 - 
+LiteLLM completion() model= glm-5; provider = anthropic
+[15:28:15] [LiteLLM] 
+LiteLLM completion() model= glm-5; provider = anthropic
+[92m15:28:19 - LiteLLM:INFO[0m: utils.py:1308 - Wrapper: Completed Call, calling success_handler
+[15:28:19] [LiteLLM] Wrapper: Completed Call, calling success_handler

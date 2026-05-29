@@ -1,0 +1,24 @@
+[13:56:15] 从文件加载任务列表: error_analysis/classify_outputs/qwen-3.6-27b/deepseek_classify/inputs/memory_structured_C.csv
+[13:56:15]   clawbench: 1 tasks
+[13:56:15] Config: bench=['clawbench'], models=['qwen3.6-27b'], sample=all
+[13:56:15] 
+============================================================
+[13:56:15] BENCHMARK: clawbench (1 tasks from file)
+[13:56:15] ============================================================
+[13:56:15]   [clawbench×qwen3.6-27b] evaluating...
+[13:56:19] [clawbench_sys-013_qwen3.6-27b_20260521_055617] Container started
+[14:00:20]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-013-log-rotation-planner/environment/setup.sh
+[14:00:20]   [container] [setup] setup.sh 成功
+[14:00:20]   [container] [setup] 工作空间文件: ['instruction.md', 'log_inventory.json']
+[14:00:20]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:00:20]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=958, finish_reason=stop, reasoning_tokens=2831
+[14:00:20]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[14:00:20]   [container] [StructuredMemoryStore] LLM init response: content_type=str, content_len=1138, finish_reason=stop, reasoning_tokens=2843
+[14:00:20]   [container] DONE
+[14:00:20] [clawbench_sys-013_qwen3.6-27b_20260521_055617] Agent finished in 240.55s, returncode=0
+[14:00:20] [clawbench_sys-013_qwen3.6-27b_20260521_055617] Agent result: passed=False, score=0.7308
+[14:00:20] [sys-013] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory_structured/clawbench-official/qwen3.6-27b/sys-013.json
+[14:00:20]   [clawbench×qwen3.6-27b] done: score=73.1, scored=0/1
+[14:00:20]   [clawbench×qwen3.6-27b] done: score=73.1, scored=0/1
+[14:00:20] 
+

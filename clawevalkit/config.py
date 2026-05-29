@@ -75,6 +75,10 @@ def load_env(env_file: str = None) -> str | None:
     root = _find_project_root()
     candidates.append(root / ".env")
 
+    # Keys that should always be merged (appended) from .env, even if already set.
+    # NO_PROXY/no_proxy may be partially set by the shell; .env adds internal hosts.
+    _MERGE_APPEND_KEYS = {"NO_PROXY", "no_proxy"}
+
     for p in candidates:
         if p.exists():
             for line in p.read_text().splitlines():
@@ -82,7 +86,14 @@ def load_env(env_file: str = None) -> str | None:
                 if line and not line.startswith("#") and "=" in line:
                     k, _, v = line.partition("=")
                     k, v = k.strip(), v.strip().strip("'\"")
-                    if k not in os.environ:
+                    if k in _MERGE_APPEND_KEYS:
+                        existing = os.environ.get(k, "")
+                        existing_parts = set(x.strip() for x in existing.split(",") if x.strip())
+                        new_parts = [x.strip() for x in v.split(",") if x.strip() and x.strip() not in existing_parts]
+                        if new_parts:
+                            merged = existing.rstrip(",") + ("," if existing else "") + ",".join(new_parts)
+                            os.environ[k] = merged
+                    elif k not in os.environ:
                         os.environ[k] = v
             return str(p)
     return None
@@ -130,10 +141,19 @@ def get_judge_config(judge_model: str = None) -> tuple[str, str, str]:
         else:
             actual_model = judge_model
     elif "glm" in judge_model.lower():
-        api_key = os.getenv("GLM_API_KEY", os.getenv("JUDGE_API_KEY", ""))
-        # Anthropic-compatible endpoint (LLMJudge auto-detects and uses Anthropic SDK)
-        base_url = "https://open.bigmodel.cn/api/anthropic"
-        # GLM uses model name directly (e.g., "glm-4.7"), not "anthropic/glm-4.7"
+        glm_key = os.getenv("GLM_API_KEY", "")
+        modelhub_key = os.getenv("MODELHUB_API_KEY", "")
+        if glm_key:
+            # Direct ZhipuAI endpoint (Anthropic-compatible)
+            api_key = glm_key
+            base_url = "https://open.bigmodel.cn/api/anthropic"
+        elif modelhub_key:
+            # Fallback to ModelHub (AzureOpenAI-compatible)
+            api_key = modelhub_key
+            base_url = "https://aidp.bytedance.net/api/modelhub/online/v2/crawl"
+        else:
+            api_key = os.getenv("JUDGE_API_KEY", "")
+            base_url = "https://open.bigmodel.cn/api/anthropic"
         actual_model = judge_model
     else:
         api_key = os.getenv("JUDGE_API_KEY", os.getenv("OPENROUTER_API_KEY", ""))

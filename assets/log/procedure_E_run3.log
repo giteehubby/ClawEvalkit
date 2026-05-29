@@ -1,0 +1,71 @@
+[11:03:08] 从文件加载任务列表: error_analysis/classify_outputs/qwen-3.6-27b/inputs/procedure_E.csv
+[11:03:08]   clawbench: 3 tasks
+[11:03:08]   pinchbench: 1 tasks
+[11:03:08] Config: bench=['clawbench', 'pinchbench'], models=['claude-sonnet'], sample=all
+[11:03:08] 
+============================================================
+[11:03:08] BENCHMARK: clawbench (3 tasks from file)
+[11:03:08] ============================================================
+[11:03:08]   [clawbench×claude-sonnet] evaluating...
+[11:03:12] [clawbench_acct-005-financial-statements_claude-sonnet-4.6_20260521_030309] Container started
+[11:03:12] [clawbench_mag-001_claude-sonnet-4.6_20260521_030309] Container started
+[11:03:12] [clawbench_cont-003-readability-audit_claude-sonnet-4.6_20260521_030309] Container started
+[11:05:06]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/accounting/acct-005-financial-statements/environment/setup.sh
+[11:05:06]   [container] [setup] setup.sh 成功
+[11:05:06]   [container] [setup] 工作空间文件: ['trial_balance.csv', 'instruction.md']
+[11:05:06]   [container] DONE
+[11:05:06]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[11:05:06]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 8814.44it/s]
+[11:05:06]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[11:05:06]   [container-err] Key                     | Status     |  | 
+[11:05:06]   [container-err] ------------------------+------------+--+-
+[11:05:06]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[11:05:06]   [container-err] 
+[11:05:06]   [container-err] Notes:
+[11:05:06]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[11:05:06] [clawbench_acct-005-financial-statements_claude-sonnet-4.6_20260521_030309] Agent finished in 114.25s, returncode=0
+[11:05:06] [clawbench_acct-005-financial-statements_claude-sonnet-4.6_20260521_030309] Agent result: passed=False, score=0.5000
+[11:05:07] [acct-005-financial-statements] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/clawbench-official/claude-sonnet/acct-005-financial-statements.json
+[11:05:20]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/content-analysis/cont-003-readability-audit/environment/setup.sh
+[11:05:20]   [container] [setup] setup.sh 成功
+[11:05:20]   [container] [setup] 工作空间文件: ['instruction.md']
+[11:05:20]   [container] DONE
+[11:05:20]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[11:05:20]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 3803.40it/s]
+[11:05:20]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[11:05:20]   [container-err] Key                     | Status     |  | 
+[11:05:20]   [container-err] ------------------------+------------+--+-
+[11:05:20]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[11:05:20]   [container-err] 
+[11:05:20]   [container-err] Notes:
+[11:05:20]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[11:05:20] [clawbench_cont-003-readability-audit_claude-sonnet-4.6_20260521_030309] Agent finished in 127.71s, returncode=0
+[11:05:20] [clawbench_cont-003-readability-audit_claude-sonnet-4.6_20260521_030309] Agent result: passed=False, score=0.5000
+[11:05:20] [cont-003-readability-audit] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/clawbench-official/claude-sonnet/cont-003-readability-audit.json
+[11:07:57]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/multi-agent/mag-001-code-review-pipeline/environment/setup.sh
+[11:07:57]   [container] [setup] setup.sh 成功
+[11:07:57]   [container] [setup] 工作空间文件: ['data_processor.py', 'text_utils.py', 'instruction.md', 'calculator.py']
+[11:07:57]   [container] DONE
+[11:07:57]   [container-err] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[11:07:57]   [container-err] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 4196.42it/s]
+[11:07:57]   [container-err] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[11:07:57]   [container-err] Key                     | Status     |  | 
+[11:07:57]   [container-err] ------------------------+------------+--+-
+[11:07:57]   [container-err] embeddings.position_ids | UNEXPECTED |  | 
+[11:07:57]   [container-err] 
+[11:07:57]   [container-err] Notes:
+[11:07:57]   [container-err] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[11:07:57] [clawbench_mag-001_claude-sonnet-4.6_20260521_030309] Agent finished in 285.34s, returncode=0
+[11:07:57] [clawbench_mag-001_claude-sonnet-4.6_20260521_030309] Agent result: passed=False, score=0.9000
+[11:07:58] [mag-001] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/clawbench-official/claude-sonnet/mag-001.json
+[11:07:58]   [clawbench×claude-sonnet] done: score=63.3, scored=0/3
+[11:07:58]   [clawbench×claude-sonnet] done: score=63.3, scored=0/3
+[11:07:58] 
+============================================================
+[11:07:58] BENCHMARK: pinchbench (1 tasks from file)
+[11:07:58] ============================================================
+[11:07:58]   [pinchbench×claude-sonnet] evaluating...
+[11:07:58]   [pinchbench×claude-sonnet] done: score=86.9, scored=0/23
+[11:07:58]   [pinchbench×claude-sonnet] done: score=86.9, scored=0/23
+[11:07:58] 
+

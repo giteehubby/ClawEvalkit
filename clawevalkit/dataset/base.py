@@ -78,6 +78,7 @@ class BaseBenchmark(ABC):
         out_dir.mkdir(parents=True, exist_ok=True)
         out_path = out_dir / "result.json"
         out_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
+        log(f"[{task_id}] Result saved to {out_path.resolve()}")
         return out_path
 
     def _build_and_save_summary(

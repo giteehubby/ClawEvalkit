@@ -90,7 +90,7 @@ def get_harness_config(harness: str, bench_key: str = None, model_config: dict =
                 ),
                 preflight_enabled=False,  # T2(b) 前置检查，可选开启
                 verify=VerifyConfig(
-                    enabled=False,  # 禁用 SelfVerify 模块
+                    enabled=False,  # 禁用 SelfVerify 模块（部分任务 timeout 较短，避免超时）
                     max_rounds=1,
                 ),
             )
@@ -182,10 +182,17 @@ def get_harness_config(harness: str, bench_key: str = None, model_config: dict =
             )
         }
     elif harness == "combo":
-        # T5: T2 + T3 组合配方 (Control + Collaboration)
-        # - Control (T2): PlanFirst + Replan + Retry + Reflection，修复 A/B/D 类失败
-        # - Collaboration (T3): Executor + Verifier 双角色，修复 D/E 类失败
-        # 二者正交，组合后预期对 A/B/D 类有叠加增益
+        # T5: 博采众长的组合配方
+        # 组合所有 harness 中最有效的子组件，按失败类别正交修复：
+        # - Structured Memory (H2): 修复 C 类状态管理失败 (CRR 60%)
+        # - Control (T2 精选): PlanFirst + PreflightCheck + Retry，修复 A/B 类
+        # - Collab (T3a): Executor-Verifier，修复 D/E 类 (D=47.6%, E=40%)
+        # - Procedure (T4): ProgramSupportCards + SkillActivation，修复 E 类 (CRR 57.5%)
+        #
+        # 设计原则：
+        # 1. 只启用各 harness 中已被验证最有效的子组件，避免上下文拥挤
+        # 2. 去除功能重叠的组件（如 Control 的 Reflection 与 Collab 的 Verifier 重叠）
+        # 3. 精心调节参数以平衡效果和 token 开销
         from OpenClawPro.harness.agent.control import (
             ControlConfig,
             PlanFirstConfig,
@@ -195,7 +202,34 @@ def get_harness_config(harness: str, bench_key: str = None, model_config: dict =
             VerifyConfig,
         )
         from OpenClawPro.harness.agent.collaboration import CollabConfig
+        from OpenClawPro.harness.agent.memory_structured import StructuredMemoryConfig
+        from OpenClawPro.harness.agent.procedure import (
+            ProceduralConfig,
+            ProgramSupportConfig,
+            RetrievalConfig,
+            SkillActivationConfig,
+        )
+        import os
 
+        mc = model_config or {}
+
+        # H2: 结构化状态跟踪 — 四 slots 主动维护决策可用状态
+        structured_memory_cfg = StructuredMemoryConfig(
+            enabled=True,
+            llm_model=mc.get("model", "glm-4"),
+            llm_api_url=mc.get("api_url", ""),
+            llm_api_key=mc.get("api_key", ""),
+            llm_update_interval=4,
+            llm_update_buffer_size=10,
+        )
+
+        # T2: Control 精选 — 只启用 PlanFirst + PreflightCheck + Retry
+        # - PlanFirst: 目标落地，修复 A 类 (34.4%)
+        # - PreflightCheck: 工具参数预检，修复 B 类 (36.8%)
+        # - Retry: 工具调用失败自动重试
+        # - 禁用 Reflection（与 Verifier 角色重叠）
+        # - 禁用 Replan（Verifier 反馈已提供纠偏，Replan 会注入过多 system msg）
+        # - 禁用 SelfVerify（Collab Verifier 已承担验证职责）
         control_cfg = ControlConfig(
             enabled=True,
             plan_first=PlanFirstConfig(
@@ -203,13 +237,7 @@ def get_harness_config(harness: str, bench_key: str = None, model_config: dict =
                 trigger="always",
                 max_plan_length=500,
             ),
-            replan=ReplanConfig(
-                enabled=True,
-                signal_threshold=5,
-                signals=["error", "repeated_action"],
-                max_replans=2,
-                min_iterations_between_replans=2,
-            ),
+            replan=ReplanConfig(enabled=False),
             retry=RetryConfig(
                 enabled=True,
                 max_retries=2,
@@ -218,23 +246,68 @@ def get_harness_config(harness: str, bench_key: str = None, model_config: dict =
                 retryable_errors=["rate_limit", "timeout", "transient"],
                 fatal_errors=["invalid_params", "auth_failed", "permission_denied"],
             ),
-            reflection=ReflectionConfig(
+            reflection=ReflectionConfig(enabled=False),
+            preflight_enabled=True,
+            preflight_check_params=True,
+            preflight_check_suitability=False,
+            verify=VerifyConfig(enabled=False),
+        )
+
+        # T3a: Executor-Verifier 协作
+        # - 提高 max_handoffs 到 5，给 verifier 更多修正机会
+        # - 提高 max_verifier_turns，让 verifier 有足够工具调用验证
+        collab_cfg = CollabConfig(
+            enabled=True,
+            mode="executor_verifier",
+            max_handoffs=5,
+            max_verifier_turns=10,
+        )
+
+        # T4: Procedure — 程序支持卡片 + 技能激活
+        repo_root = Path(__file__).parent.parent
+        host_cards_root = str(repo_root / "OpenClawPro" / "harness" / "agent" / "procedure" / "cards")
+        docker_cards_root = "/root/OpenClawPro/harness/agent/procedure/cards"
+        docker_benches = {"agentbench", "clawbench-official", "pinchbench", "skillsbench",
+                          "claw-bench-tribe", "zclawbench"}
+        base = docker_cards_root if bench_key in docker_benches else host_cards_root
+
+        if bench_key:
+            cards_subdir = BENCH_CARDS_MAP.get(bench_key, "")
+            cards_dir = os.path.join(base, cards_subdir) if cards_subdir else base
+        else:
+            cards_dir = os.environ.get("T4A_CARDS_DIR", base)
+
+        procedural_cfg = ProceduralConfig(
+            enabled=True,
+            program_support=ProgramSupportConfig(
                 enabled=True,
-                trigger="on_failure",
-                consecutive_failure_threshold=2,
-                max_reflection_length=300,
+                cards_dir=cards_dir,
+                retrieval=RetrievalConfig(
+                    embedding_model=os.environ.get("T4A_EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2"),
+                    device=os.environ.get("T4A_DEVICE", "cpu"),
+                    top_k=int(os.environ.get("T4A_TOP_K", "3")),
+                    batch_size=16,
+                    cache_embeddings=True,
+                    score_threshold=0.35,
+                ),
+                use_keyword_fallback=True,
             ),
-            preflight_enabled=False,
-            verify=VerifyConfig(
-                enabled=False,  # SelfVerify 禁用，由 Collab 的 VerifierRole 处理
-                max_rounds=1,
+            skill_activation=SkillActivationConfig(
+                enabled=True,
+                inject_at_start=True,
+                retrigger_on_unexpected=True,
+                unexpected_threshold=1,
+                include_inventory=True,
+                include_selection=True,
+                include_verification=True,
             ),
         )
-        collab_cfg = CollabConfig(enabled=True, mode="executor_verifier")
 
         return {
+            "structured_memory_config": structured_memory_cfg,
             "control_config": control_cfg,
             "collab_config": collab_cfg,
+            "procedural_config": procedural_cfg,
         }
     return {}
 

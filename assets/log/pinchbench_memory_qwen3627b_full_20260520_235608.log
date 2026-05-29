@@ -1,0 +1,599 @@
+[23:56:09] Config: bench=['pinchbench'], models=['qwen3.6-27b'], sample=all
+[23:56:09] 
+============================================================
+[23:56:09] BENCHMARK: PinchBench (23 tasks)
+[23:56:09] ============================================================
+[23:56:09]   [pinchbench×qwen3.6-27b] evaluating...
+[23:56:10] [pinchbench] 汇总已保存: 2/23 完成
+[23:56:10] [task_00_sanity] No workspace_files defined in task
+[23:56:10] [task_01_calendar] No workspace_files defined in task
+[23:56:14] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] Container started
+[23:56:14] [pinch_task_00_sanity_qwen3.6-27b_20260520_155610] Container started
+[23:56:18] [pinch_task_00_sanity_qwen3.6-27b_20260520_155610] Agent finished in 4.53s, returncode=0
+[23:56:18] [pinch_task_00_sanity_qwen3.6-27b_20260520_155610] [DEBUG] Workspace: /tmp/workspace, exists=True
+[23:56:18] [pinch_task_00_sanity_qwen3.6-27b_20260520_155610] [DEBUG] Contents: []
+[23:56:18] [pinch_task_00_sanity_qwen3.6-27b_20260520_155610] [PROGRESS] Task started at 1779292576.8441744
+[23:56:18] [pinch_task_00_sanity_qwen3.6-27b_20260520_155610] [PROGRESS] Task finished at 1.6s, status=success
+[23:56:18] [pinch_task_00_sanity_qwen3.6-27b_20260520_155610] [PROGRESS] Transcript entries: 5
+[23:56:18] [pinch_task_00_sanity_qwen3.6-27b_20260520_155610] DONE
+[23:56:18] [pinch_task_00_sanity_qwen3.6-27b_20260520_155610] Agent result loaded: status=success, transcript_len=5
+[23:56:18] [task_00_sanity] Grade score: 1.0000
+[23:56:19] [task_00_sanity] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_00_sanity/transcript.json
+[23:56:19] [task_00_sanity] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_00_sanity/result.json
+[23:56:19] [task_02_stock] No workspace_files defined in task
+[23:56:19] [pinchbench] 汇总已保存: 2/23 完成
+[23:56:21] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] Container started
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] Agent finished in 85.02s, returncode=0
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] [DEBUG] Workspace: /tmp/workspace, exists=True
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] [DEBUG] Contents: []
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] [PROGRESS] Task started at 1779292576.8544884
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] [PROGRESS] Task finished at 81.4s, status=success
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] [PROGRESS] Transcript entries: 21
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] DONE
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] [STDERR] 
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 6909.23it/s]
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] [STDERR] Key                     | Status     |  | 
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] [STDERR] ------------------------+------------+--+-
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] [STDERR] 
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] [STDERR] Notes:
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[23:57:39] [pinch_task_01_calendar_qwen3.6-27b_20260520_155610] Agent result loaded: status=success, transcript_len=21
+[23:57:39] [task_01_calendar] Grade score: 0.0000
+[23:57:39] [task_01_calendar] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_01_calendar/transcript.json
+[23:57:39] [task_01_calendar] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_01_calendar/result.json
+[23:57:39] [task_03_blog] No workspace_files defined in task
+[23:57:39] [pinchbench] 汇总已保存: 3/23 完成
+[23:57:41] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] Container started
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] Agent finished in 27.44s, returncode=0
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] [DEBUG] Workspace: /tmp/workspace, exists=True
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] [DEBUG] Contents: []
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] [PROGRESS] Task started at 1779292664.5938416
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] [PROGRESS] Task finished at 24.0s, status=success
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] [PROGRESS] Transcript entries: 9
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] DONE
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] [STDERR] 
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 19788.98it/s]
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] [STDERR] Key                     | Status     |  | 
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] [STDERR] ------------------------+------------+--+-
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] [STDERR] 
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] [STDERR] Notes:
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[23:58:09] [pinch_task_03_blog_qwen3.6-27b_20260520_155739] Agent result loaded: status=success, transcript_len=9
+[23:58:15] [task_03_blog] LLM Judge score: 0.8300
+[23:58:16] [task_03_blog] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_03_blog/transcript.json
+[23:58:16] [task_03_blog] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_03_blog/result.json
+[23:58:16] [task_04_weather] No workspace_files defined in task
+[23:58:16] [pinchbench] 汇总已保存: 3/23 完成
+[23:58:18] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] Container started
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] Agent finished in 142.82s, returncode=0
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [DEBUG] Workspace: /tmp/workspace, exists=True
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [DEBUG] Contents: []
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [PROGRESS] Task started at 1779292584.104487
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [PROGRESS] Task finished at 139.1s, status=success
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [PROGRESS] Transcript entries: 47
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] DONE
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] 2026-05-20 15:56:28.366 | WARNING  | nanobot.agent.tools.web:_search_brave:115 - BRAVE_API_KEY not set, falling back to DuckDuckGo
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] 
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 27009.27it/s]
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] Key                     | Status     |  | 
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] ------------------------+------------+--+-
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] 
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] Notes:
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] 2026-05-20 15:56:47.369 | DEBUG    | nanobot.agent.tools.web:_fetch_jina:299 - Jina Reader failed for https://finance.yahoo.com/quote/AAPL/, falling back to readability: Client error '451 Unavailable For Legal Reasons' for url 'https://r.jina.ai/https://finance.yahoo.com/quote/AAPL/'
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/451
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] 2026-05-20 15:56:54.773 | WARNING  | nanobot.agent.tools.web:_search_brave:115 - BRAVE_API_KEY not set, falling back to DuckDuckGo
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] 2026-05-20 15:57:19.961 | WARNING  | nanobot.agent.tools.web:_search_brave:115 - BRAVE_API_KEY not set, falling back to DuckDuckGo
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] [STDERR] 2026-05-20 15:57:36.296 | WARNING  | nanobot.agent.tools.web:_search_brave:115 - BRAVE_API_KEY not set, falling back to DuckDuckGo
+[23:58:44] [pinch_task_02_stock_qwen3.6-27b_20260520_155619] Agent result loaded: status=success, transcript_len=47
+[23:58:44] [task_02_stock] Grade score: 1.0000
+[23:58:44] [task_02_stock] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_02_stock/transcript.json
+[23:58:44] [task_02_stock] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_02_stock/result.json
+[23:58:44] [task_05_summary] Preparing 1 workspace file(s): ['summary_source.txt']
+[23:58:44] [task_05_summary] Wrote workspace file: summary_source.txt
+[23:58:44] [pinchbench] 汇总已保存: 4/23 完成
+[23:58:47] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] Container started
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] Agent finished in 22.78s, returncode=0
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] [DEBUG] Workspace: /tmp/workspace, exists=True
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] [DEBUG] Contents: [PosixPath('/tmp/workspace/summary_source.txt')]
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] [PROGRESS] Task started at 1779292730.777161
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] [PROGRESS] Task finished at 19.3s, status=success
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] [PROGRESS] Transcript entries: 13
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] DONE
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] [STDERR] 
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 18542.94it/s]
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] [STDERR] Key                     | Status     |  | 
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] [STDERR] ------------------------+------------+--+-
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] [STDERR] 
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] [STDERR] Notes:
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[23:59:10] [pinch_task_05_summary_qwen3.6-27b_20260520_155844] Agent result loaded: status=success, transcript_len=13
+[23:59:15] [task_05_summary] LLM Judge score: 0.8500
+[23:59:15] [task_05_summary] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_05_summary/transcript.json
+[23:59:15] [task_05_summary] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_05_summary/result.json
+[23:59:15] [task_06_events] No workspace_files defined in task
+[23:59:15] [pinchbench] 汇总已保存: 5/23 完成
+[23:59:17] [pinch_task_06_events_qwen3.6-27b_20260520_155915] Container started
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] Agent finished in 84.71s, returncode=0
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] [DEBUG] Workspace: /tmp/workspace, exists=True
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] [DEBUG] Contents: []
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] [PROGRESS] Task started at 1779292701.197427
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] [PROGRESS] Task finished at 81.1s, status=success
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] [PROGRESS] Transcript entries: 37
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] DONE
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] [STDERR] 
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 39406.49it/s]
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] [STDERR] Key                     | Status     |  | 
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] [STDERR] ------------------------+------------+--+-
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] [STDERR] 
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] [STDERR] Notes:
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[23:59:43] [pinch_task_04_weather_qwen3.6-27b_20260520_155816] Agent result loaded: status=success, transcript_len=37
+[23:59:43] [task_04_weather] Grade score: 0.0000
+[23:59:43] [task_04_weather] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_04_weather/transcript.json
+[23:59:43] [task_04_weather] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_04_weather/result.json
+[23:59:43] [task_07_email] No workspace_files defined in task
+[23:59:43] [pinchbench] 汇总已保存: 6/23 完成
+[23:59:47] [pinch_task_07_email_qwen3.6-27b_20260520_155943] Container started
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] Agent finished in 23.36s, returncode=0
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] [DEBUG] Contents: []
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] [PROGRESS] Task started at 1779292789.928915
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] [PROGRESS] Task finished at 18.9s, status=success
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] [PROGRESS] Transcript entries: 9
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] DONE
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] [STDERR] 
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 20073.10it/s]
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] [STDERR] Key                     | Status     |  | 
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] [STDERR] ------------------------+------------+--+-
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] [STDERR] 
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] [STDERR] Notes:
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:00:10] [pinch_task_07_email_qwen3.6-27b_20260520_155943] Agent result loaded: status=success, transcript_len=9
+[00:00:14] [task_07_email] LLM Judge score: 0.7000
+[00:00:15] [task_07_email] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_07_email/transcript.json
+[00:00:15] [task_07_email] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_07_email/result.json
+[00:00:15] [task_08_memory] Preparing 1 workspace file(s): ['notes.md']
+[00:00:15] [task_08_memory] Wrote workspace file: notes.md
+[00:00:15] [pinchbench] 汇总已保存: 7/23 完成
+[00:00:17] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] Container started
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] Agent finished in 61.34s, returncode=0
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [DEBUG] Contents: []
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [PROGRESS] Task started at 1779292760.5251215
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [PROGRESS] Task finished at 57.5s, status=success
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [PROGRESS] Transcript entries: 20
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] DONE
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [STDERR] 2026-05-20 15:59:25.836 | WARNING  | nanobot.agent.tools.web:_search_brave:115 - BRAVE_API_KEY not set, falling back to DuckDuckGo
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [STDERR] 
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 23069.01it/s]
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [STDERR] Key                     | Status     |  | 
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [STDERR] ------------------------+------------+--+-
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [STDERR] 
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [STDERR] Notes:
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:00:18] [pinch_task_06_events_qwen3.6-27b_20260520_155915] Agent result loaded: status=success, transcript_len=20
+[00:00:23] [task_06_events] LLM Judge score: 0.9350
+[00:00:23] [task_06_events] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_06_events/transcript.json
+[00:00:23] [task_06_events] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_06_events/result.json
+[00:00:23] [task_09_files] No workspace_files defined in task
+[00:00:23] [pinchbench] 汇总已保存: 8/23 完成
+[00:00:27] [pinch_task_09_files_qwen3.6-27b_20260520_160023] Container started
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] Agent finished in 16.13s, returncode=0
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] [DEBUG] Contents: [PosixPath('/tmp/workspace/notes.md')]
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] [PROGRESS] Task started at 1779292820.578032
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] [PROGRESS] Task finished at 12.6s, status=success
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] [PROGRESS] Transcript entries: 13
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] DONE
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] [STDERR] 
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 15725.59it/s]
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] [STDERR] Key                     | Status     |  | 
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] [STDERR] ------------------------+------------+--+-
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] [STDERR] 
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] [STDERR] Notes:
+[00:00:33] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:00:34] [pinch_task_08_memory_qwen3.6-27b_20260520_160015] Agent result loaded: status=success, transcript_len=13
+[00:00:34] [task_08_memory] Grade score: 1.0000
+[00:00:34] [task_08_memory] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_08_memory/transcript.json
+[00:00:34] [task_08_memory] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_08_memory/result.json
+[00:00:34] [task_10_workflow] Preparing 1 workspace file(s): ['config.json']
+[00:00:34] [task_10_workflow] Wrote workspace file: config.json
+[00:00:34] [pinchbench] 汇总已保存: 9/23 完成
+[00:00:37] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] Container started
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] Agent finished in 27.74s, returncode=0
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] [DEBUG] Contents: []
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] [PROGRESS] Task started at 1779292829.9560182
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] [PROGRESS] Task finished at 24.1s, status=success
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] [PROGRESS] Transcript entries: 33
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] DONE
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] [STDERR] 
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 37352.01it/s]
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] [STDERR] Key                     | Status     |  | 
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] [STDERR] ------------------------+------------+--+-
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] [STDERR] 
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] [STDERR] Notes:
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:00:55] [pinch_task_09_files_qwen3.6-27b_20260520_160023] Agent result loaded: status=success, transcript_len=33
+[00:00:55] [task_09_files] Grade score: 1.0000
+[00:00:56] [task_09_files] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_09_files/transcript.json
+[00:00:56] [task_09_files] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_09_files/result.json
+[00:00:56] [task_11_clawdhub] No workspace_files defined in task
+[00:00:56] [pinchbench] 汇总已保存: 10/23 完成
+[00:00:59] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] Container started
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] Agent finished in 28.30s, returncode=0
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] [DEBUG] Contents: [PosixPath('/tmp/workspace/config.json')]
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] [PROGRESS] Task started at 1779292840.5772266
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] [PROGRESS] Task finished at 24.7s, status=success
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] [PROGRESS] Transcript entries: 16
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] DONE
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] [STDERR] 
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 25526.67it/s]
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] [STDERR] Key                     | Status     |  | 
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] [STDERR] ------------------------+------------+--+-
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] [STDERR] 
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] [STDERR] Notes:
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:01:06] [pinch_task_10_workflow_qwen3.6-27b_20260520_160034] Agent result loaded: status=success, transcript_len=16
+[00:01:12] [task_10_workflow] Hybrid score: 0.9100 (auto=1.0000, llm=0.8200)
+[00:01:12] [task_10_workflow] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_10_workflow/transcript.json
+[00:01:12] [task_10_workflow] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_10_workflow/result.json
+[00:01:12] [task_12_skill_search] Preparing 2 workspace file(s): ['config/settings.json', 'config/database.yml']
+[00:01:12] [task_12_skill_search] Wrote workspace file: config/settings.json
+[00:01:12] [task_12_skill_search] Wrote workspace file: config/database.yml
+[00:01:12] [pinchbench] 汇总已保存: 11/23 完成
+[00:01:16] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] Container started
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] Agent finished in 26.23s, returncode=0
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] [DEBUG] Contents: []
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] [PROGRESS] Task started at 1779292862.1621745
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] [PROGRESS] Task finished at 22.3s, status=success
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] [PROGRESS] Transcript entries: 22
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] DONE
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] [STDERR] 
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 24819.79it/s]
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] [STDERR] Key                     | Status     |  | 
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] [STDERR] ------------------------+------------+--+-
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] [STDERR] 
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] [STDERR] Notes:
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:01:25] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_160056] Agent result loaded: status=success, transcript_len=22
+[00:01:25] [task_11_clawdhub] Grade score: 1.0000
+[00:01:25] [task_11_clawdhub] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_11_clawdhub/transcript.json
+[00:01:25] [task_11_clawdhub] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_11_clawdhub/result.json
+[00:01:25] [task_13_image_gen] No workspace_files defined in task
+[00:01:25] [pinchbench] 汇总已保存: 12/23 完成
+[00:01:29] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] Container started
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] Agent finished in 32.59s, returncode=0
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] [DEBUG] Contents: [PosixPath('/tmp/workspace/config')]
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] [PROGRESS] Task started at 1779292880.2112944
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] [PROGRESS] Task finished at 28.5s, status=success
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] [PROGRESS] Transcript entries: 42
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] DONE
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] [STDERR] 
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 41376.62it/s]
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] [STDERR] Key                     | Status     |  | 
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] [STDERR] ------------------------+------------+--+-
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] [STDERR] 
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] [STDERR] Notes:
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:01:49] [pinch_task_12_skill_search_qwen3.6-27b_20260520_160112] Agent result loaded: status=success, transcript_len=42
+[00:01:49] [task_12_skill_search] Grade score: 1.0000
+[00:01:50] [task_12_skill_search] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_12_skill_search/transcript.json
+[00:01:50] [task_12_skill_search] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_12_skill_search/result.json
+[00:01:50] [task_14_humanizer] Preparing 1 workspace file(s): [{'source': 'ai_blog.txt', 'dest': 'ai_blog.txt'}]
+[00:01:50] [task_14_humanizer] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/ai_blog.txt -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_14_humanizer_bu0pti41/workspace/ai_blog.txt
+[00:01:50] [pinchbench] 汇总已保存: 13/23 完成
+[00:01:54] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] Container started
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] Agent finished in 52.20s, returncode=0
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [DEBUG] Contents: []
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [PROGRESS] Task started at 1779292892.2984228
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [PROGRESS] Task finished at 48.3s, status=success
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [PROGRESS] Transcript entries: 31
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] DONE
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [STDERR] 
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 32074.64it/s]
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [STDERR] Key                     | Status     |  | 
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [STDERR] ------------------------+------------+--+-
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [STDERR] 
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [STDERR] Notes:
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] [STDERR] 2026-05-20 16:01:43.502 | WARNING  | nanobot.agent.tools.web:_search_brave:115 - BRAVE_API_KEY not set, falling back to DuckDuckGo
+[00:02:21] [pinch_task_13_image_gen_qwen3.6-27b_20260520_160125] Agent result loaded: status=success, transcript_len=31
+[00:02:29] [task_13_image_gen] Hybrid score: 0.5717 (auto=0.3333, llm=0.8100)
+[00:02:30] [task_13_image_gen] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_13_image_gen/transcript.json
+[00:02:30] [task_13_image_gen] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_13_image_gen/result.json
+[00:02:30] [task_15_daily_summary] Preparing 5 workspace file(s): ['research/market_analysis.txt', 'research/competitor_intelligence.txt', 'research/customer_feedback.txt', 'research/product_updates.txt', 'research/industry_news.txt']
+[00:02:30] [task_15_daily_summary] Wrote workspace file: research/market_analysis.txt
+[00:02:30] [task_15_daily_summary] Wrote workspace file: research/competitor_intelligence.txt
+[00:02:30] [task_15_daily_summary] Wrote workspace file: research/customer_feedback.txt
+[00:02:30] [task_15_daily_summary] Wrote workspace file: research/product_updates.txt
+[00:02:30] [task_15_daily_summary] Wrote workspace file: research/industry_news.txt
+[00:02:30] [pinchbench] 汇总已保存: 14/23 完成
+[00:02:33] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] Container started
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] Agent finished in 75.10s, returncode=0
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] [DEBUG] Contents: [PosixPath('/tmp/workspace/ai_blog.txt')]
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] [PROGRESS] Task started at 1779292918.0411146
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] [PROGRESS] Task finished at 71.1s, status=success
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] [PROGRESS] Transcript entries: 34
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] DONE
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] [STDERR] 
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 20116.10it/s]
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] [STDERR] Key                     | Status     |  | 
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] [STDERR] ------------------------+------------+--+-
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] [STDERR] 
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] [STDERR] Notes:
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:03:10] [pinch_task_14_humanizer_qwen3.6-27b_20260520_160150] Agent result loaded: status=success, transcript_len=34
+[00:03:13] [task_14_humanizer] LLM Judge score: 0.8200
+[00:03:14] [task_14_humanizer] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_14_humanizer/transcript.json
+[00:03:14] [task_14_humanizer] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_14_humanizer/result.json
+[00:03:14] [task_16_email_triage] Preparing 13 workspace file(s): ['inbox/email_01.txt', 'inbox/email_02.txt', 'inbox/email_03.txt', 'inbox/email_04.txt', 'inbox/email_05.txt', 'inbox/email_06.txt', 'inbox/email_07.txt', 'inbox/email_08.txt', 'inbox/email_09.txt', 'inbox/email_10.txt', 'inbox/email_11.txt', 'inbox/email_12.txt', 'inbox/email_13.txt']
+[00:03:14] [task_16_email_triage] Wrote workspace file: inbox/email_01.txt
+[00:03:14] [task_16_email_triage] Wrote workspace file: inbox/email_02.txt
+[00:03:14] [task_16_email_triage] Wrote workspace file: inbox/email_03.txt
+[00:03:14] [task_16_email_triage] Wrote workspace file: inbox/email_04.txt
+[00:03:14] [task_16_email_triage] Wrote workspace file: inbox/email_05.txt
+[00:03:14] [task_16_email_triage] Wrote workspace file: inbox/email_06.txt
+[00:03:14] [task_16_email_triage] Wrote workspace file: inbox/email_07.txt
+[00:03:14] [pinchbench] 汇总已保存: 15/23 完成
+[00:03:14] [task_16_email_triage] Wrote workspace file: inbox/email_08.txt
+[00:03:14] [task_16_email_triage] Wrote workspace file: inbox/email_09.txt
+[00:03:14] [task_16_email_triage] Wrote workspace file: inbox/email_10.txt
+[00:03:14] [task_16_email_triage] Wrote workspace file: inbox/email_11.txt
+[00:03:14] [task_16_email_triage] Wrote workspace file: inbox/email_12.txt
+[00:03:14] [task_16_email_triage] Wrote workspace file: inbox/email_13.txt
+[00:03:18] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] Container started
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] Agent finished in 48.81s, returncode=0
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] [DEBUG] Contents: [PosixPath('/tmp/workspace/research')]
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] [PROGRESS] Task started at 1779292956.0297408
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] [PROGRESS] Task finished at 45.3s, status=success
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] [PROGRESS] Transcript entries: 29
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] DONE
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] [STDERR] 
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 13948.96it/s]
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] [STDERR] Key                     | Status     |  | 
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] [STDERR] ------------------------+------------+--+-
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] [STDERR] 
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] [STDERR] Notes:
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:03:22] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_160230] Agent result loaded: status=success, transcript_len=29
+[00:03:30] [task_15_daily_summary] LLM Judge score: 0.9000
+[00:03:30] [task_15_daily_summary] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_15_daily_summary/transcript.json
+[00:03:30] [task_15_daily_summary] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_15_daily_summary/result.json
+[00:03:30] [task_17_email_search] Preparing 11 workspace file(s): ['emails/2026-01-15_project_alpha_kickoff.txt', 'emails/2026-01-22_alpha_data_pipeline.txt', 'emails/2026-02-03_alpha_budget_concern.txt', 'emails/2026-02-05_alpha_api_design.txt', 'emails/2026-02-10_alpha_security_review.txt', 'emails/2026-02-12_alpha_phase1_complete.txt', 'emails/2026-02-14_alpha_client_feedback.txt', 'emails/2026-02-18_alpha_timeline_slip.txt', 'emails/2026-02-20_unrelated_team_lunch.txt', 'emails/2026-02-22_unrelated_conference.txt', 'emails/2026-02-25_alpha_frontend_progress.txt']
+[00:03:30] [task_17_email_search] Wrote workspace file: emails/2026-01-15_project_alpha_kickoff.txt
+[00:03:30] [task_17_email_search] Wrote workspace file: emails/2026-01-22_alpha_data_pipeline.txt
+[00:03:30] [task_17_email_search] Wrote workspace file: emails/2026-02-03_alpha_budget_concern.txt
+[00:03:30] [task_17_email_search] Wrote workspace file: emails/2026-02-05_alpha_api_design.txt
+[00:03:30] [task_17_email_search] Wrote workspace file: emails/2026-02-10_alpha_security_review.txt
+[00:03:30] [task_17_email_search] Wrote workspace file: emails/2026-02-12_alpha_phase1_complete.txt
+[00:03:30] [pinchbench] 汇总已保存: 16/23 完成
+[00:03:30] [task_17_email_search] Wrote workspace file: emails/2026-02-14_alpha_client_feedback.txt
+[00:03:30] [task_17_email_search] Wrote workspace file: emails/2026-02-18_alpha_timeline_slip.txt
+[00:03:30] [task_17_email_search] Wrote workspace file: emails/2026-02-20_unrelated_team_lunch.txt
+[00:03:30] [task_17_email_search] Wrote workspace file: emails/2026-02-22_unrelated_conference.txt
+[00:03:30] [task_17_email_search] Wrote workspace file: emails/2026-02-25_alpha_frontend_progress.txt
+[00:03:34] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] Container started
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] Agent finished in 54.65s, returncode=0
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] [DEBUG] Contents: [PosixPath('/tmp/workspace/inbox')]
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] [PROGRESS] Task started at 1779293000.695275
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] [PROGRESS] Task finished at 51.3s, status=success
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] [PROGRESS] Transcript entries: 53
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] DONE
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] [STDERR] 
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 27870.03it/s]
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] [STDERR] Key                     | Status     |  | 
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] [STDERR] ------------------------+------------+--+-
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] [STDERR] 
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] [STDERR] Notes:
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:04:12] [pinch_task_16_email_triage_qwen3.6-27b_20260520_160314] Agent result loaded: status=success, transcript_len=53
+[00:04:18] [task_16_email_triage] Hybrid score: 0.9638 (auto=0.9545, llm=0.9700)
+[00:04:19] [task_16_email_triage] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_16_email_triage/transcript.json
+[00:04:19] [task_16_email_triage] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_16_email_triage/result.json
+[00:04:19] [task_16_market_research] No workspace_files defined in task
+[00:04:19] [pinchbench] 汇总已保存: 17/23 完成
+[00:04:22] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] Container started
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] Agent finished in 63.25s, returncode=0
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] [DEBUG] Contents: [PosixPath('/tmp/workspace/emails')]
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] [PROGRESS] Task started at 1779293017.3849669
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] [PROGRESS] Task finished at 59.6s, status=success
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] [PROGRESS] Transcript entries: 41
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] DONE
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] [STDERR] 
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 39492.94it/s]
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] [STDERR] Key                     | Status     |  | 
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] [STDERR] ------------------------+------------+--+-
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] [STDERR] 
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] [STDERR] Notes:
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:04:37] [pinch_task_17_email_search_qwen3.6-27b_20260520_160330] Agent result loaded: status=success, transcript_len=41
+[00:04:47] [task_17_email_search] Hybrid score: 0.8780 (auto=0.9500, llm=0.8300)
+[00:04:48] [task_17_email_search] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_17_email_search/transcript.json
+[00:04:48] [task_17_email_search] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_17_email_search/result.json
+[00:04:48] [task_18_spreadsheet_summary] Preparing 2 workspace file(s): [{'source': 'quarterly_sales.csv', 'dest': 'quarterly_sales.csv'}, {'source': 'company_expenses.xlsx', 'dest': 'company_expenses.xlsx'}]
+[00:04:48] [task_18_spreadsheet_summary] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/quarterly_sales.csv -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_18_spreadsheet_summary_f0un_wyp/workspace/quarterly_sales.csv
+[00:04:48] [pinchbench] 汇总已保存: 18/23 完成
+[00:04:48] [task_18_spreadsheet_summary] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/company_expenses.xlsx -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_18_spreadsheet_summary_f0un_wyp/workspace/company_expenses.xlsx
+[00:04:50] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] Container started
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] Agent finished in 145.97s, returncode=0
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] [DEBUG] Contents: [PosixPath('/tmp/workspace/company_expenses.xlsx'), PosixPath('/tmp/workspace/quarterly_sales.csv')]
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] [PROGRESS] Task started at 1779293093.5553563
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] [PROGRESS] Task finished at 140.5s, status=success
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] [PROGRESS] Transcript entries: 62
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] DONE
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] [STDERR] 
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 39478.51it/s]
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] [STDERR] Key                     | Status     |  | 
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] [STDERR] ------------------------+------------+--+-
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] [STDERR] 
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] [STDERR] Notes:
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:07:16] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_160448] Agent result loaded: status=success, transcript_len=62
+[00:07:21] [task_18_spreadsheet_summary] Hybrid score: 0.3367 (auto=0.4444, llm=0.1750)
+[00:07:21] [task_18_spreadsheet_summary] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_18_spreadsheet_summary/transcript.json
+[00:07:21] [task_18_spreadsheet_summary] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_18_spreadsheet_summary/result.json
+[00:07:21] [task_20_eli5_pdf_summary] Preparing 1 workspace file(s): [{'source': 'GPT4.pdf', 'dest': 'GPT4.pdf'}]
+[00:07:21] [pinchbench] 汇总已保存: 19/23 完成
+[00:07:21] [task_20_eli5_pdf_summary] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/GPT4.pdf -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_20_eli5_pdf_summary_s55bwdd0/workspace/GPT4.pdf
+[00:07:25] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] Container started
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] Agent finished in 196.55s, returncode=0
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [DEBUG] Contents: []
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [PROGRESS] Task started at 1779293065.6115026
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [PROGRESS] Task finished at 191.9s, status=success
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [PROGRESS] Transcript entries: 40
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] DONE
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [STDERR] 2026-05-20 16:04:30.180 | WARNING  | nanobot.agent.tools.web:_search_brave:115 - BRAVE_API_KEY not set, falling back to DuckDuckGo
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [STDERR] 
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 31208.07it/s]
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [STDERR] Key                     | Status     |  | 
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [STDERR] ------------------------+------------+--+-
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [STDERR] 
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [STDERR] Notes:
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [STDERR] 2026-05-20 16:04:48.637 | WARNING  | nanobot.agent.tools.web:_search_brave:115 - BRAVE_API_KEY not set, falling back to DuckDuckGo
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [STDERR] 2026-05-20 16:05:02.367 | WARNING  | nanobot.agent.tools.web:_search_brave:115 - BRAVE_API_KEY not set, falling back to DuckDuckGo
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [STDERR] 2026-05-20 16:05:52.571 | WARNING  | nanobot.agent.tools.web:_search_brave:115 - BRAVE_API_KEY not set, falling back to DuckDuckGo
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] [STDERR] 2026-05-20 16:05:57.876 | WARNING  | nanobot.agent.tools.web:_search_brave:115 - BRAVE_API_KEY not set, falling back to DuckDuckGo
+[00:07:38] [pinch_task_16_market_research_qwen3.6-27b_20260520_160419] Agent result loaded: status=success, transcript_len=40
+[00:07:44] [task_16_market_research] Hybrid score: 0.9400 (auto=1.0000, llm=0.8800)
+[00:07:45] [task_16_market_research] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_16_market_research/transcript.json
+[00:07:45] [task_16_market_research] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_16_market_research/result.json
+[00:07:45] [task_21_openclaw_comprehension] Preparing 1 workspace file(s): [{'source': 'OpenClaw Agent Use Cases and Gap Analysis for PinchBench.pdf', 'dest': 'openclaw_report.pdf'}]
+[00:07:45] [pinchbench] 汇总已保存: 20/23 完成
+[00:07:45] [task_21_openclaw_comprehension] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/OpenClaw Agent Use Cases and Gap Analysis for PinchBench.pdf -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_21_openclaw_comprehension_jgyp9h6f/workspace/openclaw_report.pdf
+[00:07:49] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] Container started
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] Agent finished in 115.50s, returncode=0
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] [DEBUG] Contents: [PosixPath('/tmp/workspace/openclaw_report.pdf')]
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] [PROGRESS] Task started at 1779293272.515509
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] [PROGRESS] Task finished at 111.2s, status=success
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] [PROGRESS] Transcript entries: 61
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] DONE
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] [STDERR] 
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 39113.93it/s]
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] [STDERR] Key                     | Status     |  | 
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] [STDERR] ------------------------+------------+--+-
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] [STDERR] 
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] [STDERR] Notes:
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:09:44] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_160745] Agent result loaded: status=success, transcript_len=61
+[00:09:44] [task_21_openclaw_comprehension] Grade score: 0.9444
+[00:09:45] [task_21_openclaw_comprehension] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_21_openclaw_comprehension/transcript.json
+[00:09:45] [task_21_openclaw_comprehension] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_21_openclaw_comprehension/result.json
+[00:09:45] [task_22_second_brain] No workspace_files defined in task
+[00:09:45] [pinchbench] 汇总已保存: 21/23 完成
+[00:09:47] [pinch_task_22_second_brain_qwen3.6-27b_20260520_160945] Container started
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] Agent finished in 149.99s, returncode=0
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] [DEBUG] Workspace: /tmp/workspace, exists=True
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] [DEBUG] Contents: [PosixPath('/tmp/workspace/GPT4.pdf')]
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] [PROGRESS] Task started at 1779293247.9913712
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] [PROGRESS] Task finished at 145.6s, status=success
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] [PROGRESS] Transcript entries: 53
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] DONE
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] [STDERR] 
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 29870.24it/s]
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] [STDERR] Key                     | Status     |  | 
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] [STDERR] ------------------------+------------+--+-
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] [STDERR] 
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] [STDERR] Notes:
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:09:55] [pinch_task_20_eli5_pdf_summary_qwen3.6-27b_20260520_160721] Agent result loaded: status=success, transcript_len=53
+[00:10:00] [task_20_eli5_pdf_summary] LLM Judge score: 0.7800
+[00:10:00] [task_20_eli5_pdf_summary] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_20_eli5_pdf_summary/transcript.json
+[00:10:00] [task_20_eli5_pdf_summary] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_20_eli5_pdf_summary/result.json
+[00:10:00] [pinchbench] 汇总已保存: 22/23 完成
+[00:10:49] [pinch_task_22_second_brain_qwen3.6-27b_20260520_160945] Agent finished in 61.60s, returncode=0
+[00:10:49] [pinch_task_22_second_brain_qwen3.6-27b_20260520_160945] DONE
+[00:10:49] [pinch_task_22_second_brain_qwen3.6-27b_20260520_160945] [STDERR] 
+[00:10:49] [pinch_task_22_second_brain_qwen3.6-27b_20260520_160945] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[00:10:49] [pinch_task_22_second_brain_qwen3.6-27b_20260520_160945] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 24865.51it/s]
+[00:10:49] [pinch_task_22_second_brain_qwen3.6-27b_20260520_160945] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[00:10:49] [pinch_task_22_second_brain_qwen3.6-27b_20260520_160945] [STDERR] Key                     | Status     |  | 
+[00:10:49] [pinch_task_22_second_brain_qwen3.6-27b_20260520_160945] [STDERR] ------------------------+------------+--+-
+[00:10:49] [pinch_task_22_second_brain_qwen3.6-27b_20260520_160945] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[00:10:49] [pinch_task_22_second_brain_qwen3.6-27b_20260520_160945] [STDERR] 
+[00:10:49] [pinch_task_22_second_brain_qwen3.6-27b_20260520_160945] [STDERR] Notes:
+[00:10:49] [pinch_task_22_second_brain_qwen3.6-27b_20260520_160945] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[00:10:49] [pinch_task_22_second_brain_qwen3.6-27b_20260520_160945] Agent result loaded: status=success, transcript_len=73
+[00:10:54] [task_22_second_brain] Hybrid score: 0.3650 (auto=0.0000, llm=0.7300)
+[00:10:54] [task_22_second_brain] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_22_second_brain/transcript.json
+[00:10:54] [task_22_second_brain] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_22_second_brain/result.json
+[00:10:54] [pinchbench] 汇总已保存: 23/23 完成
+[00:10:54]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[00:10:54] 
+

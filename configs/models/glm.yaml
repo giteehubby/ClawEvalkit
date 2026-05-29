@@ -1,8 +1,38 @@
-# GLM-4.7 (Anthropic-compatible API from ZhipuAI)
-# Note: requires sufficient balance on ZhipuAI account
+# GLM family (OpenAI-compatible API from ZhipuAI)
+# Note: requires sufficient balance and model access on the ZhipuAI account
+glm-5.1:
+  name: GLM 5.1
+  api_url: https://open.bigmodel.cn/api/coding/paas/v4
+  api_key_env: GLM_API_KEY
+  model: glm-5.1
+  provider: glm
+
+glm-5:
+  name: GLM 5
+  api_url: https://open.bigmodel.cn/api/coding/paas/v4
+  api_key_env: GLM_API_KEY
+  model: glm-5
+  provider: glm
+
+glm-5-turbo:
+  name: GLM 5 Turbo
+  api_url: https://open.bigmodel.cn/api/coding/paas/v4
+  api_key_env: GLM_API_KEY
+  model: glm-5-turbo
+  provider: glm
+
 glm-4.7:
   name: GLM 4.7
-  api_url: https://open.bigmodel.cn/api/anthropic
+  api_url: https://open.bigmodel.cn/api/paas/v4
   api_key_env: GLM_API_KEY
   model: glm-4.7
   provider: glm
+
+# GLM-5 via ModelHub (ByteDance internal, AzureOpenAI-compatible)
+# Call without proxy: export http_proxy="" https_proxy="" or add aidp.bytedance.net to NO_PROXY
+glm-5-modelhub:
+  name: GLM-5 (ModelHub)
+  api_url: https://aidp.bytedance.net/api/modelhub/online/v2/crawl
+  api_key_env: MODELHUB_API_KEY
+  model: glm-5
+  provider: azure_openai

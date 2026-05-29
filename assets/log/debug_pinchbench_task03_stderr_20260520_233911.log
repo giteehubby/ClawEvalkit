@@ -1,0 +1,31 @@
+[23:39:12] Config: bench=['pinchbench'], models=['qwen3.6-27b'], sample=all
+[23:39:12] 
+============================================================
+[23:39:12] BENCHMARK: PinchBench (23 tasks)
+[23:39:12] ============================================================
+[23:39:12]   [pinchbench×qwen3.6-27b] evaluating...
+[23:39:13] [pinchbench] Filtered to 1 tasks by task_ids: ['task_03_blog']
+[23:39:13] [pinchbench] 汇总已保存: 0/1 完成
+[23:39:13] [pinchbench] Running task 1/1: task_03_blog
+[23:39:13] [task_03_blog] No workspace_files defined in task
+[23:39:14] [pinch_task_03_blog_qwen3.6-27b_20260520_153913] Container started
+[23:40:22] [pinch_task_03_blog_qwen3.6-27b_20260520_153913] Agent finished in 67.86s, returncode=0
+[23:40:22] [pinch_task_03_blog_qwen3.6-27b_20260520_153913] [DEBUG] Workspace: /tmp/workspace, exists=True
+[23:40:22] [pinch_task_03_blog_qwen3.6-27b_20260520_153913] [DEBUG] Contents: []
+[23:40:22] [pinch_task_03_blog_qwen3.6-27b_20260520_153913] [PROGRESS] Task started at 1779291557.6689878
+[23:40:22] [pinch_task_03_blog_qwen3.6-27b_20260520_153913] [PROGRESS] Task finished at 64.1s, status=error
+[23:40:22] [pinch_task_03_blog_qwen3.6-27b_20260520_153913] [PROGRESS] Transcript entries: 4
+[23:40:22] [pinch_task_03_blog_qwen3.6-27b_20260520_153913] DONE
+[23:40:22] [pinch_task_03_blog_qwen3.6-27b_20260520_153913] [STDERR] '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/./modules.json
+[23:40:22] [pinch_task_03_blog_qwen3.6-27b_20260520_153913] [STDERR] Retrying in 1s [Retry 1/5].
+[23:40:22] [pinch_task_03_blog_qwen3.6-27b_20260520_153913] [STDERR] '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)' thrown while requesting HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json
+[23:40:22] [pinch_task_03_blog_qwen3.6-27b_20260520_153913] [STDERR] Retrying in 1s [Retry 1/5].
+[23:40:22] [pinch_task_03_blog_qwen3.6-27b_20260520_153913] [STDERR] [execute] Exception caught: RuntimeError: Cannot send a request, as the client has been closed.
+[23:40:22] [pinch_task_03_blog_qwen3.6-27b_20260520_153913] Agent result loaded: status=error, transcript_len=4
+[23:40:26] [task_03_blog] LLM Judge score: 0.0000
+[23:40:26] [task_03_blog] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_03_blog/transcript.json
+[23:40:26] [task_03_blog] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_03_blog/result.json
+[23:40:26] [pinchbench] 汇总已保存: 0/1 完成
+[23:40:26]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[23:40:26] 
+

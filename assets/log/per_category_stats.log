@@ -1,0 +1,25 @@
+============================================================
+Per-Category Statistics + Sensitivity Analysis
+============================================================
+
+--- Primary Labels (DeepSeek) ---
+  Cat A (n=140): best=T2 (50.0%), runner=T1s (39.3%), combo=47.9%, mcnemar p=0.006
+  Cat B (n=32): best=T2 (62.5%), runner=T1s (59.4%), combo=71.9%, mcnemar p=1.000
+  Cat C (n=7): best=T1 (71.4%), runner=T1s (71.4%), combo=71.4%, mcnemar p=1.000
+  Cat D (n=16): best=T3 (68.8%), runner=T1s (50.0%), combo=68.8%, mcnemar p=0.375
+  Cat E (n=23): best=T4 (52.2%), runner=T1 (47.8%), combo=47.8%, mcnemar p=1.000
+  Cat F (n=8): best=T2 (12.5%), runner=T1 (12.5%), combo=12.5%, mcnemar p=1.000
+
+--- Qwen Labels ---
+  Cat A (n=125): best=T2 (48.8%), runner=T1s (41.6%)
+  Cat B (n=39): best=T2 (56.4%), runner=T1s (48.7%)
+  Cat C (n=6): best=T4 (83.3%), runner=T2 (66.7%)
+  Cat D (n=14): best=T3 (57.1%), runner=T1s (50.0%)
+  Cat E (n=36): best=T4 (50.0%), runner=T2 (44.4%)
+  Cat F (n=6): best=T1s (33.3%), runner=T2 (16.7%)
+
+[保存] /Volumes/F/work/ClawEvalkit-private-emnlp/error_analysis/outputs/per_category_stats.json
+[保存] /Volumes/F/work/ClawEvalkit-private-emnlp/error_analysis/outputs/per_category_stats.md
+[保存] /Volumes/F/work/ClawEvalkit-private-emnlp/error_analysis/outputs/qwen_sensitivity.md
+
+完成!

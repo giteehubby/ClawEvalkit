@@ -220,7 +220,6 @@ class PinchBench(BaseBenchmark):
 
             # Save per-task result
             self._save_task_result("pinchbench", model_key, tid, r)
-            log(f"[{tid}] Saved result to outputs/pinchbench/{model_key}/{tid}/result.json")
             # Save transcript
             if transcript:
                 self._save_transcript(model_key, tid, transcript)
@@ -395,6 +394,9 @@ class PinchBench(BaseBenchmark):
                     minimax_api_key = os.getenv("MINIMAX_API_KEY", "")
                     env_args.extend(["-e", f"MINIMAX_API_KEY={minimax_api_key}"])
                     env_args.extend(["-e", f"ANTHROPIC_API_KEY={minimax_api_key}"])
+                elif provider == "azure_openai":
+                    modelhub_api_key = os.getenv("MODELHUB_API_KEY", "")
+                    env_args.extend(["-e", f"MODELHUB_API_KEY={modelhub_api_key}"])
                 elif provider == "glm":
                     glm_api_key = os.getenv("GLM_API_KEY", "")
                     env_args.extend(["-e", f"GLM_API_KEY={glm_api_key}"])
@@ -520,7 +522,6 @@ class PinchBench(BaseBenchmark):
             # Save result
             try:
                 self._save_task_result("pinchbench", model_key, tid, result)
-                log(f"[{tid}] Saved result to outputs/pinchbench/{model_key}/{tid}/result.json")
             except Exception as e:
                 log(f"[{tid}] Failed to save result: {e}")
 
@@ -607,6 +608,8 @@ class PinchBench(BaseBenchmark):
         provider = config.get("provider", "openrouter")
         if provider == "minimax":
             api_key_env = "MINIMAX_API_KEY"
+        elif provider == "azure_openai":
+            api_key_env = "MODELHUB_API_KEY"
         elif provider == "glm":
             api_key_env = "GLM_API_KEY"
         else:
@@ -615,6 +618,8 @@ class PinchBench(BaseBenchmark):
         # Build harness import lines and constructor kwargs
         harness_imports, harness_kwargs_str = build_harness_script_parts(harness_config)
         harness_imports += "\n"  # extra newline for concatenation style
+        # Pre-compute to avoid backslash-in-f-string (Python < 3.12 restriction)
+        prompt_escaped = prompt.replace("'", "\\'")
 
         if multi_session and sessions:
             # Build sessions as properly escaped Python literal
@@ -740,7 +745,7 @@ try:
     print(f"[PROGRESS] Task started at {{start_time}}")
 
     result = agent.execute(
-        '''{prompt.replace("'", "\\'")}''',
+        '''{prompt_escaped}''',
         session_id=session_id,
         workspace=workspace,
         system_prompt=system_prompt,
@@ -1037,28 +1042,57 @@ print(json.dumps(scores))
     # ── LLM Judge helpers ───────────────────────────────────────────────
 
     def _transcript_to_text(self, transcript: list) -> str:
-        """将 NanoBotAgent transcript 转换为 judge 可读的文本摘要。"""
+        """将 NanoBotAgent transcript 转换为 judge 可读的文本摘要。
+        支持 message 和 collab_event 两种事件格式。"""
         parts = []
         for event in transcript:
             if not isinstance(event, dict):
                 continue
-            if event.get("type") != "message":
-                continue
-            msg = event.get("message", {})
-            role = msg.get("role")
-            content = msg.get("content", [])
-            if role == "assistant":
-                for item in content:
-                    if isinstance(item, dict) and item.get("type") == "toolCall":
-                        parts.append(f"Tool: {item.get('name')}({json.dumps(item.get('arguments', {}), ensure_ascii=False)})")
-                    elif isinstance(item, dict) and item.get("type") == "text":
-                        parts.append(f"Assistant: {item.get('text', '')[:400]}")
-            elif role == "toolResult":
-                if content:
-                    parts.append(f"Result: {str(content[0])[:300]}")
-            elif role == "user":
-                if content:
-                    parts.append(f"User: {str(content[0])[:200]}")
+            etype = event.get("type")
+
+            # ── 常规 message 事件 ──
+            if etype == "message":
+                msg = event.get("message", {})
+                role = msg.get("role")
+                content = msg.get("content", [])
+                if role == "assistant":
+                    # content 可能是 str（collab_cmd 模式）或 list[dict]（普通模式）
+                    if isinstance(content, str):
+                        parts.append(f"Assistant: {content[:400]}")
+                    else:
+                        for item in content:
+                            if isinstance(item, dict) and item.get("type") == "toolCall":
+                                parts.append(f"Tool: {item.get('name')}({json.dumps(item.get('arguments', {}), ensure_ascii=False)})")
+                            elif isinstance(item, dict) and item.get("type") == "text":
+                                parts.append(f"Assistant: {item.get('text', '')[:400]}")
+                elif role == "toolResult":
+                    if content:
+                        parts.append(f"Result: {str(content[0])[:300]}")
+                elif role == "user":
+                    if isinstance(content, list) and content:
+                        parts.append(f"User: {str(content[0])[:200]}")
+                    elif isinstance(content, str):
+                        parts.append(f"User: {content[:200]}")
+
+            # ── collab_event 事件（collab_cmd 模式下的工具调用与执行结果） ──
+            elif etype == "collab_event":
+                data = event.get("data", {})
+                ev = event.get("event_type", "")
+                if ev == "tool_called":
+                    tool = data.get("tool", "unknown")
+                    args = data.get("args", {})
+                    result = data.get("result", "")
+                    args_str = json.dumps(args, ensure_ascii=False)[:200]
+                    result_str = str(result)[:300]
+                    parts.append(f"Tool: {tool}({args_str})")
+                    if result_str:
+                        parts.append(f"Result: {result_str}")
+                elif ev == "step_executed":
+                    step = data.get("step", "")
+                    text = data.get("content", "")[:400]
+                    if text:
+                        parts.append(f"Assistant: {text}")
+
         return "\n".join(parts)
 
     def _build_judge_prompt(self, task: dict, transcript_text: str) -> str:
@@ -1173,12 +1207,18 @@ print(json.dumps(scores))
         try:
             is_bigmodel = "bigmodel" in base_url.lower()
             is_openrouter = "openrouter" in base_url.lower()
+            is_azure = "aidp.bytedance.net" in base_url.lower() or ("azure" in base_url.lower() and "anthropic" not in base_url.lower())
             use_anthropic = (
                 "minimax" in base_url.lower()
                 or (actual_model.startswith("anthropic/") and not is_openrouter and not is_bigmodel)
             )
 
-            if is_bigmodel:
+            if is_azure:
+                from openai import AzureOpenAI
+                client = AzureOpenAI(api_key=api_key, api_version="2024-02-01", azure_endpoint=base_url.rstrip("/"), timeout=120.0)
+                resp = client.chat.completions.create(model=actual_model, messages=messages, temperature=0.0, max_tokens=2048)
+                response_text = resp.choices[0].message.content
+            elif is_bigmodel:
                 # BigModel.cn supports Anthropic-compatible API - use Anthropic SDK directly
                 import anthropic
                 client = anthropic.Anthropic(api_key=api_key, base_url=base_url)

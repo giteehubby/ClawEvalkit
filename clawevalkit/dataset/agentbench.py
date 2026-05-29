@@ -56,6 +56,31 @@ def _find_matching_file(container_name: str, regex: str) -> str | None:
     return None
 
 
+def _check_glob_pattern_exists(container_name: str, glob_pattern: str) -> bool:
+    """Check if any file matching a glob pattern exists in container workspace.
+
+    Supports patterns like '**/MEMORY.md', '**/memory/**' etc.
+    Searches recursively under /tmp/workspace.
+    """
+    # Extract filename component from glob (strip leading **/path/ components)
+    import re
+    name_part = glob_pattern.rsplit("/", 1)[-1]
+    if not name_part or name_part in ("**", "*"):
+        # Directory glob — check if any directory matching exists
+        dir_part = glob_pattern.rstrip("/**").lstrip("**/").lstrip("*/")
+        if dir_part:
+            proc = subprocess.run(
+                ["docker", "exec", container_name, "find", "/tmp/workspace", "-type", "d", "-name", dir_part],
+                capture_output=True, text=True)
+            return bool(proc.stdout.strip())
+        return False
+    else:
+        proc = subprocess.run(
+            ["docker", "exec", container_name, "find", "/tmp/workspace", "-name", name_part],
+            capture_output=True, text=True)
+        return bool(proc.stdout.strip())
+
+
 def _check_directory_structure(container_name: str, expected: list[str]) -> tuple[int, int]:
     """Check if all expected paths exist. Returns (passed, total)."""
     passed = 0
@@ -225,6 +250,15 @@ def _compute_layer0_score(container_name: str, expected_outputs: list[dict],
             if vtype == "file-exists":
                 max_points += 30
                 if _check_file_exists(container_name, pattern):
+                    total_points += 30
+                    output_points += 30
+
+            elif vtype == "file-modified":
+                # Check that at least one of the specified patterns exists in workspace.
+                # 'patterns' is a list of glob patterns like ["**/MEMORY.md", "**/memory/**"]
+                patterns_to_check = validator.get("patterns", [pattern] if pattern else [])
+                max_points += 30
+                if any(_check_glob_pattern_exists(container_name, p) for p in patterns_to_check):
                     total_points += 30
                     output_points += 30
 
@@ -460,6 +494,8 @@ def _build_exec_script(model_key: str, task_id: str, user_message: str, config: 
     provider = config.get("provider", "openrouter")
     if provider == "minimax":
         api_key_env = "MINIMAX_API_KEY"
+    elif provider == "azure_openai":
+        api_key_env = "MODELHUB_API_KEY"
     elif provider == "openrouter":
         api_key_env = "OPENROUTER_API_KEY"
     elif provider == "glm":
@@ -617,7 +653,7 @@ def _copy_results_from_container(container_name: str, workspace_path: str, task_
 
 class AgentBench(BaseBenchmark):
     DISPLAY_NAME = "AgentBench"
-    TASK_COUNT = 40
+    TASK_COUNT = 39
     SCORE_RANGE = "0-100"
 
     def __init__(self, base_dir: Path = None, output_dir: Path = None, use_docker: bool = False):
@@ -750,6 +786,7 @@ class AgentBench(BaseBenchmark):
                 r = {"task_id": tid, "model_key": model_key, "status": "error", "error": str(e)[:300], "scores": {}}
 
             result_file.write_text(json.dumps(r, indent=2, ensure_ascii=False))
+            log(f"[{tid}] Result saved to {result_file.resolve()}")
             shutil.rmtree(workspace, ignore_errors=True)
             results.append(r)
 
@@ -895,6 +932,9 @@ class AgentBench(BaseBenchmark):
                 if provider == "minimax":
                     minimax_api_key = os.getenv("MINIMAX_API_KEY", "")
                     env_args.extend(["-e", f"MINIMAX_API_KEY={minimax_api_key}"])
+                elif provider == "azure_openai":
+                    modelhub_api_key = os.getenv("MODELHUB_API_KEY", "")
+                    env_args.extend(["-e", f"MODELHUB_API_KEY={modelhub_api_key}"])
                 elif provider == "glm":
                     glm_api_key = os.getenv("GLM_API_KEY", "")
                     env_args.extend(["-e", f"GLM_API_KEY={glm_api_key}"])
@@ -968,12 +1008,15 @@ class AgentBench(BaseBenchmark):
                         validators = turn.get("validators", [])
                         if not validators:
                             continue
-                        if turn.get("expect") == "file-output":
+                        expect = turn.get("expect", "")
+                        if expect in ("file-output", "memory-write"):
+                            # memory-write: agent should have written to a memory file
                             expected_outputs.append({
-                                "pattern": validators[0].get("pattern", "*.md"),
+                                "pattern": validators[0].get("pattern", ""),
                                 "validators": validators,
                             })
-                        elif turn.get("expect") == "response":
+                        elif expect in ("response", "correct-recall"):
+                            # correct-recall: check agent's final response contains expected content
                             expected_behavior.append({"validators": validators})
                 l0_score = _compute_layer0_score(container_name, expected_outputs, expected_behavior, model_output)
 
@@ -1043,7 +1086,7 @@ class AgentBench(BaseBenchmark):
             # Save cache (always save, not just on success)
             try:
                 result_file.write_text(json.dumps(result, indent=2, ensure_ascii=False))
-                log(f"[{container_name}] Result saved to {result_file}")
+                log(f"[{container_name}] Result saved to {result_file.resolve()}")
             except Exception as e:
                 log(f"[{container_name}] Failed to save result: {e}")
 

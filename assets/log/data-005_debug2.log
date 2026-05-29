@@ -1,0 +1,30 @@
+[09:59:47] Config: bench=['clawbench-official'], models=['qwen3.6-27b'], sample=all
+[09:59:47] 
+============================================================
+[09:59:47] BENCHMARK: ClawBench Official (250 tasks)
+[09:59:47] ============================================================
+[09:59:47]   [clawbench-official×qwen3.6-27b] evaluating...
+[09:59:50] [clawbench_data-005_qwen3.6-27b_20260521_015948] Container started
+[09:59:50] [data-005] Harness detected, timeout adjusted: 180 → 360
+[10:02:23]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-005/environment/setup.sh
+[10:02:23]   [container] [setup] setup.sh 成功
+[10:02:23]   [container] [setup] 工作空间文件: ['instruction.md', 'measurements.csv']
+[10:02:23]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[10:02:23]   [container] [StructuredMemoryStore] LLM init response: content_type=NoneType, content_len=0, finish_reason=length
+[10:02:23]   [container] [StructuredMemoryStore] LLM init call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[10:02:23]   [container] [StructuredMemoryStore] LLM init response: content_type=NoneType, content_len=0, finish_reason=length
+[10:02:23]   [container] [StructuredMemoryStore] Batch LLM call: model=openai/qwen/qwen3.6-27b, api_base=https://openrouter.ai/api/v1, api_key=***c064
+[10:02:23]   [container] [StructuredMemoryStore] Batch LLM response: content_type=NoneType, content_len=0, finish_reason=length
+[10:02:23]   [container] DONE
+[10:02:23]   [container-err] [StructuredMemoryStore] LLM returned empty/None content
+[10:02:23]   [container-err] [StructuredMemoryStore] LLM extraction failed: LLM returned empty content, falling back to regex
+[10:02:23]   [container-err] [StructuredMemoryStore] LLM returned empty/None content
+[10:02:23]   [container-err] [StructuredMemoryStore] absorb_user_message failed: LLM returned empty content, fallback to regex
+[10:02:23]   [container-err] [StructuredMemoryStore] Batch update LLM returned empty/None content
+[10:02:23]   [container-err] [StructuredMemoryStore] LLM update failed: LLM returned empty content, falling back to regex
+[10:02:23] [clawbench_data-005_qwen3.6-27b_20260521_015948] Agent finished in 152.43s, returncode=0
+[10:02:23] [clawbench_data-005_qwen3.6-27b_20260521_015948] Agent result: passed=False, score=0.8571
+[10:02:23] [data-005] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory_structured/clawbench-official/qwen3.6-27b/data-005.json
+[10:02:23]   [clawbench-official×qwen3.6-27b] done: score=85.7, scored=0/1
+[10:02:23] 
+

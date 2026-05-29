@@ -1,3 +1,0 @@
-bench_id,task_id
-clawbench,mem-002-multi-step-instructions
-clawbench,mem-005-long-document-summarization

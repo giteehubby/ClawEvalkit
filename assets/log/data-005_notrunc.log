@@ -1,0 +1,27 @@
+[09:33:53] Config: bench=['clawbench-official'], models=['qwen3.6-27b'], sample=all
+[09:33:53] 
+============================================================
+[09:33:53] BENCHMARK: ClawBench Official (250 tasks)
+[09:33:53] ============================================================
+[09:33:53]   [clawbench-official×qwen3.6-27b] evaluating...
+[09:33:57] [clawbench_data-005_qwen3.6-27b_20260521_013355] Container started
+[09:33:57] [data-005] Harness detected, timeout adjusted: 180 → 360
+[09:35:21]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-005/environment/setup.sh
+[09:35:21]   [container] [setup] setup.sh 成功
+[09:35:21]   [container] [setup] 工作空间文件: ['instruction.md', 'measurements.csv']
+[09:35:21]   [container] DONE
+[09:35:21]   [container-err] [StructuredMemoryStore] LLM extraction failed: 'NoneType' object is not subscriptable, falling back to regex
+[09:35:21]   [container-err] /usr/local/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:75: RuntimeWarning: coroutine 'Logging.async_success_handler' was never awaited
+[09:35:21]   [container-err]   self._queue = None
+[09:35:21]   [container-err] RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+[09:35:21]   [container-err] [StructuredMemoryStore] absorb_user_message failed: 'NoneType' object is not subscriptable, fallback to regex
+[09:35:21]   [container-err] [StructuredMemoryStore] LLM update failed: 'NoneType' object has no attribute 'strip', falling back to regex
+[09:35:21]   [container-err] /usr/local/lib/python3.12/site-packages/litellm/litellm_core_utils/logging_worker.py:75: RuntimeWarning: coroutine 'Logging.async_success_handler' was never awaited
+[09:35:21]   [container-err]   self._queue = None
+[09:35:21]   [container-err] RuntimeWarning: Enable tracemalloc to get the object allocation traceback
+[09:35:21] [clawbench_data-005_qwen3.6-27b_20260521_013355] Agent finished in 83.26s, returncode=0
+[09:35:21] [clawbench_data-005_qwen3.6-27b_20260521_013355] Agent result: passed=True, score=1.0000
+[09:35:21] [data-005] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory_structured/clawbench-official/qwen3.6-27b/data-005.json
+[09:35:21]   [clawbench-official×qwen3.6-27b] done: score=100.0, scored=1/1
+[09:35:21] 
+

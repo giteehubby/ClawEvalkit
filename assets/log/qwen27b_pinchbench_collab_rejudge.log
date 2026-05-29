@@ -1,0 +1,40 @@
+[13:41:36] Config: bench=['pinchbench'], models=['qwen3.6-27b'], sample=all
+[13:41:36] 
+============================================================
+[13:41:36] BENCHMARK: PinchBench (23 tasks)
+[13:41:36] ============================================================
+[13:41:36]   [pinchbench×qwen3.6-27b] evaluating...
+[13:41:37] [pinchbench] === REJUDGE mode: 23 tasks, harness=baseline ===
+[13:41:37] [pinchbench] rejudge task_00_sanity: score=1.0000
+[13:41:37] [pinchbench] rejudge task_01_calendar: score=0.0000
+[13:41:37] [pinchbench] rejudge task_02_stock: score=0.0000
+[13:41:47] [pinchbench] rejudge task_03_blog: score=0.7500
+[13:41:47] [pinchbench] rejudge task_04_weather: score=0.0000
+[13:41:53] [pinchbench] rejudge task_05_summary: score=0.0000
+[13:41:59] [pinchbench] rejudge task_06_events: score=0.9000
+[13:42:04] [pinchbench] rejudge task_07_email: score=0.9100
+[13:42:04] [pinchbench] rejudge task_08_memory: score=0.0000
+[13:42:04] [pinchbench] rejudge task_09_files: score=0.0000
+[13:42:21] [pinchbench] rejudge task_10_workflow: Hybrid=0.9100 (auto=1.0000, llm=0.8200)
+[13:42:21] [pinchbench] rejudge task_10_workflow: score=0.9100
+[13:42:21] [pinchbench] rejudge task_11_clawdhub: score=0.0000
+[13:42:21] [pinchbench] rejudge task_12_skill_search: score=0.0000
+[13:42:34] [pinchbench] rejudge task_13_image_gen: Hybrid=0.4917 (auto=0.3333, llm=0.6500)
+[13:42:34] [pinchbench] rejudge task_13_image_gen: score=0.4917
+[13:42:38] [pinchbench] rejudge task_14_humanizer: score=0.8200
+[13:42:47] [pinchbench] rejudge task_15_daily_summary: score=0.8400
+[13:43:02] [pinchbench] rejudge task_16_email_triage: Hybrid=0.8911 (auto=0.7727, llm=0.9700)
+[13:43:02] [pinchbench] rejudge task_16_email_triage: score=0.8911
+[13:43:16] [pinchbench] rejudge task_17_email_search: Hybrid=0.9200 (auto=0.9500, llm=0.9000)
+[13:43:16] [pinchbench] rejudge task_17_email_search: score=0.9200
+[13:43:28] [pinchbench] rejudge task_16_market_research: Hybrid=0.9150 (auto=1.0000, llm=0.8300)
+[13:43:28] [pinchbench] rejudge task_16_market_research: score=0.9150
+[13:43:51] [pinchbench] rejudge task_18_spreadsheet_summary: Hybrid=0.9550 (auto=1.0000, llm=0.8875)
+[13:43:51] [pinchbench] rejudge task_18_spreadsheet_summary: score=0.9550
+[13:43:58] [pinchbench] rejudge task_20_eli5_pdf_summary: score=0.7700
+[13:43:58] [pinchbench] rejudge task_21_openclaw_comprehension: score=0.0000
+[13:44:11] [pinchbench] rejudge task_22_second_brain: Hybrid=0.8950 (auto=1.0000, llm=0.7900)
+[13:44:11] [pinchbench] rejudge task_22_second_brain: score=0.8950
+[13:44:11]   [pinchbench×qwen3.6-27b] done: score=52.0, scored=23/23
+[13:44:11] 
+

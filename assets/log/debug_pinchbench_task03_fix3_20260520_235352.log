@@ -1,0 +1,36 @@
+[23:53:53] Config: bench=['pinchbench'], models=['qwen3.6-27b'], sample=all
+[23:53:53] 
+============================================================
+[23:53:53] BENCHMARK: PinchBench (23 tasks)
+[23:53:53] ============================================================
+[23:53:53]   [pinchbench×qwen3.6-27b] evaluating...
+[23:53:55] [pinchbench] Filtered to 1 tasks by task_ids: ['task_03_blog']
+[23:53:55] [pinchbench] 汇总已保存: 0/1 完成
+[23:53:55] [pinchbench] Running task 1/1: task_03_blog
+[23:53:55] [task_03_blog] No workspace_files defined in task
+[23:53:58] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] Container started
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] Agent finished in 83.41s, returncode=0
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] [DEBUG] Workspace: /tmp/workspace, exists=True
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] [DEBUG] Contents: []
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] [PROGRESS] Task started at 1779292441.47977
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] [PROGRESS] Task finished at 79.3s, status=success
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] [PROGRESS] Transcript entries: 9
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] DONE
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] [STDERR] 
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] [STDERR] Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] [STDERR] Loading weights: 100%|██████████| 103/103 [00:00<00:00, 5958.89it/s]
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] [STDERR] [1mBertModel LOAD REPORT[0m from: sentence-transformers/all-MiniLM-L6-v2
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] [STDERR] Key                     | Status     |  | 
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] [STDERR] ------------------------+------------+--+-
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] [STDERR] embeddings.position_ids | UNEXPECTED |  | 
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] [STDERR] 
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] [STDERR] Notes:
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] [STDERR] - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+[23:55:22] [pinch_task_03_blog_qwen3.6-27b_20260520_155355] Agent result loaded: status=success, transcript_len=9
+[23:55:28] [task_03_blog] LLM Judge score: 0.8300
+[23:55:28] [task_03_blog] Saved transcript to outputs/harness/memory/pinchbench/transcripts/qwen3.6-27b/task_03_blog/transcript.json
+[23:55:28] [task_03_blog] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/memory/pinchbench/qwen3.6-27b/task_03_blog/result.json
+[23:55:28] [pinchbench] 汇总已保存: 1/1 完成
+[23:55:28]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[23:55:28] 
+

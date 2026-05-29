@@ -1,0 +1,36 @@
+[10:27:49] Config: bench=['clawbench-official'], models=['qwen3.6-27b'], sample=all
+[10:27:49] 
+============================================================
+[10:27:49] BENCHMARK: ClawBench Official (250 tasks)
+[10:27:49] ============================================================
+[10:27:49]   [clawbench-official×qwen3.6-27b] evaluating...
+[10:27:52] [clawbench_data-003_qwen3.6-27b_20260521_022750] Container started
+[10:27:52] [data-003] Harness detected, timeout adjusted: 120 → 300
+[10:28:55]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/data-analysis/data-003/environment/setup.sh
+[10:28:55]   [container] [setup] setup.sh 成功
+[10:28:55]   [container] [setup] 工作空间文件: ['instruction.md', 'sales.csv']
+[10:28:55]   [container] DONE
+[10:28:55] [clawbench_data-003_qwen3.6-27b_20260521_022750] Agent finished in 62.46s, returncode=0
+[10:28:55] [clawbench_data-003_qwen3.6-27b_20260521_022750] Agent result: passed=True, score=1.0000
+[10:28:55] [data-003] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/collaboration/clawbench-official/qwen3.6-27b/data-003.json
+[10:28:57] [clawbench_sys-011_qwen3.6-27b_20260521_022855] Container started
+[10:28:57] [sys-011] Harness detected, timeout adjusted: 120 → 300
+[10:30:03]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-011-disk-usage-analyzer/environment/setup.sh
+[10:30:03]   [container] [setup] setup.sh 成功
+[10:30:03]   [container] [setup] 工作空间文件: ['instruction.md', 'disk_usage.txt']
+[10:30:03]   [container] DONE
+[10:30:03] [clawbench_sys-011_qwen3.6-27b_20260521_022855] Agent finished in 65.37s, returncode=0
+[10:30:03] [clawbench_sys-011_qwen3.6-27b_20260521_022855] Agent result: passed=False, score=0.5882
+[10:30:03] [sys-011] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/collaboration/clawbench-official/qwen3.6-27b/sys-011.json
+[10:30:05] [clawbench_sys-013_qwen3.6-27b_20260521_023003] Container started
+[10:30:05] [sys-013] Harness detected, timeout adjusted: 120 → 300
+[10:31:54]   [container] [setup] 运行 setup.sh: /app/claw-bench/tasks/system-admin/sys-013-log-rotation-planner/environment/setup.sh
+[10:31:54]   [container] [setup] setup.sh 成功
+[10:31:54]   [container] [setup] 工作空间文件: ['instruction.md', 'log_inventory.json']
+[10:31:54]   [container] DONE
+[10:31:54] [clawbench_sys-013_qwen3.6-27b_20260521_023003] Agent finished in 109.23s, returncode=0
+[10:31:55] [clawbench_sys-013_qwen3.6-27b_20260521_023003] Agent result: passed=False, score=0.7308
+[10:31:55] [sys-013] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/collaboration/clawbench-official/qwen3.6-27b/sys-013.json
+[10:31:55]   [clawbench-official×qwen3.6-27b] done: score=77.3, scored=1/3
+[10:31:55] 
+

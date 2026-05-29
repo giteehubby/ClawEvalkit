@@ -209,6 +209,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
             }
 
             workspace_path = None
+            timeout = 3600  # default, will be overwritten inside try
 
             try:
                 # 准备工作空间
@@ -228,6 +229,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                     "-e", f"HTTP_PROXY={proxy_http}",
                     "-e", f"HTTPS_PROXY={proxy_https}",
                     "-e", "HF_HUB_OFFLINE=1",
+                    "-e", f"WORKSPACE={TMP_WORKSPACE}",
                 ]
 
                 # 根据 provider 传递正确的 API key
@@ -235,10 +237,12 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
                 if provider == "minimax":
                     minimax_api_key = os.getenv("MINIMAX_API_KEY", "")
                     env_args.extend(["-e", f"MINIMAX_API_KEY={minimax_api_key}"])
+                elif provider == "azure_openai":
+                    modelhub_api_key = os.getenv("MODELHUB_API_KEY", "")
+                    env_args.extend(["-e", f"MODELHUB_API_KEY={modelhub_api_key}"])
                 elif provider == "glm":
-                    # GLM 使用 Anthropic 兼容端点，需要 ANTHROPIC_API_KEY
                     glm_api_key = os.getenv("GLM_API_KEY", "")
-                    env_args.extend(["-e", f"ANTHROPIC_API_KEY={glm_api_key}"])
+                    env_args.extend(["-e", f"GLM_API_KEY={glm_api_key}"])
                 else:
                     env_args.extend(["-e", f"OPENROUTER_API_KEY={openrouter_api_key}"])
 
@@ -298,6 +302,7 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
             # 保存结果
             try:
                 result_file.write_text(json.dumps(result, indent=2, ensure_ascii=False))
+                log(f"[{tid}] Result saved to {result_file.resolve()}")
             except Exception as e:
                 log(f"[{tid}] Failed to save result: {e}")
 
@@ -471,8 +476,10 @@ print(json.dumps({{'score': round(avg, 1), 'passed': passed, 'total': len(result
         provider = config.get("provider", "openrouter")
         if provider == "minimax":
             api_key_env = "MINIMAX_API_KEY"
+        elif provider == "azure_openai":
+            api_key_env = "MODELHUB_API_KEY"
         elif provider == "glm":
-            api_key_env = "ANTHROPIC_API_KEY"
+            api_key_env = "GLM_API_KEY"
         else:
             api_key_env = "OPENROUTER_API_KEY"
 

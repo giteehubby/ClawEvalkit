@@ -1,0 +1,359 @@
+[16:11:34] Config: bench=['pinchbench'], models=['qwen3.6-27b'], sample=all
+[16:11:34] 
+============================================================
+[16:11:34] BENCHMARK: PinchBench (23 tasks)
+[16:11:34] ============================================================
+[16:11:34]   [pinchbench×qwen3.6-27b] evaluating...
+[16:11:35] [pinchbench] 2 tasks cached, 21 remaining
+[16:11:35] [pinchbench] 汇总已保存: 2/23 完成
+[16:11:35] [pinchbench] Running task 1/21: task_00_sanity
+[16:11:35] [task_00_sanity] No workspace_files defined in task
+[16:11:36] [pinch_task_00_sanity_qwen3.6-27b_20260520_081135] Container started
+[16:11:49] [pinch_task_00_sanity_qwen3.6-27b_20260520_081135] Agent finished in 12.54s, returncode=0
+[16:11:49] [pinch_task_00_sanity_qwen3.6-27b_20260520_081135] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:11:49] [pinch_task_00_sanity_qwen3.6-27b_20260520_081135] [DEBUG] Contents: []
+[16:11:49] [pinch_task_00_sanity_qwen3.6-27b_20260520_081135] [PROGRESS] Task started at 1779264699.5340807
+[16:11:49] [pinch_task_00_sanity_qwen3.6-27b_20260520_081135] [PROGRESS] Task finished at 9.1s, status=success
+[16:11:49] [pinch_task_00_sanity_qwen3.6-27b_20260520_081135] [PROGRESS] Transcript entries: 4
+[16:11:49] [pinch_task_00_sanity_qwen3.6-27b_20260520_081135] DONE
+[16:11:49] [pinch_task_00_sanity_qwen3.6-27b_20260520_081135] Agent result loaded: status=success, transcript_len=4
+[16:11:49] [task_00_sanity] Grade score: 1.0000
+[16:11:49] [task_00_sanity] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_00_sanity/transcript.json
+[16:11:49] [task_00_sanity] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_00_sanity/result.json
+[16:11:49] [pinchbench] 汇总已保存: 3/23 完成
+[16:11:49] [pinchbench] Running task 2/21: task_01_calendar
+[16:11:49] [task_01_calendar] No workspace_files defined in task
+[16:11:50] [pinch_task_01_calendar_qwen3.6-27b_20260520_081149] Container started
+[16:13:07] [pinch_task_01_calendar_qwen3.6-27b_20260520_081149] Agent finished in 77.16s, returncode=0
+[16:13:07] [pinch_task_01_calendar_qwen3.6-27b_20260520_081149] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:13:07] [pinch_task_01_calendar_qwen3.6-27b_20260520_081149] [DEBUG] Contents: []
+[16:13:07] [pinch_task_01_calendar_qwen3.6-27b_20260520_081149] [PROGRESS] Task started at 1779264713.4256759
+[16:13:07] [pinch_task_01_calendar_qwen3.6-27b_20260520_081149] [PROGRESS] Task finished at 73.7s, status=success
+[16:13:07] [pinch_task_01_calendar_qwen3.6-27b_20260520_081149] [PROGRESS] Transcript entries: 15
+[16:13:07] [pinch_task_01_calendar_qwen3.6-27b_20260520_081149] DONE
+[16:13:07] [pinch_task_01_calendar_qwen3.6-27b_20260520_081149] Agent result loaded: status=success, transcript_len=15
+[16:13:08] [task_01_calendar] Grade score: 1.0000
+[16:13:08] [task_01_calendar] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_01_calendar/transcript.json
+[16:13:08] [task_01_calendar] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_01_calendar/result.json
+[16:13:08] [pinchbench] 汇总已保存: 4/23 完成
+[16:13:08] [pinchbench] Running task 3/21: task_02_stock
+[16:13:08] [task_02_stock] No workspace_files defined in task
+[16:13:09] [pinch_task_02_stock_qwen3.6-27b_20260520_081308] Container started
+[16:16:31] [pinch_task_02_stock_qwen3.6-27b_20260520_081308] Agent finished in 201.57s, returncode=0
+[16:16:31] [pinch_task_02_stock_qwen3.6-27b_20260520_081308] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:16:31] [pinch_task_02_stock_qwen3.6-27b_20260520_081308] [DEBUG] Contents: []
+[16:16:31] [pinch_task_02_stock_qwen3.6-27b_20260520_081308] [PROGRESS] Task started at 1779264792.2256877
+[16:16:31] [pinch_task_02_stock_qwen3.6-27b_20260520_081308] [PROGRESS] Task finished at 197.1s, status=success
+[16:16:31] [pinch_task_02_stock_qwen3.6-27b_20260520_081308] [PROGRESS] Transcript entries: 23
+[16:16:31] [pinch_task_02_stock_qwen3.6-27b_20260520_081308] DONE
+[16:16:31] [pinch_task_02_stock_qwen3.6-27b_20260520_081308] Agent result loaded: status=success, transcript_len=23
+[16:16:31] [task_02_stock] Grade score: 1.0000
+[16:16:31] [task_02_stock] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_02_stock/transcript.json
+[16:16:31] [task_02_stock] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_02_stock/result.json
+[16:16:31] [pinchbench] 汇总已保存: 5/23 完成
+[16:16:31] [pinchbench] Running task 4/21: task_04_weather
+[16:16:31] [task_04_weather] No workspace_files defined in task
+[16:16:33] [pinch_task_04_weather_qwen3.6-27b_20260520_081631] Container started
+[16:21:29] [pinch_task_04_weather_qwen3.6-27b_20260520_081631] Agent finished in 296.31s, returncode=0
+[16:21:29] [pinch_task_04_weather_qwen3.6-27b_20260520_081631] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:21:29] [pinch_task_04_weather_qwen3.6-27b_20260520_081631] [DEBUG] Contents: []
+[16:21:29] [pinch_task_04_weather_qwen3.6-27b_20260520_081631] [PROGRESS] Task started at 1779264995.9420455
+[16:21:29] [pinch_task_04_weather_qwen3.6-27b_20260520_081631] [PROGRESS] Task finished at 289.3s, status=success
+[16:21:29] [pinch_task_04_weather_qwen3.6-27b_20260520_081631] [PROGRESS] Transcript entries: 19
+[16:21:29] [pinch_task_04_weather_qwen3.6-27b_20260520_081631] DONE
+[16:21:29] [pinch_task_04_weather_qwen3.6-27b_20260520_081631] Agent result loaded: status=success, transcript_len=19
+[16:21:29] [task_04_weather] Grade score: 1.0000
+[16:21:29] [task_04_weather] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_04_weather/transcript.json
+[16:21:29] [task_04_weather] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_04_weather/result.json
+[16:21:29] [pinchbench] 汇总已保存: 6/23 完成
+[16:21:29] [pinchbench] Running task 5/21: task_05_summary
+[16:21:29] [task_05_summary] Preparing 1 workspace file(s): ['summary_source.txt']
+[16:21:29] [task_05_summary] Wrote workspace file: summary_source.txt
+[16:21:31] [pinch_task_05_summary_qwen3.6-27b_20260520_082129] Container started
+[16:22:21] [pinch_task_05_summary_qwen3.6-27b_20260520_082129] Agent finished in 50.11s, returncode=0
+[16:22:21] [pinch_task_05_summary_qwen3.6-27b_20260520_082129] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:22:21] [pinch_task_05_summary_qwen3.6-27b_20260520_082129] [DEBUG] Contents: [PosixPath('/tmp/workspace/summary_source.txt')]
+[16:22:21] [pinch_task_05_summary_qwen3.6-27b_20260520_082129] [PROGRESS] Task started at 1779265293.824286
+[16:22:21] [pinch_task_05_summary_qwen3.6-27b_20260520_082129] [PROGRESS] Task finished at 46.7s, status=success
+[16:22:21] [pinch_task_05_summary_qwen3.6-27b_20260520_082129] [PROGRESS] Transcript entries: 9
+[16:22:21] [pinch_task_05_summary_qwen3.6-27b_20260520_082129] DONE
+[16:22:21] [pinch_task_05_summary_qwen3.6-27b_20260520_082129] Agent result loaded: status=success, transcript_len=9
+[16:22:30] [task_05_summary] LLM Judge score: 0.8400
+[16:22:30] [task_05_summary] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_05_summary/transcript.json
+[16:22:30] [task_05_summary] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_05_summary/result.json
+[16:22:30] [pinchbench] 汇总已保存: 7/23 完成
+[16:22:30] [pinchbench] Running task 6/21: task_06_events
+[16:22:30] [task_06_events] No workspace_files defined in task
+[16:22:32] [pinch_task_06_events_qwen3.6-27b_20260520_082230] Container started
+[16:27:52] [pinch_task_06_events_qwen3.6-27b_20260520_082230] Agent finished in 320.12s, returncode=0
+[16:27:52] [pinch_task_06_events_qwen3.6-27b_20260520_082230] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:27:52] [pinch_task_06_events_qwen3.6-27b_20260520_082230] [DEBUG] Contents: []
+[16:27:52] [pinch_task_06_events_qwen3.6-27b_20260520_082230] [PROGRESS] Task started at 1779265354.5794587
+[16:27:52] [pinch_task_06_events_qwen3.6-27b_20260520_082230] [PROGRESS] Task finished at 315.9s, status=success
+[16:27:52] [pinch_task_06_events_qwen3.6-27b_20260520_082230] [PROGRESS] Transcript entries: 38
+[16:27:52] [pinch_task_06_events_qwen3.6-27b_20260520_082230] DONE
+[16:27:52] [pinch_task_06_events_qwen3.6-27b_20260520_082230] Agent result loaded: status=success, transcript_len=38
+[16:27:57] [task_06_events] LLM Judge score: 0.7400
+[16:27:58] [task_06_events] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_06_events/transcript.json
+[16:27:58] [task_06_events] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_06_events/result.json
+[16:27:58] [pinchbench] 汇总已保存: 8/23 完成
+[16:27:58] [pinchbench] Running task 7/21: task_07_email
+[16:27:58] [task_07_email] No workspace_files defined in task
+[16:28:00] [pinch_task_07_email_qwen3.6-27b_20260520_082758] Container started
+[16:28:41] [pinch_task_07_email_qwen3.6-27b_20260520_082758] Agent finished in 41.61s, returncode=0
+[16:28:41] [pinch_task_07_email_qwen3.6-27b_20260520_082758] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:28:41] [pinch_task_07_email_qwen3.6-27b_20260520_082758] [DEBUG] Contents: []
+[16:28:41] [pinch_task_07_email_qwen3.6-27b_20260520_082758] [PROGRESS] Task started at 1779265683.017834
+[16:28:41] [pinch_task_07_email_qwen3.6-27b_20260520_082758] [PROGRESS] Task finished at 37.9s, status=success
+[16:28:41] [pinch_task_07_email_qwen3.6-27b_20260520_082758] [PROGRESS] Transcript entries: 7
+[16:28:41] [pinch_task_07_email_qwen3.6-27b_20260520_082758] DONE
+[16:28:41] [pinch_task_07_email_qwen3.6-27b_20260520_082758] Agent result loaded: status=success, transcript_len=7
+[16:28:47] [task_07_email] LLM Judge score: 0.8600
+[16:28:47] [task_07_email] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_07_email/transcript.json
+[16:28:47] [task_07_email] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_07_email/result.json
+[16:28:47] [pinchbench] 汇总已保存: 9/23 完成
+[16:28:47] [pinchbench] Running task 8/21: task_08_memory
+[16:28:47] [task_08_memory] Preparing 1 workspace file(s): ['notes.md']
+[16:28:47] [task_08_memory] Wrote workspace file: notes.md
+[16:28:49] [pinch_task_08_memory_qwen3.6-27b_20260520_082847] Container started
+[16:29:09] [pinch_task_08_memory_qwen3.6-27b_20260520_082847] Agent finished in 20.45s, returncode=0
+[16:29:09] [pinch_task_08_memory_qwen3.6-27b_20260520_082847] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:29:09] [pinch_task_08_memory_qwen3.6-27b_20260520_082847] [DEBUG] Contents: [PosixPath('/tmp/workspace/notes.md')]
+[16:29:09] [pinch_task_08_memory_qwen3.6-27b_20260520_082847] [PROGRESS] Task started at 1779265731.5569048
+[16:29:09] [pinch_task_08_memory_qwen3.6-27b_20260520_082847] [PROGRESS] Task finished at 17.3s, status=success
+[16:29:09] [pinch_task_08_memory_qwen3.6-27b_20260520_082847] [PROGRESS] Transcript entries: 8
+[16:29:09] [pinch_task_08_memory_qwen3.6-27b_20260520_082847] DONE
+[16:29:09] [pinch_task_08_memory_qwen3.6-27b_20260520_082847] Agent result loaded: status=success, transcript_len=8
+[16:29:09] [task_08_memory] Grade score: 1.0000
+[16:29:10] [task_08_memory] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_08_memory/transcript.json
+[16:29:10] [task_08_memory] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_08_memory/result.json
+[16:29:10] [pinchbench] 汇总已保存: 10/23 完成
+[16:29:10] [pinchbench] Running task 9/21: task_09_files
+[16:29:10] [task_09_files] No workspace_files defined in task
+[16:29:10] [pinch_task_09_files_qwen3.6-27b_20260520_082910] Container started
+[16:29:59] [pinch_task_09_files_qwen3.6-27b_20260520_082910] Agent finished in 48.12s, returncode=0
+[16:29:59] [pinch_task_09_files_qwen3.6-27b_20260520_082910] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:29:59] [pinch_task_09_files_qwen3.6-27b_20260520_082910] [DEBUG] Contents: []
+[16:29:59] [pinch_task_09_files_qwen3.6-27b_20260520_082910] [PROGRESS] Task started at 1779265754.274723
+[16:29:59] [pinch_task_09_files_qwen3.6-27b_20260520_082910] [PROGRESS] Task finished at 43.9s, status=success
+[16:29:59] [pinch_task_09_files_qwen3.6-27b_20260520_082910] [PROGRESS] Transcript entries: 21
+[16:29:59] [pinch_task_09_files_qwen3.6-27b_20260520_082910] DONE
+[16:29:59] [pinch_task_09_files_qwen3.6-27b_20260520_082910] Agent result loaded: status=success, transcript_len=21
+[16:29:59] [task_09_files] Grade score: 0.8571
+[16:29:59] [task_09_files] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_09_files/transcript.json
+[16:29:59] [task_09_files] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_09_files/result.json
+[16:29:59] [pinchbench] 汇总已保存: 11/23 完成
+[16:29:59] [pinchbench] Running task 10/21: task_10_workflow
+[16:29:59] [task_10_workflow] Preparing 1 workspace file(s): ['config.json']
+[16:29:59] [task_10_workflow] Wrote workspace file: config.json
+[16:30:00] [pinch_task_10_workflow_qwen3.6-27b_20260520_082959] Container started
+[16:33:03] [pinch_task_10_workflow_qwen3.6-27b_20260520_082959] Agent finished in 182.98s, returncode=0
+[16:33:03] [pinch_task_10_workflow_qwen3.6-27b_20260520_082959] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:33:03] [pinch_task_10_workflow_qwen3.6-27b_20260520_082959] [DEBUG] Contents: [PosixPath('/tmp/workspace/config.json')]
+[16:33:03] [pinch_task_10_workflow_qwen3.6-27b_20260520_082959] [PROGRESS] Task started at 1779265803.503432
+[16:33:03] [pinch_task_10_workflow_qwen3.6-27b_20260520_082959] [PROGRESS] Task finished at 179.5s, status=success
+[16:33:03] [pinch_task_10_workflow_qwen3.6-27b_20260520_082959] [PROGRESS] Transcript entries: 39
+[16:33:03] [pinch_task_10_workflow_qwen3.6-27b_20260520_082959] DONE
+[16:33:04] [pinch_task_10_workflow_qwen3.6-27b_20260520_082959] Agent result loaded: status=success, transcript_len=39
+[16:33:13] [task_10_workflow] Hybrid score: 0.3350 (auto=0.0000, llm=0.6700)
+[16:33:13] [task_10_workflow] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_10_workflow/transcript.json
+[16:33:13] [task_10_workflow] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_10_workflow/result.json
+[16:33:13] [pinchbench] 汇总已保存: 12/23 完成
+[16:33:13] [pinchbench] Running task 11/21: task_11_clawdhub
+[16:33:13] [task_11_clawdhub] No workspace_files defined in task
+[16:33:14] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_083313] Container started
+[16:34:05] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_083313] Agent finished in 50.43s, returncode=0
+[16:34:05] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_083313] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:34:05] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_083313] [DEBUG] Contents: []
+[16:34:05] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_083313] [PROGRESS] Task started at 1779265997.3267887
+[16:34:05] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_083313] [PROGRESS] Task finished at 47.2s, status=success
+[16:34:05] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_083313] [PROGRESS] Transcript entries: 21
+[16:34:05] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_083313] DONE
+[16:34:05] [pinch_task_11_clawdhub_qwen3.6-27b_20260520_083313] Agent result loaded: status=success, transcript_len=21
+[16:34:05] [task_11_clawdhub] Grade score: 1.0000
+[16:34:05] [task_11_clawdhub] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_11_clawdhub/transcript.json
+[16:34:05] [task_11_clawdhub] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_11_clawdhub/result.json
+[16:34:05] [pinchbench] 汇总已保存: 13/23 完成
+[16:34:05] [pinchbench] Running task 12/21: task_12_skill_search
+[16:34:05] [task_12_skill_search] Preparing 2 workspace file(s): ['config/settings.json', 'config/database.yml']
+[16:34:05] [task_12_skill_search] Wrote workspace file: config/settings.json
+[16:34:05] [task_12_skill_search] Wrote workspace file: config/database.yml
+[16:34:07] [pinch_task_12_skill_search_qwen3.6-27b_20260520_083405] Container started
+[16:35:16] [pinch_task_12_skill_search_qwen3.6-27b_20260520_083405] Agent finished in 69.09s, returncode=0
+[16:35:16] [pinch_task_12_skill_search_qwen3.6-27b_20260520_083405] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:35:16] [pinch_task_12_skill_search_qwen3.6-27b_20260520_083405] [DEBUG] Contents: [PosixPath('/tmp/workspace/config')]
+[16:35:16] [pinch_task_12_skill_search_qwen3.6-27b_20260520_083405] [PROGRESS] Task started at 1779266050.0024137
+[16:35:16] [pinch_task_12_skill_search_qwen3.6-27b_20260520_083405] [PROGRESS] Task finished at 65.7s, status=success
+[16:35:16] [pinch_task_12_skill_search_qwen3.6-27b_20260520_083405] [PROGRESS] Transcript entries: 21
+[16:35:16] [pinch_task_12_skill_search_qwen3.6-27b_20260520_083405] DONE
+[16:35:16] [pinch_task_12_skill_search_qwen3.6-27b_20260520_083405] Agent result loaded: status=success, transcript_len=21
+[16:35:16] [task_12_skill_search] Grade score: 1.0000
+[16:35:16] [task_12_skill_search] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_12_skill_search/transcript.json
+[16:35:16] [task_12_skill_search] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_12_skill_search/result.json
+[16:35:16] [pinchbench] 汇总已保存: 14/23 完成
+[16:35:16] [pinchbench] Running task 13/21: task_13_image_gen
+[16:35:16] [task_13_image_gen] No workspace_files defined in task
+[16:35:18] [pinch_task_13_image_gen_qwen3.6-27b_20260520_083516] Container started
+[16:39:01] [pinch_task_13_image_gen_qwen3.6-27b_20260520_083516] Agent finished in 222.94s, returncode=0
+[16:39:01] [pinch_task_13_image_gen_qwen3.6-27b_20260520_083516] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:39:01] [pinch_task_13_image_gen_qwen3.6-27b_20260520_083516] [DEBUG] Contents: []
+[16:39:01] [pinch_task_13_image_gen_qwen3.6-27b_20260520_083516] [PROGRESS] Task started at 1779266120.760657
+[16:39:01] [pinch_task_13_image_gen_qwen3.6-27b_20260520_083516] [PROGRESS] Task finished at 219.3s, status=success
+[16:39:01] [pinch_task_13_image_gen_qwen3.6-27b_20260520_083516] [PROGRESS] Transcript entries: 36
+[16:39:01] [pinch_task_13_image_gen_qwen3.6-27b_20260520_083516] DONE
+[16:39:01] [pinch_task_13_image_gen_qwen3.6-27b_20260520_083516] Agent result loaded: status=success, transcript_len=36
+[16:39:07] [task_13_image_gen] Hybrid score: 0.3833 (auto=0.1667, llm=0.6000)
+[16:39:08] [task_13_image_gen] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_13_image_gen/transcript.json
+[16:39:08] [task_13_image_gen] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_13_image_gen/result.json
+[16:39:08] [pinchbench] 汇总已保存: 15/23 完成
+[16:39:08] [pinchbench] Running task 14/21: task_14_humanizer
+[16:39:08] [task_14_humanizer] Preparing 1 workspace file(s): [{'source': 'ai_blog.txt', 'dest': 'ai_blog.txt'}]
+[16:39:08] [task_14_humanizer] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/ai_blog.txt -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_14_humanizer_xh42te_b/workspace/ai_blog.txt
+[16:39:09] [pinch_task_14_humanizer_qwen3.6-27b_20260520_083908] Container started
+[16:42:13] [pinch_task_14_humanizer_qwen3.6-27b_20260520_083908] Agent finished in 184.26s, returncode=0
+[16:42:13] [pinch_task_14_humanizer_qwen3.6-27b_20260520_083908] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:42:13] [pinch_task_14_humanizer_qwen3.6-27b_20260520_083908] [DEBUG] Contents: [PosixPath('/tmp/workspace/ai_blog.txt')]
+[16:42:13] [pinch_task_14_humanizer_qwen3.6-27b_20260520_083908] [PROGRESS] Task started at 1779266352.2400913
+[16:42:13] [pinch_task_14_humanizer_qwen3.6-27b_20260520_083908] [PROGRESS] Task finished at 179.8s, status=success
+[16:42:13] [pinch_task_14_humanizer_qwen3.6-27b_20260520_083908] [PROGRESS] Transcript entries: 27
+[16:42:13] [pinch_task_14_humanizer_qwen3.6-27b_20260520_083908] DONE
+[16:42:13] [pinch_task_14_humanizer_qwen3.6-27b_20260520_083908] Agent result loaded: status=success, transcript_len=27
+[16:42:22] [task_14_humanizer] LLM Judge score: 0.8300
+[16:42:23] [task_14_humanizer] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_14_humanizer/transcript.json
+[16:42:23] [task_14_humanizer] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_14_humanizer/result.json
+[16:42:23] [pinchbench] 汇总已保存: 16/23 完成
+[16:42:23] [pinchbench] Running task 15/21: task_15_daily_summary
+[16:42:23] [task_15_daily_summary] Preparing 5 workspace file(s): ['research/market_analysis.txt', 'research/competitor_intelligence.txt', 'research/customer_feedback.txt', 'research/product_updates.txt', 'research/industry_news.txt']
+[16:42:23] [task_15_daily_summary] Wrote workspace file: research/market_analysis.txt
+[16:42:23] [task_15_daily_summary] Wrote workspace file: research/competitor_intelligence.txt
+[16:42:23] [task_15_daily_summary] Wrote workspace file: research/customer_feedback.txt
+[16:42:23] [task_15_daily_summary] Wrote workspace file: research/product_updates.txt
+[16:42:23] [task_15_daily_summary] Wrote workspace file: research/industry_news.txt
+[16:42:25] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_084223] Container started
+[16:44:08] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_084223] Agent finished in 102.80s, returncode=0
+[16:44:08] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_084223] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:44:08] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_084223] [DEBUG] Contents: [PosixPath('/tmp/workspace/research')]
+[16:44:08] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_084223] [PROGRESS] Task started at 1779266548.0389457
+[16:44:08] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_084223] [PROGRESS] Task finished at 98.2s, status=success
+[16:44:08] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_084223] [PROGRESS] Transcript entries: 19
+[16:44:08] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_084223] DONE
+[16:44:08] [pinch_task_15_daily_summary_qwen3.6-27b_20260520_084223] Agent result loaded: status=success, transcript_len=19
+[16:44:19] [task_15_daily_summary] LLM Judge score: 0.8800
+[16:44:20] [task_15_daily_summary] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_15_daily_summary/transcript.json
+[16:44:20] [task_15_daily_summary] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_15_daily_summary/result.json
+[16:44:20] [pinchbench] 汇总已保存: 17/23 完成
+[16:44:20] [pinchbench] Running task 16/21: task_16_email_triage
+[16:44:20] [task_16_email_triage] Preparing 13 workspace file(s): ['inbox/email_01.txt', 'inbox/email_02.txt', 'inbox/email_03.txt', 'inbox/email_04.txt', 'inbox/email_05.txt', 'inbox/email_06.txt', 'inbox/email_07.txt', 'inbox/email_08.txt', 'inbox/email_09.txt', 'inbox/email_10.txt', 'inbox/email_11.txt', 'inbox/email_12.txt', 'inbox/email_13.txt']
+[16:44:20] [task_16_email_triage] Wrote workspace file: inbox/email_01.txt
+[16:44:20] [task_16_email_triage] Wrote workspace file: inbox/email_02.txt
+[16:44:20] [task_16_email_triage] Wrote workspace file: inbox/email_03.txt
+[16:44:20] [task_16_email_triage] Wrote workspace file: inbox/email_04.txt
+[16:44:20] [task_16_email_triage] Wrote workspace file: inbox/email_05.txt
+[16:44:20] [task_16_email_triage] Wrote workspace file: inbox/email_06.txt
+[16:44:20] [task_16_email_triage] Wrote workspace file: inbox/email_07.txt
+[16:44:20] [task_16_email_triage] Wrote workspace file: inbox/email_08.txt
+[16:44:20] [task_16_email_triage] Wrote workspace file: inbox/email_09.txt
+[16:44:20] [task_16_email_triage] Wrote workspace file: inbox/email_10.txt
+[16:44:20] [task_16_email_triage] Wrote workspace file: inbox/email_11.txt
+[16:44:20] [task_16_email_triage] Wrote workspace file: inbox/email_12.txt
+[16:44:20] [task_16_email_triage] Wrote workspace file: inbox/email_13.txt
+[16:44:21] [pinch_task_16_email_triage_qwen3.6-27b_20260520_084420] Container started
+[16:46:38] [pinch_task_16_email_triage_qwen3.6-27b_20260520_084420] Agent finished in 137.17s, returncode=0
+[16:46:38] [pinch_task_16_email_triage_qwen3.6-27b_20260520_084420] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:46:38] [pinch_task_16_email_triage_qwen3.6-27b_20260520_084420] [DEBUG] Contents: [PosixPath('/tmp/workspace/inbox')]
+[16:46:38] [pinch_task_16_email_triage_qwen3.6-27b_20260520_084420] [PROGRESS] Task started at 1779266663.906792
+[16:46:38] [pinch_task_16_email_triage_qwen3.6-27b_20260520_084420] [PROGRESS] Task finished at 133.4s, status=success
+[16:46:38] [pinch_task_16_email_triage_qwen3.6-27b_20260520_084420] [PROGRESS] Transcript entries: 35
+[16:46:38] [pinch_task_16_email_triage_qwen3.6-27b_20260520_084420] DONE
+[16:46:38] [pinch_task_16_email_triage_qwen3.6-27b_20260520_084420] Agent result loaded: status=success, transcript_len=35
+[16:46:50] [task_16_email_triage] Hybrid score: 0.9275 (auto=0.8636, llm=0.9700)
+[16:46:50] [task_16_email_triage] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_16_email_triage/transcript.json
+[16:46:50] [task_16_email_triage] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_16_email_triage/result.json
+[16:46:50] [pinchbench] 汇总已保存: 18/23 完成
+[16:46:50] [pinchbench] Running task 17/21: task_17_email_search
+[16:46:50] [task_17_email_search] Preparing 11 workspace file(s): ['emails/2026-01-15_project_alpha_kickoff.txt', 'emails/2026-01-22_alpha_data_pipeline.txt', 'emails/2026-02-03_alpha_budget_concern.txt', 'emails/2026-02-05_alpha_api_design.txt', 'emails/2026-02-10_alpha_security_review.txt', 'emails/2026-02-12_alpha_phase1_complete.txt', 'emails/2026-02-14_alpha_client_feedback.txt', 'emails/2026-02-18_alpha_timeline_slip.txt', 'emails/2026-02-20_unrelated_team_lunch.txt', 'emails/2026-02-22_unrelated_conference.txt', 'emails/2026-02-25_alpha_frontend_progress.txt']
+[16:46:50] [task_17_email_search] Wrote workspace file: emails/2026-01-15_project_alpha_kickoff.txt
+[16:46:50] [task_17_email_search] Wrote workspace file: emails/2026-01-22_alpha_data_pipeline.txt
+[16:46:50] [task_17_email_search] Wrote workspace file: emails/2026-02-03_alpha_budget_concern.txt
+[16:46:50] [task_17_email_search] Wrote workspace file: emails/2026-02-05_alpha_api_design.txt
+[16:46:50] [task_17_email_search] Wrote workspace file: emails/2026-02-10_alpha_security_review.txt
+[16:46:50] [task_17_email_search] Wrote workspace file: emails/2026-02-12_alpha_phase1_complete.txt
+[16:46:50] [task_17_email_search] Wrote workspace file: emails/2026-02-14_alpha_client_feedback.txt
+[16:46:50] [task_17_email_search] Wrote workspace file: emails/2026-02-18_alpha_timeline_slip.txt
+[16:46:50] [task_17_email_search] Wrote workspace file: emails/2026-02-20_unrelated_team_lunch.txt
+[16:46:50] [task_17_email_search] Wrote workspace file: emails/2026-02-22_unrelated_conference.txt
+[16:46:50] [task_17_email_search] Wrote workspace file: emails/2026-02-25_alpha_frontend_progress.txt
+[16:46:52] [pinch_task_17_email_search_qwen3.6-27b_20260520_084650] Container started
+[16:48:38] [pinch_task_17_email_search_qwen3.6-27b_20260520_084650] Agent finished in 106.35s, returncode=0
+[16:48:38] [pinch_task_17_email_search_qwen3.6-27b_20260520_084650] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:48:38] [pinch_task_17_email_search_qwen3.6-27b_20260520_084650] [DEBUG] Contents: [PosixPath('/tmp/workspace/emails')]
+[16:48:38] [pinch_task_17_email_search_qwen3.6-27b_20260520_084650] [PROGRESS] Task started at 1779266814.9165173
+[16:48:38] [pinch_task_17_email_search_qwen3.6-27b_20260520_084650] [PROGRESS] Task finished at 102.4s, status=success
+[16:48:38] [pinch_task_17_email_search_qwen3.6-27b_20260520_084650] [PROGRESS] Transcript entries: 31
+[16:48:38] [pinch_task_17_email_search_qwen3.6-27b_20260520_084650] DONE
+[16:48:38] [pinch_task_17_email_search_qwen3.6-27b_20260520_084650] Agent result loaded: status=success, transcript_len=31
+[16:48:45] [task_17_email_search] Hybrid score: 0.8730 (auto=0.9000, llm=0.8550)
+[16:48:45] [task_17_email_search] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_17_email_search/transcript.json
+[16:48:45] [task_17_email_search] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_17_email_search/result.json
+[16:48:45] [pinchbench] 汇总已保存: 19/23 完成
+[16:48:45] [pinchbench] Running task 18/21: task_16_market_research
+[16:48:45] [task_16_market_research] No workspace_files defined in task
+[16:48:48] [pinch_task_16_market_research_qwen3.6-27b_20260520_084845] Container started
+[16:55:05] [pinch_task_16_market_research_qwen3.6-27b_20260520_084845] Agent finished in 377.86s, returncode=0
+[16:55:05] [pinch_task_16_market_research_qwen3.6-27b_20260520_084845] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:55:05] [pinch_task_16_market_research_qwen3.6-27b_20260520_084845] [DEBUG] Contents: []
+[16:55:05] [pinch_task_16_market_research_qwen3.6-27b_20260520_084845] [PROGRESS] Task started at 1779266930.6710296
+[16:55:05] [pinch_task_16_market_research_qwen3.6-27b_20260520_084845] [PROGRESS] Task finished at 373.9s, status=success
+[16:55:05] [pinch_task_16_market_research_qwen3.6-27b_20260520_084845] [PROGRESS] Transcript entries: 31
+[16:55:05] [pinch_task_16_market_research_qwen3.6-27b_20260520_084845] DONE
+[16:55:06] [pinch_task_16_market_research_qwen3.6-27b_20260520_084845] Agent result loaded: status=success, transcript_len=31
+[16:55:12] [task_16_market_research] Hybrid score: 0.9175 (auto=1.0000, llm=0.8350)
+[16:55:13] [task_16_market_research] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_16_market_research/transcript.json
+[16:55:13] [task_16_market_research] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_16_market_research/result.json
+[16:55:13] [pinchbench] 汇总已保存: 20/23 完成
+[16:55:13] [pinchbench] Running task 19/21: task_18_spreadsheet_summary
+[16:55:13] [task_18_spreadsheet_summary] Preparing 2 workspace file(s): [{'source': 'quarterly_sales.csv', 'dest': 'quarterly_sales.csv'}, {'source': 'company_expenses.xlsx', 'dest': 'company_expenses.xlsx'}]
+[16:55:13] [task_18_spreadsheet_summary] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/quarterly_sales.csv -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_18_spreadsheet_summary_f9hahfnp/workspace/quarterly_sales.csv
+[16:55:13] [task_18_spreadsheet_summary] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/company_expenses.xlsx -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_18_spreadsheet_summary_f9hahfnp/workspace/company_expenses.xlsx
+[16:55:14] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_085513] Container started
+[16:56:52] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_085513] Agent finished in 97.83s, returncode=0
+[16:56:52] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_085513] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:56:52] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_085513] [DEBUG] Contents: [PosixPath('/tmp/workspace/company_expenses.xlsx'), PosixPath('/tmp/workspace/quarterly_sales.csv')]
+[16:56:52] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_085513] [PROGRESS] Task started at 1779267317.5856636
+[16:56:52] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_085513] [PROGRESS] Task finished at 94.1s, status=success
+[16:56:52] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_085513] [PROGRESS] Transcript entries: 23
+[16:56:52] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_085513] DONE
+[16:56:52] [pinch_task_18_spreadsheet_summary_qwen3.6-27b_20260520_085513] Agent result loaded: status=success, transcript_len=23
+[16:56:59] [task_18_spreadsheet_summary] Hybrid score: 1.0000 (auto=1.0000, llm=1.0000)
+[16:56:59] [task_18_spreadsheet_summary] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_18_spreadsheet_summary/transcript.json
+[16:56:59] [task_18_spreadsheet_summary] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_18_spreadsheet_summary/result.json
+[16:56:59] [pinchbench] 汇总已保存: 21/23 完成
+[16:56:59] [pinchbench] Running task 20/21: task_21_openclaw_comprehension
+[16:56:59] [task_21_openclaw_comprehension] Preparing 1 workspace file(s): [{'source': 'OpenClaw Agent Use Cases and Gap Analysis for PinchBench.pdf', 'dest': 'openclaw_report.pdf'}]
+[16:56:59] [task_21_openclaw_comprehension] Copied workspace file: /Volumes/F/work/ClawEvalkit-private-emnlp/benchmarks/pinchbench/assets/OpenClaw Agent Use Cases and Gap Analysis for PinchBench.pdf -> /var/folders/92/4qjtd4l10qb6nj7zrjn__bfr0000gn/T/pinchbench_docker_task_21_openclaw_comprehension_jg2mmpry/workspace/openclaw_report.pdf
+[16:57:01] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_085659] Container started
+[16:59:18] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_085659] Agent finished in 137.31s, returncode=0
+[16:59:18] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_085659] [DEBUG] Workspace: /tmp/workspace, exists=True
+[16:59:18] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_085659] [DEBUG] Contents: [PosixPath('/tmp/workspace/openclaw_report.pdf')]
+[16:59:18] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_085659] [PROGRESS] Task started at 1779267423.8128068
+[16:59:18] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_085659] [PROGRESS] Task finished at 132.9s, status=success
+[16:59:18] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_085659] [PROGRESS] Transcript entries: 31
+[16:59:18] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_085659] DONE
+[16:59:18] [pinch_task_21_openclaw_comprehension_qwen3.6-27b_20260520_085659] Agent result loaded: status=success, transcript_len=31
+[16:59:18] [task_21_openclaw_comprehension] Grade score: 1.0000
+[16:59:19] [task_21_openclaw_comprehension] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_21_openclaw_comprehension/transcript.json
+[16:59:19] [task_21_openclaw_comprehension] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_21_openclaw_comprehension/result.json
+[16:59:19] [pinchbench] 汇总已保存: 22/23 完成
+[16:59:19] [pinchbench] Running task 21/21: task_22_second_brain
+[16:59:19] [task_22_second_brain] No workspace_files defined in task
+[16:59:20] [pinch_task_22_second_brain_qwen3.6-27b_20260520_085919] Container started
+[17:00:29] [pinch_task_22_second_brain_qwen3.6-27b_20260520_085919] Agent finished in 68.80s, returncode=0
+[17:00:29] [pinch_task_22_second_brain_qwen3.6-27b_20260520_085919] DONE
+[17:00:29] [pinch_task_22_second_brain_qwen3.6-27b_20260520_085919] Agent result loaded: status=success, transcript_len=46
+[17:00:35] [task_22_second_brain] Hybrid score: 0.9650 (auto=1.0000, llm=0.9300)
+[17:00:35] [task_22_second_brain] Saved transcript to outputs/harness/procedure/pinchbench/transcripts/qwen3.6-27b/task_22_second_brain/transcript.json
+[17:00:35] [task_22_second_brain] Result saved to /Volumes/F/work/ClawEvalkit-private-emnlp/outputs/harness/procedure/pinchbench/qwen3.6-27b/task_22_second_brain/result.json
+[17:00:35] [pinchbench] 汇总已保存: 23/23 完成
+[17:00:35]   [pinchbench×qwen3.6-27b] done: score=0, scored=0/0
+[17:00:35] 
+
